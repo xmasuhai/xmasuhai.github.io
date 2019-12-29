@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>Joel in the house  | 【HTML全解5】HTML入门 不能这么写、我不造</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="generator" content="Hugo 0.59.1" />
+    
+    
+      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+    
+
+    
+    
+      <link href="/dist/css/app.d98f2eb6bcd1eaedb7edf166bd16af26.css" rel="stylesheet">
+    
+
+    
+
+    
+      
+    
+
+    
+    
+    <meta property="og:title" content="【HTML全解5】HTML入门 不能这么写、我不造" />
+<meta property="og:description" content="摘要  标签错误嵌套：a标签不可以嵌套交互式元素 块级/内联元素的嵌套规范 不可包含块级元素的标签  p标签不能包含块级元素 li标签可以包含div以及ul，ul的子元素应该只有li  元素并排（块级和块级并列，内联和内联并列) 字符实体引发的错误 错误地使用：role 属性 行内元素强制转成块级元素，块级元素强制转成行内元素 使用 disabled=false 页面中同一个ID出现两次及以上 内嵌的 &lt;script&gt; 标签含有 src 属性  标签错误嵌套 语法错误
+ a标签不可以嵌套交互式元素：
+&lt;!-- 错误的嵌套 --&gt; &lt;a&gt; &lt;a&gt;链接&lt;/a&gt; &lt;button&gt; &lt;img usemap=&quot;&quot;&gt;如果设置了usemap属性&lt;/img&gt; &lt;/button&gt; &lt;details&gt;&lt;/details&gt; &lt;embed&gt;&lt;/embed&gt; &lt;iframe&gt;&lt;/iframe&gt; &lt;img usemap=&quot;&quot;&gt;如果设置了属性&lt;/img&gt; &lt;input type!=&quot;hidden&quot;&gt; &lt;keygen&gt; &lt;label&gt; &lt;menu type=&quot;toolbar&quot;&gt;（如果type属性为toolbar状态） &lt;object usemap=&quot;&quot;&gt;（如果设置了usemap属性） &lt;select&gt;&lt;/select&gt; &lt;textarea&gt; &lt;audio controls=&quot;&quot;&gt;如果设置了controls属性&lt;/audio&gt; &lt;video controls=&quot;&quot;&gt;如果设置了controls属性&lt;/video&gt; &lt;/a&gt;  下面这些写法浏览器大都不能正常解析：
+&lt;a href=&quot;&quot;&gt; &lt;a href=&quot;&quot;&gt;click&lt;/a&gt; &lt;/a&gt; &lt;a href=&quot;&quot;&gt; &lt;button&gt;click&lt;/button&gt; &lt;/a&gt; &lt;a href=&quot;&quot;&gt; &lt;input type=&quot;text&quot;&gt; &lt;/a&gt; &lt;a href=&quot;&quot;&gt; &lt;textarea name=&quot;&quot; id=&quot;&quot; cols=&quot;10&quot; rows=&quot;5&quot;&gt;&lt;/textarea&gt; &lt;/a&gt;    有的虽然解析正常，但却达不到预想的目的，无效设置" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://xmasuhai.github.io/posts/html/html%E5%85%A8%E8%A7%A35html%E5%85%A5%E9%97%A8-%E4%B8%8D%E8%83%BD%E8%BF%99%E4%B9%88%E5%86%99%E6%88%91%E4%B8%8D%E9%80%A0/" />
+<meta property="article:published_time" content="2019-12-21T23:50:00+08:00" />
+<meta property="article:modified_time" content="2019-12-21T23:50:00+08:00" />
+<meta itemprop="name" content="【HTML全解5】HTML入门 不能这么写、我不造">
+<meta itemprop="description" content="摘要  标签错误嵌套：a标签不可以嵌套交互式元素 块级/内联元素的嵌套规范 不可包含块级元素的标签  p标签不能包含块级元素 li标签可以包含div以及ul，ul的子元素应该只有li  元素并排（块级和块级并列，内联和内联并列) 字符实体引发的错误 错误地使用：role 属性 行内元素强制转成块级元素，块级元素强制转成行内元素 使用 disabled=false 页面中同一个ID出现两次及以上 内嵌的 &lt;script&gt; 标签含有 src 属性  标签错误嵌套 语法错误
+ a标签不可以嵌套交互式元素：
+&lt;!-- 错误的嵌套 --&gt; &lt;a&gt; &lt;a&gt;链接&lt;/a&gt; &lt;button&gt; &lt;img usemap=&quot;&quot;&gt;如果设置了usemap属性&lt;/img&gt; &lt;/button&gt; &lt;details&gt;&lt;/details&gt; &lt;embed&gt;&lt;/embed&gt; &lt;iframe&gt;&lt;/iframe&gt; &lt;img usemap=&quot;&quot;&gt;如果设置了属性&lt;/img&gt; &lt;input type!=&quot;hidden&quot;&gt; &lt;keygen&gt; &lt;label&gt; &lt;menu type=&quot;toolbar&quot;&gt;（如果type属性为toolbar状态） &lt;object usemap=&quot;&quot;&gt;（如果设置了usemap属性） &lt;select&gt;&lt;/select&gt; &lt;textarea&gt; &lt;audio controls=&quot;&quot;&gt;如果设置了controls属性&lt;/audio&gt; &lt;video controls=&quot;&quot;&gt;如果设置了controls属性&lt;/video&gt; &lt;/a&gt;  下面这些写法浏览器大都不能正常解析：
+&lt;a href=&quot;&quot;&gt; &lt;a href=&quot;&quot;&gt;click&lt;/a&gt; &lt;/a&gt; &lt;a href=&quot;&quot;&gt; &lt;button&gt;click&lt;/button&gt; &lt;/a&gt; &lt;a href=&quot;&quot;&gt; &lt;input type=&quot;text&quot;&gt; &lt;/a&gt; &lt;a href=&quot;&quot;&gt; &lt;textarea name=&quot;&quot; id=&quot;&quot; cols=&quot;10&quot; rows=&quot;5&quot;&gt;&lt;/textarea&gt; &lt;/a&gt;    有的虽然解析正常，但却达不到预想的目的，无效设置">
+
+
+<meta itemprop="datePublished" content="2019-12-21T23:50:00&#43;08:00" />
+<meta itemprop="dateModified" content="2019-12-21T23:50:00&#43;08:00" />
+<meta itemprop="wordCount" content="298">
+
+
+
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="【HTML全解5】HTML入门 不能这么写、我不造"/>
+<meta name="twitter:description" content="摘要  标签错误嵌套：a标签不可以嵌套交互式元素 块级/内联元素的嵌套规范 不可包含块级元素的标签  p标签不能包含块级元素 li标签可以包含div以及ul，ul的子元素应该只有li  元素并排（块级和块级并列，内联和内联并列) 字符实体引发的错误 错误地使用：role 属性 行内元素强制转成块级元素，块级元素强制转成行内元素 使用 disabled=false 页面中同一个ID出现两次及以上 内嵌的 &lt;script&gt; 标签含有 src 属性  标签错误嵌套 语法错误
+ a标签不可以嵌套交互式元素：
+&lt;!-- 错误的嵌套 --&gt; &lt;a&gt; &lt;a&gt;链接&lt;/a&gt; &lt;button&gt; &lt;img usemap=&quot;&quot;&gt;如果设置了usemap属性&lt;/img&gt; &lt;/button&gt; &lt;details&gt;&lt;/details&gt; &lt;embed&gt;&lt;/embed&gt; &lt;iframe&gt;&lt;/iframe&gt; &lt;img usemap=&quot;&quot;&gt;如果设置了属性&lt;/img&gt; &lt;input type!=&quot;hidden&quot;&gt; &lt;keygen&gt; &lt;label&gt; &lt;menu type=&quot;toolbar&quot;&gt;（如果type属性为toolbar状态） &lt;object usemap=&quot;&quot;&gt;（如果设置了usemap属性） &lt;select&gt;&lt;/select&gt; &lt;textarea&gt; &lt;audio controls=&quot;&quot;&gt;如果设置了controls属性&lt;/audio&gt; &lt;video controls=&quot;&quot;&gt;如果设置了controls属性&lt;/video&gt; &lt;/a&gt;  下面这些写法浏览器大都不能正常解析：
+&lt;a href=&quot;&quot;&gt; &lt;a href=&quot;&quot;&gt;click&lt;/a&gt; &lt;/a&gt; &lt;a href=&quot;&quot;&gt; &lt;button&gt;click&lt;/button&gt; &lt;/a&gt; &lt;a href=&quot;&quot;&gt; &lt;input type=&quot;text&quot;&gt; &lt;/a&gt; &lt;a href=&quot;&quot;&gt; &lt;textarea name=&quot;&quot; id=&quot;&quot; cols=&quot;10&quot; rows=&quot;5&quot;&gt;&lt;/textarea&gt; &lt;/a&gt;    有的虽然解析正常，但却达不到预想的目的，无效设置"/>
+
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="https://xmasuhai.github.io/" class="f3 fw2 hover-white no-underline white-90 dib">
+      Joel in the house
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+      
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
+
+    <header class="mt4 w-100">
+      <p class="f6 b helvetica tracked">
+          
+        POSTS
+      </p>
+      <h1 class="f1 athelas mb1">【HTML全解5】HTML入门 不能这么写、我不造</h1>
+      
+      
+      <time class="f6 mv4 dib tracked" datetime="2019-12-21T23:50:00&#43;08:00">December 21, 2019</time>
+      
+      
+    </header>
+
+    <section class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l">
+
+<h2 id="摘要">摘要</h2>
+
+<ul>
+<li>标签错误嵌套：a标签不可以嵌套交互式元素</li>
+<li>块级/内联元素的嵌套规范</li>
+<li>不可包含块级元素的标签
+
+<ul>
+<li>p标签不能包含块级元素</li>
+<li>li标签可以包含div以及ul，ul的子元素应该只有li</li>
+</ul></li>
+<li>元素并排（块级和块级并列，内联和内联并列)</li>
+<li>字符实体引发的错误</li>
+<li>错误地使用：role 属性
+行内元素强制转成块级元素，块级元素强制转成行内元素</li>
+<li>使用 disabled=false</li>
+<li>页面中同一个ID出现两次及以上</li>
+<li>内嵌的 <code>&lt;script&gt;</code> 标签含有 src 属性</li>
+</ul>
+
+<hr />
+
+<h3 id="标签错误嵌套">标签错误嵌套</h3>
+
+<p>语法错误</p>
+
+<ul>
+<li><p>a标签不可以嵌套交互式元素：</p>
+
+<pre><code class="language-HTML">
+&lt;!-- 错误的嵌套 --&gt;
+&lt;a&gt;
+&lt;a&gt;链接&lt;/a&gt;
+&lt;button&gt;
+    &lt;img usemap=&quot;&quot;&gt;如果设置了usemap属性&lt;/img&gt;
+&lt;/button&gt;
+&lt;details&gt;&lt;/details&gt;
+&lt;embed&gt;&lt;/embed&gt;
+&lt;iframe&gt;&lt;/iframe&gt;
+&lt;img usemap=&quot;&quot;&gt;如果设置了属性&lt;/img&gt;
+&lt;input type!=&quot;hidden&quot;&gt;
+&lt;keygen&gt;
+&lt;label&gt;
+&lt;menu type=&quot;toolbar&quot;&gt;（如果type属性为toolbar状态）
+&lt;object usemap=&quot;&quot;&gt;（如果设置了usemap属性）
+&lt;select&gt;&lt;/select&gt;
+&lt;textarea&gt;
+&lt;audio controls=&quot;&quot;&gt;如果设置了controls属性&lt;/audio&gt;
+&lt;video controls=&quot;&quot;&gt;如果设置了controls属性&lt;/video&gt;
+&lt;/a&gt;
+</code></pre></li>
+
+<li><p>下面这些写法浏览器大都不能正常解析：</p>
+
+<pre><code class="language-HTML">&lt;a href=&quot;&quot;&gt;
+&lt;a href=&quot;&quot;&gt;click&lt;/a&gt;
+&lt;/a&gt;
+
+&lt;a href=&quot;&quot;&gt;
+&lt;button&gt;click&lt;/button&gt;
+&lt;/a&gt;
+
+&lt;a href=&quot;&quot;&gt;
+&lt;input type=&quot;text&quot;&gt;
+&lt;/a&gt;
+
+&lt;a href=&quot;&quot;&gt;
+&lt;textarea name=&quot;&quot; id=&quot;&quot; cols=&quot;10&quot; rows=&quot;5&quot;&gt;&lt;/textarea&gt;
+&lt;/a&gt;
+</code></pre></li>
+</ul>
+
+<blockquote>
+<p>有的虽然解析正常，但却达不到预想的目的，无效设置</p>
+</blockquote>
+
+<h3 id="语义错误">语义错误</h3>
+
+<blockquote>
+<p>页面可能正常解析，但不符合语义。</p>
+</blockquote>
+
+<p>这是因为浏览器自带容错机制，对于不规范的写法也能够正确的解析，各浏览器的容错机制不同，所以尽量按规范来写。</p>
+
+<h3 id="不可包含块级元素标签">不可包含块级元素标签</h3>
+
+<p>h1~h6、p</p>
+
+<h4 id="块级-内联元素的嵌套规范">块级/内联元素的嵌套规范</h4>
+
+<blockquote>
+<ul>
+<li>块级元素可以包含内联元素和某些块级元素</li>
+<li>内联元素不能包含块级元素，只能包含内联元素</li>
+</ul>
+</blockquote>
+
+<pre><code class="language-HTML">&lt;!-- 规范的写法 --&gt;
+&lt;div&gt;
+    &lt;h2&gt;某kexueyuan&lt;/h2&gt;
+    &lt;p&gt;IT education&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;!-- 不规范的写法 --&gt;
+&lt;span&gt;
+    &lt;div&gt;wrong&lt;/div&gt;
+&lt;/span&gt;
+
+&lt;p&gt;
+   &lt;h1&gt;&lt;/h1&gt;
+&lt;/p&gt;
+
+&lt;p&gt;
+   &lt;div&gt;&lt;/div&gt;
+&lt;/p&gt;
+&lt;!-- p标签不能包含块级元素 --&gt;
+</code></pre>
+
+<h4 id="li标签可以包含div以及ul-二级列表">li标签可以包含div以及ul(二级列表)</h4>
+
+<pre><code class="language-HTML">&lt;!-- 规范的写法 --&gt;
+&lt;li&gt;
+   &lt;ul&gt;
+       &lt;li&gt;&lt;/li&gt;
+       &lt;li&gt;&lt;/li&gt;
+       &lt;li&gt;&lt;/li&gt;
+   &lt;/ul&gt;
+   &lt;div&gt;&lt;/div&gt;
+&lt;/li&gt;
+
+&lt;!-- 不规范的写法 --&gt;
+
+&lt;ul&gt;
+   &lt;a href=&quot;&quot;&gt;迷路的a标签&lt;/a&gt;
+   &lt;li&gt;&lt;/li&gt;
+   &lt;li&gt;&lt;/li&gt;
+   &lt;li&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+
+<h3 id="元素并排">元素并排</h3>
+
+<blockquote>
+<ul>
+<li>块级和块级并列</li>
+<li>内联和内联并列</li>
+</ul>
+</blockquote>
+
+<pre><code class="language-HTML">&lt;!-- 规范的写法 --&gt;
+&lt;div&gt;
+   &lt;h2&gt;&lt;/h2&gt;
+   &lt;p&gt;&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;div&gt;
+   &lt;img src=&quot;&quot; alt=&quot;&quot;&gt;
+   &lt;a href=&quot;&quot;&gt;&lt;/a&gt;
+   &lt;span&gt;&lt;/span&gt;
+&lt;/div&gt;
+
+&lt;!-- 不规范的写法 --&gt;
+&lt;div&gt;
+   &lt;span&gt;我是内联元素&lt;/span&gt;
+   &lt;p&gt;我是块级元素&lt;/p&gt;
+&lt;/div&gt;
+&lt;span&gt;我也是内联元素&lt;/span&gt;
+</code></pre>
+
+<h3 id="字符实体引发的错误">字符实体引发的错误</h3>
+
+<blockquote>
+<p>有些字符是 html预留的，不能够直接书写，但是可以通过字符实体来显示</p>
+</blockquote>
+
+<p>如：</p>
+
+<pre><code class="language-HTML">空格 - &amp;nbsp;
+大于符号 - &amp;gt;
+&amp; - &amp;amp;
+</code></pre>
+
+<blockquote>
+<p>但如果稍不注意，在如下的情况下就会引发错误：</p>
+</blockquote>
+
+<pre><code class="language-HTML">&lt;!--这里的 &amp;copy 会被转换为 ©️符号，从而得不到预期的效果--&gt;
+&lt;a href=&quot;?art&amp;copy&quot;&gt;Art and Copy&lt;/a&gt;
+
+&lt;!--正确的做法是所有的保留字符全部用实体字符替代。--&gt;
+&lt;a href=&quot;?art&amp;amp;copy&quot;&gt;Art and Copy&lt;/a&gt;
+</code></pre>
+
+<h3 id="错误地使用-role-属性">错误地使用 role 属性</h3>
+
+<blockquote>
+<p>role 属性是用来增强标签的语义的，但如果使用不当，反而得到负面的效果</p>
+</blockquote>
+
+<pre><code class="language-HTML">&lt;input type=radio role=progressbar&gt;
+&lt;!--
+这里的是一个 input标签，但是却通过 role 指定了进度条的语义
+input是不能够作为进度条的，所以这里反而模糊了语义。
+--&gt;
+</code></pre>
+
+<h3 id="元素类型强制转换">元素类型强制转换</h3>
+
+<blockquote>
+<ul>
+<li>行内元素强制转成块级元素</li>
+<li>块级元素强制转成行内元素</li>
+</ul>
+</blockquote>
+
+<pre><code class="language-HTML">给 &lt;div style=&quot;display: inline;&quot;&gt; 标签设置 inline 属性
+给 &lt;span style=&quot;display: block;&quot;&gt;标签设置 block 属性
+</code></pre>
+
+<blockquote>
+<ul>
+<li>display 是CSS中最重要的用于控制布局的属性。</li>
+<li>每个元素都有一个默认的 display 值，这与元素的类型有关。</li>
+<li>对于大多数元素它们的默认值通常是 block 或 inline 。</li>
+<li>一个 block 元素通常被叫做块级元素。</li>
+<li>一个 inline 元素通常被叫做行内元素。</li>
+</ul>
+</blockquote>
+
+<h3 id="使用-disabled-false">使用 disabled=false</h3>
+
+<blockquote>
+<p>disabled 属性是用来禁用标签的
+一般用于 input 、button等，表示不可点击。</p>
+</blockquote>
+
+<pre><code class="language-HTML">&lt;!-- 正常的用法 --&gt;
+&lt;input type=&quot;text&quot; name=&quot;lname&quot;&gt;
+&lt;input type=&quot;text&quot; name=&quot;lname&quot; disabled&gt;
+&lt;input type=&quot;text&quot; name=&quot;lname&quot; disabled=&quot;disabled&quot;&gt;
+
+&lt;!-- 错误的写法 --&gt;
+&lt;input type=&quot;text&quot; name=&quot;name&quot; disabled=&quot;false&quot;&gt;
+&lt;!--
+这里虽然 disabled=&quot;false&quot; 语义也代表不禁用
+但实际上是被禁用的。
+--&gt;
+</code></pre>
+
+<h3 id="页面中同一个-id-出现两次及更多">页面中同一个 ID 出现两次及更多</h3>
+
+<blockquote>
+<p>ID重复会引起元素选择错误，从而引发 Javascript 隐藏问题，因此需要注意。</p>
+</blockquote>
+
+<ul>
+<li>每一个ID会在浏览器中生成一个同名的全局变量</li>
+<li>内嵌的 <code>&lt;script&gt;</code> 标签含有 src 属性</li>
+<li>当 <code>&lt;script&gt;</code> 标签包含 src 属性时，其包含的 Javascript 脚本是不会执行的。</li>
+</ul>
+
+<blockquote>
+<p>注意 用HUGO 把Markdown转HMTl时 任何标签比如<code>&lt;script&gt;</code>都要被包裹进&rdquo;`&rdquo;&rdquo;`&ldquo;里，不然后面的文本就被解析到标签里，可能不显示</p>
+</blockquote>
+
+<p>部分来自：<a href="https://zhuanlan.zhihu.com/p/25410484/">杨小福@极客学院</a></p>
+
+<p>整理By me，不断收集更新</p>
+
+<hr />
+
+<!-- End -->
+
+<p>·完·</p>
+
+<hr />
+
+<h4 id="参考文章">参考文章</h4>
+
+<ul>
+<li>无</li>
+</ul>
+
+<h4 id="相关文章">相关文章</h4>
+
+<ul>
+<li>无</li>
+</ul>
+
+<hr />
+
+<ul>
+<li>作者： Joel</li>
+<li>文章链接：</li>
+<li><a href="http://xmasuhai.xyz/posts/版权声明链接/">版权声明</a></li>
+<li>非自由转载-非商用-非衍生-保持署名</li>
+</ul>
+
+<hr />
+<ul class="pa0">
+  
+</ul>
+<div class="mt6">
+      
+      
+      </div>
+    </section>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://xmasuhai.github.io/" >
+    &copy; 2019 Joel in the house
+  </a>
+    <div>
+
+
+
+
+
+
+
+
+
+
+
+</div>
+  </div>
+</footer>
+
+    
+
+  <script src="/dist/js/app.3fc0f988d21662902933.js"></script>
+
+
+  </body>
+</html>
