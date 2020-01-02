@@ -7,7 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>Joel Xu</copyright>
-    <lastBuildDate>Wed, 01 Jan 2020 17:27:15 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 02 Jan 2020 20:54:55 +0800</lastBuildDate>
     
         <atom:link href="http://xmasuhai.xyz/index.xml" rel="self" type="application/rss+xml" />
     
@@ -31,6 +31,290 @@
 &lt;/ul&gt;
 
 &lt;p&gt;Learn more and contribute on &lt;a href=&#34;https://github.com/gohugoio&#34;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
+</description>
+      
+    </item>
+    
+    <item>
+      <title>【Git入门1】Git 本地仓库_常用操作流程1</title>
+      <link>http://xmasuhai.xyz/post/github/git%E5%85%A5%E9%97%A81git-%E6%9C%AC%E5%9C%B0%E4%BB%93%E5%BA%93_%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C%E6%B5%81%E7%A8%8B1/</link>
+      <pubDate>Thu, 02 Jan 2020 20:54:55 +0800</pubDate>
+      
+      <guid>http://xmasuhai.xyz/post/github/git%E5%85%A5%E9%97%A81git-%E6%9C%AC%E5%9C%B0%E4%BB%93%E5%BA%93_%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C%E6%B5%81%E7%A8%8B1/</guid>
+      
+        <description>
+
+&lt;h2 id=&#34;git-版本控制-常用操作流程&#34;&gt;git 版本控制 常用操作流程&lt;/h2&gt;
+
+&lt;h3 id=&#34;第0步-准备工作&#34;&gt;第0步 准备工作&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;cd ~/Desktop
+mkdir demo-1
+cd demo-1
+touch index.html
+code .
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;code . 表示用VSCode打开当前目录&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;第1步-git-init-会创建-git目录&#34;&gt;第1步 git init 会创建.git目录&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;用VSCode编辑index.html的第一个版本，随便写&lt;/li&gt;
+&lt;li&gt;用Cmder/iterm2（也可以使用VSCode自带的命令行）&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;在demo-1目录下初始化git本地仓库，运行:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;git init
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;第2步-查看下-git目录&#34;&gt;第2步 查看下 .git目录&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;ls -a
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;ls 不加参数，就不会显示以“.”开头的目录或文件&lt;/li&gt;
+&lt;li&gt;.git 目录用来容纳你不同版本的代码快照&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;第3步-告诉git哪些文件的变动不需提交的-git-add-gitignore&#34;&gt;第3步 告诉git哪些文件的变动不需提交的：git add ./.gitignore&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;新建.gitignore文件&lt;/li&gt;
+&lt;li&gt;将不需提交的文件名写入.gitignore，以回车分隔&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;.gitignore 描述哪些变动是不需要提交的
+常见的有：&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;node_modules
+.DS_Store
+.idea
+.vscode
+...
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;注明.gitignore之后，以后的提交变更只需&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;git add .
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;就行了&lt;/p&gt;
+
+&lt;h3 id=&#34;第4步-告诉git哪些文件的变动要提交的-git-add-xxx&#34;&gt;第4步 告诉git哪些文件的变动要提交的：git add xxx&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;git add是用来暂存提交的&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;git add index.html
+git add bg.css
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;可以不用管warning
+只要没error就是正常的
+VSCode里的状态：A表示已经添加，U表示未添加&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;git add 路径&lt;/li&gt;
+&lt;li&gt;选择哪些变动是需要提交的；&lt;/li&gt;
+&lt;li&gt;路径可以是 &lt;strong&gt;绝对/相对&lt;/strong&gt; 路径&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;strong&gt;绝对路径：&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul class=&#34;task-list&#34;&gt;
+&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; /c/Users/Fang/Desktop&lt;/label&gt;&lt;/li&gt;
+&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; /c/Users/Fang/Music&lt;/label&gt;&lt;/li&gt;
+&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; ~/Desktop&lt;/label&gt;&lt;/li&gt;
+&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; ~/Music&lt;/label&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;“/”表示根目录，绝对路径都是以“/” 开头的，“~ ”是 /c/Users/*** 的缩写，所以实际上 “~ ”也是以 / 开头的绝对路径&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;strong&gt;相对路径：&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul class=&#34;task-list&#34;&gt;
+&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt;   .&lt;/label&gt;&lt;/li&gt;
+&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt;  ./xxx&lt;/label&gt;&lt;/li&gt;
+&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt;  ./xxx/&lt;/label&gt;&lt;/li&gt;
+&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt;  xxx&lt;/label&gt;&lt;/li&gt;
+&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt;  xxx/1.txt&lt;/label&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;“.”表示当前目录，相对路径都是“相对于当前”来说的；“../”表示上一级目录，也是相对路径&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;第5步-查看当前状态&#34;&gt;第5步 查看当前状态&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;git status
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;第6步-提交&#34;&gt;第6步 提交&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;git commit -m 字符串&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;git commit -m &amp;quot;version 0.1&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;提交，并说明提交理由&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;注意空格与关闭英文引号&lt;/li&gt;
+&lt;li&gt;字符串里有空格，就要用引号包起来;没有，可不加
+实际上，git commit就是把当前提交的代码复制一份到.git里&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;更推荐：&lt;strong&gt;git commit -v&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;git commit -v
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;在VSCode里编辑COMMIT EDITMSG信息&lt;/li&gt;
+&lt;li&gt;帮我回顾，改了什么&lt;/li&gt;
+&lt;li&gt;请把提交理由写得更详细一点&lt;/li&gt;
+&lt;li&gt;v : &amp;ndash;verbose啰嗦&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;在COMMIT EDITMSG里查看本次提交所有的变更&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;git commit -v --amend
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;第7步-修改了文件第二版后&#34;&gt;第7步 修改了文件第二版后&lt;/h3&gt;
+
+&lt;p&gt;再重复4~6步，就ok了&lt;/p&gt;
+
+&lt;h3 id=&#34;第8步-查看文件版本&#34;&gt;第8步 查看文件版本&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;git log
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;第9步-多次提交&#34;&gt;第9步 多次提交&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;git add .
+git commit -v
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;每次重复这两个操作，注意.不要少写，注意空格&lt;/p&gt;
+
+&lt;h3 id=&#34;第10步-版本回滚-历史版本跳转&#34;&gt;第10步 版本回滚/历史版本跳转&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;git log
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;得到各历史版本 commit xxxxxx&amp;hellip;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;git reset --hard ******
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;******是提交号的前4~6位，只要不重复&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;确保已经把所有代码commit了&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;最好 git status 一下，看看是否 &lt;strong&gt;nothing to commit, working tree clean&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;因为git reset &amp;ndash;hard操作会把所有未提交的变动（代码/文件/目录）直接删除&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;第11步-查看所有操作的历史版本-git-reset没提交的除外&#34;&gt;第11步 查看所有操作的历史版本，git reset没提交的除外&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;git reflog
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;这就是git commit的意义&lt;/li&gt;
+&lt;li&gt;只要git commit 了，代码就不会丢&lt;/li&gt;
+&lt;li&gt;git log能上传到远程仓库，而git reflog只在本地仓库&lt;/li&gt;
+&lt;li&gt;git log 是当前时间线的提交&lt;/li&gt;
+&lt;li&gt;git reflog 是显示所有提交(commit)变动&lt;/li&gt;
+&lt;li&gt;再用git reset &amp;ndash;hard回去就行了，如果有必要的话&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;总结&#34;&gt;总结&lt;/h3&gt;
+
+&lt;p&gt;git status几个状态&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;a. 忽略（.gitignore）&lt;/li&gt;
+&lt;li&gt;b. 暂存待提交（git add）&lt;/li&gt;
+&lt;li&gt;c. 已提交（git commit）&lt;/li&gt;
+&lt;li&gt;git reset &amp;ndash;hard时，除a b c外 其他状态会被清空&lt;/li&gt;
+&lt;li&gt;git文件状态演变&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;ol&gt;
+&lt;li&gt;git add 选择要提交的版本&lt;/li&gt;
+&lt;li&gt;.gitignore文件中描述不提交的内容&lt;/li&gt;
+&lt;li&gt;git commit -v 用来提交&lt;/li&gt;
+&lt;li&gt;git log用来查看历史，只有当前提交的过程，不包括回滚的提交&lt;/li&gt;
+&lt;li&gt;git reset &amp;ndash;hard *******用来切换版本&lt;/li&gt;
+&lt;li&gt;git reflog用来查看所有提交历史&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;!-- Article End --&gt;
+
+&lt;hr /&gt;
+
+&lt;!-- test --&gt;
+
+&lt;div style=&#34;text-align:center;&#34;&gt;·未完待续·&lt;/div&gt;
+
+&lt;!-- ok --&gt;
+
+&lt;hr /&gt;
+
+&lt;h4 id=&#34;参考文章&#34;&gt;参考文章&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://static.xiedaimala.com/xdml/file/3ac7c224-c23d-491f-84b5-4fabfbeab9b8/2019-8-8-10-23-55.pdf&#34;&gt;git 本地仓库.pdf&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;相关文章&#34;&gt;相关文章&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;无&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;ul&gt;
+&lt;li&gt;作者： Joel&lt;/li&gt;
+&lt;li&gt;文章链接：&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://xmasuhai.xyz/posts/版权声明链接/&#34;&gt;版权声明&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;非自由转载-非商用-非衍生-保持署名&lt;/li&gt;
+&lt;li&gt;&lt;a style=&#39;color:#DB2D5D;&#39; href=&#39;https://xiedaimala.com/bbs/users/8c266e6f-55a2-4348-a180-17cb8cdb2c46#/?page=1&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;河&lt;/a&gt;
+&lt;a style=&#39;color:#006CFF;&#39; href=&#39;https://juejin.im/user/59abfad26fb9a0248f4aa221&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;掘&lt;/a&gt;
+&lt;a style=&#39;color:#009A61;&#39; href=&#39;https://segmentfault.com/u/joel_59b17eb9d2155&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;思&lt;/a&gt;
+&lt;a style=&#39;color:#0084FF;&#39; href=&#39;https://www.zhihu.com/people/xue-shou-41/posts&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;知&lt;/a&gt;
+&lt;a style=&#39;color:#EA6F5A;&#39; href=&#39;https://www.jianshu.com/u/079916729823&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;简&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
 </description>
       
     </item>
@@ -191,7 +475,7 @@ git config --global core.autocrlf input
 &lt;h4 id=&#34;参考文章&#34;&gt;参考文章&lt;/h4&gt;
 
 &lt;ul&gt;
-&lt;li&gt;无&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://static.xiedaimala.com/xdml/file/3ac7c224-c23d-491f-84b5-4fabfbeab9b8/2019-8-8-10-23-55.pdf&#34;&gt;git 本地仓库.pdf&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h4 id=&#34;相关文章&#34;&gt;相关文章&lt;/h4&gt;
@@ -4973,80 +5257,6 @@ resources/*
 &lt;a style=&#39;color:#0084FF;&#39; href=&#39;https://www.zhihu.com/people/xue-shou-41/posts&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;知&lt;/a&gt;
 &lt;a style=&#39;color:#EA6F5A;&#39; href=&#39;https://www.jianshu.com/u/079916729823&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;简&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-
-&lt;hr /&gt;
-</description>
-      
-    </item>
-    
-    <item>
-      <title>README</title>
-      <link>http://xmasuhai.xyz/post/readme/</link>
-      <pubDate>Wed, 11 Dec 2019 23:38:06 +0800</pubDate>
-      
-      <guid>http://xmasuhai.xyz/post/readme/</guid>
-      
-        <description>
-
-&lt;h1 id=&#34;my-blog-joel-in-the-house-http-xmasuhai-xyz&#34;&gt;My Blog：&lt;a href=&#34;http://xmasuhai.xyz&#34;&gt;Joel in the house&lt;/a&gt;&lt;/h1&gt;
-
-&lt;p&gt;这是 Joel 的个人博客，地址：&lt;a href=&#34;http://xmasuhai.xyz&#34;&gt;http://xmasuhai.xyz&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;使用 Markdown 书写，用 Hugo 生成静态网页，部署在 xmasuhai.github.io 上。&lt;/p&gt;
-
-&lt;p&gt;主题使用的是 &lt;a href=&#34;https://themes.gohugo.io/gohugo-theme-ananke/&#34;&gt;ananke&lt;/a&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;版权声明&#34;&gt;版权声明&lt;/h2&gt;
-
-&lt;h2 id=&#34;署名-非商业性使用-相同方式共享-4-0-国际-cc-by-nc-sa-4-0-https-creativecommons-org-licenses-by-nc-4-0-deed-zh&#34;&gt;&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/deed.zh&#34;&gt;署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0)&lt;/a&gt;&lt;/h2&gt;
-
-&lt;p&gt;这是一份普通人可以理解的许可协议概要 (但不是替代) 。&lt;/p&gt;
-
-&lt;h3 id=&#34;您可以自由地&#34;&gt;您可以自由地&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;共享&lt;/strong&gt; — 在任何媒介以任何形式复制、发行本作品&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;演绎&lt;/strong&gt; — 修改、转换或以本作品为基础进行创作&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;只要你遵守许可协议条款，许可人就无法收回你的这些权利。&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&#34;惟须遵守下列条件&#34;&gt;惟须遵守下列条件&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;署名&lt;/strong&gt; — 您必须给出&lt;strong&gt;适当的署名&lt;/strong&gt;，提供指向本许可协议的链接，同时&lt;strong&gt;标明是否（对原始作品）作了修改&lt;/strong&gt;。您可以用任何合理的方式来署名，但是不得以任何方式暗示许可人为您或您的使用背书。&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;非商业性使用&lt;/strong&gt; — 您不得将本作品用于&lt;strong&gt;商业目的&lt;/strong&gt;。&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;相同方式共享&lt;/strong&gt; — 如果您再混合、转换或者基于本作品进行创作，您必须基于与原先许可协议相同的许可协议 分发您贡献的作品。&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;没有附加限制&lt;/strong&gt; — 您不得适用法律术语或者 技术措施 从而限制其他人做许可协议允许的事情。&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&#34;声明&#34;&gt;声明&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;您不必因为公共领域的作品要素而遵守许可协议，或者您的使用被可适用的 例外或限制所允许。&lt;/li&gt;
-&lt;li&gt;不提供担保。许可协议可能不会给与您意图使用的所必须的所有许可。例如，其他权利比如形象权、隐私权或人格权可能限制您如何使用作品。&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;博客原作者：Joel&lt;/li&gt;
-&lt;li&gt;博客采用&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/deed.zh&#34;&gt;知识共享署名-非商业性使用 4.0 国际许可协议&lt;/a&gt;进行许可&lt;/li&gt;
-&lt;li&gt;原始资料（包括但不限于视频、图片、代码、PDF等）部分来源：&lt;a href=&#34;https://jirengu.com&#34;&gt;2020版前端体系课【方方】&lt;/a&gt;  饥人谷/写代码啦/河码&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://jirengu.com&#34;&gt;原始资料&lt;/a&gt;内容版权归属本人及杭州饥人谷教育科技有限公司（简称：饥人谷）所有。任何媒体、网站或个人未经授权不得转载、链接和转贴，或以其他方式复制、发布和发表。&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://jirengu.com&#34;&gt;原始资料&lt;/a&gt;商业转载请联系作者获得授权，并注明出处。对于违反者，饥人谷将依法追究责任。&lt;/li&gt;
-&lt;li&gt;如果内容中有侵犯到您的版权，请联系&lt;a href=&#34;&amp;amp;#109;&amp;amp;#97;&amp;amp;#105;&amp;amp;#108;&amp;amp;#116;&amp;amp;#111;&amp;amp;#58;&amp;amp;#120;&amp;amp;#109;&amp;amp;#97;&amp;amp;#115;&amp;amp;#117;&amp;amp;#104;&amp;amp;#97;&amp;amp;#105;&amp;amp;#64;&amp;amp;#49;&amp;amp;#54;&amp;amp;#51;&amp;amp;#46;&amp;amp;#99;&amp;amp;#111;&amp;amp;#109;?subject=版权申诉&amp;amp;cc=jubao@12377.cn&#34;&gt;我的邮箱&lt;/a&gt;，经核实，会立即删除&lt;/li&gt;
-&lt;li&gt;博客仅供参考，
-如发现内容错误，请到&lt;a href=&#34;&amp;amp;#109;&amp;amp;#97;&amp;amp;#105;&amp;amp;#108;&amp;amp;#116;&amp;amp;#111;&amp;amp;#58;&amp;amp;#120;&amp;amp;#109;&amp;amp;#97;&amp;amp;#115;&amp;amp;#117;&amp;amp;#104;&amp;amp;#97;&amp;amp;#105;&amp;amp;#64;&amp;amp;#49;&amp;amp;#54;&amp;amp;#51;&amp;amp;#46;&amp;amp;#99;&amp;amp;#111;&amp;amp;#109;?subject=内容错误指正&amp;amp;cc=jubao@12377.cn&#34;&gt;这里&lt;/a&gt;， 不吝指正，对于参考此内容所造成损失概不负责😜&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;
 
 &lt;hr /&gt;
 </description>
