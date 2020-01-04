@@ -7,7 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>Joel Xu</copyright>
-    <lastBuildDate>Fri, 03 Jan 2020 22:48:00 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 04 Jan 2020 21:44:38 +0800</lastBuildDate>
     
         <atom:link href="http://xmasuhai.xyz/index.xml" rel="self" type="application/rss+xml" />
     
@@ -31,6 +31,217 @@
 &lt;/ul&gt;
 
 &lt;p&gt;Learn more and contribute on &lt;a href=&#34;https://github.com/gohugoio&#34;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
+</description>
+      
+    </item>
+    
+    <item>
+      <title>【Git入门5】Git远程仓库   GitHub常用操作流程1_配置</title>
+      <link>http://xmasuhai.xyz/post/github/git%E5%85%A5%E9%97%A85git%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93-github%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C%E6%B5%81%E7%A8%8B1_%E9%85%8D%E7%BD%AE/</link>
+      <pubDate>Sat, 04 Jan 2020 21:44:38 +0800</pubDate>
+      
+      <guid>http://xmasuhai.xyz/post/github/git%E5%85%A5%E9%97%A85git%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93-github%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C%E6%B5%81%E7%A8%8B1_%E9%85%8D%E7%BD%AE/</guid>
+      
+        <description>
+
+&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;本地仓库和远程仓库是完全隔开的&lt;/li&gt;
+&lt;li&gt;代码存储在云端GitHub&lt;/li&gt;
+&lt;li&gt;SSH key验证身份 使用场景:可以避免我们重复的输入密码，提高开发效率；访问远程服务&lt;/li&gt;
+&lt;li&gt;如果SSH key私钥(即.ssh文件夹中的id_rsa文件)被第三方获取，那么他将可以您的身份来操作 Git 仓库，这跟密码被盗一样严重&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;git远程仓库github-常用操作流程&#34;&gt;git远程仓库GitHub 常用操作流程&lt;/h2&gt;
+
+&lt;h3 id=&#34;0-前提&#34;&gt;0. 前提&lt;/h3&gt;
+
+&lt;ol&gt;
+&lt;li&gt;在GitHub上有一个账号&lt;/li&gt;
+&lt;li&gt;git仓库在电脑上&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;上传代码：私钥加密&lt;/li&gt;
+&lt;li&gt;GitHub用账号留下的公钥解密&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;1-生成ssh-key&#34;&gt;1. 生成ssh key&lt;/h3&gt;
+
+&lt;h4 id=&#34;第1步-运行命令&#34;&gt;第1步 运行命令&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;ssh-keygen -t rsa -b 4096 -C &amp;quot;your_email@example.com&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;第2步-三次回车-直到没有提示-然后&#34;&gt;第2步 三次回车，直到没有提示；然后&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;cat ~/.ssh/id_rsa_pub
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;第3步-复制内容-去你github主页-设置页面-ssh-key-标题填能表示清哪台电脑就行-填入公钥&#34;&gt;第3步 复制内容，去你GitHub主页&amp;gt;设置页面&amp;gt;SSH key&amp;hellip;，标题填能表示清哪台电脑就行，填入公钥&lt;/h4&gt;
+
+&lt;p&gt;ok&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&#34;https://help.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent&#34;&gt;GitHub_SSH key帮助文档&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;2-测试是否配置成功&#34;&gt;2. 测试是否配置成功&lt;/h3&gt;
+
+&lt;h4 id=&#34;第1步-运行-命令&#34;&gt;第1步 运行 命令&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;ssh -T git@github.com
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;第2步-确认github给的公钥&#34;&gt;第2步 确认GitHub给的公钥&lt;/h4&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;不可敲回车，输入yes即可&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h4 id=&#34;第3步&#34;&gt;第3步&lt;/h4&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;看到Hi xxx! You&amp;rsquo;ve successfully authenticated&amp;hellip;说明添加成功&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;3-注意&#34;&gt;3.注意&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;GitHub，别用HTTPS协议，每次要输密码不方便&lt;/li&gt;
+&lt;li&gt;使用SSH key&lt;/li&gt;
+&lt;li&gt;电脑-私钥 GitHub账号-公钥&lt;/li&gt;
+&lt;li&gt;上传代码用私钥加密，github用公钥解密&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;如果手贱已经生成HTTPS链接了，不方便用&lt;code&gt;git remote add ...&lt;/code&gt;了&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;可以设置：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;git remote set-url origin git@github.com:yourName/***.git
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;来修改之前的origin URL，是不是很鸡贼&lt;/p&gt;
+
+&lt;h3 id=&#34;4-查看生成的ssh-key密钥文件目录-备份&#34;&gt;4. 查看生成的SSH key密钥文件目录，备份&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;cd ~/.ssh
+ll
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$ ls -al ~/.ssh
+# Lists the files in your .ssh directory, if they exist
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;cp id_rsa id_rsa_bk
+cp id_rsa.pub id_rsa_bk.pub
+ll
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;总结&#34;&gt;总结&lt;/h3&gt;
+
+&lt;h4 id=&#34;1-需要你复制的代码&#34;&gt;1. 需要你复制的代码&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;ssh-keygen -t rsa -b 4096 -C 你的邮箱
+cat ~/.ssh/id_rsa.pub # 得到公钥内容
+ssh -T git@github.com
+git remote add origin git@xxxxxxx
+git push -u origin master
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;2-高级操作&#34;&gt;2. 高级操作&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;touch ~/.bashrc
+echo &#39;alias ga=&amp;quot;git add&amp;quot;&#39;&amp;gt;&amp;gt; ~/.bashrc
+echo &#39;alias gc=&amp;quot;git commit -v&amp;quot;&#39;&amp;gt;&amp;gt; ~/.bashrc
+echo &#39;alias gl=&amp;quot;git pull&amp;quot;&#39;&amp;gt;&amp;gt; ~/.bashrc
+echo &#39;alias gp=&amp;quot;git push&amp;quot;&#39;&amp;gt;&amp;gt; ~/.bashrc
+echo &#39;alias gco=&amp;quot;git checkout&amp;quot;&#39;&amp;gt;&amp;gt; ~/.bashrc
+echo &#39;alias gst=&amp;quot;git status -sb&amp;quot;&#39;&amp;gt;&amp;gt; ~/.bashrc
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;3-最后-code-bashrc-在文件最后加上&#34;&gt;3. 最后 code ~/.bashrc 在文件最后加上&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;alias glog=&amp;quot;git log --graph --pretty=format:&#39;%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)&amp;lt;%an&amp;gt;%Creset&#39; --abbrev-commit -- | less&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;我的配置：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;alias Glg=&amp;quot;git log --color --graph --date=relative --pretty=format:&#39;%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)&amp;lt;%an&amp;gt;%Creset&#39; --abbrev-commit&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;提问&#34;&gt;提问&lt;/h3&gt;
+
+&lt;p&gt;有没有一种可以实现一键ga+gv &amp;ldquo;xxx&amp;rdquo;+gl+gp+gst的Combo技？&lt;/p&gt;
+
+&lt;p&gt;重复添加SSH key会如何？
+&amp;gt; 会使你之前添加的key失效&lt;/p&gt;
+
+&lt;h3 id=&#34;一些链接&#34;&gt;一些链接&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://juejin.im/post/5de8d849e51d455808332166&#34;&gt;高频使用的 Git 命令&lt;/a&gt;：
+不是入门文档，官方文档肯定比我全面，这里是结合实际业务场景输出。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.jeepxie.net/article/781036.html&#34;&gt;如果你看到 “access denied”&lt;/a&gt;：表示拒绝访问，那么你就需要使用 https 去访问，而不是 SSH 。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://blog.csdn.net/kongkongkkk/article/details/78662715&#34;&gt;GitHub添加SSH key时的问题&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://juejin.im/post/5c063c4ee51d451ded182458&#34;&gt;告诉你 ssh 的常见使用场景和配置&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://segmentfault.com/a/1190000005607713&#34;&gt;git:如何管理本机的多个ssh密钥&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://www.cnblogs.com/iforever/p/7513172.html&#34;&gt;ssh keys自动化管理工具&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/Coding/coding-docs/blob/master/doc/git/ssh-key.markdown&#34;&gt;在 Coding.net 添加公钥&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://help.github.com/en/github/authenticating-to-github/checking-for-existing-ssh-keys&#34;&gt;Checking for existing SSH keys&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://help.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent&#34;&gt;Generating a new SSH key and adding it to the ssh-agent&lt;/a&gt;&lt;/p&gt;
+
+&lt;!-- Article End --&gt;
+
+&lt;hr /&gt;
+
+&lt;!-- test --&gt;
+
+&lt;div style=&#34;text-align:center;&#34;&gt;·未完待续·&lt;/div&gt;
+
+&lt;!-- ok --&gt;
+
+&lt;hr /&gt;
+
+&lt;h4 id=&#34;参考文章&#34;&gt;参考文章&lt;/h4&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://static.xiedaimala.com/xdml/file/3ac7c224-c23d-491f-84b5-4fabfbeab9b8/2019-8-10-15-17-35.pdf&#34;&gt;git 远程仓库.pdf&lt;/a&gt;&lt;/p&gt;
+
+&lt;h4 id=&#34;相关文章&#34;&gt;相关文章&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;无&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;ul&gt;
+&lt;li&gt;作者： Joel&lt;/li&gt;
+&lt;li&gt;文章链接：&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://xmasuhai.xyz/posts/版权声明链接/&#34;&gt;版权声明&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;非自由转载-非商用-非衍生-保持署名&lt;/li&gt;
+&lt;li&gt;&lt;a style=&#39;color:#DB2D5D;&#39; href=&#39;https://xiedaimala.com/bbs/users/8c266e6f-55a2-4348-a180-17cb8cdb2c46#/?page=1&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;河&lt;/a&gt;
+&lt;a style=&#39;color:#006CFF;&#39; href=&#39;https://juejin.im/user/59abfad26fb9a0248f4aa221&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;掘&lt;/a&gt;
+&lt;a style=&#39;color:#009A61;&#39; href=&#39;https://segmentfault.com/u/joel_59b17eb9d2155&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;思&lt;/a&gt;
+&lt;a style=&#39;color:#0084FF;&#39; href=&#39;https://www.zhihu.com/people/xue-shou-41/posts&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;知&lt;/a&gt;
+&lt;a style=&#39;color:#EA6F5A;&#39; href=&#39;https://www.jianshu.com/u/079916729823&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;简&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
 </description>
       
     </item>
@@ -5310,100 +5521,6 @@ resources/*
 &lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://xiedaimala.com/tasks/4750e955-a081-480b-9a77-c109e75eba23/video_tutorials/d9eb1c02-d2fc-4e61-8f5d-fc79a3147b29&#34;&gt;Hugo 搭建个人博客&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
 
 &lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://xiedaimala.com/courses/9dbe920a-0773-41eb-bb70-c9899c581b64#/common&#34;&gt;HTML &amp;amp; CSS 入门&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&#34;相关文章&#34;&gt;相关文章&lt;/h4&gt;
-
-&lt;ul&gt;
-&lt;li&gt;无&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-
-&lt;ul&gt;
-&lt;li&gt;作者： Joel&lt;/li&gt;
-&lt;li&gt;文章链接：&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://xmasuhai.xyz/posts/版权声明链接/&#34;&gt;版权声明&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;非自由转载-非商用-非衍生-保持署名&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-</description>
-      
-    </item>
-    
-    <item>
-      <title>养成习惯</title>
-      <link>http://xmasuhai.xyz/post/firsttips/%E5%85%BB%E6%88%90%E4%B9%A0%E6%83%AF/</link>
-      <pubDate>Wed, 11 Dec 2019 23:41:39 +0800</pubDate>
-      
-      <guid>http://xmasuhai.xyz/post/firsttips/%E5%85%BB%E6%88%90%E4%B9%A0%E6%83%AF/</guid>
-      
-        <description>
-
-&lt;h3 id=&#34;养成习惯&#34;&gt;养成习惯&lt;/h3&gt;
-
-&lt;ol&gt;
-&lt;li&gt;用词典（欧陆/有道/Mac）（Win/Mac/Android/&amp;hellip;）&lt;/li&gt;
-&lt;li&gt;严谨（非字符/字符串&amp;rdquo;）&lt;/li&gt;
-&lt;li&gt;记笔记&lt;/li&gt;
-&lt;li&gt;像素眼（1/l 0/O ;/；）&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;中归中，英归英，标点符号和语言标准统一，不混用&lt;/li&gt;
-&lt;li&gt;翻译插件将英文字符转成中文字符&amp;mdash;显示原始网页&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;h3 id=&#34;关于记忆&#34;&gt;关于记忆&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;别嘲笑金鱼7s记忆了&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;普通人的记忆极限 7件事&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;ul class=&#34;task-list&#34;&gt;
-&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; 古人的结绳记忆法&amp;ndash;&amp;gt;拉清单&lt;/label&gt;&lt;/li&gt;
-&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; 回顾&lt;/label&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&#34;程序员&#34;&gt;程序员&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;程序员下载软件的正确姿势是&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;搜索官网，在官网下载,其他路径可能下载到被投毒的安装包&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Git Bash 和 git 的关系是&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;完全不一样的东西，一个是 bash，一个是 git，两种不同的软件&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h3 id=&#34;避免低效&#34;&gt;避免低效&lt;/h3&gt;
-
-&lt;ol&gt;
-&lt;li&gt;单元测试&lt;/li&gt;
-&lt;li&gt;代码review&lt;/li&gt;
-&lt;li&gt;代码重复率检查&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;·完·&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h4 id=&#34;参考文章&#34;&gt;参考文章&lt;/h4&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://static.xiedaimala.com/xdml/file/3ac7c224-c23d-491f-84b5-4fabfbeab9b8/2019-8-4-10-37-14.pdf&#34;&gt;第一课.pdf/Pg8&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h4 id=&#34;相关文章&#34;&gt;相关文章&lt;/h4&gt;
