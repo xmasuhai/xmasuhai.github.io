@@ -7,7 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>Joel Xu</copyright>
-    <lastBuildDate>Sat, 04 Jan 2020 23:02:28 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 06 Jan 2020 21:50:47 +0800</lastBuildDate>
     
         <atom:link href="http://xmasuhai.xyz/index.xml" rel="self" type="application/rss+xml" />
     
@@ -31,6 +31,247 @@
 &lt;/ul&gt;
 
 &lt;p&gt;Learn more and contribute on &lt;a href=&#34;https://github.com/gohugoio&#34;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
+</description>
+      
+    </item>
+    
+    <item>
+      <title>【Git入门6】Git远程仓库   GitHub常用操作流程2_上传</title>
+      <link>http://xmasuhai.xyz/post/github/git%E5%85%A5%E9%97%A86git%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93-github%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C%E6%B5%81%E7%A8%8B2_%E4%B8%8A%E4%BC%A0/</link>
+      <pubDate>Mon, 06 Jan 2020 21:50:47 +0800</pubDate>
+      
+      <guid>http://xmasuhai.xyz/post/github/git%E5%85%A5%E9%97%A86git%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93-github%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C%E6%B5%81%E7%A8%8B2_%E4%B8%8A%E4%BC%A0/</guid>
+      
+        <description>
+
+&lt;blockquote&gt;
+&lt;p&gt;设置了公钥，就能上传和下载了&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;通过 &lt;code&gt;git pull&lt;/code&gt; &amp;amp;&amp;amp; &lt;code&gt;git push&lt;/code&gt; &amp;amp;&amp;amp; &lt;code&gt;git clone&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;h4 id=&#34;1-两行命令&#34;&gt;1. 两行命令&lt;/h4&gt;
+
+&lt;p&gt;第0步 准备工作&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;新建GitHub Repo(Repositories),任意Repository name&lt;/li&gt;
+&lt;li&gt;在快速设置中，默认SSH(勿选HTTPS，坑，每次要输密码，不方便，骂死你)&lt;/li&gt;
+&lt;li&gt;复制页面里的代码（关掉翻译）
+「复制SSH 地址（注意是以git开头的而不是HTTPS地址）」&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;已有本地仓库&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;git remote add origin git@github.com:yourName/yourRepoName.git
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;告诉本地仓库，对应到远程仓库的地址，仓库名是origin&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;第1步 第一次上传：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;git push -u origin master
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;-u upstream&lt;/code&gt; 第一次上传时，记下本次匹配，推到origin仓库的master分支&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-u origin master&lt;/code&gt;只有第一次需要写，以后直接&lt;code&gt;git push&lt;/code&gt;就好了&lt;/li&gt;
+&lt;li&gt;master（本地）-&amp;gt;master（GitHub）&lt;/li&gt;
+&lt;li&gt;刷新远程仓库页面就可以看到上传的内容了&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;没有本地仓库，完全新建时&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;echo &amp;quot;# RepoName&amp;quot; &amp;gt;&amp;gt; README.md
+git init
+git add README.md
+git commit -m &amp;quot;first commit&amp;quot;
+git remote add origin git@github.com:yourName/yourRepo Name.git
+git push -u origin master
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;git push&lt;/code&gt; 上传的是本地仓库提交过的一个分支，并不是当前看到的代码&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;可以提交多个分支：&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;git branch x
+git checkout x
+## ... change sth ...
+git add .
+git commit -am &amp;quot;log&amp;quot;
+git push -u origin x
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;注意要加-u，因为是第一次上传此分支* [new branch]&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;x（本地）-&amp;gt;x（GitHub）&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;类似我要查看分支:&lt;code&gt;git branch&lt;/code&gt;，我要查看远程仓库：&lt;code&gt;git remote&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;小结&#34;&gt;小结&lt;/h3&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;关联你新建的远程仓库&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;git remote add origin git@xxxx
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;ul class=&#34;task-list&#34;&gt;
+&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; 在本地添加远程仓库的地址&lt;/label&gt;&lt;/li&gt;
+&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; origin是远程仓库的默认名字，可以换，不建议换&lt;/label&gt;&lt;/li&gt;
+&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; 勿使用&lt;code&gt;https://&lt;/code&gt;地址，每次要输密码烦&lt;/label&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;初始提交到远程仓库&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;git push -u origin master
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;ul class=&#34;task-list&#34;&gt;
+&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; 推送本地master分支到远程origin的master分支&lt;/label&gt;&lt;/li&gt;
+&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; &lt;strong&gt;如果由于手贱，在创建远程仓库时加了README.md等原因，导致远程仓和你本地仓文件不一致，提示你应该git pull&amp;hellip;，就git pull一下&lt;/strong&gt;&lt;/label&gt;&lt;/li&gt;
+&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; &lt;code&gt;git pull&lt;/code&gt;是先把远程分支合并到本地对应的分支&lt;/label&gt;&lt;/li&gt;
+&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; 如果远程分支没有（被其他人）更新过，才可以省略&lt;code&gt;git pull&lt;/code&gt;&lt;/label&gt;&lt;/li&gt;
+&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; &lt;code&gt;-u origin master&lt;/code&gt; 的意思是设置上游分支&lt;/label&gt;&lt;/li&gt;
+&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; 之后就可以不用设置直接&lt;code&gt;git pull&lt;/code&gt;;&lt;code&gt;git push&lt;/code&gt;&lt;/label&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;eg.
+&lt;strong&gt;比如有个repo2仓库&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;git remote add repo2 gti@github.com:yourName/git-demo-02.git
+git push -u repo2 master
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;不可直接&lt;code&gt;git pull&lt;/code&gt;，默认去origin仓库;被![reject]，这时需要将repo2仓库的master分支复制到当前的master 分支：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;git checkout master
+git pull repo2 master:master
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;master -&amp;gt; repo2/master&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;git push -u repo2 master
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;被拒绝合并，因为没有关联，可以谨慎使用强制合并：&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;git push -u repo2 master -f
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;小心同事打你&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ol&gt;
+&lt;li&gt;如何上传其他分支&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;[x] 方法一：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;git push origin x:x
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;git push&lt;/code&gt; 仓库名 分支名(源头：本地x):分支名（目标：远程x）&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;[x] 方法二：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;git checkout x
+git push -u origin x
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;git push&lt;/code&gt; 仓库名 分支名&lt;/li&gt;
+&lt;li&gt;GitHub远程仓库是本地仓库（分支）的一个拷贝而已（备份.git/）&lt;/li&gt;
+&lt;li&gt;本地仓库在硬盘里的位置（相对路径）不影响远程仓库&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;远程的Repo(Repositories)相当于在GitHub上的一个文件夹，git clone 下来的文件夹名就是Repo的名称&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;类似我要查看分支:&lt;code&gt;git branch&lt;/code&gt;，我要查看远程仓库：&lt;code&gt;git remote&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;区分origin和远程仓库的名称：&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://www.zhihu.com/question/27712995&#34;&gt;GitHub 里面的 origin 到底代表啥意思&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;hr /&gt;
+
+&lt;!-- Article End --&gt;
+
+&lt;hr /&gt;
+
+&lt;!-- test --&gt;
+
+&lt;div style=&#34;text-align:center;&#34;&gt;·未完待续·&lt;/div&gt;
+
+&lt;!-- ok --&gt;
+
+&lt;hr /&gt;
+
+&lt;h4 id=&#34;参考文章&#34;&gt;参考文章&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://stackoom.com/question/2cxSb/git命令中-origin-和-remote-有什么区别-重复&#34;&gt;git命令中&amp;rsquo;origin&amp;rsquo;和&amp;rsquo;remote&amp;rsquo;有什么区别？&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://www.cnblogs.com/xuyaowen/p/git-origin.html&#34;&gt;git 的 origin 的含义&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://static.xiedaimala.com/xdml/file/3ac7c224-c23d-491f-84b5-4fabfbeab9b8/2019-8-10-15-17-35.pdf&#34;&gt;git 远程仓库.pdf&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;相关文章&#34;&gt;相关文章&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;无&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;ul&gt;
+&lt;li&gt;作者： Joel&lt;/li&gt;
+&lt;li&gt;文章链接：&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://xmasuhai.xyz/posts/版权声明链接/&#34;&gt;版权声明&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;非自由转载-非商用-非衍生-保持署名&lt;/li&gt;
+&lt;li&gt;&lt;a style=&#39;color:#DB2D5D;&#39; href=&#39;https://xiedaimala.com/bbs/users/8c266e6f-55a2-4348-a180-17cb8cdb2c46#/?page=1&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;河&lt;/a&gt;
+&lt;a style=&#39;color:#006CFF;&#39; href=&#39;https://juejin.im/user/59abfad26fb9a0248f4aa221&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;掘&lt;/a&gt;
+&lt;a style=&#39;color:#009A61;&#39; href=&#39;https://segmentfault.com/u/joel_59b17eb9d2155&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;思&lt;/a&gt;
+&lt;a style=&#39;color:#0084FF;&#39; href=&#39;https://www.zhihu.com/people/xue-shou-41/posts&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;知&lt;/a&gt;
+&lt;a style=&#39;color:#EA6F5A;&#39; href=&#39;https://www.jianshu.com/u/079916729823&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;简&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
 </description>
       
     </item>
@@ -205,7 +446,8 @@ div.menu-bar li:hover &amp;gt; ul {
 &lt;li&gt;&lt;code&gt;@charset&lt;/code&gt;必须放在第一行，解析中文字符&lt;/li&gt;
 &lt;li&gt;前两个@语法必须以分号&lt;code&gt;;&lt;/code&gt;结尾&lt;/li&gt;
 &lt;li&gt;@media 单独学&lt;/li&gt;
-&lt;li&gt;charset字面是字符集的意思，UTF-8是字符编码 encodeing，历史遗留问题，encodeing ∈ charset&lt;/li&gt;
+&lt;li&gt;charset字面是字符集的意思，UTF-8是字符编码 encodeing，历史遗留问题&lt;/li&gt;
+&lt;li&gt;encodeing ∈ charset&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;blockquote&gt;
@@ -251,6 +493,7 @@ div.menu-bar li:hover &amp;gt; ul {
 &lt;li&gt;逐行移动&lt;code&gt;border:1px solid red;&lt;/code&gt;看选择器是否生效；属性匹配到哪个属性了；具体哪个属性失效；&lt;/li&gt;
 &lt;li&gt;加到VScode 等IDE的snnipets里，每次省个几秒：&lt;code&gt;border大法好，用border得永生，现已加入snippets豪华套餐&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;好像和&lt;a href=&#34;https://docs.emmet.io/cheat-sheet/&#34;&gt;Emmet&lt;/a&gt;想到一块去了：&lt;code&gt;emmmet bd&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;其实如果学了SCSS的&lt;code&gt;@mixin&lt;/code&gt;的话&amp;hellip;&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h5 id=&#34;注意&#34;&gt;注意&lt;/h5&gt;
@@ -365,6 +608,12 @@ div.menu-bar li:hover &amp;gt; ul {
 
 &lt;blockquote&gt;
 &lt;p&gt;抄-运行-改&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;快速上手scss-https-xiedaimala-com-tasks-42e05a0e-9233-4097-addd-43e61244be06-video-tutorials-1a2a0d76-c4ea-4f50-9ca9-a77c92db39dc&#34;&gt;&lt;a href=&#34;https://xiedaimala.com/tasks/42e05a0e-9233-4097-addd-43e61244be06/video_tutorials/1a2a0d76-c4ea-4f50-9ca9-a77c92db39dc&#34;&gt;快速上手SCSS&lt;/a&gt;&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;直构所有CSS demo&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;!-- Article End --&gt;
@@ -5350,401 +5599,6 @@ eg. :nth-child(n)&lt;/li&gt;
 &lt;h3 id=&#34;问题&#34;&gt;问题&lt;/h3&gt;
 
 &lt;p&gt;？元素 爆炸图实现？：原型图爆炸图拆解 八卦图：几个圆形的重叠 图层&lt;/p&gt;
-
-&lt;!-- Article End --&gt;
-
-&lt;hr /&gt;
-
-&lt;!-- test --&gt;
-
-&lt;div style=&#34;text-align:center;&#34;&gt;·未完待续·&lt;/div&gt;
-
-&lt;!-- ok --&gt;
-
-&lt;hr /&gt;
-
-&lt;h4 id=&#34;参考文章&#34;&gt;参考文章&lt;/h4&gt;
-
-&lt;ul&gt;
-&lt;li&gt;无&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&#34;相关文章&#34;&gt;相关文章&lt;/h4&gt;
-
-&lt;ul&gt;
-&lt;li&gt;无&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-
-&lt;ul&gt;
-&lt;li&gt;作者： Joel&lt;/li&gt;
-&lt;li&gt;文章链接：&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://xmasuhai.xyz/posts/版权声明链接/&#34;&gt;版权声明&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;非自由转载-非商用-非衍生-保持署名&lt;/li&gt;
-&lt;li&gt;&lt;a style=&#39;color:#DB2D5D;&#39; href=&#39;https://xiedaimala.com/bbs/users/8c266e6f-55a2-4348-a180-17cb8cdb2c46#/?page=1&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;河&lt;/a&gt;
-&lt;a style=&#39;color:#006CFF;&#39; href=&#39;https://juejin.im/user/59abfad26fb9a0248f4aa221&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;掘&lt;/a&gt;
-&lt;a style=&#39;color:#009A61;&#39; href=&#39;https://segmentfault.com/u/joel_59b17eb9d2155&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;思&lt;/a&gt;
-&lt;a style=&#39;color:#0084FF;&#39; href=&#39;https://www.zhihu.com/people/xue-shou-41/posts&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;知&lt;/a&gt;
-&lt;a style=&#39;color:#EA6F5A;&#39; href=&#39;https://www.jianshu.com/u/079916729823&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;简&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-</description>
-      
-    </item>
-    
-    <item>
-      <title>【Hugo入门1】个人博客搭建_常用操作流程</title>
-      <link>http://xmasuhai.xyz/post/hugo/hugo%E5%85%A5%E9%97%A81%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA_%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C%E6%B5%81%E7%A8%8B/</link>
-      <pubDate>Thu, 12 Dec 2019 00:51:16 +0800</pubDate>
-      
-      <guid>http://xmasuhai.xyz/post/hugo/hugo%E5%85%A5%E9%97%A81%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA_%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C%E6%B5%81%E7%A8%8B/</guid>
-      
-        <description>
-
-&lt;!-- more --&gt;
-
-&lt;blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;使用 GitHub Pages 预览 HTML 的进阶&lt;/li&gt;
-&lt;li&gt;Go语言实现&lt;/li&gt;
-&lt;li&gt;最快的博客生成器&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;ul&gt;
-&lt;li&gt;时常 更新（写文章）&lt;/li&gt;
-&lt;li&gt;偶尔 修改（纠错，补充）&lt;/li&gt;
-&lt;li&gt;总是 备份&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;不应囿于语言&lt;/li&gt;
-&lt;li&gt;迟早会学多种语言&lt;/li&gt;
-&lt;li&gt;关注领域，而不只关注语言&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://xmasuhai.github.io/&#34;&gt;这是我的博客&lt;/a&gt;&lt;/p&gt;
-
-&lt;!-- more --&gt;
-
-&lt;h2 id=&#34;1-快速搭建hugo&#34;&gt;1.快速搭建Hugo&lt;/h2&gt;
-
-&lt;p&gt;1.&lt;a href=&#34;https://gohugo.io/getting-started/installing&#34;&gt;安装&lt;/a&gt;：&lt;/p&gt;
-
-&lt;p&gt;到Mac：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;brew install hugo
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;到Win：&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;去&lt;a href=&#34;https://github.com/gohugoio/hugo/releases&#34;&gt;gohugoio/hugo&lt;/a&gt;下hugo_***_Windows-64bit.zip&lt;/li&gt;
-&lt;li&gt;将解压的hugo.exe放到软件目录，并添加PATH&lt;/li&gt;
-&lt;li&gt;重启终端，运行&lt;code&gt;hugo --version&lt;/code&gt;，看到显示版本号就说明安装成功&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;进入&lt;a href=&#34;https://gohugo.io&#34;&gt;Hugo官网&lt;/a&gt; ，或直接&lt;a href=&#34;https://gohugo.io/getting-started/quick-start/&#34;&gt;Quick Start&lt;/a&gt;，参照Step 2 ~ Step 7：&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;2.新建一个文档目录x，当前目录下使用命令行（Cmder Here&amp;hellip;）：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;hugo new site yourName #Step 2: Create a New Site in a folder named yourName.github.io-generator
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;用VSCode打开：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;code yourName.github.io-generator/
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;或用终端：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;cd yourName.github.io-generator/
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;3.初始化，下载默认主题ananke：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;git init
-git submodule add https://github.com/budparr/gohugo-theme-ananke.git themes/ananke
-echo &#39;theme = &amp;quot;ananke&amp;quot;&#39; &amp;gt;&amp;gt; config.toml  # Step 3: Add a Theme called ananke
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;4.创建新文章（content/posts）：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;hugo new posts/my-first-postXXXX.md  #Step 4: Add Some Content
-hugo new posts/开博大吉.md
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;hugo v0.59.1+已经修复：&lt;code&gt;themes/ananke/theme.toml/&lt;/code&gt;里 &lt;code&gt;min_version = &amp;quot;0.30.2&amp;quot;&lt;/code&gt;没加引号的bug&lt;/li&gt;
-&lt;li&gt;编辑&lt;code&gt;XXXX.md&lt;/code&gt;，注意名字XXXX间不能有空格，可以用&lt;code&gt;-&lt;/code&gt;/&lt;code&gt;_&lt;/code&gt;来连接；&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-markdown&#34;&gt;
----
-title: &amp;quot;开博大吉&amp;quot;
-date: 2019-12-10T22:18:37+08:00
-draft: true
----
-
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;date的时间必须早于现在，才能显示出来&lt;/li&gt;
-&lt;li&gt;编辑完成后，预览一下，将draft里的 true改为false，才可见&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;5.运行Hugo服务器&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;hugo server -D  # Step 5: Start the Hugo server, Now, start the Hugo server with drafts enabled...
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;先别Press Ctrl+C to stop，点击进入链接：&lt;a href=&#34;http://localhost:1313/&#34;&gt;http://localhost:1313/&lt;/a&gt; (bind address 127.0.0.1)&lt;/li&gt;
-&lt;li&gt;打开浏览器，检查元素，查看手机适配，本地预览ok&lt;/li&gt;
-&lt;li&gt;如果手快Press Ctrl+C，或者重设了配置文件，重新&lt;code&gt;hugo server -D&lt;/code&gt;一下即可&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;6.设置主题配置文件（url有坑）&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;打开VSCode，Ctrl + p，搜“config.toml”，打开&lt;/li&gt;
-&lt;li&gt;将&lt;code&gt;languageCode = &amp;quot;en-us&amp;quot;&lt;/code&gt;，改成：&lt;code&gt;&amp;quot;zh-Hans&amp;quot;&lt;/code&gt;（简体中文）&lt;/li&gt;
-&lt;li&gt;修改标题：&lt;code&gt;title = &amp;quot;你的标题&amp;quot;&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;7.生成public目录&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;勿关闭终端（否则就不能访问之前设置的博客网页了）&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;新建一个终端，然后运行：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;hugo
-&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;得到一个public目录，即博客站点&lt;/li&gt;
-&lt;li&gt;在资源管理器中打开public目录，双击打开public/index.html不可预览（由于没有样式，不使用文件协议预览），只能使用&lt;code&gt;hugo server&lt;/code&gt;进行预览&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;至此，走完了教程，本地初步设置完毕，官方教程默认你会发布博客，没有教任何后续操作，小白我不会，你的博客仍未发布到GitHub上&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;预览草稿：&lt;code&gt;hugo server -D&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;预览非草稿：&lt;code&gt;hugo server&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;一个坑： config.toml里的第一行：&lt;code&gt;baseURL = &amp;quot;....&amp;quot;&lt;/code&gt;
-&amp;ldquo;&amp;hellip;&amp;ldquo;要填你的博客地址&lt;code&gt;https://yourName.github.io/&lt;/code&gt;；Ctrl + c关闭hugo server;再重新运行&lt;code&gt;hugo&lt;/code&gt;；&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;!-- more --&gt;
-
-&lt;h2 id=&#34;2-发布到github-pages上&#34;&gt;2.发布到GitHub Pages上&lt;/h2&gt;
-
-&lt;p&gt;第1步：紧接着之前（博客生成器目录里：&lt;code&gt;xxx.github.io-generator/&lt;/code&gt;），新建&lt;code&gt;.gitignore&lt;/code&gt;，写上&lt;code&gt;/public/&lt;/code&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;touch .gitignore
-echo &#39;/public/&#39; &amp;gt;&amp;gt; .gitignore
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;外部仓库忽略public目录，public要自成一个仓库&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;第2步：进入public目录，并初始化-本地提交一条龙：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;cd public
-git init
-git add .
-git commit -m &amp;quot;第一次部署&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;第3步：GitHub新建仓库&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;Repository name必须是：&lt;code&gt;你的用户名.github.io&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;复用会覆盖掉之前的，所以做好备份&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;GitHub新建仓库一条龙，举栗子：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;git remote add origin git@github.com:yourName/yourRepoName.github.io.git
-git push -u origin master
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;我的：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;git remote add origin git@github.com:xmasuhai/xmasuhai.github.io.git
-git push -u origin master
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;记住：只把public上传到单独的git仓库就行了&lt;/li&gt;
-&lt;li&gt;生成的public目录本质上就是使用 GitHub Pages 预览 HTML ，只不过小白不用自己去编辑HTML以及CSS，只要会markdown&lt;/li&gt;
-&lt;li&gt;以后修改只要&lt;code&gt;git push&lt;/code&gt;到GitHub Pages上就行了&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;第4步：最重要的操作：Settings&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;确保GitHub Pages下Source在master branch上就行了，如果没有，选到master按钮&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;第5步：点击链接，我的是&lt;code&gt;https://xmasuhai.github.io/&lt;/code&gt;，就能访问博客了&lt;/p&gt;
-
-&lt;h3 id=&#34;回顾&#34;&gt;回顾&lt;/h3&gt;
-
-&lt;ol&gt;
-&lt;li&gt;hugo&lt;/li&gt;
-&lt;li&gt;搞出xxx.github.io-generator/&lt;/li&gt;
-&lt;li&gt;搞出public&lt;/li&gt;
-&lt;li&gt;在.gitignore里写上&lt;code&gt;/public/&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;public自成一派，上传GitHub仓库：&lt;code&gt;用户名.github.io&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;Setting&amp;gt;GitHub Pages&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;!-- more --&gt;
-
-&lt;h2 id=&#34;3-修改了博客文章和配置后-增删改查&#34;&gt;3.修改了博客文章和配置后（增删改查）&lt;/h2&gt;
-
-&lt;p&gt;Ctrl + c 关闭hugo server，再打开&lt;code&gt;hugo&lt;/code&gt;：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;cd public
-git add .
-git commit -v
-...
-git push
-
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;&lt;code&gt;hugo&lt;/code&gt;自动将content目录下posts里你写的markdown博客，生成对应的静态HTML到&lt;code&gt;/public/&lt;/code&gt;目录下&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;!-- more --&gt;
-
-&lt;h2 id=&#34;4-备份博客生成器的本地仓库&#34;&gt;4.备份博客生成器的本地仓库&lt;/h2&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;creator或者generator和public是两个互相嵌套且忽略的不同的本地仓库&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;1.新建GitHub new repo：&lt;code&gt;yourName.github.io-generator&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;2.删掉下载的主题文件里的.git&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;rm -rf themes/***/.git
-&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;或者gitignore掉&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;3.上传git 远程仓库一条龙&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;git remote add origin git@github.com:yourName/yourName.github.io-generator.git
-git push -u origin master
-&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;不需要生成子仓库&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;ul&gt;
-&lt;li&gt;4.备份完成，你可以不用担心public被删除，你只要能下载博客生成器仓库，就可以用hugo重新生成public目录，万无一失&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;!-- more --&gt;
-
-&lt;h2 id=&#34;5-小结&#34;&gt;5.小结&lt;/h2&gt;
-
-&lt;ul&gt;
-&lt;li&gt;博客md文件名不可包含非法字符，和win文件名命名规则一样&lt;/li&gt;
-&lt;li&gt;写完博客，检查有没有把draft的状态改为false&lt;/li&gt;
-&lt;li&gt;然后再cd到hugo博客生成器目录(xxx.github.io-generator）&lt;/li&gt;
-&lt;li&gt;重启&lt;code&gt;hugo&lt;/code&gt;一下，自动将content目录下posts里你写的markdown博客生成对应的静态HTML放到&lt;code&gt;/public/&lt;/code&gt;目录下&lt;/li&gt;
-&lt;li&gt;git上传一条龙&lt;/li&gt;
-&lt;li&gt;本地访问需要开着&lt;code&gt;hugo server&lt;/code&gt;实时预览&lt;/li&gt;
-&lt;li&gt;和 &lt;code&gt;hugo server -D&lt;/code&gt; 的区别是后者会把draft状态为true的博客也展示出来，其他我就不知道了&lt;/li&gt;
-&lt;li&gt;墨菲定律的告诫：要备份儿&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;!-- more --&gt;
-
-&lt;h2 id=&#34;6-自学编程的正确姿势&#34;&gt;6.自学编程的正确姿势&lt;/h2&gt;
-
-&lt;ol&gt;
-&lt;li&gt;设定一个目标（在GitHub上写博客）&lt;/li&gt;
-&lt;li&gt;开始干&lt;/li&gt;
-&lt;li&gt;发现要学什么，就去学什么（命令行/git本地仓库/git远程仓库 markdown/VSCode使用）&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;!-- more --&gt;
-
-&lt;h2 id=&#34;p-s&#34;&gt;P.S&lt;/h2&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;如何在 Hugo 里插入图片&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;ul&gt;
-&lt;li&gt;视频里没有录制怎么在博客里插入图片，这里用文字说一下：&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;ol&gt;
-&lt;li&gt;将图片文件 1.png 存放到 static 目录里，得到 static/1.png&lt;/li&gt;
-&lt;li&gt;在博客 Markdown 里写 &lt;code&gt;![](/1.png)&lt;/code&gt;就能看到 static/1.png 对应的图片了&lt;/li&gt;
-&lt;li&gt;如果你想在 static 里创建 images 目录，直接创建就好，对应的图片前面加上 /images 即可，比如
-
-&lt;ul&gt;
-&lt;li&gt;将图片文件 2.png 放到 static/images 目录里，得到 static/images/2.png&lt;/li&gt;
-&lt;li&gt;在博客里写 &lt;code&gt;![](/images/2.png)&lt;/code&gt;即可&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;推荐使用 static/images 来存放图片，这样更有条理。&lt;/li&gt;
-&lt;li&gt;推荐使用 VSCode 的拖放功能存入图片。&lt;/li&gt;
-&lt;li&gt;另外，如果你不会插入图片，就不知道谷歌一下「Hugo 插入图片」找找答案吗？&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;blockquote&gt;
-&lt;h3 id=&#34;添加-gitignore-文件&#34;&gt;添加 .gitignore 文件&lt;/h3&gt;
-&lt;/blockquote&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;在 Hugo 本地编译时会产生 public 文件夹，但是这个文件夹中的内容对于 Blog 仓库来说是不需要的 (包括用来存放主题的 themes 文件夹和主题产生的 resources 文件夹也是不需要的)&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;可以用一个.gitignore 文件来排除这些内容&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;在 Blog 目录下创建并修改 .gitignore&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;public/*
-themes/*
-resources/*
-&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;然后提交到 GitHub&lt;/p&gt;
 
 &lt;!-- Article End --&gt;
 
