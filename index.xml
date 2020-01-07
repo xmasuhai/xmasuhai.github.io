@@ -7,7 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>Joel Xu</copyright>
-    <lastBuildDate>Mon, 06 Jan 2020 21:50:47 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 08 Jan 2020 06:12:59 +0800</lastBuildDate>
     
         <atom:link href="http://xmasuhai.xyz/index.xml" rel="self" type="application/rss+xml" />
     
@@ -31,6 +31,463 @@
 &lt;/ul&gt;
 
 &lt;p&gt;Learn more and contribute on &lt;a href=&#34;https://github.com/gohugoio&#34;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
+</description>
+      
+    </item>
+    
+    <item>
+      <title>【CSS全解02】CSS基础 文档流</title>
+      <link>http://xmasuhai.xyz/post/css/css%E5%85%A8%E8%A7%A302css%E5%9F%BA%E7%A1%80-%E6%96%87%E6%A1%A3%E6%B5%81/</link>
+      <pubDate>Wed, 08 Jan 2020 06:12:59 +0800</pubDate>
+      
+      <guid>http://xmasuhai.xyz/post/css/css%E5%85%A8%E8%A7%A302css%E5%9F%BA%E7%A1%80-%E6%96%87%E6%A1%A3%E6%B5%81/</guid>
+      
+        <description>
+
+&lt;h2 id=&#34;基本概念&#34;&gt;基本概念&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://developer.mozilla.org/zh-CN/docs/Learn/CSS/CSS_layout/Normal_Flow&#34;&gt;文档流 mdn&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;块、内联、内联块？&lt;/li&gt;
+&lt;li&gt;margin合并&lt;/li&gt;
+&lt;li&gt;两种盒模型&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;文档流-normal-flow&#34;&gt;文档流 Normal Flow&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://developer.mozilla.org/zh-CN/docs/Web/CSS/CSS_Flow_Layout&#34;&gt;流式布局 mdn&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;文档流动方向&#34;&gt;文档流动方向&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;从左到右：&lt;a href=&#34;https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/span&#34;&gt;内联元素像默认的&lt;code&gt;&amp;lt;span&amp;gt;&amp;lt;/span&amp;gt;&lt;/code&gt;&lt;/a&gt; 直到排满一行，才会另起一行&lt;/li&gt;
+&lt;li&gt;从上到下：&lt;a href=&#34;https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/div&#34;&gt;块级元素像默认的&lt;code&gt;&amp;lt;div&amp;gt;&amp;lt;/div&amp;gt;&lt;/code&gt;&lt;/a&gt; 每一个元素占据一行，不并排（注意不加任何样式为前提下）&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;eg.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://xmasuhai.xyz/demo-test/css-demo-1/css-demo_system.html&#34;&gt;css-demo-1 with CSS animation &amp;amp; SCSS&lt;/a&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;内联元素占满一行，空间不够时，折行，即拦腰折断显示到下一行&lt;/p&gt;
+
+&lt;p&gt;块级元素就算设置了宽度不占满，也不会合成一行，即不并排，除非设置定位属性：默认情况下，每个块级元素独占一行&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;文档流小结&#34;&gt;文档流小结&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;流动方向
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;inline&lt;/code&gt;元素从左到右，到达最右边才会换行&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;block&lt;/code&gt;元素从上到下，每一个都会另起一行&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;inline-block&lt;/code&gt;也是从左到右&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;宽度
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;inline&lt;/code&gt;宽度为所有内部内联元素的宽度，一般即文字宽度的和所决定，指定&lt;code&gt;width&lt;/code&gt;无效&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;block&lt;/code&gt;默认自动计算宽度&lt;code&gt;width:auto;&lt;/code&gt;，指能有多宽就占多宽，&lt;strong&gt;尽量得宽&lt;/strong&gt;，并不一定是&lt;code&gt;100%&lt;/code&gt;，可用&lt;code&gt;width&lt;/code&gt;指定，指定了也不会换行，除非有其他非默认属性&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;inline-block&lt;/code&gt;结合前两者部分特点，默认宽度和&lt;code&gt;inline&lt;/code&gt;相同，&lt;strong&gt;尽量得窄&lt;/strong&gt;，紧密包裹里面的内容，但可设置&lt;code&gt;width&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;高度
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;inline&lt;/code&gt;高度由&lt;code&gt;inline-height&lt;/code&gt;间接确定，跟它的&lt;code&gt;height&lt;/code&gt;或者&lt;code&gt;padding&lt;/code&gt;无关&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;block&lt;/code&gt;高度由所有内部正常文档流中的元素高度之和决定，全部包裹住，可以设&lt;code&gt;height&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;inline-block&lt;/code&gt;和&lt;code&gt;block&lt;/code&gt;类似，可以设置&lt;code&gt;height&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;这里&lt;code&gt;内联/行内 | 块级 | 行盒 元素&lt;/code&gt;指的是 &lt;code&gt;display：[inline | block | inline-block]&lt;/code&gt;的元素，因为HTML5标准不分块级、内联级，只分浏览器的默认属性，可以随时切换&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;http://xmasuhai.xyz/post/html/html%E5%85%A8%E8%A7%A35html%E5%85%A5%E9%97%A8-%E4%B8%8D%E8%83%BD%E8%BF%99%E4%B9%88%E5%86%99%E6%88%91%E4%B8%8D%E9%80%A0/&#34;&gt;&lt;strong&gt;永远不要在inline元素里写block元素&lt;/strong&gt;&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;永远不要写&lt;code&gt;width:100%;&lt;/code&gt;&lt;/strong&gt;，除非特殊说明&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;默认&lt;code&gt;&amp;lt;span&amp;gt;&amp;lt;/span&amp;gt;&lt;/code&gt;的高度是由谁决定的？&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://xmasuhai.xyz/demo-test/css-demo-1/css-demo_flow.html&#34;&gt;css-demo_flow with CSS animation &amp;amp; SCSS&lt;/a&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;demo里默认&lt;code&gt;&amp;lt;span&amp;gt;&amp;lt;/span&amp;gt;&lt;/code&gt;既不接受宽度，也不接受高度；&lt;/li&gt;
+&lt;li&gt;包裹它的&lt;code&gt;&amp;lt;div&amp;gt;&amp;lt;/div&amp;gt;&lt;/code&gt;并没有被&lt;code&gt;&amp;lt;span&amp;gt;&amp;lt;/span&amp;gt;&lt;/code&gt;设置的&lt;code&gt;padding&lt;/code&gt;撑开，而&lt;code&gt;&amp;lt;div&amp;gt;&amp;lt;/div&amp;gt;&lt;/code&gt;的高度由其里面的元素决定，包裹住其中的元素；&lt;/li&gt;
+&lt;li&gt;加了内边距的&lt;code&gt;&amp;lt;span&amp;gt;&amp;lt;/span&amp;gt;&lt;/code&gt;被撑高的只是&lt;strong&gt;可视高度&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;inline&lt;/code&gt;元素的&lt;strong&gt;实际高度&lt;/strong&gt;是由&lt;strong&gt;行高&lt;code&gt;line-height&lt;/code&gt;间接确定的&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;包裹它的&lt;code&gt;&amp;lt;div&amp;gt;&amp;lt;/div&amp;gt;&lt;/code&gt;被内部元素的实际高度撑开，行高会继承，写在div后也一样&lt;/li&gt;
+&lt;li&gt;间接？还受到不同字体的影响，请看行盒模型&lt;a href=&#34;https://zhuanlan.zhihu.com/p/25808995&#34;&gt;深入理解CSS:字体度量&amp;hellip;by方应杭&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;脱离文档流元素不计算入父元素的高度， 具体&lt;a href=&#34;[https://xxx/](https://developer.mozilla.org/zh-CN/docs/Web/Guide/CSS/Understanding_z_index/The_stacking_context)&#34;&gt;看层叠上下文 mdn&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;属性-overflow-溢出&#34;&gt;属性&lt;code&gt;overflow&lt;/code&gt;溢出&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;当内容&lt;code&gt;content&lt;/code&gt;大于容器&lt;code&gt;box&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;等内容的宽度或高度大于容器的，会溢出&lt;/li&gt;
+&lt;li&gt;可用&lt;code&gt;overflow&lt;/code&gt;来设置是否显示滚动条&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;auto&lt;/code&gt;：灵活设置&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;scroll&lt;/code&gt;：永远显示，太丑，多出的像素会影响布局，不用，在cssReset里干掉&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;hidden&lt;/code&gt;：直接隐藏溢出部分&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;visible&lt;/code&gt;：直接显示溢出部分&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;overflow&lt;/code&gt;可以分为&lt;code&gt;overflow-x&lt;/code&gt;和&lt;code&gt;overflow-y&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;脱离文档流-mdn-https-developer-mozilla-org-zh-cn-docs-web-css-overflow&#34;&gt;&lt;a href=&#34;https://developer.mozilla.org/zh-CN/docs/Web/CSS/overflow&#34;&gt;脱离文档流 mdn&lt;/a&gt;&lt;/h4&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;超出的内容&amp;hellip;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;visible 可见&lt;/li&gt;
+&lt;li&gt;hidden 不给看&lt;/li&gt;
+&lt;li&gt;scroll 可滚（太丑 高度不超过也显示滚动条）&lt;/li&gt;
+&lt;li&gt;auto 超出部分，自动显示滚动条&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;&amp;lt;div&amp;gt;&amp;lt;/div&amp;gt;&lt;/code&gt;里面什么也没有，即高度为0px，里面没有文档流元素&lt;/p&gt;
+
+&lt;p&gt;而&lt;code&gt;&amp;lt;span&amp;gt;&amp;lt;/span&amp;gt;&lt;/code&gt;里面什么也没有时，加了border，看出高度是由&lt;code&gt;line-height&lt;/code&gt;决定的&lt;/p&gt;
+
+&lt;p&gt;指定除visible(默认值)以外的值将创建一个新的 块级格式化上下文.&lt;/p&gt;
+
+&lt;p&gt;为使overflow有效果，块级容器必须有一个指定的高度（height或者max-height）或者将white-space设置为nowrap。&lt;/p&gt;
+
+&lt;p&gt;注意:  设置一个轴为visible（默认值），同时设置另一个轴为不同的值，会导致设置visible的轴的行为会变成auto。&lt;/p&gt;
+
+&lt;p&gt;注意: 即使将overflow设置为hidden，也可以使用JavaScript Element.scrollTop 属性来滚动HTML元素。&lt;/p&gt;
+
+&lt;p&gt;如果有滚动条，那么里面的元素默认只在第一屏显示，后面留空&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://xmasuhai.xyz/demo-test/css-demo-1/css-demo_flow.html&#34;&gt;css-demo-overflow with SCSS&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;让一个元素脱离文档流&#34;&gt;让一个元素脱离文档流&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;回忆一下&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;block&lt;/code&gt;高度由内部文档流元素决定，可以设&lt;code&gt;height&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;有些元素可以不在文档流中，放飞自我&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;哪些元素脱离文档流
+如何让一个元素脱离文档流？&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;内联元素的高度是由行高决定的&amp;ndash;&amp;gt;确定了行高的文字内容形成文档流元素&amp;ndash;&amp;gt;决定了其外部块级元素的高度&amp;ndash;&amp;gt;高度撑开其外部的块级元素&lt;/p&gt;
+
+&lt;p&gt;现在让文字即其内联元素脱离文档流&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;加属性&lt;code&gt;float&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;加属性&lt;code&gt;position:absolute |  fixed;&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;怎么让元素不脱离文档流&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;不要用以上提到的属性&lt;/li&gt;
+&lt;li&gt;一个元素脱离文档流，就不影响块级父元素的高度，换句话说父容器计算高度时就不把它计算在内了&lt;/li&gt;
+&lt;li&gt;以后会学清除浮动，但一旦脱离文档流，就回不去了&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;块-内联-内联块-过时的概念&#34;&gt;块、内联、内联块？过时的概念&lt;/h3&gt;
+
+&lt;h4 id=&#34;元素的默认level&#34;&gt;元素的默认level&lt;/h4&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;内联/行内 | 块级 | 行盒 元素&lt;/code&gt;指的是 &lt;code&gt;display：[inline | block | inline-block]&lt;/code&gt;的元素，因为HTML5标准不分块级、内联级，只分浏览器的默认属性，可以随时切换，&lt;a href=&#34;https://developer.mozilla.org/zh-CN/docs/Web/HTML/Block-level_elements#%E5%9D%97%E7%BA%A7%E5%85%83%E7%B4%A0%E4%B8%8E%E8%A1%8C%E5%86%85%E5%85%83%E7%B4%A0&#34;&gt;块级元素与行内元素 mdn&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;默认是block-level box的元素&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;默认是in-line-level box的元素&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;通过&lt;code&gt;display:[inline | block | inline-block|];&lt;/code&gt;来随时切换&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;code&gt;inline-block&lt;/code&gt;在文档流上很像&lt;code&gt;inline&lt;/code&gt;，但是不会跨两行显示&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;flow-layout-and-overflow-流布局和溢出-https-developer-mozilla-org-zh-cn-docs-web-css-css-flow-layout-flow-layout-and-overflow&#34;&gt;&lt;a href=&#34;https://developer.mozilla.org/zh-CN/docs/Web/CSS/CSS_Flow_Layout/Flow_Layout_and_Overflow&#34;&gt;Flow Layout and Overflow 流布局和溢出&lt;/a&gt;&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;块级元素设置的高度比内容矮时，内容溢出边框&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;margin合并-死记硬背&#34;&gt;margin合并（死记硬背）&lt;/h3&gt;
+
+&lt;h3 id=&#34;两种盒模型-border-box更符合人类思维-直觉&#34;&gt;两种盒模型（border-box更符合人类思维、直觉）&lt;/h3&gt;
+
+&lt;p&gt;更符合人类思维、直觉&lt;/p&gt;
+
+&lt;p&gt;eg.
+第三视角&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;CSS不是重点，面向工作学习市场上比较需要的技术才是王道，张*旭的职业发展不适大多数人，选择比努力更重要&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;!-- Article End --&gt;
+
+&lt;hr /&gt;
+
+&lt;!-- test --&gt;
+
+&lt;div style=&#34;text-align:center;&#34;&gt;·未完待续·&lt;/div&gt;
+
+&lt;!-- ok --&gt;
+
+&lt;hr /&gt;
+
+&lt;h4 id=&#34;参考文章&#34;&gt;参考文章&lt;/h4&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://static.xiedaimala.com/xdml/file/3ac7c224-c23d-491f-84b5-4fabfbeab9b8/2019-8-23-12-30-0.pdf&#34;&gt;CSS 基础概念.pdf&lt;/a&gt;&lt;/p&gt;
+
+&lt;h4 id=&#34;相关文章&#34;&gt;相关文章&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;无&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;ul&gt;
+&lt;li&gt;作者： Joel&lt;/li&gt;
+&lt;li&gt;文章链接：&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://xmasuhai.xyz/posts/版权声明链接/&#34;&gt;版权声明&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;非自由转载-非商用-非衍生-保持署名&lt;/li&gt;
+&lt;li&gt;&lt;a style=&#39;color:#DB2D5D;&#39; href=&#39;https://xiedaimala.com/bbs/users/8c266e6f-55a2-4348-a180-17cb8cdb2c46#/?page=1&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;河&lt;/a&gt;
+&lt;a style=&#39;color:#006CFF;&#39; href=&#39;https://juejin.im/user/59abfad26fb9a0248f4aa221&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;掘&lt;/a&gt;
+&lt;a style=&#39;color:#009A61;&#39; href=&#39;https://segmentfault.com/u/joel_59b17eb9d2155&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;思&lt;/a&gt;
+&lt;a style=&#39;color:#0084FF;&#39; href=&#39;https://www.zhihu.com/people/xue-shou-41/posts&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;知&lt;/a&gt;
+&lt;a style=&#39;color:#EA6F5A;&#39; href=&#39;https://www.jianshu.com/u/079916729823&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;简&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+</description>
+      
+    </item>
+    
+    <item>
+      <title>【Git入门7】Git远程仓库   GitHub常用操作流程3_下载</title>
+      <link>http://xmasuhai.xyz/post/github/git%E5%85%A5%E9%97%A87git%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93-github%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C%E6%B5%81%E7%A8%8B3_%E4%B8%8B%E8%BD%BD/</link>
+      <pubDate>Tue, 07 Jan 2020 21:36:30 +0800</pubDate>
+      
+      <guid>http://xmasuhai.xyz/post/github/git%E5%85%A5%E9%97%A87git%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93-github%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C%E6%B5%81%E7%A8%8B3_%E4%B8%8B%E8%BD%BD/</guid>
+      
+        <description>
+
+&lt;h3 id=&#34;下载别人的代码&#34;&gt;下载别人的代码&lt;/h3&gt;
+
+&lt;h4 id=&#34;1-方法&#34;&gt;1. 方法&lt;/h4&gt;
+
+&lt;ul class=&#34;task-list&#34;&gt;
+&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; 如果是自己的机子，用SSH链接下载，&lt;code&gt;git clone git@xxxx[目标路径]&lt;/code&gt;&lt;/label&gt;&lt;/li&gt;
+&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; 如果是不同机子，要上传新的SSH key（一机一key)&lt;/label&gt;&lt;/li&gt;
+&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; 许多场景都是机子未和别人的账号绑定,只能用HTTPS链接:&lt;code&gt;git clone https://github.com/xxxx/***.git&lt;/code&gt;&lt;/label&gt;&lt;/li&gt;
+&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; 自己不同的机子，对应相同的GitHub账号&lt;/label&gt;&lt;/li&gt;
+&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; cd 目标路径！！！&lt;/label&gt;&lt;/li&gt;
+&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; &lt;code&gt;git add &amp;amp;&amp;amp; git commit &amp;amp;&amp;amp; [git pull]（同事改过代码）&amp;amp;&amp;amp; git push四联操作&lt;/code&gt;&lt;/label&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;2-步骤&#34;&gt;2. 步骤&lt;/h4&gt;
+
+&lt;p&gt;第1步：复制SSH key/HTTPS链接地址&lt;/p&gt;
+
+&lt;p&gt;第2步：&lt;code&gt;cd [目标路径父目录]&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;第3步：&lt;code&gt;git clone git@xxxx.git [目标路径]&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;第4步：&lt;code&gt;cd [目标路径]&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;第5步：完成&lt;/p&gt;
+
+&lt;h4 id=&#34;3-如何下载某个分支&#34;&gt;3. 如何下载某个分支&lt;/h4&gt;
+
+&lt;ul class=&#34;task-list&#34;&gt;
+&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; &lt;code&gt;cd [目标路径父目录]&lt;/code&gt;&lt;/label&gt;&lt;/li&gt;
+&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; 每次先下载整个仓库，然后&lt;code&gt;git checkout xxx #xxx分支名（如果有的话）&lt;/code&gt;&lt;/label&gt;&lt;/li&gt;
+&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; or 搜 &lt;a href=&#34;https://stackoverflow.com/questions/1778088/how-do-i-clone-a-single-branch-in-git/7034921#7034921&#34;&gt;难记的命令&lt;/a&gt;&lt;/label&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;4-git-clone-的三种变形&#34;&gt;4. &lt;code&gt;git clone&lt;/code&gt;的三种变形&lt;/h4&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;git clone git@?/xxx1.git&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;ul class=&#34;task-list&#34;&gt;
+&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; 会在当前目录下创建一个叫xxx1的目录&lt;/label&gt;&lt;/li&gt;
+&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; &lt;code&gt;xxx1/.git&lt;/code&gt;是本地仓库&lt;/label&gt;&lt;/li&gt;
+&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; 马上接一句&lt;code&gt;cd xxx1&lt;/code&gt;，要形成条件反射&lt;/label&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;git clone git@?/xxx2.git yyy1&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;ul class=&#34;task-list&#34;&gt;
+&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; 重命名目录：在本地新建yyy1目录&lt;/label&gt;&lt;/li&gt;
+&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; 马上接一句 &lt;code&gt;cd yyy1&lt;/code&gt;，要形成条件反射&lt;/label&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;git clone git@?/xxx3.git .&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;ul class=&#34;task-list&#34;&gt;
+&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; 新建 xxx&lt;/label&gt;&lt;/li&gt;
+&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; 马上接一句&lt;code&gt;cd xxx&lt;/code&gt;，要形成条件反射&lt;/label&gt;&lt;/li&gt;
+&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; 最后一个字符是点，注意有空格&lt;/label&gt;&lt;/li&gt;
+&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; 不会小建目录，使用当前目录容纳代码和.git&lt;/label&gt;&lt;/li&gt;
+&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; 当前目录一开始最好是个空目录，不然后果自负&lt;/label&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;clone 之后马上接cd&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;h4 id=&#34;5-git-pull-冲突了怎办&#34;&gt;5. &lt;code&gt;git pull&lt;/code&gt; 冲突了怎办&lt;/h4&gt;
+
+&lt;p&gt;和解决&lt;code&gt;git merge&lt;/code&gt;冲突一样：&lt;/p&gt;
+
+&lt;ul class=&#34;task-list&#34;&gt;
+&lt;li&gt;发现冲突&lt;/li&gt;
+&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; 合并分支时 ，会得到CONFLICT提示&lt;/label&gt;&lt;/li&gt;
+&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; 使用&lt;code&gt;git status -sb&lt;/code&gt;查看哪个/哪些文件冲突了&lt;/label&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;UU&lt;/code&gt; 表示两边都改了&lt;/li&gt;
+&lt;li&gt;-s表示summary -b表示brunch&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;ul class=&#34;task-list&#34;&gt;
+&lt;li&gt;解决冲突&lt;/li&gt;
+&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; 依次打开每个文件&lt;/label&gt;&lt;/li&gt;
+&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; 搜索====&lt;strong&gt;四个等于号&lt;/strong&gt;&lt;/label&gt;&lt;/li&gt;
+&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; 在上下两个部分中选择要保留的代码，只选上面/只选下面/都保留&lt;/label&gt;&lt;/li&gt;
+&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; 删除不用的代码&lt;/label&gt;&lt;/li&gt;
+&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; 删除==== &amp;lt;&amp;lt;&amp;lt;&amp;lt; &amp;gt;&amp;gt;&amp;gt;&amp;gt;这些标记&lt;/label&gt;&lt;/li&gt;
+&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; &lt;strong&gt;&lt;code&gt;git add&lt;/code&gt;暂存对应的文件&lt;/strong&gt;&lt;/label&gt;&lt;/li&gt;
+&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; 再次 git status -sb，解决下一个文件的冲突&lt;/label&gt;&lt;/li&gt;
+&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; 直到没有冲突，&lt;strong&gt;运行&lt;code&gt;git commit&lt;/code&gt;（注意不需要选项，自动添加fix conflict）&lt;/strong&gt;&lt;/label&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;6-总结&#34;&gt;6. 总结&lt;/h4&gt;
+
+&lt;ol&gt;
+&lt;li&gt;自己的代码：用SSH链接下载&lt;/li&gt;
+&lt;li&gt;别人的代码：用HTTPS链接下载&lt;/li&gt;
+&lt;li&gt;5个步骤&lt;/li&gt;
+&lt;li&gt;只需要两句话&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;ul class=&#34;task-list&#34;&gt;
+&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; &lt;code&gt;git remote add repo2 git@xxx&lt;/code&gt;&lt;/label&gt;&lt;/li&gt;
+&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; &lt;code&gt;git push -u repo2 master&lt;/code&gt;&lt;/label&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;ol&gt;
+&lt;li&gt;如果提示&lt;code&gt;git pull...&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;ul class=&#34;task-list&#34;&gt;
+&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; 说明新建项目时，在远程仓库创建了一些你本地仓库没有的文件&lt;/label&gt;&lt;/li&gt;
+&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; 只需要运行&lt;code&gt;git pull&lt;/code&gt;之后，再运行刚才的命令（&lt;code&gt;git push -u 仓库名 分支名&lt;/code&gt; 即可）&lt;/label&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;ol&gt;
+&lt;li&gt;下载分支&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;git clone&lt;/code&gt; 三种变形&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&#34;大总结&#34;&gt;大总结&lt;/h3&gt;
+
+&lt;h4 id=&#34;常用命令&#34;&gt;常用命令&lt;/h4&gt;
+
+&lt;ul class=&#34;task-list&#34;&gt;
+&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; 大部分时候，只需要用到 &lt;code&gt;git clone &amp;amp;&amp;amp; git pull &amp;amp;&amp;amp; git push&lt;/code&gt;&lt;/label&gt;&lt;/li&gt;
+&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; 遇到报错，翻译，查原因&lt;/label&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;远程仓库&#34;&gt;远程仓库&lt;/h4&gt;
+
+&lt;ul class=&#34;task-list&#34;&gt;
+&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; 只是本地仓库的备份，所以变化都要先commit到本地仓库，然后push到远程&lt;/label&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;[x] 不下载部分代码，只clone整个仓库&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;[x] 类似我要查看在哪个分支分支，用:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-git&#34;&gt;git branch
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;[x] 我要查看在哪个远程仓库，用：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;git remote # -v
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;!-- Article End --&gt;
+
+&lt;hr /&gt;
+
+&lt;!-- test --&gt;
+
+&lt;div style=&#34;text-align:center;&#34;&gt;·未完待续·&lt;/div&gt;
+
+&lt;!-- ok --&gt;
+
+&lt;hr /&gt;
+
+&lt;h4 id=&#34;参考文章&#34;&gt;参考文章&lt;/h4&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://www.google.com/search?sxsrf=ACYBGNT3nzzp-4UUv6olhs19dX9xhbhOTQ%3A1575821490674&amp;amp;source=hp&amp;amp;ei=siDtXe33JY3l-AbSm6-QDQ&amp;amp;q=github+%E5%88%A0%E9%99%A4%E4%B8%80%E4%B8%AA%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93&amp;amp;oq=github+%E5%88%A0%E9%99%A4%E4%B8%80%E4%B8%AA%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93&amp;amp;gs_l=psy-ab.3...1944.24432..25638...2.0..0.101.1131.11j2......0....2j1..gws-wiz.....10..35i362i39j0.GAX7DrVupEM&amp;amp;ved=0ahUKEwjtmLbBuKbmAhWNMt4KHdLNC9IQ4dUDCAk&amp;amp;uact=5&#34;&gt;需要谨慎操作的：GitHub 删除一个远程仓库&lt;/a&gt;&lt;/p&gt;
+
+&lt;h4 id=&#34;相关文章&#34;&gt;相关文章&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;无&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;ul&gt;
+&lt;li&gt;作者： Joel&lt;/li&gt;
+&lt;li&gt;文章链接：&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://xmasuhai.xyz/posts/版权声明链接/&#34;&gt;版权声明&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;非自由转载-非商用-非衍生-保持署名&lt;/li&gt;
+&lt;li&gt;&lt;a style=&#39;color:#DB2D5D;&#39; href=&#39;https://xiedaimala.com/bbs/users/8c266e6f-55a2-4348-a180-17cb8cdb2c46#/?page=1&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;河&lt;/a&gt;
+&lt;a style=&#39;color:#006CFF;&#39; href=&#39;https://juejin.im/user/59abfad26fb9a0248f4aa221&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;掘&lt;/a&gt;
+&lt;a style=&#39;color:#009A61;&#39; href=&#39;https://segmentfault.com/u/joel_59b17eb9d2155&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;思&lt;/a&gt;
+&lt;a style=&#39;color:#0084FF;&#39; href=&#39;https://www.zhihu.com/people/xue-shou-41/posts&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;知&lt;/a&gt;
+&lt;a style=&#39;color:#EA6F5A;&#39; href=&#39;https://www.jianshu.com/u/079916729823&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;简&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
 </description>
       
     </item>
@@ -4956,649 +5413,6 @@ height:100vh;
 
 &amp;lt;/html&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;
-
-&lt;!-- Article End --&gt;
-
-&lt;hr /&gt;
-
-&lt;!-- test --&gt;
-
-&lt;div style=&#34;text-align:center;&#34;&gt;·未完待续·&lt;/div&gt;
-
-&lt;!-- ok --&gt;
-
-&lt;hr /&gt;
-
-&lt;h4 id=&#34;参考文章&#34;&gt;参考文章&lt;/h4&gt;
-
-&lt;ul&gt;
-&lt;li&gt;无&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&#34;相关文章&#34;&gt;相关文章&lt;/h4&gt;
-
-&lt;ul&gt;
-&lt;li&gt;无&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-
-&lt;ul&gt;
-&lt;li&gt;作者： Joel&lt;/li&gt;
-&lt;li&gt;文章链接：&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://xmasuhai.xyz/posts/版权声明链接/&#34;&gt;版权声明&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;非自由转载-非商用-非衍生-保持署名&lt;/li&gt;
-&lt;li&gt;&lt;a style=&#39;color:#DB2D5D;&#39; href=&#39;https://xiedaimala.com/bbs/users/8c266e6f-55a2-4348-a180-17cb8cdb2c46#/?page=1&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;河&lt;/a&gt;
-&lt;a style=&#39;color:#006CFF;&#39; href=&#39;https://juejin.im/user/59abfad26fb9a0248f4aa221&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;掘&lt;/a&gt;
-&lt;a style=&#39;color:#009A61;&#39; href=&#39;https://segmentfault.com/u/joel_59b17eb9d2155&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;思&lt;/a&gt;
-&lt;a style=&#39;color:#0084FF;&#39; href=&#39;https://www.zhihu.com/people/xue-shou-41/posts&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;知&lt;/a&gt;
-&lt;a style=&#39;color:#EA6F5A;&#39; href=&#39;https://www.jianshu.com/u/079916729823&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;简&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-</description>
-      
-    </item>
-    
-    <item>
-      <title>【HTML全解0】HTML &amp; CSS 入门项目八卦3-第一个手机页面</title>
-      <link>http://xmasuhai.xyz/post/html/html%E5%85%A8%E8%A7%A30html-css-%E5%85%A5%E9%97%A8%E9%A1%B9%E7%9B%AE%E5%85%AB%E5%8D%A63-%E7%AC%AC%E4%B8%80%E4%B8%AA%E6%89%8B%E6%9C%BA%E9%A1%B5%E9%9D%A2/</link>
-      <pubDate>Wed, 18 Dec 2019 00:44:22 +0800</pubDate>
-      
-      <guid>http://xmasuhai.xyz/post/html/html%E5%85%A8%E8%A7%A30html-css-%E5%85%A5%E9%97%A8%E9%A1%B9%E7%9B%AE%E5%85%AB%E5%8D%A63-%E7%AC%AC%E4%B8%80%E4%B8%AA%E6%89%8B%E6%9C%BA%E9%A1%B5%E9%9D%A2/</guid>
-      
-        <description>
-
-&lt;h3 id=&#34;调试模式&#34;&gt;调试模式&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;手机页面调试&lt;/li&gt;
-&lt;li&gt;右置调试窗口&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;八卦太大&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;ul&gt;
-&lt;li&gt;此时注意，手机上一定要添加：
-&lt;code&gt;&amp;lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1.0&amp;quot;&amp;gt;&lt;/code&gt;
-这行代码&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;视口大小：设备大小 1倍初始比例&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h3 id=&#34;给-八卦-加适用的手机样式-媒体查询-media&#34;&gt;给&lt;code&gt;#八卦&lt;/code&gt;加适用的手机样式(媒体查询@media)&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-CSS&#34;&gt;#八卦 {
-    position: relative;
-    width: 400px;
-    height: 400px;
-    border-radius: 50%;
-    overflow: hidden;
-    animation: x 3s linear infinite;
-    box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.75);
-}
-
-@media (max-width: 500px) {
-    #八卦 {
-        width: 200px;
-        height: 200px;
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;此时，PC端与手机端的样式出现不同的变化
-- 注意@media（）{}的位置：紧跟要加媒体查询的样式之后
-- 当页面宽度小于等于&lt;code&gt;500px&lt;/code&gt;时，额外地添加一个样式属性：&amp;rdquo;@media语法&amp;rdquo;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;ul&gt;
-&lt;li&gt;逐行查看，是否有需要添加不同样式，写进@media里，注意包括连选择器一起复制进来，不要只复制样式，修改&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;可写多行&lt;/li&gt;
-&lt;li&gt;没写死，不用改&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;此时，出现了怪异的样式&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;怎么改？&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;加border&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-CSS&#34;&gt;@media (max-width: 500px) {
-#八卦&amp;gt;div:nth-child(6) {
-    border: 2px solid red;
-    width: 25px;
-    height: 25px;
-    margin-left: -12.5px;
-}
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;被遮住，看不见border？&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;ul&gt;
-&lt;li&gt;从后往前改&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;从最后一个元素开始改*显示优先级&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;ul&gt;
-&lt;li&gt;只改像素，非百分数的属性值除以2，按1/2比例缩放，查看&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;像素是绝对单位，屏幕上有多少个像素然而也并不是那么固定：改了分辨率，随之改变（面试：像素固定吗？要分情况，像素大小随分辨率而改变）&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-CSS&#34;&gt;#八卦&amp;gt;div:nth-child(6) {
-    position: absolute;
-    width: 50px;
-    height: 50px;
-    left: 50%;
-    bottom: 75%;
-    margin-left: -25px;
-    border-radius: 50%;
-    background: white;
-}
-
-@media (max-width: 500px) {
-    #八卦&amp;gt;div:nth-child(6) {
-        /* border: 2px solid red; */
-        width: 25px;
-        height: 25px;
-        margin-left: -12.5px;
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;ul&gt;
-&lt;li&gt;看不见就加border，所有的都改完后去掉除border&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;别在原来的样式里改，在@media里改，注意别忘记最后的大括号&lt;code&gt;&amp;quot;}&amp;quot;&lt;/code&gt;:&lt;code&gt;@media(){}&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;ul&gt;
-&lt;li&gt;VSCode 按住Alt 多行同时修改&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;好烦，弄个变量&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;ul&gt;
-&lt;li&gt;抱歉，只有SCSS什么的才做得到&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;初级先通过重复来记忆和理解&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;代码测试链接：&lt;a href=&#34;http://js.jirengu.com/zacaz/2/edit?html,css,output&#34;&gt;JSBin&lt;/a&gt;
-&amp;gt; JSBin Share还是有bug的，窗口调小，变椭圆，所以改成测试页面&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;此阶段完整代码：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-HTML&#34;&gt;&amp;lt;!DOCTYPE html&amp;gt;
-&amp;lt;html lang=&amp;quot;zh&amp;quot;&amp;gt;
-
-&amp;lt;head&amp;gt;
-    &amp;lt;meta charset=&amp;quot;UTF-8&amp;quot;&amp;gt;
-    &amp;lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1.0&amp;quot;&amp;gt;
-    &amp;lt;meta http-equiv=&amp;quot;X-UA-Compatible&amp;quot; content=&amp;quot;ie=edge&amp;quot;&amp;gt;
-    &amp;lt;title&amp;gt;TaiJiTu&amp;lt;/title&amp;gt;
-    &amp;lt;style&amp;gt;
-        body {
-            background: #eee;
-        }
-        * {
-            box-sizing: border-box;
-            padding: 0;
-            margin: 0;
-        }
-        @keyframes x {
-            from {
-                transform: rotate(0deg);
-            }
-            to {
-                transform: rotate(306deg);
-            }
-        }
-        #八卦 {
-            position: relative;
-            width: 400px;
-            height: 400px;
-            border-radius: 50%;
-            overflow: hidden;
-            animation: x 3s linear infinite;
-            box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.75);
-        }
-        @media (max-width: 500px) {
-            #八卦 {
-                width: 200px;
-                height: 200px;
-            }
-        }
-        #八卦&amp;gt;div:first-child {
-            position: absolute;
-            width: 50%;
-            height: 100%;
-            left: 0;
-            background: black;
-        }
-        #八卦&amp;gt;div:nth-child(2) {
-            position: absolute;
-            width: 50%;
-            height: 100%;
-            right: 0;
-            background: white;
-        }
-        #八卦&amp;gt;div:nth-child(3) {
-            position: absolute;
-            width: 200px;
-            height: 200px;
-            left: 50%;
-            margin-left: -100px;
-            border-radius: 50%;
-            background: black;
-        }
-        @media (max-width: 500px) {
-            #八卦&amp;gt;div:nth-child(3) {
-                width: 100px;
-                height: 100px;
-                margin-left: -50px;
-            }
-        }
-        #八卦&amp;gt;div:nth-child(4) {
-            position: absolute;
-            width: 200px;
-            height: 200px;
-            left: 50%;
-            bottom: 0;
-            margin-left: -100px;
-            border-radius: 50%;
-            background: white;
-        }
-        @media (max-width: 500px) {
-            #八卦&amp;gt;div:nth-child(4) {
-                width: 100px;
-                height: 100px;
-                margin-left: -50px;
-                background: white;
-            }
-        }
-        #八卦&amp;gt;div:nth-child(5) {
-            position: absolute;
-            width: 50px;
-            height: 50px;
-            left: 50%;
-            top: 75%;
-            margin-left: -25px;
-            border-radius: 50%;
-            background: black;
-        }
-        @media (max-width: 500px) {
-            #八卦&amp;gt;div:nth-child(5) {
-                width: 25px;
-                height: 25px;
-                margin-left: -12.5px;
-            }
-        }
-        #八卦&amp;gt;div:nth-child(6) {
-            position: absolute;
-            width: 50px;
-            height: 50px;
-            left: 50%;
-            bottom: 75%;
-            margin-left: -25px;
-            border-radius: 50%;
-            background: white;
-        }
-        @media (max-width: 500px) {
-            #八卦&amp;gt;div:nth-child(6) {
-                /* border: 2px solid red; */
-                width: 25px;
-                height: 25px;
-                margin-left: -12.5px;
-            }
-        }
-        #八卦-wrapper {
-            border: 1px solid red;
-            height: 100vh;
-            /*  vh:viewport height  用户可视范围 窗口左上到右下 */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            /* flex三行式 */
-            flex-direction: column;
-        }
-        #八卦-描述 {
-            margin-top: 1em;
-        }
-    &amp;lt;/style&amp;gt;
-&amp;lt;/head&amp;gt;
-
-&amp;lt;body&amp;gt;
-    &amp;lt;div id=&amp;quot;八卦-wrapper&amp;quot;&amp;gt;
-        &amp;lt;div id=&amp;quot;八卦&amp;quot;&amp;gt;
-            &amp;lt;div&amp;gt;&amp;lt;/div&amp;gt;
-            &amp;lt;div&amp;gt;&amp;lt;/div&amp;gt;
-            &amp;lt;div&amp;gt;&amp;lt;/div&amp;gt;
-            &amp;lt;div&amp;gt;&amp;lt;/div&amp;gt;
-            &amp;lt;div&amp;gt;&amp;lt;/div&amp;gt;
-            &amp;lt;div&amp;gt;&amp;lt;/div&amp;gt;
-        &amp;lt;/div&amp;gt;
-
-        &amp;lt;div id=&amp;quot;八卦-描述&amp;quot;&amp;gt;
-            道可道，非常道
-        &amp;lt;/div&amp;gt;
-    &amp;lt;/div&amp;gt;
-&amp;lt;/body&amp;gt;
-
-&amp;lt;/html&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;!-- Article End --&gt;
-
-&lt;hr /&gt;
-
-&lt;!-- test --&gt;
-
-&lt;div style=&#34;text-align:center;&#34;&gt;·未完待续·&lt;/div&gt;
-
-&lt;!-- ok --&gt;
-
-&lt;hr /&gt;
-
-&lt;h4 id=&#34;参考文章&#34;&gt;参考文章&lt;/h4&gt;
-
-&lt;ul&gt;
-&lt;li&gt;无&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&#34;相关文章&#34;&gt;相关文章&lt;/h4&gt;
-
-&lt;ul&gt;
-&lt;li&gt;无&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-
-&lt;ul&gt;
-&lt;li&gt;作者： Joel&lt;/li&gt;
-&lt;li&gt;文章链接：&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://xmasuhai.xyz/posts/版权声明链接/&#34;&gt;版权声明&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;非自由转载-非商用-非衍生-保持署名&lt;/li&gt;
-&lt;li&gt;&lt;a style=&#39;color:#DB2D5D;&#39; href=&#39;https://xiedaimala.com/bbs/users/8c266e6f-55a2-4348-a180-17cb8cdb2c46#/?page=1&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;河&lt;/a&gt;
-&lt;a style=&#39;color:#006CFF;&#39; href=&#39;https://juejin.im/user/59abfad26fb9a0248f4aa221&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;掘&lt;/a&gt;
-&lt;a style=&#39;color:#009A61;&#39; href=&#39;https://segmentfault.com/u/joel_59b17eb9d2155&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;思&lt;/a&gt;
-&lt;a style=&#39;color:#0084FF;&#39; href=&#39;https://www.zhihu.com/people/xue-shou-41/posts&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;知&lt;/a&gt;
-&lt;a style=&#39;color:#EA6F5A;&#39; href=&#39;https://www.jianshu.com/u/079916729823&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;简&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-</description>
-      
-    </item>
-    
-    <item>
-      <title>【HTML全解0】HTML &amp; CSS 入门项目八卦4-页面部署及总结</title>
-      <link>http://xmasuhai.xyz/post/html/html%E5%85%A8%E8%A7%A30html-css-%E5%85%A5%E9%97%A8%E9%A1%B9%E7%9B%AE%E5%85%AB%E5%8D%A64-%E9%A1%B5%E9%9D%A2%E9%83%A8%E7%BD%B2%E5%8F%8A%E6%80%BB%E7%BB%93/</link>
-      <pubDate>Wed, 18 Dec 2019 00:44:22 +0800</pubDate>
-      
-      <guid>http://xmasuhai.xyz/post/html/html%E5%85%A8%E8%A7%A30html-css-%E5%85%A5%E9%97%A8%E9%A1%B9%E7%9B%AE%E5%85%AB%E5%8D%A64-%E9%A1%B5%E9%9D%A2%E9%83%A8%E7%BD%B2%E5%8F%8A%E6%80%BB%E7%BB%93/</guid>
-      
-        <description>
-
-&lt;h3 id=&#34;让别人看见你的代码&#34;&gt;让别人看见你的代码&lt;/h3&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;部署代码到免费的服务器：GitHub上&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h4 id=&#34;创建新项目仓库&#34;&gt;创建新项目仓库&lt;/h4&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Repositories New 左上角&lt;/li&gt;
-&lt;li&gt;Create a new repositories :Repositories name * 可以和项目名称不一样 一般一样&lt;/li&gt;
-&lt;li&gt;选Public 其他先不管&lt;/li&gt;
-&lt;li&gt;点击Create repository&lt;/li&gt;
-&lt;li&gt;creating a new file: index.html&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&#34;复制代码进去&#34;&gt;复制代码进去&lt;/h4&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;Ctrl + A&lt;/code&gt;全选&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;Ctrl + C&lt;/code&gt;加 &lt;code&gt;Ctrl + V&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;保存成&lt;code&gt;index.html&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;提交（Commit new file）&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&#34;开启github-pages&#34;&gt;开启GitHub Pages&lt;/h4&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;源代码—&amp;gt;页面展示：&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Setting&amp;gt;GitHub Pages&lt;/li&gt;
-&lt;li&gt;None 改选成master branch&lt;/li&gt;
-&lt;li&gt;给出一个网址，会默认访问index.html&lt;/li&gt;
-&lt;li&gt;有延迟，等三分钟，或者手动加路径&lt;code&gt;/index.html&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;复制链接，访问这个链接就可以看到你写的页面了&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://xmasuhai.xyz/HTML5-CSS3-Demo-1/index.html&#34;&gt;这是我的demo页面&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&#34;其他&#34;&gt;其他&lt;/h4&gt;
-
-&lt;ul&gt;
-&lt;li&gt;买域名，配进Custom domain&lt;/li&gt;
-&lt;li&gt;在主网站（用户名.github.io）配了，默认所有网站自动都配了&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;加描述（mardown语法）：创建&lt;code&gt;README.md&lt;/code&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-markdown&#34;&gt;# 一个简单的项目
-
-我学会使用HTML和CSS3画八卦图了。
-&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;贴心一点，在Description里写“预览请点击：”&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;复制链接到Website里&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;点击Save&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;添加Topic Tag 技术栈:&lt;code&gt;·HTML5 ·CSS3 ·Moblie&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;回顾：&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;创建新项目&lt;/li&gt;
-&lt;li&gt;代码放到index.html里&lt;/li&gt;
-&lt;li&gt;开启GitHub Pages&lt;/li&gt;
-&lt;li&gt;点选Master&lt;/li&gt;
-&lt;li&gt;点开链接&lt;/li&gt;
-&lt;li&gt;等三分钟&lt;/li&gt;
-&lt;li&gt;还有问题，加路径&lt;code&gt;/index.html&lt;/code&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h2 id=&#34;重点&#34;&gt;重点&lt;/h2&gt;
-
-&lt;h3 id=&#34;不要用chrome直接预览&#34;&gt;不要用Chrome直接预览&lt;/h3&gt;
-
-&lt;blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;只能在本地浏览&lt;/li&gt;
-&lt;li&gt;会有很多bug&lt;/li&gt;
-&lt;li&gt;推荐使用&lt;code&gt;http-server/parcel&lt;/code&gt;等工具的预览方式&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;h4 id=&#34;有问题-搜-关键字-mdn&#34;&gt;有问题，搜&lt;code&gt;关键字 MDN&lt;/code&gt;&lt;/h4&gt;
-
-&lt;blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;HTML 标签怎么用&lt;/li&gt;
-&lt;li&gt;CSS 属性怎么用&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://developer.mozilla.org/zh-CN/docs/Web/CSS/animation/&#34;&gt;搜&lt;code&gt;animation mdn&lt;/code&gt;切Language成中文&lt;/a&gt;&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;直接看范例，敲代码&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;h4 id=&#34;css-border-调试大法&#34;&gt;CSS Border 调试大法&lt;/h4&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;学CSS唯一需要了解的调试方法&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;ul&gt;
-&lt;li&gt;快速显示元素的位置，层次&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;另一个有用的工具就是Chrome开发者工具
-错误提示&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h4 id=&#34;技巧&#34;&gt;技巧&lt;/h4&gt;
-
-&lt;ul&gt;
-&lt;li&gt;随时格式化自己的代码&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Formate On Save&lt;/strong&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Auto Save&lt;/strong&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;ul&gt;
-&lt;li&gt;马上写反括号的习惯&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;注意别少写反括号&lt;code&gt;}&lt;/code&gt;，写了&lt;code&gt;{&lt;/code&gt;，没有自动补全的话，马上手动补上&lt;code&gt;}&lt;/code&gt;，再写里面的代码&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h4 id=&#34;项目目的&#34;&gt;项目目的&lt;/h4&gt;
-
-&lt;ul&gt;
-&lt;li&gt;此项目目的&lt;strong&gt;不是把东西做出来&lt;/strong&gt;，写的稀烂也无所谓&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;目的是在失败中求生，&lt;strong&gt;用以致学&lt;/strong&gt;&lt;/li&gt;
-&lt;li&gt;此项目还有很多bug，但不重要&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;&lt;strong&gt;掌握知识&lt;/strong&gt;，&lt;strong&gt;重复练习&lt;/strong&gt;，对&lt;strong&gt;资料&lt;/strong&gt;记忆，写篇博客，总结&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;这样学的好处&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;面试有干货&lt;/li&gt;
-&lt;li&gt;就算忘了，也有痕迹&lt;/li&gt;
-&lt;li&gt;分散的知识点，通过项目进行覆盖，博客输出，再串联起来进行体系化学习&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&#34;总结&#34;&gt;总结&lt;/h2&gt;
-
-&lt;ul&gt;
-&lt;li&gt;如果想&lt;strong&gt;做一个网页&lt;/strong&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;没有必要系统学习&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;ul&gt;
-&lt;li&gt;想&lt;strong&gt;通过面试&lt;/strong&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;必须要系统学习&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;ul&gt;
-&lt;li&gt;到底怎么学？&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;先以&lt;strong&gt;项目&lt;/strong&gt;为&lt;strong&gt;中心&lt;/strong&gt;学&lt;/li&gt;
-&lt;li&gt;等做了&lt;strong&gt;足够多&lt;/strong&gt;的项目，再&lt;strong&gt;总结&lt;/strong&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;ul&gt;
-&lt;li&gt;最坏的学习方法&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;先系统学（看书，照本宣科）不动手&lt;/li&gt;
-&lt;li&gt;动手时，全忘了&lt;/li&gt;
-&lt;li&gt;最重要的是没留下痕迹&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;ul&gt;
-&lt;li&gt;CRN法
-eg. :nth-child(n)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;抄示例&lt;/p&gt;
-
-&lt;p&gt;运行&lt;/p&gt;
-
-&lt;p&gt;改一改&lt;/p&gt;
-
-&lt;p&gt;重复迭代&lt;/p&gt;
-
-&lt;h3 id=&#34;问题&#34;&gt;问题&lt;/h3&gt;
-
-&lt;p&gt;？元素 爆炸图实现？：原型图爆炸图拆解 八卦图：几个圆形的重叠 图层&lt;/p&gt;
 
 &lt;!-- Article End --&gt;
 
