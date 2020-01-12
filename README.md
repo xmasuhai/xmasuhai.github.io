@@ -4,7 +4,8 @@
 
 使用 Markdown 书写，用 Hugo 生成静态网页，部署在 xmasuhai.github.io 上。
 
-主题使用的是 [ananke](https://themes.gohugo.io/gohugo-theme-ananke/)
+之前主题使用的是 [ananke](https://themes.gohugo.io/gohugo-theme-ananke/)
+现在用[Jane](https://github.com/xianmin/hugo-theme-jane)
 
 
 # [版权声明](https://github.com/xmasuhai/Copyright_Hungervalley.git)：
