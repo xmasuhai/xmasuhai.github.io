@@ -7,7 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>Joel Xu</copyright>
-    <lastBuildDate>Mon, 13 Jan 2020 00:27:37 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 16 Jan 2020 06:42:43 +0800</lastBuildDate>
     
         <atom:link href="http://xmasuhai.xyz/index.xml" rel="self" type="application/rss+xml" />
     
@@ -31,6 +31,395 @@
 &lt;/ul&gt;
 
 &lt;p&gt;Learn more and contribute on &lt;a href=&#34;https://github.com/gohugoio&#34;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
+</description>
+      
+    </item>
+    
+    <item>
+      <title>【HTTP全解】浅析 URL</title>
+      <link>http://xmasuhai.xyz/post/http/http%E5%85%A8%E8%A7%A3%E6%B5%85%E6%9E%90-url/</link>
+      <pubDate>Thu, 16 Jan 2020 06:42:43 +0800</pubDate>
+      
+      <guid>http://xmasuhai.xyz/post/http/http%E5%85%A8%E8%A7%A3%E6%B5%85%E6%9E%90-url/</guid>
+      
+        <description>
+
+&lt;p&gt;大纲：&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;URL 包含哪几部分，每部分分别有什么作用&lt;/li&gt;
+&lt;li&gt;DNS 的作用是什么，nslookup 命令怎么用&lt;/li&gt;
+&lt;li&gt;IP 的作用是什么，ping 命令怎么用&lt;/li&gt;
+&lt;li&gt;域名是什么，分别哪几类域名&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&#34;url的组成部分&#34;&gt;URL的组成部分&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;==传输协议== + &lt;strong&gt;域名或IP&lt;/strong&gt; + 端口号 + ++路径++ + &lt;code&gt;查询字符串&lt;/code&gt; + &lt;em&gt;锚点&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;eg.&lt;/p&gt;
+
+&lt;p&gt;==https://==&lt;strong&gt;www.baidu.com&lt;/strong&gt;++/s++&lt;code&gt;wd=hello&amp;amp;rsv_spt=1&lt;/code&gt;&lt;em&gt;#5&lt;/em&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;传输协议：&lt;code&gt;http&lt;/code&gt;、&lt;code&gt;https&lt;/code&gt;、&lt;code&gt;ftp&lt;/code&gt;等&lt;/li&gt;
+&lt;li&gt;域名：&lt;code&gt;www.baidu.com&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;端口：通常省略，&lt;code&gt;:80&lt;/code&gt;、&lt;code&gt;:443&lt;/code&gt;、&lt;code&gt;:8080&lt;/code&gt;等（http 大部分默认80, https默认443）&lt;/li&gt;
+&lt;li&gt;路径：&lt;code&gt;/s&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;查询参数：&lt;code&gt;wd=hello&amp;amp;rsv_spt=1&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;锚点：&lt;code&gt;#5&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;另一个常见的 URL（URI） 的例子：&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://zh.wikipedia.org/w/index.php?title=Special:随机页面#5&#34;&gt;https://zh.wikipedia.org/w/index.php?title=Special:随机页面#5&lt;/a&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;https&lt;/code&gt;：协议&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;zh.wikipedia.org&lt;/code&gt;：域名&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/w/index.php&lt;/code&gt;：路径（不同的页面）&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;?title=Special&lt;/code&gt;:随机页面：查询参数（相同页面，不同内容）&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;#5&lt;/code&gt;：锚点（相同页面，相同内容，不同位置）&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;其中若不写端口号，则表示使用
+https 对应的默认端口号 443&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;localhost:8080&lt;/code&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;dns-域名系统&#34;&gt;DNS：域名系统&lt;/h2&gt;
+
+&lt;p&gt;作用：根据域名查出IP地址&lt;/p&gt;
+
+&lt;p&gt;即：将域名解析为IP 地址&lt;/p&gt;
+
+&lt;h2 id=&#34;nslookup可查询ip地址&#34;&gt;nslookup可查询IP地址&lt;/h2&gt;
+
+&lt;p&gt;直接使用可以查询到域名的 A 记录&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;nslookup + 域名
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;nslookup xmasuhai.xyz
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;ip的作用-ping-命令用法&#34;&gt;IP的作用，ping 命令用法&lt;/h2&gt;
+
+&lt;p&gt;一是定位一台设备
+二是封装数据报文跟其他设备交流&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;ping baidu.com
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;域名是什么-域名分类&#34;&gt;域名是什么，域名分类&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;域名分顶级域名，二级域名和三级域名&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;比如对于 &lt;code&gt;www.baidu.com&lt;/code&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;顶级域名：&lt;code&gt;com&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;二级域名：&lt;code&gt;baidu.com&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;三级域名：&lt;code&gt;www.baidu.com&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;问：hosts 文件在哪？&lt;/p&gt;
+
+&lt;p&gt;答： 在 Windows 系统中，hosts 位于 &lt;code&gt;C:\Windows\System32\drivers\etc\hosts&lt;/code&gt; 。&lt;/p&gt;
+
+&lt;p&gt;在 macOS / Linux系统中，hosts 位于 &lt;code&gt;/etc/hosts&lt;/code&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;网络和-ip&#34;&gt;网络和 IP&lt;/h2&gt;
+
+&lt;p&gt;李爵士的发明&lt;/p&gt;
+
+&lt;p&gt;WWW=URL+HTTP+HTML&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;HyperText Transfer Protocol&lt;/code&gt;协议&lt;/p&gt;
+
+&lt;p&gt;IP: &lt;code&gt;Internet Protocol&lt;/code&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;ip主要约定&#34;&gt;IP主要约定&lt;/h3&gt;
+
+&lt;p&gt;1.如何定位一台设备
+2.如何封装数据报文（用来和其他设备交流）&lt;/p&gt;
+
+&lt;p&gt;互联网（not WWW），至少一个独特的IP&lt;/p&gt;
+
+&lt;p&gt;IP分内网和外网&lt;/p&gt;
+
+&lt;p&gt;设备 路由器 电信DNS服务器 其他用户&lt;/p&gt;
+
+&lt;p&gt;获取外网IP 买 | 蹭&lt;/p&gt;
+
+&lt;p&gt;每次重启路由，被分配一个随机的外网IP，无固定外网IP&lt;/p&gt;
+
+&lt;h3 id=&#34;内网ip&#34;&gt;内网IP&lt;/h3&gt;
+
+&lt;p&gt;路由器创建内网，内网中的设备使用内网IP，格式&lt;code&gt;192.168.xxx.xxx&lt;/code&gt;、&lt;code&gt;192.168.1.1&lt;/code&gt;等&lt;/p&gt;
+
+&lt;p&gt;路由再给每一个内网中的设备(PC、手机)分配一个不同的内网IP&lt;/p&gt;
+
+&lt;p&gt;内网的所有设备都有一个相同的外网IP&lt;/p&gt;
+
+&lt;p&gt;内网IP固定&lt;/p&gt;
+
+&lt;p&gt;查看IP&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;ping xxx.com
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;ipconfig
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;查看&lt;code&gt;ip38.com&lt;/code&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;路由器的功能&#34;&gt;路由器的功能&lt;/h3&gt;
+
+&lt;ol&gt;
+&lt;li&gt;路由器有两个IP,内外各一&lt;/li&gt;
+&lt;li&gt;内网中的设备可互相访问，但不可直接访问外网&lt;/li&gt;
+&lt;li&gt;内网设备通过路由器中转，访问外网&lt;/li&gt;
+&lt;li&gt;外网设备无法访问你的内网，不管直接间接&lt;/li&gt;
+&lt;li&gt;外网把内容推送到内网，必须通过路由&lt;/li&gt;
+&lt;li&gt;内外隔绝，路由是唯一联通点，即网关&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&#34;几个特殊的ip&#34;&gt;几个特殊的IP&lt;/h3&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;127.0.0.1&lt;/code&gt;表示自己&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;localhost&lt;/code&gt;通过hosts指定为自己&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;0.0.0.0&lt;/code&gt;不表示任何设备，后端用&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&#34;端口&#34;&gt;端口&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;一台机子可提供很多服务，每个服务一个号码，即端口号&lt;code&gt;port&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;不同的服务&#34;&gt;不同的服务&lt;/h3&gt;
+
+&lt;ol&gt;
+&lt;li&gt;提供&lt;code&gt;HTTP&lt;/code&gt;服务，最好使用&lt;code&gt;80&lt;/code&gt;端口&lt;/li&gt;
+&lt;li&gt;提供&lt;code&gt;HTTPS&lt;/code&gt;服务，最好&lt;code&gt;443&lt;/code&gt;端口&lt;/li&gt;
+&lt;li&gt;一共有65535个端口，&lt;code&gt;FTP&lt;/code&gt;是21端口&lt;/li&gt;
+&lt;li&gt;该用什么端口：&lt;a href=&#34;https://zh.wikipedia.org/wiki/TCP/UDP%E7%AB%AF%E5%8F%A3%E5%88%97%E8%A1%A8#0.E5.88.B01023.E5.8F.B7.E7.AB.AF.E5.8F.A3&#34;&gt;端口对应的服务列表wiki&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&#34;其他适用规则&#34;&gt;其他适用规则&lt;/h3&gt;
+
+&lt;ol&gt;
+&lt;li&gt;0到1023（2的10次方减1，计1024个）号端口，留给系统使用，自己使用须取得管理权限&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;http-server&lt;/code&gt;默认使用&lt;code&gt;8080&lt;/code&gt;端口&lt;/li&gt;
+&lt;li&gt;一个端口被占用时，只能换另一个&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;总之，IP和端口缺一不可&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;域名-路径-查询参数-锚点&#34;&gt;域名、路径、查询参数、锚点&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;qq.com&lt;/code&gt;，&lt;code&gt;t.tt&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;域名-对ip的别称&#34;&gt;域名：对IP的别称&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;ping baidu.com
+
+#将得到四个回复（win），mac 需ctrl+c中断
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;baidu.com&lt;/code&gt;对应&lt;code&gt;ping baidu.com&lt;/code&gt;，&lt;code&gt;qq.com&lt;/code&gt;对应&lt;code&gt;ping qq.com&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;知识点&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;一个域名可以对应不同IP，即均衡负载，分流，防止一台机子扛不住，或者恶意的&lt;code&gt;D-Dos&lt;/code&gt;攻击，网站优化策略&lt;/li&gt;
+&lt;li&gt;一个IP可对应不同域名，即穷开发者的共享主机&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;域名和IP，怎么对应起来？&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;通过DNS&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;当你输入-xiedai-ala-com&#34;&gt;当你输入&lt;code&gt;xiedai+ala.com&lt;/code&gt;&lt;/h3&gt;
+
+&lt;p&gt;Chrome开发者工具中，&lt;code&gt;Network&lt;/code&gt;面板，&lt;code&gt;xiedaimala.com&lt;/code&gt;点击，Headers里，请求根目录&lt;code&gt;https://xiedaimala.com/&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;得到响应Response 一串HTML代码，请求CSS，请求图片，请求js等&lt;/p&gt;
+
+&lt;h4 id=&#34;过程&#34;&gt;过程&lt;/h4&gt;
+
+&lt;p&gt;客户端向DNS服务器（DNS服务器有自己的IP地址）发送域名查询请求&lt;/p&gt;
+
+&lt;p&gt;DNS服务器告知客户机Web服务器的IP地址&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;提供DNS的服务器的服务商：电信或联通等&lt;/li&gt;
+&lt;li&gt;浏览器向提供DNS的服务器询问&lt;code&gt;xiedaimala.com&lt;/code&gt;对应什么IP&lt;/li&gt;
+&lt;li&gt;服务器回答一个IP（具体过程三次握手、四次握手，面试必问）&lt;/li&gt;
+&lt;li&gt;请求内容是查看这个网址的网页
+eg.&lt;code&gt;xiedaimala.com&lt;/code&gt;的首页&lt;code&gt;index.html&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;why-80-或-443-端口&#34;&gt;why &lt;code&gt;80&lt;/code&gt;或&lt;code&gt;443&lt;/code&gt;端口&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;服务器默认用&lt;code&gt;80&lt;/code&gt;提供&lt;code&gt;http&lt;/code&gt;服务&lt;/li&gt;
+&lt;li&gt;服务器默认用&lt;code&gt;443&lt;/code&gt;提供&lt;code&gt;https&lt;/code&gt;服务&lt;/li&gt;
+&lt;li&gt;在开发者工具查看具体端口&lt;/li&gt;
+&lt;li&gt;不需要写在地址栏里，写了也帮你消掉&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;询问域名，域名&lt;code&gt;ns&lt;/code&gt;，寻找&lt;code&gt;lookup&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;nslookup baidu.com
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;默认自动设置
+电信DNS
+&lt;code&gt;114.114.114.114&lt;/code&gt;
+备用
+&lt;code&gt;114.114.115.115&lt;/code&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;题外话&#34;&gt;题外话&lt;/h3&gt;
+
+&lt;h4 id=&#34;www&#34;&gt;&lt;code&gt;www&lt;/code&gt;&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;A：&lt;code&gt;www.xiedaimala.com&lt;/code&gt;和B：&lt;code&gt;xiedaimala.com&lt;/code&gt;不是同一个域名&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;com&lt;/code&gt;（没有点）是顶级域名&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;xiedaimala.com&lt;/code&gt;是二级域名（俗称一级域名）&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;www.xiedaimala.com&lt;/code&gt;是三级域名（俗称二级）&lt;/li&gt;
+&lt;li&gt;祖父子关系&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;github.io&lt;/code&gt;把子域名&lt;code&gt;xxx.github.io&lt;/code&gt;免费给你使用&lt;/li&gt;
+&lt;li&gt;A和B可以不是同一家公司&lt;/li&gt;
+&lt;li&gt;www是多余的，历史残留，脱x子放*&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;如何请求不同的页面&#34;&gt;如何请求不同的页面&lt;/h4&gt;
+
+&lt;h5 id=&#34;用路径&#34;&gt;用路径&lt;/h5&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://developer.mozilla.org/zh-CN/docs/Web/HTML&#34;&gt;`https://developer.mozilla.org/zh-CN/docs/Web/HTML&lt;/a&gt;`&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://developer.mozilla.org/zh-CN/docs/Web/CSS&#34;&gt;&lt;code&gt;https://developer.mozilla.org/zh-CN/docs/Web/CSS&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h5 id=&#34;工具&#34;&gt;工具&lt;/h5&gt;
+
+&lt;p&gt;使用Chrome开发者工具&lt;strong&gt;Network&lt;/strong&gt;面板查看区别&lt;/p&gt;
+
+&lt;h4 id=&#34;同一个页面-不同内容&#34;&gt;同一个页面，不同内容&lt;/h4&gt;
+
+&lt;p&gt;用查询参数：&lt;code&gt;https://xxx.com/s?wd=hello&lt;/code&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.baidu.com/s?wd=hi&#34;&gt;&lt;code&gt;https://www.baidu.com/s?wd=hi&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.baidu.com/s?wd=hello&#34;&gt;&lt;code&gt;https://www.baidu.com/s?wd=hello&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;同一个内容-页面-不同位置&#34;&gt;同一个内容（页面），不同位置&lt;/h4&gt;
+
+&lt;h5 id=&#34;用锚点&#34;&gt;用锚点&lt;/h5&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://developer.mozilla.org/zh-CN/docs/Web/CSS#%E5%8F%82%E8%80%83%E4%B9%A6&#34;&gt;&lt;code&gt;https://developer.mozilla.org/zh-CN/docs/Web/CSS#参考书&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://developer.mozilla.org/zh-CN/docs/Web/CSS#%E6%95%99%E7%A8%8B&#34;&gt;&lt;code&gt;https://developer.mozilla.org/zh-CN/docs/Web/CSS#教程&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;锚点就是文档内部的定位&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;注意：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;锚点看起来有中文，实际不支持中文&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;#参考书&lt;/code&gt;会变成&lt;code&gt;#%E5%8F%82%E8%80%83%E4%B9%A6&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;锚点不会传给服务器，所以是无法在&lt;code&gt;Network&lt;/code&gt;面板里看到的&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;url的组成&#34;&gt;URL的组成&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;==协议== + &lt;strong&gt;域名或IP&lt;/strong&gt; + 端口号 + ++路径++ + &lt;code&gt;查询字符串&lt;/code&gt; + &lt;em&gt;锚点&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;eg.&lt;/p&gt;
+
+&lt;p&gt;==https://==&lt;strong&gt;www.baidu.com&lt;/strong&gt;++/s++&lt;code&gt;wd=hello&amp;amp;rsv_spt=1&lt;/code&gt;&lt;em&gt;#5&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;就算没写，也应知道端口，&lt;code&gt;HTTPS&lt;/code&gt;默认端口&lt;code&gt;443&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;ftp://&lt;/code&gt;是文件传输协议，不属于&lt;code&gt;www&lt;/code&gt;，本地或局域网&lt;/p&gt;
+
+&lt;p&gt;锚点会被浏览器‘吃掉’，锚点只和浏览器有关，没必要发送给服务器&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;服务器无法接收&lt;code&gt;#&lt;/code&gt;之后的内容，参数&lt;/strong&gt;，不想被扣年终bonus的记住&lt;/p&gt;
+
+&lt;p&gt;路径表示访问那个网页&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;wd=hello&amp;amp;rsv_spt=1&lt;/code&gt;：&lt;code&gt;查询字符串&lt;/code&gt; 表示页面的展示内容，第几部分，第几章，第几页，或者查询关键词&lt;/p&gt;
+
+&lt;p&gt;统一资源定位符&lt;/p&gt;
+
+&lt;h2 id=&#34;http协议&#34;&gt;HTTP协议&lt;/h2&gt;
+
+&lt;p&gt;基于&lt;code&gt;TCP&lt;/code&gt;和&lt;code&gt;IP&lt;/code&gt;两个协议：也称&lt;code&gt;TCP/IP&lt;/code&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;curl-命令&#34;&gt;curl 命令&lt;/h2&gt;
+
+&lt;h3 id=&#34;用-curl-可以发http请求&#34;&gt;用&lt;code&gt;curl&lt;/code&gt;可以发HTTP请求&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;curl https://xiedaimala.com&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;curl -v http://baidu.com&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;curl -v -- http://baidu.com&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;-v&lt;/code&gt;：verbo 啰嗦模式&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;理解以下概念&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;url&lt;/code&gt;会被&lt;code&gt;curl&lt;/code&gt;工具重写，先请求DNS获得IP&lt;/li&gt;
+&lt;li&gt;先进行TCP连接，TCP连接成功后，开始发送HTTP请求&lt;/li&gt;
+&lt;li&gt;请求内容看一眼&lt;/li&gt;
+&lt;li&gt;相应内容看一眼&lt;/li&gt;
+&lt;li&gt;响应结束后，关闭TCP连接（看不出来）&lt;/li&gt;
+&lt;li&gt;真正结束&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;规定请求的格式是什么，响应式格式是什么&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://static.xiedaimala.com/xdml/file/3ac7c224-c23d-491f-84b5-4fabfbeab9b8/2019-8-27-11-33-39.pdf&#34;&gt;URL是什么.pdf&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://blog.csdn.net/qq_31930499/article/details/79767330&#34;&gt;DNS的作用是什么？为什么一定要配置DNS才能上网&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://www.ruanyifeng.com/blog/2016/06/dns.html&#34;&gt;DNS 原理入门 作者：阮一峰&lt;/a&gt;&lt;/p&gt;
 </description>
       
     </item>
@@ -4474,802 +4863,6 @@ overflow:hidden;/*溢出的文字隐藏*/
 或者在Settings里删掉Custom domain，或者续费域名&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/blockquote&gt;
-
-&lt;!-- Article End --&gt;
-
-&lt;hr /&gt;
-
-&lt;!-- test --&gt;
-
-&lt;div style=&#34;text-align:center;&#34;&gt;·未完待续·&lt;/div&gt;
-
-&lt;!-- ok --&gt;
-
-&lt;hr /&gt;
-
-&lt;h4 id=&#34;参考文章&#34;&gt;参考文章&lt;/h4&gt;
-
-&lt;ul&gt;
-&lt;li&gt;无&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&#34;相关文章&#34;&gt;相关文章&lt;/h4&gt;
-
-&lt;ul&gt;
-&lt;li&gt;无&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-
-&lt;ul&gt;
-&lt;li&gt;作者： Joel&lt;/li&gt;
-&lt;li&gt;文章链接：&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://xmasuhai.xyz/posts/版权声明链接/&#34;&gt;版权声明&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;非自由转载-非商用-非衍生-保持署名&lt;/li&gt;
-&lt;li&gt;&lt;a style=&#39;color:#DB2D5D;&#39; href=&#39;https://xiedaimala.com/bbs/users/8c266e6f-55a2-4348-a180-17cb8cdb2c46#/?page=1&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;河&lt;/a&gt;
-&lt;a style=&#39;color:#006CFF;&#39; href=&#39;https://juejin.im/user/59abfad26fb9a0248f4aa221&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;掘&lt;/a&gt;
-&lt;a style=&#39;color:#009A61;&#39; href=&#39;https://segmentfault.com/u/joel_59b17eb9d2155&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;思&lt;/a&gt;
-&lt;a style=&#39;color:#0084FF;&#39; href=&#39;https://www.zhihu.com/people/xue-shou-41/posts&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;知&lt;/a&gt;
-&lt;a style=&#39;color:#EA6F5A;&#39; href=&#39;https://www.jianshu.com/u/079916729823&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;简&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-</description>
-      
-    </item>
-    
-    <item>
-      <title>【HTML全解0】HTML &amp; CSS 入门项目八卦1-制作太极图页面</title>
-      <link>http://xmasuhai.xyz/post/html/html%E5%85%A8%E8%A7%A30html-css-%E5%85%A5%E9%97%A8%E9%A1%B9%E7%9B%AE%E5%85%AB%E5%8D%A61-%E5%88%B6%E4%BD%9C%E5%A4%AA%E6%9E%81%E5%9B%BE%E9%A1%B5%E9%9D%A2/</link>
-      <pubDate>Wed, 18 Dec 2019 00:44:22 +0800</pubDate>
-      
-      <guid>http://xmasuhai.xyz/post/html/html%E5%85%A8%E8%A7%A30html-css-%E5%85%A5%E9%97%A8%E9%A1%B9%E7%9B%AE%E5%85%AB%E5%8D%A61-%E5%88%B6%E4%BD%9C%E5%A4%AA%E6%9E%81%E5%9B%BE%E9%A1%B5%E9%9D%A2/</guid>
-      
-        <description>
-
-&lt;!-- start --&gt;
-
-&lt;h2 id=&#34;目录&#34;&gt;目录&lt;/h2&gt;
-
-&lt;ul&gt;
-&lt;li&gt;带着问题看代码&lt;/li&gt;
-&lt;li&gt;CRM学习法&lt;/li&gt;
-&lt;li&gt;制作一个太极&lt;/li&gt;
-&lt;li&gt;总结过程&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&#34;带着问题看代码&#34;&gt;带着问题看代码&lt;/h2&gt;
-
-&lt;ul&gt;
-&lt;li&gt;主题思想&lt;/li&gt;
-&lt;li&gt;遇到问题（模拟真实场景 磕磕绊绊地写代码、 处理步骤）&lt;/li&gt;
-&lt;li&gt;在哪查资料（搜那些关键字   ）&lt;/li&gt;
-&lt;li&gt;没想到的代码&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;为什么用这个标签？&lt;/li&gt;
-&lt;li&gt;为什么用这个选择器？&lt;/li&gt;
-&lt;li&gt;这个工具没用过？&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&#34;crm学习法&#34;&gt;CRM学习法&lt;/h2&gt;
-
-&lt;h3 id=&#34;定义&#34;&gt;定义&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Copy 唱&lt;/li&gt;
-&lt;li&gt;Run 跳&lt;/li&gt;
-&lt;li&gt;Modify 篮球Rap&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&#34;编程万精油法&#34;&gt;编程万精油法&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;不看书&lt;/li&gt;
-&lt;li&gt;用以致学&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&#34;系统学习&#34;&gt;系统学习&lt;/h3&gt;
-
-&lt;p&gt;放到核心阶段学&lt;/p&gt;
-
-&lt;h2 id=&#34;制作一个太极页面&#34;&gt;制作一个太极页面&lt;/h2&gt;
-
-&lt;h3 id=&#34;这是一个非常小的项目&#34;&gt;这是一个非常小的项目&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;足够简单：不快弃&lt;/li&gt;
-&lt;li&gt;足够全面：手机端支持&lt;/li&gt;
-&lt;li&gt;有扩展的余地：可以再加第二页内容&lt;/li&gt;
-&lt;li&gt;很强的指导性：一窥学习技巧&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;目标：完成PC端和手机端：太极图，并用CSS动画，使其转起来&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h3 id=&#34;起手式&#34;&gt;起手式&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;创建目录：专用干净的工作目录；不要用中文（软件不对中文进行优化，会出现bug，避免不必用的bug）&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;写代码：
-先&lt;code&gt;！&lt;/code&gt;然后&lt;code&gt;Tab&lt;/code&gt;:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-html&#34;&gt;&amp;lt;!DOCTYPE html&amp;gt;
-&amp;lt;html lang=&amp;quot;en&amp;quot;&amp;gt;
-
-&amp;lt;head&amp;gt;
-&amp;lt;meta charset=&amp;quot;UTF-8&amp;quot;&amp;gt;
-&amp;lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1.0&amp;quot;&amp;gt;
-&amp;lt;meta http-equiv=&amp;quot;X-UA-Compatible&amp;quot; content=&amp;quot;ie=edge&amp;quot;&amp;gt;
-&amp;lt;title&amp;gt;Document&amp;lt;/title&amp;gt;
-&amp;lt;/head&amp;gt;
-
-&amp;lt;body&amp;gt;
-
-&amp;lt;/body&amp;gt;
-
-&amp;lt;/html&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;&lt;code&gt;&amp;lt;html lang=&amp;quot;en&amp;quot;&amp;gt;&lt;/code&gt;改为&lt;code&gt;&amp;lt;html lang=&amp;quot;zh&amp;quot;&amp;gt;&lt;/code&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h4 id=&#34;设置vscode&#34;&gt;设置VSCode&lt;/h4&gt;
-
-&lt;p&gt;进入文件首选项&amp;gt;设置：&lt;/p&gt;
-
-&lt;p&gt;搜：&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;自动格式化：Format on Save&lt;/li&gt;
-&lt;li&gt;自动保存Auto Save：onFocusChange&lt;/li&gt;
-&lt;li&gt;新桌面 VSCode 左&lt;/li&gt;
-&lt;li&gt;Shift + Alt + R 在资源管理器打开，拖到Chrome里&lt;/li&gt;
-&lt;li&gt;装VSCode插件&lt;code&gt;Live Server&lt;/code&gt;，用&lt;code&gt;Open with Live Server&lt;/code&gt;打开&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://zhuanlan.zhihu.com/p/62231222/&#34;&gt;vscode如何使用live serve自动刷新并使用Debugger for Chrome进行调试&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://eviler.top/articles/plugin-livereload/&#34;&gt;Vscode插件livereload配合chrome扩展程序livereload实现网页自动刷新(保存时)2018-11-15 前端&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;标签的id 属性可以用中文，拿引号括起来&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;h4 id=&#34;css-border调试法&#34;&gt;CSS Border调试法&lt;/h4&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-CSS&#34;&gt;#八卦{
-    border:1px solid red;
-    width:400px;
-    height:400px;
-    border-radius: 200px;
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;圆角矩形-&amp;gt;正圆，去搜&lt;code&gt;MDN border-radius&lt;/code&gt;
-小于/大于/等于 width &amp;amp; height的一半&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-CSS&#34;&gt;#八卦{
-    border:1px solid red;
-    width:400px;
-    height:400px;
-    border-radius: 50%;
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;思路：两个div对半开&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h4 id=&#34;emmet语法&#34;&gt;Emmet语法&lt;/h4&gt;
-
-&lt;p&gt;&lt;code&gt;div+div&lt;/code&gt;&lt;/p&gt;
-
-&lt;h4 id=&#34;开始写&#34;&gt;开始写&lt;/h4&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;在body里添加&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-HTML&#34;&gt;    &amp;lt;div id=&amp;quot;八卦&amp;quot;&amp;gt;
-        &amp;lt;div&amp;gt;&amp;lt;/div&amp;gt;
-        &amp;lt;div&amp;gt;&amp;lt;/div&amp;gt;
-    &amp;lt;/div&amp;gt;
-
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;在head里添加style标签，写CSS：&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-CSS&#34;&gt;#八卦{
-    border:1px solid red;
-    width:400px;
-    height:400px;
-    border-radius: 50%;
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;当前元素的子元素（所有）：&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-CSS&#34;&gt;#八卦&amp;gt;div{
-    border:1px solid green;
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;当前元素的大儿子，老大：&lt;code&gt;:first-child&lt;/code&gt;：&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-CSS&#34;&gt;#八卦&amp;gt;div:first-child{
-    border:1px solid green;
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;当前元素的第N个儿子：&lt;code&gt;:nth-child(n)&lt;/code&gt;，n从1开始算：&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-CSS&#34;&gt;#八卦&amp;gt;div:first-child{
-    border:1px solid blue;
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;当前元素的子元素（所有）宽度、高度（50%）：&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-CSS&#34;&gt;#八卦&amp;gt;div{
-    width:50%;
-    height:50%;
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;怎么没在一行？后面再说,要让两个div一左一右&lt;/li&gt;
-&lt;li&gt;定位子元素，到特定位置~&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;ul&gt;
-&lt;li&gt;绝对定位，怎么用？&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;要在父元素上先&lt;strong&gt;相对定位&lt;/strong&gt;一下：&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-CSS&#34;&gt;#八卦{
-    border:1px solid red;
-    width:400px;
-    height:400px;
-    border-radius: 50%;
-    position:relative;
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;然后，将当前元素的子元素（所有）&lt;strong&gt;绝对定位&lt;/strong&gt;一下：&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-CSS&#34;&gt;#八卦&amp;gt;div{
-    width:50%;
-    height:50%;
-    position:absolute;
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;如果没先在父元素上先&lt;strong&gt;相对定位&lt;/strong&gt;，
-那儿子会骑到父亲头上去（脱离当前文档流），你可以试试
-现在可以定位了：&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-CSS&#34;&gt;#八卦&amp;gt;div:first-child{
-    border:1px solid blue;
-    left:0;
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;第N个儿子&lt;code&gt;:nth-child(n){}&lt;/code&gt; ~~ 摁死孩子：&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;first-child{}&lt;/code&gt;等价于&lt;code&gt;:nth-child(1){}&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-CSS&#34;&gt;#八卦&amp;gt;div:nth-child(2){
-    border:1px solid blue;
-    right:0;
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;为什么都是50%的width，两个div还有重叠的部分？&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;ul&gt;
-&lt;li&gt;CSS盒模型，CSS为什么难学？不正交&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;所有元素，改变盒模型，让重叠消失，更适合人类理解，以前的是垃圾（乐色）盒模型&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-CSS&#34;&gt;* {
-    box-sizing:border-box;
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;ID？为什么用#表示？可以用&lt;code&gt;[id=&amp;quot;&amp;quot;]{}&lt;/code&gt;来代替，但太麻烦，简化为&lt;code&gt;#{}&lt;/code&gt;， 表示号码&lt;/p&gt;
-
-&lt;p&gt;加颜色：&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-CSS&#34;&gt;#八卦&amp;gt;div:first-child{
-    border:1px solid blue;
-    left:0;
-    background:black;
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;区别白色和透明（纸和水），默认是透明&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-CSS&#34;&gt;#八卦&amp;gt;div:nth-child(2){
-    border:1px solid blue;
-    right:0;
-    background:white;
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;得到两个矩形，一左一右，还有红色圆形border露出，删掉父元素圆形之外的部分，也不是删掉，只是遮挡掉：&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-CSS&#34;&gt;#八卦{
-    border:1px solid red;
-    width:400px;
-    height:400px;
-    border-radius: 50%;
-    position:relative;
-    overflow:hidden;
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;超过我的部分：&lt;code&gt;overflow:hidden;&lt;/code&gt;遮挡&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;删掉Border&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-CSS&#34;&gt;#八卦&amp;gt;div:first-child {
-        left: 0;
-        background: black;
-    }
-#八卦&amp;gt;div:nth-child(2) {
-        right: 0;
-        background: white;
-    }
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;删掉子元素div内容&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-HTML&#34;&gt;&amp;lt;div id=&amp;quot;八卦&amp;quot;&amp;gt;
-    &amp;lt;div&amp;gt;&amp;lt;/div&amp;gt;
-    &amp;lt;div&amp;gt;&amp;lt;/div&amp;gt;
-&amp;lt;/div&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;思路：突出部分再画一个圆（加一个div）：&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-HTML&#34;&gt;&amp;lt;div id=&amp;quot;八卦&amp;quot;&amp;gt;
-    &amp;lt;div&amp;gt;&amp;lt;/div&amp;gt;
-    &amp;lt;div&amp;gt;&amp;lt;/div&amp;gt;
-    &amp;lt;div&amp;gt;&amp;lt;/div&amp;gt;
-&amp;lt;/div&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;CSS Border调试大法：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-CSS&#34;&gt;#八卦&amp;gt;div:nth-child(3) {
-    border:10px solid yellow;
-    }
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;怎么还是看不见？&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;和&lt;strong&gt;绝对定位&lt;/strong&gt;有关&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;绝对定位&lt;/strong&gt;的之前两个div是浮起来的，挡住了第三个&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;思路：要把第三个弄到最前面来：&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-CSS&#34;&gt;#八卦&amp;gt;div:nth-child(3) {
-    width: 25%;
-    height: 25%;/*小一点*/
-    border:10px solid yellow;
-    /* position:absolute; */
-    /* 也给你浮起来 */
-    z-index: 1;
-    /* 提高优先级 */
-    }
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;还是不行，之前父元素有&lt;code&gt;overflow: hidden;&lt;/code&gt;，三太子在左上角，超出了圆的范围，被遮挡，所以看不见，边加个&lt;code&gt;100px&lt;/code&gt;：&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-CSS&#34;&gt;#八卦&amp;gt;div:nth-child(3) {
-    width: 25%;
-    height: 25%;/*小一点*/
-    border:100px solid yellow;
-    z-index: 1;
-    /* 提高优先级 */
-    }
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;为方便查看，先要注释掉&lt;code&gt;overflow: hidden;&lt;/code&gt;这个属性，用&lt;code&gt;Ctrl + /&lt;/code&gt;：&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-CSS&#34;&gt;#八卦 {
-    border: 1px solid red;
-    width: 400px;
-    height: 400px;
-    border-radius: 50%;
-    position: relative;
-    /* overflow: hidden; */
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;你也可以故意拼错属性名为&lt;code&gt;fuck overflow: hidden;&lt;/code&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-CSS&#34;&gt;#八卦 {
-    border: 1px solid red;
-    width: 400px;
-    height: 400px;
-    border-radius: 50%;
-    position: relative;
-    fuckoverflow: hidden;
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;拼错自然无效，在开发者工具中有个小三角，属性上有删除线&lt;/li&gt;
-&lt;li&gt;删掉无用的&lt;code&gt;z-index&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-CSS&#34;&gt;#八卦&amp;gt;div:nth-child(3) {
-    width: 25%;
-    height: 25%;/*小一点*/
-    border:10px solid yellow;
-    }
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;思路：把黄div移到中间：&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-CSS&#34;&gt;#八卦&amp;gt;div:nth-child(3) {
-    width: 200px;
-    height: 200px; /*大圆的一半*/
-    border:10px solid orange; /*显眼 网络安全色*/
-    left:50%;
-    }
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;并没有居中&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;ul&gt;
-&lt;li&gt;左上角出现在中间，可以测试下：&lt;code&gt;left:40%/50%/60%;&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;思路：希望div的中心出现在中间&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;再往回倒&lt;code&gt;left:25%;&lt;/code&gt;：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-CSS&#34;&gt;#八卦&amp;gt;div:nth-child(3) {
-width: 200px;
-height: 200px; /*大圆的一半*/
-border:10px solid orange; /*显眼 网络安全色*/
-left:25%;
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;这是特殊情况，三太子宽度正好是大圆的一半；必须回去自身的一半&lt;code&gt;margin-left:-50%;&lt;/code&gt;：&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-CSS&#34;&gt;#八卦&amp;gt;div:nth-child(3) {
-    width: 200px;
-    height: 200px; /*大圆的一半*/
-    border:10px solid orange; /*显眼 网络安全色*/
-    left:50%;
-    margin-left:-50%; /*常规操作*/
-    }
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;加个圆角：&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-CSS&#34;&gt;#八卦&amp;gt;div:nth-child(3) {
-    width: 200px;
-    height: 200px; /*大圆的一半*/
-    border:10px solid orange; /*显眼 网络安全色*/
-    left:50%;
-    margin-left:-100px; /*常规操作*/
-    border-radius:50%; /*不用计算具体px数值*/
-    }
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;不是&lt;code&gt;margin-left:-50%;&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;变黑；已经搞清位置，去掉border&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-CSS&#34;&gt;#八卦&amp;gt;div:nth-child(3) {
-    width: 200px;
-    height: 200px; /*大圆的一半*/
-    left:50%;
-    margin-left:-100px; /*常规操作*/
-    border-radius:50%; /*不用计算具体px数值*/
-    background:black;
-    }
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;在注释上再按用&lt;code&gt;Ctrl + /&lt;/code&gt;，解除注释掉&lt;code&gt;overflow: hidden;&lt;/code&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-CSS&#34;&gt;#八卦 {
-    border: 1px solid red;
-    width: 400px;
-    height: 400px;
-    border-radius: 50%;
-    position: relative;
-    overflow: hidden;
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;在下部加一个白色的小圆，到最前面，遮住&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-HTML&#34;&gt;&amp;lt;div id=&amp;quot;八卦&amp;quot;&amp;gt;
-    &amp;lt;div&amp;gt;&amp;lt;/div&amp;gt;
-    &amp;lt;div&amp;gt;&amp;lt;/div&amp;gt;
-    &amp;lt;div&amp;gt;&amp;lt;/div&amp;gt;
-    &amp;lt;div&amp;gt;&amp;lt;/div&amp;gt;
-&amp;lt;/div&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-CSS&#34;&gt;#八卦&amp;gt;div:nth-child(4) {
-    width: 200px;
-    height: 200px;
-    left:50%;
-    bottom:0;
-    margin-left:-100px; 
-    border-radius:50%; 
-    background:white;
-    }
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;不圆滑，因为border占了2px，去掉&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-CSS&#34;&gt;#八卦 {
-    width: 400px;
-    height: 400px;
-    border-radius: 50%;
-    position: relative;
-    overflow: hidden;
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;融入了背景，看不清了，加背景色：&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-CSS&#34;&gt;body{
-    background:#eee;
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;加第5和第6个小圆div&lt;/li&gt;
-&lt;li&gt;复制第3和第4个小圆的CSS&lt;/li&gt;
-&lt;li&gt;变小 width/height: 100px&lt;/li&gt;
-&lt;li&gt;变色（为了知道位置）red/white/black&lt;/li&gt;
-&lt;li&gt;左右居中的移动距离也小一半：margin-left:-50px
-上- 下居中:下移一些：top:50%&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-CSS&#34;&gt;#八卦&amp;gt;div:nth-child(5) {
-    width: 100px;
-    height: 100px;
-    left: 50%;
-    top: 12.5%;
-    margin-left: -50px;
-    border-radius: 50%;
-    background: white;
-}
-
-#八卦&amp;gt;div:nth-child(6) {
-    width: 100px;
-    height: 100px;
-    left: 50%;
-    bottom: 12.5%;
-    margin-left: -50px;
-    border-radius: 50%;
-    background: black;
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;为什么第一个文件要叫做index.html？&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;ul&gt;
-&lt;li&gt;index.html作为入口是一个不成文的习惯，像是git本地仓主分支叫master，远程仓叫origin&lt;/li&gt;
-&lt;li&gt;apatch tomcat/nginx 默认index.html作为入口&lt;/li&gt;
-&lt;li&gt;访问目录优先找index.html&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;代码测试链接：&lt;a href=&#34;http://js.jirengu.com/yipen/5/&#34;&gt;JSBin&lt;/a&gt;&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;为什么位置差几像素？
-用什么工具可以做到像素级调试？
-调试工具 标尺?
-火狐 开发者版浏览器?&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;ul&gt;
-&lt;li&gt;手机模式开ruler&lt;/li&gt;
-&lt;li&gt;Chrome插件Page Ruler&lt;/li&gt;
-&lt;li&gt;Safari插件red lines&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;遇坑：一个标点px不写全，引起的bug&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;ul&gt;
-&lt;li&gt;查错流程：属性名拼写
-单位名拼写VSCode 无提示&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;此阶段完整代码：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-HTML&#34;&gt;&amp;lt;!DOCTYPE html&amp;gt;
-&amp;lt;html lang=&amp;quot;zh&amp;quot;&amp;gt;
-
-&amp;lt;head&amp;gt;
-    &amp;lt;meta charset=&amp;quot;UTF-8&amp;quot;&amp;gt;
-    &amp;lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1.0&amp;quot;&amp;gt;
-    &amp;lt;meta http-equiv=&amp;quot;X-UA-Compatible&amp;quot; content=&amp;quot;ie=edge&amp;quot;&amp;gt;
-    &amp;lt;title&amp;gt;TaiJiTu&amp;lt;/title&amp;gt;
-    &amp;lt;style&amp;gt;
-        body {
-            background: #eee;
-        }
-        * {
-            box-sizing: border-box;
-        }
-        #八卦 {
-            position: relative;
-            width: 400px;
-            height: 400px;
-            border-radius: 50%;
-            overflow: hidden;
-        }
-        #八卦&amp;gt;div:first-child {
-            position: absolute;
-            width: 50%;
-            height: 100%;
-            left: 0;
-            background: black;
-        }
-        #八卦&amp;gt;div:nth-child(2) {
-            position: absolute;
-            width: 50%;
-            height: 100%;
-            right: 0;
-            background: white;
-        }
-        #八卦&amp;gt;div:nth-child(3) {
-            position: absolute;
-            width: 200px;
-            height: 200px;
-            left: 50%;
-            margin-left: -100px;
-            border-radius: 50%;
-            background: black;
-        }
-        #八卦&amp;gt;div:nth-child(4) {
-            position: absolute;
-            width: 200px;
-            height: 200px;
-            left: 50%;
-            bottom: 0;
-            margin-left: -100px;
-            border-radius: 50%;
-            background: white;
-        }
-        #八卦&amp;gt;div:nth-child(5) {
-            position: absolute;
-            width: 50px;
-            height: 50px;
-            left: 50%;
-            top: 75%;
-            margin-left: -25px;
-            border-radius: 50%;
-            background: black;
-        }
-        #八卦&amp;gt;div:nth-child(6) {
-            position: absolute;
-            width: 50px;
-            height: 50px;
-            left: 50%;
-            bottom: 75%;
-            margin-left: -25px;
-            border-radius: 50%;
-            background: white;
-        }
-    &amp;lt;/style&amp;gt;
-&amp;lt;/head&amp;gt;
-
-&amp;lt;body&amp;gt;
-    &amp;lt;div id=&amp;quot;八卦&amp;quot;&amp;gt;
-        &amp;lt;div&amp;gt;&amp;lt;/div&amp;gt;
-        &amp;lt;div&amp;gt;&amp;lt;/div&amp;gt;
-        &amp;lt;div&amp;gt;&amp;lt;/div&amp;gt;
-        &amp;lt;div&amp;gt;&amp;lt;/div&amp;gt;
-        &amp;lt;div&amp;gt;&amp;lt;/div&amp;gt;
-        &amp;lt;div&amp;gt;&amp;lt;/div&amp;gt;
-    &amp;lt;/div&amp;gt;
-
-    道可道，非常道
-&amp;lt;/body&amp;gt;
-
-&amp;lt;/html&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
 
 &lt;!-- Article End --&gt;
 
