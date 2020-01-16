@@ -53,7 +53,7 @@
 &lt;li&gt;域名是什么，分别哪几类域名&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;h2 id=&#34;url的组成部分&#34;&gt;URL的组成部分&lt;/h2&gt;
+&lt;h2 id=&#34;url-uniform-resource-locator-的组成部分&#34;&gt;URL（Uniform Resource Locator）的组成部分&lt;/h2&gt;
 
 &lt;blockquote&gt;
 &lt;p&gt;&lt;code&gt;传输协议&lt;/code&gt; + &lt;strong&gt;域名或IP&lt;/strong&gt; + 端口号 +&lt;code&gt;路径&lt;/code&gt; + &lt;code&gt;查询字符串&lt;/code&gt; + &lt;em&gt;锚点&lt;/em&gt;&lt;/p&gt;
@@ -64,12 +64,19 @@
 &lt;p&gt;&lt;code&gt;https://&lt;/code&gt;&lt;strong&gt;www.baidu.com&lt;/strong&gt;&lt;code&gt;/s&lt;/code&gt;&lt;strong&gt;wd=hello&amp;amp;rsv_spt=1&lt;/strong&gt;&lt;code&gt;#5&lt;/code&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-&lt;li&gt;传输协议：&lt;code&gt;http&lt;/code&gt;、&lt;code&gt;https&lt;/code&gt;、&lt;code&gt;ftp&lt;/code&gt;等&lt;/li&gt;
-&lt;li&gt;域名：&lt;code&gt;www.baidu.com&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;端口：通常省略，&lt;code&gt;:80&lt;/code&gt;、&lt;code&gt;:443&lt;/code&gt;、&lt;code&gt;:8080&lt;/code&gt;等（http 大部分默认80, https默认443）&lt;/li&gt;
-&lt;li&gt;路径：&lt;code&gt;/s&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;查询参数：&lt;code&gt;wd=hello&amp;amp;rsv_spt=1&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;锚点：&lt;code&gt;#5&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;传输协议（ scheme: [protocal] ）：&lt;code&gt;http&lt;/code&gt;、&lt;code&gt;https&lt;/code&gt;、&lt;code&gt;ftp&lt;/code&gt;等&lt;/li&gt;
+&lt;li&gt;域名（ [//authority] Domain Name ）：&lt;code&gt;www.baidu.com&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;端口（ :Port ）：通常省略，&lt;code&gt;:80&lt;/code&gt;、&lt;code&gt;:443&lt;/code&gt;、&lt;code&gt;:8080&lt;/code&gt;等（http 大部分默认80, https默认443）&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;[//authority] = [userinfo@]host[:port]&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;路径（ Path to the file）：&lt;code&gt;/s&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;查询参数（[?query] Parameters ）：&lt;code&gt;wd=hello&amp;amp;rsv_spt=1&lt;/code&gt;或者&lt;code&gt;?key1=value1&amp;amp;key2=value2&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;锚点（ [#fragment] Anchor ）：&lt;code&gt;#5&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;另一个常见的 URL（URI） 的例子：&lt;/p&gt;
@@ -89,17 +96,22 @@ https 对应的默认端口号 443&lt;/p&gt;
 
 &lt;p&gt;&lt;code&gt;localhost:8080&lt;/code&gt;&lt;/p&gt;
 
-&lt;h2 id=&#34;dns-域名系统&#34;&gt;DNS：域名系统&lt;/h2&gt;
+&lt;h2 id=&#34;dns-domain-name-system-域名系统&#34;&gt;DNS（Domain Name System）：域名系统&lt;/h2&gt;
 
 &lt;p&gt;作用：根据域名查出IP地址&lt;/p&gt;
 
 &lt;p&gt;即：将域名解析为IP 地址&lt;/p&gt;
 
-&lt;h2 id=&#34;nslookup可查询ip地址&#34;&gt;nslookup可查询IP地址&lt;/h2&gt;
+&lt;h2 id=&#34;nslookup可查询ip-dns-地址&#34;&gt;nslookup可查询IP（DNS）地址&lt;/h2&gt;
 
 &lt;p&gt;直接使用可以查询到域名的 A 记录&lt;/p&gt;
 
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;nslookup + 域名
+&lt;blockquote&gt;
+&lt;p&gt;nslookup 命令用于查询 DNS 的记录，查看域名解析是否正常，在网络故障的时候用来诊断网络问题&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;# nslookup + 域名
+nslookup domain [dns-server]
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;nslookup xmasuhai.xyz
@@ -107,13 +119,34 @@ https 对应的默认端口号 443&lt;/p&gt;
 
 &lt;h2 id=&#34;ip的作用-ping-命令用法&#34;&gt;IP的作用，ping 命令用法&lt;/h2&gt;
 
-&lt;p&gt;一是定位一台设备
-二是封装数据报文跟其他设备交流&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;一是定位一台设备&lt;/li&gt;
+&lt;li&gt;二是封装数据报文跟其他设备交流&lt;/li&gt;
+&lt;/ul&gt;
 
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;ping baidu.com
-&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;ping&lt;/code&gt; 命令是常用的网络命令，它通常用来测试与目标主机的连通性。&lt;/p&gt;
 
-&lt;h2 id=&#34;域名是什么-域名分类&#34;&gt;域名是什么，域名分类&lt;/h2&gt;
+&lt;p&gt;即：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;标识主机，具体地说，标识其网络接口，并且提供主机在网络中的位置，就此提供创建到达该主机的路径的能力。&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;每个 IP 数据包的标头包含了发送主机的 IP 地址和目的主机的 IP 地址。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;# ping [参数][主机名或ip地址]
+ping baidu.com
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;域名-domain-name&#34;&gt;域名（Domain Name）&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;是互联网的一项服务，主要用于域名与 IP 地址的相互转换&lt;/p&gt;
+
+&lt;p&gt;如果要访问一个地址（使用域名），都要先通过DNS查询域名对应的IP地址，才能进行访问&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;域名分类&#34;&gt;域名分类&lt;/h3&gt;
 
 &lt;blockquote&gt;
 &lt;p&gt;域名分顶级域名，二级域名和三级域名&lt;/p&gt;
@@ -126,6 +159,18 @@ https 对应的默认端口号 443&lt;/p&gt;
 &lt;li&gt;二级域名：&lt;code&gt;baidu.com&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;三级域名：&lt;code&gt;www.baidu.com&lt;/code&gt;&lt;/li&gt;
 &lt;/ol&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;域名的第一级是顶级域，它包括通用顶级域，例如.com、.net 和.org；&lt;/p&gt;
+
+&lt;p&gt;以及国家和地区顶级域，例如.us、.cn 和.tk。&lt;/p&gt;
+
+&lt;p&gt;完整域名的所有字符加起来不得超过 253 个 ASCII 字符的总长度。&lt;/p&gt;
+
+&lt;p&gt;当每一级都使用单个字符时，限制为 127 个级别：127 个字符加上 126 个点的总长度为 253。&lt;/p&gt;
+
+&lt;p&gt;但实际上，某些域名可能具有其他限制；也没有只有一个字符的域名后缀。&lt;/p&gt;
+&lt;/blockquote&gt;
 
 &lt;hr /&gt;
 
@@ -149,32 +194,40 @@ https 对应的默认端口号 443&lt;/p&gt;
 
 &lt;p&gt;IP: &lt;code&gt;Internet Protocol&lt;/code&gt;&lt;/p&gt;
 
-&lt;h3 id=&#34;ip主要约定&#34;&gt;IP主要约定&lt;/h3&gt;
+&lt;h3 id=&#34;ip-internet-protocol-主要约定&#34;&gt;IP（Internet Protocol）主要约定&lt;/h3&gt;
 
 &lt;p&gt;1.如何定位一台设备
 2.如何封装数据报文（用来和其他设备交流）&lt;/p&gt;
 
 &lt;p&gt;互联网（not WWW），至少一个独特的IP&lt;/p&gt;
 
-&lt;p&gt;IP分内网和外网&lt;/p&gt;
+&lt;h4 id=&#34;ip分内网和外网&#34;&gt;IP分内网和外网&lt;/h4&gt;
 
 &lt;p&gt;设备 路由器 电信DNS服务器 其他用户&lt;/p&gt;
 
-&lt;p&gt;获取外网IP 买 | 蹭&lt;/p&gt;
+&lt;h4 id=&#34;获取外网ip-买-蹭&#34;&gt;获取外网IP 买 | 蹭&lt;/h4&gt;
 
-&lt;p&gt;每次重启路由，被分配一个随机的外网IP，无固定外网IP&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;首先，你需要租用宽带（电信或者联通）&lt;/li&gt;
+&lt;li&gt;其次，你需要购买一个路由器（有时候也被叫做“网关”）&lt;/li&gt;
+&lt;li&gt;当路由器连接上电信或者联通的服务器后，路由器就会获得一个外网的IP，所有通过路由器连接的设备，他们的外网IP都是一致的。&lt;/li&gt;
+&lt;li&gt;注意：如果当你重启路由器之后，可能会被分配一个新的外网IP，也就是说，路由器是没有一个固定的外网IP，除非高价买，企业级需要&lt;/li&gt;
+&lt;/ul&gt;
 
-&lt;h3 id=&#34;内网ip&#34;&gt;内网IP&lt;/h3&gt;
+&lt;h4 id=&#34;内网ip&#34;&gt;内网IP&lt;/h4&gt;
 
-&lt;p&gt;路由器创建内网，内网中的设备使用内网IP，格式&lt;code&gt;192.168.xxx.xxx&lt;/code&gt;、&lt;code&gt;192.168.1.1&lt;/code&gt;等&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;路由器创建内网，内网中的设备使用内网IP，格式&lt;code&gt;192.168.xxx.xxx&lt;/code&gt;、&lt;code&gt;192.168.1.1&lt;/code&gt;等&lt;/li&gt;
+&lt;li&gt;路由再给每一个内网中的设备(PC、手机)分配一个不同的内网IP&lt;/li&gt;
+&lt;li&gt;内网的所有设备都有一个相同的外网IP&lt;/li&gt;
+&lt;li&gt;路由器会为每一个内网中的设备分配一个不同的内网IP&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
 
-&lt;p&gt;路由再给每一个内网中的设备(PC、手机)分配一个不同的内网IP&lt;/p&gt;
+&lt;h4 id=&#34;内网ip固定&#34;&gt;内网IP固定&lt;/h4&gt;
 
-&lt;p&gt;内网的所有设备都有一个相同的外网IP&lt;/p&gt;
-
-&lt;p&gt;内网IP固定&lt;/p&gt;
-
-&lt;p&gt;查看IP&lt;/p&gt;
+&lt;h4 id=&#34;查看ip&#34;&gt;查看IP&lt;/h4&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;ping xxx.com
 &lt;/code&gt;&lt;/pre&gt;
@@ -218,7 +271,7 @@ https 对应的默认端口号 443&lt;/p&gt;
 &lt;li&gt;该用什么端口：&lt;a href=&#34;https://zh.wikipedia.org/wiki/TCP/UDP%E7%AB%AF%E5%8F%A3%E5%88%97%E8%A1%A8#0.E5.88.B01023.E5.8F.B7.E7.AB.AF.E5.8F.A3&#34;&gt;端口对应的服务列表wiki&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;h3 id=&#34;其他适用规则&#34;&gt;其他适用规则&lt;/h3&gt;
+&lt;h3 id=&#34;其他使用规则&#34;&gt;其他使用规则&lt;/h3&gt;
 
 &lt;ol&gt;
 &lt;li&gt;0到1023（2的10次方减1，计1024个）号端口，留给系统使用，自己使用须取得管理权限&lt;/li&gt;
@@ -278,9 +331,10 @@ https 对应的默认端口号 443&lt;/p&gt;
 &lt;li&gt;提供DNS的服务器的服务商：电信或联通等&lt;/li&gt;
 &lt;li&gt;浏览器向提供DNS的服务器询问&lt;code&gt;xiedaimala.com&lt;/code&gt;对应什么IP&lt;/li&gt;
 &lt;li&gt;服务器回答一个IP（具体过程三次握手、四次握手，面试必问）&lt;/li&gt;
-&lt;li&gt;请求内容是查看这个网址的网页
-eg.&lt;code&gt;xiedaimala.com&lt;/code&gt;的首页&lt;code&gt;index.html&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;请求内容是查看这个网址的网页&lt;/li&gt;
 &lt;/ul&gt;
+
+&lt;p&gt;eg.&lt;code&gt;xiedaimala.com&lt;/code&gt;的首页&lt;code&gt;index.html&lt;/code&gt;&lt;/p&gt;
 
 &lt;h4 id=&#34;why-80-或-443-端口&#34;&gt;why &lt;code&gt;80&lt;/code&gt;或&lt;code&gt;443&lt;/code&gt;端口&lt;/h4&gt;
 
@@ -289,6 +343,21 @@ eg.&lt;code&gt;xiedaimala.com&lt;/code&gt;的首页&lt;code&gt;index.html&lt;/co
 &lt;li&gt;服务器默认用&lt;code&gt;443&lt;/code&gt;提供&lt;code&gt;https&lt;/code&gt;服务&lt;/li&gt;
 &lt;li&gt;在开发者工具查看具体端口&lt;/li&gt;
 &lt;li&gt;不需要写在地址栏里，写了也帮你消掉&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;nslookup&#34;&gt;&lt;code&gt;nslookup&lt;/code&gt;&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;nslookup -qt=[type] domain [dns-server]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;code&gt;type&lt;/code&gt;可以是：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;A 地址记录&lt;/li&gt;
+&lt;li&gt;AAAA 地址记录（IPv6）&lt;/li&gt;
+&lt;li&gt;CNAME 别名记录&lt;/li&gt;
+&lt;li&gt;HINFO 硬件配置记录，包括 CPU、操作系统信息
+等&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;询问域名，域名&lt;code&gt;ns&lt;/code&gt;，寻找&lt;code&gt;lookup&lt;/code&gt;&lt;/p&gt;
@@ -322,7 +391,7 @@ eg.&lt;code&gt;xiedaimala.com&lt;/code&gt;的首页&lt;code&gt;index.html&lt;/co
 &lt;h5 id=&#34;用路径&#34;&gt;用路径&lt;/h5&gt;
 
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://developer.mozilla.org/zh-CN/docs/Web/HTML&#34;&gt;`https://developer.mozilla.org/zh-CN/docs/Web/HTML&lt;/a&gt;`&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://developer.mozilla.org/zh-CN/docs/Web/HTML&#34;&gt;&lt;code&gt;https://developer.mozilla.org/zh-CN/docs/Web/HTML&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://developer.mozilla.org/zh-CN/docs/Web/CSS&#34;&gt;&lt;code&gt;https://developer.mozilla.org/zh-CN/docs/Web/CSS&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
@@ -360,7 +429,26 @@ eg.&lt;code&gt;xiedaimala.com&lt;/code&gt;的首页&lt;code&gt;index.html&lt;/co
 &lt;li&gt;锚点不会传给服务器，所以是无法在&lt;code&gt;Network&lt;/code&gt;面板里看到的&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2 id=&#34;url的组成&#34;&gt;URL的组成&lt;/h2&gt;
+&lt;h2 id=&#34;url&#34;&gt;URL&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;统一资源定位符(Uniform Resource Locator),简称URL,是因特网上标准的资源的地址（Address）&lt;/p&gt;
+
+&lt;p&gt;Every HTTP &lt;strong&gt;URL&lt;/strong&gt; conforms to the syntax of a generic &lt;strong&gt;URI&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;每个有效的 URI 都指向一个独特的资源。这个资源可以是一个 HTML 页面，一个 CSS 文档，一幅图像、视频、邮件、PDF等&lt;/p&gt;
+
+&lt;p&gt;The URI generic syntax consists of a hierarchical sequence of five components&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;URI = scheme:[//authority]path[?query][#fragment]&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-authority = [userinfo@]host[:port]&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/URL&#34;&gt;wiki:URL&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;组成&#34;&gt;组成&lt;/h3&gt;
 
 &lt;blockquote&gt;
 &lt;p&gt;&lt;code&gt;传输协议&lt;/code&gt; + &lt;strong&gt;域名或IP&lt;/strong&gt; + 端口号 +&lt;code&gt;路径&lt;/code&gt; + &lt;code&gt;查询字符串&lt;/code&gt; + &lt;em&gt;锚点&lt;/em&gt;&lt;/p&gt;
@@ -370,19 +458,35 @@ eg.&lt;code&gt;xiedaimala.com&lt;/code&gt;的首页&lt;code&gt;index.html&lt;/co
 
 &lt;p&gt;&lt;code&gt;https://&lt;/code&gt;&lt;strong&gt;www.baidu.com&lt;/strong&gt;&lt;code&gt;/s&lt;/code&gt;&lt;strong&gt;wd=hello&amp;amp;rsv_spt=1&lt;/strong&gt;&lt;code&gt;#5&lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;就算没写，也应知道端口，&lt;code&gt;HTTPS&lt;/code&gt;默认端口&lt;code&gt;443&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;**www.baidu.com**&lt;/code&gt;是域名。 表明正在请求哪个 Web 服务器。或者，可以直接使用 IP address, 但因为不便，所以不常使用。&lt;/p&gt;
+
+&lt;p&gt;就算没写，也应知道端口，&lt;code&gt;HTTPS&lt;/code&gt;默认端口&lt;code&gt;443&lt;/code&gt;，通常省略&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;/path/to/index.html&lt;/code&gt; 是网络服务器上资源的路径，路径表示访问哪个网页&lt;/p&gt;
 
 &lt;p&gt;&lt;code&gt;ftp://&lt;/code&gt;是文件传输协议，不属于&lt;code&gt;www&lt;/code&gt;，本地或局域网&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;wd=hello&amp;amp;rsv_spt=1&lt;/code&gt; 或&lt;code&gt;?key1=value1&amp;amp;key2=value2&lt;/code&gt; 是提供给网络服务器的额外参数。 这些参数是用 &amp;amp; 符号分隔的键/值对列表。&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;wd=hello&amp;amp;rsv_spt=1&lt;/code&gt;：&lt;code&gt;查询字符串&lt;/code&gt;表示页面的展示内容，第几部分，第几章，第几页，或者查询关键词&lt;/p&gt;
+
+&lt;p&gt;在返回资源之前，Web服务器可以使用这些参数来执行额外的操作。&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;#Anchor&lt;/code&gt;或&lt;code&gt;#SomewhereInTheDocument&lt;/code&gt;是资源本身的另一部分的锚点。&lt;/p&gt;
+
+&lt;p&gt;锚点表示资源中的一种“书签”，给浏览器显示位于该“加书签”位置的内容的方向。
+例如，
+在 HTML 文档上，浏览器将滚动到定义锚点的位置&lt;/p&gt;
+
+&lt;p&gt;在视频或音频文档上，浏览器将尝试转到锚代表的时间&lt;/p&gt;
+
+&lt;p&gt;＃后面的部分（也称为片段标识符）[fragment]从来没有发送到请求的服务器&lt;/p&gt;
 
 &lt;p&gt;锚点会被浏览器‘吃掉’，锚点只和浏览器有关，没必要发送给服务器&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;服务器无法接收&lt;code&gt;#&lt;/code&gt;之后的内容，参数&lt;/strong&gt;，不想被扣年终bonus的记住&lt;/p&gt;
-
-&lt;p&gt;路径表示访问那个网页&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;wd=hello&amp;amp;rsv_spt=1&lt;/code&gt;：&lt;code&gt;查询字符串&lt;/code&gt; 表示页面的展示内容，第几部分，第几章，第几页，或者查询关键词&lt;/p&gt;
-
-&lt;p&gt;统一资源定位符&lt;/p&gt;
+&lt;/blockquote&gt;
 
 &lt;h2 id=&#34;http协议&#34;&gt;HTTP协议&lt;/h2&gt;
 
@@ -436,8 +540,7 @@ eg.&lt;code&gt;xiedaimala.com&lt;/code&gt;的首页&lt;code&gt;index.html&lt;/co
 
 &lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://blog.csdn.net/qq_31930499/article/details/79767330&#34;&gt;DNS的作用是什么？为什么一定要配置DNS才能上网&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
 
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://www.ruanyifeng.com/blog/2016/06/dns.html&#34;&gt;DNS 原理入门 作者：阮一峰&lt;/a&gt;
-&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt; HEAD&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://www.ruanyifeng.com/blog/2016/06/dns.html&#34;&gt;DNS 原理入门 作者：阮一峰&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h4 id=&#34;相关文章&#34;&gt;相关文章&lt;/h4&gt;
