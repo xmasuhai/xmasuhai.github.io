@@ -1,0 +1,116 @@
+@mixin anime($life:3.5s, $demoName:demo1) {
+    animation: $life linear .5s infinite alternate $demoName;
+}
+
+@mixin demo($bdWidth_bf:0px, $bdWidth_af:10px, $bdColor_bf:orangered, $bdColor_af:greenyellow) {
+    from {
+        border: $bdWidth_bf solid $bdColor_bf;
+    }
+    to {
+        border: $bdWidth_af solid $bdColor_af;
+    }
+}
+
+@keyframes demo1 {
+    @include demo(0px, 10px, orange, greenyellow);
+}
+
+@keyframes demo2 {
+    from {
+        width: 100px;
+    }
+    to {
+        width: 500px;
+    }
+}
+
+@keyframes demo3 {
+    from {
+        display: inline;
+        height: 0px;
+    }
+    to {
+        display: block;
+        height: 80px;
+    }
+}
+
+@keyframes demo4 {
+    0% {
+        display: block;
+        height: 0px;
+    }
+    50% {
+        display: inline;
+        height: 30px;
+    }
+    100% {
+        display: inline;
+        height: 80px;
+    }
+}
+
+span {
+    @include anime(4s, demo1);
+}
+
+div {
+    @include anime(4.5s, demo1);
+}
+
+a {
+    /* border: 1px solid red; */
+    background: purple;
+    @include anime(3.8s, demo1);
+}
+
+.block {
+    @include anime(3s, demo2);
+    /* animation: 2s linear 2s infinite alternate demo1; */
+    /* 延迟? 覆盖? 权重? */
+}
+
+.traitor_Block {
+    display: block;
+    @include anime(3s, demo4);
+}
+
+.traitor_inline {
+    display: inline;
+    @include anime(3.8s, demo3);
+}
+
+
+/* a:hover {
+    display: inline-block;
+    border: 1px solid #777777;
+    width: 100%;
+    background: greenyellow;
+    transition: all 1s ease-in-out;
+} */
+
+
+/* a:active {
+    border: 1px solid red;
+    background: orangered;
+    transition: all 1s ease-in-out;
+} */
+
+span {
+    /*无效的设置*/
+    width: 300px;
+}
+
+span,
+div,
+a {
+    border: 1px solid red;
+    background: #777;
+    overflow: hidden;
+    /* transition: all 1s ease-in-out; */
+}
+
+.ib {
+    border: 1px solid cyan;
+    display: inline-block;
+}
