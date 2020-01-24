@@ -71,7 +71,7 @@
 
 <meta itemprop="datePublished" content="2020-01-16T06:42:43&#43;08:00" />
 <meta itemprop="dateModified" content="2020-01-16T06:42:43&#43;08:00" />
-<meta itemprop="wordCount" content="4146">
+<meta itemprop="wordCount" content="5527">
 
 
 
@@ -382,9 +382,10 @@
 <li><a href="#组成">组成</a></li>
 </ul></li>
 <li><a href="#http协议">HTTP协议</a></li>
-<li><a href="#curl-命令">curl 命令</a>
+<li><a href="#curl-命令"><code>curl</code> 命令</a>
 <ul>
-<li><a href="#用-curl-可以发http请求">用<code>curl</code>可以发HTTP请求</a>
+<li><a href="#用-curl-可以发http请求">用<code>curl</code>可以发HTTP请求</a></li>
+<li><a href="#http">HTTP</a>
 <ul>
 <li><a href="#参考文章">参考文章</a></li>
 <li><a href="#相关文章">相关文章</a></li>
@@ -418,6 +419,14 @@
 <p>eg.</p>
 
 <p><code>https://</code><strong>www.baidu.com</strong><code>/s</code><strong>wd=hello&amp;rsv_spt=1</strong><code>#5</code></p>
+
+<blockquote>
+<p>==传输协议== + <strong>域名或IP</strong> + 端口号 + ++路径++ + <code>查询字符串</code> + <em>锚点</em></p>
+</blockquote>
+
+<p>eg.</p>
+
+<p>==https://==<strong>www.baidu.com</strong>++/s++<code>wd=hello&amp;rsv_spt=1</code><em>#5</em></p>
 
 <ul>
 <li>传输协议（ scheme: [protocal] ）：<code>http</code>、<code>https</code>、<code>ftp</code>等</li>
@@ -491,8 +500,12 @@ nslookup domain [dns-server]
 
 <pre><code class="language-bash"># ping [参数][主机名或ip地址]
 ping baidu.com
+ping localhost
+ping 127.0.0.1
 </code></pre></li>
 </ul>
+
+<p>用<code>Ctrl + c</code>中断</p>
 
 <h2 id="域名-domain-name">域名（Domain Name）</h2>
 
@@ -517,9 +530,9 @@ ping baidu.com
 </ol>
 
 <blockquote>
-<p>域名的第一级是顶级域，它包括通用顶级域，例如.com、.net 和.org；</p>
+<p>域名的第一级是顶级域，它包括通用顶级域，例如<code>.com</code>、<code>.net</code> 和<code>.org</code>；</p>
 
-<p>以及国家和地区顶级域，例如.us、.cn 和.tk。</p>
+<p>以及国家和地区顶级域，例如<code>.us</code>、<code>.cn</code>和<code>.tk</code>。</p>
 
 <p>完整域名的所有字符加起来不得超过 253 个 ASCII 字符的总长度。</p>
 
@@ -533,12 +546,6 @@ ping baidu.com
 <p>内容提要卐，后面是视频记录流水账</p>
 
 <hr />
-
-<p>问：hosts 文件在哪？</p>
-
-<p>答： 在 Windows 系统中，hosts 位于 <code>C:\Windows\System32\drivers\etc\hosts</code> 。</p>
-
-<p>在 macOS / Linux系统中，hosts 位于 <code>/etc/hosts</code></p>
 
 <h2 id="网络和-ip">网络和 IP</h2>
 
@@ -610,7 +617,46 @@ ping baidu.com
 <li><code>127.0.0.1</code>表示自己</li>
 <li><code>localhost</code>通过hosts指定为自己</li>
 <li><code>0.0.0.0</code>不表示任何设备，后端用</li>
+<li>localhost是个域名，不是地址，它可以被配置为任意的 IP 地址，不过通常情况下都指向 127.0.0.1(ipv4)和 <a href="ipv6">::1</a></li>
 </ol>
+
+<p>eg.</p>
+
+<pre><code class="language-bash">127.0.0.1	localhost
+255.255.255.255	broadcasthost
+::1             localhost
+</code></pre>
+
+<p>改为：</p>
+
+<pre><code class="language-bash">127.0.0.1	xmas
+</code></pre>
+
+<p>就能在地址栏用<code>xmas</code>访问<code>127.0.0.1</code></p>
+
+<p>问：hosts 文件在哪？</p>
+
+<p>答： 在 Windows 系统中，hosts 位于 <code>C:\Windows\System32\drivers\etc\hosts</code> 。</p>
+
+<p>在 macOS / Linux系统中，hosts 位于 <code>/etc/hosts</code></p>
+
+<p>问：在window或mac上，当我们访问<code>localhost</code>时，究竟在访问哪里？</p>
+
+<p><a href="https://www.jianshu.com/p/59644b5bf2e8">修改host文件以及localhost与127.0.0.1的区别</a></p>
+
+<p><a href="https://www.zhihu.com/question/23940717">localhost、127.0.0.1 和 本机IP 三者的区别?</a></p>
+
+<p><a href="https://github.com/Kimi-Gao/Program-Blog/issues/52">localhost和127.0.0.1的异同</a></p>
+
+<p>一些概念</p>
+
+<blockquote>
+<p>（1）127.0.0.1在Linux也好，Windows也好，都会有这个循回地址的。</p>
+
+<p>（2）在IP地址的规定中，第一部分是1~126为A类地址，128~191为B类地址，那么中间留的127.0.0.1被称为本地回环地址，主要作用有两个：一是测试本机的网络配置，能PING通127.0.0.1说明本机的网卡和IP协议安装都没有问题；另一个作用是某些SERVER/CLIENT的应用程序在运行时需调用服务器上的资源，一般要指定SERVER的IP地址，但当该程序要在同一台机器上运行而没有别的SERVER时就可以把SERVER的资源装在本机，SERVER的IP地址设为127.0.0.1也同样可以运行。</p>
+
+<p>（3）这个地址也是给本机loop back接口所预留的IP地址，它是为了让上层应用联系本机用的，如果没有这个loop back接口通常上层应用无法与自己联系，因为它仍然会把数据往IP层发送，数据到了IP层如果发现目的地是自己，则回被回环驱动程序送回。因此通过这个地址也可以测试TCP/IP的安装是否成功，就是驱动，网卡 都是否正常，但无法测试出具体TCP/IP的配置是否正确，也无法测试出网卡是否正常，因为数据在离开IP层之前就已经被送回去了。</p>
+</blockquote>
 
 <h2 id="端口">端口</h2>
 
@@ -636,6 +682,16 @@ ping baidu.com
 </ol>
 
 <blockquote>
+<p>IP是用来定位一个设备的</p>
+
+<p>端口是用来定位一个设备的服务</p>
+
+<p>有了IP和端口，就可以定位一个设备提供的服务</p>
+
+<p>比如百度的设备提供网页服务；腾讯的设备提供聊天服务；淘宝的设备提供支付服务等</p>
+
+<p>这些服务都可以通过IP和端口<strong>唯一确定</strong></p>
+
 <p>总之，IP和端口缺一不可</p>
 </blockquote>
 
@@ -659,7 +715,7 @@ ping baidu.com
 <p>知识点</p>
 
 <ul>
-<li>一个域名可以对应不同IP，即均衡负载，分流，防止一台机子扛不住，或者恶意的<code>D-Dos</code>攻击，网站优化策略</li>
+<li>一个域名可以对应不同IP，即均衡负载，分流，防止一台机子扛不住，或者恶意的<code>DDos</code>攻击，网站优化策略</li>
 <li>一个IP可对应不同域名，即穷开发者的共享主机</li>
 </ul>
 
@@ -726,6 +782,8 @@ ping baidu.com
 <code>114.114.114.114</code>
 备用
 <code>114.114.115.115</code></p>
+
+<p>但设置了可能会被代理商嵌入广告</p>
 
 <h3 id="题外话">题外话</h3>
 
@@ -848,19 +906,23 @@ ping baidu.com
 
 <p>基于<code>TCP</code>和<code>IP</code>两个协议：也称<code>TCP/IP</code></p>
 
-<h2 id="curl-命令">curl 命令</h2>
+<h2 id="curl-命令"><code>curl</code> 命令</h2>
 
 <h3 id="用-curl-可以发http请求">用<code>curl</code>可以发HTTP请求</h3>
 
 <ul>
 <li><code>curl https://xiedaimala.com</code></li>
 <li><code>curl -v http://baidu.com</code></li>
-<li><code>curl -v -- http://baidu.com</code></li>
+<li><code>curl -s -v -- http://baidu.com</code></li>
 </ul>
 
 <blockquote>
 <p><code>-v</code>：verbose 啰嗦模式</p>
 </blockquote>
+
+<p>用Chrome（地址栏输入URL），得到网页，开始解析页面</p>
+
+<p>而用curl命令，只得到网页，不解析页面</p>
 
 <p>理解以下概念</p>
 
@@ -873,9 +935,66 @@ ping baidu.com
 <li>真正结束</li>
 </ul>
 
+<p>&gt; <code>curl baidu.com</code></p>
+
+<p>&lt; 以下是返回的内容</p>
+
+<pre><code class="language-HTML">&lt;html&gt;
+&lt;meta http-equiv=&quot;refresh&quot; content=&quot;0;url=http://www.baidu.com/&quot;&gt;
+&lt;/html&gt;
+</code></pre>
+
+<blockquote>
+<p>查看<code>curl</code> 发送的五行请求</p>
+</blockquote>
+
+<p>&gt; <code>curl -v  http://baidu.com</code></p>
+
+<pre><code class="language-bash">*   Trying 180.101.49.12:80... #DNS询问IP地址
+* TCP_NODELAY set
+* Connected to baidu.com (180.101.49.12) port 80 (#0) # 链接服务器80端口
+&gt; GET / HTTP/1.1 #获取根路径 使用的协议
+&gt; Host: baidu.com #一个IP有可能对应多个域名，所以访问`180.101.49.12`所对应的的域名是`baidu.com`
+&gt; User-Agent: curl/7.67.0 #用户访问工具
+&gt; Accept: */* #期待返回的内容 任意内容
+&gt; # 回车表示请求结束，一共五行
+* Mark bundle as not supporting multiuse
+&lt; HTTP/1.1 200 OK # 以`&lt;`开头的就是服务器返回的内容
+&lt; Accept-Ranges: bytes
+&lt; Cache-Control: private, no-cache, no-store, proxy-revalidate, no-transform
+&lt; Connection: keep-alive
+&lt; Content-Length: 2381
+&lt; Content-Type: text/html
+&lt; Date: Mon, 20 Jan 2020 13:46:42 GMT
+&lt; Etag: &quot;588604c8-94d&quot;
+&lt; Last-Modified: Mon, 23 Jan 2017 13:27:36 GMT
+&lt; Pragma: no-cache
+&lt; Server: bfe/1.0.8.18
+&lt; Set-Cookie: BDORZ=27315; max-age=86400; domain=.baidu.com; path=/
+&lt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;meta http-equiv=&quot;refresh&quot; content=&quot;0;url=http://www.baidu.com/&quot;&gt;
+&lt;/html&gt;
+* Connection #0 to host baidu.com left intact
+</code></pre>
+
+<p>启用<code>baidu.com</code>,请重新访问<code>http://www.baidu.com/</code>，对应访问的IP改变，<code>TCP</code>启动，连接到80端口，之后发送五行内容，得到</p>
+
+<pre><code class="language-bash">&lt;!DOCTYPE html&gt;
+&lt;!--STATUS OK--&gt;&lt;html&gt;...&lt;/html&gt;
+* Connection #0 to host www.baidu.com left intact
+</code></pre>
+
+<p>只有TCP结束了，才真正结束</p>
+
+<h3 id="http">HTTP</h3>
+
 <blockquote>
 <p>规定请求的格式是什么，响应式格式是什么</p>
 </blockquote>
+
+<p>HTTP规定如何写五行请求以及如何返回响应</p>
 
 <!-- Article End -->
 
@@ -893,6 +1012,10 @@ ping baidu.com
 
 <ul>
 <li><p><a href="https://static.xiedaimala.com/xdml/file/3ac7c224-c23d-491f-84b5-4fabfbeab9b8/2019-8-27-11-33-39.pdf">URL是什么.pdf</a></p></li>
+
+<li><p><a href="https://static.xiedaimala.com/xdml/file/3ac7c224-c23d-491f-84b5-4fabfbeab9b8/2019-8-29-11-22-40.js%20%E6%9C%8D%E5%8A%A1%E5%99%A8.pdf">HTTP 请求与响应 &amp; Node.js 服务器.pdf</a></p></li>
+
+<li><p><a href="https://zhih.me/how-the-web-works/">WEB是如何工作的 By底噪</a></p></li>
 
 <li><p><a href="https://blog.csdn.net/qq_31930499/article/details/79767330">DNS的作用是什么？为什么一定要配置DNS才能上网</a></p></li>
 
