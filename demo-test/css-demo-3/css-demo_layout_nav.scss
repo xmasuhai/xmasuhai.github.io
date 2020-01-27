@@ -9,12 +9,113 @@ ol {
     list-style: none;
 }
 
-ul>li {
+%fltLt {
     float: left;
-    border: 1px solid red;
-    padding: 4px 0.5em;
+}
+
+%height300 {
+    height: 300px;
+}
+
+.logo {
+    background-color: grey;
+    display: inline-block; //尽量压窄
+    @extend %fltLt;
+    margin-top: 8px;
+    margin-left: 10px;
+    ;
+    >img {
+        max-width: 100%;
+        height: 26px;
+        // width: 100px;
+        // border: 1px solid red;
+        vertical-align: top; //如果图片下有多余留空，加上这个属性可以去掉 或者`vertical-align:middle;`
+    }
+}
+
+.clearfix::after,
+br {
+    content: '';
+    display: block;
+    clear: both;
 }
 
 ul {
-    border: 1px solid green;
+    // border: 1px solid green;
+    display: inline-block;
+    >li {
+        @extend %fltLt;
+        // border: 1px solid red;
+        padding: 4px 0.5em;
+        line-height: 32px;
+    }
+}
+
+.nav1 {
+    @extend %fltLt;
+}
+
+.nav {
+    float: right;
+    margin-left: 20px;
+}
+
+header {
+    // border: 1px solid blue;
+    background-color: grey;
+    color: whitesmoke;
+}
+
+@mixin triple($bgColor:#999) {
+    @extend %height300;
+    @extend %fltLt;
+    background-color: $bgColor;
+}
+
+.content {
+    margin-top: 10px;
+    // outline: 1px solid cyan;
+    /* 不设`width`，用内容去填，即宽度由内容决定，除非`<aside></aside>`宽度固定，高度由内容撑起来，一般不设置具体高度值 */
+    width: 800px;
+    /* CSS重要原则之一：不该写的多余代码不要写；必须的代码不能少
+    `margin-left:auto;margin-right:auto;`比`margin:0 auto;`更稳妥，可会覆盖`margin-top`，精确，尽量正交，避免层叠掉其他样式 */
+    // margin: 0 auto;
+    margin-left: auto;
+    margin-right: auto;
+    >aside {
+        // border: 1px solid red;
+        width: 200px;
+        @include triple(#aaa);
+    }
+    >main {
+        // border: 1px solid purple;
+        @include triple(#ddd);
+        width: 500px;
+    }
+    >.ad {
+        width: 100px;
+        @include triple(#888);
+        // border: 1px solid gold;
+    }
+}
+
+.imageList {
+    outline: 1px solid red;
+    width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    >.x {
+        margin-right: -12px;
+    }
+    >.x>.image {
+        width: 191px;
+        height: 191px;
+        background-color: #777;
+        border: 50px solid yellowgreen;
+        @extend %fltLt;
+        // margin-top: 10px;
+        margin-bottom: 10px;
+        margin-right: 12px;
+    }
 }
