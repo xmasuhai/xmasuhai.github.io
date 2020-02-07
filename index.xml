@@ -7,7 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>Joel Xu</copyright>
-    <lastBuildDate>Fri, 07 Feb 2020 00:39:55 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 07 Feb 2020 23:37:07 +0800</lastBuildDate>
     
         <atom:link href="http://xmasuhai.xyz/index.xml" rel="self" type="application/rss+xml" />
     
@@ -31,6 +31,354 @@
 &lt;/ul&gt;
 
 &lt;p&gt;Learn more and contribute on &lt;a href=&#34;https://github.com/gohugoio&#34;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
+</description>
+      
+    </item>
+    
+    <item>
+      <title>【更好的CSS 01】SCSS入门</title>
+      <link>http://xmasuhai.xyz/post/scss/%E6%9B%B4%E5%A5%BD%E7%9A%84css-01scss%E5%85%A5%E9%97%A8/</link>
+      <pubDate>Fri, 07 Feb 2020 23:37:07 +0800</pubDate>
+      
+      <guid>http://xmasuhai.xyz/post/scss/%E6%9B%B4%E5%A5%BD%E7%9A%84css-01scss%E5%85%A5%E9%97%A8/</guid>
+      
+        <description>
+
+&lt;h2 id=&#34;快速上手&#34;&gt;快速上手&lt;/h2&gt;
+
+&lt;h3 id=&#34;scss是什么&#34;&gt;SCSS是什么&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;加强版的CSS?&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;懒人版CSS&lt;/li&gt;
+&lt;li&gt;解决&lt;a href=&#34;https://zh.wikipedia.org/wiki/层叠样式表#缺点&#34;&gt;CSS的一个缺陷&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;CSS实现了变量&lt;code&gt;--var&lt;/code&gt;，&lt;a href=&#34;https://caniuse.com/#search=--var&#34;&gt;支持的浏览器ok(2020)&lt;/a&gt;，单功能单一&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;当使用CSS时，我们经常在一个全局环境设置，这样可能会错误地设置元素的样式。&lt;/p&gt;
+
+&lt;p&gt;自定义CSS(即使有CSS变量)仍然是非常冗余的。&lt;/p&gt;
+
+&lt;p&gt;CSS不是为我们今天所拥有的那种复杂的架构设计的&lt;/p&gt;
+
+&lt;p&gt;我们遇到了在另一个样式表中导入一个样式表的问题，这可能会导致一个非常大的样式库，没有适当的文档可能无法理解它。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;了解为什么要使用这些预处理程序
+演示如何将样式划分为更小的特定组件
+不必强迫用户下载大量不需要的CSS文件&lt;/p&gt;
+
+&lt;h3 id=&#34;scss历史&#34;&gt;SCSS历史&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://zh.wikipedia.org/wiki/Sass&#34;&gt;维基百科&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;脱胎于Ruby (on Rails) 社区&lt;/p&gt;
+
+&lt;p&gt;Node-SASS 各端的版本&lt;/p&gt;
+
+&lt;p&gt;HTML HAML Pug&lt;/p&gt;
+
+&lt;p&gt;TS/ES6&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;SassScript提供以下功能：变量、嵌套、混入（Mixin）、选择器继承等。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;安装与运行&#34;&gt;安装与运行&lt;/h3&gt;
+
+&lt;p&gt;课堂上用到的代码，实时看到页面效果&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;cd scss-1
+npm init -y
+npm i -D parcel
+npx parcel index.html #
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;不要装&lt;code&gt;cnpm&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;如果发现 node-sass安装出错，请百度。&lt;/p&gt;
+
+&lt;p&gt;如果需要设置 npm淘宝源，请百度。&lt;/p&gt;
+
+&lt;h4 id=&#34;零配置学习-使用parcel&#34;&gt;零配置学习 - 使用parcel&lt;/h4&gt;
+
+&lt;h4 id=&#34;零配置学习-使用测试&#34;&gt;零配置学习 - 使用测试&lt;/h4&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&#34;最简单的几个语法&#34;&gt;最简单的几个语法&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;$variable&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;@mixin XXX&lt;/code&gt;-&lt;code&gt;@include XXX&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;%placeholder&lt;/code&gt;-&lt;code&gt;@extend %placeholder&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;嵌套选择器-nesting&#34;&gt;嵌套选择器 Nesting&lt;/h4&gt;
+
+&lt;p&gt;嵌套和作用域&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-CSS&#34;&gt;/* div&amp;gt;ul&amp;gt;li */
+.nav {
+    &amp;gt;ul {
+        &amp;gt;li {
+            border: 1px solid red;
+        }
+    }
+    border: 2px solid blue;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-CSS&#34;&gt;h1 {
+    color: red;
+}
+body {
+    h1 {
+        background: #ddd;
+        font-size: 100px;
+        color: green;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;能够推断 HTML文件的结构，同时保持实现的简短。这样做的另一个好处是，它有助于避免拼写错误&lt;/p&gt;
+
+&lt;p&gt;而且已经确定了一些规则的作用域，因此这些样式只用于&lt;code&gt;nav&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;后台看调试里对CSS的请求，仍是**.css，&lt;code&gt;npx parcel index.html&lt;/code&gt;自动编译成css语法&lt;/p&gt;
+
+&lt;p&gt;属性也可以嵌套，比如&lt;code&gt;border-color&lt;/code&gt;属性，可以写成：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-CSS&#34;&gt;p {
+    border: {
+    color: red;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;注意，&lt;code&gt;border:&lt;/code&gt;后面必须加上冒号。&lt;/p&gt;
+
+&lt;p&gt;在嵌套的代码块内，可以使用&lt;code&gt;&amp;amp;&lt;/code&gt;引用父元素。比如&lt;code&gt;a:hover&lt;/code&gt;伪类，可以写成：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-CSS&#34;&gt;a {
+    &amp;amp;:hover { color: #ffb3ff; }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;变量&#34;&gt;变量&lt;code&gt;$&lt;/code&gt;&lt;/h4&gt;
+
+&lt;p&gt;使用$来声明变量&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-CSS&#34;&gt;$r:orange;
+$g:yellowgreen;
+$c:cyan;
+$grey:#666;
+$gray:$grey;
+$border-width:5px;
+h1 {
+    color: $r;
+}
+body {
+    h1 {
+        background: $g;
+        font-size: 100px;
+        color: $r;
+    }
+}
+/* div&amp;gt;ul&amp;gt;li */
+.nav {
+    &amp;gt;ul {
+        &amp;gt;li {
+            border: $border-width solid $g;
+        }
+    }
+    border: $border-width solid $grey;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;如果变量需要镶嵌在字符串之中，就必须需要写在&lt;code&gt;#{}&lt;/code&gt;之中。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-CSS&#34;&gt;$side : left;
+.rounded {
+    border-#{$side}-radius: 5px;
+　　}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;mixin-支持参数&#34;&gt;&lt;code&gt;@mixin&lt;/code&gt;支持参数&lt;/h4&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;可以重用的代码块&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;写成函数来代替&lt;code&gt;border: 1px solid red;&lt;/code&gt;调试&lt;/p&gt;
+
+&lt;p&gt;声明&lt;code&gt;@mixin xxx&lt;/code&gt; 引入&lt;code&gt;@include xxx&lt;/code&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;@mixin&lt;/code&gt;的强大之处，在于可以指定参数和缺省值。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-CSS&#34;&gt;/* 指定参数和缺省值 */
+@mixin debug($border-color:red, $background-color:gold) {
+    border: 10px solid $border-color;
+    background: $background-color;
+}
+/* 写成函数来代替border: 1px solid red;调试 */
+
+/* 使用的时候，根据需要加入参数 */
+body {
+    h1 {
+        background: $g;
+        font-size: 100px;
+        color: $r;
+        @include debug(orangered, cyan);
+    }
+}
+/* div&amp;gt;ul&amp;gt;li */
+.nav {
+    &amp;gt;ul {
+        &amp;gt;li {
+            border: $border-width solid $g;
+            @include debug(purple, yellowgreen);
+        }
+    }
+    border: $border-width solid $grey;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;@include&lt;/code&gt; 机械地减少了代码量，但浏览器渲染时仍旧会还原css，性能一样&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;下面是一个mixin的实例，用来生成浏览器前缀。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-CSS&#34;&gt;@mixin rounded($vert, $horz, $radius: 10px) {
+　　border-#{$vert}-#{$horz}-radius: $radius;
+　　-moz-border-radius-#{$vert}#{$horz}: $radius;
+　　-webkit-border-#{$vert}-#{$horz}-radius: $radius;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;使用的时候，可以像下面这样调用：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-CSS&#34;&gt;#navbar li {
+@include rounded(top, left);
+}
+
+#footer {
+@include rounded(top, left, 5px); 
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;placeholder-和继承&#34;&gt;&lt;code&gt;%placeholder&lt;/code&gt;和继承&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-CSS&#34;&gt;%x
+
+div{
+    @extend %x{
+    /* xxx */
+    }
+}
+p{
+    @extend %x{
+    /* xxx */
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;刷新页面看CSS:&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-CSS&#34;&gt;div,p{
+    /* xxx */ 
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;不重复拷贝样式，而是把选择器提到相同样式前&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;SASS允许一个选择器，继承另一个选择器。比如，现有&lt;code&gt;class1&lt;/code&gt;：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-CSS&#34;&gt;.class1 {
+    border: 1px solid #ddd;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;class2要继承class1，就要使用&lt;code&gt;@extend&lt;/code&gt;命令：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-CSS&#34;&gt;.class2 {
+    @extend .class1;
+    font-size:120%;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;注释&#34;&gt;注释&lt;/h3&gt;
+
+&lt;p&gt;SASS共有两种注释风格。&lt;/p&gt;
+
+&lt;p&gt;标准的CSS注释&lt;code&gt;/* comment */&lt;/code&gt;，会保留到编译后的文件。&lt;/p&gt;
+
+&lt;p&gt;单行注释&lt;code&gt;//comment&lt;/code&gt;，只保留在SASS源文件中，编译后被省略。&lt;/p&gt;
+
+&lt;p&gt;在&lt;code&gt;/*&lt;/code&gt;后面加一个感叹号，表示这是&amp;rdquo;重要注释&amp;rdquo;。&lt;/p&gt;
+
+&lt;p&gt;即使是压缩模式编译，也会保留这行注释，通常可以用于声明版权信息。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-CSS&#34;&gt;/*!
+    重要注释！
+*/
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;总结&#34;&gt;总结&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&#34;https://juejin.im/post/5cf488ea518825378867758f&#34;&gt;SCSS快速入门&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;SCSS（学完之后你可以自学 &lt;a href=&#34;http://lesscss.org&#34;&gt;LESS&lt;/a&gt; 和 &lt;a href=&#34;http://stylus-lang.com&#34;&gt;Stylus&lt;/a&gt; &lt;a href=&#34;https://postcss.org&#34;&gt;PostCSS&lt;/a&gt; ）&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&#34;https://sass-lang.com&#34;&gt;SCSS-lang&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://www.sasscss.com/docs/&#34;&gt;中文文档1&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://sass.bootcss.com/docs/sass-reference/&#34;&gt;中文文档2&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://sass-lang.com/documentation/at-rules/mixin&#34;&gt; at-rules: @mixin @include&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://thesassway.com/beginner/the-inception-rule&#34;&gt;The Sass Way&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-CSS&#34;&gt;/* 文本不换行 */
+@mixin no-wrap(){
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+/* 使用方法: */
+.box {
+    @include no-wrap()
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://www.ruanyifeng.com/blog/2012/06/sass.html&#34;&gt;SASS用法指南 阮一峰&lt;/a&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;hr /&gt;
 </description>
       
     </item>
@@ -5903,190 +6251,6 @@ git commit -v
 &lt;li&gt;git reset &amp;ndash;hard *******用来切换版本&lt;/li&gt;
 &lt;li&gt;git reflog用来查看所有提交历史&lt;/li&gt;
 &lt;/ol&gt;
-
-&lt;!-- Article End --&gt;
-
-&lt;hr /&gt;
-
-&lt;!-- test --&gt;
-
-&lt;div style=&#34;text-align:center;&#34;&gt;·未完待续·&lt;/div&gt;
-
-&lt;!-- ok --&gt;
-
-&lt;hr /&gt;
-
-&lt;h4 id=&#34;参考文章&#34;&gt;参考文章&lt;/h4&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://static.xiedaimala.com/xdml/file/3ac7c224-c23d-491f-84b5-4fabfbeab9b8/2019-8-8-10-23-55.pdf&#34;&gt;git 本地仓库.pdf&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&#34;相关文章&#34;&gt;相关文章&lt;/h4&gt;
-
-&lt;ul&gt;
-&lt;li&gt;无&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-
-&lt;ul&gt;
-&lt;li&gt;作者： Joel&lt;/li&gt;
-&lt;li&gt;文章链接：&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://xmasuhai.xyz/posts/版权声明链接/&#34;&gt;版权声明&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;非自由转载-非商用-非衍生-保持署名&lt;/li&gt;
-&lt;li&gt;&lt;a style=&#39;color:#DB2D5D;&#39; href=&#39;https://xiedaimala.com/bbs/users/8c266e6f-55a2-4348-a180-17cb8cdb2c46#/?page=1&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;河&lt;/a&gt;
-&lt;a style=&#39;color:#006CFF;&#39; href=&#39;https://juejin.im/user/59abfad26fb9a0248f4aa221&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;掘&lt;/a&gt;
-&lt;a style=&#39;color:#009A61;&#39; href=&#39;https://segmentfault.com/u/joel_59b17eb9d2155&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;思&lt;/a&gt;
-&lt;a style=&#39;color:#0084FF;&#39; href=&#39;https://www.zhihu.com/people/xue-shou-41/posts&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;知&lt;/a&gt;
-&lt;a style=&#39;color:#EA6F5A;&#39; href=&#39;https://www.jianshu.com/u/079916729823&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;简&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-</description>
-      
-    </item>
-    
-    <item>
-      <title>【Git入门0】Git本地仓库六行配置与常见问题</title>
-      <link>http://xmasuhai.xyz/post/github/git%E5%85%A5%E9%97%A80git%E6%9C%AC%E5%9C%B0%E4%BB%93%E5%BA%93%E5%85%AD%E8%A1%8C%E9%85%8D%E7%BD%AE%E4%B8%8E%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/</link>
-      <pubDate>Wed, 01 Jan 2020 17:27:15 +0800</pubDate>
-      
-      <guid>http://xmasuhai.xyz/post/github/git%E5%85%A5%E9%97%A80git%E6%9C%AC%E5%9C%B0%E4%BB%93%E5%BA%93%E5%85%AD%E8%A1%8C%E9%85%8D%E7%BD%AE%E4%B8%8E%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/</guid>
-      
-        <description>
-
-&lt;h2 id=&#34;git-六行配置&#34;&gt;git 六行配置&lt;/h2&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;git config --global user.name 你的英文名
-git config --global user.email 你的邮箱
-git config --global push.default simple
-git config --global core.quotepath false
-git config --global core.editor &amp;quot;code --wait&amp;quot;
-git config --global core.autocrlf input
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;查看配置&#34;&gt;查看配置&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;git config --global --list
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;注意：上面的英文名和邮箱跟 GitHub 没有关系。
-可以跟 GitHub 的用户名和邮箱保持一致，
-也可以不一致。我的是一致的。&lt;/li&gt;
-&lt;li&gt;其中 git config &amp;ndash;global core.editor &amp;ldquo;code &amp;ndash;wait&amp;rdquo;用的是VSCode
-也可以用Vim&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;注意：你需要保证 code 是可以直接在命令行执行的。&lt;/strong&gt;
-如果不能执行，你需要安装 VSCode 并配置 PATH。
-我（win10）的 PATH 里添加的内容是&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;C:~\AppData\Local\Programs\Microsoft VS Code\bin
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;Mac 的配置方法，要在iTerm2中用命令code打开VSCode的步骤&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;ol&gt;
-&lt;li&gt;运行VS code并打开命令面板（ ⇧⌘P ）&lt;/li&gt;
-&lt;li&gt;输入 shell command 找到: Install ‘code&amp;rsquo; command in PATH 就行了。&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;http://www.jianshu.com/p/3dda4756eca5&#34;&gt;code命令还支持其他参数：Visual Studio Code入门&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&#34;常见问题&#34;&gt;常见问题&lt;/h2&gt;
-
-&lt;blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;问：课上说 git reset &amp;ndash;hard XXXXXX 里面的 XXXXXX 是提交号，那为什么视频后面你又写出了 git reset &amp;ndash;hard master 这样的命令。&lt;/li&gt;
-&lt;li&gt;答：请注意，说 git reset &amp;ndash;hard XXXXXX 的意思是我们「可以」使用 XXXXXX，并没有说我们「只能」使用 XXXXXX， &lt;strong&gt;显然reset 支持的参数不止 XXXXXX 这一种&lt;/strong&gt;。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;h3 id=&#34;git-就是一个命令而已&#34;&gt;git 就是一个命令而已&lt;/h3&gt;
-
-&lt;p&gt;Bash命令行里有很多命令，git 就是其中一个，在git-bash里运行git命令&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;问：手贱 已经在根目录下git init了 怎办？&lt;/li&gt;
-&lt;li&gt;或者对一个已经包含了git仓库的文件夹(假设该文件夹叫做TargetFile)再进行了次git init ，没多想就直接git add -A 怎办？&lt;/li&gt;
-&lt;li&gt;答：取消对文件夹 git init 初始化操作&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;其实想要恢复很简单，在当前目录下：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;rm -rf .git/
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;删除.git文件夹就意味着桌面不再是仓库了。&lt;/li&gt;
-&lt;li&gt;git只会认为有.git文件夹的路径是工作 仓库。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;-r ：递归的删除该目录下的文件夹和文件，及子目录下的文件夹和文件&lt;/strong&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;-f ： 忽略不存在的文件&lt;/strong&gt;&lt;/li&gt;
-&lt;li&gt;将这个文件夹删除就相当于删掉了init生成的内容，直接移除git对该文件夹造成的影响，并且不会影响到该文件夹中那个已经是git仓库的文件夹的git状态&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;h4 id=&#34;如何删除本地仓库&#34;&gt;如何删除本地仓库&lt;/h4&gt;
-
-&lt;p&gt;开始删除所创建的仓库：&lt;/p&gt;
-
-&lt;p&gt;1.显示所有本地分支&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;git branch
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;2.初始化本地版本库&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;git init
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;如果显示：&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;Reinitialized existing Git repository in C:/Users/Administrator/test1/.git/&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;则:&lt;/p&gt;
-
-&lt;p&gt;3.找到目录下.git&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;ls -a
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;显示：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;./  ../  .git/
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;则:&lt;/p&gt;
-
-&lt;p&gt;4.删除&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;rm -rf .git
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;5.可以看到master分支已经删除（test1中隐藏的.git文件夹已经删除）&lt;/p&gt;
-
-&lt;p&gt;6.删除git之后 再去删除本地的库文件夹即可&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;rm -rf XXXX
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;简而言之，就是删除仓库文件夹下隐藏的.git文件夹即可，直接在文件夹右键删除也可以吧&lt;/p&gt;
-&lt;/blockquote&gt;
 
 &lt;!-- Article End --&gt;
 
