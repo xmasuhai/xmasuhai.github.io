@@ -7,7 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>Joel Xu</copyright>
-    <lastBuildDate>Thu, 13 Feb 2020 02:08:56 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 14 Feb 2020 01:37:55 +0800</lastBuildDate>
     
         <atom:link href="http://xmasuhai.xyz/index.xml" rel="self" type="application/rss+xml" />
     
@@ -31,6 +31,1035 @@
 &lt;/ul&gt;
 
 &lt;p&gt;Learn more and contribute on &lt;a href=&#34;https://github.com/gohugoio&#34;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
+</description>
+      
+    </item>
+    
+    <item>
+      <title>【JS非全解02】JS数据类型</title>
+      <link>http://xmasuhai.xyz/post/js/js%E9%9D%9E%E5%85%A8%E8%A7%A302js%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/</link>
+      <pubDate>Fri, 14 Feb 2020 01:37:55 +0800</pubDate>
+      
+      <guid>http://xmasuhai.xyz/post/js/js%E9%9D%9E%E5%85%A8%E8%A7%A302js%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/</guid>
+      
+        <description>
+
+&lt;h2 id=&#34;数字与字符串&#34;&gt;数字与字符串&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;1&lt;/code&gt;和&lt;code&gt;&#39;1&#39;&lt;/code&gt;完全不同&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;功能&#34;&gt;功能&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;数字能加减乘除模和值的比较，字符串不能计算值，无法进行值的大小比较（严谨的说不算隐式转换的话）&lt;/li&gt;
+&lt;li&gt;字符串能表示电话号码，数字不行，数字不能表示开头是&lt;code&gt;0&lt;/code&gt;，硬上会造成数据损失&lt;/li&gt;
+&lt;li&gt;不同国家的电话号码中甚至可以有字母&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;存储形式&#34;&gt;存储形式&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;JS中，数字是用64位浮点数的形式存储的&lt;/li&gt;
+&lt;li&gt;JS中，字符串是用类似&lt;code&gt;UTF-8&lt;/code&gt;的形式存储的（&lt;code&gt;UCS-2&lt;/code&gt; ASCII码）&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;如何存数字&#34;&gt;如何存数字&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;把十进制转二进制即可&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;二进制&#34;&gt;二进制&lt;/h3&gt;
+
+&lt;h3 id=&#34;10转2&#34;&gt;10转2&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;有公式，但程序员不是数学家，从来不套公式，只尝试，按数位展开，按位累加&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;2转10&#34;&gt;2转10&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://xima.tv/4S1hns&#34;&gt;快算进制转换&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;用十六进制表示二进制&#34;&gt;用十六进制表示二进制&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;TL，DR&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;计算器程序员模式&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;HEX&lt;/code&gt;16 &lt;code&gt;BIN&lt;/code&gt;2 &lt;code&gt;OCT&lt;/code&gt;8 &lt;code&gt;DEC&lt;/code&gt;10&lt;/p&gt;
+
+&lt;h2 id=&#34;如何存字符&#34;&gt;如何存字符&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;转成数字，但&lt;code&gt;&#39;1&#39;&lt;/code&gt;不能用&lt;code&gt;1&lt;/code&gt;来表示&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;utf8&#34;&gt;&lt;code&gt;UTF8&lt;/code&gt;&lt;/h3&gt;
+
+&lt;h3 id=&#34;存储-abc123&#34;&gt;存储&lt;code&gt;abc123&lt;/code&gt;&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;编号&lt;code&gt;0~127&lt;/code&gt;（2^7）表示所有符号&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;0&lt;/code&gt;表示结束字符&lt;code&gt;NUL&lt;/code&gt;(null)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;10&lt;/code&gt;表示换行&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;13&lt;/code&gt;表示回车&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;27&lt;/code&gt;表示&amp;rsquo;ESC&amp;rsquo;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;32&lt;/code&gt;表示空格&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;33&lt;/code&gt;~&lt;code&gt;47&lt;/code&gt;表示标点&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;code&gt;48&lt;/code&gt;&lt;/strong&gt;~&lt;strong&gt;&lt;code&gt;57&lt;/code&gt;&lt;/strong&gt; 表示数字符号&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;65&lt;/code&gt;~&lt;code&gt;90&lt;/code&gt;表示大写字母&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;97&lt;/code&gt;~&lt;code&gt;122&lt;/code&gt;表示小写字母&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;127&lt;/code&gt;表示删除键&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;0&lt;/code&gt;用&lt;code&gt;48&lt;/code&gt;表示，&lt;code&gt;A&lt;/code&gt;用&lt;code&gt;65&lt;/code&gt;表示，&lt;code&gt;a&lt;/code&gt;用&lt;code&gt;97&lt;/code&gt;表示，其他用到再查&lt;/p&gt;
+
+&lt;p&gt;其他编码基本兼容以上，即前128位都为以上表示&lt;/p&gt;
+
+&lt;p&gt;键盘监听事件&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&#34;中文字符的编码&#34;&gt;中文字符的编码&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;「国标2312」&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;0000&lt;/code&gt;~&lt;code&gt;FFFF&lt;/code&gt;表示汉字&lt;/p&gt;
+
+&lt;p&gt;一个16进制数是4个&lt;code&gt;0/1&lt;/code&gt;位&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;FFFF&lt;/code&gt;就是&lt;code&gt;4*4=16&lt;/code&gt;位，即两个字节&lt;/p&gt;
+
+&lt;p&gt;最多收录&lt;code&gt;2^16 = 65536&lt;/code&gt;个字符&lt;/p&gt;
+
+&lt;p&gt;但只收录了6k多汉字、西文字母和日文假名&lt;/p&gt;
+
+&lt;p&gt;生僻字、繁体字、其他东亚字符无法表示&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;国标局官方的效率差，微软出了&lt;code&gt;GBK&lt;/code&gt;，国标扩&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;含&lt;code&gt;21886&lt;/code&gt;个汉字和图形符号&lt;/p&gt;
+
+&lt;p&gt;收录中日韩使用的几乎所有汉字&lt;/p&gt;
+
+&lt;p&gt;依然使用16位（两字节）&lt;/p&gt;
+
+&lt;p&gt;后国标局推出&lt;code&gt;GB18030&lt;/code&gt;想取代&lt;code&gt;GBK&lt;/code&gt;，但竟然不兼容&lt;code&gt;GB2312&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;怎么表示其他语言文字，藏文，泰文&amp;hellip;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;万国码&lt;code&gt;Unicode&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;unicode&#34;&gt;&lt;code&gt;Unicode&lt;/code&gt;&lt;/h2&gt;
+
+&lt;h3 id=&#34;优点&#34;&gt;优点&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;已收录0.13M多个字符（大于16位），世界通用&lt;/li&gt;
+&lt;li&gt;以后会扩充&lt;/li&gt;
+&lt;li&gt;最新版（2019）添加了一个字——令和的合体字&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;缺点&#34;&gt;缺点&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;两个字节不够用，每个字符要用三个及以上的字节&lt;/li&gt;
+&lt;li&gt;所有文件都扩大50%，不划算&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;用（读写）&lt;code&gt;Unicode&lt;/code&gt;，存的时候简化&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;UTF-8&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;utf-8&#34;&gt;&lt;code&gt;UTF-8&lt;/code&gt;&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;鸡贼的寸法&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;存储-a&#34;&gt;存储「a」&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;a&lt;/code&gt;对应的&lt;code&gt;Unicode&lt;/code&gt;编号为&lt;code&gt;97&lt;/code&gt;，十六进制为&lt;code&gt;61&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Unicode&lt;/code&gt;直接存： &lt;em&gt;&lt;code&gt;00000000&lt;/code&gt;&lt;/em&gt; &lt;em&gt;&lt;code&gt;00000000&lt;/code&gt;&lt;/em&gt;     &lt;strong&gt;&lt;code&gt;011000011&lt;/code&gt;&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;UTF-8&lt;/code&gt;偷懒存：&lt;strong&gt;&lt;code&gt;011000011&lt;/code&gt;&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;三字节变一字节，比GBK还省&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;存储-你&#34;&gt;存储「你」&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;「你」对应&lt;code&gt;Unicode&lt;/code&gt;编号&lt;code&gt;4F60&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Unicode&lt;/code&gt;直接存： &lt;em&gt;&lt;code&gt;00000000&lt;/code&gt;&lt;/em&gt; &lt;strong&gt;&lt;code&gt;01001111&lt;/code&gt;&lt;/strong&gt;     &lt;strong&gt;&lt;code&gt;01100000&lt;/code&gt;&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;UTF-8&lt;/code&gt;偷懒失败存：&lt;strong&gt;&lt;code&gt;11100100&lt;/code&gt;&lt;/strong&gt; &lt;strong&gt;&lt;code&gt;10111101&lt;/code&gt;&lt;/strong&gt; &lt;strong&gt;&lt;code&gt;10100000&lt;/code&gt;&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;还是三字节，没省，但是字母都能省一点&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;utf-8-中的-8-的意思是&#34;&gt;&lt;code&gt;UTF-8&lt;/code&gt;中的&lt;code&gt;8&lt;/code&gt;的意思是&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;最少可用8位存一个字符，其他可以是16位，24位数位&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;utf-8-的规则&#34;&gt;&lt;code&gt;UTF-8&lt;/code&gt;的规则&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;由开头的数字表示用几个8位表示&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;详见PDF第25页
+&lt;a href=&#34;https://static.xiedaimala.com/xdml/file/3ac7c224-c23d-491f-84b5-4fabfbeab9b8/2019-9-12-11-52-43.pdf&#34;&gt;数据类型和运算符.pdf&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;位运算&#34;&gt;位运算&lt;/h3&gt;
+
+&lt;p&gt;TL,DR&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;比喻：去餐厅排队&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;hr /&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;如何存字符，就是编码，然后存编码&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;1&lt;/code&gt;和&lt;code&gt;&#39;1&#39;&lt;/code&gt; 功能不同，存储形式不同&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;1&lt;/code&gt;是变成二进制直接存&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;&#39;1&#39;&lt;/code&gt;要经过编码（变成&lt;code&gt;49&lt;/code&gt;）再存&lt;/p&gt;
+
+&lt;p&gt;那计算机怎么知道存的是数字还是字符？&lt;/p&gt;
+
+&lt;p&gt;计算机不用知道，用文件格式表示&lt;/p&gt;
+
+&lt;p&gt;文本格式&lt;code&gt;.txt&lt;/code&gt;全用字符串表示，可以在另存为中，选择保存的编码&lt;/p&gt;
+
+&lt;p&gt;即计算机通过文件格式来约定存储的是什么&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;.html&lt;/code&gt;文件只支持字符串&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;hr /&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;拉回正题&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;js中的数据类型&#34;&gt;JS中的数据类型&lt;/h2&gt;
+
+&lt;p&gt;目前八种（截止2020，以后还会增加？）&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;7种原始类型（大小写无所谓只有写代码时要区分大小写）&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;数字&lt;code&gt;number&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;字符串&lt;code&gt;string&lt;/code&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;布尔&lt;code&gt;boolean&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;空&lt;code&gt;undefined&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;空&lt;code&gt;null&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;增加的&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;符号&lt;code&gt;symbol&lt;/code&gt; 抄&lt;code&gt;ruby&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;大型整数&lt;code&gt;bigint&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;1种复杂类型&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;对象&lt;code&gt;object&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;以下不是数据类型&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;数组、函数、日期&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;以上都属于&lt;code&gt;object&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;数字-number&#34;&gt;数字&lt;code&gt;number&lt;/code&gt;&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;64位浮点数&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;写法&#34;&gt;写法&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;一般写法&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;整数写法：&lt;code&gt;1&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;小数写法：&lt;code&gt;0.1&lt;/code&gt;或&lt;code&gt;.123&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;不常用&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;科学记数法：&lt;code&gt;1.2e4&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;八进制：&lt;code&gt;0123&lt;/code&gt;或&lt;code&gt;00123&lt;/code&gt;或&lt;code&gt;0o123&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;十六进制：&lt;code&gt;0x3F&lt;/code&gt;或&lt;code&gt;0X3F&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;二进制：&lt;code&gt;0b11&lt;/code&gt;或&lt;code&gt;0B11&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;特殊值&#34;&gt;特殊值&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;正零和负零&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;都等于&lt;code&gt;0&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;区别&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-JavaScript&#34;&gt;&amp;gt; 1/0
+&amp;lt; Infinity
+
+&amp;gt; 1/+0
+&amp;lt; Infinity
+
+&amp;gt; 1/-0
+&amp;lt; -Infinity
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;无穷大&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;Infinity&lt;/code&gt;、&lt;code&gt;+Infinity&lt;/code&gt;、&lt;code&gt;-Infinity&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;无法表示的数字&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;NaN(not a number)&lt;/li&gt;
+&lt;li&gt;不能表示的数字，但TM还是一个数字&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;但它不等于自己&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-JavaScript&#34;&gt;&amp;gt; 0/0
+&amp;lt; NaN
+
+&amp;gt; NaN == NaN
+&amp;lt; false
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;64位浮点数&#34;&gt;64位浮点数&lt;/h2&gt;
+
+&lt;h3 id=&#34;js数字的存储形式&#34;&gt;JS数字的存储形式&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;浮点就是 &amp;lsquo;浮动的点&amp;rsquo;，意思是小数点会乱动&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;123.456&lt;/code&gt;可以表示为&lt;code&gt;1.23456e10^2&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;也可表示为&lt;code&gt;12345.6e10^-2&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;64位存储一个-number&#34;&gt;64位存储一个&lt;code&gt;number&lt;/code&gt;&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;符号占1位&lt;/li&gt;
+&lt;li&gt;指数占11位（-1023~1024）&lt;/li&gt;
+&lt;li&gt;有效数字占52位（开头的1省略）&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th align=&#34;center&#34;&gt;JS浮点数&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;11位&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;53位&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td align=&#34;center&#34;&gt;0正&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;指数部分（有正负）&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;有效数字（省去第一个&lt;code&gt;1&lt;/code&gt;）&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;center&#34;&gt;1负&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;指数部分（有正负）&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;有效数字（省去第一个&lt;code&gt;1&lt;/code&gt;）&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;++±++  1.++01100110++ x 2^++8++（二进制）&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;范围和精度&#34;&gt;范围和精度&lt;/h3&gt;
+
+&lt;h4 id=&#34;范围-忽略符号位&#34;&gt;范围（忽略符号位）&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;指数拉满、有效数字拉满，得到最大二进制数字&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Number.MAX_VALUE&lt;/code&gt;：&lt;code&gt;1.7976931348623157e+308&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;指数负方向拉满、有效数字最小&lt;code&gt;1&lt;/code&gt;，得到最小值&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;NUmber.MIN_VALUE&lt;/code&gt;：&lt;code&gt;5e-324&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;精度&#34;&gt;精度&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;最多只能到&lt;code&gt;52+1&lt;/code&gt;个二进制位表示有效数字&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;2^53&lt;/code&gt;对应的十进制是&lt;code&gt;9&lt;/code&gt;之后&lt;code&gt;15&lt;/code&gt;个零&lt;/li&gt;
+&lt;li&gt;所以&lt;code&gt;15&lt;/code&gt;位有效数字以内都能精确表示&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;16&lt;/code&gt;位有效数字如果小于&lt;code&gt;90&lt;/code&gt;开头，也能精确表示&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;911·000·000·000·000·1&lt;/code&gt; （忽略&lt;code&gt;·&lt;/code&gt;），就存不下来&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&#34;字符串-string&#34;&gt;字符串&lt;code&gt;string&lt;/code&gt;&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;每个字符两个字节（阉割版UTF8）&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;字符串-string-写法-es6&#34;&gt;字符串&lt;code&gt;string&lt;/code&gt;写法（ES6）&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;单引号&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&amp;lsquo;Hi&amp;rsquo;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;双引号&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&amp;ldquo;Hello&amp;rdquo;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;反引号&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;`Aloha`&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;注意&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;引号不属于字符串的一部分，就像书名号不属于书名的一部分一样&lt;/li&gt;
+&lt;li&gt;如果要在单引号里包含单引号咋办？&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;用转义符&lt;code&gt;\&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;转义&#34;&gt;转义&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;用另一种写法表示你想要的东西&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h4 id=&#34;错误写法&#34;&gt;错误写法&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;&#39;it&#39; ok&#39;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;JS引擎会以为&lt;code&gt;&#39;it&#39;&lt;/code&gt;就结束了，后面的看不懂&lt;/li&gt;
+&lt;li&gt;在&lt;code&gt;Chrome&lt;/code&gt;控制台测试，不要看控制台的返回值的双引号，会扰乱视听&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;正确写法&#34;&gt;正确写法&lt;/h4&gt;
+
+&lt;ul class=&#34;task-list&#34;&gt;
+&lt;li&gt;在&lt;code&gt;Chrome&lt;/code&gt;控制台敲入以下代码试试&lt;/li&gt;
+&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; &lt;code&gt;&#39;it\&#39;s ok&#39;&lt;/code&gt; 这就是转义&lt;/label&gt;&lt;/li&gt;
+&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; &lt;code&gt;&amp;quot;it&#39;s ok&amp;quot;&lt;/code&gt; 交替使用&lt;/label&gt;&lt;/li&gt;
+&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; `it&amp;rsquo;s ok` 反斜杠通吃&lt;/label&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;转义其他表示法&#34;&gt;转义其他表示法&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;\&#39;&lt;/code&gt;表示&lt;code&gt;&#39;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;\&amp;quot;&lt;/code&gt;表示&lt;code&gt;&amp;quot;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;\n&lt;/code&gt;表示换行&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;\r&lt;/code&gt;表示回车&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;\t&lt;/code&gt;表示制表符&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;\\&lt;/code&gt;表示&lt;code&gt;\&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;\uFFFF&lt;/code&gt;表示对应的&lt;code&gt;Unicode&lt;/code&gt;字符&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;code&gt;\xFF&lt;/code&gt;表示前&lt;code&gt;256&lt;/code&gt;个&lt;code&gt;Unicode&lt;/code&gt;字符&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-JavaScript&#34;&gt;&amp;gt; &#39;\u4f60&#39;
+&amp;lt; &amp;quot;你&amp;quot;
+
+&amp;gt; &#39;\x31&#39;
+&amp;lt; &amp;quot;1&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;多行字符串-string&#34;&gt;多行字符串&lt;code&gt;string&lt;/code&gt;&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;在字符串例敲回车&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-JavaScript&#34;&gt;let s = `这样是
+可以的
+用反引号很容易做到
+`
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;以前没有反引号的时候写起来很麻烦&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;看&lt;a href=&#34;https://wangdoc.com/javascript/types/string.html&#34;&gt;网道 字符串&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;字符串的属性&#34;&gt;字符串的属性&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;只有对象才有属性，隐式转换成了包装对象，才有了属性&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h4 id=&#34;字符串的长度&#34;&gt;字符串的长度&lt;/h4&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;string.length&lt;/code&gt;的变态情况&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;&#39;123&#39;.length //3&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&#39;\n\r\t&#39;.length //3&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&#39;\\\\\\&#39;.length //3&lt;/code&gt;两个反斜杠表示一个反斜杠&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&#39;&#39;.length //0&lt;/code&gt; 空字符串&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&#39; &#39;.length //1&lt;/code&gt; 空格字符串&lt;/li&gt;
+&lt;li&gt;可以试试6个空格的长度，就是6&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;通过下标读取字符&#34;&gt;通过下标读取字符&lt;/h4&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;string[index]&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-JavaScript&#34;&gt;let s = &#39;hello&#39;
+s[0]  //&amp;quot;h&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;注意&lt;code&gt;index&lt;/code&gt;从&lt;code&gt;0&lt;/code&gt;开始&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;s[0]&lt;/code&gt;是第一个字符&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;注意&lt;code&gt;index&lt;/code&gt;到length&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-JavaScript&#34;&gt;let s = &#39;hello&#39;
+s[5] // undefined，居然不报错
+s[4] //&#39;o&#39;
+s[s.length-1] //&#39;o&#39;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;base64-转码&#34;&gt;&lt;code&gt;base64&lt;/code&gt;转码&lt;/h4&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;window.btoa(&amp;lsquo;xxx&amp;rsquo;)&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;正常字符串为&lt;code&gt;Base64&lt;/code&gt;编码的字符串&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;window.atob(&amp;lsquo;xxx&amp;rsquo;)&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;Base64&lt;/code&gt;编码的字符串转为原来的字符串&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;一般用来隐藏招聘启事里的简历&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;邮箱：&lt;code&gt;ZmFuZ3lpbmdoYW5nQGZveG1haWwuY29t&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;「加密」不可靠，有其他专门的方法&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;布尔-boolean&#34;&gt;布尔&lt;code&gt;boolean&lt;/code&gt;&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;真或假&lt;/p&gt;
+
+&lt;p&gt;只有两个值，注意大小写：&lt;code&gt;true&lt;/code&gt;和&lt;code&gt;false&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;会得到-bool-值的运算符&#34;&gt;会得到&lt;code&gt;bool&lt;/code&gt;值的运算符&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;否定运算&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;!value&lt;/code&gt;表示取反&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;相等运算（等性运算）&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;1 == 2&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;1 != 2&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;3 === 4&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;3 !== 4&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;比较运算&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;1 &amp;gt; 2&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;1 &amp;gt;= 2&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;3 &amp;lt; 4&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;3 &amp;lt;= 4&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;if-配-bool&#34;&gt;&lt;code&gt;if&lt;/code&gt;配&lt;code&gt;bool&lt;/code&gt;&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;if&lt;/code&gt;语句常常需要判断真假&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;if(value){...}else{...}&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;问题来了&lt;/p&gt;
+
+&lt;p&gt;如果&lt;code&gt;value&lt;/code&gt;是&lt;code&gt;bool&lt;/code&gt;值还好说&lt;/p&gt;
+
+&lt;p&gt;如果&lt;code&gt;value&lt;/code&gt;不是&lt;code&gt;bool&lt;/code&gt;值，比如一个表达式，咋办，孰真孰假？&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;1&lt;/code&gt;是真是假，&lt;code&gt;0&lt;/code&gt;是真是假&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;&#39;1&#39;&lt;/code&gt;是真是假，&lt;code&gt;&#39;0&#39;&lt;/code&gt;是真是假&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;五个-falsy-值&#34;&gt;五个&lt;code&gt;falsy&lt;/code&gt;值&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;falsy&lt;/code&gt;就是相当于&lt;code&gt;false&lt;/code&gt;但又不是&lt;code&gt;false&lt;/code&gt;的值&lt;/p&gt;
+
+&lt;p&gt;分别是&lt;code&gt;undefined&lt;/code&gt;、&lt;code&gt;null&lt;/code&gt;、&lt;code&gt;0&lt;/code&gt;、&lt;code&gt;NaN&lt;/code&gt;、``（空字符串，没空格）&lt;/p&gt;
+
+&lt;p&gt;加上&lt;code&gt;false&lt;/code&gt;，一共六个假值&lt;/p&gt;
+
+&lt;p&gt;其他所有一切，都是真值，包括函数，空数组，空对象&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;&#39;&#39;&lt;/code&gt;和&lt;code&gt;&#39; &#39;&lt;/code&gt;（一个空格）不同，保持严谨&lt;/li&gt;
+&lt;li&gt;把输入法的设置标点都改为在IDE应用中都使用英语标点&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;空类型-undefined-和-null&#34;&gt;空类型&lt;code&gt;undefined&lt;/code&gt;和&lt;code&gt;null&lt;/code&gt;&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;JS原(la)创(ji)&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;undefined&lt;/code&gt;是补&lt;code&gt;null&lt;/code&gt; bug补来的&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;区别&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;没有本质区别&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;细节一：如果一个变量声明了，但没有赋值，那么默认就是&lt;code&gt;undefined&lt;/code&gt;，而不出&lt;code&gt;null&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;细节二：如果一个函数，没有写&lt;code&gt;return&lt;/code&gt;，那么默认&lt;code&gt;return undefined&lt;/code&gt;，而不是&lt;code&gt;null&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;细节三：仅前端习惯上，把非对象的控制写成&lt;code&gt;undefined&lt;/code&gt;，把对象的空值写为&lt;code&gt;null&lt;/code&gt;，没有任何语法依据&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;undefined&lt;/code&gt;是默认空，&lt;code&gt;null&lt;/code&gt;是主动清空&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;符号-symbol&#34;&gt;符号&lt;code&gt;symbol&lt;/code&gt;&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;不常用的数据类型&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://zhuanlan.zhihu.com/p/22652486&#34;&gt;「每日一题」JS 中的 Symbol 是什么？&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;大型整数-bigint&#34;&gt;大型整数&lt;code&gt;bigInt&lt;/code&gt;&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://zhuanlan.zhihu.com/p/103508446&#34;&gt;javascript 中基于BigInt 实现定点数 BigFixed&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://zhuanlan.zhihu.com/p/100380291&#34;&gt;BigNumber.js&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://zhuanlan.zhihu.com/p/93528023&#34;&gt;原生JS灵魂之问&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://zhuanlan.zhihu.com/p/99539770&#34;&gt;7 个令人兴奋的 JavaScript 新特性&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://zhuanlan.zhihu.com/p/99342755&#34;&gt;ES7、ES8、ES9、ES10 新特性大盘点&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://zhuanlan.zhihu.com/p/102284595&#34;&gt;2020年从基础到进阶，测试你有多了解 JavaScript，刷新你的知识&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://zhuanlan.zhihu.com/p/101065488&#34;&gt;ES2020新增功能&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://zhuanlan.zhihu.com/p/95295769&#34;&gt;你即将使用的ES2020新功能&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://zhuanlan.zhihu.com/p/100251213&#34;&gt;种草 ES2020 新特性&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://zhuanlan.zhihu.com/p/97133965&#34;&gt;从 JavaScript、ES6、ES7 到 ES10，你学到哪儿了&lt;/a&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;也许也用不到&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;对象-object&#34;&gt;对象&lt;code&gt;object&lt;/code&gt;&lt;/h2&gt;
+
+&lt;p&gt;复杂类型，另开一篇笔记&lt;/p&gt;
+
+&lt;h2 id=&#34;变量声明&#34;&gt;变量声明&lt;/h2&gt;
+
+&lt;h3 id=&#34;三种声明方式&#34;&gt;三种声明方式&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-JavaScript&#34;&gt;var a = 1
+let a = 1
+const a = 1
+a = 1 //错误的声明方式，起效，不规范 只是赋值 并不是声明全局变量
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;区别&#34;&gt;区别&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;var&lt;/code&gt;是过时的、不好用的方式，直接跳过，写代码不用&lt;code&gt;var&lt;/code&gt;，面试另说&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;let&lt;/code&gt;是新的、更合理的方式的变量声明&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;const&lt;/code&gt;是声明时必须赋值，且不能再改的方式，即常量声明&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;a = 1&lt;/code&gt;  错误的声明方式，起效，不规范 只是赋值 并不是声明全局变量&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;在函数外声明，挂在&lt;code&gt;window&lt;/code&gt;上，只是&lt;code&gt;window&lt;/code&gt;的属性，不规范，不用&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-JavaScript&#34;&gt;function fn(){
+a = 1
+}
+fn()
+a
+
+function fn(){
+var a
+function f2(){
+    a = 1 //并不是声明全局变量
+}
+f2()
+}
+fn()
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;var-变量提升&#34;&gt;&lt;code&gt;var&lt;/code&gt;变量提升&lt;/h3&gt;
+
+&lt;p&gt;面试必有，看 &lt;a href=&#34;https://wangdoc.com/javascript/basic/grammar.html#%E5%8F%98%E9%87%8F%E6%8F%90%E5%8D%87&#34;&gt;网道 变量提升&lt;/a&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;工作不准用&lt;code&gt;var&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;let-声明规则&#34;&gt;&lt;code&gt;let&lt;/code&gt;声明规则&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;遵循块作用域，即使用范围不能超出&lt;code&gt;代码块{}&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;不能重复声明，重复声明会报错，除非在其他代码块内&lt;/li&gt;
+&lt;li&gt;可以赋值，也可不赋值&lt;/li&gt;
+&lt;li&gt;必须先声明，再使用，否则报错，即不会变量提升&lt;/li&gt;
+&lt;li&gt;全局声明的&lt;code&gt;let&lt;/code&gt;变量，不会变成&lt;code&gt;window&lt;/code&gt;的属性（&lt;code&gt;var&lt;/code&gt;会）&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;配合&lt;code&gt;for&lt;/code&gt;循环使用，有奇效&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-JavaScript&#34;&gt;{
+let b = 1
+console.log(b)
+}
+console.log(b) //报错
+
+{
+let a = 1
+}
+{
+let a = 3 //ok
+}
+
+let c //ok
+c = 2
+
+let abc = &#39;abc&#39;
+window.abc //undefined
+var abc = &#39;abc&#39;
+window.abc //&amp;quot;abc&amp;quot; 属于var的bug
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;配合&lt;code&gt;for&lt;/code&gt;循环使用，有奇效&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-JavaScript&#34;&gt;for (var i = 0; i &amp;lt; 5; i++){
+    setTimeout(()=&amp;gt;{console.log(i)},0)
+}
+&amp;lt; 8 //是setTimeout的ID
+//打出5个5
+
+for (let i = 0; i &amp;lt; 5; i++){
+    setTimeout(()=&amp;gt;{console.log(i)},0)
+}
+//ok
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;const-声明规则&#34;&gt;&lt;code&gt;const&lt;/code&gt;声明规则&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;和&lt;code&gt;let&lt;/code&gt;几乎一样&lt;/li&gt;
+&lt;li&gt;只是：声明时就要赋值，赋值后不能改，即有且仅有一次赋值&lt;/li&gt;
+&lt;li&gt;只读变量，即常量&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;变量声明的过程中，发生了什么&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-JavaScript&#34;&gt;const i //报错
+const i = 100
+i = 101  //报错
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;变量声明的细节&#34;&gt;变量声明的细节&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;指定了值&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;code&gt;var = 1&lt;/code&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;同时也就指定了类型&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;code&gt;var = 1&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;但是值和类型都可以随意变化&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-JavaScript&#34;&gt;a = 2
+a = &#39;2&#39;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;name-和-name-的区别&#34;&gt;&lt;code&gt;name&lt;/code&gt;和&lt;code&gt;&#39;name&#39;&lt;/code&gt;的区别&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;name&lt;/code&gt;是变量&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;值可变，可能是字符串&lt;code&gt;&#39;name&#39;&lt;/code&gt;，也可能识别的&lt;/li&gt;
+&lt;li&gt;存在内存的未知区&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;&#39;name&#39;&lt;/code&gt;是字符串常量&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;常量就是不变量&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;name&lt;/code&gt;只能是&lt;code&gt;name&lt;/code&gt;，不是其他值&lt;/li&gt;
+&lt;li&gt;存在内存的&lt;code&gt;Stack&lt;/code&gt;栈区&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;类型转换&#34;&gt;类型转换&lt;/h2&gt;
+
+&lt;h3 id=&#34;number-string&#34;&gt;&lt;code&gt;number&lt;/code&gt;=&amp;gt;&lt;code&gt;string&lt;/code&gt;&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;String(n)&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;n + &#39;&#39;&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;string-number&#34;&gt;&lt;code&gt;string&lt;/code&gt;=&amp;gt;&lt;code&gt;number&lt;/code&gt;&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;Number(s)&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;parseInt(s)/parseFloat(s)&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;s - 0&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;+s&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;parseInt(0123)&lt;/code&gt;返回&lt;code&gt;123&lt;/code&gt;，不需要加参数，也默认十进制，&lt;code&gt;parseInt(0123,10)&lt;/code&gt;，是ES6之前（&lt;code&gt;0&lt;/code&gt;开头数字以8进制转换）的bug&lt;/p&gt;
+
+&lt;p&gt;另一个bug：&lt;code&gt;String(1000000000000000000000)&lt;/code&gt;返回&lt;code&gt;1e21&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;x-bool&#34;&gt;&lt;code&gt;x&lt;/code&gt;=&amp;gt;&lt;code&gt;bool&lt;/code&gt;&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;Boolean(x)&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;!!x&lt;/code&gt; 取原始布尔值&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;x-string&#34;&gt;&lt;code&gt;x&lt;/code&gt;=&amp;gt;&lt;code&gt;string&lt;/code&gt;&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;String(x)&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;x.toString()&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;bug：&lt;code&gt;1.toString()&lt;/code&gt;报错&lt;/p&gt;
+
+&lt;p&gt;改为&lt;code&gt;(1).toString()&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;或改为&lt;code&gt;1..toString()&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;1.&lt;/code&gt;解析为&lt;code&gt;1.0&lt;/code&gt;，即&lt;code&gt;1.0.toString()&lt;/code&gt;，竟然合法&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;!-- Article End --&gt;
+
+&lt;hr /&gt;
+
+&lt;!-- test --&gt;
+
+&lt;div style=&#34;text-align:center;&#34;&gt;·未完待续·&lt;/div&gt;
+
+&lt;!-- ok --&gt;
+
+&lt;hr /&gt;
+
+&lt;h4 id=&#34;参考文章&#34;&gt;参考文章&lt;/h4&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://static.xiedaimala.com/xdml/file/3ac7c224-c23d-491f-84b5-4fabfbeab9b8/2019-9-12-11-52-43.pdf&#34;&gt;数据类型和运算符.pdf&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://zhuanlan.zhihu.com/p/28140450&#34;&gt;我用了两个月的时间才理解 let&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://zhuanlan.zhihu.com/p/22652486&#34;&gt;「每日一题」JS 中的 Symbol 是什么？&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://wangdoc.com/javascript/types/string.html&#34;&gt;字符串 网道 / WangDoc.com &lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://zhuanlan.zhihu.com/p/102932475&#34;&gt;全面总结 JavaScript 类型相关知识点&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;记录JS各种奇葩bug的&lt;a href=&#34;https://bonsaiden.github.io/JavaScript-Garden/zh/&#34;&gt;JavaScript 秘密花园&lt;/a&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://zhuanlan.zhihu.com/p/103508446&#34;&gt;javascript 中基于BigInt 实现定点数 BigFixed&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://zhuanlan.zhihu.com/p/93528023&#34;&gt;原生JS灵魂之问&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://zhuanlan.zhihu.com/p/99539770&#34;&gt;7 个令人兴奋的 JavaScript 新特性&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://zhuanlan.zhihu.com/p/99342755&#34;&gt;ES7、ES8、ES9、ES10 新特性大盘点&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://zhuanlan.zhihu.com/p/102284595&#34;&gt;2020年从基础到进阶，测试你有多了解 JavaScript，刷新你的知识&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://zhuanlan.zhihu.com/p/101065488&#34;&gt;ES2020新增功能&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://zhuanlan.zhihu.com/p/95295769&#34;&gt;你即将使用的ES2020新功能&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://zhuanlan.zhihu.com/p/100251213&#34;&gt;种草 ES2020 新特性&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://zhuanlan.zhihu.com/p/97133965&#34;&gt;从 JavaScript、ES6、ES7 到 ES10，你学到哪儿了&lt;/a&gt;&lt;/p&gt;
+
+&lt;h4 id=&#34;相关文章&#34;&gt;相关文章&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;无&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;ul&gt;
+&lt;li&gt;作者： Joel&lt;/li&gt;
+&lt;li&gt;文章链接：&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://xmasuhai.xyz/posts/版权声明链接/&#34;&gt;版权声明&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;非自由转载-非商用-非衍生-保持署名&lt;/li&gt;
+&lt;li&gt;&lt;a style=&#39;color:#DB2D5D;&#39; href=&#39;https://xiedaimala.com/bbs/users/8c266e6f-55a2-4348-a180-17cb8cdb2c46#/?page=1&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;河&lt;/a&gt;
+&lt;a style=&#39;color:#006CFF;&#39; href=&#39;https://juejin.im/user/59abfad26fb9a0248f4aa221&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;掘&lt;/a&gt;
+&lt;a style=&#39;color:#009A61;&#39; href=&#39;https://segmentfault.com/u/joel_59b17eb9d2155&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;思&lt;/a&gt;
+&lt;a style=&#39;color:#0084FF;&#39; href=&#39;https://www.zhihu.com/people/xue-shou-41/posts&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;知&lt;/a&gt;
+&lt;a style=&#39;color:#EA6F5A;&#39; href=&#39;https://www.jianshu.com/u/079916729823&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;简&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
 </description>
       
     </item>
@@ -463,14 +1492,17 @@ window.f1 &amp;amp;&amp;amp; console.log(&#39;fi存在&#39;)
 &lt;p&gt;第一个&lt;code&gt;A&lt;/code&gt;表达式为假，不计算下去了，直接返回第一个表达式的值&lt;/p&gt;
 &lt;/blockquote&gt;
 
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;&amp;amp;&amp;amp;&lt;/code&gt;：‘假’短路&lt;/p&gt;
+
 &lt;pre&gt;&lt;code class=&#34;language-JavaScript&#34;&gt;//IE 没`console`
 console &amp;amp;&amp;amp; console.log &amp;amp;&amp;amp; console.log(&#39;hi&#39;)
 //“遇真才算”、“遇假则止”
-&lt;/code&gt;&lt;/pre&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
 
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;A &amp;amp;&amp;amp; B &amp;amp;&amp;amp; C &amp;amp;&amp;amp; D&lt;/code&gt;取第一个出现的假值或者&lt;code&gt;D&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;不同于&lt;code&gt;&amp;amp;&lt;/code&gt;或&lt;code&gt;|&lt;/code&gt;，并不会取&lt;code&gt;true/false&lt;/code&gt;，而是执行表达式，并取表达式的值&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;A &amp;amp;&amp;amp; B &amp;amp;&amp;amp; C &amp;amp;&amp;amp; D&lt;/code&gt;取第一个出现的假值或者&lt;code&gt;D&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;不同于&lt;code&gt;&amp;amp;&lt;/code&gt;或&lt;code&gt;|&lt;/code&gt;，并不会取&lt;code&gt;true/false&lt;/code&gt;，而是执行表达式，并取表达式的值&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h3 id=&#34;短路逻辑-1&#34;&gt;&lt;code&gt;||&lt;/code&gt;短路逻辑&lt;/h3&gt;
@@ -562,6 +1594,7 @@ if(a){
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;A || B || C || D&lt;/code&gt;取第一个真值（后面都不看了）或者&lt;code&gt;D&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;“遇真则止”、“遇假才算”&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;||&lt;/code&gt;：‘真’短路&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h3 id=&#34;条件语句小结&#34;&gt;条件语句小结&lt;/h3&gt;
@@ -6658,279 +7691,6 @@ echo &#39;alias gst=&amp;quot;git status -sb&amp;quot;&#39;&amp;gt;&amp;gt; ~/.b
 &lt;p&gt;&lt;a href=&#34;https://static.xiedaimala.com/xdml/file/3ac7c224-c23d-491f-84b5-4fabfbeab9b8/2019-8-10-15-17-35.pdf&#34;&gt;git 远程仓库.pdf&lt;/a&gt;&lt;/p&gt;
 
 &lt;h4 id=&#34;相关文章&#34;&gt;相关文章&lt;/h4&gt;
-
-&lt;ul&gt;
-&lt;li&gt;无&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-
-&lt;ul&gt;
-&lt;li&gt;作者： Joel&lt;/li&gt;
-&lt;li&gt;文章链接：&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://xmasuhai.xyz/posts/版权声明链接/&#34;&gt;版权声明&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;非自由转载-非商用-非衍生-保持署名&lt;/li&gt;
-&lt;li&gt;&lt;a style=&#39;color:#DB2D5D;&#39; href=&#39;https://xiedaimala.com/bbs/users/8c266e6f-55a2-4348-a180-17cb8cdb2c46#/?page=1&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;河&lt;/a&gt;
-&lt;a style=&#39;color:#006CFF;&#39; href=&#39;https://juejin.im/user/59abfad26fb9a0248f4aa221&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;掘&lt;/a&gt;
-&lt;a style=&#39;color:#009A61;&#39; href=&#39;https://segmentfault.com/u/joel_59b17eb9d2155&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;思&lt;/a&gt;
-&lt;a style=&#39;color:#0084FF;&#39; href=&#39;https://www.zhihu.com/people/xue-shou-41/posts&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;知&lt;/a&gt;
-&lt;a style=&#39;color:#EA6F5A;&#39; href=&#39;https://www.jianshu.com/u/079916729823&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;简&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-</description>
-      
-    </item>
-    
-    <item>
-      <title>【Git入门234】Git本地仓库常用操作流程2_分支相关操作_大总结</title>
-      <link>http://xmasuhai.xyz/post/github/git%E5%85%A5%E9%97%A8234git%E6%9C%AC%E5%9C%B0%E4%BB%93%E5%BA%93%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C%E6%B5%81%E7%A8%8B2_%E5%88%86%E6%94%AF%E7%9B%B8%E5%85%B3%E6%93%8D%E4%BD%9C_%E5%A4%A7%E6%80%BB%E7%BB%93/</link>
-      <pubDate>Fri, 03 Jan 2020 22:48:00 +0800</pubDate>
-      
-      <guid>http://xmasuhai.xyz/post/github/git%E5%85%A5%E9%97%A8234git%E6%9C%AC%E5%9C%B0%E4%BB%93%E5%BA%93%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C%E6%B5%81%E7%A8%8B2_%E5%88%86%E6%94%AF%E7%9B%B8%E5%85%B3%E6%93%8D%E4%BD%9C_%E5%A4%A7%E6%80%BB%E7%BB%93/</guid>
-      
-        <description>
-
-&lt;h2 id=&#34;创建分支git-branch&#34;&gt;创建分支git branch&lt;/h2&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;git branch x
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;仅创建一个叫x的分支拷贝，不对代码进行任何变动&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;可以创造平行时间线x&lt;/li&gt;
-&lt;li&gt;术语叫“分支”&lt;/li&gt;
-&lt;li&gt;虚拷贝，引用&lt;/li&gt;
-&lt;li&gt;可以同时基于master/branch x开发&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&#34;切换分支git-checkout&#34;&gt;切换分支git checkout&lt;/h2&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;.git同时维护master和branch x&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;git checkout x
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;git checkout master
-&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;两个时间线交替进行&lt;/li&gt;
-&lt;li&gt;时不时查看下&lt;code&gt;git status&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;ls -a/pwd&lt;/code&gt;下查看目录&lt;/li&gt;
-&lt;li&gt;分别修改了各自分支后&amp;hellip;
-看历史，非git命令&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;history
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;小结&#34;&gt;小结&lt;/h2&gt;
-
-&lt;h3 id=&#34;git-branch&#34;&gt;git branch&lt;/h3&gt;
-
-&lt;ul class=&#34;task-list&#34;&gt;
-&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; 基于当前最新commit创建一个新的时间线（分支的快照），不是基于当前代码&lt;/label&gt;&lt;/li&gt;
-&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; 在哪个分支提交，代码就出现在哪个分支&lt;/label&gt;&lt;/li&gt;
-&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; 默认在master主分支&lt;/label&gt;&lt;/li&gt;
-&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; Cmder/git-bash会提示目前所在的分支，如果你初始化过，iterm2默认不会，要设置&lt;/label&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&#34;git-checkout&#34;&gt;git checkout&lt;/h3&gt;
-
-&lt;ul class=&#34;task-list&#34;&gt;
-&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; 用于切换另一个分支&lt;/label&gt;&lt;/li&gt;
-&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; 当前目录有未add/未提交的代码，只要跟另一分支不冲突，就不需要理会，不影响硬盘上原有的文件（git reset是影响的）&lt;/label&gt;&lt;/li&gt;
-&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; 如果冲突（修改了文件内容），会报一个error，使&lt;code&gt;git checkout&lt;/code&gt; 切换失败&lt;/label&gt;&lt;/li&gt;
-&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; 此时要么&lt;code&gt;git commit&lt;/code&gt;下，要么使用git stash合并冲突&lt;/label&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&#34;直接查看当前所在branch&#34;&gt;直接查看当前所在branch&lt;/h2&gt;
-
-&lt;p&gt;不加参：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-git&#34;&gt;git branch
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;输出：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-git&#34;&gt;* master
-  x
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;*就表示当前所在branch，智能的Cmder就不用了&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&#34;合并分支git-merge&#34;&gt;合并分支git merge&lt;/h2&gt;
-
-&lt;h3 id=&#34;1-切到你想保留的那个分支-一般是主分支master&#34;&gt;1. 切到你想保留的那个分支，一般是主分支master&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-git&#34;&gt;git checkout master
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;2-将另一个分支合并到当前分支&#34;&gt;2. 将另一个分支合并到当前分支&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-git&#34;&gt;git merge xxx
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;3-提示有冲突-查看status&#34;&gt;3. 提示有冲突,查看status&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-git&#34;&gt;git status
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;4-在vscode里逐行修改&#34;&gt;4. 在VSCode里逐行修改&lt;/h3&gt;
-
-&lt;ol&gt;
-&lt;li&gt;找到========&lt;/li&gt;
-&lt;li&gt;逐行修改，删掉=======&lt;/li&gt;
-&lt;li&gt;删掉标记&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&lt;/li&gt;
-&lt;li&gt;删掉标记&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&lt;/li&gt;
-&lt;li&gt;保存，修改完毕&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h3 id=&#34;5-git-add标记下-暂存&#34;&gt;5. git add标记下(暂存)&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-git&#34;&gt;git add
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;6-直接提交&#34;&gt;6. 直接提交&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-git&#34;&gt;git commit
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;不用加参数，自动添加标记 Merge branch &amp;lsquo;xxxx&amp;rsquo;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h3 id=&#34;git-merge-可能有冲突-也可能没&#34;&gt;git merge 可能有冲突，也可能没&lt;/h3&gt;
-
-&lt;ul class=&#34;task-list&#34;&gt;
-&lt;li&gt;发现冲突&lt;/li&gt;
-&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; 合并分支时 ，会得到CONFLICT提示&lt;/label&gt;&lt;/li&gt;
-&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; 使用&lt;code&gt;git status -sb&lt;/code&gt;查看哪个/哪些文件冲突了&lt;/label&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;UU表示两边都改了&lt;/li&gt;
-&lt;li&gt;s表示summary b表示brunch&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;ul class=&#34;task-list&#34;&gt;
-&lt;li&gt;解决冲突&lt;/li&gt;
-&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; 依次打开每个文件&lt;/label&gt;&lt;/li&gt;
-&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; 搜索====&lt;strong&gt;四个等于号&lt;/strong&gt;&lt;/label&gt;&lt;/li&gt;
-&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; 在上下两个部分中选择要保留的代码，只选上面/只选下面/都保留&lt;/label&gt;&lt;/li&gt;
-&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; 删除不用的代码&lt;/label&gt;&lt;/li&gt;
-&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; 删除==== &amp;lt;&amp;lt;&amp;lt;&amp;lt; &amp;gt;&amp;gt;&amp;gt;&amp;gt;这些标记&lt;/label&gt;&lt;/li&gt;
-&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; &lt;strong&gt;git add 暂存对应的文件&lt;/strong&gt;&lt;/label&gt;&lt;/li&gt;
-&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; 再次 &lt;code&gt;git status -sb&lt;/code&gt;，解决下一个文件的冲突&lt;/label&gt;&lt;/li&gt;
-&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; 直到没有冲突，&lt;strong&gt;运行&lt;code&gt;git commit&lt;/code&gt;（注意不需要选项）&lt;/strong&gt;&lt;/label&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&#34;小结2&#34;&gt;小结2&lt;/h2&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;h3 id=&#34;分支可以合并&#34;&gt;分支可以合并&lt;/h3&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;[x] 进入要保留的分支&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;[x] 运行&lt;code&gt;git merge xxx&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;[x] 合并后，删除无用的分支&lt;code&gt;git branch -d xxx&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;h3 id=&#34;合并时冲突处理&#34;&gt;合并时冲突处理&lt;/h3&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;[x] 修改代码，解决冲突&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;[x] 然后&lt;code&gt;git commit&lt;/code&gt;，使用默认的commit message&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Git本地仓库_大总结&lt;/p&gt;
-
-&lt;h2 id=&#34;命令&#34;&gt;命令&lt;/h2&gt;
-
-&lt;ul class=&#34;task-list&#34;&gt;
-&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; &lt;code&gt;git config&lt;/code&gt; （6行配置）&lt;/label&gt;&lt;/li&gt;
-&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; &lt;code&gt;git add 路径&lt;/code&gt; （标记：加进/移除购物车 暂存）&lt;/label&gt;&lt;/li&gt;
-&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; &lt;code&gt;git status -sb&lt;/code&gt; （简化状态信息）&lt;/label&gt;&lt;/li&gt;
-&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; &lt;code&gt;git commit -v&lt;/code&gt; （提交：结算+记笔账）&lt;/label&gt;&lt;/li&gt;
-&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; &lt;code&gt;git branch xxx&lt;/code&gt; （创建分支）&lt;/label&gt;&lt;/li&gt;
-&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; &lt;code&gt;git checkout xxx&lt;/code&gt; （进入分支）&lt;/label&gt;&lt;/li&gt;
-&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; &lt;code&gt;git merge xxx&lt;/code&gt; （合并分支，还要add下，加进购物车）&lt;/label&gt;&lt;/li&gt;
-&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; &lt;code&gt;git commit&lt;/code&gt; （提交合并，自动记账）&lt;/label&gt;&lt;/li&gt;
-&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; &lt;code&gt;git branch -d xxx&lt;/code&gt; （砍掉分支）&lt;/label&gt;&lt;/li&gt;
-&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; &lt;code&gt;git log&lt;/code&gt; （查看）&lt;/label&gt;&lt;/li&gt;
-&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; &lt;code&gt;git reflog&lt;/code&gt; （本地上帝视角查看）&lt;/label&gt;&lt;/li&gt;
-&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; &lt;code&gt;git reset --hard ******&lt;/code&gt; （版本穿越）&lt;/label&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&#34;git目录-本地仓库&#34;&gt;.git目录：本地仓库&lt;/h2&gt;
-
-&lt;ul class=&#34;task-list&#34;&gt;
-&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; 不会重复复制相同的文件（优化）&lt;/label&gt;&lt;/li&gt;
-&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; 可以支持多个分支&lt;/label&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&#34;一些细节&#34;&gt;一些细节&lt;/h2&gt;
-
-&lt;ul class=&#34;task-list&#34;&gt;
-&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; &lt;code&gt;git add&lt;/code&gt;&lt;/label&gt;&lt;/li&gt;
-&lt;li&gt;使用&lt;code&gt;git add&lt;/code&gt;来临时记录变动外，也能记录&lt;code&gt;git rm xxx&lt;/code&gt;(处理的是文件的变化，而不是文件本身)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;比如删除一个文件后，依然要用&lt;code&gt;git add&lt;/code&gt; 来添加到待提交区&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;rm xxx
-git add xxx
-git status
-git commit -v
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;当使用&lt;code&gt;git commit&lt;/code&gt;提交后，.git会移除xxx：
-此时&lt;code&gt;git add xxx&lt;/code&gt; 、&lt;code&gt;git commit -m&lt;/code&gt;&amp;ldquo;delete xxx&amp;rdquo; 等同于 &lt;code&gt;git rm xxx&lt;/code&gt;、&lt;code&gt;git commit -m&lt;/code&gt;&amp;ldquo;delete xxx&amp;rdquo;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;ul class=&#34;task-list&#34;&gt;
-&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; 大部分时候，只需&lt;code&gt;git add&lt;/code&gt; 和&lt;code&gt;git commit -v&lt;/code&gt;&lt;/label&gt;&lt;/li&gt;
-&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; 不需要GUI，当然你会用，还知道原理&lt;/label&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;VSCode插件git-easy使用：在当前文件里Ctrl + Shift + p;搜&lt;code&gt;git add&lt;/code&gt;；&lt;code&gt;Add All Modified&lt;/code&gt;；&amp;hellip;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;!-- Article End --&gt;
-
-&lt;hr /&gt;
-
-&lt;!-- test --&gt;
-
-&lt;div style=&#34;text-align:center;&#34;&gt;·未完待续·&lt;/div&gt;
-
-&lt;!-- ok --&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&#34;参考文章&#34;&gt;参考文章&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://static.xiedaimala.com/xdml/file/3ac7c224-c23d-491f-84b5-4fabfbeab9b8/2019-8-8-10-23-55.pdf&#34;&gt;git 本地仓库.pdf&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&#34;相关文章&#34;&gt;相关文章&lt;/h3&gt;
 
 &lt;ul&gt;
 &lt;li&gt;无&lt;/li&gt;
