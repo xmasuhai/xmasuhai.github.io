@@ -7,7 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>Joel Xu</copyright>
-    <lastBuildDate>Fri, 14 Feb 2020 01:37:55 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 16 Feb 2020 05:01:41 +0800</lastBuildDate>
     
         <atom:link href="http://xmasuhai.xyz/index.xml" rel="self" type="application/rss+xml" />
     
@@ -31,6 +31,788 @@
 &lt;/ul&gt;
 
 &lt;p&gt;Learn more and contribute on &lt;a href=&#34;https://github.com/gohugoio&#34;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
+</description>
+      
+    </item>
+    
+    <item>
+      <title>【JS非全解03】JS对象基本用法</title>
+      <link>http://xmasuhai.xyz/post/js/js%E9%9D%9E%E5%85%A8%E8%A7%A303js%E5%AF%B9%E8%B1%A1%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95/</link>
+      <pubDate>Sun, 16 Feb 2020 05:01:41 +0800</pubDate>
+      
+      <guid>http://xmasuhai.xyz/post/js/js%E9%9D%9E%E5%85%A8%E8%A7%A303js%E5%AF%B9%E8%B1%A1%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95/</guid>
+      
+        <description>
+
+&lt;blockquote&gt;
+&lt;p&gt;JavaScript的对象是JS中唯一一种复杂类型&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;重点内容提要&#34;&gt;重点内容提要&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;声明对象的两种语法&lt;/li&gt;
+&lt;li&gt;如何删除对象的属性&lt;/li&gt;
+&lt;li&gt;如何查看对象的属性&lt;/li&gt;
+&lt;li&gt;如何修改或增加对象的属性&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&#39;name&#39; in obj&lt;/code&gt;和&lt;code&gt;obj.hasOwnProperty(&#39;name&#39;)&lt;/code&gt;的区别&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;对象的定义&#34;&gt;对象的定义&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;无序的数据集合&lt;/li&gt;
+&lt;li&gt;键值对的集合&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;对象的写法&#34;&gt;对象的写法&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-JavaScript&#34;&gt;let obj = { &#39;name&#39;:&#39;frank&#39;, &#39;age&#39;:18 } //常用写法
+let obj = new Object({&#39;name&#39;:&#39;frank&#39;}) //正规写法没人写
+console.log({ &#39;name&#39;:&#39;frank&#39;, &#39;age&#39;:18 }) //匿名对象
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;细节&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;key（键名）是&lt;strong&gt;字符串&lt;/strong&gt;，不是标识符（不以数字开头的)&lt;/li&gt;
+&lt;li&gt;可以包含任意字符串，即使是空字符串、包含空格、中文、Emoji的字符串皆可，但没人这么用，此时引号不能省略&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Chrome&lt;/code&gt;的控制台返回值有欺骗性，用&lt;code&gt;Object.keys(obj)&lt;/code&gt;来查看正确的键名&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;除了字符串，&lt;code&gt;symbol&lt;/code&gt;也能做属性名，但不常用&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-JavaScript&#34;&gt;let obj = { &#39;name family&#39;:&#39;frank&#39;, &#39;age&#39;:18 }
+let obj2{ &#39;&#39;:1 } //fine~
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;引号可以省略，省略后只能写*标识符*（符合标识符规则的字符）&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;&lt;em&gt;就算引号省略，键名也还是字符串&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;属性名&#34;&gt;属性名&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;每个&lt;code&gt;key&lt;/code&gt;（键）都是对象的属性名（property）&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;属性值&#34;&gt;属性值&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;每个&lt;code&gt;value&lt;/code&gt;都是对象的属性值&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;不规范的属性名&#34;&gt;不规范的属性名&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;所有属性名会自动变成字符串&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-JavaScript&#34;&gt;let obj = {
+    1:&#39;a&#39;,
+    3.2:&#39;b&#39;,
+    1e2:true,
+    1e-2:false,
+    .234:true,
+    0xFF:true
+};//&amp;lt; Object { 1: &amp;quot;a&amp;quot;, 100: true, 255: true, &amp;quot;3.2&amp;quot;: &amp;quot;b&amp;quot;, &amp;quot;0.01&amp;quot;: false, &amp;quot;0.234&amp;quot;: true }
+
+Object.keys(obj); //&amp;lt; Array(6) [ &amp;quot;1&amp;quot;, &amp;quot;100&amp;quot;, &amp;quot;255&amp;quot;, &amp;quot;3.2&amp;quot;, &amp;quot;0.01&amp;quot;, &amp;quot;0.234&amp;quot; ]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;细节&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;加引号&lt;/strong&gt;是最安全的键值写法，否则，键名就不一定符合预期&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Object.keys(obj)&lt;/code&gt;可以得到&lt;code&gt;obj&lt;/code&gt;的所有&lt;code&gt;key&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;变量的值-做属性名&#34;&gt;*变量的值*做属性名&lt;/h3&gt;
+
+&lt;h4 id=&#34;如何用变量做属性名&#34;&gt;如何用变量做属性名&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;之前都是用*常量*做属性名&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;想以变量的值作为属性名，以&lt;code&gt;[]&lt;/code&gt;将变量括起来，这是ES6的新增语法&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-JavaScript&#34;&gt;let  a = &#39;xxx&#39;
+var obj = {
+a : 1111,
+&#39;a&#39; : 2222,
+[a] : 3333
+}
+
+// ES6之前的做法
+var obj = {}
+obj[a] = 111
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;另一些例子&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-JavaScript&#34;&gt;let p1 = &#39;name&#39;
+let obj = {p1:&#39;frankfang&#39;} //这样写，属性名为&#39;p1&#39;
+let obj = {[p1]:&#39;frankfang&#39;} //这样写，属性名为&#39;name&#39;
+var obj = {
+    [1+2+3+4]:&#39;十&#39;
+}
+// obj {10:&amp;quot;十&amp;quot;} 这里的10是字符串的&#39;10&#39;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;对比&#34;&gt;对比&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;不加&lt;code&gt;[]&lt;/code&gt;的属性名会自动变成字符串&lt;/li&gt;
+&lt;li&gt;加了&lt;code&gt;[]&lt;/code&gt;则会被当做变量并先求值，再作为字符串，成为属性名&lt;/li&gt;
+&lt;li&gt;值如果不是字符串，则会自动变成字符串&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;对象的-隐藏-属性&#34;&gt;对象的*隐藏*属性&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;对象&lt;code&gt;obj&lt;/code&gt;，点开控制台看到有个属性&lt;code&gt;__protp__&lt;/code&gt;，控制台骗你，&lt;code&gt;__protp__&lt;/code&gt;并非指向&lt;code&gt;Object&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;JS中每一个对象都有一个隐藏属性&lt;/li&gt;
+&lt;li&gt;这个隐藏属性存储着其&lt;strong&gt;共有属性组成的对象&lt;/strong&gt;的&lt;strong&gt;&lt;em&gt;地址&lt;/em&gt;&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;这个*共有属性组成的对象*叫做原型&lt;/li&gt;
+&lt;li&gt;也就是说，隐藏属性存储着&lt;strong&gt;原型的地址&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;共有属性省内存&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;代码示例&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-JavaScript&#34;&gt;var obj = {}
+obj.toString() //不报错
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;不报错是因为&lt;code&gt;obj&lt;/code&gt;的隐藏属性&lt;strong&gt;&lt;em&gt;对应的对象&lt;/em&gt;&lt;/strong&gt;上有&lt;code&gt;toString&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;原型即共有属性&lt;/li&gt;
+&lt;li&gt;内存举例：&lt;code&gt;#409&lt;/code&gt;存着&lt;code&gt;toString()&lt;/code&gt;、&lt;code&gt;valueOf()&lt;/code&gt;、&lt;code&gt;hasOwnPorperty()&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;定义一个对象&lt;code&gt;obj2&lt;/code&gt;，地址&lt;code&gt;#901&lt;/code&gt;，里面有&lt;code&gt;__proto__&lt;/code&gt;属性指向&lt;code&gt;#409&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;这个对象就是原型，而&lt;code&gt;#409&lt;/code&gt;是它的地址，&lt;code&gt;#409&lt;/code&gt;所代表的这块内存所表示的对象是原型&lt;/li&gt;
+&lt;li&gt;它是&lt;code&gt;obj&lt;/code&gt;的原型，也是任何一个新对象的原型&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;one more thing&amp;hellip;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;除了字符串，&lt;code&gt;symbol&lt;/code&gt;也能做属性名&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-JavaScript&#34;&gt;let a = Symbol()
+let obj = { [a]: &#39;Hello&#39; }
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;目前（2020）不常用，在学「迭代」的时候会用到&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&#34;增删改查&#34;&gt;增删改查&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;「增删改查」对象的属性&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&#34;增加属性-写入属性&#34;&gt;增加属性（写入属性）&lt;/h3&gt;
+
+&lt;h4 id=&#34;直接赋值&#34;&gt;直接赋值&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-JavaScript&#34;&gt;let obj = {name: &#39;frank&#39;} //name自动变为字符串
+obj.name = &#39;frankfang&#39; //name自动变为字符串
+obj[&#39;name&#39;] = &#39;fangfang&#39;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;del&gt;&lt;code&gt;obj[name] = &#39;frank&lt;/code&gt;&lt;/del&gt; 错误，因为name 值不确定，不信，再看&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-JavaScript&#34;&gt;obj[&#39;na&#39; + &#39;me&#39;] = &#39;frank&#39;
+let key  = &#39;name&#39;; obj[key] = &#39;frank&#39;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;let key = &#39;name&#39;;&lt;/code&gt; &lt;del&gt;&lt;code&gt;obj.key = &#39;frank&#39;&lt;/code&gt;&lt;/del&gt; 错误，因为&lt;code&gt;obj.key&lt;/code&gt;等价于&lt;code&gt;obj[&#39;key&#39;]&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h4 id=&#34;批量赋值&#34;&gt;批量赋值&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-JavaScript&#34;&gt;let obj = {}
+Object.assign(obj,{age: 30, gender: &#39;oldman&#39;})
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;增加共有属性&#34;&gt;增加共有属性&lt;/h4&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;无法通过自身，来增加共有属性&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-JavaScript&#34;&gt;let obj = {},obj2{} //共有toString
+obj.toString = &#39;xxx&#39; //只会在改obj的自身叫toString的属性
+obj2.toString //还是在原型链上
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;硬要增加原型链上的属性&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-JavaScript&#34;&gt;obj.__proto__.toString = &#39;xxx&#39; //不推荐用__proto__
+Object.prototype.toString = &#39;xxx&#39;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&#34;删除属性&#34;&gt;删除属性&lt;/h3&gt;
+
+&lt;h4 id=&#34;delete-obj-xxx-或-delete-obj-xxx&#34;&gt;&lt;code&gt;delete obj.xxx&lt;/code&gt;或&lt;code&gt;delete obj[&#39;xxx&#39;]&lt;/code&gt;&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;即可删除&lt;code&gt;obj&lt;/code&gt;的&lt;code&gt;xxx&lt;/code&gt;属性&lt;/li&gt;
+&lt;li&gt;请区分「属性值为&lt;code&gt;undefined&lt;/code&gt;」和「不含属性名」&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;delete obj[&#39;xxx&#39;]&lt;/code&gt;注意&lt;code&gt;[]&lt;/code&gt;里的引号&lt;code&gt;&amp;quot;&amp;quot;&lt;/code&gt;，要求是一个字符串的形式&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;不含属性名&#34;&gt;不含属性名&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-JavaScript&#34;&gt;let obj = {}
+&#39;xxx&#39; in obj === false
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;含属性名-但值为-undefined&#34;&gt;含属性名，但值为&lt;code&gt;undefined&lt;/code&gt;&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-JavaScript&#34;&gt;let obj = {}
+obj.xxx = undefined
+&#39;xxx&#39; in obj &amp;amp;&amp;amp; obj.xxx === undefined //true
+&#39;x&#39; in obj //false
+&#39;x in obj2&#39;//true
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;注意-obj-xxx-undefined&#34;&gt;注意&lt;code&gt;obj.xxx === undefined&lt;/code&gt;&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;所以&lt;code&gt;obj.xxx === undefined&lt;/code&gt;不能断定&lt;code&gt;xxx&lt;/code&gt;是否为&lt;code&gt;obj&lt;/code&gt;的属性&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-JavaScript&#34;&gt;var obj = {}
+var obj2 = {x: undefined}
+obj.x === undefined //true
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;严谨：&lt;code&gt;没有&lt;/code&gt;和&lt;code&gt;有但undefined&lt;/code&gt;是不一样的&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-JavaScript&#34;&gt;var obj = {name: &#39;frank&#39;, age: 18}
+obj.name = undefined //仅删掉属性值，未删掉属性名
+delete obj.name //删掉属性名，属性值自然就被同时删掉
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;就算你删掉属性后再同样地删一次，JS也不报错&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;所以要验证&lt;code&gt;&#39;xxx&#39; in obj&lt;/code&gt;，注意属性名一定要加引号&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-JavaScript&#34;&gt;var obj = {name: &#39;frank&#39;, age: 18}
+obj.name = undefined
+delete obj.name
+delete obj[&#39;name&#39;]
+
+//验证是否存在属性&#39;name&#39;
+&#39;name&#39; in obj //false
+&#39;age&#39; in obj
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;小结&#34;&gt;小结&lt;/h4&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;判断对象是否含有某个属性名&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;code&gt;&#39;xxx&#39; in obj&lt;/code&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;判断对象的某个属性的属性值是否为空，预期值&lt;code&gt;true&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;code&gt;&#39;xxx&#39; in obj &amp;amp;&amp;amp; obj.xxx === undefined&lt;/code&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;delete&lt;/code&gt;操作符用于删除对象的属性&lt;/p&gt;
+
+&lt;p&gt;那怎么删掉对象&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-JavaScript&#34;&gt;var obj  = {}
+window.obj //{} 自动变成window的属性
+obj === window.obj //true
+delete obj //
+obj //{} 还在
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/delete&#34;&gt;delete 操作符 MDN&lt;/a&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&#34;改变属性-值&#34;&gt;改变属性（值）&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;原来没有某个属性，就是增加；有某个属性，就是修改&lt;/p&gt;
+
+&lt;p&gt;修改属性的值，即赋值&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h4 id=&#34;增加或修改属性-写入属性&#34;&gt;增加或修改属性（写入属性）&lt;/h4&gt;
+
+&lt;h4 id=&#34;直接赋值-增加或修改&#34;&gt;直接赋值 增加或修改&lt;/h4&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;原来有某个属性，就是修改，确切地分为覆盖掉原来所有的属性值即修改属性值，还是增加新属性，方法一样&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-JavaScript&#34;&gt;// 开发不用var 再次赋值不报错，会覆盖掉原来的所有属性，所以用let
+let obj = {name: &#39;frank&#39;} //name自动变为字符串
+obj.name = &#39;frankfang&#39; //name自动变为字符串
+obj[&#39;name&#39;] = &#39;fangfang&#39; //直接修改
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;del&gt;&lt;code&gt;obj[name] = &#39;frank&#39;&lt;/code&gt;&lt;/del&gt; 错误，因为name 值不确定，不信看&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-JavaScript&#34;&gt;let obj = {}
+obj[name] = &amp;quot;fang&amp;quot;
+name //&amp;quot;&amp;quot;
+Object.keys(obj) //Array[&amp;quot;&amp;quot;]
+console.dir(obj) //{&amp;quot;&amp;quot;:&amp;quot;fang&amp;quot;,...}
+obj.hasOwnProperty(&amp;quot;&amp;quot;) //true
+Object.values(obj) //[&amp;quot;fang&amp;quot;}
+Object.entries(obj)
+obj[&#39;&#39;] //&amp;quot;fang&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-JavaScript&#34;&gt;obj[&#39;na&#39; + &#39;me&#39;] = &#39;frank&#39; //经过拼接的字符串作为属性
+let key  = &#39;name&#39;; obj[key] = &#39;frank&#39; //声明变量，变量的值为属性值
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;let key = &#39;name&#39;;&lt;/code&gt; &lt;del&gt;&lt;code&gt;obj.key = &#39;frank&#39;&lt;/code&gt;&lt;/del&gt; 错误，因为&lt;code&gt;obj.key&lt;/code&gt;等价于&lt;code&gt;obj[&#39;key&#39;]&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h4 id=&#34;批量赋值-批量增加属性-es6&#34;&gt;批量赋值，批量增加属性（ES6）&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-JavaScript&#34;&gt;let obj = {}
+Object.assign(obj,{age: 30, gender: &#39;oldman&#39;})
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;assign&lt;/code&gt;就是赋值的意思&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h4 id=&#34;增加或修改共有属性&#34;&gt;增加或修改共有属性&lt;/h4&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;无法通过自身，来增加或修改共有属性&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-JavaScript&#34;&gt;let obj = {},obj2 = {} //共有toString
+obj.toString = &#39;xxx&#39; //只会在改obj的自身叫toString的属性
+obj2.toString //还是在原型链上
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;JS设计成读的时候，回去看对象隐藏属性发准考的原型；写的时候，不会改掉原型，只能写到自身的属性上&lt;/li&gt;
+&lt;li&gt;修改单个不同对象的共有属性不会互相覆盖&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;硬要增加或修改原型链上的属性&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-JavaScript&#34;&gt;obj.__protp__.toString = &#39;xxx&#39; //不推荐用__proto__
+
+obj.__proto__ === window.Object.prototype //true 同一个地址
+
+//硬要增加或修改原型链上的属性，就用
+Object.prototype.toStirng = &#39;xxx&#39;
+window.Object.prototype.toStirng = &#39;xxx&#39;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;谨慎修改原型，可能引起很多问题，这就是JS脆弱的地方，可以随时修改任意对象的原型属性，毁掉整个对象体系&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-JavaScript&#34;&gt;var obj = {name: &amp;quot;fang&amp;quot;, age:false}
+console.dir(obj)
+obj.__proto__ = null
+console.dir(obj) //得到一个没有原型的“纯”对象,但没一点儿卵用
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;修改隐藏属性&#34;&gt;修改隐藏属性&lt;/h4&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;不推荐使用&lt;code&gt;__proto__&lt;/code&gt;，性能低&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-JavaScript&#34;&gt;let obj = {name:&#39;frank&#39;}
+let obj2 = {name:&#39;fang&#39;}
+let common = {kind:&#39;human&#39;}
+
+/* 不推荐 */
+obj.__proto__ = common
+obj2.__proto__ = common
+console.dir(obj)
+console.dir(obj2)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;在原型中加了一个节点，原型后面还有原型，即原型链&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h4 id=&#34;推荐使用-object-create-common-es6-新方法&#34;&gt;推荐使用&lt;code&gt;Object.create(common)&lt;/code&gt;，（ES6）新方法&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-JavaScript&#34;&gt;let obj = {name:&#39;frank&#39;}
+let obj2 = {name:&#39;fang&#39;}
+let common = {kind:&#39;human&#39;}
+/* 推荐 */
+let obj = Object.create(common)
+obj.name = &#39;frank&#39;
+let obj2 = Object.create(common)
+obj.name = &#39;fang&#39;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/create&#34;&gt;&lt;code&gt;Object.create(common)&lt;/code&gt; MDN&lt;/a&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-JavaScript&#34;&gt;var common = {&#39;国籍&#39;:&#39;中国&#39;, hairColor: &#39;gold&#39;}
+var person = Object.create(common)
+console.dir(person)
+var person = Object.create(common,{
+    name:{value:&#39;frank&#39;} //很麻烦
+})
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;一创建时，就告指定原型&lt;/p&gt;
+
+&lt;p&gt;规范：要改就一开始就该，别后来再改&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&#34;查看属性&#34;&gt;查看属性&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;分查看所有属性，和查看单个属性&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h4 id=&#34;查看所有属性-读取属性&#34;&gt;查看所有属性（读取属性）&lt;/h4&gt;
+
+&lt;h5 id=&#34;仅查看自身-所有属性&#34;&gt;仅查看自身&lt;strong&gt;&lt;em&gt;所有属性&lt;/em&gt;&lt;/strong&gt;&lt;/h5&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;Object.keys(obj)&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;返回一个包含所有属性名字符串的数组&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h5 id=&#34;查看-自身-共有-的所有属性&#34;&gt;查看&lt;strong&gt;&lt;em&gt;自身&lt;/em&gt;&lt;/strong&gt; + &lt;strong&gt;&lt;em&gt;共有&lt;/em&gt;&lt;/strong&gt; 的所有属性&lt;/h5&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;console.dir(obj)&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;一目录的形式打出来，但chrome控制台瞎返回了一个&lt;code&gt;Object&lt;/code&gt;，点开可以看到&lt;strong&gt;&lt;em&gt;自身&lt;/em&gt;&lt;/strong&gt; + &lt;strong&gt;&lt;em&gt;共有&lt;/em&gt;&lt;/strong&gt; 的所有属性&lt;code&gt;__proto__&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;或者自己依次用&lt;code&gt;Object.keys()&lt;/code&gt;在控制台打印出&lt;code&gt;obj.__proto__&lt;/code&gt;，这种方法不推荐，不规范&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h5 id=&#34;判断一个属性是自身的-还是共有的&#34;&gt;判断一个属性是自身的，还是共有的&lt;/h5&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;&#39;toString&#39; in obj //true&lt;/code&gt;是不会区分属性是自身的，还是共有的&lt;/li&gt;
+&lt;li&gt;只能用&lt;code&gt;obj.hasOwnProperty(&#39;toString&#39;)&lt;/code&gt;，返回&lt;code&gt;false&lt;/code&gt;说明不是共有属性&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h5 id=&#34;仅查看所有属性的值&#34;&gt;仅查看所有属性的值&lt;/h5&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;Object.values(obj)&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;返回一个包含所有属性值字符串的数组&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h5 id=&#34;既要看名-又要看值&#34;&gt;既要看名，又要看值&lt;/h5&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;Object.entries(obj)&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;返回一个数组，这个数组包含两个数组&lt;/li&gt;
+&lt;li&gt;一个数组包含所有属性名字符串&lt;/li&gt;
+&lt;li&gt;另一个包含所有属性值字符串&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;补充插入&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;原型&#34;&gt;原型&lt;/h3&gt;
+
+&lt;h4 id=&#34;每个对象都有原型&#34;&gt;每个对象都有原型&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;原型里存着对象的共有属性&lt;/li&gt;
+&lt;li&gt;比如&lt;code&gt;obj&lt;/code&gt;的原型就是一个对象&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;obj.__proto__&lt;/code&gt;存着这个对象的地址&lt;/li&gt;
+&lt;li&gt;这个对象里有&lt;code&gt;toStirng/constructor/valueOf&lt;/code&gt;等属性&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;对象的原型也是一个对象&#34;&gt;对象的原型也是一个对象&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;所以对象的原型也有原型&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;obj = {}&lt;/code&gt;的原型即为所有对象的原型&lt;/li&gt;
+&lt;li&gt;这个原型包含所有对象的共有属性，是&lt;strong&gt;对象的根&lt;/strong&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;这个原型也有原型，是&lt;code&gt;null&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-JavaScript&#34;&gt;console.log(obj.__proto__)
+console.log(obj.__proto__.__prptp__) //null
+&#39;__proto__&#39; in obj.__proto__ //true
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;把根对象的原型人为地指定为空值&lt;code&gt;null&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;hr /&gt;
+
+&lt;h4 id=&#34;查看单个属性&#34;&gt;查看单个属性&lt;/h4&gt;
+
+&lt;h5 id=&#34;两种方法查看单个属性&#34;&gt;两种方法查看单个属性&lt;/h5&gt;
+
+&lt;ul&gt;
+&lt;li&gt;中括号语法：&lt;code&gt;obj[&#39;key&#39;]&lt;/code&gt;，最明确&lt;/li&gt;
+&lt;li&gt;点语法：&lt;code&gt;obj.key&lt;/code&gt;，易被误导成&lt;code&gt;key&lt;/code&gt;不是字符串，其实是字符串&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;坑新人语法：&lt;code&gt;obj[key]&lt;/code&gt;，其变量&lt;code&gt;key&lt;/code&gt;值一般不为字符串&lt;code&gt;&#39;key&#39;&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-JavaScript&#34;&gt;var obj = {name: &#39;frankfang&#39;, age: 30}
+obj[&#39;name&#39;] //&#39;frankfang&#39;
+obj.name //&#39;frankfang&#39;
+obj[name] //undefined
+
+name //&amp;quot;&amp;quot;
+window.name = &#39;age&#39;
+obj[name] //18
+
+obj[&#39;na&#39;+&#39;me&#39;] //&#39;frankfang&#39;
+
+obj[console.log(&#39;name&#39;)] //undefined，打印出的是name
+
+console.log(&#39;name&#39;) //返回的都是undefined，打印出的是name
+
+obj[console.log(&#39;name&#39;)] //相当于obj[&#39;undefined&#39;]，打印出的是name
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h5 id=&#34;优先使用中括号语法&#34;&gt;优先使用中括号语法&lt;/h5&gt;
+
+&lt;ul&gt;
+&lt;li&gt;点语法会误导，让人误以为&lt;code&gt;.key&lt;/code&gt;不是字符串&lt;/li&gt;
+&lt;li&gt;等能够确定不会混淆两种语法，再改用点语法&lt;/li&gt;
+&lt;li&gt;比如用点语法时，就加注释&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;重要知识点&#34;&gt;重要知识点&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;读对象的属性时，
+如果使用 [ ] 语法，那么 JS 会先求 [ ] 中表达式的值&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;注意区分表达式是变量还是常量。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;如果使用点语法，那么点后面一定是 string 常量。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;易混淆的&#34;&gt;易混淆的&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;obj.name&lt;/code&gt;等价于&lt;code&gt;obj[&#39;name&#39;]&lt;/code&gt;（注意这里的&lt;code&gt;[]&lt;/code&gt;中是字符串&lt;code&gt;&#39;name&#39;&lt;/code&gt;）&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;obj.name&lt;/code&gt;不等价于&lt;code&gt;obj[name]&lt;/code&gt;（注意这里的&lt;code&gt;[]&lt;/code&gt;中是变量&lt;code&gt;name&lt;/code&gt;）&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;简单说来，&lt;code&gt;.name&lt;/code&gt;是字符串&lt;code&gt;&#39;name&#39;&lt;/code&gt;，而不是变量&lt;/p&gt;
+
+&lt;p&gt;再举一例&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-JavaScript&#34;&gt;let obj = {name:&#39;fang&#39;}
+let name = &#39;frankFang&#39;
+obj[name] === obj[&#39;frankFang&#39;] //true
+obj[name] === obj[&#39;name&#39;] //false
+obj[name] === obj.name //false
+obj[&#39;name&#39;] === obj[&#39;frankFang&#39;] //false
+obj[&#39;name&#39;] === obj.name //true
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;obj[name]&lt;/code&gt;等价于&lt;code&gt;obj[&#39;frankfang&#39;]&lt;/code&gt;等价于&lt;code&gt;obj[&#39;name&#39;]&lt;/code&gt;
+而不是&lt;code&gt;obj[&#39;name&#39;]&lt;/code&gt;和&lt;code&gt;obj.name&lt;/code&gt;
+面试就看分清变量&lt;code&gt;name&lt;/code&gt;和常量字符串&lt;code&gt;&#39;name&#39;&lt;/code&gt;
+记清&lt;code&gt;obj.name&lt;/code&gt;、&lt;code&gt;obj[&#39;name&#39;]&lt;/code&gt;、&lt;code&gt;obj[name]&lt;/code&gt;三者的区别&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;必须搞清的面试题&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-JavaScript&#34;&gt;let list = [&#39;name&#39;,&#39;age&#39;,&#39;gender&#39;]
+let person  = {
+name: &#39;xiaofang&#39;, age: 30, gender: &#39;femaleMaybe&#39;
+}
+for (let i = 0; i &amp;lt; list.length; i++){
+let name = list[i]
+console.log(person__???__)
+}//打印person的所有属性
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;填空（坑）&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul class=&#34;task-list&#34;&gt;
+&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; disabled class=&#34;task-list-item&#34;&gt; &lt;code&gt;console.log(person.name)&lt;/code&gt;&lt;/label&gt;&lt;/li&gt;
+&lt;li&gt;&lt;label&gt;&lt;input type=&#34;checkbox&#34; checked disabled class=&#34;task-list-item&#34;&gt; &lt;code&gt;console.log(person[name])&lt;/code&gt;&lt;/label&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;区分&lt;code&gt;.name&lt;/code&gt;和&lt;code&gt;&#39;name&#39;&lt;/code&gt;为什么这么重要&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;学&lt;code&gt;vue&lt;/code&gt;的时候就知道厉害了&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&#34;总结&#34;&gt;总结&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;删&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-JavaScript&#34;&gt;let obj =  {name: &#39;fang&#39;}
+/* 只能删属性 */
+delete obj[&#39;name&#39;]
+&#39;name&#39; in obj  //false 没办法判断是自身/共有属性
+obj.hasOwnProperty(&#39;name&#39;) //false 有可能这个属性是在原型上的，或者根本没有这个属性
+obj = null //交给垃圾回收机制
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;查&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-JavaScript&#34;&gt;let obj =  {name: &#39;fang&#39;}
+/**/
+Object.keys(obj)
+console.dir(obj)
+obj[&#39;name&#39;]
+obj.name //记住这里的name是字符串
+obj[name] //记住这里的name是变量
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;改&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;改自身&lt;code&gt;obj[&#39;name&#39;] = &#39;jack&#39;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;批量改自身&lt;code&gt;Object.assign(obj,{age:18,...})&lt;/code&gt;，先赋值空对象&lt;/li&gt;
+&lt;li&gt;改共有属性&lt;code&gt;obj.__proto__[&#39;toString&#39;] = &#39;xxx&#39;&lt;/code&gt;，不推荐&lt;/li&gt;
+&lt;li&gt;改共有属性&lt;code&gt;Object.prototype[&#39;toString&#39;] = &#39;xxx&#39;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;改原型&lt;code&gt;obj.__proto__ = common&lt;/code&gt;，不推荐&lt;/li&gt;
+&lt;li&gt;改原型&lt;code&gt;let obj = Object.create(common)&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;所有&lt;code&gt;__proto__&lt;/code&gt;的代码都是墙裂不推荐写的，不可用于业务代码中，仅供学习测试&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;增(改)，属于写&lt;/p&gt;
+
+&lt;p&gt;基本同上：已有属性则改；没有属性则增&lt;/p&gt;
+
+&lt;p&gt;查属于读，查的时候会看原型链&lt;/p&gt;
+
+&lt;p&gt;增改时不会看原型链，增改都是自身&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-JavaScript&#34;&gt;/* 区分Object.create() 和new Object()*/
+var obj1 = Object.create({name:&#39;frank&#39;}) //增改原型属性
+console.dir(obj1)
+var obj2 = new Object({name:&#39;frank&#39;}) //增改自身属性
+console.dir(obj2)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;原型是个对象，共有属性是原型对象的所有属性；原型包含共有属性，共有属性依附于原型对象上&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;!-- Article End --&gt;
+
+&lt;hr /&gt;
+
+&lt;!-- test --&gt;
+
+&lt;div style=&#34;text-align:center;&#34;&gt;·未完待续·&lt;/div&gt;
+
+&lt;!-- ok --&gt;
+
+&lt;hr /&gt;
+
+&lt;h4 id=&#34;参考文章&#34;&gt;参考文章&lt;/h4&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://static.xiedaimala.com/xdml/file/3ac7c224-c23d-491f-84b5-4fabfbeab9b8/2019-9-17-0-56-36.pdf&#34;&gt;JS 对象.pdf&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;入门&lt;a href=&#34;https://wangdoc.com/javascript/&#34;&gt;《网道 JavaScript 教程》&lt;/a&gt;&lt;/p&gt;
+
+&lt;h4 id=&#34;相关文章&#34;&gt;相关文章&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;无&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;ul&gt;
+&lt;li&gt;作者： Joel&lt;/li&gt;
+&lt;li&gt;文章链接：&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://xmasuhai.xyz/posts/版权声明链接/&#34;&gt;版权声明&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;非自由转载-非商用-非衍生-保持署名&lt;/li&gt;
+&lt;li&gt;&lt;a style=&#39;color:#DB2D5D;&#39; href=&#39;https://xiedaimala.com/bbs/users/8c266e6f-55a2-4348-a180-17cb8cdb2c46#/?page=1&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;河&lt;/a&gt;
+&lt;a style=&#39;color:#006CFF;&#39; href=&#39;https://juejin.im/user/59abfad26fb9a0248f4aa221&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;掘&lt;/a&gt;
+&lt;a style=&#39;color:#009A61;&#39; href=&#39;https://segmentfault.com/u/joel_59b17eb9d2155&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;思&lt;/a&gt;
+&lt;a style=&#39;color:#0084FF;&#39; href=&#39;https://www.zhihu.com/people/xue-shou-41/posts&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;知&lt;/a&gt;
+&lt;a style=&#39;color:#EA6F5A;&#39; href=&#39;https://www.jianshu.com/u/079916729823&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;简&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
 </description>
       
     </item>
@@ -805,7 +1587,7 @@ a = 1 //错误的声明方式，起效，不规范 只是赋值 并不是声明�
 &lt;h3 id=&#34;区别&#34;&gt;区别&lt;/h3&gt;
 
 &lt;ul&gt;
-&lt;li&gt;&lt;code&gt;var&lt;/code&gt;是过时的、不好用的方式，直接跳过，写代码不用&lt;code&gt;var&lt;/code&gt;，面试另说&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;var&lt;/code&gt;是过时的、不好用的方式，直接跳过，写业务代码不用&lt;code&gt;var&lt;/code&gt;，演示时在控制台调试用&lt;code&gt;var&lt;/code&gt;，可重复声明变量，面试另说&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;let&lt;/code&gt;是新的、更合理的方式的变量声明&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;const&lt;/code&gt;是声明时必须赋值，且不能再改的方式，即常量声明&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;a = 1&lt;/code&gt;  错误的声明方式，起效，不规范 只是赋值 并不是声明全局变量&lt;/li&gt;
@@ -7478,217 +8260,6 @@ div.menu-bar li:hover &amp;gt; ul {
 &lt;h4 id=&#34;参考文章&#34;&gt;参考文章&lt;/h4&gt;
 
 &lt;p&gt;&lt;a href=&#34;https://static.xiedaimala.com/xdml/file/3ac7c224-c23d-491f-84b5-4fabfbeab9b8/2019-8-23-12-30-0.pdf&#34;&gt;CSS 基础概念.pdf&lt;/a&gt;&lt;/p&gt;
-
-&lt;h4 id=&#34;相关文章&#34;&gt;相关文章&lt;/h4&gt;
-
-&lt;ul&gt;
-&lt;li&gt;无&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-
-&lt;ul&gt;
-&lt;li&gt;作者： Joel&lt;/li&gt;
-&lt;li&gt;文章链接：&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://xmasuhai.xyz/posts/版权声明链接/&#34;&gt;版权声明&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;非自由转载-非商用-非衍生-保持署名&lt;/li&gt;
-&lt;li&gt;&lt;a style=&#39;color:#DB2D5D;&#39; href=&#39;https://xiedaimala.com/bbs/users/8c266e6f-55a2-4348-a180-17cb8cdb2c46#/?page=1&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;河&lt;/a&gt;
-&lt;a style=&#39;color:#006CFF;&#39; href=&#39;https://juejin.im/user/59abfad26fb9a0248f4aa221&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;掘&lt;/a&gt;
-&lt;a style=&#39;color:#009A61;&#39; href=&#39;https://segmentfault.com/u/joel_59b17eb9d2155&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;思&lt;/a&gt;
-&lt;a style=&#39;color:#0084FF;&#39; href=&#39;https://www.zhihu.com/people/xue-shou-41/posts&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;知&lt;/a&gt;
-&lt;a style=&#39;color:#EA6F5A;&#39; href=&#39;https://www.jianshu.com/u/079916729823&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;简&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-</description>
-      
-    </item>
-    
-    <item>
-      <title>【Git入门5】Git远程仓库   GitHub常用操作流程1_配置</title>
-      <link>http://xmasuhai.xyz/post/github/git%E5%85%A5%E9%97%A85git%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93-github%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C%E6%B5%81%E7%A8%8B1_%E9%85%8D%E7%BD%AE/</link>
-      <pubDate>Sat, 04 Jan 2020 21:44:38 +0800</pubDate>
-      
-      <guid>http://xmasuhai.xyz/post/github/git%E5%85%A5%E9%97%A85git%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93-github%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C%E6%B5%81%E7%A8%8B1_%E9%85%8D%E7%BD%AE/</guid>
-      
-        <description>
-
-&lt;blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;本地仓库和远程仓库是完全隔开的&lt;/li&gt;
-&lt;li&gt;代码存储在云端GitHub&lt;/li&gt;
-&lt;li&gt;SSH key验证身份 使用场景:可以避免我们重复的输入密码，提高开发效率；访问远程服务&lt;/li&gt;
-&lt;li&gt;如果SSH key私钥(即.ssh文件夹中的id_rsa文件)被第三方获取，那么他将可以您的身份来操作 Git 仓库，这跟密码被盗一样严重&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&#34;git远程仓库github-常用操作流程&#34;&gt;git远程仓库GitHub 常用操作流程&lt;/h2&gt;
-
-&lt;h3 id=&#34;0-前提&#34;&gt;0. 前提&lt;/h3&gt;
-
-&lt;ol&gt;
-&lt;li&gt;在GitHub上有一个账号&lt;/li&gt;
-&lt;li&gt;git仓库在电脑上&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;上传代码：私钥加密&lt;/li&gt;
-&lt;li&gt;GitHub用账号留下的公钥解密&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;h3 id=&#34;1-生成ssh-key&#34;&gt;1. 生成ssh key&lt;/h3&gt;
-
-&lt;h4 id=&#34;第1步-运行命令&#34;&gt;第1步 运行命令&lt;/h4&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;ssh-keygen -t rsa -b 4096 -C &amp;quot;your_email@example.com&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h4 id=&#34;第2步-三次回车-直到没有提示-然后&#34;&gt;第2步 三次回车，直到没有提示；然后&lt;/h4&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;cat ~/.ssh/id_rsa_pub
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h4 id=&#34;第3步-复制内容-去你github主页-设置页面-ssh-key-标题填能表示清哪台电脑就行-填入公钥&#34;&gt;第3步 复制内容，去你GitHub主页&amp;gt;设置页面&amp;gt;SSH key&amp;hellip;，标题填能表示清哪台电脑就行，填入公钥&lt;/h4&gt;
-
-&lt;p&gt;ok&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;&lt;a href=&#34;https://help.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent&#34;&gt;GitHub_SSH key帮助文档&lt;/a&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h3 id=&#34;2-测试是否配置成功&#34;&gt;2. 测试是否配置成功&lt;/h3&gt;
-
-&lt;h4 id=&#34;第1步-运行-命令&#34;&gt;第1步 运行 命令&lt;/h4&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;ssh -T git@github.com
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h4 id=&#34;第2步-确认github给的公钥&#34;&gt;第2步 确认GitHub给的公钥&lt;/h4&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;不可敲回车，输入yes即可&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h4 id=&#34;第3步&#34;&gt;第3步&lt;/h4&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;看到Hi xxx! You&amp;rsquo;ve successfully authenticated&amp;hellip;说明添加成功&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h3 id=&#34;3-注意&#34;&gt;3.注意&lt;/h3&gt;
-
-&lt;blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;GitHub，别用HTTPS协议，每次要输密码不方便&lt;/li&gt;
-&lt;li&gt;使用SSH key&lt;/li&gt;
-&lt;li&gt;电脑-私钥 GitHub账号-公钥&lt;/li&gt;
-&lt;li&gt;上传代码用私钥加密，github用公钥解密&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;ul&gt;
-&lt;li&gt;如果手贱已经生成HTTPS链接了，不方便用&lt;code&gt;git remote add ...&lt;/code&gt;了&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;可以设置：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;git remote set-url origin git@github.com:yourName/***.git
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;来修改之前的origin URL，是不是很鸡贼&lt;/p&gt;
-
-&lt;h3 id=&#34;4-查看生成的ssh-key密钥文件目录-备份&#34;&gt;4. 查看生成的SSH key密钥文件目录，备份&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;cd ~/.ssh
-ll
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$ ls -al ~/.ssh
-# Lists the files in your .ssh directory, if they exist
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;cp id_rsa id_rsa_bk
-cp id_rsa.pub id_rsa_bk.pub
-ll
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;总结&#34;&gt;总结&lt;/h3&gt;
-
-&lt;h4 id=&#34;1-需要你复制的代码&#34;&gt;1. 需要你复制的代码&lt;/h4&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;ssh-keygen -t rsa -b 4096 -C 你的邮箱
-cat ~/.ssh/id_rsa.pub # 得到公钥内容
-ssh -T git@github.com
-git remote add origin git@xxxxxxx
-git push -u origin master
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h4 id=&#34;2-高级操作&#34;&gt;2. 高级操作&lt;/h4&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;touch ~/.bashrc
-echo &#39;alias ga=&amp;quot;git add&amp;quot;&#39;&amp;gt;&amp;gt; ~/.bashrc
-echo &#39;alias gc=&amp;quot;git commit -v&amp;quot;&#39;&amp;gt;&amp;gt; ~/.bashrc
-echo &#39;alias gl=&amp;quot;git pull&amp;quot;&#39;&amp;gt;&amp;gt; ~/.bashrc
-echo &#39;alias gp=&amp;quot;git push&amp;quot;&#39;&amp;gt;&amp;gt; ~/.bashrc
-echo &#39;alias gco=&amp;quot;git checkout&amp;quot;&#39;&amp;gt;&amp;gt; ~/.bashrc
-echo &#39;alias gst=&amp;quot;git status -sb&amp;quot;&#39;&amp;gt;&amp;gt; ~/.bashrc
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h4 id=&#34;3-最后-code-bashrc-在文件最后加上&#34;&gt;3. 最后 code ~/.bashrc 在文件最后加上&lt;/h4&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;alias glog=&amp;quot;git log --graph --pretty=format:&#39;%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)&amp;lt;%an&amp;gt;%Creset&#39; --abbrev-commit -- | less&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;我的配置：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;alias Glg=&amp;quot;git log --color --graph --date=relative --pretty=format:&#39;%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)&amp;lt;%an&amp;gt;%Creset&#39; --abbrev-commit&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;提问&#34;&gt;提问&lt;/h3&gt;
-
-&lt;p&gt;有没有一种可以实现一键ga+gv &amp;ldquo;xxx&amp;rdquo;+gl+gp+gst的Combo技？&lt;/p&gt;
-
-&lt;p&gt;重复添加SSH key会如何？
-&amp;gt; 会使你之前添加的key失效&lt;/p&gt;
-
-&lt;h3 id=&#34;一些链接&#34;&gt;一些链接&lt;/h3&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://juejin.im/post/5de8d849e51d455808332166&#34;&gt;高频使用的 Git 命令&lt;/a&gt;：
-不是入门文档，官方文档肯定比我全面，这里是结合实际业务场景输出。&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;http://www.jeepxie.net/article/781036.html&#34;&gt;如果你看到 “access denied”&lt;/a&gt;：表示拒绝访问，那么你就需要使用 https 去访问，而不是 SSH 。&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://blog.csdn.net/kongkongkkk/article/details/78662715&#34;&gt;GitHub添加SSH key时的问题&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://juejin.im/post/5c063c4ee51d451ded182458&#34;&gt;告诉你 ssh 的常见使用场景和配置&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://segmentfault.com/a/1190000005607713&#34;&gt;git:如何管理本机的多个ssh密钥&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://www.cnblogs.com/iforever/p/7513172.html&#34;&gt;ssh keys自动化管理工具&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://github.com/Coding/coding-docs/blob/master/doc/git/ssh-key.markdown&#34;&gt;在 Coding.net 添加公钥&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://help.github.com/en/github/authenticating-to-github/checking-for-existing-ssh-keys&#34;&gt;Checking for existing SSH keys&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://help.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent&#34;&gt;Generating a new SSH key and adding it to the ssh-agent&lt;/a&gt;&lt;/p&gt;
-
-&lt;!-- Article End --&gt;
-
-&lt;hr /&gt;
-
-&lt;!-- test --&gt;
-
-&lt;div style=&#34;text-align:center;&#34;&gt;·未完待续·&lt;/div&gt;
-
-&lt;!-- ok --&gt;
-
-&lt;hr /&gt;
-
-&lt;h4 id=&#34;参考文章&#34;&gt;参考文章&lt;/h4&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://static.xiedaimala.com/xdml/file/3ac7c224-c23d-491f-84b5-4fabfbeab9b8/2019-8-10-15-17-35.pdf&#34;&gt;git 远程仓库.pdf&lt;/a&gt;&lt;/p&gt;
 
 &lt;h4 id=&#34;相关文章&#34;&gt;相关文章&lt;/h4&gt;
 
