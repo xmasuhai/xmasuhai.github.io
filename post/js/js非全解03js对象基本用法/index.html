@@ -71,7 +71,7 @@
 
 <meta itemprop="datePublished" content="2020-02-16T05:01:41&#43;08:00" />
 <meta itemprop="dateModified" content="2020-02-16T05:01:41&#43;08:00" />
-<meta itemprop="wordCount" content="4785">
+<meta itemprop="wordCount" content="5022">
 
 
 
@@ -372,7 +372,7 @@
 <ul>
 <li><a href="#仅查看自身-独有属性">仅查看自身<strong><em>独有属性</em></strong></a></li>
 <li><a href="#查看-独有-共有-的所有属性">查看<strong><em>独有</em></strong> + <strong><em>共有</em></strong> 的所有属性</a></li>
-<li><a href="#判断一个属性是自身的独有的-还是共有的-obj-hasownproperty-porpertyname">判断一个属性是自身的独有的，还是共有的：<code>obj.hasOwnProperty('porpertyName')</code></a></li>
+<li><a href="#判断一个属性是自身的独有的-还是共有的-obj-hasownproperty-propertyname">判断一个属性是自身的独有的，还是共有的：<strong><em>obj.hasOwnProperty(&lsquo;propertyName&rsquo;)</em></strong></a></li>
 <li><a href="#仅查看所有属性的值">仅查看所有属性的值</a></li>
 <li><a href="#既要看名-又要看值">既要看名，又要看值</a></li>
 </ul></li>
@@ -392,11 +392,8 @@
 </ul></li>
 <li><a href="#总结">总结</a>
 <ul>
-<li>
-<ul>
 <li><a href="#参考文章">参考文章</a></li>
 <li><a href="#相关文章">相关文章</a></li>
-</ul></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -565,7 +562,7 @@ obj.toString() //不报错
 <ul>
 <li>不报错是因为<code>obj</code>的隐藏属性<strong><em>对应的对象</em></strong>上有<code>toString</code></li>
 <li>原型即共有属性</li>
-<li>内存举例：<code>#409</code>存着<code>toString()</code>、<code>valueOf()</code>、<code>hasOwnPorperty()</code></li>
+<li>内存举例：<code>#409</code>存着<code>toString()</code>、<code>valueOf()</code>、<code>hasOwnProperty()</code></li>
 <li>定义一个对象<code>obj2</code>，地址<code>#901</code>，里面有<code>__proto__</code>属性指向<code>#409</code></li>
 <li>这个对象就是原型，而<code>#409</code>是它的地址，<code>#409</code>所代表的这块内存所表示的对象是原型</li>
 <li>它是<code>obj</code>的原型，也是任何一个新对象的原型</li>
@@ -667,7 +664,7 @@ Object.prototype.toString = 'xxx'
 obj.xxx = undefined
 'xxx' in obj &amp;&amp; obj.xxx === undefined //true
 'x' in obj //false
-'x in obj2'//true
+'x' in obj2//true
 </code></pre>
 
 <h4 id="注意-obj-xxx-undefined">注意<code>obj.xxx === undefined</code></h4>
@@ -699,12 +696,30 @@ delete obj.name //删掉属性名，属性值自然就被同时删掉
 
 <pre><code class="language-JavaScript">var obj = {name: 'frank', age: 18}
 obj.name = undefined
+
+'name' in obj //true
+'name' in obj &amp;&amp; obj.name === undefined //true
+
 delete obj.name
 delete obj['name']
 
-//验证是否存在属性'name'
-'name' in obj //false
-'age' in obj
+//验证是否还存在属性'name'
+'name' in obj === false //true
+'age' in obj === false //false
+</code></pre></li>
+
+<li><p>只能用<code>'xxx' in obj</code> 查看属性名是否还在对象中：true表示在，false表示不在</p></li>
+
+<li><p><code>'xxx' in obj &amp;&amp; obj.xxx === undefined</code>返回<code>true</code>，表示属性<code>xxx</code>还在<code>obj</code>中，而且属性<code>xxx</code>的值是<code>undefined</code></p></li>
+
+<li><p><code>obj.xxx === undefined</code>不能断定<code>'xxx'</code> 是否为<code>obj</code>的属性。</p>
+
+<pre><code class="language-JavaScript">let obj = {}
+let obj2 = {xxx: undefined}
+obj.xxx === undefined //true
+obj2.xxx === undefined //true
+obj.xxx === null //false null空占位符
+obj2.xxx === null //false null空占位符
 </code></pre></li>
 </ul>
 
@@ -907,12 +922,13 @@ var person = Object.create(common,{
 <li>或者自己依次用<code>Object.keys()</code>在控制台打印出<code>obj.__proto__</code>，这种方法不推荐，不规范</li>
 </ul>
 
-<h5 id="判断一个属性是自身的独有的-还是共有的-obj-hasownproperty-porpertyname">判断一个属性是自身的独有的，还是共有的：<code>obj.hasOwnProperty('porpertyName')</code></h5>
+<h5 id="判断一个属性是自身的独有的-还是共有的-obj-hasownproperty-propertyname">判断一个属性是自身的独有的，还是共有的：<strong><em>obj.hasOwnProperty(&lsquo;propertyName&rsquo;)</em></strong></h5>
 
 <ul>
 <li><code>'toString' in obj //true</code>是不会区分属性是自身的，还是共有的</li>
 <li><code>'xxx' in obj &amp;&amp; obj.xxx === undefined</code>返回<code>true</code>，表示属性<code>xxx</code>还在<code>obj</code>中，而且属性<code>xxx</code>的值是<code>undefined</code></li>
 <li><code>obj.xxx === undefined</code>不能断定<code>'xxx'</code> 是否为<code>obj</code>的属性</li>
+<li>用<code>'xxx' in obj</code> 只用来查看属性名是否还在对象中：true表示在，false表示不在</li>
 <li>只能用<code>obj.hasOwnProperty('toString')</code>，返回<code>false</code>说明不是共有属性</li>
 </ul>
 
@@ -1162,13 +1178,13 @@ console.dir(obj2)
 
 <hr />
 
-<h4 id="参考文章">参考文章</h4>
+<h3 id="参考文章">参考文章</h3>
 
 <p><a href="https://static.xiedaimala.com/xdml/file/3ac7c224-c23d-491f-84b5-4fabfbeab9b8/2019-9-17-0-56-36.pdf">JS 对象.pdf</a></p>
 
 <p>入门<a href="https://wangdoc.com/javascript/">《网道 JavaScript 教程》</a></p>
 
-<h4 id="相关文章">相关文章</h4>
+<h3 id="相关文章">相关文章</h3>
 
 <ul>
 <li>无</li>

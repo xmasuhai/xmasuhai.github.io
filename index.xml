@@ -201,7 +201,7 @@ obj.toString() //不报错
 &lt;ul&gt;
 &lt;li&gt;不报错是因为&lt;code&gt;obj&lt;/code&gt;的隐藏属性&lt;strong&gt;&lt;em&gt;对应的对象&lt;/em&gt;&lt;/strong&gt;上有&lt;code&gt;toString&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;原型即共有属性&lt;/li&gt;
-&lt;li&gt;内存举例：&lt;code&gt;#409&lt;/code&gt;存着&lt;code&gt;toString()&lt;/code&gt;、&lt;code&gt;valueOf()&lt;/code&gt;、&lt;code&gt;hasOwnPorperty()&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;内存举例：&lt;code&gt;#409&lt;/code&gt;存着&lt;code&gt;toString()&lt;/code&gt;、&lt;code&gt;valueOf()&lt;/code&gt;、&lt;code&gt;hasOwnProperty()&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;定义一个对象&lt;code&gt;obj2&lt;/code&gt;，地址&lt;code&gt;#901&lt;/code&gt;，里面有&lt;code&gt;__proto__&lt;/code&gt;属性指向&lt;code&gt;#409&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;这个对象就是原型，而&lt;code&gt;#409&lt;/code&gt;是它的地址，&lt;code&gt;#409&lt;/code&gt;所代表的这块内存所表示的对象是原型&lt;/li&gt;
 &lt;li&gt;它是&lt;code&gt;obj&lt;/code&gt;的原型，也是任何一个新对象的原型&lt;/li&gt;
@@ -303,7 +303,7 @@ Object.prototype.toString = &#39;xxx&#39;
 obj.xxx = undefined
 &#39;xxx&#39; in obj &amp;amp;&amp;amp; obj.xxx === undefined //true
 &#39;x&#39; in obj //false
-&#39;x in obj2&#39;//true
+&#39;x&#39; in obj2//true
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;h4 id=&#34;注意-obj-xxx-undefined&#34;&gt;注意&lt;code&gt;obj.xxx === undefined&lt;/code&gt;&lt;/h4&gt;
@@ -335,12 +335,30 @@ delete obj.name //删掉属性名，属性值自然就被同时删掉
 
 &lt;pre&gt;&lt;code class=&#34;language-JavaScript&#34;&gt;var obj = {name: &#39;frank&#39;, age: 18}
 obj.name = undefined
+
+&#39;name&#39; in obj //true
+&#39;name&#39; in obj &amp;amp;&amp;amp; obj.name === undefined //true
+
 delete obj.name
 delete obj[&#39;name&#39;]
 
-//验证是否存在属性&#39;name&#39;
-&#39;name&#39; in obj //false
-&#39;age&#39; in obj
+//验证是否还存在属性&#39;name&#39;
+&#39;name&#39; in obj === false //true
+&#39;age&#39; in obj === false //false
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;只能用&lt;code&gt;&#39;xxx&#39; in obj&lt;/code&gt; 查看属性名是否还在对象中：true表示在，false表示不在&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;code&gt;&#39;xxx&#39; in obj &amp;amp;&amp;amp; obj.xxx === undefined&lt;/code&gt;返回&lt;code&gt;true&lt;/code&gt;，表示属性&lt;code&gt;xxx&lt;/code&gt;还在&lt;code&gt;obj&lt;/code&gt;中，而且属性&lt;code&gt;xxx&lt;/code&gt;的值是&lt;code&gt;undefined&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;code&gt;obj.xxx === undefined&lt;/code&gt;不能断定&lt;code&gt;&#39;xxx&#39;&lt;/code&gt; 是否为&lt;code&gt;obj&lt;/code&gt;的属性。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-JavaScript&#34;&gt;let obj = {}
+let obj2 = {xxx: undefined}
+obj.xxx === undefined //true
+obj2.xxx === undefined //true
+obj.xxx === null //false null空占位符
+obj2.xxx === null //false null空占位符
 &lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
@@ -543,12 +561,13 @@ var person = Object.create(common,{
 &lt;li&gt;或者自己依次用&lt;code&gt;Object.keys()&lt;/code&gt;在控制台打印出&lt;code&gt;obj.__proto__&lt;/code&gt;，这种方法不推荐，不规范&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h5 id=&#34;判断一个属性是自身的独有的-还是共有的-obj-hasownproperty-porpertyname&#34;&gt;判断一个属性是自身的独有的，还是共有的：&lt;code&gt;obj.hasOwnProperty(&#39;porpertyName&#39;)&lt;/code&gt;&lt;/h5&gt;
+&lt;h5 id=&#34;判断一个属性是自身的独有的-还是共有的-obj-hasownproperty-propertyname&#34;&gt;判断一个属性是自身的独有的，还是共有的：&lt;strong&gt;&lt;em&gt;obj.hasOwnProperty(&amp;lsquo;propertyName&amp;rsquo;)&lt;/em&gt;&lt;/strong&gt;&lt;/h5&gt;
 
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;&#39;toString&#39; in obj //true&lt;/code&gt;是不会区分属性是自身的，还是共有的&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;&#39;xxx&#39; in obj &amp;amp;&amp;amp; obj.xxx === undefined&lt;/code&gt;返回&lt;code&gt;true&lt;/code&gt;，表示属性&lt;code&gt;xxx&lt;/code&gt;还在&lt;code&gt;obj&lt;/code&gt;中，而且属性&lt;code&gt;xxx&lt;/code&gt;的值是&lt;code&gt;undefined&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;obj.xxx === undefined&lt;/code&gt;不能断定&lt;code&gt;&#39;xxx&#39;&lt;/code&gt; 是否为&lt;code&gt;obj&lt;/code&gt;的属性&lt;/li&gt;
+&lt;li&gt;用&lt;code&gt;&#39;xxx&#39; in obj&lt;/code&gt; 只用来查看属性名是否还在对象中：true表示在，false表示不在&lt;/li&gt;
 &lt;li&gt;只能用&lt;code&gt;obj.hasOwnProperty(&#39;toString&#39;)&lt;/code&gt;，返回&lt;code&gt;false&lt;/code&gt;说明不是共有属性&lt;/li&gt;
 &lt;/ul&gt;
 
@@ -798,13 +817,13 @@ console.dir(obj2)
 
 &lt;hr /&gt;
 
-&lt;h4 id=&#34;参考文章&#34;&gt;参考文章&lt;/h4&gt;
+&lt;h3 id=&#34;参考文章&#34;&gt;参考文章&lt;/h3&gt;
 
 &lt;p&gt;&lt;a href=&#34;https://static.xiedaimala.com/xdml/file/3ac7c224-c23d-491f-84b5-4fabfbeab9b8/2019-9-17-0-56-36.pdf&#34;&gt;JS 对象.pdf&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;入门&lt;a href=&#34;https://wangdoc.com/javascript/&#34;&gt;《网道 JavaScript 教程》&lt;/a&gt;&lt;/p&gt;
 
-&lt;h4 id=&#34;相关文章&#34;&gt;相关文章&lt;/h4&gt;
+&lt;h3 id=&#34;相关文章&#34;&gt;相关文章&lt;/h3&gt;
 
 &lt;ul&gt;
 &lt;li&gt;无&lt;/li&gt;
