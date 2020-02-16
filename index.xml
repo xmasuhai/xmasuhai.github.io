@@ -45,7 +45,9 @@
         <description>
 
 &lt;blockquote&gt;
-&lt;p&gt;JavaScript的对象是JS中唯一一种复杂类型&lt;/p&gt;
+&lt;p&gt;JavaScript的对象是JS中唯一一种复杂类型，它可以存其他其中简单类型（数字&lt;code&gt;Number&lt;/code&gt;、字符串&lt;code&gt;String&lt;/code&gt;、布尔&lt;code&gt;Boolean&lt;/code&gt;、未定义&lt;code&gt;Undefined&lt;/code&gt;、空&lt;code&gt;Null&lt;/code&gt;、符号&lt;code&gt;Symbol&lt;/code&gt;、大型整数&lt;code&gt;BigInt&lt;/code&gt;）&lt;/p&gt;
+
+&lt;p&gt;NaN属于数字&lt;code&gt;Number&lt;/code&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;h2 id=&#34;重点内容提要&#34;&gt;重点内容提要&lt;/h2&gt;
@@ -57,6 +59,8 @@
 &lt;li&gt;如何修改或增加对象的属性&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;&#39;name&#39; in obj&lt;/code&gt;和&lt;code&gt;obj.hasOwnProperty(&#39;name&#39;)&lt;/code&gt;的区别&lt;/li&gt;
 &lt;/ul&gt;
+
+&lt;hr /&gt;
 
 &lt;h3 id=&#34;对象的定义&#34;&gt;对象的定义&lt;/h3&gt;
 
@@ -175,7 +179,7 @@ var obj = {
 &lt;h3 id=&#34;对象的-隐藏-属性&#34;&gt;对象的*隐藏*属性&lt;/h3&gt;
 
 &lt;blockquote&gt;
-&lt;p&gt;对象&lt;code&gt;obj&lt;/code&gt;，点开控制台看到有个属性&lt;code&gt;__protp__&lt;/code&gt;，控制台骗你，&lt;code&gt;__protp__&lt;/code&gt;并非指向&lt;code&gt;Object&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;对象&lt;code&gt;obj&lt;/code&gt;，点开控制台看到有个属性&lt;code&gt;__proto__&lt;/code&gt;，控制台骗你，&lt;code&gt;__proto__&lt;/code&gt;并非指向&lt;code&gt;Object&lt;/code&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;ul&gt;
@@ -290,7 +294,7 @@ Object.prototype.toString = &#39;xxx&#39;
 &lt;h4 id=&#34;不含属性名&#34;&gt;不含属性名&lt;/h4&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-JavaScript&#34;&gt;let obj = {}
-&#39;xxx&#39; in obj === false
+&#39;xxx&#39; in obj === false //验证是否删除属性
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;h4 id=&#34;含属性名-但值为-undefined&#34;&gt;含属性名，但值为&lt;code&gt;undefined&lt;/code&gt;&lt;/h4&gt;
@@ -308,8 +312,10 @@ obj.xxx = undefined
 &lt;li&gt;&lt;p&gt;所以&lt;code&gt;obj.xxx === undefined&lt;/code&gt;不能断定&lt;code&gt;xxx&lt;/code&gt;是否为&lt;code&gt;obj&lt;/code&gt;的属性&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-JavaScript&#34;&gt;var obj = {}
-var obj2 = {x: undefined}
-obj.x === undefined //true
+var obj2 = {xxx: undefined}
+/* 判断 */
+obj.xxx === undefined //true
+obj2.xxx === undefined //true
 &lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
@@ -522,14 +528,14 @@ var person = Object.create(common,{
 
 &lt;h4 id=&#34;查看所有属性-读取属性&#34;&gt;查看所有属性（读取属性）&lt;/h4&gt;
 
-&lt;h5 id=&#34;仅查看自身-所有属性&#34;&gt;仅查看自身&lt;strong&gt;&lt;em&gt;所有属性&lt;/em&gt;&lt;/strong&gt;&lt;/h5&gt;
+&lt;h5 id=&#34;仅查看自身-独有属性&#34;&gt;仅查看自身&lt;strong&gt;&lt;em&gt;独有属性&lt;/em&gt;&lt;/strong&gt;&lt;/h5&gt;
 
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;Object.keys(obj)&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;返回一个包含所有属性名字符串的数组&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h5 id=&#34;查看-自身-共有-的所有属性&#34;&gt;查看&lt;strong&gt;&lt;em&gt;自身&lt;/em&gt;&lt;/strong&gt; + &lt;strong&gt;&lt;em&gt;共有&lt;/em&gt;&lt;/strong&gt; 的所有属性&lt;/h5&gt;
+&lt;h5 id=&#34;查看-独有-共有-的所有属性&#34;&gt;查看&lt;strong&gt;&lt;em&gt;独有&lt;/em&gt;&lt;/strong&gt; + &lt;strong&gt;&lt;em&gt;共有&lt;/em&gt;&lt;/strong&gt; 的所有属性&lt;/h5&gt;
 
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;console.dir(obj)&lt;/code&gt;&lt;/li&gt;
@@ -537,10 +543,12 @@ var person = Object.create(common,{
 &lt;li&gt;或者自己依次用&lt;code&gt;Object.keys()&lt;/code&gt;在控制台打印出&lt;code&gt;obj.__proto__&lt;/code&gt;，这种方法不推荐，不规范&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h5 id=&#34;判断一个属性是自身的-还是共有的&#34;&gt;判断一个属性是自身的，还是共有的&lt;/h5&gt;
+&lt;h5 id=&#34;判断一个属性是自身的独有的-还是共有的-obj-hasownproperty-porpertyname&#34;&gt;判断一个属性是自身的独有的，还是共有的：&lt;code&gt;obj.hasOwnProperty(&#39;porpertyName&#39;)&lt;/code&gt;&lt;/h5&gt;
 
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;&#39;toString&#39; in obj //true&lt;/code&gt;是不会区分属性是自身的，还是共有的&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&#39;xxx&#39; in obj &amp;amp;&amp;amp; obj.xxx === undefined&lt;/code&gt;返回&lt;code&gt;true&lt;/code&gt;，表示属性&lt;code&gt;xxx&lt;/code&gt;还在&lt;code&gt;obj&lt;/code&gt;中，而且属性&lt;code&gt;xxx&lt;/code&gt;的值是&lt;code&gt;undefined&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;obj.xxx === undefined&lt;/code&gt;不能断定&lt;code&gt;&#39;xxx&#39;&lt;/code&gt; 是否为&lt;code&gt;obj&lt;/code&gt;的属性&lt;/li&gt;
 &lt;li&gt;只能用&lt;code&gt;obj.hasOwnProperty(&#39;toString&#39;)&lt;/code&gt;，返回&lt;code&gt;false&lt;/code&gt;说明不是共有属性&lt;/li&gt;
 &lt;/ul&gt;
 
@@ -574,7 +582,7 @@ var person = Object.create(common,{
 &lt;li&gt;原型里存着对象的共有属性&lt;/li&gt;
 &lt;li&gt;比如&lt;code&gt;obj&lt;/code&gt;的原型就是一个对象&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;obj.__proto__&lt;/code&gt;存着这个对象的地址&lt;/li&gt;
-&lt;li&gt;这个对象里有&lt;code&gt;toStirng/constructor/valueOf&lt;/code&gt;等属性&lt;/li&gt;
+&lt;li&gt;这个对象里有&lt;code&gt;toString/constructor/valueOf&lt;/code&gt;等属性&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h4 id=&#34;对象的原型也是一个对象&#34;&gt;对象的原型也是一个对象&lt;/h4&gt;
@@ -587,7 +595,7 @@ var person = Object.create(common,{
 &lt;li&gt;&lt;p&gt;这个原型也有原型，是&lt;code&gt;null&lt;/code&gt;&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-JavaScript&#34;&gt;console.log(obj.__proto__)
-console.log(obj.__proto__.__prptp__) //null
+console.log(obj.__proto__.__proto__) //null
 &#39;__proto__&#39; in obj.__proto__ //true
 &lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
 &lt;/ul&gt;
@@ -665,6 +673,7 @@ obj[console.log(&#39;name&#39;)] //相当于obj[&#39;undefined&#39;]，打印出
 
 &lt;pre&gt;&lt;code class=&#34;language-JavaScript&#34;&gt;let obj = {name:&#39;fang&#39;}
 let name = &#39;frankFang&#39;
+/* 注意以下 */
 obj[name] === obj[&#39;frankFang&#39;] //true
 obj[name] === obj[&#39;name&#39;] //false
 obj[name] === obj.name //false
@@ -673,10 +682,13 @@ obj[&#39;name&#39;] === obj.name //true
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;blockquote&gt;
-&lt;p&gt;&lt;code&gt;obj[name]&lt;/code&gt;等价于&lt;code&gt;obj[&#39;frankfang&#39;]&lt;/code&gt;等价于&lt;code&gt;obj[&#39;name&#39;]&lt;/code&gt;
-而不是&lt;code&gt;obj[&#39;name&#39;]&lt;/code&gt;和&lt;code&gt;obj.name&lt;/code&gt;
-面试就看分清变量&lt;code&gt;name&lt;/code&gt;和常量字符串&lt;code&gt;&#39;name&#39;&lt;/code&gt;
-记清&lt;code&gt;obj.name&lt;/code&gt;、&lt;code&gt;obj[&#39;name&#39;]&lt;/code&gt;、&lt;code&gt;obj[name]&lt;/code&gt;三者的区别&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;obj[name]&lt;/code&gt;等价于&lt;code&gt;obj[&#39;frankfang&#39;]&lt;/code&gt;，而不等价于&lt;code&gt;obj[&#39;name&#39;]&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;而不是&lt;code&gt;obj[&#39;name&#39;]&lt;/code&gt;和&lt;code&gt;obj.name&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;面试就看分清变量&lt;code&gt;name&lt;/code&gt;和常量字符串&lt;code&gt;&#39;name&#39;&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;记清&lt;code&gt;obj.name&lt;/code&gt;、&lt;code&gt;obj[&#39;name&#39;]&lt;/code&gt;、&lt;code&gt;obj[name]&lt;/code&gt;三者的区别&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;ul&gt;

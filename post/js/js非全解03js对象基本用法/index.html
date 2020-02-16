@@ -23,7 +23,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 
 <meta name="author" content="Joel Xu" />
-  <meta name="description" content="JavaScript的对象是JS中唯一一种复杂类型 重点内容提要 声明对象的两种语法 如何删除对象的属性 如何查看对象的属性 如何修改或增加对象的属性" />
+  <meta name="description" content="JavaScript的对象是JS中唯一一种复杂类型，它可以存其他其中简单类型（数字Number、字符串String、布尔Boolean、未定" />
 
   <meta name="keywords" content="Hugo, theme, jane" />
 
@@ -60,25 +60,25 @@
 
 
 <meta property="og:title" content="【JS非全解03】JS对象基本用法" />
-<meta property="og:description" content="JavaScript的对象是JS中唯一一种复杂类型 重点内容提要 声明对象的两种语法 如何删除对象的属性 如何查看对象的属性 如何修改或增加对象的属性" />
+<meta property="og:description" content="JavaScript的对象是JS中唯一一种复杂类型，它可以存其他其中简单类型（数字Number、字符串String、布尔Boolean、未定" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://xmasuhai.xyz/post/js/js%E9%9D%9E%E5%85%A8%E8%A7%A303js%E5%AF%B9%E8%B1%A1%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95/" />
 <meta property="article:published_time" content="2020-02-16T05:01:41+08:00" />
 <meta property="article:modified_time" content="2020-02-16T05:01:41+08:00" />
 <meta itemprop="name" content="【JS非全解03】JS对象基本用法">
-<meta itemprop="description" content="JavaScript的对象是JS中唯一一种复杂类型 重点内容提要 声明对象的两种语法 如何删除对象的属性 如何查看对象的属性 如何修改或增加对象的属性">
+<meta itemprop="description" content="JavaScript的对象是JS中唯一一种复杂类型，它可以存其他其中简单类型（数字Number、字符串String、布尔Boolean、未定">
 
 
 <meta itemprop="datePublished" content="2020-02-16T05:01:41&#43;08:00" />
 <meta itemprop="dateModified" content="2020-02-16T05:01:41&#43;08:00" />
-<meta itemprop="wordCount" content="4541">
+<meta itemprop="wordCount" content="4785">
 
 
 
 <meta itemprop="keywords" content="JavaScript," />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="【JS非全解03】JS对象基本用法"/>
-<meta name="twitter:description" content="JavaScript的对象是JS中唯一一种复杂类型 重点内容提要 声明对象的两种语法 如何删除对象的属性 如何查看对象的属性 如何修改或增加对象的属性"/>
+<meta name="twitter:description" content="JavaScript的对象是JS中唯一一种复杂类型，它可以存其他其中简单类型（数字Number、字符串String、布尔Boolean、未定"/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -370,9 +370,9 @@
 <ul>
 <li><a href="#查看所有属性-读取属性">查看所有属性（读取属性）</a>
 <ul>
-<li><a href="#仅查看自身-所有属性">仅查看自身<strong><em>所有属性</em></strong></a></li>
-<li><a href="#查看-自身-共有-的所有属性">查看<strong><em>自身</em></strong> + <strong><em>共有</em></strong> 的所有属性</a></li>
-<li><a href="#判断一个属性是自身的-还是共有的">判断一个属性是自身的，还是共有的</a></li>
+<li><a href="#仅查看自身-独有属性">仅查看自身<strong><em>独有属性</em></strong></a></li>
+<li><a href="#查看-独有-共有-的所有属性">查看<strong><em>独有</em></strong> + <strong><em>共有</em></strong> 的所有属性</a></li>
+<li><a href="#判断一个属性是自身的独有的-还是共有的-obj-hasownproperty-porpertyname">判断一个属性是自身的独有的，还是共有的：<code>obj.hasOwnProperty('porpertyName')</code></a></li>
 <li><a href="#仅查看所有属性的值">仅查看所有属性的值</a></li>
 <li><a href="#既要看名-又要看值">既要看名，又要看值</a></li>
 </ul></li>
@@ -409,7 +409,9 @@
       
 
 <blockquote>
-<p>JavaScript的对象是JS中唯一一种复杂类型</p>
+<p>JavaScript的对象是JS中唯一一种复杂类型，它可以存其他其中简单类型（数字<code>Number</code>、字符串<code>String</code>、布尔<code>Boolean</code>、未定义<code>Undefined</code>、空<code>Null</code>、符号<code>Symbol</code>、大型整数<code>BigInt</code>）</p>
+
+<p>NaN属于数字<code>Number</code></p>
 </blockquote>
 
 <h2 id="重点内容提要">重点内容提要</h2>
@@ -421,6 +423,8 @@
 <li>如何修改或增加对象的属性</li>
 <li><code>'name' in obj</code>和<code>obj.hasOwnProperty('name')</code>的区别</li>
 </ul>
+
+<hr />
 
 <h3 id="对象的定义">对象的定义</h3>
 
@@ -539,7 +543,7 @@ var obj = {
 <h3 id="对象的-隐藏-属性">对象的*隐藏*属性</h3>
 
 <blockquote>
-<p>对象<code>obj</code>，点开控制台看到有个属性<code>__protp__</code>，控制台骗你，<code>__protp__</code>并非指向<code>Object</code></p>
+<p>对象<code>obj</code>，点开控制台看到有个属性<code>__proto__</code>，控制台骗你，<code>__proto__</code>并非指向<code>Object</code></p>
 </blockquote>
 
 <ul>
@@ -654,7 +658,7 @@ Object.prototype.toString = 'xxx'
 <h4 id="不含属性名">不含属性名</h4>
 
 <pre><code class="language-JavaScript">let obj = {}
-'xxx' in obj === false
+'xxx' in obj === false //验证是否删除属性
 </code></pre>
 
 <h4 id="含属性名-但值为-undefined">含属性名，但值为<code>undefined</code></h4>
@@ -672,8 +676,10 @@ obj.xxx = undefined
 <li><p>所以<code>obj.xxx === undefined</code>不能断定<code>xxx</code>是否为<code>obj</code>的属性</p>
 
 <pre><code class="language-JavaScript">var obj = {}
-var obj2 = {x: undefined}
-obj.x === undefined //true
+var obj2 = {xxx: undefined}
+/* 判断 */
+obj.xxx === undefined //true
+obj2.xxx === undefined //true
 </code></pre></li>
 </ul>
 
@@ -886,14 +892,14 @@ var person = Object.create(common,{
 
 <h4 id="查看所有属性-读取属性">查看所有属性（读取属性）</h4>
 
-<h5 id="仅查看自身-所有属性">仅查看自身<strong><em>所有属性</em></strong></h5>
+<h5 id="仅查看自身-独有属性">仅查看自身<strong><em>独有属性</em></strong></h5>
 
 <ul>
 <li><code>Object.keys(obj)</code></li>
 <li>返回一个包含所有属性名字符串的数组</li>
 </ul>
 
-<h5 id="查看-自身-共有-的所有属性">查看<strong><em>自身</em></strong> + <strong><em>共有</em></strong> 的所有属性</h5>
+<h5 id="查看-独有-共有-的所有属性">查看<strong><em>独有</em></strong> + <strong><em>共有</em></strong> 的所有属性</h5>
 
 <ul>
 <li><code>console.dir(obj)</code></li>
@@ -901,10 +907,12 @@ var person = Object.create(common,{
 <li>或者自己依次用<code>Object.keys()</code>在控制台打印出<code>obj.__proto__</code>，这种方法不推荐，不规范</li>
 </ul>
 
-<h5 id="判断一个属性是自身的-还是共有的">判断一个属性是自身的，还是共有的</h5>
+<h5 id="判断一个属性是自身的独有的-还是共有的-obj-hasownproperty-porpertyname">判断一个属性是自身的独有的，还是共有的：<code>obj.hasOwnProperty('porpertyName')</code></h5>
 
 <ul>
 <li><code>'toString' in obj //true</code>是不会区分属性是自身的，还是共有的</li>
+<li><code>'xxx' in obj &amp;&amp; obj.xxx === undefined</code>返回<code>true</code>，表示属性<code>xxx</code>还在<code>obj</code>中，而且属性<code>xxx</code>的值是<code>undefined</code></li>
+<li><code>obj.xxx === undefined</code>不能断定<code>'xxx'</code> 是否为<code>obj</code>的属性</li>
 <li>只能用<code>obj.hasOwnProperty('toString')</code>，返回<code>false</code>说明不是共有属性</li>
 </ul>
 
@@ -938,7 +946,7 @@ var person = Object.create(common,{
 <li>原型里存着对象的共有属性</li>
 <li>比如<code>obj</code>的原型就是一个对象</li>
 <li><code>obj.__proto__</code>存着这个对象的地址</li>
-<li>这个对象里有<code>toStirng/constructor/valueOf</code>等属性</li>
+<li>这个对象里有<code>toString/constructor/valueOf</code>等属性</li>
 </ul>
 
 <h4 id="对象的原型也是一个对象">对象的原型也是一个对象</h4>
@@ -951,7 +959,7 @@ var person = Object.create(common,{
 <li><p>这个原型也有原型，是<code>null</code></p>
 
 <pre><code class="language-JavaScript">console.log(obj.__proto__)
-console.log(obj.__proto__.__prptp__) //null
+console.log(obj.__proto__.__proto__) //null
 '__proto__' in obj.__proto__ //true
 </code></pre></li>
 </ul>
@@ -1029,6 +1037,7 @@ obj[console.log('name')] //相当于obj['undefined']，打印出的是name
 
 <pre><code class="language-JavaScript">let obj = {name:'fang'}
 let name = 'frankFang'
+/* 注意以下 */
 obj[name] === obj['frankFang'] //true
 obj[name] === obj['name'] //false
 obj[name] === obj.name //false
@@ -1037,10 +1046,13 @@ obj['name'] === obj.name //true
 </code></pre>
 
 <blockquote>
-<p><code>obj[name]</code>等价于<code>obj['frankfang']</code>等价于<code>obj['name']</code>
-而不是<code>obj['name']</code>和<code>obj.name</code>
-面试就看分清变量<code>name</code>和常量字符串<code>'name'</code>
-记清<code>obj.name</code>、<code>obj['name']</code>、<code>obj[name]</code>三者的区别</p>
+<p><code>obj[name]</code>等价于<code>obj['frankfang']</code>，而不等价于<code>obj['name']</code></p>
+
+<p>而不是<code>obj['name']</code>和<code>obj.name</code></p>
+
+<p>面试就看分清变量<code>name</code>和常量字符串<code>'name'</code></p>
+
+<p>记清<code>obj.name</code>、<code>obj['name']</code>、<code>obj[name]</code>三者的区别</p>
 </blockquote>
 
 <ul>
