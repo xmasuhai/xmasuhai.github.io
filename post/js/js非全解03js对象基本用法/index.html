@@ -71,7 +71,7 @@
 
 <meta itemprop="datePublished" content="2020-02-16T05:01:41&#43;08:00" />
 <meta itemprop="dateModified" content="2020-02-17T00:52:51&#43;08:00" />
-<meta itemprop="wordCount" content="5269">
+<meta itemprop="wordCount" content="6527">
 
 
 
@@ -365,8 +365,8 @@
             <a href="http://xmasuhai.xyz/categories/2020/"> 2020 </a>
             
           </div>
-        <span class="more-meta"> 约 5269 字 </span>
-          <span class="more-meta"> 预计阅读 11 分钟 </span>
+        <span class="more-meta"> 约 6527 字 </span>
+          <span class="more-meta"> 预计阅读 14 分钟 </span>
 
         
         
@@ -439,6 +439,7 @@
 <ul>
 <li><a href="#每个对象都有原型">每个对象都有原型</a></li>
 <li><a href="#对象的原型也是一个对象">对象的原型也是一个对象</a></li>
+<li><a href="#原型之属性继承">原型之属性继承</a></li>
 <li><a href="#查看单个属性">查看单个属性</a>
 <ul>
 <li><a href="#两种方法查看单个属性">两种方法查看单个属性</a></li>
@@ -477,6 +478,56 @@
 <li><code>'name' in obj</code>和<code>obj.hasOwnProperty('name')</code>的区别</li>
 </ul>
 
+<p>声明对象的两三种语法</p>
+
+<ul>
+<li>对象字面量：<code>let obj = {'属性名'：属性值,...}</code>，工作只用一般这个</li>
+<li>new构造函数：<code>let obj = new object{'属性名'：属性值}</code></li>
+<li>ES5方法：<code>var obj = Object.create({...})</code></li>
+</ul>
+
+<p>删除对象的属性</p>
+
+<ul>
+<li><code>delete obj.xxx</code></li>
+<li><code>delete obj['xxx']</code></li>
+<li><code>obj.xxx = undefined</code>属性值改为了<code>undefined</code>，而并非将该属性完全删除</li>
+</ul>
+
+<p>当运行<code>'xxx' in obj</code> 值为 <code>false</code> 时，可确认已删除<code>xxx</code>属性</p>
+
+<p>查看对象的属性</p>
+
+<ul>
+<li>查看自身独有属性：<code>Object.keys(obj)</code></li>
+<li>查看自身独有加共有属性：<code>console.dir(obj)</code></li>
+<li>两种方法单个属性属性：<code>obj['key'] 或 obj.key</code>，（注意key是字符串）</li>
+</ul>
+
+<p>修改或增加对象的属性</p>
+
+<ul>
+<li>声明时赋值：<code>let obj = {kkk: 'vvv'}</code> ，<strong>kkk</strong> 是字符串</li>
+<li>直接赋值（点运算符）：<code>obj.kkk = 'vvv'</code>，<strong>kkk</strong> 是字符串</li>
+<li>直接赋值（方括号运算符）：<code>obj['kkk'] = 'vvv'</code></li>
+<li>间接赋值（到变量）：<code>let key = 'kkk'; obj[key] = 'vvv'</code></li>
+<li>批量赋值：<code>Object.assign(obj, {age: 18, gender: 'man'})</code></li>
+</ul>
+
+<p><code>'name' in obj</code>和<code>obj.hasOwnProperty('name')</code> 的区别</p>
+
+<blockquote>
+<p><code>'name' in obj</code>：无法知道这个属性是对象自身的还是共有的，当自身没有但共有属性里面有这个属性时，也同样返回true。</p>
+
+<p><code>obj.hasOwnProperty('name')</code>：可以很清楚的知道这个对象的某一个属性是自身的，不会去找共有属性里面</p>
+
+<p><code>obj.hasOwnProperty('name')</code>：当自身没有，但共有属性里面有这个属性，返回<code>false</code>，即使改变了原型，除非命名了一个和共有属性名字相同的属性。</p>
+</blockquote>
+
+<hr />
+
+<p>正文开始</p>
+
 <hr />
 
 <h3 id="对象的定义">对象的定义</h3>
@@ -492,11 +543,13 @@
 <pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
+</span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">{</span> <span class="s1">&#39;name&#39;</span><span class="o">:</span><span class="s1">&#39;frank&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="o">:</span><span class="mi">18</span> <span class="p">}</span> <span class="c1">//常用写法
-</span><span class="c1"></span><span class="kd">let</span> <span class="nx">obj</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Object</span><span class="p">({</span><span class="s1">&#39;name&#39;</span><span class="o">:</span><span class="s1">&#39;frank&#39;</span><span class="p">})</span> <span class="c1">//正规写法没人写
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">{</span> <span class="s1">&#39;name&#39;</span><span class="o">:</span><span class="s1">&#39;frank&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="o">:</span><span class="mi">18</span> <span class="p">}</span> <span class="c1">//工作常用写法，对象字面量
+</span><span class="c1"></span><span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Object</span><span class="p">({</span><span class="s1">&#39;name&#39;</span><span class="o">:</span><span class="s1">&#39;frank&#39;</span><span class="p">})</span> <span class="c1">//正规写法没人写，new构造函数
 </span><span class="c1"></span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">({</span> <span class="s1">&#39;name&#39;</span><span class="o">:</span><span class="s1">&#39;frank&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="o">:</span><span class="mi">18</span> <span class="p">})</span> <span class="c1">//匿名对象
+</span><span class="c1"></span><span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">create</span><span class="p">({...})</span> <span class="c1">//ES5方法
 </span></code></pre></td></tr></table>
 </div>
 </div>
@@ -505,7 +558,7 @@
 </blockquote>
 
 <ul>
-<li>key（键名）是<strong>字符串</strong>，不是标识符（不以数字开头的)</li>
+<li>key（键名）是<strong>字符串</strong>，不是标识符（不以数字开头的）</li>
 <li>可以包含任意字符串，即使是空字符串、包含空格、中文、Emoji的字符串皆可，但没人这么用，此时引号不能省略</li>
 <li><code>Chrome</code>的控制台返回值有欺骗性，用<code>Object.keys(obj)</code>来查看正确的键名</li>
 
@@ -630,8 +683,8 @@
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">p1</span> <span class="o">=</span> <span class="s1">&#39;name&#39;</span>
-<span class="kd">let</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">{</span><span class="nx">p1</span><span class="o">:</span><span class="s1">&#39;frankfang&#39;</span><span class="p">}</span> <span class="c1">//这样写，属性名为&#39;p1&#39;
-</span><span class="c1"></span><span class="kd">let</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">{[</span><span class="nx">p1</span><span class="p">]</span><span class="o">:</span><span class="s1">&#39;frankfang&#39;</span><span class="p">}</span> <span class="c1">//这样写，属性名为&#39;name&#39;
+<span class="kd">let</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">{</span><span class="nx">p1</span><span class="o">:</span><span class="s1">&#39;frankFang&#39;</span><span class="p">}</span> <span class="c1">//这样写，属性名为&#39;p1&#39;
+</span><span class="c1"></span><span class="kd">let</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">{[</span><span class="nx">p1</span><span class="p">]</span><span class="o">:</span><span class="s1">&#39;frankFang&#39;</span><span class="p">}</span> <span class="c1">//这样写，属性名为&#39;name&#39;
 </span><span class="c1"></span><span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">{</span>
     <span class="p">[</span><span class="mi">1</span><span class="o">+</span><span class="mi">2</span><span class="o">+</span><span class="mi">3</span><span class="o">+</span><span class="mi">4</span><span class="p">]</span><span class="o">:</span><span class="s1">&#39;十&#39;</span>
 <span class="p">}</span>
@@ -749,8 +802,22 @@
 </div>
 <blockquote>
 <p><code>let key = 'name';</code> <del><code>obj.key = 'frank'</code></del> 错误，因为<code>obj.key</code>等价于<code>obj['key']</code></p>
-</blockquote>
 
+<p>增加属性（写入属性），即属性设置又称为属性赋值</p>
+
+<p>增加属性和改变属性的方法一样，其中，点运算符和方括号运算符这两种方法，与属性查询相同</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nx">o</span><span class="p">.</span><span class="nx">p</span> <span class="o">=</span> <span class="s1">&#39;abc&#39;</span><span class="p">;</span>
+<span class="nx">o</span><span class="p">[</span><span class="s1">&#39;p&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;abc&#39;</span><span class="p">;</span>
+</code></pre></td></tr></table>
+</div>
+</div>
 <h4 id="批量赋值">批量赋值</h4>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -959,11 +1026,20 @@
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">var</span> <span class="nx">obj</span>  <span class="o">=</span> <span class="p">{}</span>
@@ -971,6 +1047,15 @@
 </span><span class="c1"></span><span class="nx">obj</span> <span class="o">===</span> <span class="nb">window</span><span class="p">.</span><span class="nx">obj</span> <span class="c1">//true
 </span><span class="c1"></span><span class="k">delete</span> <span class="nx">obj</span> <span class="c1">//
 </span><span class="c1"></span><span class="nx">obj</span> <span class="c1">//{} 还在
+</span><span class="c1"></span>
+<span class="kd">var</span> <span class="nx">o</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">a</span> <span class="o">:</span> <span class="mi">1</span>
+<span class="p">};</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">o</span><span class="p">.</span><span class="nx">a</span><span class="p">);</span><span class="c1">//1
+</span><span class="c1"></span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;a&#39;</span> <span class="k">in</span> <span class="nx">o</span><span class="p">);</span><span class="c1">//true
+</span><span class="c1"></span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">delete</span> <span class="nx">o</span><span class="p">.</span><span class="nx">a</span><span class="p">);</span><span class="c1">//true
+</span><span class="c1"></span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">o</span><span class="p">.</span><span class="nx">a</span><span class="p">);</span><span class="c1">//undefined
+</span><span class="c1"></span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;a&#39;</span> <span class="k">in</span> <span class="nx">o</span><span class="p">);</span><span class="c1">//false
 </span></code></pre></td></tr></table>
 </div>
 </div>
@@ -1002,9 +1087,9 @@
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="c1">// 开发不用var 再次赋值不报错，会覆盖掉原来的所有属性，所以用let
-</span><span class="c1"></span><span class="kd">let</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;frank&#39;</span><span class="p">}</span> <span class="c1">//name自动变为字符串
-</span><span class="c1"></span><span class="nx">obj</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="s1">&#39;frankfang&#39;</span> <span class="c1">//name自动变为字符串
-</span><span class="c1"></span><span class="nx">obj</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;fangfang&#39;</span> <span class="c1">//直接修改
+</span><span class="c1"></span><span class="kd">let</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;frank&#39;</span><span class="p">}</span> <span class="c1">//name自动变为字符串，声明时赋值
+</span><span class="c1"></span><span class="nx">obj</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="s1">&#39;frankFang&#39;</span> <span class="c1">//name自动变为字符串，直接赋值
+</span><span class="c1"></span><span class="nx">obj</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;fangFang&#39;</span> <span class="c1">//直接赋值
 </span></code></pre></td></tr></table>
 </div>
 </div>
@@ -1035,7 +1120,11 @@
 <span class="nx">obj</span><span class="p">[</span><span class="s1">&#39;&#39;</span><span class="p">]</span> <span class="c1">//&#34;fang&#34;
 </span></code></pre></td></tr></table>
 </div>
-</div><div class="highlight"><div class="chroma">
+</div>
+<blockquote>
+<p><code>obj[]</code>里是通过运算后得到的属性</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
 </span><span class="lnt">2
@@ -1058,7 +1147,7 @@
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">{}</span>
-<span class="nb">Object</span><span class="p">.</span><span class="nx">assign</span><span class="p">(</span><span class="nx">obj</span><span class="p">,{</span><span class="nx">age</span><span class="o">:</span> <span class="mi">30</span><span class="p">,</span> <span class="nx">gender</span><span class="o">:</span> <span class="s1">&#39;oldman&#39;</span><span class="p">})</span>
+<span class="nb">Object</span><span class="p">.</span><span class="nx">assign</span><span class="p">(</span><span class="nx">obj</span><span class="p">,{</span><span class="nx">age</span><span class="o">:</span> <span class="mi">30</span><span class="p">,</span> <span class="nx">gender</span><span class="o">:</span> <span class="s1">&#39;oldMan&#39;</span><span class="p">})</span>
 </code></pre></td></tr></table>
 </div>
 </div>
@@ -1269,7 +1358,11 @@
 <hr />
 
 <blockquote>
+<blockquote>
+<blockquote>
 <p>补充插入</p>
+</blockquote>
+</blockquote>
 </blockquote>
 
 <h3 id="原型">原型</h3>
@@ -1310,12 +1403,122 @@
 <p>把根对象的原型人为地指定为空值<code>null</code></p>
 </blockquote>
 
+<h4 id="原型之属性继承">原型之属性继承</h4>
+
+<blockquote>
+<p>对象都和某一个对象相关联，这个对象即原型，每一个对象都从原型继承属性。</p>
+
+<p>所有通过对象直接量创建的对象都具有同一个原型对象，并可以通过<code>Object.prototype</code>获得对原型对象的引用</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">{};</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">obj</span><span class="p">.</span><span class="nx">__proto__</span> <span class="o">===</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">prototype</span><span class="p">);</span><span class="c1">//true
+</span></code></pre></td></tr></table>
+</div>
+</div>
+<blockquote>
+<p>对象本身具有的属性叫自有属性(own property)，从原型对象继承而来的属性叫继承属性</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">var</span> <span class="nx">o</span> <span class="o">=</span> <span class="p">{</span><span class="nx">a</span><span class="o">:</span><span class="mi">1</span><span class="p">};</span>
+<span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="nx">o</span><span class="p">);</span>
+<span class="nx">obj</span><span class="p">.</span><span class="nx">b</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="c1">//继承自原型对象o的属性a
+</span><span class="c1"></span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">obj</span><span class="p">.</span><span class="nx">a</span><span class="p">);</span><span class="c1">//1
+</span><span class="c1">//自有属性b
+</span><span class="c1"></span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">obj</span><span class="p">.</span><span class="nx">b</span><span class="p">);</span><span class="c1">//2
+</span></code></pre></td></tr></table>
+</div>
+</div>
+<blockquote>
+<p><code>in</code>操作符可以判断属性在不在该对象上，但无法区别自有还是继承属性</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">var</span> <span class="nx">o</span> <span class="o">=</span> <span class="p">{</span><span class="nx">a</span><span class="o">:</span><span class="mi">1</span><span class="p">};</span>
+<span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="nx">o</span><span class="p">);</span>
+<span class="nx">obj</span><span class="p">.</span><span class="nx">b</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;a&#39;</span> <span class="k">in</span> <span class="nx">obj</span><span class="p">);</span><span class="c1">//true
+</span><span class="c1"></span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;b&#39;</span> <span class="k">in</span> <span class="nx">obj</span><span class="p">);</span><span class="c1">//true
+</span><span class="c1"></span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;b&#39;</span> <span class="k">in</span> <span class="nx">o</span><span class="p">);</span><span class="c1">//false
+</span></code></pre></td></tr></table>
+</div>
+</div>
+<blockquote>
+<p>通过<code>hasOwnProperty()</code>方法可以确定该属性是自有属性还是继承属性</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">var</span> <span class="nx">o</span> <span class="o">=</span> <span class="p">{</span><span class="nx">a</span><span class="o">:</span><span class="mi">1</span><span class="p">};</span>
+<span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="nx">o</span><span class="p">);</span>
+<span class="nx">obj</span><span class="p">.</span><span class="nx">b</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">obj</span><span class="p">.</span><span class="nx">hasOwnProperty</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">));</span><span class="c1">//false
+</span><span class="c1"></span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">obj</span><span class="p">.</span><span class="nx">hasOwnProperty</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">));</span><span class="c1">//true
+</span></code></pre></td></tr></table>
+</div>
+</div>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>补充插入完毕</p>
+</blockquote>
+</blockquote>
+</blockquote>
+
 <hr />
 
 <h4 id="查看单个属性">查看单个属性</h4>
 
 <h5 id="两种方法查看单个属性">两种方法查看单个属性</h5>
 
+<p>属性查询一般有两种方法，包括点运算符和方括号运算符</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">var</span> <span class="nx">o</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nx">p</span><span class="o">:</span> <span class="s1">&#39;Hello World&#39;</span>
+<span class="p">};</span>
+<span class="nx">o</span><span class="p">.</span><span class="nx">p</span> <span class="c1">// &#34;Hello World&#34;
+</span><span class="c1"></span><span class="nx">o</span><span class="p">[</span><span class="s1">&#39;p&#39;</span><span class="p">]</span> <span class="c1">// &#34;Hello World&#34;
+</span></code></pre></td></tr></table>
+</div>
+</div>
 <ul>
 <li>中括号语法：<code>obj['key']</code>，最明确</li>
 <li>点语法：<code>obj.key</code>，易被误导成<code>key</code>不是字符串，其实是字符串</li>
@@ -1350,7 +1553,7 @@
 </span><span class="c1"></span><span class="nb">window</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="s1">&#39;age&#39;</span>
 <span class="nx">obj</span><span class="p">[</span><span class="nx">name</span><span class="p">]</span> <span class="c1">//18
 </span><span class="c1"></span>
-<span class="nx">obj</span><span class="p">[</span><span class="s1">&#39;na&#39;</span><span class="o">+</span><span class="s1">&#39;me&#39;</span><span class="p">]</span> <span class="c1">//&#39;frankfang&#39;
+<span class="nx">obj</span><span class="p">[</span><span class="s1">&#39;na&#39;</span><span class="o">+</span><span class="s1">&#39;me&#39;</span><span class="p">]</span> <span class="c1">//&#39;frankfang&#39;，在对象字面量内部对属性名使用表达式，则需要使用ES6的可计算属性名
 </span><span class="c1"></span>
 <span class="nx">obj</span><span class="p">[</span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">)]</span> <span class="c1">//undefined，打印出的是name
 </span><span class="c1"></span>
@@ -1362,6 +1565,26 @@
 </div></li>
 </ul>
 
+<blockquote>
+<p>如果要在对象字面量内部对属性名使用表达式，则需要使用ES6的可计算属性名</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="p">[</span><span class="nx">a</span> <span class="o">+</span> <span class="mi">3</span><span class="p">]</span><span class="o">:</span> <span class="s1">&#39;abc&#39;</span>
+<span class="p">};</span>
+<span class="nx">person</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span><span class="c1">//&#39;abc&#39;
+</span></code></pre></td></tr></table>
+</div>
+</div>
 <h5 id="优先使用中括号语法">优先使用中括号语法</h5>
 
 <ul>
