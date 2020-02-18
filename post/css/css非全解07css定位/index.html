@@ -23,7 +23,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 
 <meta name="author" content="Joel Xu" />
-  <meta name="description" content="布局分类 固定宽度：PC（淘宝），一般：960px、1000px、1024px 不固定宽度：手机页面（手机淘宝），主要靠文档流的原理来布局，开发" />
+  <meta name="description" content="布局和定位的区别 布局是屏幕平面上的 定位是垂直于屏幕的 完全不同的概念 一个 div 的分层 从文档流和盒模型说起 背景的范围是从哪到哪？ border内侧围住" />
 
   <meta name="keywords" content="Hugo, theme, jane" />
 
@@ -60,25 +60,25 @@
 
 
 <meta property="og:title" content="【CSS非全解07】CSS定位" />
-<meta property="og:description" content="布局分类 固定宽度：PC（淘宝），一般：960px、1000px、1024px 不固定宽度：手机页面（手机淘宝），主要靠文档流的原理来布局，开发" />
+<meta property="og:description" content="布局和定位的区别 布局是屏幕平面上的 定位是垂直于屏幕的 完全不同的概念 一个 div 的分层 从文档流和盒模型说起 背景的范围是从哪到哪？ border内侧围住" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://xmasuhai.xyz/post/css/css%E9%9D%9E%E5%85%A8%E8%A7%A307css%E5%AE%9A%E4%BD%8D/" />
 <meta property="article:published_time" content="2020-02-01T00:40:41+08:00" />
 <meta property="article:modified_time" content="2020-02-07T23:30:01+08:00" />
 <meta itemprop="name" content="【CSS非全解07】CSS定位">
-<meta itemprop="description" content="布局分类 固定宽度：PC（淘宝），一般：960px、1000px、1024px 不固定宽度：手机页面（手机淘宝），主要靠文档流的原理来布局，开发">
+<meta itemprop="description" content="布局和定位的区别 布局是屏幕平面上的 定位是垂直于屏幕的 完全不同的概念 一个 div 的分层 从文档流和盒模型说起 背景的范围是从哪到哪？ border内侧围住">
 
 
 <meta itemprop="datePublished" content="2020-02-01T00:40:41&#43;08:00" />
 <meta itemprop="dateModified" content="2020-02-07T23:30:01&#43;08:00" />
-<meta itemprop="wordCount" content="2164">
+<meta itemprop="wordCount" content="2702">
 
 
 
-<meta itemprop="keywords" content="CSS position," />
+<meta itemprop="keywords" content="CSS,CSS-Position," />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="【CSS非全解07】CSS定位"/>
-<meta name="twitter:description" content="布局分类 固定宽度：PC（淘宝），一般：960px、1000px、1024px 不固定宽度：手机页面（手机淘宝），主要靠文档流的原理来布局，开发"/>
+<meta name="twitter:description" content="布局和定位的区别 布局是屏幕平面上的 定位是垂直于屏幕的 完全不同的概念 一个 div 的分层 从文档流和盒模型说起 背景的范围是从哪到哪？ border内侧围住"/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -365,8 +365,8 @@
             <a href="http://xmasuhai.xyz/categories/2020/"> 2020 </a>
             
           </div>
-        <span class="more-meta"> 约 2164 字 </span>
-          <span class="more-meta"> 预计阅读 5 分钟 </span>
+        <span class="more-meta"> 约 2702 字 </span>
+          <span class="more-meta"> 预计阅读 6 分钟 </span>
 
         
         
@@ -385,26 +385,52 @@
 <ul>
 <li>
 <ul>
-<li><a href="#布局分类">布局分类</a>
+<li><a href="#布局和定位的区别">布局和定位的区别</a>
 <ul>
-<li><a href="#布局思路">布局思路</a>
+<li><a href="#一个-div-的分层">一个 div 的分层</a>
 <ul>
-<li><a href="#文字描述-用什么布局">文字描述：用什么布局？</a></li>
+<li><a href="#从-屏幕侧面-看一个div-是什么样子">从<strong>屏幕侧面</strong>看一个div，是什么样子</a></li>
 </ul></li>
-<li><a href="#float-布局-非响应式"><code>float</code>布局，非响应式</a>
+<li><a href="#position-的五个取值"><code>position</code>的五个取值</a>
 <ul>
-<li><a href="#步骤">步骤</a></li>
 <li><a href="#经验">经验</a></li>
-</ul></li>
-<li><a href="#栗子实践">栗子实践</a>
+<li><a href="#position-relative"><code>position:relative</code></a>
 <ul>
-<li><a href="#用-float-做不同布局">用<code>float</code>做不同布局：</a>
-<ul>
-<li><a href="#注意的事项">注意的事项</a></li>
+<li><a href="#position-relative-使用场景"><code>position:relative</code>使用场景</a></li>
+<li><a href="#position-relative-配合-z-index"><code>position:relative</code>配合<code>z-index</code></a></li>
+<li><a href="#position-relative-经验"><code>position:relative</code>经验</a></li>
 </ul></li>
-<li><a href="#负-margin">负<code>margin</code></a></li>
-<li><a href="#经验总结">经验总结</a></li>
-<li><a href="#问答">问答</a></li>
+<li><a href="#position-absolute"><code>position:absolute</code></a>
+<ul>
+<li><a href="#position-absolute-使用场景"><code>position:absolute</code>使用场景</a></li>
+<li><a href="#position-absolute-配合-z-index"><code>position:absolute</code>配合<code>z-index</code></a></li>
+<li><a href="#position-absolute-经验"><code>position:absolute</code>经验</a></li>
+</ul></li>
+<li><a href="#position-fixed"><code>position:fixed</code></a>
+<ul>
+<li><a href="#position-fixed-使用场景"><code>position:fixed</code>使用场景</a></li>
+<li><a href="#position-fixed-配合-z-index"><code>position:fixed</code>配合<code>z-index</code></a></li>
+<li><a href="#position-fixed-经验"><code>position:fixed</code>经验</a></li>
+</ul></li>
+<li><a href="#position-sticky"><code>position:sticky</code></a>
+<ul>
+<li><a href="#position-sticky-使用场景"><code>position:sticky</code>使用场景</a></li>
+<li><a href="#position-sticky-配合-z-index"><code>position:sticky</code>配合<code>z-index</code></a></li>
+<li><a href="#position-sticky-经验"><code>position:sticky</code>经验</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#z-index-怎么用"><code>z-index</code>怎么用</a></li>
+</ul></li>
+<li><a href="#层叠上下文">层叠上下文</a>
+<ul>
+<li><a href="#定位与层叠上下文">定位与层叠上下文</a>
+<ul>
+<li><a href="#比喻">比喻</a></li>
+<li><a href="#哪些不正交的属性可以创建它">哪些不正交的属性可以创建它</a></li>
+</ul></li>
+<li><a href="#负-z-index-与层叠上下文">负<code>z-index</code>与层叠上下文</a></li>
+<li><a href="#优先级-样式继承-选择器权重">优先级 样式继承、选择器权重</a>
+<ul>
 <li><a href="#参考文章">参考文章</a></li>
 <li><a href="#相关文章">相关文章</a></li>
 </ul></li>
@@ -419,186 +445,336 @@
     <div class="post-content">
       
 
-<h2 id="布局分类">布局分类</h2>
-
-<ol>
-<li>固定宽度：PC（<a href="https://taobao.com/">淘宝</a>），一般：960px、1000px、1024px</li>
-<li>不固定宽度：手机页面（<a href="https://main.m.taobao.com/?sprefer=sypc00">手机淘宝</a>），主要靠文档流的原理来布局，开发者手机页面模式 | 响应式</li>
-</ol>
+<h2 id="布局和定位的区别">布局和定位的区别</h2>
 
 <blockquote>
-<p>屏幕 页面 尺寸</p>
+<p>布局是屏幕平面上的</p>
 
-<p>文档流本来就是自适应的，不需添加额外样式，(加了固定宽度，就不是)</p>
+<p>定位是垂直于屏幕的</p>
+
+<p>完全不同的概念</p>
 </blockquote>
 
-<ul>
-<li>响应式布局（PC上固定宽，手机不固定），即混合布局</li>
-</ul>
-
-<h3 id="布局思路">布局思路</h3>
+<h3 id="一个-div-的分层">一个 div 的分层</h3>
 
 <blockquote>
-<p>整体&lt;-&gt;细节</p>
+<p>从文档流和盒模型说起</p>
+
+<p>背景的范围是从哪到哪？</p>
 </blockquote>
 
-<p>一图流</p>
-
-<p><img src="../../../static/images/layoutTaoLu.jpg" alt="布局思路" /></p>
-
-<h4 id="文字描述-用什么布局">文字描述：用什么布局？</h4>
-
-<ul>
-<li>=&gt;<code>兼容IE9</code>=&gt;<code>左浮两个，固定宽度，不要响应式</code>=&gt;<code>给父元素加clearfix</code>=&gt;<code>使用float布局</code>{必要时使用负margin}</li>
-<li>=&gt;<code>不需兼容IE9</code></li>
-<li>- =&gt;<code>不只兼容最新浏览器</code>=&gt;<code>使用flex布局</code>{必要时使用负margin}</li>
-<li>- =&gt;<code>只兼容最新浏览器</code>=&gt;<code>使用grid布局</code></li>
+<ul class="task-list">
+<li><label><input type="checkbox" disabled class="task-list-item"> border内侧围住的区域</label></li>
+<li><label><input type="checkbox" checked disabled class="task-list-item"> border外侧围住的区域</label></li>
 </ul>
+
+<blockquote>
+<p>如何验证？border半透明</p>
+</blockquote>
+
+<p>代码验证：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-CSS" data-lang="CSS"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-CSS" data-lang="CSS"><span class="c">/* 点rgba 按住Alt 上下键 0.1 幅度 Chrome开发者调试 */</span>
+<span class="p">.</span><span class="nc">demo</span> <span class="p">{</span>
+    <span class="k">box-sizing</span><span class="p">:</span> <span class="kc">border-box</span><span class="p">;</span>
+    <span class="k">margin</span><span class="p">:</span> <span class="mi">12</span><span class="kt">px</span><span class="p">;</span>
+    <span class="k">border</span><span class="p">:</span> <span class="mi">15</span><span class="kt">px</span> <span class="kc">solid</span> <span class="nb">rgba</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">.9</span><span class="p">);</span>
+    <span class="k">padding</span><span class="p">:</span> <span class="mi">22</span><span class="kt">px</span><span class="p">;</span>
+    <span class="k">width</span><span class="p">:</span> <span class="mi">300</span><span class="kt">px</span><span class="p">;</span>
+    <span class="k">height</span><span class="p">:</span> <span class="mi">300</span><span class="kt">px</span><span class="p">;</span>
+    <span class="k">background</span><span class="p">:</span> <span class="kc">lightblue</span><span class="p">;</span>
+    <span class="k">color</span><span class="p">:</span> <span class="kc">darkorange</span><span class="p">;</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<blockquote>
+<p>做demo验证CSS特性</p>
+</blockquote>
+
+<p><a href="http://xmasuhai.xyz/demo-test/css-demo-4/css-demo_position_divTest.html">demo_position_divTest</a></p>
+
+<h4 id="从-屏幕侧面-看一个div-是什么样子">从<strong>屏幕侧面</strong>看一个div，是什么样子</h4>
+
+<blockquote>
+<p>内容区里的文字会遮住<code>background</code>；</p>
+
+<p><code>border</code>会遮住<code>background</code></p>
+
+<p>内容区里的文字会遮住<code>border</code>吗？</p>
+
+<p>会</p>
+
+<p>脱离文档流的子元素 比之前高一点（离屏幕近一些）跳出并不再影响原普通文档流</p>
+
+<p>其实就是浮起来了一点点</p>
+</blockquote>
+
+<p>代码验证：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-CSS" data-lang="CSS"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-CSS" data-lang="CSS"><span class="c">/* 字体变大 直至覆盖到border */</span>
+<span class="p">.</span><span class="nc">demo</span> <span class="p">{</span>
+    <span class="k">box-sizing</span><span class="p">:</span> <span class="kc">border-box</span><span class="p">;</span>
+    <span class="k">border</span><span class="p">:</span> <span class="mi">15</span><span class="kt">px</span> <span class="kc">solid</span> <span class="kc">red</span><span class="p">;</span>
+    <span class="k">width</span><span class="p">:</span> <span class="mi">300</span><span class="kt">px</span><span class="p">;</span>
+    <span class="k">height</span><span class="p">:</span> <span class="mi">300</span><span class="kt">px</span><span class="p">;</span>
+    <span class="k">background</span><span class="p">:</span> <span class="kc">lightblue</span><span class="p">;</span>
+    <span class="k">color</span><span class="p">:</span> <span class="kc">darkorange</span><span class="p">;</span>
+    <span class="k">font-size</span><span class="p">:</span><span class="mi">120</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<blockquote>
+<p>上帝视角看div三维立体结构 <a href="https://docs.microsoft.com/zh-cn/microsoft-edge/devtools-guide-chromium/whats-new/2019/12/devtools#3d-view">IE Edge 3D view</a></p>
+
+<p>分层：内容文字 &gt; border &gt; background</p>
+
+<p>较后的子元素里的文字会覆盖较前的</p>
+</blockquote>
 
 <hr />
 
-<h3 id="float-布局-非响应式"><code>float</code>布局，非响应式</h3>
+<p><del><a href="https://www.google.com.hk/search?q=+%E8%AE%A9%E6%B5%8F%E8%A7%88%E7%9A%84%E7%BD%91%E9%A1%B5%E5%B8%A6%E6%9C%893D%E6%95%88%E6%9E%9C++%E5%AE%9E%E7%8E%B03D%E8%A7%86%E5%9B%BE%E6%9F%A5%E7%9C%8B%E7%BD%91%E9%A1%B5+++%E6%9F%A5%E7%9C%8B3D%E4%B8%AD%E7%9A%84%E7%BD%91%E7%AB%99%E7%BB%93%E6%9E%84">让浏览的网页带有3D效果 实现3D视图查看网页 查看3D中的网站结构</a></del></p>
 
-<h4 id="步骤">步骤</h4>
+<p><del><a href="https://blog.csdn.net/weixin_42551465/article/details/96868212">火狐（firefox）使用Tilt插件实现3D视图查看网页</a></del></p>
 
-<p><code>clearfix::after</code>伪元素清浮动法</p>
+<p><del><a href="http://www.lingchenliang.com/post/58025.html">firefox扩展Tilt-让浏览的网页带有3D效果</a></del></p>
+
+<p><del>* 新版火狐本不支持</del></p>
+
+<p><a href="https://www.31du.cn/blog/3d-chromium.html">Firefox 不要的 3D 视图功能，微软将它引入 Chromium</a></p>
+
+<hr />
+
+<h3 id="position-的五个取值"><code>position</code>的五个取值</h3>
 
 <ul>
-<li>子元素加<code>float:left;</code>和<code>width</code></li>
-
-<li><p>父元素加<code>.clearfix</code>：<strong>三行Combo</strong></p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-CSS" data-lang="CSS"><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-CSS" data-lang="CSS"><span class="p">.</span><span class="nc">clearfix</span><span class="p">::</span><span class="nd">after</span> <span class="p">{</span>
-<span class="k">content</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
-<span class="k">display</span><span class="p">:</span> <span class="kc">block</span><span class="p">;</span>
-<span class="k">clear</span><span class="p">:</span> <span class="kc">both</span><span class="p">;</span>
-<span class="p">}</span></code></pre></td></tr></table>
-</div>
-</div></li>
-
-<li><p>父元素默认是块级元素</p></li>
-
-<li><p>高度是由内部文档流元素高度的总和决定</p></li>
-
-<li><p><code>float</code>属性使元素脱离文档流，不再影响父元素高度</p></li>
-
-<li><p>父元素里没有文档流元素，高度为0</p></li>
-
-<li><p>解决方法：伪元素清浮动法</p></li>
+<li><code>position:static</code>：默认值，待在文档流里，每个块级元素占据自己的区块（block），元素与元素之间不产生重叠</li>
+<li><code>position:relative</code>：相对定位，升起来，但不脱离文档流（所占据的位置不变，仍在默认位置处占据空间）</li>
+<li><code>position:absolute</code>：绝对定位，定位基准是祖先里最近的非<code>static</code>元素</li>
+<li><code>position:fixed</code>：固定定位，定位基准是viewport（有诈）</li>
+<li><code>position:sticky</code>：粘滞定位，直接举例</li>
 </ul>
+
+<blockquote>
+<p>注意，<code>position:static</code>定位所导致的元素位置，是浏览器自主决定的，所以这时<code>top</code>、<code>bottom</code>、<code>left</code>、<code>right</code>这四个属性无效。</p>
+</blockquote>
 
 <h4 id="经验">经验</h4>
 
 <ul>
-<li>留一些空间，或者最后一个不设<code>width</code>，或者用<code>max-width</code></li>
-<li>不需要响应式，手机上没IE，<code>float</code>布局专为IE</li>
+<li>如果在元素上写了<code>position:absolute</code>，一定在父级以上元素补一个<code>position:relative</code></li>
+<li>如果写了<code>position:absolute</code>或<code>position:fixed</code>，一定得补<code>top</code>和<code>left</code></li>
+<li><code>position:sticky</code>兼容性差，主要用于面试</li>
+</ul>
+
+<p>网站实例：</p>
+
+<p><a href="https://www.juliusbaer.com/asia/cn/您的私人银行/">Julius Bär 宝盛</a></p>
+
+<h4 id="position-relative"><code>position:relative</code></h4>
+
+<blockquote>
+<p>相对于默认位置（即<code>position:static</code>时的位置）进行偏移，即定位基点是元素的默认位置</p>
+
+<p>所占据的位置不变，仍在默认位置占据空间，只是显示的位置和默认位置间有一个偏移</p>
+
+<p>必须搭配<code>top</code>、<code>bottom</code>、<code>left</code>、<code>right</code>这四个属性一起使用，用来指定偏移的方向和距离</p>
+</blockquote>
+
+<h5 id="position-relative-使用场景"><code>position:relative</code>使用场景</h5>
+
+<ul>
+<li>用于做位移（很少）对齐</li>
+<li>用于给<code>position:absolute</code>元素做父级定位基点</li>
+</ul>
+
+<h5 id="position-relative-配合-z-index"><code>position:relative</code>配合<code>z-index</code></h5>
+
+<ul>
+<li><code>z-index:auto</code>默认值，计算出的值是<code>0</code>，但不创建新的层叠上下文</li>
+<li><code>z-index:0/1/2</code>创建新的层叠上下文</li>
+<li><code>z-index:-1/-2</code>创建新的层叠上下文</li>
 </ul>
 
 <blockquote>
-<p>IE6/7存在双倍margin Bug，<code>margin-left</code>x2，解决办法两个</p>
-
-<p>一是将错就错，针对IE6/7把margin减半，写margin，再写<code>_margin:</code>或者<code>*margin:</code></p>
-
-<p>二是加个<code>display:inline-block</code></p>
-
-<p>IE8不支持<code>::after</code>、HTML5新标签等，<code>header{display:block;}</code></p>
-
-<p>IE7不支持<code>border-box</code></p>
+<p><code>z-index:auto</code>和<code>z-index:0</code>是不同的</p>
 </blockquote>
 
-<h3 id="栗子实践">栗子实践</h3>
-
-<h4 id="用-float-做不同布局">用<code>float</code>做不同布局：</h4>
+<h5 id="position-relative-经验"><code>position:relative</code>经验</h5>
 
 <ul>
-<li>两栏布局（如顶部条）</li>
-<li>三栏布局（如内容区），比如：<a href="https://taobao.com/">淘宝</a></li>
-<li>四栏布局（如导航）</li>
-<li>平均布局（如产品展示区）</li>
-<li>过时的淘宝双飞翼布局</li>
+<li>写<code>z-index:9999</code>菜</li>
+<li>学会管理<code>z-index</code></li>
 </ul>
 
-<p>代码链接：</p>
+<h4 id="position-absolute"><code>position:absolute</code></h4>
+
+<h5 id="position-absolute-使用场景"><code>position:absolute</code>使用场景</h5>
 
 <ul>
-<li><a href="http://xmasuhai.xyz/demo-test/css-demo-1/css-demo_layout_floats.html">css-demo_layout_floats</a></li>
-<li><a href="http://xmasuhai.xyz/demo-test/css-demo-1/css-demo_layout_nav.html">css-demo_layout_nav</a></li>
+<li>脱离原来的位置，另起一层（比如对话框的关闭按钮）</li>
+<li>鼠标提示信息（开发者工具设置展示hover：点击Styles :hov 勾选:hover）</li>
 </ul>
 
-<h5 id="注意的事项">注意的事项</h5>
+<h5 id="position-absolute-配合-z-index"><code>position:absolute</code>配合<code>z-index</code></h5>
+
+<p>同之前</p>
+
+<h5 id="position-absolute-经验"><code>position:absolute</code>经验</h5>
 
 <ul>
-<li>将父元素设置为<code>display: inline-block;</code>，压缩宽度到正好包裹子元素，不留空</li>
-<li><code>display: inline-block;</code>特点是尽量压窄自己；</li>
-<li>默认的<code>display: block;</code>特点是尽量放宽自己；</li>
-<li><code>vertical-align:top;</code>或者<code>vertical-align:middle;</code>：如果图片下有多余留空，加上这个属性可以去掉</li>
-<li>请看一小时：<a href="https://www.google.com/search?q=%E6%96%B9%E5%BA%94%E6%9D%ADline+height&amp;rlz=1C5CHFA_enJP765JP765&amp;oq=%E6%96%B9%E5%BA%94%E6%9D%ADline+height&amp;aqs=chrome..69i57.18103j0j7&amp;sourceid=chrome&amp;ie=UTF-8">深入理解CSS：字体度量、line-height 和vertical-align</a></li>
+<li>必须有参考点</li>
+<li><code>position:absolute</code>并不一定是相对于<code>position:relative</code>定位的</li>
+<li>父元素<code>position:relative</code>，不影响父元素，以父元素作为参考点（定位基准是祖先里最近的非<code>static</code>元素）</li>
+<li>不是<code>static</code>就是定位元素</li>
+<li>不设<code>left/top</code>、设为<code>auto</code>时，位置处于默认，即不设绝对定位时的原始位置</li>
+<li>某些浏览器上如果不写<code>top/left</code>会位置错乱</li>
+<li>善用：<code>left:100%</code></li>
+<li>善用：<code>left:50%;</code>加负<code>margin</code>（需计算）</li>
+<li>或者<code>transform: translateX(-50%);</code></li>
+</ul>
+
+<hr />
+
+<ul>
+<li>完全脱离普通文档流</li>
+<li>位置无法被其他任何元素改变 但会互相覆盖</li>
+<li><code>left:10px</code> 是自己的 外边距 相对于参考元素的边框内壁 偏移 10px</li>
+<li>宽度收缩 必须 设置 固定宽</li>
+<li>行内元素设置绝对定位后 有 块级特性 可设宽高 但不为 块级元素</li>
+<li>适用 元素重叠 任意放置</li>
+</ul>
+
+<h4 id="position-fixed"><code>position:fixed</code></h4>
+
+<blockquote>
+<p>定位基准是viewport（有诈）</p>
+
+<p>所在的父元素如果有<code>transform:scale(0.9);</code>之类的属性，那就不一定了</p>
+</blockquote>
+
+<h5 id="position-fixed-使用场景"><code>position:fixed</code>使用场景</h5>
+
+<ul>
+<li>广告</li>
+<li>回到顶部</li>
+</ul>
+
+<h5 id="position-fixed-配合-z-index"><code>position:fixed</code>配合<code>z-index</code></h5>
+
+<p>同之前</p>
+
+<h5 id="position-fixed-经验"><code>position:fixed</code>经验</h5>
+
+<ul>
+<li>视口不包括滚动条（iframe里的也是不包括）</li>
+<li>手机上尽量不要用这个属性，坑多</li>
+<li>搜索「移动端fixed」</li>
+</ul>
+
+<h4 id="position-sticky"><code>position:sticky</code></h4>
+
+<h5 id="position-sticky-使用场景"><code>position:sticky</code>使用场景</h5>
+
+<h5 id="position-sticky-配合-z-index"><code>position:sticky</code>配合<code>z-index</code></h5>
+
+<h5 id="position-sticky-经验"><code>position:sticky</code>经验</h5>
+
+<p><a href="http://js.jirengu.com/coguv/2/edit?html,css,output">position:sticky</a></p>
+
+<p><a href="http://js.jirengu.com/wobav/2/edit?html,css,output">推走标题</a></p>
+
+<hr />
+
+<h3 id="z-index-怎么用"><code>z-index</code>怎么用</h3>
+
+<ul>
+<li>只要是给元素定了位（非static），变成定位元素（<code>position:relative | absolute | fixed</code>），自然超越了当前父元素的内容文字之上</li>
+<li>默认<code>z-index:0;</code></li>
+<li>所有定位元素以所处父元素的内容文字所在的层作为基准，默认第一层<code>z-index:0;</code>，越往上数值越大</li>
+<li><code>z-index</code>为负的话，处于父元素的<code>background</code>之后</li>
+<li>定位元素底是当前的层叠上下文，即默认的<code>&lt;html&gt;&lt;/html&gt;</code></li>
+</ul>
+
+<p><a href="http://xmasuhai.xyz/demo-test/css-demo-4/css-demo_position_divTest.html">demo_position_divTest</a></p>
+
+<h2 id="层叠上下文">层叠上下文</h2>
+
+<blockquote>
+<p>也叫堆叠上下文</p>
+
+<p><code>z-index:10</code>和<code>z-index:5</code>哪个高？</p>
+
+<p>不一定，要看所处的父元素是否有（形成）自己的层叠上下文</p>
+</blockquote>
+
+<p><a href="http://xmasuhai.xyz/demo-test/css-demo-4/css-demo_stackingContext.html">demo_stackingContext</a></p>
+
+<h3 id="定位与层叠上下文">定位与层叠上下文</h3>
+
+<h4 id="比喻">比喻</h4>
+
+<ul>
+<li>每个层叠上下文就是一个新的小世界（作用域）</li>
+<li>这个作用域里的<code>z-index</code>和外界无关</li>
+<li>处在同一个作用域的<code>z-index</code>之间才能比较</li>
+<li>默认层叠上下文是根元素<code>&lt;html&gt;&lt;/html&gt;</code></li>
+<li>相当于<code>z-index</code>的作用域</li>
+</ul>
+
+<p><a href="http://xmasuhai.xyz/demo-test/css-demo-4/css-demo_stackingContext.html">demo</a></p>
+
+<h4 id="哪些不正交的属性可以创建它">哪些不正交的属性可以创建它</h4>
+
+<ul>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/Guide/CSS/Understanding_z_index/The_stacking_context">MDN文档</a></li>
+<li>需要记住的：<code>z-index/flex/opacity/transform</code></li>
+<li>只要满足一个条件，就自动创建一个层叠上下文</li>
+<li>其他随时搜索查看即可</li>
 </ul>
 
 <blockquote>
-<p>只记套路，只看结果，中间发生什么，就当不存在</p>
+<p><code>opacity:0.5;</code>和<code>background:rgba(0,0,0,0.5)</code>的区别</p>
+
+<p><code>opacity</code>影响整个元素</p>
 </blockquote>
 
-<ul>
-<li>高度确定，宽度适应，或设计师以整数切图</li>
-<li>两个元素高度分别是偶数和奇数，不可完全居中对齐，手动调高度</li>
-<li>文字高度<code>line-height</code></li>
-<li>计算公约高度：平均高度，高度和除以2，计算差值，设置<code>margin</code></li>
-<li>不设<code>width</code>，用内容去填，即宽度由内容决定，除非<code>&lt;aside&gt;&lt;/aside&gt;</code>宽度固定，高度由内容撑起来，一般不设置具体高度值</li>
-<li>被挤下去，是因为<code>border-box</code>的宽度包含<code>border</code>的<code>1px</code>，可以用<code>outline:1px solid red</code>代替，仅用在当<code>border</code>干扰宽度的时候，调试用，但有时可能在外面会看不见，也可用背景色代替</li>
-<li>让有固定宽度的块级父元素居中：<code>margin:0 auto;</code>，但不太好</li>
-</ul>
+<h3 id="负-z-index-与层叠上下文">负<code>z-index</code>与层叠上下文</h3>
 
 <blockquote>
-<p>CSS重要原则之一：不该写的多余代码不要写；必须的代码不能少</p>
+<p>也只在其属于的作用域里可比较</p>
+
+<p>负<code>z-index</code>逃不出所属层叠上下文</p>
 </blockquote>
 
-<ul>
-<li><code>margin-left:auto;margin-right:auto;</code>比<code>margin:0 auto;</code>更稳妥，可会覆盖<code>margin-top</code>，精确，尽量正交，避免层叠掉其他样式：即最小必要原则</li>
-<li>设置了<code>float</code>属性的元素外边距不会合并</li>
-</ul>
-
-<h4 id="负-margin">负<code>margin</code></h4>
-
-<p>怎么把内容扩宽，又不影响布局？一个应用场景：</p>
-
-<blockquote>
-<p>平均布局中，块级父元素和子元素宽度固定，子元素间空隙<code>margin-right:12px;</code></p>
-
-<p>子元素们外新加个带有负<code>margin</code>属性的父元素，值为子元素间空隙的负值<code>margin-right:-12px;</code></p>
-
-<p>原来的父元素变成祖元素，父子关系变了，<code>clearfix</code>类要加到新的父元素上，新父元素多余的右边距设为负值，值为子元素间空隙的负值<code>margin-right:-12px;</code>即可</p>
-
-<p>最后一个子元素的右边框超出了祖元素，新的父元素用正margin会位移，但用负margin会变宽，就可使自己有足够的空间容纳子元素超出的右边框，从而不挤掉最后一个子元素而换行</p>
-
-<p>如果设置的负margin的（绝对）值过大，仍不挤掉最后一个子元素而换行，但会使窗口产生滚动条</p>
-
-<p>可以追加任意多个同样的子元素，即可实现平均布局</p>
-</blockquote>
-
-<h4 id="经验总结">经验总结</h4>
-
-<ul>
-<li>加头尾，即可满足所有PC页面要求</li>
-<li>手机页面不用<code>float</code></li>
-<li><code>float</code>需要计算宽度，不灵活，足以应付IE</li>
-</ul>
-
-<h4 id="问答">问答</h4>
-
-<ul>
-<li>不用考虑IE，IE也换Chrome的内核了：Blink（Chrome及其他）、Webkit（Safari）、Gecko（Firefox），其他都淘汰弃用了</li>
-<li><code>logo</code>、<code>nav</code>高度不固定，<code>margin-top:5px</code>可行吗？直接用flexBox布局</li>
-<li>父元素宽500px，四个子元素宽分别191px，还有<code>border:1px;</code>加起来不止764px，用<code>border-box</code>不用考虑</li>
-</ul>
+<h3 id="优先级-样式继承-选择器权重">优先级 样式继承、选择器权重</h3>
 
 <!-- Article End -->
 
@@ -670,7 +846,8 @@
 
     <footer class="post-footer">
       <div class="post-tags">
-          <a href="http://xmasuhai.xyz/tags/css-position/">CSS position</a>
+          <a href="http://xmasuhai.xyz/tags/css/">CSS</a>
+          <a href="http://xmasuhai.xyz/tags/css-position/">CSS-Position</a>
           
         </div>
 
