@@ -64,14 +64,14 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://xmasuhai.xyz/post/js/js%E9%9D%9E%E5%85%A8%E8%A7%A306js-%E5%87%BD%E6%95%B0%E7%9A%84%E6%89%A7%E8%A1%8C%E6%97%B6%E6%9C%BA%E4%B8%8Ejs-%E5%87%BD%E6%95%B0%E6%B5%85%E6%9E%90/" />
 <meta property="article:published_time" content="2020-02-26T00:58:40+08:00" />
-<meta property="article:modified_time" content="2020-02-26T00:58:40+08:00" />
+<meta property="article:modified_time" content="2020-02-26T01:02:50+08:00" />
 <meta itemprop="name" content="【JS非全解06】JS 函数的执行时机与JS 函数浅析">
 <meta itemprop="description" content="重点内容提要：JS 函数的执行时机 1）为什么如下代码会打印 6 个 6 1 2 3 4 5 6 let i = 0 for(i = 0; i&lt;6; i&#43;&#43;){ setTimeout(()=&gt;{ console.log(i) },0) } 我认为本篇正文涉及到的知识（作用域、闭包">
 
 
 <meta itemprop="datePublished" content="2020-02-26T00:58:40&#43;08:00" />
-<meta itemprop="dateModified" content="2020-02-26T00:58:40&#43;08:00" />
-<meta itemprop="wordCount" content="9045">
+<meta itemprop="dateModified" content="2020-02-26T01:02:50&#43;08:00" />
+<meta itemprop="wordCount" content="9531">
 
 
 
@@ -366,8 +366,8 @@
             <a href="http://xmasuhai.xyz/categories/2020/"> 2020 </a>
             
           </div>
-        <span class="more-meta"> 约 9045 字 </span>
-          <span class="more-meta"> 预计阅读 19 分钟 </span>
+        <span class="more-meta"> 约 9531 字 </span>
+          <span class="more-meta"> 预计阅读 20 分钟 </span>
 
         
         
@@ -393,7 +393,7 @@
 <li><a href="#3-可以打印出-0-1-2-3-4-5-的方法汇总">3）可以打印出 <code>0、1、2、3、4、5</code>的方法汇总</a>
 <ul>
 <li><a href="#1-利用-es-6-方法">1.利用 <code>ES 6</code> 方法</a></li>
-<li><a href="#2-用闭包">2.用闭包</a></li>
+<li><a href="#2-用闭包与自执行函数">2.用闭包与自执行函数</a></li>
 <li><a href="#3-利用-bind-函数">3.利用 bind 函数</a></li>
 <li><a href="#利用-settimeout-的第三个参数">利用 <code>setTimeout</code> 的第三个参数</a></li>
 </ul></li>
@@ -402,7 +402,7 @@
 <ul>
 <li><a href="#基本语法">基本语法</a></li>
 <li><a href="#定义匿名函数">定义匿名函数</a></li>
-<li><a href="#箭头函数">箭头函数</a></li>
+<li><a href="#用es6箭头函数">用ES6箭头函数</a></li>
 <li><a href="#用构造函数">用构造函数</a></li>
 </ul></li>
 <li><a href="#函数自身-v-s-函数调用">函数自身 V.S. 函数调用</a>
@@ -431,7 +431,7 @@
 <li><a href="#函数提升">函数提升</a></li>
 <li><a href="#arguments-和-this-除了箭头函数没有"><code>arguments</code>和<code>this</code>（除了箭头函数没有）</a></li>
 </ul></li>
-<li><a href="#小结-1">小结</a></li>
+<li><a href="#this-小结"><code>this</code>小结</a></li>
 <li><a href="#函数两种调用模式">函数两种调用模式</a>
 <ul>
 <li><a href="#小白调用法">小白调用法</a></li>
@@ -439,11 +439,15 @@
 <li><a href="#this-的两种使用方法"><code>this</code>的两种使用方法</a></li>
 <li><a href="#强制绑定-this">强制绑定<code>this</code></a></li>
 </ul></li>
-<li><a href="#箭头函数-1">箭头函数</a></li>
+<li><a href="#箭头函数">箭头函数</a></li>
 <li><a href="#总结">总结</a></li>
 <li><a href="#立即执行函数">立即执行函数</a>
 <ul>
-<li><a href="#关于-this">关于 this</a></li>
+<li><a href="#关于-this">关于 this</a>
+<ul>
+<li><a href="#参考文章">参考文章</a></li>
+<li><a href="#相关文章">相关文章</a></li>
+</ul></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -484,8 +488,32 @@
 
 <p>任何试图解释这个现象的尝试目前都是徒劳</p>
 
-<p>所以我直接搜了答案</p>
-
+<p>所以我直接搜了答案：setTimeout函数在队列任务执行完后执行<code>console.log(i)</code>，在此之前，<code>for</code>的判断表达式与自增语句就早已全部走完，<code>i</code>值为<code>6</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span><span class="p">(</span><span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="mi">6</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="o">&amp;&amp;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;自增语句中的i：&#39;</span> <span class="o">+</span> <span class="nx">i</span><span class="p">)){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;循环体中setTimeOut()前的i：&#39;</span> <span class="o">+</span> <span class="nx">i</span> <span class="p">)</span> <span class="c1">// 0、1、2、3、4、5
+</span><span class="c1"></span>  <span class="nx">setTimeout</span><span class="p">(()=&gt;{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;setTimeOut延时打印出的i：&#39;</span> <span class="o">+</span> <span class="nx">i</span><span class="p">)</span> <span class="c1">// 6个6
+</span><span class="c1"></span>  <span class="p">},</span><span class="mi">0</span><span class="p">)</span>
+<span class="p">}</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;循环体中setTimeOut()后面的i：&#39;</span> <span class="o">+</span> <span class="nx">i</span> <span class="p">)</span> <span class="c1">// 6个6
+</span></code></pre></td></tr></table>
+</div>
+</div>
+<blockquote>
 <p>可能至少但不限于先要了解的知识，如下</p>
 </blockquote>
 
@@ -560,32 +588,6 @@
 </code></pre></td></tr></table>
 </div>
 </div>
-<blockquote>
-<p>利用 <strong><em>箭头函数</em></strong> 声明的匿名函数</p>
-</blockquote>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span><span class="lnt">8
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="k">for</span><span class="p">(</span><span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span><span class="nx">i</span><span class="o">&lt;</span><span class="mi">6</span><span class="p">;</span><span class="nx">i</span> <span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-    <span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">i</span><span class="p">){</span>
-        <span class="nx">setTimeout</span><span class="p">((</span> <span class="cm">/* 这里不能瞎写i，我试过，传入形参就相当于重新声明，会覆盖掉函数体里的全局变量 */</span> <span class="p">)=&gt;</span> <span class="p">{</span>
-            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span>
-        <span class="p">},</span> <span class="mi">0</span><span class="p">);</span>
-    <span class="p">})(</span><span class="nx">i</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
-</div>
-</div>
 <h3 id="3-可以打印出-0-1-2-3-4-5-的方法汇总">3）可以打印出 <code>0、1、2、3、4、5</code>的方法汇总</h3>
 
 <blockquote>
@@ -613,7 +615,7 @@
 <p>以下都是变通方法，将要要消耗更多资源，见<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Window/setTimeout#%E5%8F%98%E9%80%9A%E6%96%B9%E6%B3%95">翻译不完整的MDN window.setTimeout</a></p>
 </blockquote>
 
-<h4 id="2-用闭包">2.用闭包</h4>
+<h4 id="2-用闭包与自执行函数">2.用闭包与自执行函数</h4>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
@@ -643,8 +645,32 @@
 <p>利用函数创建一个局部变量，保留了调用时的局部变量 <code>i</code></p>
 
 <p><code>ES6</code>引入更简洁的箭头函数，可完全代替这里的所有匿名函数</p>
-</blockquote>
 
+<p><strong><em>箭头函数</em></strong> 声明的匿名函数</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span><span class="p">(</span><span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span><span class="nx">i</span><span class="o">&lt;</span><span class="mi">6</span><span class="p">;</span><span class="nx">i</span> <span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">i</span><span class="p">){</span>
+        <span class="nx">setTimeout</span><span class="p">((</span> <span class="cm">/* 这里不能瞎写i，我试过，传入形参就相当于重新声明，会覆盖掉函数体里的全局变量 */</span> <span class="p">)=&gt;</span> <span class="p">{</span>
+            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span>
+        <span class="p">},</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="p">})(</span><span class="nx">i</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
 <h4 id="3-利用-bind-函数">3.利用 bind 函数</h4>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -782,7 +808,7 @@
 <p>没有等于号，作用域就在当前作用域的全局下</p>
 </blockquote>
 
-<h3 id="箭头函数">箭头函数</h3>
+<h3 id="用es6箭头函数">用ES6箭头函数</h3>
 
 <blockquote>
 <p>箭头函数，箭头左边就是输入参数，右边就是输出参数</p>
@@ -829,7 +855,7 @@
 <pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">f4</span> <span class="o">=</span> <span class="nx">x</span> <span class="p">=&gt;</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span><span class="nx">x</span><span class="p">}</span> <span class="c1">// 语法错误
 </span><span class="c1"></span><span class="kd">let</span> <span class="nx">f5</span> <span class="o">=</span> <span class="nx">x</span> <span class="p">=&gt;</span> <span class="p">({</span><span class="nx">name</span><span class="o">:</span><span class="nx">x</span><span class="p">})</span> <span class="c1">// 语法对了，就显得有些Zz
 </span><span class="c1"></span>
-<span class="nx">f4</span><span class="p">(</span><span class="s1">&#39;frank&#39;</span><span class="p">)</span> <span class="c1">// undefined ，JS解释器认为是一个lable 标签语句
+<span class="nx">f4</span><span class="p">(</span><span class="s1">&#39;frank&#39;</span><span class="p">)</span> <span class="c1">// undefined ，JS解释器认为是一个label 标签语句
 </span><span class="c1"></span><span class="nx">f5</span><span class="p">(</span><span class="s1">&#39;frank&#39;</span><span class="p">)</span> <span class="c1">// {name: &#34;frank&#34;}
 </span></code></pre></td></tr></table>
 </div>
@@ -846,7 +872,7 @@
 </div>
 <ul>
 <li>基本没人用，但是能让你知道函数时谁构造的</li>
-<li>所有函数都是<code>Funcion</code>构造出来的，是JS世界的创世神</li>
+<li>所有函数都是<code>Function</code>构造出来的，是JS世界的创世神</li>
 <li>包括<code>Object</code>、<code>Array</code>、<code>Function</code>自身也是</li>
 </ul>
 
@@ -1091,7 +1117,7 @@
 <span class="kd">function</span> <span class="nx">fn</span><span class="p">(){</span>
 <span class="nx">setTimeout</span><span class="p">(()=&gt;{</span>
     <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span>
-<span class="p">},</span><span class="mi">0</span><span class="p">)</span> 
+<span class="p">},</span><span class="mi">0</span><span class="p">)</span>
 <span class="c1">// 在一段时间后，执行，多少时间根本不是关键
 </span><span class="c1">// 而是setTimeout()里的代码的执行时机
 </span><span class="c1">// 要等后续代码执行完后，再执行setTimeout()
@@ -2021,7 +2047,7 @@
 </ul>
 
 <blockquote>
-<p><code>this</code>默认指向<code>window</code>（控制台打出的是<code>Winodw</code>），一般不需要</p>
+<p><code>this</code>默认指向<code>window</code>（控制台打出的是<code>Window</code>），一般不需要</p>
 
 <p><code>this</code>是隐藏参数，<code>arguments</code>是普通参数</p>
 
@@ -2280,7 +2306,7 @@
 
 <hr />
 
-<h2 id="小结-1">小结</h2>
+<h2 id="this-小结"><code>this</code>小结</h2>
 
 <ul>
 <li>想让函数获取未知对象的引用</li>
@@ -2298,7 +2324,7 @@
 <p>其他</p>
 
 <ul>
-<li>注意<code>perosn.sayHi</code>和<code>person.sayHi()</code>的区别</li>
+<li>注意<code>person.sayHi</code>和<code>person.sayHi()</code>的区别</li>
 <li>注意<code>person.sayHi()</code>的断句<code>(person.sayHi)()</code></li>
 </ul>
 
@@ -2672,7 +2698,7 @@
 </div></li>
 </ul>
 
-<h2 id="箭头函数-1">箭头函数</h2>
+<h2 id="箭头函数">箭头函数</h2>
 
 <blockquote>
 <p>没有<code>arguments</code>和<code>this</code></p>
@@ -2815,8 +2841,6 @@
 </span><span class="lnt">36
 </span><span class="lnt">37
 </span><span class="lnt">38
-</span><span class="lnt">39
-</span><span class="lnt">40
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1">// 全局变量
@@ -2852,13 +2876,11 @@
 <span class="p">}</span> <span class="p">)()</span>
 
 <span class="cm">/* ES6 局部变量 */</span>
-
 <span class="p">{</span>
 <span class="kd">let</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">3</span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span>
 <span class="p">}</span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span>
-    
 </code></pre></td></tr></table>
 </div>
 </div></li>
@@ -2869,16 +2891,61 @@
 <h3 id="关于-this">关于 this</h3>
 
 <blockquote>
-<p>这节课讲了 this，不过相信 this 作为 JS 的第二座大山，不是那么容易能理解的。</p>
+<p>这篇Blog初步讲了 this，不过相信 this 作为 JS 的第二座大山，不是那么容易能理解的。</p>
 
 <p>前期以记忆为主，后面几节才有可能真正理解 this。</p>
 
 <p>从下节开始，所有函数调用使用 call 的形式，直到理解 this</p>
 </blockquote>
 
-<p><a href="https://static.xiedaimala.com/xdml/file/3ac7c224-c23d-491f-84b5-4fabfbeab9b8/2019-9-24-12-5-18.pdf">JS 函数.pdf</a></p>
+<!-- Article End -->
 
 <hr />
+
+<!-- test -->
+
+<div style="text-align:center;">·未完待续·</div>
+
+<!-- ok -->
+
+<hr />
+
+<h4 id="参考文章">参考文章</h4>
+
+<ul>
+<li><a href="https://static.xiedaimala.com/xdml/file/3ac7c224-c23d-491f-84b5-4fabfbeab9b8/2019-9-24-12-5-18.pdf">JS 函数.pdf</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/101092477">闭包的作用</a></li>
+<li><a href="https://wangdoc.com/javascript/async/general.html">异步与JS单线程模型</a></li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Window/setTimeout">window.setTimeout</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/34924059">事件循环与任务队列</a></li>
+<li><a href="http://jirengu.github.io/fe2/markdown/garbage_collection.html">JS引擎的垃圾回收机制</a></li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/learn/JavaScript/%E5%BC%82%E6%AD%A5/%E8%B6%85%E6%97%B6%E5%92%8C%E9%97%B4%E9%9A%94">MDN 合作异步JavaScript: 超时和间隔</a></li>
+<li><a href="https://wangdoc.com/javascript/async/general.html">网道 / WangDoc.com 异步操作概述</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/66235337">从setTimeout和Promise比较js执行机制</a></li>
+<li><a href="https://www.zhihu.com/question/25371869/answer/30577793">JS setTimeout 问题 贺师俊的回答</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/34924059">Event Loop、计时器、nextTick By 方应杭</a></li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Glossary/Call_stack">Call stack（调用栈）MDN的解释</a></li>
+</ul>
+
+<h4 id="相关文章">相关文章</h4>
+
+<ul>
+<li>无</li>
+</ul>
+
+<hr />
+
+<ul>
+<li>作者： Joel</li>
+<li>文章链接：</li>
+<li><a href="http://xmasuhai.xyz/posts/版权声明链接/">版权声明</a></li>
+<li>非自由转载-非商用-非衍生-保持署名</li>
+<li><a style='color:#DB2D5D;' href='https://xiedaimala.com/bbs/users/8c266e6f-55a2-4348-a180-17cb8cdb2c46#/?page=1' target='_blank' rel='noreferrer noopener'>河</a>
+<a style='color:#006CFF;' href='https://juejin.im/user/59abfad26fb9a0248f4aa221' target='_blank' rel='noreferrer noopener'>掘</a>
+<a style='color:#009A61;' href='https://segmentfault.com/u/joel_59b17eb9d2155' target='_blank' rel='noreferrer noopener'>思</a>
+<a style='color:#0084FF;' href='https://www.zhihu.com/people/xue-shou-41/posts' target='_blank' rel='noreferrer noopener'>知</a>
+<a style='color:#EA6F5A;' href='https://www.jianshu.com/u/079916729823' target='_blank' rel='noreferrer noopener'>简</a></li>
+</ul>
 
 <hr />
 
@@ -2895,6 +2962,9 @@
     <span class="item-title">上次更新</span>
     <span class="item-content">
       2020-02-26
+      
+        
+        
       
     </span>
   </p>
