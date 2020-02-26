@@ -64,14 +64,14 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://xmasuhai.xyz/post/js/js%E9%9D%9E%E5%85%A8%E8%A7%A306js-%E5%87%BD%E6%95%B0%E7%9A%84%E6%89%A7%E8%A1%8C%E6%97%B6%E6%9C%BA%E4%B8%8Ejs-%E5%87%BD%E6%95%B0%E6%B5%85%E6%9E%90/" />
 <meta property="article:published_time" content="2020-02-26T00:58:40+08:00" />
-<meta property="article:modified_time" content="2020-02-26T01:47:26+08:00" />
+<meta property="article:modified_time" content="2020-02-26T12:35:57+08:00" />
 <meta itemprop="name" content="【JS非全解06】JS 函数的执行时机与JS 函数浅析">
 <meta itemprop="description" content="重点内容提要：JS 函数的执行时机 1）为什么如下代码会打印 6 个 6 1 2 3 4 5 6 let i = 0 for(i = 0; i&lt;6; i&#43;&#43;){ setTimeout(()=&gt;{ console.log(i) },0) } 我认为本篇正文涉及到的知识（作用域、闭包">
 
 
 <meta itemprop="datePublished" content="2020-02-26T00:58:40&#43;08:00" />
-<meta itemprop="dateModified" content="2020-02-26T01:47:26&#43;08:00" />
-<meta itemprop="wordCount" content="9627">
+<meta itemprop="dateModified" content="2020-02-26T12:35:57&#43;08:00" />
+<meta itemprop="wordCount" content="9672">
 
 
 
@@ -366,7 +366,7 @@
             <a href="http://xmasuhai.xyz/categories/2020/"> 2020 </a>
             
           </div>
-        <span class="more-meta"> 约 9627 字 </span>
+        <span class="more-meta"> 约 9672 字 </span>
           <span class="more-meta"> 预计阅读 20 分钟 </span>
 
         
@@ -500,17 +500,19 @@
 </span><span class="lnt">6
 </span><span class="lnt">7
 </span><span class="lnt">8
+</span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="k">for</span><span class="p">(</span><span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">6</span><span class="p">;</span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;自增语句前的i：&#39;</span> <span class="o">+</span> <span class="nx">i</span><span class="p">)</span> <span class="o">||</span> <span class="nx">i</span><span class="o">++</span> <span class="o">&amp;&amp;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;自增语句中的i：&#39;</span> <span class="o">+</span> <span class="nx">i</span><span class="p">)){</span>
+<span class="k">for</span><span class="p">(</span><span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">6</span><span class="p">;</span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;自增语句前的i：&#39;</span> <span class="o">+</span> <span class="nx">i</span><span class="p">)</span> <span class="o">||</span> <span class="nx">i</span><span class="o">++</span> <span class="o">&amp;&amp;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;自增语句后的i：&#39;</span> <span class="o">+</span> <span class="nx">i</span><span class="p">)){</span>
   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;循环体中setTimeOut()前的i：&#39;</span> <span class="o">+</span> <span class="nx">i</span><span class="p">)</span> <span class="c1">// 0、1、2、3、4、5
 </span><span class="c1"></span>  <span class="nx">setTimeout</span><span class="p">(()=&gt;{</span>
     <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;setTimeOut延时打印出的i：&#39;</span> <span class="o">+</span> <span class="nx">i</span><span class="p">)</span> <span class="c1">// 6个6
 </span><span class="c1"></span>  <span class="p">},</span><span class="mi">0</span><span class="p">);</span>
-  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;循环体中setTimeOut()后面的i：&#39;</span> <span class="o">+</span> <span class="nx">i</span><span class="p">)</span> <span class="c1">// 6个6
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;循环体中setTimeOut()后的i：&#39;</span> <span class="o">+</span> <span class="nx">i</span><span class="p">)</span> <span class="c1">// 0、1、2、3、4、5
 </span><span class="c1"></span><span class="p">}</span>
-</code></pre></td></tr></table>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;循环外打印出的i：&#39;</span> <span class="o">+</span> <span class="nx">i</span><span class="p">)</span> <span class="c1">// 6个6
+</span></code></pre></td></tr></table>
 </div>
 </div>
 <blockquote>
