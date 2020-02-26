@@ -71,7 +71,7 @@
 
 <meta itemprop="datePublished" content="2020-02-26T00:58:40&#43;08:00" />
 <meta itemprop="dateModified" content="2020-02-26T01:47:26&#43;08:00" />
-<meta itemprop="wordCount" content="9531">
+<meta itemprop="wordCount" content="9627">
 
 
 
@@ -366,7 +366,7 @@
             <a href="http://xmasuhai.xyz/categories/2020/"> 2020 </a>
             
           </div>
-        <span class="more-meta"> 约 9531 字 </span>
+        <span class="more-meta"> 约 9627 字 </span>
           <span class="more-meta"> 预计阅读 20 分钟 </span>
 
         
@@ -395,7 +395,7 @@
 <li><a href="#1-利用-es-6-方法">1.利用 <code>ES 6</code> 方法</a></li>
 <li><a href="#2-用闭包与自执行函数">2.用闭包与自执行函数</a></li>
 <li><a href="#3-利用-bind-函数">3.利用 bind 函数</a></li>
-<li><a href="#利用-settimeout-的第三个参数">利用 <code>setTimeout</code> 的第三个参数</a></li>
+<li><a href="#4-利用-settimeout-的第三个参数">4.利用 <code>setTimeout</code> 的第三个参数</a></li>
 </ul></li>
 </ul></li>
 <li><a href="#四种方法定义一个函数">四种方法定义一个函数</a>
@@ -484,11 +484,11 @@
 </div>
 </div>
 <blockquote>
-<p>我认为本篇正文涉及到的知识（作用域、闭包的定义、 调用时机、调用栈）的不足以解释</p>
+<p>我认为本篇正文涉及到的知识（作用域、闭包的定义、 调用时机、调用栈等）不足以解释</p>
 
 <p>任何试图解释这个现象的尝试目前都是徒劳</p>
 
-<p>所以我直接搜了答案：setTimeout函数在队列任务执行完后执行<code>console.log(i)</code>，在此之前，<code>for</code>的判断表达式与自增语句就早已全部走完，<code>i</code>值为<code>6</code></p>
+<p>所以我直接搜了并总结了各类答案：setTimeout函数在队列任务执行完后执行<code>console.log(i)</code>，在此之前，<code>for</code>的判断表达式与自增语句就早已全部走完，<code>i</code>值为<code>6</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -503,14 +503,14 @@
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="k">for</span><span class="p">(</span><span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="mi">6</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="o">&amp;&amp;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;自增语句中的i：&#39;</span> <span class="o">+</span> <span class="nx">i</span><span class="p">)){</span>
-  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;循环体中setTimeOut()前的i：&#39;</span> <span class="o">+</span> <span class="nx">i</span> <span class="p">)</span> <span class="c1">// 0、1、2、3、4、5
+<span class="k">for</span><span class="p">(</span><span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">6</span><span class="p">;</span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;自增语句前的i：&#39;</span> <span class="o">+</span> <span class="nx">i</span><span class="p">)</span> <span class="o">||</span> <span class="nx">i</span><span class="o">++</span> <span class="o">&amp;&amp;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;自增语句中的i：&#39;</span> <span class="o">+</span> <span class="nx">i</span><span class="p">)){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;循环体中setTimeOut()前的i：&#39;</span> <span class="o">+</span> <span class="nx">i</span><span class="p">)</span> <span class="c1">// 0、1、2、3、4、5
 </span><span class="c1"></span>  <span class="nx">setTimeout</span><span class="p">(()=&gt;{</span>
     <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;setTimeOut延时打印出的i：&#39;</span> <span class="o">+</span> <span class="nx">i</span><span class="p">)</span> <span class="c1">// 6个6
-</span><span class="c1"></span>  <span class="p">},</span><span class="mi">0</span><span class="p">)</span>
-<span class="p">}</span>
-  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;循环体中setTimeOut()后面的i：&#39;</span> <span class="o">+</span> <span class="nx">i</span> <span class="p">)</span> <span class="c1">// 6个6
-</span></code></pre></td></tr></table>
+</span><span class="c1"></span>  <span class="p">},</span><span class="mi">0</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;循环体中setTimeOut()后面的i：&#39;</span> <span class="o">+</span> <span class="nx">i</span><span class="p">)</span> <span class="c1">// 6个6
+</span><span class="c1"></span><span class="p">}</span>
+</code></pre></td></tr></table>
 </div>
 </div>
 <blockquote>
@@ -522,7 +522,7 @@
 <li><a href="https://wangdoc.com/javascript/async/general.html">异步与JS单线程模型</a></li>
 <li><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Window/setTimeout">window.setTimeout</a></li>
 <li><a href="https://zhuanlan.zhihu.com/p/34924059">事件循环与任务队列</a></li>
-<li><a href="http://jirengu.github.io/fe2/markdown/garbage_collection.html">JS引擎的垃圾回收机制</a></li>
+<li><a href="http://jirengu.github.io/fe2/markdown/garbage_collection.html">JS引擎的垃圾回收机制与性能</a></li>
 </ul>
 
 <blockquote>
@@ -698,7 +698,7 @@
 <li>bind 还可以接受更多的参数，将这些参数绑定原函数的参数</li>
 </ul>
 
-<h4 id="利用-settimeout-的第三个参数">利用 <code>setTimeout</code> 的第三个参数</h4>
+<h4 id="4-利用-settimeout-的第三个参数">4.利用 <code>setTimeout</code> 的第三个参数</h4>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
@@ -735,6 +735,8 @@
 <p><a href="https://www.zhihu.com/question/25371869/answer/30577793">JS setTimeout 问题 贺师俊的回答</a></p>
 
 <p><a href="https://zhuanlan.zhihu.com/p/34924059">Event Loop、计时器、nextTick By 方应杭</a></p>
+
+<p>JSConfEU的一个油管视频解释了一部分原理</p>
 
 <hr />
 
@@ -803,7 +805,7 @@
 </ul>
 
 <blockquote>
-<p>如果函数<code>fn()</code>在等号右边，那么<code>fn()</code>的作用域就只在等号右边，超过函数体，<code>fn()</code>就不存在，就只能用<code>a1()</code></p>
+<p>函数表达式中，如果函数<code>fn()</code>在等号右边，那么<code>fn()</code>的作用域就只在等号右边，超过函数体，<code>fn()</code>就不存在，就只能用<code>a1()</code></p>
 
 <p>没有等于号，作用域就在当前作用域的全局下</p>
 </blockquote>
@@ -2867,7 +2869,7 @@
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;hi&#39;</span><span class="p">)</span> <span class="c1">// undefined
 </span><span class="c1"></span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;hi&#39;</span><span class="p">)})()</span> <span class="c1">// JS里回车没有意义，相当于 undefined(function(){console.log(&#39;hi&#39;)})()
 </span><span class="c1"></span>
-<span class="cm">/* 除非加个“;” ，也是JS里唯一必须加分号的地方 */</span>
+<span class="cm">/* 除非加个“;” ，也是JS里少数几个必须加分号的地方 还有 `([]) !== ([]);({}) !== ({});`等设计圆括号的 */</span>
 
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;hi&#39;</span><span class="p">)</span>
 <span class="p">;(</span><span class="kd">function</span><span class="p">(){</span>
