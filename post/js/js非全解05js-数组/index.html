@@ -64,18 +64,18 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://xmasuhai.xyz/post/js/js%E9%9D%9E%E5%85%A8%E8%A7%A305js-%E6%95%B0%E7%BB%84/" />
 <meta property="article:published_time" content="2020-02-23T22:26:26+08:00" />
-<meta property="article:modified_time" content="2020-03-13T00:26:55+08:00" />
+<meta property="article:modified_time" content="2020-03-14T02:17:55+08:00" />
 <meta itemprop="name" content="【JS非全解05】JS 数组">
 <meta itemprop="description" content="数组对象，区别于其他语言，比如JAVA，JS其实没有真正的数组，只是用对象模拟数组，即内置对象(built-in Object) JS的数组是非经典数组 典型">
 
 
 <meta itemprop="datePublished" content="2020-02-23T22:26:26&#43;08:00" />
-<meta itemprop="dateModified" content="2020-03-13T00:26:55&#43;08:00" />
-<meta itemprop="wordCount" content="7886">
+<meta itemprop="dateModified" content="2020-03-14T02:17:55&#43;08:00" />
+<meta itemprop="wordCount" content="7925">
 
 
 
-<meta itemprop="keywords" content="JavaScript,JS," />
+<meta itemprop="keywords" content="JavaScript,JS,Array,map(),filter(),reduce()," />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="【JS非全解05】JS 数组"/>
 <meta name="twitter:description" content="数组对象，区别于其他语言，比如JAVA，JS其实没有真正的数组，只是用对象模拟数组，即内置对象(built-in Object) JS的数组是非经典数组 典型"/>
@@ -138,7 +138,7 @@
         
           
           
-            <a class="menu-item-link" href="http://xmasuhai.xyz/about/">About</a>
+            <a class="menu-item-link" href="http://xmasuhai.xyz/about/">关于我</a>
           
         
       </li><li class="mobile-menu-item">
@@ -157,15 +157,11 @@
               </li>
             
               <li>
-                <a href="http://xmasuhai.xyz/post/test/image-preview/">Image Preview</a>
-              </li>
-            
-              <li>
                 <a href="http://xmasuhai.xyz/post/test/syntax-highlighting/">Syntax Highlighting</a>
               </li>
             
               <li>
-                <a href="http://xmasuhai.xyz/post/test/math-preview/">Math Preview</a>
+                <a href="http://xmasuhai.xyz/post/test/mytest/">my Syntax Highlighting &amp; ShortCode Test</a>
               </li>
             
           </ul>
@@ -303,7 +299,7 @@
         
           
           
-            <a class="menu-item-link" href="http://xmasuhai.xyz/about/">About</a>
+            <a class="menu-item-link" href="http://xmasuhai.xyz/about/">关于我</a>
           
 
         
@@ -321,15 +317,11 @@
               </li>
             
               <li>
-                <a href="http://xmasuhai.xyz/post/test/image-preview/">Image Preview</a>
-              </li>
-            
-              <li>
                 <a href="http://xmasuhai.xyz/post/test/syntax-highlighting/">Syntax Highlighting</a>
               </li>
             
               <li>
-                <a href="http://xmasuhai.xyz/post/test/math-preview/">Math Preview</a>
+                <a href="http://xmasuhai.xyz/post/test/mytest/">my Syntax Highlighting &amp; ShortCode Test</a>
               </li>
             
           </ul>
@@ -365,7 +357,7 @@
             <a href="http://xmasuhai.xyz/categories/2020/"> 2020 </a>
             
           </div>
-        <span class="more-meta"> 约 7886 字 </span>
+        <span class="more-meta"> 约 7925 字 </span>
           <span class="more-meta"> 预计阅读 16 分钟 </span>
 
         
@@ -405,7 +397,7 @@
 <li><a href="#创建一个数组-续">创建一个数组（续）</a>
 <ul>
 <li><a href="#合并两个数组">合并两个数组</a></li>
-<li><a href="#截取一个数组的一部分-或全部截取">截取一个数组的一部分，或全部截取</a></li>
+<li><a href="#截取">截取</a></li>
 </ul></li>
 <li><a href="#增删改查数组中的元素">增删改查数组中的元素</a>
 <ul>
@@ -428,7 +420,11 @@
 <li><a href="#查看所有元素">查看所有元素</a>
 <ul>
 <li><a href="#查看所有属性名">查看所有属性名</a></li>
-<li><a href="#arr-foreach-查看数字-字符串-属性名和值"><code>arr.forEach()</code>查看数字（字符串）属性名和值</a></li>
+</ul></li>
+<li><a href="#查看数组的正确姿势">查看数组的正确姿势</a>
+<ul>
+<li><a href="#for-let-i-循环-查看数组属性名和值"><code>for let i 循环</code>查看数组属性名和值</a></li>
+<li><a href="#arr-foreach-查看数组属性名和值"><code>arr.forEach()</code>查看数组属性名和值</a></li>
 </ul></li>
 <li><a href="#foreach-是个坎"><code>forEach</code>是个坎</a></li>
 <li><a href="#arr-every-和-arr-some-按条件判断"><code>arr.every()</code> 和<code>arr.some()</code>按条件判断</a></li>
@@ -444,7 +440,7 @@
 <li><a href="#使用条件查找元素">使用条件查找元素</a></li>
 <li><a href="#使用条件查找元素的索引">使用条件查找元素的索引</a></li>
 </ul></li>
-<li><a href="#小结">小结</a></li>
+<li><a href="#查数组元素小结">查数组元素小结</a></li>
 </ul></li>
 <li><a href="#增元素">增元素</a>
 <ul>
@@ -467,7 +463,7 @@
 <li><a href="#reduce-语法糖"><strong><em><code>reduce</code></em></strong> 语法糖</a>
 <ul>
 <li><a href="#基本用法">基本用法</a></li>
-<li><a href="#高级用法">高级用法</a>
+<li><a href="#reduce-高级用法总结"><code>reduce()</code>高级用法总结</a>
 <ul>
 <li><a href="#累加累乘">累加累乘</a></li>
 <li><a href="#权重求和">权重求和</a></li>
@@ -492,8 +488,7 @@
 </ul></li>
 </ul></li>
 <li><a href="#练手题">练手题</a></li>
-<li><a href="#面试题">面试题</a></li>
-<li><a href="#reduce-高级用法"><code>reduce()</code>高级用法</a>
+<li><a href="#面试题">面试题</a>
 <ul>
 <li><a href="#参考文章">参考文章</a></li>
 <li><a href="#相关文章">相关文章</a></li>
@@ -567,7 +562,7 @@
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">arr</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
-<span class="nx">arr</span><span class="p">[</span><span class="s1">&#39;xxx&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1">//加个&#39;xxx&#39;下标
+<span class="nx">arr</span><span class="p">[</span><span class="s1">&#39;xxx&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1">//加个&#39;xxx&#39;属性
 </span><span class="c1"></span><span class="nx">arr</span><span class="p">[</span><span class="s1">&#39;yyy&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;yyy&#39;</span>
 <span class="nx">arr</span><span class="p">.</span><span class="nx">length</span>
 <span class="o">&lt;</span> <span class="mi">3</span>
@@ -790,7 +785,11 @@
 <p>不改变原数组，得到（返回）新数组</p>
 </blockquote>
 
-<h3 id="截取一个数组的一部分-或全部截取">截取一个数组的一部分，或全部截取</h3>
+<h3 id="截取">截取</h3>
+
+<blockquote>
+<p>一个数组的一部分，或全部截取</p>
+</blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
@@ -798,7 +797,7 @@
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">arr4</span> <span class="o">=</span> <span class="nx">arr1</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="c1">//从第二个元素开始截取
-</span><span class="c1"></span><span class="kd">let</span> <span class="nx">arr5</span> <span class="o">=</span> <span class="nx">arr1</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="c1">//全部截取
+</span><span class="c1"></span><span class="kd">let</span> <span class="nx">arr5</span> <span class="o">=</span> <span class="nx">arr1</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="c1">//全部截取，即为复制
 </span></code></pre></td></tr></table>
 </div>
 </div>
@@ -833,7 +832,7 @@
 </div>
 </div>
 <blockquote>
-<p>有长度属性，但没有对应下标的数组，叫稀疏数组，只会带来bug</p>
+<p>有长度属性，但没有对应下标的数组，叫<strong><em>「稀疏数组」</em></strong>，只会带来bug</p>
 
 <p>数组长度并未改变</p>
 
@@ -871,6 +870,8 @@
 </ul>
 
 <h5 id="需要改-length-的场景">需要改<code>length</code>的场景</h5>
+
+<hr />
 
 <h3 id="删元素-续">删元素（续）</h3>
 
@@ -1006,11 +1007,9 @@
 
 <hr />
 
-<blockquote>
-<p>正确姿势</p>
-</blockquote>
+<h4 id="查看数组的正确姿势">查看数组的正确姿势</h4>
 
-<h5 id="arr-foreach-查看数字-字符串-属性名和值"><code>arr.forEach()</code>查看数字（字符串）属性名和值</h5>
+<h5 id="for-let-i-循环-查看数组属性名和值"><code>for let i 循环</code>查看数组属性名和值</h5>
 
 <blockquote>
 <p>区别于<code>for i in arr</code>，遍历所有属性，指定具体要遍历的下标</p>
@@ -1042,6 +1041,8 @@
 <blockquote>
 <p>数组提供的另一种方法，在数组的原型中可以看到</p>
 </blockquote>
+
+<h5 id="arr-foreach-查看数组属性名和值"><code>arr.forEach()</code>查看数组属性名和值</h5>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
@@ -1076,7 +1077,7 @@
 </div>
 </div>
 <ul>
-<li><code>forEach</code>用到了回调，怎么理解，自己写一个</li>
+<li><code>forEach</code>用到了回调，怎么理解，自己手写一个</li>
 </ul>
 
 <blockquote>
@@ -1165,7 +1166,7 @@
 <blockquote>
 <p>问for循环遍历下标的方法和<code>forEach</code>的区别是什么（有什么第一种可做到，而第二种做不到的一点）</p>
 
-<p>几乎通用，除了</p>
+<p>几乎通用，，但并不是语法糖的关系，因为以下</p>
 
 <p>区别一：for循环里支持<code>break</code>和<code>continue</code>，而<code>forEach</code>只是一个函数，不支持</p>
 
@@ -1392,6 +1393,8 @@
 <p>注意数组索引不要越界</p>
 </blockquote>
 
+<hr />
+
 <h4 id="查看单个属性-续">查看单个属性（续）</h4>
 
 <h5 id="arr-indexof-item"><code>arr.indexOf(item)</code></h5>
@@ -1522,7 +1525,7 @@
 </code></pre></td></tr></table>
 </div>
 </div>
-<h4 id="小结">小结</h4>
+<h4 id="查数组元素小结">查数组元素小结</h4>
 
 <ul>
 <li>用<code>Array.indexOf()</code>按下标来查找某个元素，如果下标越界，则返回<code>-1</code></li>
@@ -2266,7 +2269,7 @@
 <li><p>初始值可选</p></li>
 </ul>
 
-<h4 id="高级用法">高级用法</h4>
+<h4 id="reduce-高级用法总结"><code>reduce()</code>高级用法总结</h4>
 
 <blockquote>
 <p>25种场景来应用reduce的高级用法</p>
@@ -2531,8 +2534,6 @@
 </span></code></pre></td></tr></table>
 </div>
 </div>
-<h3 id="reduce-高级用法"><code>reduce()</code>高级用法</h3>
-
 <!-- Article End -->
 
 <hr />
@@ -2587,7 +2588,7 @@
   <p class="copyright-item">
     <span class="item-title">上次更新</span>
     <span class="item-content">
-      2020-03-13
+      2020-03-14
       
         
         
@@ -2609,6 +2610,10 @@
       <div class="post-tags">
           <a href="http://xmasuhai.xyz/tags/javascript/">JavaScript</a>
           <a href="http://xmasuhai.xyz/tags/js/">JS</a>
+          <a href="http://xmasuhai.xyz/tags/array/">Array</a>
+          <a href="http://xmasuhai.xyz/tags/map/">map()</a>
+          <a href="http://xmasuhai.xyz/tags/filter/">filter()</a>
+          <a href="http://xmasuhai.xyz/tags/reduce/">reduce()</a>
           
         </div>
 
