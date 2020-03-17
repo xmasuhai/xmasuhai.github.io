@@ -64,14 +64,14 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://xmasuhai.xyz/post/algorithm/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%8401%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E4%B8%8A/" />
 <meta property="article:published_time" content="2020-03-12T23:31:41+08:00" />
-<meta property="article:modified_time" content="2020-03-17T02:24:31+08:00" />
+<meta property="article:modified_time" content="2020-03-18T01:05:54+08:00" />
 <meta itemprop="name" content="【算法与数据结构01】排序算法（上）">
 <meta itemprop="description" content="排序算法 如何找出两个数中较小的一个 必备知识 数据结构 用数组[a,b]表示两个数字 JS中没有二元组，用数组代替 编程知识：A?B:C表达式 minOf2 的实现">
 
 
 <meta itemprop="datePublished" content="2020-03-12T23:31:41&#43;08:00" />
-<meta itemprop="dateModified" content="2020-03-17T02:24:31&#43;08:00" />
-<meta itemprop="wordCount" content="4589">
+<meta itemprop="dateModified" content="2020-03-18T01:05:54&#43;08:00" />
+<meta itemprop="wordCount" content="5306">
 
 
 
@@ -358,8 +358,8 @@
             <a href="http://xmasuhai.xyz/categories/2020/"> 2020 </a>
             
           </div>
-        <span class="more-meta"> 约 4589 字 </span>
-          <span class="more-meta"> 预计阅读 10 分钟 </span>
+        <span class="more-meta"> 约 5306 字 </span>
+          <span class="more-meta"> 预计阅读 11 分钟 </span>
 
         
         
@@ -420,6 +420,14 @@
 <ul>
 <li><a href="#算法心得">算法心得</a></li>
 <li><a href="#手写题">手写题</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#算法中的递归">算法中的递归</a>
+<ul>
+<li><a href="#1-递归的概念">1. 递归的概念</a></li>
+<li><a href="#2-递归三要素">2. 递归三要素</a></li>
+<li><a href="#3-高频题目精讲">3. 高频题目精讲</a>
+<ul>
 <li><a href="#参考文章">参考文章</a></li>
 <li><a href="#相关文章">相关文章</a></li>
 </ul></li>
@@ -1376,8 +1384,8 @@
     <span class="nx">a</span> <span class="o">=</span> <span class="nx">b</span>
     <span class="nx">b</span> <span class="o">=</span> <span class="nx">temp</span>
 <span class="p">}</span>
-<span class="nx">swap</span><span class="p">(</span><span class="nx">numbers</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="nx">numbers</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
-</code></pre></td></tr></table>
+<span class="nx">swap</span><span class="p">(</span><span class="nx">numbers</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="nx">numbers</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="c1">// 改变原数组
+</span></code></pre></td></tr></table>
 </div>
 </div>
 <blockquote>
@@ -1451,7 +1459,7 @@
 <span class="k">for</span><span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="o">???</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">){</span> <span class="c1">// i &lt; ???
 </span><span class="c1"></span>    <span class="kd">let</span> <span class="nx">index</span> <span class="o">=</span> <span class="nx">minIndex</span><span class="p">(</span><span class="nx">numbers</span><span class="p">)</span> <span class="c1">// minIndex()　的实现是否符合预期？
 </span><span class="c1"></span>    <span class="c1">// index 是当前最小数的下标
-</span><span class="c1"></span>    <span class="c1">// index 对应的书应该放到 i 处
+</span><span class="c1"></span>    <span class="c1">// index 对应的数应该放到 i 处，即每次 i 接受一次 index 的值：
 </span><span class="c1"></span>    <span class="nx">swap</span><span class="p">(</span><span class="nx">numbers</span><span class="p">,</span> <span class="nx">index</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span> <span class="c1">// swap() 已实现
 </span><span class="c1"></span>    <span class="c1">// index i 都是 index 的意思， 建议 i 改名
 </span><span class="c1"></span><span class="p">}</span>
@@ -1515,54 +1523,81 @@
 </tbody>
 </table>
 
+<ul>
+<li>发现问题：</li>
+</ul>
+
 <blockquote>
-<p>发现问题：每次<code>index</code>都在数组的所有元素中取</p>
+<p>每次<code>index</code>都在数组的所有元素中取</p>
 
 <p>有可能找到已经排好的第一个最小值，不再调换剩余项的位置</p>
 
-<p>即<code>minIndex</code>查找<code>index</code>范围有问题，<code>i</code>的最大值应为<code>numbers.length - 1</code></p>
-
-<p>即<code>???</code>里应该写<code>numbers.length - 1</code></p>
+<p>即<code>minIndex</code>查找<code>index</code>范围有问题</p>
 </blockquote>
 
 <ul>
-<li><code>let index = minIndex(numbers)</code></li>
-<li>如果上次循环已经找到了第一个最小的值，那么之后找到同样的最小值的时候，就可以忽略上一个找到的最小值</li>
-<li>上句代码应改为：<code>let index = minIndex(numbers.slice(i)) + i</code>，<code>i</code>为遍历的下标范围小于<code>numbers.length - 1</code></li>
+<li><code>let index = minIndex(numbers)</code>错误，不该在原数组里找</li>
+<li>解决问题：</li>
+</ul>
+
+<blockquote>
+<p><code>i</code>的最大值应为<code>numbers.length - 1</code></p>
+
+<p>即<code>???</code>里应该写<code>numbers.length - 1</code></p>
+
+<p>每次循环对比上一次，应该去掉上次找到的最小值</p>
+</blockquote>
+
+<ul>
+<li>如果上次循环已经找到一个最小的值，那么下一次找最小值时候，就必须忽略（排除）上次那个找到的最小值</li>
+<li>把本次找到的最小值提前<code>swap()</code></li>
+<li>截取第<code>i</code>次之后的新数组<code>numbers.slice(i)</code>，不改变原数组</li>
+<li>得到截取后最小值的下标<code>minIndex( numbers.slice(i) )</code></li>
+<li>将最小值序号变为<code>minIndex( numbers.slice(i) ) + i</code></li>
+<li>即<code>let index = minIndex( numbers.slice(i) ) + i</code>，<code>i</code>为遍历的下标范围小于<code>numbers.length - 1</code></li>
 </ul>
 
 <table>
 <thead>
 <tr>
-<th>i</th>
-<th>忽略几个</th>
+<th align="center">i</th>
+<th align="center">要找几个</th>
+<th align="center">忽略几个</th>
 </tr>
 </thead>
 
 <tbody>
 <tr>
-<td>0</td>
-<td>0</td>
+<td align="center">0</td>
+<td align="center">4</td>
+<td align="center">0</td>
 </tr>
 
 <tr>
-<td>1</td>
-<td>1</td>
+<td align="center">1</td>
+<td align="center">3</td>
+<td align="center">1</td>
 </tr>
 
 <tr>
-<td>2</td>
-<td>2</td>
+<td align="center">2</td>
+<td align="center">2</td>
+<td align="center">2</td>
 </tr>
 </tbody>
 </table>
+
+<ul>
+<li>每次找<code>minIndex(numbers.slice(i))</code>里面最小的</li>
+</ul>
 
 <blockquote>
 <p>为什么要<code>+ i</code></p>
 </blockquote>
 
 <ul>
-<li>如果不加，那么<code>index</code>总是从<code>0</code>数起</li>
+<li>如果不加，那么<code>index</code>总是从<code>0</code>数起，每次都会少掉 <code>i</code> 个</li>
+<li><code>minIndex(numbers.slice(i))</code>切掉下标的要加回来</li>
 </ul>
 
 <p>重新分析代码</p>
@@ -1577,10 +1612,10 @@
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">sort</span> <span class="o">=</span> <span class="nx">numbers</span> <span class="p">=&gt;</span> <span class="p">{</span>
-    <span class="k">for</span><span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">numbers</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">){</span> <span class="c1">// i &lt; ???
-</span><span class="c1"></span>        <span class="kd">let</span> <span class="nx">index</span> <span class="o">=</span> <span class="nx">minIndex</span><span class="p">(</span><span class="nx">numbers</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span> <span class="o">+</span> <span class="nx">i</span> <span class="p">)</span>
-        <span class="nx">swap</span><span class="p">(</span><span class="nx">numbers</span><span class="p">,</span> <span class="nx">index</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span>
-    <span class="p">}</span>
+    <span class="k">for</span><span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="o">???</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">){</span> <span class="c1">// i &lt; ???
+</span><span class="c1"></span>        <span class="kd">let</span> <span class="nx">index</span> <span class="o">=</span> <span class="nx">minIndex</span><span class="p">(</span> <span class="nx">numbers</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span> <span class="p">)</span> <span class="o">+</span> <span class="nx">i</span> <span class="c1">// slice() 不改变原数组
+</span><span class="c1"></span>        <span class="nx">swap</span><span class="p">(</span><span class="nx">numbers</span><span class="p">,</span> <span class="nx">index</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span> <span class="c1">// swap()改变原数组 将每次排除 i 项的剩余最小值提前
+</span><span class="c1"></span>    <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></td></tr></table>
 </div>
@@ -1625,10 +1660,33 @@
 </tbody>
 </table>
 
+<ul>
+<li><code>i &lt; ???</code>应为<code>numbers.length - 1</code></li>
+</ul>
+
 <p>画图</p>
 
 <blockquote>
+<p><code>[27,44,35,16]</code></p>
+
+<p><code>Object.keys([27,44,35,16]) -&gt; Array(4) [ &quot;0&quot;, &quot;1&quot;, &quot;2&quot;, &quot;3&quot; ]</code></p>
+
+<p>最小值<code>16</code>，最小值下标<code>&quot;3&quot;</code></p>
+
+<p><code>i = 0</code>，最小值下标&rdquo;3&rdquo;，下标 i 和&rdquo;3&rdquo;的值 对换位置<code>swap()</code></p>
+
+<p>新数组<code>[16,44,35,27]</code>，第1项固定</p>
+
+<p><code>i = 1</code>，找后面3个元素中最小值 下标&rdquo;3&rdquo;，下标 i 和&rdquo;3&rdquo;的值 对换位置<code>swap()</code></p>
+
+<p>新数组<code>[16,27,35,44]</code>，前2项固定</p>
+
+<p><code>i = 2</code>，找后面2个元素中最小值 下标&rdquo;2&rdquo;，下标 i 和&rdquo;2&rdquo;的值 不用对换</p>
+
+<p>比较完了，不必再进行循环<code>i = 3</code></p>
 </blockquote>
+
+<hr />
 
 <p>改进代码</p>
 <div class="highlight"><div class="chroma">
@@ -1670,25 +1728,27 @@
 </span><span class="lnt">35
 </span><span class="lnt">36
 </span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="c1">// 试写
 </span><span class="c1"></span><span class="kd">let</span> <span class="nx">sort</span> <span class="o">=</span> <span class="p">(</span><span class="nx">numbers</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
     <span class="k">for</span><span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">numbers</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">){</span>
-        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`----`</span><span class="p">)</span>
-        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`i: </span><span class="si">${</span><span class="nx">i</span><span class="si">}</span><span class="sb">`</span><span class="p">)</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`----`</span><span class="p">)</span> <span class="c1">// 打log精髓
+</span><span class="c1"></span>        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`i: </span><span class="si">${</span><span class="nx">i</span><span class="si">}</span><span class="sb">`</span><span class="p">)</span>
         <span class="kd">let</span> <span class="nx">index</span> <span class="o">=</span> <span class="nx">minIndex</span><span class="p">(</span><span class="nx">numbers</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="nx">i</span><span class="p">))</span> <span class="o">+</span> <span class="nx">i</span>
-        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`----`</span><span class="p">)</span>
         <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`index: </span><span class="si">${</span><span class="nx">index</span><span class="si">}</span><span class="sb">`</span><span class="p">)</span>
         <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`min: </span><span class="si">${</span><span class="nx">numbers</span><span class="p">[</span><span class="nx">index</span><span class="p">]</span><span class="si">}</span><span class="sb">`</span><span class="p">)</span>
-        <span class="c1">//
-</span><span class="c1"></span>        <span class="k">if</span><span class="p">(</span><span class="nx">index</span> <span class="o">!==</span> <span class="mi">1</span><span class="p">){</span>
+        <span class="c1">// 小标不相等 交换值的位置；相等什么也不做
+</span><span class="c1"></span>        <span class="k">if</span><span class="p">(</span><span class="nx">index</span> <span class="o">!==</span> <span class="nx">i</span><span class="p">){</span>
             <span class="nx">swap</span><span class="p">(</span><span class="nx">numbers</span><span class="p">,</span> <span class="nx">index</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span>
-            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`----`</span><span class="p">)</span>
             <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`swap </span><span class="si">${</span><span class="nx">index</span><span class="si">}</span><span class="sb">: </span><span class="si">${</span><span class="nx">i</span><span class="si">}</span><span class="sb">`</span><span class="p">)</span>
-            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">numbers</span><span class="p">)</span>
-        <span class="p">}</span> <span class="c1">// if_end
-</span><span class="c1"></span>    <span class="p">}</span> <span class="c1">// for_end
+            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`numbers: </span><span class="si">${</span><span class="nx">numbers</span><span class="si">}</span><span class="sb">`</span><span class="p">)</span>
+        <span class="p">}</span><span class="k">else</span><span class="p">{</span><span class="c1">// if_end
+</span><span class="c1"></span>            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`不交换`</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span> <span class="c1">// for_end
 </span><span class="c1"></span>    <span class="k">return</span> <span class="nx">numbers</span>
 <span class="p">}</span>
 
@@ -1709,7 +1769,9 @@
 </span><span class="c1"></span>    <span class="p">}</span> <span class="c1">//  for_end
 </span><span class="c1"></span>    <span class="k">return</span> <span class="nx">index</span>
 <span class="p">}</span> <span class="c1">//  minIndex_end
-</span></code></pre></td></tr></table>
+</span><span class="c1"></span>
+<span class="nx">sort</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">199</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mi">93</span><span class="p">,</span> <span class="mi">124</span><span class="p">,</span> <span class="mi">4903</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+</code></pre></td></tr></table>
 </div>
 </div>
 <p>最终代码</p>
@@ -1742,6 +1804,8 @@
 </span><span class="lnt">25
 </span><span class="lnt">26
 </span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">sort</span> <span class="o">=</span> <span class="p">(</span><span class="nx">numbers</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
@@ -1771,7 +1835,9 @@
 </span><span class="c1"></span>    <span class="p">}</span> <span class="c1">//  for_end
 </span><span class="c1"></span>    <span class="k">return</span> <span class="nx">index</span>
 <span class="p">}</span> <span class="c1">//  minIndex_end
-</span></code></pre></td></tr></table>
+</span><span class="c1"></span>
+<span class="nx">sort</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">199</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mi">93</span><span class="p">,</span> <span class="mi">124</span><span class="p">,</span> <span class="mi">4903</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+</code></pre></td></tr></table>
 </div>
 </div>
 <h4 id="循环选择排序小结">循环选择排序小结</h4>
@@ -1866,6 +1932,29 @@
 </code></pre></td></tr></table>
 </div>
 </div>
+<hr />
+
+<h2 id="算法中的递归">算法中的递归</h2>
+
+<p>1.递归的概念
+2.递归三要素：</p>
+
+<ul>
+<li>拆解寻找子问题</li>
+<li>最小子问题（基本问题）</li>
+<li>递归终止退出条件</li>
+</ul>
+
+<p>3.高频题目精讲</p>
+
+<hr />
+
+<h3 id="1-递归的概念">1. 递归的概念</h3>
+
+<h3 id="2-递归三要素">2. 递归三要素</h3>
+
+<h3 id="3-高频题目精讲">3. 高频题目精讲</h3>
+
 <!-- Article End -->
 
 <hr />
@@ -1887,6 +1976,8 @@
 <p><a href="https://static.xiedaimala.com/xdml/file/3ac7c224-c23d-491f-84b5-4fabfbeab9b8/2019-10-8-11-27-48.pdf">算法入门（下）.pdf</a></p>
 
 <p><a href="https://static.xiedaimala.com/xdml/file/3ac7c224-c23d-491f-84b5-4fabfbeab9b8/2019-10-9-22-25-26.pdf">数据结构（上）.pdf</a></p>
+
+<p><a href="https://xiedaimala.com/tasks/28f651d1-6d33-4d4d-8f98-8c0ce6509c19">程序员的算法课 递归</a></p>
 
 <h4 id="相关文章">相关文章</h4>
 
@@ -1922,7 +2013,7 @@
   <p class="copyright-item">
     <span class="item-title">上次更新</span>
     <span class="item-content">
-      2020-03-17
+      2020-03-18
       
         
         
