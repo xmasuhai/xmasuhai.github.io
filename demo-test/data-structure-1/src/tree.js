@@ -87,15 +87,20 @@ const removeNode = (tree, node) => {
      *  要知道 删除的节点在 兄弟节点里的下标
      *  数组仅支持按下标删除
      * */
-    const siblings = node.parent.children;
-    let index = 0;
-    for (let i = 1; i < siblings.length; i++) {
-        if (siblings[i] === node) {
-            index = i
+    if (node === tree) {
+        console.log('不能删除自己')
+        return tree
+    } else {
+        const siblings = node.parent.children;
+        let index = 0;
+        for (let i = 1; i < siblings.length; i++) {
+            if (siblings[i] === node) {
+                index = i
+            }
         }
+        // 得到要删除节点的下标index
+        siblings.splice(index, 1)
     }
-    // 得到要删除节点的下标index
-    siblings.splice(index, 1)
 };
 console.log(tree);
 removeNode(tree, node5);
