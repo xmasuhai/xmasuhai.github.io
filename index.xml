@@ -7,7 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>Joel Xu</copyright>
-    <lastBuildDate>Mon, 18 May 2020 02:41:45 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 07 Jun 2020 20:28:40 +0800</lastBuildDate>
     
         <atom:link href="http://xmasuhai.xyz/index.xml" rel="self" type="application/rss+xml" />
     
@@ -31,6 +31,1021 @@
 &lt;/ul&gt;
 
 &lt;p&gt;Learn more and contribute on &lt;a href=&#34;https://github.com/gohugoio&#34;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
+</description>
+      
+    </item>
+    
+    <item>
+      <title>【JS编程接口05】DOM事件与事件委托</title>
+      <link>http://xmasuhai.xyz/post/api/dom/js%E7%BC%96%E7%A8%8B%E6%8E%A5%E5%8F%A305dom%E4%BA%8B%E4%BB%B6%E4%B8%8E%E4%BA%8B%E4%BB%B6%E5%A7%94%E6%89%98/</link>
+      <pubDate>Sun, 07 Jun 2020 20:28:40 +0800</pubDate>
+      
+      <guid>http://xmasuhai.xyz/post/api/dom/js%E7%BC%96%E7%A8%8B%E6%8E%A5%E5%8F%A305dom%E4%BA%8B%E4%BB%B6%E4%B8%8E%E4%BA%8B%E4%BB%B6%E5%A7%94%E6%89%98/</guid>
+      
+        <description>
+
+&lt;h2 id=&#34;目录-a-id-catalogue-href-catalogue-a-a-href-catalogue-a&#34;&gt;目录&lt;a id=&#34;catalogue&#34; href=&#34;#catalogue&#34; &gt; § &lt;/a&gt;&lt;a href=&#34;#catalogue&#34;&gt; ⇧ &lt;/a&gt;&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a id=&#34;_$1_&#34; href=&#34;#点击事件&#34;&gt;1. 点击事件 § &lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a id=&#34;_$2_&#34; href=&#34;#addEventListener&#34;&gt;2. &lt;code&gt;addEventListener&lt;/code&gt; § &lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a id=&#34;_$3_&#34; href=&#34;#targetVScurrentTarget&#34;&gt;3. &lt;code&gt;target&lt;/code&gt; V.S. &lt;code&gt;currentTarget&lt;/code&gt; § &lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a id=&#34;_$4_&#34; href=&#34;#取消冒泡&#34;&gt;4. 取消冒泡 § &lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a id=&#34;_$5_&#34; href=&#34;#不可取消冒泡的事件&#34;&gt;5. 不可取消冒泡的事件 § &lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a id=&#34;_$6_&#34; href=&#34;#阻止滚动&#34;&gt;6. 阻止滚动 § &lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a id=&#34;_$7_&#34; href=&#34;#自定义事件&#34;&gt;7. 自定义事件 § &lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a id=&#34;_$8_&#34; href=&#34;#事件委托&#34;&gt;8. 事件委托（事件代理） § &lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a id=&#34;_$9_&#34; href=&#34;#封装事件委托&#34;&gt;9. 封装事件委托 § &lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a id=&#34;_$10_&#34; href=&#34;#_$2_&#34;&gt;10. $3 § &lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a id=&#34;_$11_&#34; href=&#34;#_$2_&#34;&gt;11. $3 § &lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&#34;1-点击事件-a-id-点击事件-href-点击事件-a-a-href-catalogue-a&#34;&gt;1. 点击事件 &lt;a id=&#34;点击事件&#34; href=&#34;#点击事件&#34;&gt; § &lt;/a&gt; &lt;a href=&#34;#catalogue&#34;&gt; ⇧ &lt;/a&gt;&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;有三个div，.爷爷&amp;gt;.爸爸&amp;gt;.儿子&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;给三个div分别添加事件监听，&lt;code&gt;fnYe/fnBa/fnEr&lt;/code&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-HTML&#34; data-lang=&#34;HTML&#34;&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-HTML&#34; data-lang=&#34;HTML&#34;&gt;&lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;div&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;class&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;爷爷&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;div&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;class&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;爸爸&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;div&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;class&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;儿子&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+    文字
+    &lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;div&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;div&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;div&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;点击文字，同时算点击了儿子、爸爸、爷爷&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;点击文字，事件的调用顺序&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;W3C制定浏览器标准需同时支持两种调用顺序&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;首先按爷爷-&amp;gt;爸爸-&amp;gt;儿子顺序查找函数监听，从外向内，找监听函数，叫事件捕获&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;然后按儿子-&amp;gt;爸爸-&amp;gt;爷爷顺序查找函数监听，从内向外，找监听函数，叫事件冒泡&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;有监听函数就调用，并提供事件信息，没有就跳过&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;可选择间监听的函数放在捕获阶段还是冒泡阶段调用&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&#34;2-addeventlistener-a-id-addeventlistener-href-addeventlistener-a-a-href-catalogue-a&#34;&gt;2.&lt;code&gt;addEventListener&lt;/code&gt;&lt;a id=&#34;addEventListener&#34; href=&#34;#addEventListener&#34;&gt; § &lt;/a&gt; &lt;a href=&#34;#catalogue&#34;&gt; ⇧ &lt;/a&gt;&lt;/h2&gt;
+
+&lt;h3 id=&#34;2-1-事件绑定api&#34;&gt;2.1 事件绑定API&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;element.addEventListener(&#39;click&#39;, fn, boolean)&lt;/code&gt; 冒泡&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;如果bool不传或为&lt;a href=&#34;https://developer.mozilla.org/zh-CN/docs/Glossary/Falsy&#34;&gt;falsy&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;就让fn走冒泡，即当浏览器在冒泡阶段发现节点有fn监听函数，就会调用fn，并提供事件信息&lt;/li&gt;
+&lt;li&gt;即监听函数默认走冒泡&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;如果bool为true&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;就让fn走捕获， 即当浏览器在捕获阶段发现节点有fn监听函数，就会调用fn，并提供信息&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;你可以选择吧fn放在哪边&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;如果bool为true，fn就放在左边，右边空跑&lt;/li&gt;
+&lt;li&gt;如果bool为空或falsy，fn就放在右边，左边空跑&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;代码示例&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-HTML&#34; data-lang=&#34;HTML&#34;&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-HTML&#34; data-lang=&#34;HTML&#34;&gt;&lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;body&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+  &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;div&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;class&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;lv1 x&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;div&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;class&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;lv2 x&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+      &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;div&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;class&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;lv3 x&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+        &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;div&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;class&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;lv4 x&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+          &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;div&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;class&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;lv5 x&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+            &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;div&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;class&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;lv6 x&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+              &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;div&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;class&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;lv7 x&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;div&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+            &lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;div&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+          &lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;div&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+        &lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;div&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+      &lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;div&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;div&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+  &lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;div&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+
+  &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;script&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;src&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;main.js&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;script&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;body&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-CSS&#34; data-lang=&#34;CSS&#34;&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;23
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;24
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;25
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;26
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;27
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;28
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;29
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;30
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;31
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;32
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;33
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;34
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;35
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;36
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;37
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;38
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;39
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;40
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;41
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;42
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;43
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;44
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;45
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;46
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;47
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;48
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-CSS&#34; data-lang=&#34;CSS&#34;&gt;&lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+  &lt;span class=&#34;k&#34;&gt;box-sizing&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;border-box&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+
+
+&lt;span class=&#34;nt&#34;&gt;div&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;class&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;^=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;lv&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;nd&#34;&gt;not&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;([&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;class&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;.lv7&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;])&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+  &lt;span class=&#34;k&#34;&gt;border&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;px&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;solid&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+  &lt;span class=&#34;k&#34;&gt;border-radius&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;50&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;%&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+  &lt;span class=&#34;k&#34;&gt;display&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;inline&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;kc&#34;&gt;flex&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+  &lt;span class=&#34;k&#34;&gt;padding&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;px&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+
+&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nc&#34;&gt;lv1&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+  &lt;span class=&#34;k&#34;&gt;background-color&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;purple&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+
+&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nc&#34;&gt;lv2&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+  &lt;span class=&#34;k&#34;&gt;background-color&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;blue&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+
+&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nc&#34;&gt;lv3&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+  &lt;span class=&#34;k&#34;&gt;background-color&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;cyan&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+
+&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nc&#34;&gt;lv4&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+  &lt;span class=&#34;k&#34;&gt;background-color&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;green&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+
+&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nc&#34;&gt;lv5&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+  &lt;span class=&#34;k&#34;&gt;background-color&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;yellow&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+
+&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nc&#34;&gt;lv6&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+  &lt;span class=&#34;k&#34;&gt;background-color&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;orange&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+
+&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nc&#34;&gt;lv7&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+  &lt;span class=&#34;k&#34;&gt;width&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;50&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;px&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+  &lt;span class=&#34;k&#34;&gt;height&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;50&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;px&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+  &lt;span class=&#34;k&#34;&gt;border&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;px&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;solid&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+  &lt;span class=&#34;k&#34;&gt;border-radius&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;50&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;%&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+  &lt;span class=&#34;k&#34;&gt;background-color&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;red&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+  &lt;span class=&#34;k&#34;&gt;display&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;inline&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;kc&#34;&gt;flex&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+
+&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nc&#34;&gt;x&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+  &lt;span class=&#34;k&#34;&gt;background-color&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;transparent&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-JavaScript&#34; data-lang=&#34;JavaScript&#34;&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-JavaScript&#34; data-lang=&#34;JavaScript&#34;&gt;&lt;span class=&#34;kr&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;$&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;document&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;querySelector&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;bind&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;document&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;kr&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;lv1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;lv2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;lv3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;lv4&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;lv5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;lv6&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;lv7&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;.lv1&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;.lv2&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;.lv3&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;.lv4&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;.lv5&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;.lv6&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;.lv7&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)]&lt;/span&gt;
+&lt;span class=&#34;kd&#34;&gt;let&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;n&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;
+&lt;span class=&#34;nx&#34;&gt;console&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;log&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;lv1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;nx&#34;&gt;lv1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;addEventListener&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;click&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;e&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+  &lt;span class=&#34;nx&#34;&gt;console&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;log&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;e&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;currentTarget&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+  &lt;span class=&#34;nx&#34;&gt;setTimeout&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(()&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;nx&#34;&gt;console&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;log&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;e&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;currentTarget&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+    &lt;span class=&#34;nx&#34;&gt;e&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;currentTarget&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;classList&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;remove&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;x&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+  &lt;span class=&#34;p&#34;&gt;},&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;n&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1000&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;})&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;blockquote&gt;
+&lt;p&gt;事件结束后，e 还在？&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;答案并不是「在」，也不是「不在」&lt;/li&gt;
+&lt;li&gt;e 只是没了 &lt;code&gt;currentTarget: null&lt;/code&gt; ，其他属性都还「健在」&lt;/li&gt;
+&lt;li&gt;动作结束，事件结束，e 会被浏览器悄悄改变&lt;/li&gt;
+&lt;li&gt;不推荐在事件结束后访问 e&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;把属性复制到自己的变量里再使用，比如&lt;code&gt;const tempEvent = e.currentTarget&lt;/code&gt; 就是把 currentTarget 的引用复制到 tempEvent&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-JavaScript&#34; data-lang=&#34;JavaScript&#34;&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-JavaScript&#34; data-lang=&#34;JavaScript&#34;&gt;&lt;span class=&#34;kr&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;$&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;document&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;querySelector&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;bind&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;document&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;kr&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;lv1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;lv2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;lv3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;lv4&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;lv5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;lv6&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;lv7&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;.lv1&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;.lv2&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;.lv3&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;.lv4&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;.lv5&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;.lv6&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;.lv7&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)]&lt;/span&gt;
+&lt;span class=&#34;kd&#34;&gt;let&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;n&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;
+&lt;span class=&#34;nx&#34;&gt;console&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;log&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;lv1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;nx&#34;&gt;lv1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;addEventListener&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;click&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;e&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;span class=&#34;kr&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;tempEvent&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;e&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;currentTarget&lt;/span&gt;
+&lt;span class=&#34;nx&#34;&gt;setTimeout&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(()&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;span class=&#34;nx&#34;&gt;tempEvent&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;classList&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;remove&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;x&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;},&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;n&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1000&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;nx&#34;&gt;n&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;})&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;循环监听事件&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-JavaScript&#34; data-lang=&#34;JavaScript&#34;&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;23
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;24
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;25
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;26
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-JavaScript&#34; data-lang=&#34;JavaScript&#34;&gt;&lt;span class=&#34;kr&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;$&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;document&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;querySelector&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;bind&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;document&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;kd&#34;&gt;let&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;lvn&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;lv1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;lv2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;lv3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;lv4&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;lv5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;lv6&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;lv7&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;.lv1&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;.lv2&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;.lv3&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;.lv4&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;.lv5&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;.lv6&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;.lv7&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)]&lt;/span&gt;
+
+&lt;span class=&#34;kr&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;removeX&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;e&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+  &lt;span class=&#34;kr&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;tempEvent&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;e&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;currentTarget&lt;/span&gt;
+  &lt;span class=&#34;nx&#34;&gt;setTimeout&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(()&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;nx&#34;&gt;tempEvent&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;classList&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;remove&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;x&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+  &lt;span class=&#34;p&#34;&gt;},&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;n&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;100&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+  &lt;span class=&#34;nx&#34;&gt;n&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+
+&lt;span class=&#34;kr&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;addX&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;e&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+  &lt;span class=&#34;kr&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;tempEvent&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;e&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;currentTarget&lt;/span&gt;
+  &lt;span class=&#34;nx&#34;&gt;setTimeout&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(()&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;nx&#34;&gt;tempEvent&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;classList&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;add&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;x&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+  &lt;span class=&#34;p&#34;&gt;},&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;n&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;150&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+  &lt;span class=&#34;nx&#34;&gt;n&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+
+&lt;span class=&#34;kd&#34;&gt;let&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;n&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;let&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;i&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;i&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;lvn&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;length&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;++&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+  &lt;span class=&#34;kr&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;lvnEle&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;lvn&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;];&lt;/span&gt;
+  &lt;span class=&#34;nx&#34;&gt;lvnEle&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;addEventListener&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;click&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;removeX&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;true&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+  &lt;span class=&#34;nx&#34;&gt;lvnEle&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;addEventListener&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;click&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;addX&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;false&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+  &lt;span class=&#34;c1&#34;&gt;// console.log(n, i)
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&#34;https://codepen.io/xmasuhai/pen/vYOMYxY&#34;&gt;事件捕获和冒泡效果链接&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;html&gt;
+    &lt;p class=&#34;codepen&#34; data-height=&#34;265&#34; data-theme-id=&#34;light&#34; data-default-tab=&#34;html,result&#34; data-user=&#34;xmasuhai&#34; data-slug-hash=&#34;vYOMYxY&#34; style=&#34;height: 265px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;&#34; data-pen-title=&#34;event&#34;&gt;
+      &lt;span&gt;See the Pen &lt;a href=&#34;https://codepen.io/xmasuhai/pen/vYOMYxY&#34;&gt;
+&lt;/html&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;iframe height=&#34;265&#34; style=&#34;width: 100%;&#34; scrolling=&#34;no&#34; title=&#34;event&#34; src=&#34;https://codepen.io/xmasuhai/embed/vYOMYxY?height=265&amp;theme-id=light&amp;default-tab=html,result&#34; frameborder=&#34;no&#34; allowtransparency=&#34;true&#34; allowfullscreen=&#34;true&#34;&gt;
+  See the Pen &lt;a href=&#39;https://codepen.io/xmasuhai/pen/vYOMYxY&#39;&gt;event&lt;/a&gt; by Joel Xu
+
+---
+
+&lt;div class=&#34;codepen&#34; data-height=&#34;265&#34; data-theme-id=&#34;light&#34; data-default-tab=&#34;html,result&#34; data-user=&#34;xmasuhai&#34; data-slug-hash=&#34;vYOMYxY&#34; data-prefill=&#39;{&#34;title&#34;:&#34;event&#34;,&#34;tags&#34;:[],&#34;scripts&#34;:[],&#34;stylesheets&#34;:[]}&#39;&gt;
+  &lt;pre data-lang=&#34;html&#34;&gt;&amp;lt;!DOCTYPE html&gt;
+&amp;lt;html lang=&#34;zh-Hans&#34;&gt;
+&lt;/div&gt;
+
+---
+
+### 2.2 小结
+
+&gt; 注意点
+
+- 子节点被点击了，也算点击父节点
+- 先调用父节点的函数还是先调用儿子的函数
+
+&gt; 捕获与冒泡
+
+- **捕获**先调用父节点的监听函数
+- **冒泡**先调用子节点的监听函数
+
+&gt; W3C 事件模型
+
+- 先捕获（先爸爸-&gt;儿子），再冒泡（先儿子-&gt;爸爸）
+- 冒泡可以被阻止，而捕获不可被阻止
+- 注意 e 对象被传给所有监听函数
+- 事件结束后，e 对象就不存在了
+
+## 3.`target` V.S. `currentTarget` &lt;a id=&#34;targetVScurrentTarget&#34; href=&#34;#targetVScurrentTarget&#34;&gt; § &lt;/a&gt; &lt;a href=&#34;#catalogue&#34;&gt; ⇧ &lt;/a&gt;
+
+&gt; 区别
+
+- `e.target`用户操作的元素
+- `e.currentTarget`程序员监听的函数
+- `this`是`e.currentTarget`，不推荐使用，易混淆
+
+```JavaScript
+// &lt;div id=&#34;target&#34;&gt;target&lt;/div&gt;
+console.log(target.onclick) // null
+// 简单赋值 改写 （箭头函数不支持内部 this）
+target.onclick = function(e){
+    console.log(&#39;hi&#39;)
+    console.log(this)
+    console.log(e) // 包含了点击事件的所有信息
+}
+
+// target.onclick.call(target, event)
+// this &lt;- target
+// event &lt;- e
+// this 是浏览器在用户点击时，用 .call() 按顺序传进来的
+```
+
+&gt; 举例
+
+- div &gt; span{文字}，用户点击文字
+- `e.target`就是span
+- `e.currentTarget`就是div
+
+&gt; 特例：同一个节点上的监听事件
+
+- 背景
+  - 只有一个div被监听（不考虑父子同时被监听），同级
+  - fn分别在捕获阶段和冒泡阶段监听click事件
+  - 用户点击的元素就是开发者监听的
+  - `e.target === e.currentTarget`
+- 代码
+  - `div.addEventListener(&#39;click&#39;, f1)`
+  - `div.addEventListener(&#39;click&#39;,f2, true)`
+  - 问，f1 先执行还是 f2 先执行
+  - 如果把位置调换后，哪个先执行
+  - 哪个先监听就哪个先执行
+
+## 4. 取消冒泡 &lt;a id=&#34;取消冒泡&#34; href=&#34;#取消冒泡&#34;&gt; § &lt;/a&gt; &lt;a href=&#34;#catalogue&#34;&gt; ⇧ &lt;/a&gt;
+
+&gt; 捕获不可取消，但冒泡可以
+
+- `e.stopPropagation()`可以中断冒泡，浏览器不再向上传递
+- 一般用于封装某些独立的组件
+
+## 5. 不可取消冒泡的事件 &lt;a id=&#34;不可取消冒泡的事件&#34; href=&#34;#不可取消冒泡的事件&#34;&gt; § &lt;/a&gt; &lt;a href=&#34;#catalogue&#34;&gt; ⇧ &lt;/a&gt;
+
+- MDN 英文版搜 `scroll event`，看到`Bubbles`和`Cancelable`
+- `Bubbles`是该事件是否会冒泡
+- `Cancelable`是开发者是否可以取消冒泡
+
+---
+
+## 6. 阻止滚动 &lt;a id=&#34;阻止滚动&#34; href=&#34;#阻止滚动&#34;&gt; § &lt;/a&gt; &lt;a href=&#34;#catalogue&#34;&gt; ⇧ &lt;/a&gt;
+
+### 6.1 阻止页面滚动的步骤
+
+&gt; `scoll`事件不可取消冒泡和默认事件
+
+- 阻止`scoll`默认事件无效，因先有滚轮滚动才有滚动事件
+- 要阻止滚动，可阻止`wheel`和`touchstart`的默认动作
+
+```JavaScript
+x.addEventListener(&#39;wheel&#39;, (e) =&gt; {
+  e.preventDefault()
+});
+
+x.addEventListener(&#39;touchstart&#39;, (e) =&gt; {
+  e.preventDefault()
+});
+```
+
+- 注意需要找准滚动所在的元素，能覆盖整个滚动区域的元素，[示例代码](https://codepen.io/xmasuhai/pen/wvMapyz?__cf_chl_jschl_tk__=c9cea17adb70fc1618b1fea2ca707a5e55bb1bd3-1591492706-0-AQZom389fFDtqqlFLs8Jma1_TsNa_af1YJkydJg8Sq8Nh7UVUTYAodQOncNBxwTLGwkH3yVa9PV_0_rWSjR8OpQM7i_nv7dOb9bqerLtg47rKulOqHnC-JiIXyuNLPzUdVdB3USqFAHmbPEFEM384UZ3MJ3uXGBeV5Dne-oHZkeFT4V8dGEBPfSw_cl328AcR8g6iP-Cuj6yBCqO-RQQpbtWCJtViudXLeCVeSqAYY0thgtb6CIz88KIEoDr1EvYe4RcavShW-ZKzCF2BfAUCDeLhpkKJdlduboXgx2TiAME0Q7WsMD8CZ0kflgm56f6_2EBB62BTLo6R9qa4BAcw9Q)
+- 但是滚动条依然开可以用鼠标拖动，可以用CSS让滚动条 `width: 0`
+
+```CSS
+::-webkit-scrollbar {
+  width: 0 !important;
+}
+```
+
+&gt; `CSS`实现隐藏滚动条
+
+- 滚动条是在 `Document`上的
+- 使用`overflow:hidden`可以直接取消滚动条
+- 但此时 JS 依然可以修改`scrollTop`
+
+&gt; 在有`iframe`的场景下可能失效
+
+---
+
+&lt;iframe height=&#34;265&#34; style=&#34;width: 100%;&#34; scrolling=&#34;no&#34; title=&#34;prevent scroll&#34; src=&#34;https://codepen.io/xmasuhai/embed/preview/wvMapyz?height=265&amp;theme-id=dark&amp;default-tab=html,result&#34; frameborder=&#34;no&#34; allowtransparency=&#34;true&#34; allowfullscreen=&#34;true&#34;&gt;
+  See the Pen &lt;a href=&#39;https://codepen.io/xmasuhai/pen/wvMapyz&#39;&gt;prevent scroll&lt;/a&gt; by Joel Xu
+  (&lt;a href=&#39;https://codepen.io/xmasuhai&#39;&gt;@xmasuhai&lt;/a&gt;) on &lt;a href=&#39;https://codepen.io&#39;&gt;CodePen&lt;/a&gt;.
+&lt;/iframe&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;p class=&#34;codepen&#34; data-height=&#34;265&#34; data-theme-id=&#34;dark&#34; data-default-tab=&#34;html,result&#34; data-user=&#34;xmasuhai&#34; data-slug-hash=&#34;wvMapyz&#34; data-preview=&#34;true&#34; style=&#34;height: 265px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;&#34; data-pen-title=&#34;prevent scroll&#34;&gt;
+  &lt;span&gt;See the Pen &lt;a href=&#34;https://codepen.io/xmasuhai/pen/wvMapyz&#34;&gt;
+  prevent scroll&lt;/a&gt; by Joel Xu (&lt;a href=&#34;https://codepen.io/xmasuhai&#34;&gt;@xmasuhai&lt;/a&gt;)
+  on &lt;a href=&#34;https://codepen.io&#34;&gt;CodePen&lt;/a&gt;.&lt;/span&gt;
+&lt;/p&gt;
+&lt;script async src=&#34;https://static.codepen.io/assets/embed/ei.js&#34;&gt;&lt;/script&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&#34;6-2-小结二&#34;&gt;6.2 小结二&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;target&lt;/code&gt;和&lt;code&gt;currentTarget&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;一个是用户点击的，一个是开发者监听的&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;取消冒泡&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;e.stopPropagation()&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;事件的特性&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;Bubbles&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Cancelable&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;scoll&lt;/code&gt; 的&lt;code&gt;Cancelable&lt;/code&gt;是&lt;code&gt;false&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;如何禁用滚动&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;取消特定元素的&lt;code&gt;wheel&lt;/code&gt;和&lt;code&gt;touchstart&lt;/code&gt;的默认动作&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&#34;7-自定义事件-a-id-自定义事件-href-自定义事件-a-a-href-catalogue-a&#34;&gt;7. 自定义事件 &lt;a id=&#34;自定义事件&#34; href=&#34;#自定义事件&#34;&gt; § &lt;/a&gt; &lt;a href=&#34;#catalogue&#34;&gt; ⇧ &lt;/a&gt;&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;浏览器自带事件&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;一共100多种事件，详见&lt;a href=&#34;https://developer.mozilla.org/zh-CN/docs/Web/Events&#34;&gt;MDN 事件参考&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;自定义事件&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;const userEvent = new CustomEvent(&amp;quot;newName&amp;quot;, {detail:{}, bubbles, cancelable})&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;userElement.dispatchEvent(event)&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;userElement.addEventListener(event)&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://codepen.io/pen/?editors=1111&#34;&gt;示例代码&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;iframe height=&#34;265&#34; style=&#34;width: 100%;&#34; scrolling=&#34;no&#34; title=&#34;userEvent&#34; src=&#34;https://codepen.io/xmasuhai/embed/PoZqEyz?height=265&amp;theme-id=dark&amp;default-tab=js,result&#34; frameborder=&#34;no&#34; allowtransparency=&#34;true&#34; allowfullscreen=&#34;true&#34;&gt;
+  See the Pen &lt;a href=&#39;https://codepen.io/xmasuhai/pen/PoZqEyz&#39;&gt;userEvent&lt;/a&gt; by Joel Xu
+  (&lt;a href=&#39;https://codepen.io/xmasuhai&#39;&gt;@xmasuhai&lt;/a&gt;) on &lt;a href=&#39;https://codepen.io&#39;&gt;CodePen&lt;/a&gt;.
+&lt;/iframe&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;p class=&#34;codepen&#34; data-height=&#34;265&#34; data-theme-id=&#34;dark&#34; data-default-tab=&#34;js,result&#34; data-user=&#34;xmasuhai&#34; data-slug-hash=&#34;PoZqEyz&#34; style=&#34;height: 265px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;&#34; data-pen-title=&#34;userEvent&#34;&gt;
+  &lt;span&gt;See the Pen &lt;a href=&#34;https://codepen.io/xmasuhai/pen/PoZqEyz&#34;&gt;
+  userEvent&lt;/a&gt; by Joel Xu (&lt;a href=&#34;https://codepen.io/xmasuhai&#34;&gt;@xmasuhai&lt;/a&gt;)
+  on &lt;a href=&#34;https://codepen.io&#34;&gt;CodePen&lt;/a&gt;.&lt;/span&gt;
+&lt;/p&gt;
+&lt;script async src=&#34;https://static.codepen.io/assets/embed/ei.js&#34;&gt;&lt;/script&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&#34;8-事件委托-事件代理-a-id-事件委托-href-事件委托-a-a-href-catalogue-a&#34;&gt;8. 事件委托（事件代理） &lt;a id=&#34;事件委托&#34; href=&#34;#事件委托&#34;&gt; § &lt;/a&gt; &lt;a href=&#34;#catalogue&#34;&gt; ⇧ &lt;/a&gt;&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;让父/祖元素监听原本在子元素上的监听事件；将子元素监听事件委托父/祖元素监听&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;场景一&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;要给100个按钮添加点击事件，不需要添加100个监听器&lt;/li&gt;
+&lt;li&gt;监听这100元素的祖先元素，等冒泡的时候判断是否传递到当前元素&lt;/li&gt;
+&lt;li&gt;即判断用户操作的&lt;code&gt;target&lt;/code&gt;是否是这100个按钮中的一个&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;场景二&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;要监听目前不存在的元素的点击事件&lt;/li&gt;
+&lt;li&gt;监听祖先元素，等点击的时候看是否是想要监听的元素&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;事件委托的优点&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;节省监听数（内存）&lt;/li&gt;
+&lt;li&gt;可以监听动态元素&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&#34;https://codepen.io/xmasuhai/pen/RwrPQNa?editors=1111&#34;&gt;示例代码链接&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;hr /&gt;
+
+&lt;iframe height=&#34;265&#34; style=&#34;width: 100%;&#34; scrolling=&#34;no&#34; title=&#34;Event Delegation&#34; src=&#34;https://codepen.io/xmasuhai/embed/RwrPQNa?height=265&amp;theme-id=dark&amp;default-tab=js,result&#34; frameborder=&#34;no&#34; allowtransparency=&#34;true&#34; allowfullscreen=&#34;true&#34;&gt;
+  See the Pen &lt;a href=&#39;https://codepen.io/xmasuhai/pen/RwrPQNa&#39;&gt;Event Delegation&lt;/a&gt; by Joel Xu
+  (&lt;a href=&#39;https://codepen.io/xmasuhai&#39;&gt;@xmasuhai&lt;/a&gt;) on &lt;a href=&#39;https://codepen.io&#39;&gt;CodePen&lt;/a&gt;.
+&lt;/iframe&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;p class=&#34;codepen&#34; data-height=&#34;265&#34; data-theme-id=&#34;dark&#34; data-default-tab=&#34;js,result&#34; data-user=&#34;xmasuhai&#34; data-slug-hash=&#34;RwrPQNa&#34; style=&#34;height: 265px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;&#34; data-pen-title=&#34;Event Delegation&#34;&gt;
+  &lt;span&gt;See the Pen &lt;a href=&#34;https://codepen.io/xmasuhai/pen/RwrPQNa&#34;&gt;
+  Event Delegation&lt;/a&gt; by Joel Xu (&lt;a href=&#34;https://codepen.io/xmasuhai&#34;&gt;@xmasuhai&lt;/a&gt;)
+  on &lt;a href=&#34;https://codepen.io&#34;&gt;CodePen&lt;/a&gt;.&lt;/span&gt;
+&lt;/p&gt;
+&lt;script async src=&#34;https://static.codepen.io/assets/embed/ei.js&#34;&gt;&lt;/script&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&#34;9-封装事件委托-a-id-封装事件委托-href-封装事件委托-a-a-href-catalogue-a&#34;&gt;9. 封装事件委托 &lt;a id=&#34;封装事件委托&#34; href=&#34;#封装事件委托&#34;&gt; § &lt;/a&gt; &lt;a href=&#34;#catalogue&#34;&gt; ⇧ &lt;/a&gt;&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;要求&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;写出这样一个函数&lt;code&gt;on(&#39;click&#39;, &#39;#testDiv&#39;, &#39;li&#39;, fn)&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;当用户点击&lt;code&gt;#testDiv&lt;/code&gt;里的&lt;code&gt;li&lt;/code&gt;元素时，调用fn函数&lt;/li&gt;
+&lt;li&gt;事件委托&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;方案一&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;判断&lt;code&gt;target&lt;/code&gt;是否匹配&lt;code&gt;li&lt;/code&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-JavaScript&#34; data-lang=&#34;JavaScript&#34;&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;23
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;24
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;25
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;26
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;27
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;28
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;29
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;30
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;31
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;32
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;33
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;34
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;35
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;36
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;37
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;38
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;39
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;40
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;41
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;42
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;43
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;44
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;45
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-JavaScript&#34; data-lang=&#34;JavaScript&#34;&gt;&lt;span class=&#34;cm&#34;&gt;/*
+&lt;/span&gt;&lt;span class=&#34;cm&#34;&gt;&amp;lt;div id=&amp;#34;div1&amp;#34;&amp;gt;
+&lt;/span&gt;&lt;span class=&#34;cm&#34;&gt;&amp;lt;span&amp;gt;span1&amp;lt;/span&amp;gt;
+&lt;/span&gt;&lt;span class=&#34;cm&#34;&gt;&amp;lt;/div&amp;gt;
+&lt;/span&gt;&lt;span class=&#34;cm&#34;&gt;&amp;lt;script src=&amp;#34;EventDelegation.js&amp;#34;&amp;gt;&amp;lt;/script&amp;gt;
+&lt;/span&gt;&lt;span class=&#34;cm&#34;&gt;*/&lt;/span&gt;
+
+&lt;span class=&#34;cm&#34;&gt;/* // 未封装
+&lt;/span&gt;&lt;span class=&#34;cm&#34;&gt;div1.addEventListener(&amp;#39;click&amp;#39;, (e) =&amp;gt; {
+&lt;/span&gt;&lt;span class=&#34;cm&#34;&gt;const tempButton = e.target // by user
+&lt;/span&gt;&lt;span class=&#34;cm&#34;&gt;if (tempButton.tagName.toLowerCase() === &amp;#34;button&amp;#34;) {
+&lt;/span&gt;&lt;span class=&#34;cm&#34;&gt;console.log(&amp;#39;button被点击了&amp;#39;)
+&lt;/span&gt;&lt;span class=&#34;cm&#34;&gt;console.log(&amp;#39;button内容是&amp;#39; + tempButton.textContent)
+&lt;/span&gt;&lt;span class=&#34;cm&#34;&gt;console.log(&amp;#39;button id是&amp;#39; + tempButton.dataset.id)
+&lt;/span&gt;&lt;span class=&#34;cm&#34;&gt;}
+&lt;/span&gt;&lt;span class=&#34;cm&#34;&gt;});
+&lt;/span&gt;&lt;span class=&#34;cm&#34;&gt;*/&lt;/span&gt;
+
+&lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;let&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;i&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;i&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;i&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;span class=&#34;nx&#34;&gt;setTimeout&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(()&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;span class=&#34;kr&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;button&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;document&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;createElement&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;button&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;nx&#34;&gt;button&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;textContent&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;click &amp;#39;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;i&lt;/span&gt;
+&lt;span class=&#34;nx&#34;&gt;button&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;setAttribute&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;data-id&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;nx&#34;&gt;div1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;appendChild&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;button&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;},&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;i&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1000&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+
+&lt;span class=&#34;nx&#34;&gt;on&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;click&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;#div1&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;button&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;e&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;span class=&#34;kr&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;tempElement&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;e&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;target&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;// by user
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;console&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;log&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;button被点击了&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;nx&#34;&gt;console&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;log&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;button内容是&amp;#39;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;tempElement&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;textContent&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;nx&#34;&gt;console&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;log&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;button id是&amp;#39;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;tempElement&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;dataset&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;id&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;})&lt;/span&gt;
+
+&lt;span class=&#34;kd&#34;&gt;function&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;on&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;eventType&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;element&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;selector&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;fn&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;!&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;element&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;instanceof&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;Element&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;span class=&#34;nx&#34;&gt;element&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;document&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;querySelector&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;element&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;span class=&#34;nx&#34;&gt;element&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;addEventListener&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;eventType&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;e&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;span class=&#34;kr&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;tempElement&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;e&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;target&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;// by user
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;tempElement&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;matches&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;selector&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;===&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;true&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+  &lt;span class=&#34;nx&#34;&gt;fn&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;e&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;})&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;这个答案有缺陷&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;如果将操作的元素内部再放一层子元素，比如包裹 &lt;code&gt;span&lt;/code&gt; 元素&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;操作的元素变为&lt;code&gt;span&lt;/code&gt; 元素&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;点击的时候，&lt;code&gt;tempElement&lt;/code&gt;是&lt;code&gt;span&lt;/code&gt;，而&lt;code&gt;selector&lt;/code&gt;是&lt;code&gt;button&lt;/code&gt;，不匹配，就不执行&lt;code&gt;fn&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;方案二&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://github.com/FrankFang/wheels/blob/master/lib/dom/index.js#L2&#34;&gt;递归判断&lt;/a&gt;&lt;code&gt;target/target的父元素/target的祖元素&lt;/code&gt;是否匹配&lt;code&gt;li&lt;/code&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-JavaScript&#34; data-lang=&#34;JavaScript&#34;&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-JavaScript&#34; data-lang=&#34;JavaScript&#34;&gt;&lt;span class=&#34;kd&#34;&gt;function&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;on&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;eventType&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;element&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;selector&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;fn&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;!&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;element&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;instanceof&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;Element&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;span class=&#34;nx&#34;&gt;element&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;document&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;querySelector&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;element&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;span class=&#34;nx&#34;&gt;element&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;addEventListener&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;eventType&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;e&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;span class=&#34;kd&#34;&gt;let&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;el&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;e&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;target&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;while&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;!&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;el&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;matches&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;selector&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+  &lt;span class=&#34;c1&#34;&gt;// 范围是 element 之内的元素
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;  &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;element&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;===&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;el&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;nx&#34;&gt;el&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;null&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;break&lt;/span&gt;
+  &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+  &lt;span class=&#34;nx&#34;&gt;el&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;el&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;parentNode&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;span class=&#34;nx&#34;&gt;el&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;fn&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;call&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;el&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;e&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;el&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;})&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;element&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;jQuery&lt;/code&gt;的实现&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;$(&#39;#xxx&#39;).on(&#39;click&#39;, &#39;li&#39;, fn)&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;JS 支持事件吗&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;DOM 事件不属于JS的功能，而是浏览器提供的 DOM 功能&lt;/li&gt;
+&lt;li&gt;JS 只是调用了 DOM 提供的&lt;code&gt;addEventListener&lt;/code&gt;这个API&lt;/li&gt;
+&lt;li&gt;所以 JS 不支持，提供事件机制的时浏览器&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;追问：手写JS事件系统&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://static.xiedaimala.com/xdml/file/3ac7c224-c23d-491f-84b5-4fabfbeab9b8/2019-8-21-10-39-21.pdf&#34;&gt;手写 EventHub PDF&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/FrankFang/source-eventhub&#34;&gt;源码&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;面试题：请简述 DOM 事件模型或 DOM 事件机制（你可以写一篇博客来回答这个问题）&lt;/p&gt;
+
+&lt;p&gt;提示：请描述什么是捕获什么是冒泡，并说说是先捕获还是先冒泡，再搜搜看网上的文章怎么说&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;浏览器的事件模型，就是通过监听函数（listener） 事件发生后，浏览器监听到了这个事件，就会执行对应的监听函数&lt;/li&gt;
+&lt;li&gt;DOM 事件机制 事件发生会分成三个阶段 捕获 目标 冒泡阶段，在各层元素之间传播，使得同一个事件会在多个节点上触发&lt;/li&gt;
+&lt;li&gt;事件捕获是从window（-&amp;gt; Document -&amp;gt; html -&amp;gt; &amp;hellip;）开始由外向内查找监听函数&lt;/li&gt;
+&lt;li&gt;事件冒泡是从当前操作的节点（目标节点）开始由内向外直至 window 查找监听函数&lt;/li&gt;
+&lt;li&gt;按照先捕获，后冒泡的顺序执行&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;捕获：当用户点击按钮，浏览器会从 window 从上向下遍历至用户点击的按钮，逐个触发事件处理函数。&lt;/p&gt;
+
+&lt;p&gt;冒泡：浏览器从用户点击的按钮从下往上遍历至 window，逐个触发事件处理函数。&lt;/p&gt;
+
+&lt;p&gt;W3C 事件模型/事件机制：对每个事件先捕获再冒泡&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;面试题：请简述事件委托（可写博客回答）&lt;/p&gt;
+
+&lt;p&gt;提示：请想办法把「监听祖先元素」说得高大上一点&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;事件委托就是把一个元素响应事件（click、keydown&amp;hellip;&amp;hellip;）的函数委托到另一个元素&lt;/li&gt;
+&lt;li&gt;一般是把元素的事件委托到它的父层或者更外层元素上，真正绑定事件的是外层元素&lt;/li&gt;
+&lt;li&gt;当事件响应到需要绑定的元素上时，会通过事件冒泡机制从而触发它的外层元素的绑定事件&lt;/li&gt;
+&lt;li&gt;然后在外层元素上去执行函数，即便一开始当前元素不存在于页面中，也能实现事件委托&lt;/li&gt;
+&lt;li&gt;以达到减少内存消耗和动态绑定事件的目的&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;事件委托就是把事件监听放在祖先元素（如父元素、爷爷元素）上。&lt;/p&gt;
+
+&lt;p&gt;好处是：1 节约监听数量 2 可以监听动态生成的元素。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;代码示例&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-JavaScript&#34; data-lang=&#34;JavaScript&#34;&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;23
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-JavaScript&#34; data-lang=&#34;JavaScript&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// 错误版（但是可能能过）
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;ul&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;addEventListener&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;click&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;function&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;e&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;){&lt;/span&gt;
+     &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;e&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;target&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;tagName&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;toLowerCase&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;===&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;li&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;){&lt;/span&gt;
+         &lt;span class=&#34;nx&#34;&gt;fn&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;// 执行某个函数
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;     &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+ &lt;span class=&#34;p&#34;&gt;})&lt;/span&gt;
+&lt;span class=&#34;c1&#34;&gt;// bug 在于，如果用户点击的是 li 里面的 span，就没法触发 fn，这显然不对。
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;// 高级版
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;function&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;delegate&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;element&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;eventType&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;selector&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;fn&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+     &lt;span class=&#34;nx&#34;&gt;element&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;addEventListener&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;eventType&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;e&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+       &lt;span class=&#34;kd&#34;&gt;let&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;el&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;e&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;target&lt;/span&gt;
+       &lt;span class=&#34;k&#34;&gt;while&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;!&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;el&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;matches&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;selector&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+         &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;element&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;===&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;el&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+           &lt;span class=&#34;nx&#34;&gt;el&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;null&lt;/span&gt;
+           &lt;span class=&#34;k&#34;&gt;break&lt;/span&gt;
+         &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+         &lt;span class=&#34;nx&#34;&gt;el&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;el&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;parentNode&lt;/span&gt;
+       &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+       &lt;span class=&#34;nx&#34;&gt;el&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;fn&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;call&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;el&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;e&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;el&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+     &lt;span class=&#34;p&#34;&gt;})&lt;/span&gt;
+     &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;element&lt;/span&gt;
+   &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;span class=&#34;c1&#34;&gt;// 思路是点击 span 后，递归遍历 span 的祖先元素看其中有没有 ul 里面的 li。
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;!-- Article End --&gt;
+
+&lt;hr /&gt;
+
+&lt;!-- test --&gt;
+
+&lt;div style=&#34;text-align:center;&#34;&gt;·未完待续·&lt;/div&gt;
+
+&lt;!-- ok --&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&#34;参考文章&#34;&gt;参考文章&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://static.xiedaimala.com/xdml/file/3ac7c224-c23d-491f-84b5-4fabfbeab9b8/2020-5-26-9-39-45.pdf&#34;&gt;DOM 事件与事件委托.pdf&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://static.xiedaimala.com/xdml/file/f40ceb64-df08-4420-9226-7f76dbff15d5/2020-1-3-17-55-22.pdf&#34;&gt;事件.pdf&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://static.xiedaimala.com/xdml/file/3ac7c224-c23d-491f-84b5-4fabfbeab9b8/2019-8-21-10-39-21.pdf&#34;&gt;手写 EventHub PDF&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://wangdoc.com/javascript/dom/index.html&#34;&gt;网道 DOM&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://wangdoc.com/javascript/events/index.html&#34;&gt;网道 DOM事件&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;相关文章&#34;&gt;相关文章&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;无&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;ul&gt;
+&lt;li&gt;作者： Joel&lt;/li&gt;
+&lt;li&gt;文章链接：&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://xmasuhai.xyz/posts/版权声明链接/&#34;&gt;版权声明&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;非自由转载-非商用-非衍生-保持署名&lt;/li&gt;
+&lt;li&gt;&lt;a style=&#39;color:#DB2D5D;&#39; href=&#39;https://xiedaimala.com/bbs/users/8c266e6f-55a2-4348-a180-17cb8cdb2c46#/?page=1&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;河&lt;/a&gt;
+&lt;a style=&#39;color:#006CFF;&#39; href=&#39;https://juejin.im/user/59abfad26fb9a0248f4aa221&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;掘&lt;/a&gt;
+&lt;a style=&#39;color:#009A61;&#39; href=&#39;https://segmentfault.com/u/joel_59b17eb9d2155&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;思&lt;/a&gt;
+&lt;a style=&#39;color:#0084FF;&#39; href=&#39;https://www.zhihu.com/people/xue-shou-41/posts&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;知&lt;/a&gt;
+&lt;a style=&#39;color:#EA6F5A;&#39; href=&#39;https://www.jianshu.com/u/079916729823&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;简&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
 </description>
       
     </item>
@@ -4155,1021 +5170,6 @@ npm install -g node-dev&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table
 &lt;p&gt;&lt;a href=&#34;http://jqfundamentals.com/&#34;&gt;A guide to the basics of jQuery&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&#34;https://jquery.com/&#34;&gt;JQ官网&lt;/a&gt;&lt;/p&gt;
-
-&lt;h3 id=&#34;相关文章&#34;&gt;相关文章&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;无&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-
-&lt;ul&gt;
-&lt;li&gt;作者： Joel&lt;/li&gt;
-&lt;li&gt;文章链接：&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://xmasuhai.xyz/posts/版权声明链接/&#34;&gt;版权声明&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;非自由转载-非商用-非衍生-保持署名&lt;/li&gt;
-&lt;li&gt;&lt;a style=&#39;color:#DB2D5D;&#39; href=&#39;https://xiedaimala.com/bbs/users/8c266e6f-55a2-4348-a180-17cb8cdb2c46#/?page=1&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;河&lt;/a&gt;
-&lt;a style=&#39;color:#006CFF;&#39; href=&#39;https://juejin.im/user/59abfad26fb9a0248f4aa221&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;掘&lt;/a&gt;
-&lt;a style=&#39;color:#009A61;&#39; href=&#39;https://segmentfault.com/u/joel_59b17eb9d2155&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;思&lt;/a&gt;
-&lt;a style=&#39;color:#0084FF;&#39; href=&#39;https://www.zhihu.com/people/xue-shou-41/posts&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;知&lt;/a&gt;
-&lt;a style=&#39;color:#EA6F5A;&#39; href=&#39;https://www.jianshu.com/u/079916729823&#39; target=&#39;_blank&#39; rel=&#39;noreferrer noopener&#39;&gt;简&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-</description>
-      
-    </item>
-    
-    <item>
-      <title>【JS编程接口02】封装 DOM 库</title>
-      <link>http://xmasuhai.xyz/post/api/dom/js%E7%BC%96%E7%A8%8B%E6%8E%A5%E5%8F%A302%E5%B0%81%E8%A3%85-dom-%E5%BA%93/</link>
-      <pubDate>Tue, 07 Apr 2020 20:28:13 +0800</pubDate>
-      
-      <guid>http://xmasuhai.xyz/post/api/dom/js%E7%BC%96%E7%A8%8B%E6%8E%A5%E5%8F%A302%E5%B0%81%E8%A3%85-dom-%E5%BA%93/</guid>
-      
-        <description>
-
-&lt;h2 id=&#34;目录-a-id-catalogue-href-catalogue-a-a-href-catalogue-a&#34;&gt;目录&lt;a id=&#34;catalogue&#34; href=&#34;#catalogue&#34; &gt; § &lt;/a&gt;&lt;a href=&#34;#catalogue&#34;&gt; ⇧ &lt;/a&gt;&lt;/h2&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a id=&#34;_$1_&#34; href=&#34;#点击事件&#34;&gt;1. 点击事件 § &lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a id=&#34;_$2_&#34; href=&#34;#addEventListener&#34;&gt;2. &lt;code&gt;addEventListener&lt;/code&gt; § &lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a id=&#34;_$3_&#34; href=&#34;#targetVScurrentTarget&#34;&gt;3. &lt;code&gt;target&lt;/code&gt; V.S. &lt;code&gt;currentTarget&lt;/code&gt; § &lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a id=&#34;_$4_&#34; href=&#34;#取消冒泡&#34;&gt;4. 取消冒泡 § &lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a id=&#34;_$5_&#34; href=&#34;#不可取消冒泡的事件&#34;&gt;5. 不可取消冒泡的事件 § &lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a id=&#34;_$6_&#34; href=&#34;#阻止滚动&#34;&gt;6. 阻止滚动 § &lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a id=&#34;_$7_&#34; href=&#34;#自定义事件&#34;&gt;7. 自定义事件 § &lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a id=&#34;_$8_&#34; href=&#34;#事件委托&#34;&gt;8. 事件委托（事件代理） § &lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a id=&#34;_$9_&#34; href=&#34;#封装事件委托&#34;&gt;9. 封装事件委托 § &lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a id=&#34;_$10_&#34; href=&#34;#_$2_&#34;&gt;10. $3 § &lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a id=&#34;_$11_&#34; href=&#34;#_$2_&#34;&gt;11. $3 § &lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-
-&lt;h2 id=&#34;1-点击事件-a-id-点击事件-href-点击事件-a-a-href-catalogue-a&#34;&gt;1. 点击事件 &lt;a id=&#34;点击事件&#34; href=&#34;#点击事件&#34;&gt; § &lt;/a&gt; &lt;a href=&#34;#catalogue&#34;&gt; ⇧ &lt;/a&gt;&lt;/h2&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;有三个div，.爷爷&amp;gt;.爸爸&amp;gt;.儿子&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;给三个div分别添加事件监听，&lt;code&gt;fnYe/fnBa/fnEr&lt;/code&gt;&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-HTML&#34; data-lang=&#34;HTML&#34;&gt;&lt;span class=&#34;lnt&#34;&gt;1
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-HTML&#34; data-lang=&#34;HTML&#34;&gt;&lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;div&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;class&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;爷爷&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
-&lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;div&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;class&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;爸爸&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
-    &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;div&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;class&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;儿子&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
-    文字
-    &lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;div&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
-&lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;div&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
-&lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;div&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;点击文字，同时算点击了儿子、爸爸、爷爷&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;点击文字，事件的调用顺序&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;W3C制定浏览器标准需同时支持两种调用顺序&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;首先按爷爷-&amp;gt;爸爸-&amp;gt;儿子顺序查找函数监听，从外向内，找监听函数，叫事件捕获&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;然后按儿子-&amp;gt;爸爸-&amp;gt;爷爷顺序查找函数监听，从内向外，找监听函数，叫事件冒泡&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;有监听函数就调用，并提供事件信息，没有就跳过&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;可选择间监听的函数放在捕获阶段还是冒泡阶段调用&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-
-&lt;h2 id=&#34;2-addeventlistener-a-id-addeventlistener-href-addeventlistener-a-a-href-catalogue-a&#34;&gt;2.&lt;code&gt;addEventListener&lt;/code&gt;&lt;a id=&#34;addEventListener&#34; href=&#34;#addEventListener&#34;&gt; § &lt;/a&gt; &lt;a href=&#34;#catalogue&#34;&gt; ⇧ &lt;/a&gt;&lt;/h2&gt;
-
-&lt;h3 id=&#34;2-1-事件绑定api&#34;&gt;2.1 事件绑定API&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;element.addEventListener(&#39;click&#39;, fn, boolean)&lt;/code&gt; 冒泡&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;如果bool不传或为&lt;a href=&#34;https://developer.mozilla.org/zh-CN/docs/Glossary/Falsy&#34;&gt;falsy&lt;/a&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;ul&gt;
-&lt;li&gt;就让fn走冒泡，即当浏览器在冒泡阶段发现节点有fn监听函数，就会调用fn，并提供事件信息&lt;/li&gt;
-&lt;li&gt;即监听函数默认走冒泡&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;如果bool为true&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;ul&gt;
-&lt;li&gt;就让fn走捕获， 即当浏览器在捕获阶段发现节点有fn监听函数，就会调用fn，并提供信息&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;你可以选择吧fn放在哪边&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;ul&gt;
-&lt;li&gt;如果bool为true，fn就放在左边，右边空跑&lt;/li&gt;
-&lt;li&gt;如果bool为空或falsy，fn就放在右边，左边空跑&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;代码示例&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-HTML&#34; data-lang=&#34;HTML&#34;&gt;&lt;span class=&#34;lnt&#34;&gt; 1
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-HTML&#34; data-lang=&#34;HTML&#34;&gt;&lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;body&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
-  &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;div&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;class&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;lv1 x&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
-    &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;div&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;class&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;lv2 x&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
-      &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;div&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;class&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;lv3 x&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
-        &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;div&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;class&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;lv4 x&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
-          &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;div&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;class&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;lv5 x&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
-            &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;div&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;class&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;lv6 x&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
-              &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;div&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;class&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;lv7 x&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;div&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
-            &lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;div&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
-          &lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;div&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
-        &lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;div&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
-      &lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;div&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
-    &lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;div&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
-  &lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;div&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
-
-  &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;script&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;src&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;main.js&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;script&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
-&lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;body&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-CSS&#34; data-lang=&#34;CSS&#34;&gt;&lt;span class=&#34;lnt&#34;&gt; 1
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;23
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;24
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;25
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;26
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;27
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;28
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;29
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;30
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;31
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;32
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;33
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;34
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;35
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;36
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;37
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;38
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;39
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;40
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;41
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;42
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;43
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;44
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;45
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;46
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;47
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;48
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-CSS&#34; data-lang=&#34;CSS&#34;&gt;&lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-  &lt;span class=&#34;k&#34;&gt;box-sizing&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;border-box&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-
-
-&lt;span class=&#34;nt&#34;&gt;div&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;class&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;^=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;lv&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;nd&#34;&gt;not&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;([&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;class&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;.lv7&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;])&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-  &lt;span class=&#34;k&#34;&gt;border&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;px&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;solid&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-  &lt;span class=&#34;k&#34;&gt;border-radius&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;50&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;%&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-  &lt;span class=&#34;k&#34;&gt;display&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;inline&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;kc&#34;&gt;flex&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-  &lt;span class=&#34;k&#34;&gt;padding&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;px&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-
-&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nc&#34;&gt;lv1&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-  &lt;span class=&#34;k&#34;&gt;background-color&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;purple&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-
-&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nc&#34;&gt;lv2&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-  &lt;span class=&#34;k&#34;&gt;background-color&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;blue&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-
-&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nc&#34;&gt;lv3&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-  &lt;span class=&#34;k&#34;&gt;background-color&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;cyan&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-
-&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nc&#34;&gt;lv4&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-  &lt;span class=&#34;k&#34;&gt;background-color&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;green&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-
-&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nc&#34;&gt;lv5&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-  &lt;span class=&#34;k&#34;&gt;background-color&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;yellow&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-
-&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nc&#34;&gt;lv6&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-  &lt;span class=&#34;k&#34;&gt;background-color&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;orange&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-
-&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nc&#34;&gt;lv7&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-  &lt;span class=&#34;k&#34;&gt;width&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;50&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;px&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-  &lt;span class=&#34;k&#34;&gt;height&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;50&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;px&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-  &lt;span class=&#34;k&#34;&gt;border&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;px&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;solid&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-  &lt;span class=&#34;k&#34;&gt;border-radius&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;50&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;%&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-  &lt;span class=&#34;k&#34;&gt;background-color&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;red&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-  &lt;span class=&#34;k&#34;&gt;display&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;inline&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;kc&#34;&gt;flex&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-
-&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nc&#34;&gt;x&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-  &lt;span class=&#34;k&#34;&gt;background-color&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;transparent&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-JavaScript&#34; data-lang=&#34;JavaScript&#34;&gt;&lt;span class=&#34;lnt&#34;&gt; 1
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-JavaScript&#34; data-lang=&#34;JavaScript&#34;&gt;&lt;span class=&#34;kr&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;$&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;document&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;querySelector&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;bind&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;document&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;span class=&#34;kr&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;lv1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;lv2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;lv3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;lv4&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;lv5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;lv6&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;lv7&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;.lv1&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;.lv2&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;.lv3&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;.lv4&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;.lv5&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;.lv6&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;.lv7&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)]&lt;/span&gt;
-&lt;span class=&#34;kd&#34;&gt;let&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;n&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;
-&lt;span class=&#34;nx&#34;&gt;console&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;log&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;lv1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;span class=&#34;nx&#34;&gt;lv1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;addEventListener&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;click&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;e&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-  &lt;span class=&#34;nx&#34;&gt;console&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;log&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;e&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;currentTarget&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-  &lt;span class=&#34;nx&#34;&gt;setTimeout&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(()&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-    &lt;span class=&#34;nx&#34;&gt;console&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;log&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;e&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;currentTarget&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-    &lt;span class=&#34;nx&#34;&gt;e&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;currentTarget&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;classList&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;remove&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;x&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
-  &lt;span class=&#34;p&#34;&gt;},&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;n&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1000&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;span class=&#34;p&#34;&gt;})&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;blockquote&gt;
-&lt;p&gt;事件结束后，e 还在？&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;ul&gt;
-&lt;li&gt;答案并不是「在」，也不是「不在」&lt;/li&gt;
-&lt;li&gt;e 只是没了 &lt;code&gt;currentTarget: null&lt;/code&gt; ，其他属性都还「健在」&lt;/li&gt;
-&lt;li&gt;动作结束，事件结束，e 会被浏览器悄悄改变&lt;/li&gt;
-&lt;li&gt;不推荐在事件结束后访问 e&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;把属性复制到自己的变量里再使用，比如&lt;code&gt;const tempEvent = e.currentTarget&lt;/code&gt; 就是把 currentTarget 的引用复制到 tempEvent&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-JavaScript&#34; data-lang=&#34;JavaScript&#34;&gt;&lt;span class=&#34;lnt&#34;&gt; 1
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-JavaScript&#34; data-lang=&#34;JavaScript&#34;&gt;&lt;span class=&#34;kr&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;$&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;document&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;querySelector&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;bind&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;document&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;span class=&#34;kr&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;lv1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;lv2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;lv3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;lv4&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;lv5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;lv6&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;lv7&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;.lv1&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;.lv2&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;.lv3&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;.lv4&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;.lv5&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;.lv6&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;.lv7&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)]&lt;/span&gt;
-&lt;span class=&#34;kd&#34;&gt;let&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;n&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;
-&lt;span class=&#34;nx&#34;&gt;console&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;log&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;lv1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;span class=&#34;nx&#34;&gt;lv1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;addEventListener&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;click&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;e&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-&lt;span class=&#34;kr&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;tempEvent&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;e&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;currentTarget&lt;/span&gt;
-&lt;span class=&#34;nx&#34;&gt;setTimeout&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(()&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-&lt;span class=&#34;nx&#34;&gt;tempEvent&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;classList&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;remove&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;x&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
-&lt;span class=&#34;p&#34;&gt;},&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;n&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1000&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;span class=&#34;nx&#34;&gt;n&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;
-&lt;span class=&#34;p&#34;&gt;})&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;循环监听事件&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-JavaScript&#34; data-lang=&#34;JavaScript&#34;&gt;&lt;span class=&#34;lnt&#34;&gt; 1
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;23
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;24
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;25
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;26
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-JavaScript&#34; data-lang=&#34;JavaScript&#34;&gt;&lt;span class=&#34;kr&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;$&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;document&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;querySelector&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;bind&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;document&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;span class=&#34;kd&#34;&gt;let&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;lvn&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;lv1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;lv2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;lv3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;lv4&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;lv5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;lv6&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;lv7&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;.lv1&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;.lv2&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;.lv3&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;.lv4&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;.lv5&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;.lv6&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;.lv7&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)]&lt;/span&gt;
-
-&lt;span class=&#34;kr&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;removeX&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;e&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-  &lt;span class=&#34;kr&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;tempEvent&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;e&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;currentTarget&lt;/span&gt;
-  &lt;span class=&#34;nx&#34;&gt;setTimeout&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(()&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-    &lt;span class=&#34;nx&#34;&gt;tempEvent&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;classList&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;remove&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;x&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
-  &lt;span class=&#34;p&#34;&gt;},&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;n&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;100&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-  &lt;span class=&#34;nx&#34;&gt;n&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;
-&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-
-&lt;span class=&#34;kr&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;addX&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;e&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-  &lt;span class=&#34;kr&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;tempEvent&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;e&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;currentTarget&lt;/span&gt;
-  &lt;span class=&#34;nx&#34;&gt;setTimeout&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(()&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-    &lt;span class=&#34;nx&#34;&gt;tempEvent&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;classList&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;add&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;x&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
-  &lt;span class=&#34;p&#34;&gt;},&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;n&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;150&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-  &lt;span class=&#34;nx&#34;&gt;n&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;
-&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-
-&lt;span class=&#34;kd&#34;&gt;let&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;n&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;
-&lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;let&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;i&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;i&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;lvn&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;length&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;++&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-  &lt;span class=&#34;kr&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;lvnEle&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;lvn&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;];&lt;/span&gt;
-  &lt;span class=&#34;nx&#34;&gt;lvnEle&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;addEventListener&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;click&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;removeX&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;true&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-  &lt;span class=&#34;nx&#34;&gt;lvnEle&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;addEventListener&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;click&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;addX&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;false&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-  &lt;span class=&#34;c1&#34;&gt;// console.log(n, i)
-&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;a href=&#34;https://codepen.io/xmasuhai/pen/vYOMYxY&#34;&gt;事件捕获和冒泡效果链接&lt;/a&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;&lt;html&gt;
-    &lt;p class=&#34;codepen&#34; data-height=&#34;265&#34; data-theme-id=&#34;light&#34; data-default-tab=&#34;html,result&#34; data-user=&#34;xmasuhai&#34; data-slug-hash=&#34;vYOMYxY&#34; style=&#34;height: 265px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;&#34; data-pen-title=&#34;event&#34;&gt;
-      &lt;span&gt;See the Pen &lt;a href=&#34;https://codepen.io/xmasuhai/pen/vYOMYxY&#34;&gt;
-&lt;/html&gt;&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;iframe height=&#34;265&#34; style=&#34;width: 100%;&#34; scrolling=&#34;no&#34; title=&#34;event&#34; src=&#34;https://codepen.io/xmasuhai/embed/vYOMYxY?height=265&amp;theme-id=light&amp;default-tab=html,result&#34; frameborder=&#34;no&#34; allowtransparency=&#34;true&#34; allowfullscreen=&#34;true&#34;&gt;
-  See the Pen &lt;a href=&#39;https://codepen.io/xmasuhai/pen/vYOMYxY&#39;&gt;event&lt;/a&gt; by Joel Xu
-
----
-
-&lt;div class=&#34;codepen&#34; data-height=&#34;265&#34; data-theme-id=&#34;light&#34; data-default-tab=&#34;html,result&#34; data-user=&#34;xmasuhai&#34; data-slug-hash=&#34;vYOMYxY&#34; data-prefill=&#39;{&#34;title&#34;:&#34;event&#34;,&#34;tags&#34;:[],&#34;scripts&#34;:[],&#34;stylesheets&#34;:[]}&#39;&gt;
-  &lt;pre data-lang=&#34;html&#34;&gt;&amp;lt;!DOCTYPE html&gt;
-&amp;lt;html lang=&#34;zh-Hans&#34;&gt;
-&lt;/div&gt;
-
----
-
-### 2.2 小结
-
-&gt; 注意点
-
-- 子节点被点击了，也算点击父节点
-- 先调用父节点的函数还是先调用儿子的函数
-
-&gt; 捕获与冒泡
-
-- **捕获**先调用父节点的监听函数
-- **冒泡**先调用子节点的监听函数
-
-&gt; W3C 事件模型
-
-- 先捕获（先爸爸-&gt;儿子），再冒泡（先儿子-&gt;爸爸）
-- 冒泡可以被阻止，而捕获不可被阻止
-- 注意 e 对象被传给所有监听函数
-- 事件结束后，e 对象就不存在了
-
-## 3.`target` V.S. `currentTarget` &lt;a id=&#34;targetVScurrentTarget&#34; href=&#34;#targetVScurrentTarget&#34;&gt; § &lt;/a&gt; &lt;a href=&#34;#catalogue&#34;&gt; ⇧ &lt;/a&gt;
-
-&gt; 区别
-
-- `e.target`用户操作的元素
-- `e.currentTarget`程序员监听的函数
-- `this`是`e.currentTarget`，不推荐使用，易混淆
-
-```JavaScript
-// &lt;div id=&#34;target&#34;&gt;target&lt;/div&gt;
-console.log(target.onclick) // null
-// 简单赋值 改写 （箭头函数不支持内部 this）
-target.onclick = function(e){
-    console.log(&#39;hi&#39;)
-    console.log(this)
-    console.log(e) // 包含了点击事件的所有信息
-}
-
-// target.onclick.call(target, event)
-// this &lt;- target
-// event &lt;- e
-// this 是浏览器在用户点击时，用 .call() 按顺序传进来的
-```
-
-&gt; 举例
-
-- div &gt; span{文字}，用户点击文字
-- `e.target`就是span
-- `e.currentTarget`就是div
-
-&gt; 特例：同一个节点上的监听事件
-
-- 背景
-  - 只有一个div被监听（不考虑父子同时被监听），同级
-  - fn分别在捕获阶段和冒泡阶段监听click事件
-  - 用户点击的元素就是开发者监听的
-  - `e.target === e.currentTarget`
-- 代码
-  - `div.addEventListener(&#39;click&#39;, f1)`
-  - `div.addEventListener(&#39;click&#39;,f2, true)`
-  - 问，f1 先执行还是 f2 先执行
-  - 如果把位置调换后，哪个先执行
-  - 哪个先监听就哪个先执行
-
-## 4. 取消冒泡 &lt;a id=&#34;取消冒泡&#34; href=&#34;#取消冒泡&#34;&gt; § &lt;/a&gt; &lt;a href=&#34;#catalogue&#34;&gt; ⇧ &lt;/a&gt;
-
-&gt; 捕获不可取消，但冒泡可以
-
-- `e.stopPropagation()`可以中断冒泡，浏览器不再向上传递
-- 一般用于封装某些独立的组件
-
-## 5. 不可取消冒泡的事件 &lt;a id=&#34;不可取消冒泡的事件&#34; href=&#34;#不可取消冒泡的事件&#34;&gt; § &lt;/a&gt; &lt;a href=&#34;#catalogue&#34;&gt; ⇧ &lt;/a&gt;
-
-- MDN 英文版搜 `scroll event`，看到`Bubbles`和`Cancelable`
-- `Bubbles`是该事件是否会冒泡
-- `Cancelable`是开发者是否可以取消冒泡
-
----
-
-## 6. 阻止滚动 &lt;a id=&#34;阻止滚动&#34; href=&#34;#阻止滚动&#34;&gt; § &lt;/a&gt; &lt;a href=&#34;#catalogue&#34;&gt; ⇧ &lt;/a&gt;
-
-### 6.1 阻止页面滚动的步骤
-
-&gt; `scoll`事件不可取消冒泡和默认事件
-
-- 阻止`scoll`默认事件无效，因先有滚轮滚动才有滚动事件
-- 要阻止滚动，可阻止`wheel`和`touchstart`的默认动作
-
-```JavaScript
-x.addEventListener(&#39;wheel&#39;, (e) =&gt; {
-  e.preventDefault()
-});
-
-x.addEventListener(&#39;touchstart&#39;, (e) =&gt; {
-  e.preventDefault()
-});
-```
-
-- 注意需要找准滚动所在的元素，能覆盖整个滚动区域的元素，[示例代码](https://codepen.io/xmasuhai/pen/wvMapyz?__cf_chl_jschl_tk__=c9cea17adb70fc1618b1fea2ca707a5e55bb1bd3-1591492706-0-AQZom389fFDtqqlFLs8Jma1_TsNa_af1YJkydJg8Sq8Nh7UVUTYAodQOncNBxwTLGwkH3yVa9PV_0_rWSjR8OpQM7i_nv7dOb9bqerLtg47rKulOqHnC-JiIXyuNLPzUdVdB3USqFAHmbPEFEM384UZ3MJ3uXGBeV5Dne-oHZkeFT4V8dGEBPfSw_cl328AcR8g6iP-Cuj6yBCqO-RQQpbtWCJtViudXLeCVeSqAYY0thgtb6CIz88KIEoDr1EvYe4RcavShW-ZKzCF2BfAUCDeLhpkKJdlduboXgx2TiAME0Q7WsMD8CZ0kflgm56f6_2EBB62BTLo6R9qa4BAcw9Q)
-- 但是滚动条依然开可以用鼠标拖动，可以用CSS让滚动条 `width: 0`
-
-```CSS
-::-webkit-scrollbar {
-  width: 0 !important;
-}
-```
-
-&gt; `CSS`实现隐藏滚动条
-
-- 滚动条是在 `Document`上的
-- 使用`overflow:hidden`可以直接取消滚动条
-- 但此时 JS 依然可以修改`scrollTop`
-
-&gt; 在有`iframe`的场景下可能失效
-
----
-
-&lt;iframe height=&#34;265&#34; style=&#34;width: 100%;&#34; scrolling=&#34;no&#34; title=&#34;prevent scroll&#34; src=&#34;https://codepen.io/xmasuhai/embed/preview/wvMapyz?height=265&amp;theme-id=dark&amp;default-tab=html,result&#34; frameborder=&#34;no&#34; allowtransparency=&#34;true&#34; allowfullscreen=&#34;true&#34;&gt;
-  See the Pen &lt;a href=&#39;https://codepen.io/xmasuhai/pen/wvMapyz&#39;&gt;prevent scroll&lt;/a&gt; by Joel Xu
-  (&lt;a href=&#39;https://codepen.io/xmasuhai&#39;&gt;@xmasuhai&lt;/a&gt;) on &lt;a href=&#39;https://codepen.io&#39;&gt;CodePen&lt;/a&gt;.
-&lt;/iframe&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;&lt;p class=&#34;codepen&#34; data-height=&#34;265&#34; data-theme-id=&#34;dark&#34; data-default-tab=&#34;html,result&#34; data-user=&#34;xmasuhai&#34; data-slug-hash=&#34;wvMapyz&#34; data-preview=&#34;true&#34; style=&#34;height: 265px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;&#34; data-pen-title=&#34;prevent scroll&#34;&gt;
-  &lt;span&gt;See the Pen &lt;a href=&#34;https://codepen.io/xmasuhai/pen/wvMapyz&#34;&gt;
-  prevent scroll&lt;/a&gt; by Joel Xu (&lt;a href=&#34;https://codepen.io/xmasuhai&#34;&gt;@xmasuhai&lt;/a&gt;)
-  on &lt;a href=&#34;https://codepen.io&#34;&gt;CodePen&lt;/a&gt;.&lt;/span&gt;
-&lt;/p&gt;
-&lt;script async src=&#34;https://static.codepen.io/assets/embed/ei.js&#34;&gt;&lt;/script&gt;&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&#34;6-2-小结二&#34;&gt;6.2 小结二&lt;/h3&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;&lt;code&gt;target&lt;/code&gt;和&lt;code&gt;currentTarget&lt;/code&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;ul&gt;
-&lt;li&gt;一个是用户点击的，一个是开发者监听的&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;取消冒泡&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;e.stopPropagation()&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;事件的特性&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;Bubbles&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;Cancelable&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;scoll&lt;/code&gt; 的&lt;code&gt;Cancelable&lt;/code&gt;是&lt;code&gt;false&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;如何禁用滚动&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;ul&gt;
-&lt;li&gt;取消特定元素的&lt;code&gt;wheel&lt;/code&gt;和&lt;code&gt;touchstart&lt;/code&gt;的默认动作&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-
-&lt;h2 id=&#34;7-自定义事件-a-id-自定义事件-href-自定义事件-a-a-href-catalogue-a&#34;&gt;7. 自定义事件 &lt;a id=&#34;自定义事件&#34; href=&#34;#自定义事件&#34;&gt; § &lt;/a&gt; &lt;a href=&#34;#catalogue&#34;&gt; ⇧ &lt;/a&gt;&lt;/h2&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;浏览器自带事件&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;ul&gt;
-&lt;li&gt;一共100多种事件，详见&lt;a href=&#34;https://developer.mozilla.org/zh-CN/docs/Web/Events&#34;&gt;MDN 事件参考&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;自定义事件&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;const userEvent = new CustomEvent(&amp;quot;newName&amp;quot;, {detail:{}, bubbles, cancelable})&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;userElement.dispatchEvent(event)&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;userElement.addEventListener(event)&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://codepen.io/pen/?editors=1111&#34;&gt;示例代码&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-
-&lt;iframe height=&#34;265&#34; style=&#34;width: 100%;&#34; scrolling=&#34;no&#34; title=&#34;userEvent&#34; src=&#34;https://codepen.io/xmasuhai/embed/PoZqEyz?height=265&amp;theme-id=dark&amp;default-tab=js,result&#34; frameborder=&#34;no&#34; allowtransparency=&#34;true&#34; allowfullscreen=&#34;true&#34;&gt;
-  See the Pen &lt;a href=&#39;https://codepen.io/xmasuhai/pen/PoZqEyz&#39;&gt;userEvent&lt;/a&gt; by Joel Xu
-  (&lt;a href=&#39;https://codepen.io/xmasuhai&#39;&gt;@xmasuhai&lt;/a&gt;) on &lt;a href=&#39;https://codepen.io&#39;&gt;CodePen&lt;/a&gt;.
-&lt;/iframe&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;&lt;p class=&#34;codepen&#34; data-height=&#34;265&#34; data-theme-id=&#34;dark&#34; data-default-tab=&#34;js,result&#34; data-user=&#34;xmasuhai&#34; data-slug-hash=&#34;PoZqEyz&#34; style=&#34;height: 265px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;&#34; data-pen-title=&#34;userEvent&#34;&gt;
-  &lt;span&gt;See the Pen &lt;a href=&#34;https://codepen.io/xmasuhai/pen/PoZqEyz&#34;&gt;
-  userEvent&lt;/a&gt; by Joel Xu (&lt;a href=&#34;https://codepen.io/xmasuhai&#34;&gt;@xmasuhai&lt;/a&gt;)
-  on &lt;a href=&#34;https://codepen.io&#34;&gt;CodePen&lt;/a&gt;.&lt;/span&gt;
-&lt;/p&gt;
-&lt;script async src=&#34;https://static.codepen.io/assets/embed/ei.js&#34;&gt;&lt;/script&gt;&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h2 id=&#34;8-事件委托-事件代理-a-id-事件委托-href-事件委托-a-a-href-catalogue-a&#34;&gt;8. 事件委托（事件代理） &lt;a id=&#34;事件委托&#34; href=&#34;#事件委托&#34;&gt; § &lt;/a&gt; &lt;a href=&#34;#catalogue&#34;&gt; ⇧ &lt;/a&gt;&lt;/h2&gt;
-
-&lt;ul&gt;
-&lt;li&gt;让父/祖元素监听原本在子元素上的监听事件；将子元素监听事件委托父/祖元素监听&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;场景一&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;ul&gt;
-&lt;li&gt;要给100个按钮添加点击事件，不需要添加100个监听器&lt;/li&gt;
-&lt;li&gt;监听这100元素的祖先元素，等冒泡的时候判断是否传递到当前元素&lt;/li&gt;
-&lt;li&gt;即判断用户操作的&lt;code&gt;target&lt;/code&gt;是否是这100个按钮中的一个&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;场景二&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;ul&gt;
-&lt;li&gt;要监听目前不存在的元素的点击事件&lt;/li&gt;
-&lt;li&gt;监听祖先元素，等点击的时候看是否是想要监听的元素&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;事件委托的优点&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;ul&gt;
-&lt;li&gt;节省监听数（内存）&lt;/li&gt;
-&lt;li&gt;可以监听动态元素&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;&lt;a href=&#34;https://codepen.io/xmasuhai/pen/RwrPQNa?editors=1111&#34;&gt;示例代码链接&lt;/a&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;hr /&gt;
-
-&lt;iframe height=&#34;265&#34; style=&#34;width: 100%;&#34; scrolling=&#34;no&#34; title=&#34;Event Delegation&#34; src=&#34;https://codepen.io/xmasuhai/embed/RwrPQNa?height=265&amp;theme-id=dark&amp;default-tab=js,result&#34; frameborder=&#34;no&#34; allowtransparency=&#34;true&#34; allowfullscreen=&#34;true&#34;&gt;
-  See the Pen &lt;a href=&#39;https://codepen.io/xmasuhai/pen/RwrPQNa&#39;&gt;Event Delegation&lt;/a&gt; by Joel Xu
-  (&lt;a href=&#39;https://codepen.io/xmasuhai&#39;&gt;@xmasuhai&lt;/a&gt;) on &lt;a href=&#39;https://codepen.io&#39;&gt;CodePen&lt;/a&gt;.
-&lt;/iframe&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;&lt;p class=&#34;codepen&#34; data-height=&#34;265&#34; data-theme-id=&#34;dark&#34; data-default-tab=&#34;js,result&#34; data-user=&#34;xmasuhai&#34; data-slug-hash=&#34;RwrPQNa&#34; style=&#34;height: 265px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;&#34; data-pen-title=&#34;Event Delegation&#34;&gt;
-  &lt;span&gt;See the Pen &lt;a href=&#34;https://codepen.io/xmasuhai/pen/RwrPQNa&#34;&gt;
-  Event Delegation&lt;/a&gt; by Joel Xu (&lt;a href=&#34;https://codepen.io/xmasuhai&#34;&gt;@xmasuhai&lt;/a&gt;)
-  on &lt;a href=&#34;https://codepen.io&#34;&gt;CodePen&lt;/a&gt;.&lt;/span&gt;
-&lt;/p&gt;
-&lt;script async src=&#34;https://static.codepen.io/assets/embed/ei.js&#34;&gt;&lt;/script&gt;&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h2 id=&#34;9-封装事件委托-a-id-封装事件委托-href-封装事件委托-a-a-href-catalogue-a&#34;&gt;9. 封装事件委托 &lt;a id=&#34;封装事件委托&#34; href=&#34;#封装事件委托&#34;&gt; § &lt;/a&gt; &lt;a href=&#34;#catalogue&#34;&gt; ⇧ &lt;/a&gt;&lt;/h2&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;要求&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;ul&gt;
-&lt;li&gt;写出这样一个函数&lt;code&gt;on(&#39;click&#39;, &#39;#testDiv&#39;, &#39;li&#39;, fn)&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;当用户点击&lt;code&gt;#testDiv&lt;/code&gt;里的&lt;code&gt;li&lt;/code&gt;元素时，调用fn函数&lt;/li&gt;
-&lt;li&gt;事件委托&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;方案一&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;判断&lt;code&gt;target&lt;/code&gt;是否匹配&lt;code&gt;li&lt;/code&gt;&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-JavaScript&#34; data-lang=&#34;JavaScript&#34;&gt;&lt;span class=&#34;lnt&#34;&gt; 1
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;23
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;24
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;25
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;26
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;27
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;28
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;29
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;30
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;31
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;32
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;33
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;34
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;35
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;36
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;37
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;38
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;39
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;40
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;41
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;42
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;43
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;44
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;45
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-JavaScript&#34; data-lang=&#34;JavaScript&#34;&gt;&lt;span class=&#34;cm&#34;&gt;/*
-&lt;/span&gt;&lt;span class=&#34;cm&#34;&gt;&amp;lt;div id=&amp;#34;div1&amp;#34;&amp;gt;
-&lt;/span&gt;&lt;span class=&#34;cm&#34;&gt;&amp;lt;span&amp;gt;span1&amp;lt;/span&amp;gt;
-&lt;/span&gt;&lt;span class=&#34;cm&#34;&gt;&amp;lt;/div&amp;gt;
-&lt;/span&gt;&lt;span class=&#34;cm&#34;&gt;&amp;lt;script src=&amp;#34;EventDelegation.js&amp;#34;&amp;gt;&amp;lt;/script&amp;gt;
-&lt;/span&gt;&lt;span class=&#34;cm&#34;&gt;*/&lt;/span&gt;
-
-&lt;span class=&#34;cm&#34;&gt;/* // 未封装
-&lt;/span&gt;&lt;span class=&#34;cm&#34;&gt;div1.addEventListener(&amp;#39;click&amp;#39;, (e) =&amp;gt; {
-&lt;/span&gt;&lt;span class=&#34;cm&#34;&gt;const tempButton = e.target // by user
-&lt;/span&gt;&lt;span class=&#34;cm&#34;&gt;if (tempButton.tagName.toLowerCase() === &amp;#34;button&amp;#34;) {
-&lt;/span&gt;&lt;span class=&#34;cm&#34;&gt;console.log(&amp;#39;button被点击了&amp;#39;)
-&lt;/span&gt;&lt;span class=&#34;cm&#34;&gt;console.log(&amp;#39;button内容是&amp;#39; + tempButton.textContent)
-&lt;/span&gt;&lt;span class=&#34;cm&#34;&gt;console.log(&amp;#39;button id是&amp;#39; + tempButton.dataset.id)
-&lt;/span&gt;&lt;span class=&#34;cm&#34;&gt;}
-&lt;/span&gt;&lt;span class=&#34;cm&#34;&gt;});
-&lt;/span&gt;&lt;span class=&#34;cm&#34;&gt;*/&lt;/span&gt;
-
-&lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;let&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;i&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;i&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;i&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-&lt;span class=&#34;nx&#34;&gt;setTimeout&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(()&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-&lt;span class=&#34;kr&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;button&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;document&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;createElement&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;button&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;span class=&#34;nx&#34;&gt;button&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;textContent&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;click &amp;#39;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;i&lt;/span&gt;
-&lt;span class=&#34;nx&#34;&gt;button&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;setAttribute&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;data-id&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;span class=&#34;nx&#34;&gt;div1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;appendChild&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;button&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;span class=&#34;p&#34;&gt;},&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;i&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1000&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-
-&lt;span class=&#34;nx&#34;&gt;on&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;click&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;#div1&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;button&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;e&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-&lt;span class=&#34;kr&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;tempElement&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;e&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;target&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;// by user
-&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;console&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;log&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;button被点击了&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;span class=&#34;nx&#34;&gt;console&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;log&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;button内容是&amp;#39;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;tempElement&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;textContent&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;span class=&#34;nx&#34;&gt;console&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;log&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;button id是&amp;#39;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;tempElement&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;dataset&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;id&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;span class=&#34;p&#34;&gt;})&lt;/span&gt;
-
-&lt;span class=&#34;kd&#34;&gt;function&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;on&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;eventType&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;element&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;selector&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;fn&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;!&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;element&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;instanceof&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;Element&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-&lt;span class=&#34;nx&#34;&gt;element&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;document&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;querySelector&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;element&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-&lt;span class=&#34;nx&#34;&gt;element&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;addEventListener&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;eventType&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;e&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-&lt;span class=&#34;kr&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;tempElement&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;e&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;target&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;// by user
-&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;tempElement&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;matches&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;selector&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;===&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;true&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-  &lt;span class=&#34;nx&#34;&gt;fn&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;e&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-&lt;span class=&#34;p&#34;&gt;})&lt;/span&gt;
-&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;这个答案有缺陷&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;如果将操作的元素内部再放一层子元素，比如包裹 &lt;code&gt;span&lt;/code&gt; 元素&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;操作的元素变为&lt;code&gt;span&lt;/code&gt; 元素&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;点击的时候，&lt;code&gt;tempElement&lt;/code&gt;是&lt;code&gt;span&lt;/code&gt;，而&lt;code&gt;selector&lt;/code&gt;是&lt;code&gt;button&lt;/code&gt;，不匹配，就不执行&lt;code&gt;fn&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;方案二&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://github.com/FrankFang/wheels/blob/master/lib/dom/index.js#L2&#34;&gt;递归判断&lt;/a&gt;&lt;code&gt;target/target的父元素/target的祖元素&lt;/code&gt;是否匹配&lt;code&gt;li&lt;/code&gt;&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-JavaScript&#34; data-lang=&#34;JavaScript&#34;&gt;&lt;span class=&#34;lnt&#34;&gt; 1
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-JavaScript&#34; data-lang=&#34;JavaScript&#34;&gt;&lt;span class=&#34;kd&#34;&gt;function&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;on&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;eventType&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;element&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;selector&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;fn&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;!&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;element&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;instanceof&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;Element&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-&lt;span class=&#34;nx&#34;&gt;element&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;document&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;querySelector&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;element&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-&lt;span class=&#34;nx&#34;&gt;element&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;addEventListener&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;eventType&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;e&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-&lt;span class=&#34;kd&#34;&gt;let&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;el&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;e&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;target&lt;/span&gt;
-&lt;span class=&#34;k&#34;&gt;while&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;!&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;el&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;matches&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;selector&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-  &lt;span class=&#34;c1&#34;&gt;// 范围是 element 之内的元素
-&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;  &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;element&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;===&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;el&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-    &lt;span class=&#34;nx&#34;&gt;el&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;null&lt;/span&gt;
-    &lt;span class=&#34;k&#34;&gt;break&lt;/span&gt;
-  &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-  &lt;span class=&#34;nx&#34;&gt;el&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;el&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;parentNode&lt;/span&gt;
-&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-&lt;span class=&#34;nx&#34;&gt;el&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;fn&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;call&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;el&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;e&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;el&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;span class=&#34;p&#34;&gt;})&lt;/span&gt;
-&lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;element&lt;/span&gt;
-&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;&lt;code&gt;jQuery&lt;/code&gt;的实现&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;$(&#39;#xxx&#39;).on(&#39;click&#39;, &#39;li&#39;, fn)&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;JS 支持事件吗&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;ul&gt;
-&lt;li&gt;DOM 事件不属于JS的功能，而是浏览器提供的 DOM 功能&lt;/li&gt;
-&lt;li&gt;JS 只是调用了 DOM 提供的&lt;code&gt;addEventListener&lt;/code&gt;这个API&lt;/li&gt;
-&lt;li&gt;所以 JS 不支持，提供事件机制的时浏览器&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;追问：手写JS事件系统&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://static.xiedaimala.com/xdml/file/3ac7c224-c23d-491f-84b5-4fabfbeab9b8/2019-8-21-10-39-21.pdf&#34;&gt;手写 EventHub PDF&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/FrankFang/source-eventhub&#34;&gt;源码&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;面试题：请简述 DOM 事件模型或 DOM 事件机制（你可以写一篇博客来回答这个问题）&lt;/p&gt;
-
-&lt;p&gt;提示：请描述什么是捕获什么是冒泡，并说说是先捕获还是先冒泡，再搜搜看网上的文章怎么说&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;浏览器的事件模型，就是通过监听函数（listener） 事件发生后，浏览器监听到了这个事件，就会执行对应的监听函数&lt;/li&gt;
-&lt;li&gt;DOM 事件机制 事件发生会分成三个阶段 捕获 目标 冒泡阶段，在各层元素之间传播，使得同一个事件会在多个节点上触发&lt;/li&gt;
-&lt;li&gt;事件捕获是从window（-&amp;gt; Document -&amp;gt; html -&amp;gt; &amp;hellip;）开始由外向内查找监听函数&lt;/li&gt;
-&lt;li&gt;事件冒泡是从当前操作的节点（目标节点）开始由内向外直至 window 查找监听函数&lt;/li&gt;
-&lt;li&gt;按照先捕获，后冒泡的顺序执行&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;捕获：当用户点击按钮，浏览器会从 window 从上向下遍历至用户点击的按钮，逐个触发事件处理函数。&lt;/p&gt;
-
-&lt;p&gt;冒泡：浏览器从用户点击的按钮从下往上遍历至 window，逐个触发事件处理函数。&lt;/p&gt;
-
-&lt;p&gt;W3C 事件模型/事件机制：对每个事件先捕获再冒泡&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;面试题：请简述事件委托（可写博客回答）&lt;/p&gt;
-
-&lt;p&gt;提示：请想办法把「监听祖先元素」说得高大上一点&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;事件委托就是把一个元素响应事件（click、keydown&amp;hellip;&amp;hellip;）的函数委托到另一个元素&lt;/li&gt;
-&lt;li&gt;一般是把元素的事件委托到它的父层或者更外层元素上，真正绑定事件的是外层元素&lt;/li&gt;
-&lt;li&gt;当事件响应到需要绑定的元素上时，会通过事件冒泡机制从而触发它的外层元素的绑定事件&lt;/li&gt;
-&lt;li&gt;然后在外层元素上去执行函数，即便一开始当前元素不存在于页面中，也能实现事件委托&lt;/li&gt;
-&lt;li&gt;以达到减少内存消耗和动态绑定事件的目的&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;事件委托就是把事件监听放在祖先元素（如父元素、爷爷元素）上。&lt;/p&gt;
-
-&lt;p&gt;好处是：1 节约监听数量 2 可以监听动态生成的元素。&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;代码示例&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-JavaScript&#34; data-lang=&#34;JavaScript&#34;&gt;&lt;span class=&#34;lnt&#34;&gt; 1
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;23
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-JavaScript&#34; data-lang=&#34;JavaScript&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// 错误版（但是可能能过）
-&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;ul&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;addEventListener&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;click&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;function&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;e&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;){&lt;/span&gt;
-     &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;e&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;target&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;tagName&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;toLowerCase&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;===&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;li&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;){&lt;/span&gt;
-         &lt;span class=&#34;nx&#34;&gt;fn&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;// 执行某个函数
-&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;     &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
- &lt;span class=&#34;p&#34;&gt;})&lt;/span&gt;
-&lt;span class=&#34;c1&#34;&gt;// bug 在于，如果用户点击的是 li 里面的 span，就没法触发 fn，这显然不对。
-&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;// 高级版
-&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;function&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;delegate&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;element&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;eventType&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;selector&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;fn&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-     &lt;span class=&#34;nx&#34;&gt;element&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;addEventListener&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;eventType&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;e&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-       &lt;span class=&#34;kd&#34;&gt;let&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;el&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;e&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;target&lt;/span&gt;
-       &lt;span class=&#34;k&#34;&gt;while&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;!&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;el&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;matches&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;selector&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-         &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;element&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;===&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;el&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-           &lt;span class=&#34;nx&#34;&gt;el&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;null&lt;/span&gt;
-           &lt;span class=&#34;k&#34;&gt;break&lt;/span&gt;
-         &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-         &lt;span class=&#34;nx&#34;&gt;el&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;el&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;parentNode&lt;/span&gt;
-       &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-       &lt;span class=&#34;nx&#34;&gt;el&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;fn&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;call&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;el&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;e&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;el&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-     &lt;span class=&#34;p&#34;&gt;})&lt;/span&gt;
-     &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;element&lt;/span&gt;
-   &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-&lt;span class=&#34;c1&#34;&gt;// 思路是点击 span 后，递归遍历 span 的祖先元素看其中有没有 ul 里面的 li。
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;!-- Article End --&gt;
-
-&lt;hr /&gt;
-
-&lt;!-- test --&gt;
-
-&lt;div style=&#34;text-align:center;&#34;&gt;·未完待续·&lt;/div&gt;
-
-&lt;!-- ok --&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&#34;参考文章&#34;&gt;参考文章&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://static.xiedaimala.com/xdml/file/3ac7c224-c23d-491f-84b5-4fabfbeab9b8/2020-5-26-9-39-45.pdf&#34;&gt;DOM 事件与事件委托.pdf&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://static.xiedaimala.com/xdml/file/f40ceb64-df08-4420-9226-7f76dbff15d5/2020-1-3-17-55-22.pdf&#34;&gt;事件.pdf&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://static.xiedaimala.com/xdml/file/3ac7c224-c23d-491f-84b5-4fabfbeab9b8/2019-8-21-10-39-21.pdf&#34;&gt;手写 EventHub PDF&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://wangdoc.com/javascript/dom/index.html&#34;&gt;网道 DOM&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://wangdoc.com/javascript/events/index.html&#34;&gt;网道 DOM事件&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
 
 &lt;h3 id=&#34;相关文章&#34;&gt;相关文章&lt;/h3&gt;
 
