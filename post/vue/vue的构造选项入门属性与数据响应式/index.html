@@ -23,7 +23,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 
 <meta name="author" content="Joel Xu" />
-  <meta name="description" content="0. 内存图 § 1. options里有什么 § 2. 入门属性 § 3. Vue对data做了什么 § 4. 数据响应式 § 5. Vue2.x的bug § 6. Vue.set和this" />
+  <meta name="description" content="目录§ ⇧ 0. 内存图 § 1. options里有什么 § 2. 入门属性 § 3. Vue对data做了什么 § 4. 数据响应式 § 5. Vue2.x的bug § 6. Vue.set和" />
 
   <meta name="keywords" content="Hugo, theme, jane" />
 
@@ -60,25 +60,25 @@
 
 
 <meta property="og:title" content="Vue的构造选项、入门属性与数据响应式" />
-<meta property="og:description" content="0. 内存图 § 1. options里有什么 § 2. 入门属性 § 3. Vue对data做了什么 § 4. 数据响应式 § 5. Vue2.x的bug § 6. Vue.set和this" />
+<meta property="og:description" content="目录§ ⇧ 0. 内存图 § 1. options里有什么 § 2. 入门属性 § 3. Vue对data做了什么 § 4. 数据响应式 § 5. Vue2.x的bug § 6. Vue.set和" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://xmasuhai.xyz/post/vue/vue%E7%9A%84%E6%9E%84%E9%80%A0%E9%80%89%E9%A1%B9%E5%85%A5%E9%97%A8%E5%B1%9E%E6%80%A7%E4%B8%8E%E6%95%B0%E6%8D%AE%E5%93%8D%E5%BA%94%E5%BC%8F/" />
 <meta property="article:published_time" content="2020-08-16T23:58:24+08:00" />
-<meta property="article:modified_time" content="2020-08-25T00:22:15+08:00" />
+<meta property="article:modified_time" content="2020-08-25T07:36:39+08:00" />
 <meta itemprop="name" content="Vue的构造选项、入门属性与数据响应式">
-<meta itemprop="description" content="0. 内存图 § 1. options里有什么 § 2. 入门属性 § 3. Vue对data做了什么 § 4. 数据响应式 § 5. Vue2.x的bug § 6. Vue.set和this">
+<meta itemprop="description" content="目录§ ⇧ 0. 内存图 § 1. options里有什么 § 2. 入门属性 § 3. Vue对data做了什么 § 4. 数据响应式 § 5. Vue2.x的bug § 6. Vue.set和">
 
 
 <meta itemprop="datePublished" content="2020-08-16T23:58:24&#43;08:00" />
-<meta itemprop="dateModified" content="2020-08-25T00:22:15&#43;08:00" />
-<meta itemprop="wordCount" content="10091">
+<meta itemprop="dateModified" content="2020-08-25T07:36:39&#43;08:00" />
+<meta itemprop="wordCount" content="10370">
 
 
 
-<meta itemprop="keywords" content="Vue,MVC,@vue/cli,vue.runtime.js,Vue3.x," />
+<meta itemprop="keywords" content="Vue,MVC,@vue/cli,vue.runtime.js,Vue3.x,数据响应式," />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Vue的构造选项、入门属性与数据响应式"/>
-<meta name="twitter:description" content="0. 内存图 § 1. options里有什么 § 2. 入门属性 § 3. Vue对data做了什么 § 4. 数据响应式 § 5. Vue2.x的bug § 6. Vue.set和this"/>
+<meta name="twitter:description" content="目录§ ⇧ 0. 内存图 § 1. options里有什么 § 2. 入门属性 § 3. Vue对data做了什么 § 4. 数据响应式 § 5. Vue2.x的bug § 6. Vue.set和"/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -349,7 +349,7 @@
             <a href="http://xmasuhai.xyz/categories/2020/"> 2020 </a>
             
           </div>
-        <span class="more-meta"> 约 10091 字 </span>
+        <span class="more-meta"> 约 10370 字 </span>
           <span class="more-meta"> 预计阅读 21 分钟 </span>
 
         
@@ -369,6 +369,7 @@
 <ul>
 <li>
 <ul>
+<li><a href="#目录-a-id-catalogue-href-catalogue-a-a-href-catalogue-a">目录<a id="catalogue" href="#catalogue" > § </a><a href="#catalogue"> ⇧ </a></a></li>
 <li><a href="#0-内存图-a-name-内存图-id-内存图-href-内存图-a-a-href-catalogue-a">0. 内存图<a name="内存图" id="内存图" href="#内存图"> § </a><a href="#catalogue"> ⇧ </a></a></li>
 <li><a href="#1-options-里有什么-a-id-1-href-options-a-a-href-catalogue-a">1. <code>options</code>里有什么<a id="_$1_" href="#options"> § </a><a href="#catalogue"> ⇧ </a></a>
 <ul>
@@ -401,10 +402,8 @@
 <ul>
 <li><a href="#data-实验"><code>data</code>实验</a></li>
 <li><a href="#了解-es6-https-fangyinghang-com-es-6-tutorials-的计算属性-getter-和-setter-https-developer-mozilla-org-zh-cn-docs-web-javascript-reference-operators-object-initializer-ecmascript-6-e6-96-b0-e6-a0-87-e8-ae-b0">了解<a href="https://fangyinghang.com/es-6-tutorials/"><code>ES6</code></a>的计算属性 <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Object_initializer#ECMAScript_6%E6%96%B0%E6%A0%87%E8%AE%B0"><code>getter</code>和<code>setter</code></a></a></li>
-<li><a href="#object-defineproperty-https-developer-mozilla-org-zh-cn-docs-web-javascript-reference-global-objects-object-defineproperty"><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty"><code>Object.defineProperty</code></a></a>
-<ul>
+<li><a href="#object-defineproperty-https-developer-mozilla-org-zh-cn-docs-web-javascript-reference-global-objects-object-defineproperty"><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty"><code>Object.defineProperty</code></a></a></li>
 <li><a href="#代理和监听">代理和监听</a></li>
-</ul></li>
 <li><a href="#data-小结"><code>data</code>小结</a></li>
 </ul></li>
 <li><a href="#4-数据响应式-a-id-数据响应式-href-数据响应式-a-a-href-catalogue-a">4. 数据响应式<a id="数据响应式" href="#数据响应式"> § </a><a href="#catalogue"> ⇧ </a></a></li>
@@ -414,6 +413,11 @@
 <li><a href="#8-es6-手写数组新-push-方法-v-s-es5-写法-a-id-es6-href-es5-a-a-href-catalogue-a">8. <code>ES6</code>手写数组新<code>push</code>方法 V.S. <code>ES5</code>写法<a id="ES6" href="#ES5"> § </a><a href="#catalogue"> ⇧ </a></a></li>
 <li><a href="#9-总结-a-id-总结-href-总结-a-a-href-catalogue-a">9. 总结<a id="总结" href="#总结"> § </a><a href="#catalogue"> ⇧ </a></a></li>
 <li><a href="#10-面试题-a-id-面试题-href-面试题-a-a-href-catalogue-a">10. 面试题<a id="面试题" href="#面试题"> § </a><a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#对-vue-数据响应式的理解">对 Vue 数据响应式的理解</a>
+<ul>
+<li><a href="#参考文章">参考文章</a></li>
+<li><a href="#相关文章">相关文章</a></li>
+</ul></li>
 </ul></li>
 </ul>
 </nav>
@@ -423,6 +427,8 @@
     
     <div class="post-content">
       
+
+<h2 id="目录-a-id-catalogue-href-catalogue-a-a-href-catalogue-a">目录<a id="catalogue" href="#catalogue" > § </a><a href="#catalogue"> ⇧ </a></h2>
 
 <ul>
 <li><a id="_$0_" href="#内存图">0. 内存图 § </a></li>
@@ -753,12 +759,8 @@
 <p>demo</p>
 </blockquote>
 
-<p><p class="codepen" data-height="265" data-theme-id="light" data-default-tab="js,result" data-user="xmasuhai" data-slug-hash="LYNbMBd" style="height: 265px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;" data-pen-title="button-demo-data-use-obj">
-  <span>See the Pen <a href="https://codepen.io/xmasuhai/pen/LYNbMBd">
-  button-demo-data-use-obj</a> by Joel Xu (<a href="https://codepen.io/xmasuhai">@xmasuhai</a>)
-  on <a href="https://codepen.io">CodePen</a>.</span>
-</p>
-<script async src="https://static.codepen.io/assets/embed/ei.js"></script></p>
+<p><iframe height="385" style="width: 100%;" scrolling="no" title="button-demo-data-use-obj" src="https://codepen.io/xmasuhai/embed/LYNbMBd?height=385&theme-id=light&default-tab=result" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href='https://codepen.io/xmasuhai/pen/LYNbMBd'>button-demo-data-use-obj</a> by Joel Xu</p>
 
 <hr />
 
@@ -1832,6 +1834,12 @@
 </span><span class="lnt">29
 </span><span class="lnt">30
 </span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kr">const</span> <span class="nx">Vue</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">Vue</span>
@@ -1843,7 +1851,6 @@
 <span class="p">};</span>
 <span class="c1">// 精髓1
 </span><span class="c1"></span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">myData</span><span class="p">)</span>
-
 <span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
 <span class="nx">data</span><span class="o">:</span> <span class="nx">myData</span><span class="p">,</span>
 <span class="nx">template</span><span class="o">:</span> <span class="sb">`
@@ -1865,7 +1872,14 @@
 <span class="c1">// 精髓2
 </span><span class="c1"></span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">myData</span><span class="p">)</span>
 <span class="p">},</span> <span class="mi">3000</span><span class="p">);</span>
-</code></pre></td></tr></table>
+<span class="c1">// 控制台
+</span><span class="c1">// {__ob__: we}
+</span><span class="c1">//     n: (...)
+</span><span class="c1">//     __ob__: we {value: {...}, dep: ce, vmCount: 1}
+</span><span class="c1">//     get n: f ()
+</span><span class="c1">//     set n: f (t)
+</span><span class="c1">//     __proto__: Object
+</span></code></pre></td></tr></table>
 </div>
 </div></li>
 </ul>
@@ -1880,8 +1894,14 @@
 <li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Functions/get"><code>getter</code></a></li>
 <li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Functions/set"><code>setter</code></a></li>
 <li><a href="https://codesandbox.io/s/vue-getter-setter-xn68r?file=/src/main.js">示例代码 2</a></li>
-<li><code>get 属性名xx() {}</code>和<code>set 属性名xx(yyy) {}</code></li>
-<li>第一次打印的和第二次的区别，在后台展开查看用<code>setter</code>设置属性的对象</li>
+<li>语法<code>get 属性名xx() {}</code>和<code>set 属性名xx(yyy) {}</code></li>
+</ul>
+
+<blockquote>
+<p>第一次打印的和第二次的区别，在后台展开查看用<code>setter</code>设置属性的对象</p>
+</blockquote>
+
+<ul>
 <li>调用<code>obj1.姓名()</code>要加括号，调用<code>obj2.姓名</code>不用加括号</li>
 <li><code>obj2.姓名</code>是属性，只不过使用函数形式定义的</li>
 
@@ -2060,7 +2080,7 @@
 <p><code>_xxx</code>是什么</p>
 </blockquote>
 
-<h4 id="代理和监听">代理和监听</h4>
+<h3 id="代理和监听">代理和监听</h3>
 
 <blockquote>
 <p>需求一：用 <code>Object.defineProperty</code> 定义 属性<code>n</code></p>
@@ -2765,13 +2785,36 @@
 <li>答案<a href="https://zhuanlan.zhihu.com/p/39421405">解析文章</a></li>
 </ul>
 
+<h2 id="对-vue-数据响应式的理解">对 Vue 数据响应式的理解</h2>
+
+<ul>
+<li>数据响应式就是，将 Model 绑定到 View，当更新 Model 时，View 会自动更新</li>
+<li>数据响应式强调数据驱动 DOM 生成，而不是直接操作 DOM</li>
+<li>即所谓的数据驱动，指视图是由数据驱动生成的，对视图的修改，不会直接操作 DOM，而是通过修改数据</li>
+<li>Vue 的响应式原理依赖于 Object.defineProperty 中的 setter 和 getter</li>
+<li>Vue 通过设定对象属性 setter/getter 方法来监听并代理数据的变化</li>
+<li>刚学到让数据变成响应式，数据响应式还包括依赖收集 和 派发更新，之后学</li>
+</ul>
+
 <blockquote>
 <p>理解了<code>data</code>才能继续学习<code>computed</code>和<code>watch</code></p>
 </blockquote>
 
 <hr />
 
+<!-- Article End -->
+
 <hr />
+
+<!-- test -->
+
+<div style="text-align:center;">·未完待续·</div>
+
+<!-- ok -->
+
+<hr />
+
+<h3 id="参考文章">参考文章</h3>
 
 <ul>
 <li><a href="https://static.xiedaimala.com/xdml/file/3ac7c224-c23d-491f-84b5-4fabfbeab9b8/2019-12-14-3-2-3.pdf">Vue 构造选项 - 入门属性.pdf</a></li>
@@ -2781,6 +2824,26 @@
 <li><a href="https://vue-composition-api-rfc.netlify.com/#basic-example">Composition API RFC</a></li>
 <li><a href="https://vue-composition-api-rfc.netlify.com/api.html#setup">API Reference</a></li>
 <li><a href="https://cn.vuejs.org/v2/style-guide/#%E5%9F%BA%E7%A1%80%E7%BB%84%E4%BB%B6%E5%90%8D%E5%BC%BA%E7%83%88%E6%8E%A8%E8%8D%90">风格指南</a></li>
+</ul>
+
+<h3 id="相关文章">相关文章</h3>
+
+<ul>
+<li>无</li>
+</ul>
+
+<hr />
+
+<ul>
+<li>作者： Joel</li>
+<li>文章链接：</li>
+<li><a href="http://xmasuhai.xyz/posts/版权声明链接/">版权声明</a></li>
+<li>非自由转载-非商用-非衍生-保持署名</li>
+<li><a style='color:#DB2D5D;' href='https://xiedaimala.com/bbs/users/8c266e6f-55a2-4348-a180-17cb8cdb2c46#/?page=1' target='_blank' rel='noreferrer noopener'>河</a>
+<a style='color:#006CFF;' href='https://juejin.im/user/59abfad26fb9a0248f4aa221' target='_blank' rel='noreferrer noopener'>掘</a>
+<a style='color:#009A61;' href='https://segmentfault.com/u/joel_59b17eb9d2155' target='_blank' rel='noreferrer noopener'>思</a>
+<a style='color:#0084FF;' href='https://www.zhihu.com/people/xue-shou-41/posts' target='_blank' rel='noreferrer noopener'>知</a>
+<a style='color:#EA6F5A;' href='https://www.jianshu.com/u/079916729823' target='_blank' rel='noreferrer noopener'>简</a></li>
 </ul>
 
 <hr />
@@ -2822,6 +2885,7 @@
           <a href="http://xmasuhai.xyz/tags/vue/cli/">@vue/cli</a>
           <a href="http://xmasuhai.xyz/tags/vue.runtime.js/">vue.runtime.js</a>
           <a href="http://xmasuhai.xyz/tags/vue3.x/">Vue3.x</a>
+          <a href="http://xmasuhai.xyz/tags/%E6%95%B0%E6%8D%AE%E5%93%8D%E5%BA%94%E5%BC%8F/">数据响应式</a>
           
         </div>
 
