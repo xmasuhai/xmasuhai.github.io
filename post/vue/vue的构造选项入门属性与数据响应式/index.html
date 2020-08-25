@@ -64,14 +64,14 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://xmasuhai.xyz/post/vue/vue%E7%9A%84%E6%9E%84%E9%80%A0%E9%80%89%E9%A1%B9%E5%85%A5%E9%97%A8%E5%B1%9E%E6%80%A7%E4%B8%8E%E6%95%B0%E6%8D%AE%E5%93%8D%E5%BA%94%E5%BC%8F/" />
 <meta property="article:published_time" content="2020-08-16T23:58:24+08:00" />
-<meta property="article:modified_time" content="2020-08-25T07:36:39+08:00" />
+<meta property="article:modified_time" content="2020-08-26T07:05:15+08:00" />
 <meta itemprop="name" content="Vue的构造选项、入门属性与数据响应式">
 <meta itemprop="description" content="目录§ ⇧ 0. 内存图 § 1. options里有什么 § 2. 入门属性 § 3. Vue对data做了什么 § 4. 数据响应式 § 5. Vue2.x的bug § 6. Vue.set和">
 
 
 <meta itemprop="datePublished" content="2020-08-16T23:58:24&#43;08:00" />
-<meta itemprop="dateModified" content="2020-08-25T07:36:39&#43;08:00" />
-<meta itemprop="wordCount" content="10370">
+<meta itemprop="dateModified" content="2020-08-26T07:05:15&#43;08:00" />
+<meta itemprop="wordCount" content="11390">
 
 
 
@@ -349,8 +349,8 @@
             <a href="http://xmasuhai.xyz/categories/2020/"> 2020 </a>
             
           </div>
-        <span class="more-meta"> 约 10370 字 </span>
-          <span class="more-meta"> 预计阅读 21 分钟 </span>
+        <span class="more-meta"> 约 11390 字 </span>
+          <span class="more-meta"> 预计阅读 23 分钟 </span>
 
         
         
@@ -410,7 +410,7 @@
 <li><a href="#5-vue2-x-的-bug-a-id-bug-href-bug-a-a-href-catalogue-a">5. <code>Vue2.x</code>的<code>bug</code><a id="bug" href="#bug"> § </a><a href="#catalogue"> ⇧ </a></a></li>
 <li><a href="#6-vue-set-和-this-set-a-id-set-href-set-a-a-href-catalogue-a">6. <code>Vue.set</code>和<code>this.$set</code><a id="set" href="#set"> § </a><a href="#catalogue"> ⇧ </a></a></li>
 <li><a href="#7-data-中的数组怎么破-a-id-数组-href-数组-a-a-href-catalogue-a">7. <code>data</code>中的数组怎么破<a id="数组" href="#数组"> § </a><a href="#catalogue"> ⇧ </a></a></li>
-<li><a href="#8-es6-手写数组新-push-方法-v-s-es5-写法-a-id-es6-href-es5-a-a-href-catalogue-a">8. <code>ES6</code>手写数组新<code>push</code>方法 V.S. <code>ES5</code>写法<a id="ES6" href="#ES5"> § </a><a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#8-es6-改写数组原型方法-v-s-es5-写法-a-id-es6-href-es5-a-a-href-catalogue-a">8. <code>ES6</code>改写数组原型方法 V.S. <code>ES5</code>写法<a id="ES6" href="#ES5"> § </a><a href="#catalogue"> ⇧ </a></a></li>
 <li><a href="#9-总结-a-id-总结-href-总结-a-a-href-catalogue-a">9. 总结<a id="总结" href="#总结"> § </a><a href="#catalogue"> ⇧ </a></a></li>
 <li><a href="#10-面试题-a-id-面试题-href-面试题-a-a-href-catalogue-a">10. 面试题<a id="面试题" href="#面试题"> § </a><a href="#catalogue"> ⇧ </a></a></li>
 <li><a href="#对-vue-数据响应式的理解">对 Vue 数据响应式的理解</a>
@@ -2500,6 +2500,7 @@
 <li>比如 <a href="https://www.smashingmagazine.com/">示例响应式网站 smashingMagazine</a></li>
 <li>但是注意，一般用户不会拖动网页大小，除非<code>iPad</code>分屏</li>
 <li>用响应式浏览器测试 <a href="https://responsively.app/">responsively</a></li>
+<li>区别响应式与媒体查询适配设备</li>
 </ul>
 
 <hr />
@@ -2543,7 +2544,7 @@
 </div>
 </div></li>
 
-<li><p>示例二： <code>Vue</code>无警告，只会检查第一层属性</p></li>
+<li><p><a href="https://codesandbox.io/s/objective-bohr-cpfqx">示例二</a>： <code>Vue</code>无警告，只会检查第一层属性</p></li>
 
 <li><p>只有属性<code>a</code>，却要显示属性<code>b</code></p></li>
 
@@ -2606,7 +2607,7 @@
 </blockquote>
 
 <ul>
-<li>将<code>key</code>都声明好，后面不再加属性<code>b: undefined</code></li>
+<li>将<code>key</code>都声明好，后面不再加属性<code>b: undefined</code>，即在传入的参数中预留会用到的属性</li>
 
 <li><p>使用<code>Vue.set</code>或者<code>this.$set</code></p>
 <div class="highlight"><div class="chroma">
@@ -2641,12 +2642,28 @@
 </blockquote>
 
 <ul>
-<li>新增<code>key</code></li>
+<li>新增<code>key</code>，在实例化后增加新属性</li>
 <li>自动创建代理和监听（如果没有创建过）</li>
 <li>触发<code>UI</code>更新（副作用，并不会立刻更新，异步更新）</li>
 <li><code>Vue.set(this.obj, 'b', 1)</code>将<code>this.obj</code>声明传给<code>Object.defineProperty</code></li>
 </ul>
 
+<blockquote>
+<p>语法</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nx">Vue</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="nx">object</span><span class="p">,</span> <span class="nx">propertyName</span><span class="p">,</span> <span class="nx">value</span><span class="p">)</span>
+<span class="c1">// 或者
+</span><span class="c1"></span><span class="nx">vm</span><span class="p">.</span><span class="nx">$set</span><span class="p">(</span><span class="nx">object</span><span class="p">,</span> <span class="nx">propertyName</span><span class="p">,</span> <span class="nx">value</span><span class="p">)</span> <span class="c1">// vm.$set(object, propertyName, value)
+</span></code></pre></td></tr></table>
+</div>
+</div>
 <blockquote>
 <p>举例</p>
 </blockquote>
@@ -2655,21 +2672,43 @@
 <li><code>this.$set(this.object, 'm', 100)</code></li>
 </ul>
 
+<blockquote>
+<p>小结</p>
+</blockquote>
+
+<ul>
+<li><code>Vue</code>只会监听实例化之前传进来的属性和实例化之后用<code>Vue.set</code>或 <code>this.$set</code>设置的数据</li>
+<li>在实例化后如果直接在对象上增加新属性，<code>Vue</code>不会将新属性转化为<code>getter/setter</code>，因为没有<code>setter</code>，所以在新属性的数据发生改变时，就不会通知<code>watcher</code>重新渲染视图</li>
+<li>在传入的参数中预留会用到的属性，这样就可以对属性进行监听</li>
+<li>或者是调用<code>Vue</code>提供的方法来添加新属性</li>
+
+<li><p>添加多个属性，使用<code>Object.assign()</code> 或 <code>_.extend()</code>也不会让新属性被监听，在这种情况下，用原对象与要混合进去的对象的属性一起创建一个新的对象</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="k">this</span><span class="p">.</span><span class="nx">obj</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">assign</span><span class="p">({},</span> <span class="k">this</span><span class="p">.</span><span class="nx">obj</span><span class="p">,</span> <span class="p">{</span> <span class="nx">a</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">b</span><span class="o">:</span> <span class="mi">2</span> <span class="p">})</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+
 <hr />
 
 <h2 id="7-data-中的数组怎么破-a-id-数组-href-数组-a-a-href-catalogue-a">7. <code>data</code>中的数组怎么破<a id="数组" href="#数组"> § </a><a href="#catalogue"> ⇧ </a></h2>
 
 <blockquote>
-<p>没法提前声明所有<code>key</code></p>
+<p><code>data: {n: 0, obj: {}, array: []}</code></p>
 </blockquote>
 
 <ul>
-<li>示例 1： 数组的长度可以一直增加，下标就是<code>key</code></li>
+<li>没法提前声明所有<code>key</code>(&lsquo;0&rsquo;, &lsquo;1&rsquo;, &lsquo;2&rsquo;&hellip;)</li>
+<li><a href="https://codesandbox.io/s/hungry-lumiere-lesmq?file=/src/main.js">示例 1</a>： 数组的长度可以一直增加，下标就是<code>key</code></li>
 <li>本质上<code>array: {0: 'a', 1: 'b', 2: 'c', length: ...}</code></li>
 <li>无法提前把数组的<code>key</code>都声明出来</li>
-<li><code>Vue</code>也不能检测对你新增了下标</li>
 
-<li><p>如何不用每次改数组都要用<code>Vue.set</code>或者<code>this.$set</code></p>
+<li><p><code>Vue</code>也不能检测新增了下标</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt"> 1
@@ -2691,6 +2730,12 @@
 </span><span class="lnt">17
 </span><span class="lnt">18
 </span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
@@ -2709,7 +2754,13 @@
 </span><span class="c1"></span>  <span class="k">this</span><span class="p">.</span><span class="nx">$set</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">array</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">)</span>
   <span class="c1">// this.array.push(&#39;d&#39;)
 </span><span class="c1"></span>  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">array</span><span class="p">)</span> <span class="c1">// 加了一层__proto__
-</span><span class="c1"></span><span class="p">}</span>
+</span><span class="c1"></span>  <span class="nx">Vue</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">array</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;e&#39;</span><span class="p">)</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">array</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">0</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">array</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">array</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">2</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">array</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">3</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">array</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">4</span>
+<span class="p">}</span>
 <span class="p">}</span>
 <span class="p">}).</span><span class="nx">$mount</span><span class="p">(</span><span class="s2">&#34;#app&#34;</span><span class="p">);</span>
 </code></pre></td></tr></table>
@@ -2718,30 +2769,114 @@
 </ul>
 
 <blockquote>
+<p>语法</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nx">vm</span><span class="p">.</span><span class="nx">$set</span><span class="p">(</span><span class="nx">vm</span><span class="p">.</span><span class="nx">items</span><span class="p">,</span> <span class="nx">indexOfArray</span><span class="p">,</span> <span class="nx">newValue</span><span class="p">)</span>
+<span class="c1">// 或者
+</span><span class="c1"></span><span class="nx">Vue</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="nx">vm</span><span class="p">.</span><span class="nx">items</span><span class="p">,</span> <span class="nx">indexOfArray</span><span class="p">,</span> <span class="nx">newValue</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>如何不用每次改数组都要用<code>Vue.set</code>或者<code>this.$set</code></li>
+<li><code>this.$set</code> 作用于数组时，并不会自动添加监听和代理，所以不会更新UI</li>
+</ul>
+
+<blockquote>
 <p>尤雨溪的做法</p>
 </blockquote>
 
 <ul>
 <li>篡改数组的栈方法<code>API</code>，文档中<a href="https://cn.vuejs.org/v2/guide/list.html#%E5%8F%98%E6%9B%B4%E6%96%B9%E6%B3%95">「变更方法」</a>章节</li>
-<li>7 个重新封装的<code>API</code>：<code>push()</code>、<code>pop()</code>、<code>shift()</code>、<code>unshift()</code>、<code>splice()</code>、<code>sort()</code>、<code>reverse()</code></li>
-<li>例如：新的<code>push</code>会做 1. 以前的<code>push</code>操作；2. 添加监听和代理，帮你<code>this.$set(...)</code></li>
-<li>这 7 个<code>API</code>都会被<code>Vue</code>篡改，调用后会更新<code>UI</code></li>
-<li>篡改<code>ES6</code>写法 V.S. <code>ES5</code>写法</li>
-</ul>
+<li>7 个重新封装的<code>API</code>：<code>push()</code>、<code>pop()</code>、<code>shift()</code>、<code>unshift()</code>、<code>splice()</code>、<code>sort()</code>、<code>reverse()</code>添加到数组新的一层原型链上，覆盖原来同名的方法</li>
+<li>例如：新的<code>push</code>会做 1. 以前的<code>push</code>操作；2. 通知<code>Vue</code> 添加监听和代理，帮你<code>this.$set(...)</code></li>
 
-<hr />
-
-<h2 id="8-es6-手写数组新-push-方法-v-s-es5-写法-a-id-es6-href-es5-a-a-href-catalogue-a">8. <code>ES6</code>手写数组新<code>push</code>方法 V.S. <code>ES5</code>写法<a id="ES6" href="#ES5"> § </a><a href="#catalogue"> ⇧ </a></h2>
-
-<ul>
-<li><p>增加原型链</p>
+<li><p>这 7 个<code>API</code>都会被<code>Vue</code>篡改，调用后会更新<code>UI</code></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nx">vm</span><span class="p">.</span><span class="nx">items</span><span class="p">.</span><span class="nx">splice</span><span class="p">(</span><span class="nx">indexOfItem</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">newValue</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+
+<blockquote>
+<p>改写数组的原型方法：<code>ES6</code>写法 V.S. <code>ES5</code>写法</p>
+</blockquote>
+
+<hr />
+
+<h2 id="8-es6-改写数组原型方法-v-s-es5-写法-a-id-es6-href-es5-a-a-href-catalogue-a">8. <code>ES6</code>改写数组原型方法 V.S. <code>ES5</code>写法<a id="ES6" href="#ES5"> § </a><a href="#catalogue"> ⇧ </a></h2>
+
+<ul>
+<li><p>增加原型链</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
 <pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="c1">// ES6
-</span></code></pre></td></tr></table>
+</span><span class="c1"></span><span class="kr">class</span> <span class="nx">VueArray</span> <span class="kr">extends</span> <span class="nb">Array</span> <span class="p">{</span>
+<span class="nx">push</span><span class="p">(...</span><span class="nx">args</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kr">const</span> <span class="nx">oldLength</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">length</span> <span class="c1">// this 即当前数组
+</span><span class="c1"></span>    <span class="kr">super</span><span class="p">.</span><span class="nx">push</span><span class="p">(...</span><span class="nx">args</span><span class="p">)</span> <span class="c1">// 先调下一层（父类）的原型方法
+</span><span class="c1"></span>    <span class="c1">// this.length 改变
+</span><span class="c1"></span>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;你 push 了&#39;</span><span class="p">)</span>
+    <span class="k">for</span><span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="nx">oldLength</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">Vue</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">i</span><span class="p">,</span> <span class="k">this</span><span class="p">[</span><span class="nx">i</span><span class="p">])</span>
+        <span class="c1">// 将每个新增的 key 都告诉 Vue
+</span><span class="c1"></span>    <span class="p">}</span>
+<span class="p">}</span>
+<span class="p">}</span>
+<span class="kr">const</span> <span class="nx">a</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">VueArray</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span>
+<span class="nx">a</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="c1">// ES5
+</span><span class="c1"></span><span class="kd">var</span> <span class="nx">vueArrayPrototype</span> <span class="o">=</span> <span class="p">{</span>
+<span class="nx">push</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;你 push 了&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">Array</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">push</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">arguments</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="p">}</span>
+<span class="nx">VueArrayPrototype</span><span class="p">.</span><span class="nx">__proto__</span> <span class="o">=</span> <span class="nb">Array</span><span class="p">.</span><span class="nx">prototype</span> <span class="c1">// 非标属性，仅供学习
+</span><span class="c1"></span><span class="kd">var</span> <span class="nx">array</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="nx">vueArrayPrototype</span><span class="p">)</span> <span class="c1">// 将实例的原型和vueArrayPrototype连起来
+</span><span class="c1"></span><span class="nx">array</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></td></tr></table>
 </div>
 </div></li>
 </ul>
@@ -2767,8 +2902,9 @@
 
 <ul>
 <li>也可以用<code>set</code>来新增<code>key</code>，<del>且创建监听和代理</del>，更新<code>UI</code></li>
-<li>不过尤雨溪篡改了 7 个 API 方便对数组进行增删</li>
-<li>这 7 个<code>API</code>会自动处理监听和代理，并更新<code>UI</code></li>
+<li><code>this.$set</code> 作用于数组时，并不会自动添加监听和代理</li>
+<li>不过尤雨溪篡改了 7 个数组 API 方便对数组进行<strong>增删</strong>（改查不需要，改即改原来的，删除多余的监听器，节省内存）</li>
+<li>使用 Vue 提供的数组变异 API 时，会自动添加监听和代理，并异步更新<code>UI</code></li>
 <li>结论：数组新增<code>key</code>最好通过 7 个<code>API</code></li>
 <li><code>Vue3.x</code>的解决方案</li>
 </ul>
@@ -2788,23 +2924,19 @@
 <h2 id="对-vue-数据响应式的理解">对 Vue 数据响应式的理解</h2>
 
 <ul>
-<li>数据响应式就是，将 Model 绑定到 View，当更新 Model 时，View 会自动更新</li>
-<li>数据响应式强调数据驱动 DOM 生成，而不是直接操作 DOM</li>
+<li>数据响应式就是，将Model绑定到View，当更新Model时，View会自动更新</li>
+<li>数据响应式强调数据驱动DOM生成，而不是直接操作DOM</li>
 <li>即所谓的数据驱动，指视图是由数据驱动生成的，对视图的修改，不会直接操作 DOM，而是通过修改数据</li>
-<li>Vue 的响应式原理依赖于 Object.defineProperty 中的 setter 和 getter</li>
-<li>Vue 通过设定对象属性 setter/getter 方法来监听并代理数据的变化</li>
-<li>刚学到让数据变成响应式，数据响应式还包括依赖收集 和 派发更新，之后学</li>
+<li>Vue的响应式原理依赖于<code>Object.defineProperty</code> 中的<code>setter</code> 和 <code>getter</code></li>
+<li>Vue通过设定对象属性<code>setter/getter</code>方法来监听并代理数据的变化</li>
+<li>将一个JS对象作为参数传入到Vue中时，Vue会遍历该对象的所有属性，使用 <code>Object.defineProperty</code> 把这些属性全部转为 <code>getter/setter</code>，实现监听，并且会返回一个组件实例作为该对象的代理</li>
+<li>当操作组件实例的数据时，就会同时修改传入的JavaScript对象的数据，而且vue同时会监听这个JS对象，在JS对象的数据发生修改时，同时也会更新组件实例的数据</li>
+<li>每个组件实例都对应一个<code>watcher</code> 实例，<code>watcher</code> 实例会在组件渲染的过程中把“接触”过的数据属性记录为依赖。之后当依赖项的 <code>setter</code> 触发时，会通知 <code>watcher</code>，从而使它关联的组件重新渲染</li>
 </ul>
 
 <blockquote>
 <p>理解了<code>data</code>才能继续学习<code>computed</code>和<code>watch</code></p>
 </blockquote>
-
-<hr />
-
-<!-- Article End -->
-
-<hr />
 
 <!-- test -->
 
@@ -2860,7 +2992,7 @@
   <p class="copyright-item">
     <span class="item-title">上次更新</span>
     <span class="item-content">
-      2020-08-25
+      2020-08-26
       
         
         
