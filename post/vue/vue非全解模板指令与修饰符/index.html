@@ -64,14 +64,14 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://xmasuhai.xyz/post/vue/vue%E9%9D%9E%E5%85%A8%E8%A7%A3%E6%A8%A1%E6%9D%BF%E6%8C%87%E4%BB%A4%E4%B8%8E%E4%BF%AE%E9%A5%B0%E7%AC%A6/" />
 <meta property="article:published_time" content="2020-09-18T05:47:28+08:00" />
-<meta property="article:modified_time" content="2020-09-18T06:11:22+08:00" />
+<meta property="article:modified_time" content="2020-09-21T06:36:31+08:00" />
 <meta itemprop="name" content="【Vue非全解】模板、指令与修饰符">
 <meta itemprop="description" content="1. 三种写模板template的方式§ ⇧ Vue完整版，写在HTML里 Vue完整版，写在选项options里 Vue非完整版，配合*.vue文件 V">
 
 
 <meta itemprop="datePublished" content="2020-09-18T05:47:28&#43;08:00" />
-<meta itemprop="dateModified" content="2020-09-18T06:11:22&#43;08:00" />
-<meta itemprop="wordCount" content="3501">
+<meta itemprop="dateModified" content="2020-09-21T06:36:31&#43;08:00" />
+<meta itemprop="wordCount" content="4893">
 
 
 
@@ -349,8 +349,8 @@
             <a href="http://xmasuhai.xyz/categories/2020/"> 2020 </a>
             
           </div>
-        <span class="more-meta"> 约 3501 字 </span>
-          <span class="more-meta"> 预计阅读 7 分钟 </span>
+        <span class="more-meta"> 约 4893 字 </span>
+          <span class="more-meta"> 预计阅读 10 分钟 </span>
 
         
         
@@ -371,7 +371,7 @@
 <ul>
 <li><a href="#1-三种写模板-template-的方式-a-id-三种写模板的方式-href-三种写模板的方式-a-a-href-catalogue-a">1. 三种写模板<code>template</code>的方式<a id="三种写模板的方式" href="#三种写模板的方式"> § </a><a href="#catalogue"> ⇧ </a></a>
 <ul>
-<li><a href="#vue-完整版-写在-html-里"><code>Vue</code>完整版，写在<code>HTML</code>里</a></li>
+<li><a href="#vue-完整版-写在-html-文件中"><code>Vue</code>完整版，写在<code>HTML</code>文件中</a></li>
 <li><a href="#vue-完整版-写在选项-options-里"><code>Vue</code>完整版，写在选项<code>options</code>里</a></li>
 <li><a href="#vue-非完整版-配合-vue-文件"><code>Vue</code>非完整版，配合<code>*.vue</code>文件</a></li>
 </ul></li>
@@ -388,7 +388,14 @@
 <li><a href="#3-指令-directive-与修饰符-a-id-指令与修饰符-href-指令与修饰符-a-a-href-catalogue-a">3. 指令<code>Directive</code>与修饰符<code>.*</code><a id="指令与修饰符" href="#指令与修饰符"> § </a><a href="#catalogue"> ⇧ </a></a>
 <ul>
 <li><a href="#指令">指令</a></li>
-<li><a href="#修饰符">修饰符</a></li>
+<li><a href="#修饰符">修饰符</a>
+<ul>
+<li><a href="#修饰符的种类">修饰符的种类</a></li>
+<li><a href="#事件修饰符">事件修饰符</a></li>
+<li><a href="#按键修饰符">按键修饰符</a></li>
+<li><a href="#系统修饰符">系统修饰符</a></li>
+<li><a href="#鼠标按钮修饰符">鼠标按钮修饰符</a></li>
+</ul></li>
 </ul></li>
 <li><a href="#4-sync-修饰符-a-id-sync-href-sync-a-a-href-catalogue-a">4. <code>.sync</code> 修饰符<a id="sync" href="#sync"> § </a><a href="#catalogue"> ⇧ </a></a></li>
 <li><a href="#总结-a-href-catalogue-a">总结<a href="#catalogue"> ⇧ </a></a>
@@ -416,22 +423,22 @@
 
 <hr />
 
-<h3 id="vue-完整版-写在-html-里"><code>Vue</code>完整版，写在<code>HTML</code>里</h3>
+<h3 id="vue-完整版-写在-html-文件中"><code>Vue</code>完整版，写在<code>HTML</code>文件中</h3>
 
 <ul>
 <li><p><code>Vue2.6</code>写法</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-HTML" data-lang="HTML"><span class="lnt">1
+<pre class="chroma"><code class="language-XML" data-lang="XML"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-HTML" data-lang="HTML"><span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">xxx</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-XML" data-lang="XML"><span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">xxx</span><span class="nt">&gt;</span>
 {{n}}
-<span class="p">&lt;</span><span class="nt">button</span> <span class="err">@</span><span class="na">click</span><span class="o">=</span><span class="s">&#34;add&#34;</span><span class="p">&gt;</span>+1<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span></code></pre></td></tr></table>
+<span class="nt">&lt;button</span> <span class="err">@</span><span class="na">click=</span><span class="s">&#34;add&#34;</span><span class="nt">&gt;</span>+1<span class="nt">&lt;/button&gt;</span>
+<span class="nt">&lt;/div&gt;</span></code></pre></td></tr></table>
 </div>
 </div><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -681,7 +688,7 @@
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-HTML" data-lang="HTML"><span class="lnt">1
+<pre class="chroma"><code class="language-XML" data-lang="XML"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -692,15 +699,15 @@
 </span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-HTML" data-lang="HTML"><span class="p">&lt;</span><span class="nt">div</span> <span class="na">v-if</span><span class="o">=</span><span class="s">&#34;x &gt; 0&#34;</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-XML" data-lang="XML"><span class="nt">&lt;div</span> <span class="na">v-if=</span><span class="s">&#34;x &gt; 0&#34;</span><span class="nt">&gt;</span>
     x大于0
-<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">div</span> <span class="na">v-else-if</span><span class="o">=</span><span class="s">&#34;x === 0&#34;</span><span class="p">&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">v-else-if=</span><span class="s">&#34;x === 0&#34;</span><span class="nt">&gt;</span>
     x为0
-<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">div</span> <span class="na">v-else</span><span class="p">&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;div</span> <span class="err">v-else</span><span class="nt">&gt;</span>
     x小于0
-<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span></code></pre></td></tr></table>
+<span class="nt">&lt;/div&gt;</span></code></pre></td></tr></table>
 </div>
 </div>
 <h3 id="循环操作">循环操作</h3>
@@ -712,7 +719,7 @@
 <li><p>必须绑定<code>:key=&quot;&quot;</code></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-HTML" data-lang="HTML"><span class="lnt"> 1
+<pre class="chroma"><code class="language-Vue" data-lang="Vue"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -753,24 +760,24 @@
 </span><span class="lnt">39
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-HTML" data-lang="HTML"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-Vue" data-lang="Vue"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
 <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;container&#34;</span><span class="p">&gt;</span>
-<span class="c">&lt;!-- 遍历数组 --&gt;</span>
+<span class="c">&lt;!--</span> <span class="nx">遍历数组</span> <span class="o">--&gt;</span>
 <span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">li</span> <span class="na">v-for</span><span class="o">=</span><span class="s">&#34;(value, index) in usersArray&#34;</span> <span class="na">:key</span><span class="o">=</span><span class="s">&#34;index&#34;</span><span class="p">&gt;</span>
-        索引：{{index}} 值：{{value}}
-    <span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
-<span class="c">&lt;!-- 遍历对象 --&gt;</span>
-<span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">li</span> <span class="na">v-for</span><span class="o">=</span><span class="s">&#34;(value, keyName) in usersObj&#34;</span> <span class="na">:key</span><span class="o">=</span><span class="s">&#34;keyName&#34;</span><span class="p">&gt;</span>
-        属性名：{{keyName}} 属性值：{{value}}
-    <span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
-<span class="c">&lt;!-- 遍历单标签 --&gt;</span>
-<span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;wrapper&#34;</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">v-for</span><span class="o">=</span><span class="s">&#34;(value, keyName) in keys&#34;</span> <span class="na">:key</span><span class="o">=</span><span class="s">&#34;keyName&#34;</span><span class="p">&gt;</span>
-        <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;button&#34;</span> <span class="na">v-for</span><span class="o">=</span><span class="s">&#34;(value, index) in keys[keyName]&#34;</span> <span class="na">:key</span><span class="o">=</span><span class="s">&#34;index&#34;</span> <span class="na">:value</span><span class="o">=</span><span class="s">&#34;value&#34;</span> <span class="p">/&gt;</span>
+    <span class="p">&lt;</span><span class="nt">li</span> <span class="nt">v-for</span><span class="s">=&#34;(value, index) in usersArray&#34; :key=&#34;index&#34;&gt;
+</span><span class="s">        索引：{{index}} 值：{{value}}
+</span><span class="s">    &lt;/li&gt;
+</span><span class="s">&lt;/ul&gt;
+</span><span class="s">&lt;!-- 遍历对象 --&gt;
+</span><span class="s">&lt;ul&gt;
+</span><span class="s">    &lt;li v-for=&#34;(value, keyName) in usersObj&#34; :key=&#34;keyName&#34;&gt;
+</span><span class="s">        属性名：{{keyName}} 属性值：{{value}}
+</span><span class="s">    &lt;/li&gt;
+</span><span class="s">&lt;/ul&gt;
+</span><span class="s">&lt;!-- 遍历单标签 --&gt;
+</span><span class="s">&lt;div class=&#34;wrapper&#34;&gt;
+</span><span class="s">    &lt;div v-for=&#34;(value, keyName) in keys&#34; </span><span class="nt">:key</span><span class="s">=&#34;keyName&#34;</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;button&#34;</span> <span class="na">v</span><span class="nt">-for</span><span class="err">=&#34;(</span><span class="na">value</span><span class="err">,</span> <span class="na">index</span><span class="err">)</span> <span class="na">in</span> <span class="na">keys</span><span class="err">[</span><span class="na">keyName</span><span class="err">]&#34;</span> <span class="nt">:key</span><span class="s">=&#34;index&#34;</span> <span class="nt">:value</span><span class="s">=&#34;value&#34;</span> <span class="p">/&gt;</span>
     <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
 <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
 <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
@@ -892,9 +899,20 @@
 <li><strong><code>v-指令明:参数=值</code></strong>，如<code>v-on:click=add</code></li>
 <li>如果<strong>值</strong>里没有特殊字符，则可以不加引号</li>
 <li>有些指令没有参数和值，如<code>v-pre</code></li>
-<li>有些指令可以没有值，如<code>&lt;a v-on:click.prevent href=&quot;https://www.baidu.com&quot;&gt;Baidu&lt;/a&gt;</code></li>
-<li>也可以有值，如<code>&lt;a v-on:click.prevent=&quot;xx&quot; href=&quot;https://www.baidu.com&quot;&gt;Baidu&lt;/a&gt;</code></li>
+<li>有些指令可以没有值
+
+<ul>
+<li>如<code>&lt;a v-on:click.prevent href=&quot;https://www.baidu.com&quot;&gt;Baidu&lt;/a&gt;</code></li>
+</ul></li>
+<li>也可以有值
+
+<ul>
+<li>如<code>&lt;a v-on:click.prevent=&quot;xx&quot; href=&quot;https://www.baidu.com&quot;&gt;Baidu&lt;/a&gt;</code></li>
+<li>点击 a 标签不会跳转链接</li>
+</ul></li>
 </ul>
+
+<hr />
 
 <h3 id="修饰符">修饰符</h3>
 
@@ -903,7 +921,7 @@
 </blockquote>
 
 <ul>
-<li>修饰符 (modifier) 是以半角句号.指明的特殊后缀，用于指出一个指令应该以特殊方式绑定</li>
+<li>修饰符 (modifier) 是以半角句号<code>.</code>指明的特殊后缀，用于指出一个指令应该以特殊方式绑定</li>
 <li><a href="https://vue-docs-next-zh-cn.netlify.app/guide/template-syntax.html#%E4%BF%AE%E9%A5%B0%E7%AC%A6">Vue #修饰符</a></li>
 </ul>
 
@@ -917,20 +935,121 @@
 <li><code>@click.stop.prevent=&quot;add&quot;</code>表示以上两种操作同时执行</li>
 </ul>
 
+<h4 id="修饰符的种类">修饰符的种类</h4>
+
 <blockquote>
-<p>修饰符的种类</p>
+<p>修饰符的种类：按指令支持分</p>
 </blockquote>
 
 <ul>
-<li><code>v-on</code>支持的有 <strong><em><code>.{keycode | keyAlias}</code>、<code>.stop</code>、<code>.prevent</code></em></strong>、<code>.capture</code>、<code>self</code>、<code>once</code>、<code>passive</code>、<code>native</code>
+<li><code>v-on</code>支持的主要有 <strong><em><code>.{keycode | keyAlias}</code>、<code>.stop</code>、<code>.prevent</code></em></strong>、
 
 <ul>
+<li>其他<code>.capture</code>、<code>self</code>、<code>once</code>、<code>passive</code>、<code>native</code></li>
 <li>快捷键相关：<code>.ctrl</code>、<code>.alt</code>、<code>.shift</code>、<code>.meta</code>、<code>.exact</code></li>
 <li>鼠标相关：<code>.left</code>、<code>.right</code>、<code>.middle</code>、</li>
 </ul></li>
 <li><code>v-bind</code>支持的有<code>.prop</code>、<code>.camel</code>、<strong><em><code>.sync</code></em></strong></li>
+<li><code>v-model</code>支持的有 <strong><em><code>.lazy</code>、<code>number</code>、<code>trim</code></em></strong></li>
+</ul>
 
-<li><p><code>v-model</code>支持的有 <strong><em><code>.lazy</code>、<code>number</code>、<code>trim</code></em></strong></p>
+<blockquote>
+<p>内置修饰符的种类：按作用分</p>
+</blockquote>
+
+<ul>
+<li>事件修饰符</li>
+<li>按键修饰符</li>
+<li>系统修饰符</li>
+<li>鼠标按钮修饰符</li>
+</ul>
+
+<hr />
+
+<h4 id="事件修饰符">事件修饰符</h4>
+
+<blockquote>
+<p>vue 官方解释 ：在事件处理程序中调用 <code>event.preventDefault()</code> 或 <code>event.stopPropagation()</code> 是非常常见的需求。</p>
+
+<p>尽管我们可以在方法中轻松实现这点，但更好的方式是：方法只有纯粹的数据逻辑，而不是去处理 DOM 事件细节</p>
+</blockquote>
+
+<ul>
+<li><code>.stop</code> 阻止事件的传播或者冒泡</li>
+<li><code>.prevent</code> 阻止事件的默认事件</li>
+<li><code>.capture</code> 事件为捕获方式</li>
+<li><code>.self</code> 触发事件的是自己这个元素，而不是内部元素</li>
+<li><code>.once</code> 事件只会触发一次</li>
+<li><code>.passive</code> 用来告诉事件监听器，没有调用<code>preventDefault</code>方法，可以提高滚动、滑动性能</li>
+<li><code>.native</code> 我们不能在组件上监听原生<code>dom</code>事件</li>
+<li>例如在<code>router-link</code>上不能监听<code>click</code></li>
+<li>因此要加上<code>.native</code>修饰符，意为本地的，将他作为原来的<code>html5</code>标签来监听的意思</li>
+
+<li><p>注意：<code>prevent</code>和<code>passive</code>不能一起使用，例如<code>@click.prevent.passive</code>会报错</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-XML" data-lang="XML"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-XML" data-lang="XML"><span class="c">&lt;!--当点击提交按钮时阻止对表单的提交--&gt;</span>
+<span class="c">&lt;!--提交事件不再重载页面--&gt;</span>
+<span class="nt">&lt;form</span> <span class="na">v-on:submit.prevent=</span><span class="s">&#34;onSubmit&#34;</span><span class="nt">&gt;&lt;/form&gt;</span>
+<span class="c">&lt;!--点击a标签不会跳转链接--&gt;</span>
+<span class="nt">&lt;a</span> <span class="err">@click.prevent</span> <span class="na">href=</span><span class="s">&#34;baidu.com&#34;</span><span class="nt">&gt;&lt;/a&gt;</span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+
+<h4 id="按键修饰符">按键修饰符</h4>
+
+<blockquote>
+<p><code>KeyBoardEvent.key</code>的有效按键</p>
+</blockquote>
+
+<ul>
+<li>可以传入键盘上的有效按键键名（F1 等不可以，需自定义）</li>
+<li>可以写<code>ASCII</code>码，也可以写字母等等，实际上是<a href="https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/keyCode"><code>KeyBoardEvent.key</code></a>的有效按键，已被弃用，<code>Vue3.x</code>不再支持</li>
+<li><code>ASCII</code>码是<code>keyCode</code>的值</li>
+<li><code>Vue.config.keyCodes</code>已弃用，将不再支持</li>
+</ul>
+
+<blockquote>
+<p>别名（alias）</p>
+</blockquote>
+
+<ul>
+<li><code>.enter</code></li>
+<li><code>.tab</code></li>
+<li><code>.delete</code> (捕获“删除”和“退格”键)</li>
+<li><code>.esc</code></li>
+<li><code>.space</code></li>
+<li><code>.up</code></li>
+<li><code>.down</code></li>
+<li><code>.left</code></li>
+
+<li><p><code>.right</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-XML" data-lang="XML"><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-XML" data-lang="XML"><span class="c">&lt;!-- 当用户在键盘 敲下enter回车键时，会触发xxx事件 --&gt;</span>
+<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&#34;text&#34;</span> <span class="err">@</span><span class="na">keypress.enter=</span><span class="s">&#34;xxx&#34;</span><span class="nt">&gt;</span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+
+<blockquote>
+<p>Vue3 迁移策略 —— 按键修饰符（破坏性改动）</p>
+</blockquote>
+
+<ul>
+<li><p><a href="https://v3.vuejs.org/guide/migration/keycode-modifiers.html">vue 3 官方文档原文—— keycode modifiers</a></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt"> 1
@@ -977,7 +1096,7 @@
     <span class="p">},</span>
     <span class="cm">/*
 </span><span class="cm">    y(e) {
-</span><span class="cm">        if(e.keycode ===13) {
+</span><span class="cm">        if(e.keycode === 13) {
 </span><span class="cm">            console.log(&#34;用户敲了回车&#34;)
 </span><span class="cm">        }
 </span><span class="cm">    },
@@ -990,6 +1109,49 @@
 </code></pre></td></tr></table>
 </div>
 </div></li>
+</ul>
+
+<h4 id="系统修饰符">系统修饰符</h4>
+
+<ul>
+<li><code>.ctrl</code></li>
+<li><code>.alt</code></li>
+<li><code>.shift</code></li>
+<li><code>.meta</code></li>
+
+<li><p><code>.exact</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-XML" data-lang="XML"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-XML" data-lang="XML"><span class="c">&lt;!-- Alt + C --&gt;</span>
+<span class="nt">&lt;input</span> <span class="na">v-on:keyup.alt.67=</span><span class="s">&#34;clear&#34;</span><span class="nt">&gt;</span>
+
+<span class="c">&lt;!-- Ctrl + Click --&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">v-on:click.ctrl=</span><span class="s">&#34;doSomething&#34;</span><span class="nt">&gt;</span>Do something<span class="nt">&lt;/div&gt;</span>
+
+<span class="c">&lt;!-- 有且只有 Ctrl 被按下的时候才触发 --&gt;</span>
+<span class="nt">&lt;button</span> <span class="na">v-on:click.ctrl.exact=</span><span class="s">&#34;onCtrlClick&#34;</span><span class="nt">&gt;</span>A<span class="nt">&lt;/button&gt;</span>
+<span class="c">&lt;!-- 不加exact的话可以一起按下别的键--&gt;</span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+
+<h4 id="鼠标按钮修饰符">鼠标按钮修饰符</h4>
+
+<ul>
+<li><code>.left</code></li>
+<li><code>.right</code></li>
+<li><code>.middle</code></li>
 </ul>
 
 <hr />
@@ -1014,9 +1176,8 @@
 </blockquote>
 
 <ul>
-<li>当一个子组件改变了一个外部传入的属性时，这个变化也会同步到父组件中所绑定的数据中</li>
+<li>当一个子组件改变了一外部传入的属性时，此变化也会同步到父组件中所绑定的数据中</li>
 <li>子组件要“通知”父组件，才可以改变</li>
-<li>避免真正的“双向绑定”所带来的维护上的问题</li>
 </ul>
 
 <blockquote>
@@ -1025,13 +1186,13 @@
 
 <ul>
 <li>子组件不可修改<code>props</code>外部数据，否则会出现警告，数据会被父组件的重新覆盖</li>
-<li>子组件中使用<code>$emit(eventName, fn | 单个 JavaScript 表达式)</code>可以触发事件，并传参（<code>eventBus</code>）
+<li>子组件中使用发布（发出）<code>$emit(eventName, fn | 单个 JavaScript 表达式)</code>，可以触发事件，并传参（<code>eventBus</code>）
 
 <ul>
 <li>即事件回传机制明确通知父组件，真正的更新还是父组件自己实现</li>
 </ul></li>
-<li>注意子组件 <code>$emit('update:child', child - 100)</code> 在事件后传入的应该是一个值，而不是一个其他表达式等，如 <code>child = child -100</code> 返回的是<code>undefined</code></li>
-<li>父组件中插入的子组件标签上使用<code>$event</code>可以获取（监听）子组件的<code>$emit</code>的参数，重新赋值给数据，实现同步更新</li>
+<li>注意子组件发布（发出） <code>$emit('update:money ', money - 100)</code>， 在事件后传入的应该是一个值，而不是一个其他表达式等，如 <code>money = money - 100</code> 返回的是<code>undefined</code></li>
+<li>父组件中在<strong>插入的子组件标签</strong>上使用<code>$event</code>（订阅）可以获取（监听）子组件的<code>$emit</code>发布（发出）的数据，重新赋值给数据，实现同步更新</li>
 <li>即事件的“发布订阅”</li>
 <li>事件名<code>eventName</code>的命名规则为<code>'update:myPropName'</code>，注意是有带冒号的字符串</li>
 </ul>
@@ -1106,7 +1267,7 @@
 </div>
 </div>
 <ul>
-<li>插入子组件标签，添加监听，事件名<code>update:money</code>，意图是更新赋值<code>total = $event</code>，即拿到捕获到的参数，也就是子组件发过来的 <code>money - 100</code> 的值</li>
+<li>子组件需要修改从实例引入的 <code>props</code> 数据 <code>money</code>，不直接改，而是使用了 <code>$emit</code> 将 <code>money</code> 处理并且传参</li>
 </ul>
 
 <blockquote>
@@ -1114,7 +1275,7 @@
 </blockquote>
 
 <ul>
-<li><code>.sync</code>可实现以上场景，<code>Vue</code>内置了<code>EventBus</code>事件总线传值方法，<code>.sync</code>是<code>EventBus</code>的语法糖，封装为修饰符</li>
+<li><code>.sync</code>可实现以上场景，<code>Vue</code>内置了<code>EventBus</code>事件总线传值方法，<code>.sync</code>是<code>EventBus</code>的语法糖，封装为修饰符，代替了 <code>$event</code> 的使用</li>
 <li>父组件中插入的子组件标签上使用<code>:money.sync=&quot;total&quot;</code>等价于<code>:money=&quot;total&quot; v-on:update:money=&quot;total=$event&quot;</code></li>
 <li>父组件中对属性使用<code>.sync</code>修饰符，同步子组件中相应数据的修改</li>
 </ul>
@@ -1216,6 +1377,10 @@
 <span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
 </div>
+<ul>
+<li>插入的子组件标签，添加监听，事件名<code>update:money</code>，意图是更新赋值<code>total = $event</code>，即拿到捕获到的参数，也就是子组件发过来的 <code>money - 100</code> 的值</li>
+</ul>
+
 <blockquote>
 <p>注意</p>
 </blockquote>
@@ -1224,7 +1389,102 @@
 <li>带有 <code>.sync</code> 修饰符的 <code>v-bind</code> 不能和 JS 表达式一起使用</li>
 <li>例如 <code>v-bind:title.sync=”doc.title + ‘!’”</code> 是无效的</li>
 <li>取而代之的是，只能提供要绑定的 <code>property</code> 名，类似 <code>v-model</code></li>
-<li>当子组件需要更新 <code>myProp</code> 的值时，可以显式地触发一个更新事件<code>this.$emit('update:myProp', newValue)</code></li>
+<li>当子组件需要更新 <code>myProp</code> 的值时，可以显式地触发一个更新事件<code>this.$emit('update:myProp', newValue)</code>，注意是<code>newValue</code></li>
+<li>用一个对象同时设置多个 <code>prop</code> 的时候，也可以将这个 <code>.sync</code> 修饰符和 <code>v-bind</code> 配合使用
+
+<ul>
+<li><code>&lt;text-document v-bind.sync=&quot;doc&quot;&gt;&lt;/text-document&gt;</code></li>
+<li>这样会把 <code>doc</code> 对象中的每一个 <code>property</code> (如 <code>title</code>) 都作为一个独立的 <code>prop</code> 传进去，然后各自添加用于更新的 <code>v-on</code> 监听器</li>
+</ul></li>
+<li><code>.sync</code>只是作为一个编译时的语法糖。它会被扩展为一个自动更新父组件属性的 <code>v-on</code> 监听器，实现表面的“数据双向绑定”</li>
+
+<li><p><code>.sync</code>避免真正的“双向绑定”所带来的维护上的问题，会引起父子组件都以更改数据容易混乱，因为子组件可以变更父组件，且在父组件和子组件都没有明显的变更来源</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-XML" data-lang="XML"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-XML" data-lang="XML"><span class="nt">&lt;template&gt;</span>
+<span class="nt">&lt;div&gt;</span>
+<span class="nt">&lt;p&gt;</span>{{bar}}<span class="nt">&lt;/p&gt;</span>
+<span class="nt">&lt;p&gt;</span>
+    <span class="nt">&lt;ChildInsertToFather</span> <span class="na">:foo.sync=</span><span class="s">&#34;bar&#34;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/p&gt;</span>
+<span class="c">&lt;!-- 会被扩展为（等价、语法糖） --&gt;</span>
+<span class="nt">&lt;p&gt;</span>
+    <span class="nt">&lt;ChildInsertToFather</span> <span class="na">:foo=</span><span class="s">&#34;bar&#34;</span> <span class="err">@</span><span class="na">update:foo=</span><span class="s">&#34;val =&gt; bar = val&#34;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;p&gt;</span>
+    <span class="nt">&lt;ChildInsertToFather</span> <span class="na">:foo=</span><span class="s">&#34;bar&#34;</span> <span class="err">@</span><span class="na">update:foo=</span><span class="s">&#34;bar = $event&#34;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/p&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/template&gt;</span>
+<span class="nt">&lt;script&gt;</span>
+Vue.component(&#39;my-comp&#39;, {
+template: &#39;<span class="nt">&lt;div</span> <span class="err">@</span><span class="na">click=</span><span class="s">&#34;increment&#34;</span><span class="nt">&gt;</span>+1s<span class="nt">&lt;/div&gt;</span>&#39;,
+data() {
+    return {copyFoo: this.foo}
+},
+props: [&#39;foo&#39;],
+methods: {
+    increment: function() {
+    // 当子组件需要更新 foo 的值时，它需要显式地触发一个更新事件
+        this.$emit(&#39;update:foo&#39;, ++this.copyFoo)
+        // this.$emit(&#39;update:foo&#39;, newValue)
+    }
+}
+})
+new Vue({
+data() {
+    return {
+        bar: 0
+    }
+}
+})
+<span class="nt">&lt;/script&gt;</span></code></pre></td></tr></table>
+</div>
+</div></li>
+
+<li><p>小结：<code>vue2.x</code> 修饰符<code>.sync</code>的功能是：当一个子组件改变了一个 <code>prop</code> 的值时，这变化也会同步到父组件中所绑定的对应属性</p></li>
+
+<li><p>父组件中在插入的子组件标签上，绑定的属性加后缀<code>.sync</code>，并指向父组件中响应的数据<code>&lt;Child :childProp.sync=&quot;dadData&quot; /&gt;</code></p></li>
+
+<li><p>子组件发布（主动通知）给外部<code>$emit('update:childProp', changeDadData)</code></p></li>
 </ul>
 
 <hr />
@@ -1237,18 +1497,18 @@
 <li><p><code>vue 3.x</code> 又去掉了 <code>.sync</code> ，合并到了 <code>v-model</code> 里</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-Vue" data-lang="Vue"><span class="lnt">1
+<pre class="chroma"><code class="language-XML" data-lang="XML"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-Vue" data-lang="Vue"><span class="c">&lt;!--</span> <span class="nx">vue</span> <span class="mf">2.</span><span class="nx">x</span> <span class="o">--&gt;</span>
-<span class="p">&lt;</span><span class="nt">MyComponent</span> <span class="na">v</span><span class="nt">-bind:title.sync</span><span class="s">=&#34;title&#34;</span> <span class="p">/&gt;</span>
+<pre class="chroma"><code class="language-XML" data-lang="XML"><span class="c">&lt;!-- vue 2.x --&gt;</span>
+<span class="nt">&lt;MyComponent</span> <span class="na">v-bind:title.sync=</span><span class="s">&#34;title&#34;</span> <span class="nt">/&gt;</span>
 
-<span class="c">&lt;!--</span> <span class="nx">vue</span> <span class="mf">3.</span><span class="nx">x</span> <span class="o">--&gt;</span>
-<span class="p">&lt;</span><span class="nt">MyComponent</span> <span class="na">v</span><span class="nt">-model:title</span><span class="s">=&#34;title&#34;</span> <span class="p">/&gt;</span></code></pre></td></tr></table>
+<span class="c">&lt;!-- vue 3.x --&gt;</span>
+<span class="nt">&lt;MyComponent</span> <span class="na">v-model:title=</span><span class="s">&#34;title&#34;</span> <span class="nt">/&gt;</span></code></pre></td></tr></table>
 </div>
 </div></li>
 
@@ -1323,7 +1583,7 @@
   <p class="copyright-item">
     <span class="item-title">上次更新</span>
     <span class="item-content">
-      2020-09-18
+      2020-09-21
       
         
         
