@@ -1,0 +1,3166 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>【Vue非全解4】进阶构造属性 - Joel in The House</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="Joel Xu" />
+  <meta name="description" content="目录§ ⇧ 1. 进阶属性概览 § 2. 复习响应式原理 § 3. Computed 计算属性（数据） § 4. Watch 监听属性（数据） § 5. Directive 指令（资源） § 6. Mixin 混入（组合） § 7. Extends 继承、扩展（组" />
+
+  <meta name="keywords" content="Hugo, theme, jane" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.91.2" />
+
+
+<link rel="canonical" href="http://xmasuhai.xyz/post/vue/vue%E9%9D%9E%E5%85%A8%E8%A7%A34%E8%BF%9B%E9%98%B6%E6%9E%84%E9%80%A0%E5%B1%9E%E6%80%A7/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="【Vue非全解4】进阶构造属性" />
+<meta property="og:description" content="目录§ ⇧ 1. 进阶属性概览 § 2. 复习响应式原理 § 3. Computed 计算属性（数据） § 4. Watch 监听属性（数据） § 5. Directive 指令（资源） § 6. Mixin 混入（组合） § 7. Extends 继承、扩展（组" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://xmasuhai.xyz/post/vue/vue%E9%9D%9E%E5%85%A8%E8%A7%A34%E8%BF%9B%E9%98%B6%E6%9E%84%E9%80%A0%E5%B1%9E%E6%80%A7/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2020-09-27T20:44:53+08:00" />
+<meta property="article:modified_time" content="2020-09-27T20:56:47+08:00" />
+
+<meta itemprop="name" content="【Vue非全解4】进阶构造属性">
+<meta itemprop="description" content="目录§ ⇧ 1. 进阶属性概览 § 2. 复习响应式原理 § 3. Computed 计算属性（数据） § 4. Watch 监听属性（数据） § 5. Directive 指令（资源） § 6. Mixin 混入（组合） § 7. Extends 继承、扩展（组"><meta itemprop="datePublished" content="2020-09-27T20:44:53+08:00" />
+<meta itemprop="dateModified" content="2020-09-27T20:56:47+08:00" />
+<meta itemprop="wordCount" content="11649">
+<meta itemprop="keywords" content="Vue,Vue3.x,computed,watch,directive,mixin,extend,provide &amp; inject," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="【Vue非全解4】进阶构造属性"/>
+<meta name="twitter:description" content="目录§ ⇧ 1. 进阶属性概览 § 2. 复习响应式原理 § 3. Computed 计算属性（数据） § 4. Watch 监听属性（数据） § 5. Directive 指令（资源） § 6. Mixin 混入（组合） § 7. Extends 继承、扩展（组"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Joel in The House</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/post/">文档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/categories/">目录</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/about/">关于我</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          <div class="mobile-menu-parent">
+            <span class="mobile-submenu-open"></span>
+            <a href="http://xmasuhai.xyz/">
+              docs
+            </a>
+          </div>
+          <ul class="mobile-submenu-list">
+            
+              <li>
+                <a href="http://xmasuhai.xyz/post/test/syntax-highlighting/">Syntax Highlighting</a>
+              </li>
+            
+              <li>
+                <a href="http://xmasuhai.xyz/post/test/mytest/">my Syntax Highlighting &amp; ShortCode Test</a>
+              </li>
+            
+          </ul>
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Joel in The House
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/post/">文档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/categories/">目录</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/about/">关于我</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          <a class="menu-item-link menu-parent" href="http://xmasuhai.xyz/">docs</a>
+          <ul class="submenu">
+            
+              <li>
+                <a href="http://xmasuhai.xyz/post/test/syntax-highlighting/">Syntax Highlighting</a>
+              </li>
+            
+              <li>
+                <a href="http://xmasuhai.xyz/post/test/mytest/">my Syntax Highlighting &amp; ShortCode Test</a>
+              </li>
+            
+          </ul>
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">【Vue非全解4】进阶构造属性</h1>
+      
+      <div class="post-meta">
+        <time datetime="2020-09-27" class="post-time">
+          2020-09-27
+        </time>
+        <div class="post-category">
+            <a href="http://xmasuhai.xyz/categories/frontend/"> FrontEnd </a>
+            
+          </div>
+        <span class="more-meta"> 约 11649 字 </span>
+          <span class="more-meta"> 预计阅读 24 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#目录a-idcatalogue-hrefcatalogue---aa-hrefcatalogue--a">目录<!-- raw HTML omitted --> § <!-- raw HTML omitted --><!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
+    <li><a href="#a-id_1_-href_2_1-进阶属性概览--a"><!-- raw HTML omitted -->1. 进阶属性概览 § <!-- raw HTML omitted --></a></li>
+    <li><a href="#2-复习响应式原理a-id复习响应式原理-href复习响应式原理--aa-hrefcatalogue--a">2. 复习响应式原理<!-- raw HTML omitted --> § <!-- raw HTML omitted --><!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
+    <li><a href="#3-computed-计算属性数据a-idcomputed-hrefcomputed--aa-hrefcatalogue--a">3. Computed 计算属性（数据）<!-- raw HTML omitted --> § <!-- raw HTML omitted --><!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a>
+      <ul>
+        <li><a href="#用途-a-hrefcatalogue--a">用途 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
+        <li><a href="#computed-缓存原理-a-hrefcatalogue--a">Computed 缓存原理 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
+      </ul>
+    </li>
+    <li><a href="#4-watch-监听属性数据a-idwatch-hrefwatch-aa-hrefcatalogue--a">4. Watch 监听属性（数据）<!-- raw HTML omitted -->§ <!-- raw HTML omitted --><!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a>
+      <ul>
+        <li><a href="#用途-a-hrefcatalogue--a-1">用途 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
+        <li><a href="#数据变化-a-hrefcatalogue--a">数据变化 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
+        <li><a href="#watch-类型语法"><code>watch</code> 类型语法</a></li>
+      </ul>
+    </li>
+    <li><a href="#5-directive-指令a-iddirective-hrefdirective--a-a-hrefcatalogue--a">5. Directive 指令<!-- raw HTML omitted --> § <!-- raw HTML omitted --> <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a>
+      <ul>
+        <li><a href="#directiveoptions-a-hrefcatalogue--a"><code>directiveOptions</code> <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
+        <li><a href="#指令的作用-a-hrefcatalogue--a">指令的作用 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
+      </ul>
+    </li>
+    <li><a href="#6-mixin-混入a-idmixin-hrefmixin--a-a-hrefcatalogue--a">6. <code>Mixin</code> 混入<!-- raw HTML omitted --> § <!-- raw HTML omitted --> <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a>
+      <ul>
+        <li><a href="#mixin减少重复"><code>Mixin</code>减少重复</a></li>
+        <li><a href="#mixins用法"><code>mixins</code>用法</a></li>
+        <li><a href="#mixin技巧"><code>mixin</code>技巧</a></li>
+      </ul>
+    </li>
+    <li><a href="#7-extend-继承扩展a-idextends-hrefextends--aa-hrefcatalogue--a">7. <code>Extend</code> 继承、扩展<!-- raw HTML omitted --> § <!-- raw HTML omitted --><!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a>
+      <ul>
+        <li><a href="#extend减少mixin的重复"><code>Extend</code>减少<code>Mixin</code>的重复</a></li>
+      </ul>
+    </li>
+    <li><a href="#8-provide-和-injecta-idprovideinject-hrefprovideinject--aa-hrefcatalogue--a">8. <code>Provide</code> 和 <code>Inject</code><!-- raw HTML omitted --> § <!-- raw HTML omitted --><!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
+    <li><a href="#总结a-hrefcatalogue--a">总结<!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a>
+      <ul>
+        <li><a href="#参考文章">参考文章</a></li>
+        <li><a href="#相关文章">相关文章</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      <h2 id="目录a-idcatalogue-hrefcatalogue---aa-hrefcatalogue--a">目录<!-- raw HTML omitted --> § <!-- raw HTML omitted --><!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+<ul>
+<li><!-- raw HTML omitted -->1. 进阶属性概览 § <!-- raw HTML omitted --></li>
+<li><!-- raw HTML omitted -->2. 复习响应式原理 § <!-- raw HTML omitted --></li>
+<li><!-- raw HTML omitted -->3. <code>Computed</code> 计算属性（数据） § <!-- raw HTML omitted --></li>
+<li><!-- raw HTML omitted -->4. <code>Watch</code> 监听属性（数据） § <!-- raw HTML omitted --></li>
+<li><!-- raw HTML omitted -->5. <code>Directive</code> 指令（资源） § <!-- raw HTML omitted --></li>
+<li><!-- raw HTML omitted -->6. <code>Mixin</code> 混入（组合） § <!-- raw HTML omitted --></li>
+<li><!-- raw HTML omitted -->7. <code>Extends</code> 继承、扩展（组合） § <!-- raw HTML omitted --></li>
+<li><!-- raw HTML omitted -->8. <code>Provide</code> 和 <code>Inject</code>（组合） § <!-- raw HTML omitted --></li>
+<li><!-- raw HTML omitted -->9. <code>Vue3.x</code>响应式系统 API <code>watchEffect</code> § <!-- raw HTML omitted --></li>
+<li><!-- raw HTML omitted -->10. $3 § <!-- raw HTML omitted --></li>
+<li><!-- raw HTML omitted -->11. $3 § <!-- raw HTML omitted --></li>
+</ul>
+<hr>
+<h2 id="a-id_1_-href_2_1-进阶属性概览--a"><!-- raw HTML omitted -->1. 进阶属性概览 § <!-- raw HTML omitted --></h2>
+<ul>
+<li><code>computed</code> 计算属性
+<ul>
+<li>不需要加括号</li>
+<li>会根据依赖是否变化来缓存</li>
+</ul>
+</li>
+<li><code>watch</code> 监听
+<ul>
+<li>一旦<code>data</code>变化，就执行的函数</li>
+<li><code>options.watch</code>用法</li>
+<li><code>this.$watch</code>用法</li>
+<li><code>deep</code>, <code>immediate</code>含义</li>
+</ul>
+</li>
+<li><code>directives</code> 指令
+<ul>
+<li>内置指令 <code>v-if / v-for / v-bind /v-on</code></li>
+<li>自定义指令，如<code>v-focus</code></li>
+<li>指令是为了<strong>减少重复</strong>的<code>DOM</code>操作</li>
+</ul>
+</li>
+<li><code>mixin</code> 混入
+<ul>
+<li>重复三次之后的出路</li>
+<li>混入 <code>V.S.</code> 全局混入</li>
+<li>选项自动合并</li>
+<li>混入就是为了<strong>减少重复</strong>的构造选项</li>
+</ul>
+</li>
+<li><code>extends</code> 继承
+<ul>
+<li><code>Vue.extend</code></li>
+<li>觉得用了<code>mixin</code>还是重复，自己写了<code>View</code>，继承<code>Vue</code></li>
+<li>还可以预先定义其他构造选项</li>
+<li>继承就是为了<strong>减少重复</strong>的构造选项</li>
+<li>不用<code>ES6</code>的<code>extends</code>的原因</li>
+</ul>
+</li>
+<li><code>provide/inject</code>
+<ul>
+<li>祖孙组件通信</li>
+<li>后代组件通信</li>
+<li>全局变量，局部的全局变量</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="2-复习响应式原理a-id复习响应式原理-href复习响应式原理--aa-hrefcatalogue--a">2. 复习响应式原理<!-- raw HTML omitted --> § <!-- raw HTML omitted --><!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+<ul>
+<li>当传入<code>options.data</code>给<code>Vue</code>之后
+<ul>
+<li><code>data</code>会被<code>Vue</code>监听，对象被<code>Vue</code>篡改<code>setter</code> <code>getter</code></li>
+<li>会被<code>Vue</code>实例<code>vm</code>代理</li>
+<li>每次对<code>data</code>的读写会被<code>Vue</code>监控</li>
+<li><code>Vue</code>会在<code>data</code>变化时更新<code>UI</code></li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><code>data</code>变化时除了更新<code>UI</code>外，其他的操作</p>
+</blockquote>
+<h2 id="3-computed-计算属性数据a-idcomputed-hrefcomputed--aa-hrefcatalogue--a">3. Computed 计算属性（数据）<!-- raw HTML omitted --> § <!-- raw HTML omitted --><!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+<h3 id="用途-a-hrefcatalogue--a">用途 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+<ul>
+<li>根据其他属性计算出来的属性就是计算属性</li>
+<li>语法是函数，当做属性使用，默认读取方法返回值</li>
+<li><a href="https://cn.vuejs.org/v2/guide/computed.html#%E8%AE%A1%E7%AE%97%E5%B1%9E%E6%80%A7">计算属性文档</a></li>
+<li><a href="https://cn.vuejs.org/v2/api/#computed"><code>computed</code> 文档</a></li>
+<li>示例代码1：<a href="https://codesandbox.io/s/clever-joliot-e1r3y">用户名展示</a></li>
+</ul>
+<blockquote>
+<p><code>main.js</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
+  <span class="nx">data</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">{</span>
+      <span class="nx">user</span><span class="o">:</span> <span class="p">{</span>
+        <span class="nx">email</span><span class="o">:</span> <span class="s2">&#34;FrankFang&#34;</span><span class="p">,</span>
+        <span class="nx">nickname</span><span class="o">:</span> <span class="s2">&#34;方&#34;</span><span class="p">,</span>
+        <span class="nx">phone</span><span class="o">:</span> <span class="s2">&#34;13812312312&#34;</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="nx">computed</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">displayName</span><span class="p">()</span> <span class="p">{</span>
+      <span class="kr">const</span> <span class="nx">user</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">user</span>
+      <span class="k">return</span> <span class="nx">user</span><span class="p">.</span><span class="nx">nickname</span> <span class="o">||</span> <span class="nx">user</span><span class="p">.</span><span class="nx">email</span> <span class="o">||</span> <span class="nx">user</span><span class="p">.</span><span class="nx">phone</span>
+    <span class="p">},</span>
+  <span class="p">},</span>
+  <span class="c1">// DRY 原则
+</span><span class="c1"></span>  <span class="c1">// 用 computed 来计算 displayName 代替模板中的 user.nickname || user.email || user.phone
+</span><span class="c1"></span>  <span class="nx">template</span><span class="o">:</span> <span class="sb">`
+</span><span class="sb">    &lt;div&gt;
+</span><span class="sb">      {{displayName}}
+</span><span class="sb">      &lt;div&gt;
+</span><span class="sb">        {{displayName}}
+</span><span class="sb">      &lt;/div&gt;
+</span><span class="sb">      {{displayName}}
+</span><span class="sb">    &lt;/div&gt;
+</span><span class="sb">  `</span><span class="p">,</span>
+<span class="p">}).</span><span class="nx">$mount</span><span class="p">(</span><span class="s1">&#39;#app&#39;</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>用户可能没有填昵称，优先展示昵称，没有昵称其次展示邮箱，再次展示手机</li>
+<li>页面中多处展示昵称、邮箱和手机</li>
+<li><code>DRY</code>原则，灵活面对需求变化：先展示手机，最后是邮箱</li>
+<li>将所有的数据的可能变化，写在一个函数中（<code>displayName() {return ...}</code> 必须有返回值），按需调用（当做属性，不用写括号）<code>{{displayName}}</code></li>
+<li>需要多处展示，多处写入计算属性即可</li>
+<li>好处就是可以让一些事根据其他属性计算而来的属性变成一个属性，形式是一个方法，但必须当做属性来用，默认去读取方法的返回值</li>
+</ul>
+<blockquote>
+<p>可读可写<code>main.js</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
+  <span class="nx">data</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">{</span>
+      <span class="nx">user</span><span class="o">:</span> <span class="p">{</span>
+        <span class="nx">email</span><span class="o">:</span> <span class="s2">&#34;FrankFang&#34;</span><span class="p">,</span>
+        <span class="nx">nickname</span><span class="o">:</span> <span class="s2">&#34;方&#34;</span><span class="p">,</span>
+        <span class="nx">phone</span><span class="o">:</span> <span class="s2">&#34;13812312312&#34;</span>
+      <span class="p">},</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="nx">computed</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">displayName</span><span class="o">:</span> <span class="p">{</span>
+      <span class="nx">get</span><span class="p">()</span> <span class="p">{</span>
+        <span class="kr">const</span> <span class="nx">user</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">user</span>
+        <span class="k">return</span> <span class="nx">user</span><span class="p">.</span><span class="nx">nickname</span> <span class="o">||</span> <span class="nx">user</span><span class="p">.</span><span class="nx">email</span> <span class="o">||</span> <span class="nx">user</span><span class="p">.</span><span class="nx">phone</span>
+      <span class="p">},</span>
+      <span class="nx">set</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">nickname</span> <span class="o">=</span> <span class="nx">value</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="c1">// DRY 原则
+</span><span class="c1"></span>  <span class="c1">// 用 computed 来计算 displayName 代替模板中的 user.nickname || user.email || user.phone
+</span><span class="c1"></span>  <span class="nx">template</span><span class="o">:</span> <span class="sb">`
+</span><span class="sb">    &lt;div&gt;
+</span><span class="sb">      {{displayName}}
+</span><span class="sb">      &lt;div&gt;
+</span><span class="sb">        {{displayName}}
+</span><span class="sb">      &lt;/div&gt;
+</span><span class="sb">      {{displayName}}
+</span><span class="sb">    &lt;button @click=&#34;set&#34;&gt;set&lt;/button&gt;
+</span><span class="sb">    &lt;/div&gt;
+</span><span class="sb">  `</span><span class="p">,</span>
+  <span class="nx">methods</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">set</span><span class="p">()</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;set&#39;</span><span class="p">)</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">displayName</span> <span class="o">=</span> <span class="s1">&#39;圆圆&#39;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}).</span><span class="nx">$mount</span><span class="p">(</span><span class="s1">&#39;#app&#39;</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>示例代码2：<a href="https://codesandbox.io/s/magical-forest-u9rs0?file=/src/main.js">列表展示</a></li>
+<li>需求 点击性别展示符合的内容；点击全部，展示全部</li>
+</ul>
+<blockquote>
+<p>如何给三个按钮添加事件处理函数</p>
+</blockquote>
+<ul>
+<li>思路一：点击后改<code>userList</code>，不可改变原始数据</li>
+<li>复制一份数据用来展示<code>displayUsers: []</code></li>
+<li>思路二：使用<code>computed</code></li>
+</ul>
+<hr>
+<h4 id="思路一点击后改userlista-hrefcatalogue--a">思路一：点击后改<code>userList</code><!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h4>
+<ul>
+<li><a href="https://codesandbox.io/s/modest-matsumoto-pd03w">不用 computed 筛选男女</a></li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">id</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="kr">const</span> <span class="nx">createUser</span> <span class="o">=</span> <span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">gender</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="nx">id</span> <span class="o">+=</span> <span class="mi">1</span>
+  <span class="k">return</span> <span class="p">{</span><span class="nx">id</span><span class="o">:</span> <span class="nx">id</span><span class="p">,</span> <span class="nx">name</span><span class="o">:</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">gender</span><span class="o">:</span> <span class="nx">gender</span><span class="p">}</span>
+<span class="p">}</span>
+<span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
+  <span class="nx">data</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">{</span>
+      <span class="nx">userList</span><span class="o">:</span> <span class="p">[</span>
+        <span class="nx">createUser</span><span class="p">(</span><span class="s2">&#34;方方&#34;</span><span class="p">,</span> <span class="s2">&#34;男&#34;</span><span class="p">),</span>
+        <span class="nx">createUser</span><span class="p">(</span><span class="s2">&#34;圆圆&#34;</span><span class="p">,</span> <span class="s2">&#34;女&#34;</span><span class="p">),</span>
+        <span class="nx">createUser</span><span class="p">(</span><span class="s2">&#34;小新&#34;</span><span class="p">,</span> <span class="s2">&#34;女&#34;</span><span class="p">),</span>
+        <span class="nx">createUser</span><span class="p">(</span><span class="s2">&#34;小葵&#34;</span><span class="p">,</span> <span class="s2">&#34;女&#34;</span><span class="p">),</span>
+      <span class="p">],</span>
+      <span class="c1">// DRY 重复代码 使用computed重构displayUsers
+</span><span class="c1"></span>      <span class="nx">displayUsers</span><span class="o">:</span> <span class="p">[],</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="c1">// created 实例出现在内存中，而未出现在页面中
+</span><span class="c1"></span>  <span class="c1">// 复制一份原始数据用来展示
+</span><span class="c1"></span>  <span class="nx">created</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">displayUsers</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">userList</span>
+  <span class="p">},</span>
+  <span class="nx">template</span><span class="o">:</span> <span class="sb">`
+</span><span class="sb">      &lt;div&gt;
+</span><span class="sb">        &lt;button @click=&#34;showAll&#34;&gt;全部&lt;/button&gt;
+</span><span class="sb">        &lt;button @click=&#34;showMale&#34;&gt;男&lt;/button&gt;
+</span><span class="sb">        &lt;button @click=&#34;showFemale&#34;&gt;女&lt;/button&gt;
+</span><span class="sb">        &lt;ul&gt;
+</span><span class="sb">&lt;!--      &lt;li v-for=&#34;u in userList&#34; :key=&#34;u.id&#34;&gt;   --&gt;
+</span><span class="sb">          &lt;li v-for=&#34;u in displayUsers&#34; :key=&#34;u.id&#34;&gt;
+</span><span class="sb">            {{u.name}} - {{u.gender}}
+</span><span class="sb">          &lt;/li&gt;
+</span><span class="sb">        &lt;/ul&gt;
+</span><span class="sb">      &lt;/div&gt;
+</span><span class="sb">    &lt;/div&gt;
+</span><span class="sb">  `</span><span class="p">,</span>
+  <span class="nx">methods</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">set</span><span class="p">()</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;set&#39;</span><span class="p">)</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">displayName</span> <span class="o">=</span> <span class="s1">&#39;圆圆&#39;</span>
+    <span class="p">},</span>
+    <span class="c1">// DRY 重复代码 使用computed重构
+</span><span class="c1"></span>    <span class="nx">showMale</span><span class="p">()</span> <span class="p">{</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">displayUsers</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">userList</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="nx">user</span> <span class="p">=&gt;</span> <span class="nx">user</span><span class="p">.</span><span class="nx">gender</span> <span class="o">===</span> <span class="s1">&#39;男&#39;</span><span class="p">)</span>
+    <span class="p">},</span>
+    <span class="nx">showFemale</span><span class="p">()</span> <span class="p">{</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">displayUsers</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">userList</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="nx">user</span> <span class="p">=&gt;</span> <span class="nx">user</span><span class="p">.</span><span class="nx">gender</span> <span class="o">===</span> <span class="s1">&#39;女&#39;</span><span class="p">)</span>
+
+    <span class="p">},</span>
+    <span class="nx">showAll</span><span class="p">()</span> <span class="p">{</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">displayUsers</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">userList</span>
+    <span class="p">},</span>
+  <span class="p">}</span>
+<span class="p">}).</span><span class="nx">$mount</span><span class="p">(</span><span class="s1">&#39;#app&#39;</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="思路二使用computeda-hrefcatalogue--a">思路二：使用<code>computed</code><!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h4>
+<ul>
+<li>根据<code>user</code>和<code>gender</code>筛选结果<code>result</code></li>
+<li>封装函数<code>result = f(users, gender){...}</code>，通过计算得到结果</li>
+<li>在<code>methods</code>的方法中判断<code>this.gender</code></li>
+<li>在<code>template</code>点击事件中，直接赋值<code>gender</code>，自动计算显示内容</li>
+<li><a href="https://codesandbox.io/s/little-breeze-hdx44">用 computed 筛选男女</a></li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">id</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="kr">const</span> <span class="nx">createUser</span> <span class="o">=</span> <span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">gender</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="nx">id</span> <span class="o">+=</span> <span class="mi">1</span>
+  <span class="k">return</span> <span class="p">{</span><span class="nx">id</span><span class="o">:</span> <span class="nx">id</span><span class="p">,</span> <span class="nx">name</span><span class="o">:</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">gender</span><span class="o">:</span> <span class="nx">gender</span><span class="p">}</span>
+<span class="p">}</span>
+<span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
+  <span class="nx">data</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">{</span>
+      <span class="nx">userList</span><span class="o">:</span> <span class="p">[</span>
+        <span class="nx">createUser</span><span class="p">(</span><span class="s2">&#34;方方&#34;</span><span class="p">,</span> <span class="s2">&#34;男&#34;</span><span class="p">),</span>
+        <span class="nx">createUser</span><span class="p">(</span><span class="s2">&#34;圆圆&#34;</span><span class="p">,</span> <span class="s2">&#34;女&#34;</span><span class="p">),</span>
+        <span class="nx">createUser</span><span class="p">(</span><span class="s2">&#34;小新&#34;</span><span class="p">,</span> <span class="s2">&#34;女&#34;</span><span class="p">),</span>
+        <span class="nx">createUser</span><span class="p">(</span><span class="s2">&#34;小葵&#34;</span><span class="p">,</span> <span class="s2">&#34;女&#34;</span><span class="p">),</span>
+      <span class="p">],</span>
+
+      <span class="c1">// DRY 重复代码 使用computed重构displayUsers
+</span><span class="c1"></span>      <span class="cm">/* displayUsers: [],*/</span>
+
+      <span class="c1">// 初始化gender，根据gender筛选结果result
+</span><span class="c1"></span>      <span class="nx">gender</span><span class="o">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="c1">// created 实例出现在内存中，而未出现在页面中
+</span><span class="c1"></span>  <span class="c1">// 创建时 复制一份原始数据用来展示
+</span><span class="c1"></span>  <span class="c1">// DRY 重复代码 使用computed重构displayUsers时不需要
+</span><span class="c1"></span>  <span class="cm">/*
+</span><span class="cm">  created() {
+</span><span class="cm">    this.displayUsers = this.userList
+</span><span class="cm">  },
+</span><span class="cm">  */</span>
+    <span class="nx">computed</span><span class="o">:</span> <span class="p">{</span>
+      <span class="nx">displayUsers</span><span class="p">()</span> <span class="p">{</span>
+        <span class="c1">// 哈希映射
+</span><span class="c1"></span>        <span class="kr">const</span> <span class="nx">hash</span> <span class="o">=</span> <span class="p">{</span>
+          <span class="nx">male</span><span class="o">:</span> <span class="s1">&#39;男&#39;</span><span class="p">,</span>
+          <span class="nx">female</span><span class="o">:</span> <span class="s1">&#39;女&#39;</span>
+        <span class="p">}</span>
+        <span class="kr">const</span> <span class="p">{</span><span class="nx">userList</span><span class="p">,</span> <span class="nx">gender</span><span class="p">}</span> <span class="o">=</span> <span class="k">this</span>
+        <span class="k">if</span><span class="p">(</span><span class="nx">gender</span> <span class="o">===</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="p">{</span>
+          <span class="k">return</span> <span class="nx">userList</span>
+        <span class="p">}</span>
+        <span class="cm">/*
+</span><span class="cm">        else if(gender === &#39;male&#39;) {
+</span><span class="cm">          return userList.filter(user =&gt; user.gender === &#39;男&#39;)
+</span><span class="cm">        }else if(gender === &#39;female&#39;) {
+</span><span class="cm">          return userList.filter(user =&gt; user.gender === &#39;女&#39;)
+</span><span class="cm">        }
+</span><span class="cm">        */</span>
+        <span class="cm">/*
+</span><span class="cm">        else if(gender === &#39;male&#39; || gender === &#39;female&#39;) {
+</span><span class="cm">          return userList.filter(user =&gt; user.gender === hash[gender])
+</span><span class="cm">        }
+</span><span class="cm">        */</span>
+        <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="k">typeof</span> <span class="nx">gender</span> <span class="o">===</span> <span class="s1">&#39;string&#39;</span><span class="p">)</span> <span class="p">{</span>
+          <span class="k">return</span> <span class="nx">userList</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="nx">user</span> <span class="p">=&gt;</span> <span class="nx">user</span><span class="p">.</span><span class="nx">gender</span> <span class="o">===</span> <span class="nx">hash</span><span class="p">[</span><span class="nx">gender</span><span class="p">])</span>
+        <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+          <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s1">&#39;gender的值是意外的值&#39;</span><span class="p">)</span>
+        <span class="p">}</span>
+      <span class="p">},</span>
+  <span class="p">},</span>
+  <span class="nx">template</span><span class="o">:</span> <span class="sb">`
+</span><span class="sb">      &lt;div&gt;
+</span><span class="sb">        &lt;!--
+</span><span class="sb">        &lt;button @click=&#34;showAll&#34;&gt;全部&lt;/button&gt;
+</span><span class="sb">        &lt;button @click=&#34;showMale&#34;&gt;男&lt;/button&gt;
+</span><span class="sb">        &lt;button @click=&#34;showFemale&#34;&gt;女&lt;/button&gt;
+</span><span class="sb">        --&gt;
+</span><span class="sb">        &lt;!--  不需要加this 可省略methods中的三个方法 直接改变this.gender    --&gt;
+</span><span class="sb">        &lt;!--
+</span><span class="sb">        &lt;button @click=&#34;gender =&#39;&#39;&#34;&gt;全部&lt;/button&gt;
+</span><span class="sb">        &lt;button @click=&#34;gender =&#39;male&#39;&#34;&gt;男&lt;/button&gt;
+</span><span class="sb">        &lt;button @click=&#34;gender =&#39;female&#39;&#34;&gt;女&lt;/button&gt;
+</span><span class="sb">        --&gt;
+</span><span class="sb">        &lt;button @click=&#34;setGender(&#39;&#39;)&#34;&gt;全部&lt;/button&gt;
+</span><span class="sb">        &lt;button @click=&#34;setGender(&#39;male&#39;)&#34;&gt;男&lt;/button&gt;
+</span><span class="sb">        &lt;button @click=&#34;setGender(&#39;female&#39;)&#34;&gt;女&lt;/button&gt;
+</span><span class="sb">        &lt;ul&gt;
+</span><span class="sb">&lt;!--      &lt;li v-for=&#34;u in userList&#34; :key=&#34;u.id&#34;&gt;   --&gt;
+</span><span class="sb">          &lt;li v-for=&#34;(u, index) in displayUsers&#34; :key=&#34;index&#34;&gt;
+</span><span class="sb">            {{u.name}} - {{u.gender}}
+</span><span class="sb">          &lt;/li&gt;
+</span><span class="sb">        &lt;/ul&gt;
+</span><span class="sb">      &lt;/div&gt;
+</span><span class="sb">    &lt;/div&gt;
+</span><span class="sb">  `</span><span class="p">,</span>
+  <span class="nx">methods</span><span class="o">:</span> <span class="p">{</span>
+    <span class="c1">// 在template中改变属性的选择条件，自动计算 改变内容
+</span><span class="c1"></span>    <span class="cm">/*
+</span><span class="cm">    // DRY 重复代码 使用computed重构
+</span><span class="cm">    showMale() {
+</span><span class="cm">      // 用 computed 计算属性 根据不同的gender显示userList内容 来代替
+</span><span class="cm">      // this.displayUsers = this.userList.filter(user =&gt; user.gender === &#39;男&#39;)
+</span><span class="cm">      this.gender = &#39;male&#39;
+</span><span class="cm">    },
+</span><span class="cm">    showFemale() {
+</span><span class="cm">      // 用 computed 计算属性 根据不同的gender显示userList内容 来代替
+</span><span class="cm">      // this.displayUsers = this.userList.filter(user =&gt; user.gender === &#39;女&#39;)
+</span><span class="cm">      this.gender = &#39;female&#39;
+</span><span class="cm">    },
+</span><span class="cm">    showAll() {
+</span><span class="cm">      // 用 computed 计算属性 根据不同的gender显示userList内容 来代替
+</span><span class="cm">      // this.displayUsers = this.userList
+</span><span class="cm">      this.gender = &#39;&#39;
+</span><span class="cm">    },
+</span><span class="cm">    */</span>
+    <span class="c1">// setGender 代替以上三个函数
+</span><span class="c1"></span>    <span class="nx">setGender</span><span class="p">(</span><span class="nx">string</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">gender</span> <span class="o">=</span> <span class="nx">string</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}).</span><span class="nx">$mount</span><span class="p">(</span><span class="s1">&#39;#app&#39;</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>根据<code>gender</code>返回<code>userList</code>的不同部分</li>
+<li><code>computed</code>使得<code>button</code>的逻辑更加清晰，按钮直接改变<code>gender</code>，而不用通过绑定函数，计算对应的值，全部在<code>computed</code>中计算</li>
+</ul>
+<hr>
+<h3 id="computed-缓存原理-a-hrefcatalogue--a">Computed 缓存原理 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+<ul>
+<li>如果依赖的属性没有变化，计算属性就不会重新计算</li>
+<li><code>getter/setter</code>默认不会做缓存，<code>Vue</code>做了特殊处理</li>
+<li><a href="https://codesandbox.io/s/billowing-worker-yrwx5">示例代码3</a> 非<code>Vue</code>源码</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="c1">// Computed 缓存原理
+</span><span class="c1"></span><span class="kd">let</span> <span class="nx">obj1</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nx">姓</span><span class="o">:</span> <span class="s2">&#34;高&#34;</span><span class="p">,</span>
+  <span class="nx">名</span><span class="o">:</span> <span class="s2">&#34;圆圆&#34;</span><span class="p">,</span>
+  <span class="nx">get</span> <span class="nx">姓名</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;计算了一次，将姓与名相加&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">姓</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">名</span><span class="p">;</span>
+  <span class="p">},</span>
+  <span class="nx">set</span> <span class="nx">姓名</span><span class="p">(</span><span class="nx">xxx</span><span class="p">){</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">姓</span> <span class="o">=</span> <span class="nx">xxx</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">名</span> <span class="o">=</span> <span class="nx">xxx</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+  <span class="p">},</span>
+  <span class="nx">age</span><span class="o">:</span> <span class="mi">18</span>
+<span class="p">};</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">obj1</span><span class="p">.</span><span class="nx">姓名</span><span class="p">)</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">obj1</span><span class="p">.</span><span class="nx">姓名</span><span class="p">)</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">obj1</span><span class="p">.</span><span class="nx">姓名</span><span class="p">)</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;----------------&#39;</span><span class="p">)</span> <span class="c1">// 精髓
+</span><span class="c1"></span>
+<span class="c1">// 杠精说：为什么每次都要重新计算？如果计算很复杂，不就很浪费时间吗？
+</span><span class="c1">// 那就缓存一下吧
+</span><span class="c1">// 缓存是啥？就是哈希表
+</span><span class="c1"></span><span class="kr">const</span> <span class="nx">cache</span> <span class="o">=</span> <span class="p">{}</span> <span class="c1">// {&#39;高&#39;:{&#39;圆圆&#39;: &#39;高圆圆&#39;}}
+</span><span class="c1"></span><span class="kd">let</span> <span class="nx">obj2</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nx">姓</span><span class="o">:</span> <span class="s2">&#34;高&#34;</span><span class="p">,</span>
+  <span class="nx">名</span><span class="o">:</span> <span class="s2">&#34;圆圆&#34;</span><span class="p">,</span>
+  <span class="nx">get</span> <span class="nx">姓名</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// 由于对象不支持 [&#39;高&#39;,&#39;圆圆&#39;] 数组作为 key，只能变通一下
+</span><span class="c1"></span>    <span class="k">if</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">姓</span> <span class="k">in</span> <span class="nx">cache</span> <span class="o">&amp;&amp;</span> <span class="k">this</span><span class="p">.</span><span class="nx">名</span> <span class="k">in</span> <span class="nx">cache</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">姓</span><span class="p">]){</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;有缓存，不再计算&#39;</span><span class="p">)</span>
+      <span class="k">return</span> <span class="nx">cache</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">姓</span><span class="p">][</span><span class="k">this</span><span class="p">.</span><span class="nx">名</span><span class="p">]</span>
+    <span class="p">}</span>
+    <span class="c1">// 如果 cache[this.姓] 不存在，就赋值为 {}
+</span><span class="c1"></span>    <span class="c1">// 如果 cache[this.姓] 存在，就赋值为它自己（相当于什么都不做）
+</span><span class="c1"></span>    <span class="nx">cache</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">姓</span><span class="p">]</span> <span class="o">=</span> <span class="nx">cache</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">姓</span><span class="p">]</span> <span class="o">||</span> <span class="p">{}</span> <span class="c1">// 保底值
+</span><span class="c1"></span>    <span class="nx">cache</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">姓</span><span class="p">][</span><span class="k">this</span><span class="p">.</span><span class="nx">名</span><span class="p">]</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">姓</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">名</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;计算了一次，将姓与名相加&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nx">cache</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">姓</span><span class="p">][</span><span class="k">this</span><span class="p">.</span><span class="nx">名</span><span class="p">];</span>
+  <span class="p">},</span>
+  <span class="nx">set</span> <span class="nx">姓名</span><span class="p">(</span><span class="nx">xxx</span><span class="p">){</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">姓</span> <span class="o">=</span> <span class="nx">xxx</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">名</span> <span class="o">=</span> <span class="nx">xxx</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+  <span class="p">},</span>
+  <span class="nx">age</span><span class="o">:</span> <span class="mi">18</span>
+<span class="p">};</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">obj2</span><span class="p">.</span><span class="nx">姓名</span><span class="p">)</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">obj2</span><span class="p">.</span><span class="nx">姓名</span><span class="p">)</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">obj2</span><span class="p">.</span><span class="nx">姓名</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>勿重复在<code>data</code>中声明数据，否则报错<code>The computed property &quot;xxx&quot; is already defined in data</code></li>
+</ul>
+<hr>
+<h2 id="4-watch-监听属性数据a-idwatch-hrefwatch-aa-hrefcatalogue--a">4. Watch 监听属性（数据）<!-- raw HTML omitted -->§ <!-- raw HTML omitted --><!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+<h3 id="用途-a-hrefcatalogue--a-1">用途 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+<ul>
+<li>当数据变化时，执行一个函数</li>
+<li>又称<a href="https://cn.vuejs.org/v2/guide/computed.html#%E4%BE%A6%E5%90%AC%E5%99%A8">“侦听器”</a></li>
+<li>当需要在数据变化时执行异步或开销较大的操作时，来响应数据的变化</li>
+</ul>
+<blockquote>
+<p>示例代码4：<a href="https://codesandbox.io/s/lucid-shamir-cpcw3">撤销</a></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
+  <span class="nx">template</span><span class="o">:</span> <span class="sb">`
+</span><span class="sb">    &lt;div&gt;
+</span><span class="sb">      &lt;hr/&gt;
+</span><span class="sb">      {{n}}
+</span><span class="sb">      &lt;hr/&gt;
+</span><span class="sb">      &lt;button @click=&#34;add1&#34;&gt;+1&lt;/button&gt;
+</span><span class="sb">      &lt;button @click=&#34;add2&#34;&gt;+2&lt;/button&gt;
+</span><span class="sb">      &lt;button @click=&#34;minus1&#34;&gt;-1&lt;/button&gt;
+</span><span class="sb">      &lt;button @click=&#34;minus2&#34;&gt;-2&lt;/button&gt;
+</span><span class="sb">      &lt;hr/&gt;
+</span><span class="sb">      &lt;button @click=&#34;undo&#34;&gt;撤销&lt;/button&gt;
+</span><span class="sb">      &lt;hr/&gt;
+</span><span class="sb">      {{history}}
+</span><span class="sb">    &lt;/div&gt;
+</span><span class="sb">    `</span><span class="p">,</span>
+  <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;watch&#39;</span><span class="p">,</span>
+  <span class="nx">data</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">{</span>
+      <span class="nx">n</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span>
+      <span class="nx">history</span><span class="o">:</span> <span class="p">[],</span>
+      <span class="nx">inUndoMode</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span> <span class="c1">// 撤销模式
+</span><span class="c1"></span>    <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="nx">watch</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">n</span><span class="p">(</span><span class="nx">newValue</span><span class="p">,</span> <span class="nx">oldValue</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;now in undo mode &#39;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">inUndoMode</span><span class="p">)</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`在不在撤销模式：</span><span class="si">${</span><span class="k">this</span><span class="p">.</span><span class="nx">inUndoMode</span><span class="o">?</span><span class="s1">&#39;在&#39;</span><span class="o">:</span><span class="s1">&#39;不在&#39;</span><span class="si">}</span><span class="sb">`</span><span class="p">)</span>
+      <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">inUndoMode</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">history</span><span class="p">.</span><span class="nx">push</span><span class="p">({</span> <span class="nx">from</span><span class="o">:</span> <span class="nx">oldValue</span><span class="p">,</span> <span class="nx">to</span><span class="o">:</span> <span class="nx">newValue</span><span class="p">})</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="nx">methods</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">add1</span><span class="p">()</span> <span class="p">{</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">n</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="p">},</span>
+    <span class="nx">add2</span><span class="p">()</span> <span class="p">{</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">n</span> <span class="o">+=</span> <span class="mi">2</span>
+    <span class="p">},</span>
+    <span class="nx">minus1</span><span class="p">()</span> <span class="p">{</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">n</span> <span class="o">-=</span> <span class="mi">1</span>
+    <span class="p">},</span>
+    <span class="nx">minus2</span><span class="p">()</span> <span class="p">{</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">n</span> <span class="o">-=</span> <span class="mi">2</span>
+    <span class="p">},</span>
+    <span class="nx">undo</span><span class="p">()</span> <span class="p">{</span>
+      <span class="kr">const</span> <span class="nx">last</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">history</span><span class="p">.</span><span class="nx">pop</span><span class="p">()</span>
+      <span class="c1">// 开启撤销模式
+</span><span class="c1"></span>      <span class="k">this</span><span class="p">.</span><span class="nx">inUndoMode</span> <span class="o">=</span> <span class="kc">true</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;now in undo mode &#39;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">inUndoMode</span><span class="p">)</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`在不在撤销模式：</span><span class="si">${</span><span class="k">this</span><span class="p">.</span><span class="nx">inUndoMode</span><span class="o">?</span><span class="s1">&#39;在&#39;</span><span class="o">:</span><span class="s1">&#39;不在&#39;</span><span class="si">}</span><span class="sb">`</span><span class="p">)</span>
+      <span class="kr">const</span> <span class="nx">old</span> <span class="o">=</span> <span class="nx">last</span><span class="p">.</span><span class="nx">from</span>
+      <span class="c1">// watch 的函数是异步的 this.n = old 也会被监听到
+</span><span class="c1"></span>      <span class="c1">// 等到同级的同步代码执行完毕再去执行 watch的代码
+</span><span class="c1"></span>      <span class="k">this</span><span class="p">.</span><span class="nx">n</span> <span class="o">=</span> <span class="nx">old</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">$nextTick</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">inUndoMode</span> <span class="o">=</span> <span class="kc">false</span>
+      <span class="p">},</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="p">})</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>官方描述：每个组件实例都对应一个 watcher 实例，它会在组件渲染的过程中把 <strong>“接触”过的数据 property</strong> 记录为<em><strong>依赖</strong></em></li>
+<li>之后当<em><strong>依赖项</strong></em>的 setter 触发时，会通知 watcher，从而使它关联的组件重新渲染</li>
+<li>即所有<code>methods</code>中操作数据的改变都会被<code>watch</code>监听到</li>
+</ul>
+<blockquote>
+<p>异步</p>
+</blockquote>
+<ul>
+<li><code>watch.n</code> 的函数是异步的，<a href="https://cn.vuejs.org/v2/guide/reactivity.html#%E5%BC%82%E6%AD%A5%E6%9B%B4%E6%96%B0%E9%98%9F%E5%88%97">异步更新队列</a></li>
+<li>搜索<code>vue.js set data without watch</code>: <code>just do a conditional check inside the watcher callback</code></li>
+<li>异步接口<code>this.$nextTick(() =&gt; {}, 0)</code>相当于 <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/async_function"><code>ES2017 async/await</code> 语法糖</a></li>
+</ul>
+<blockquote>
+<p>示例代码5：<a href="https://codesandbox.io/s/objective-star-vu2h3">模拟<code>computed</code></a> 不建议使用，优先使用<code>computed</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
+  <span class="nx">template</span><span class="o">:</span> <span class="sb">`
+</span><span class="sb">      &lt;div&gt;
+</span><span class="sb">        &lt;hr&gt;
+</span><span class="sb">        {{displayName}}
+</span><span class="sb">        &lt;button @click=&#34;user.nickname=undefined&#34;&gt;remove nickname&lt;/button&gt;
+</span><span class="sb">        &lt;button @click=&#34;user.email=undefined&#34;&gt;remove email&lt;/button&gt;
+</span><span class="sb">      &lt;/div&gt;
+</span><span class="sb">  `</span><span class="p">,</span>
+  <span class="nx">name</span><span class="o">:</span> <span class="s2">&#34;WatchMockComputed.vue&#34;</span><span class="p">,</span>
+  <span class="nx">data</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">{</span>
+      <span class="nx">user</span><span class="o">:</span> <span class="p">{</span>
+        <span class="nx">email</span><span class="o">:</span> <span class="s1">&#39;fangfang@qq.com&#39;</span><span class="p">,</span>
+        <span class="nx">nickname</span><span class="o">:</span> <span class="s2">&#34;rectangle&#34;</span><span class="p">,</span>
+        <span class="nx">phone</span><span class="o">:</span> <span class="s2">&#34;13812345678&#34;</span><span class="p">,</span>
+      <span class="p">},</span>
+      <span class="nx">displayName</span><span class="o">:</span> <span class="kc">null</span><span class="p">,</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="nx">watch</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s1">&#39;user.email&#39;</span><span class="o">:</span> <span class="p">{</span>
+        <span class="nx">handler</span><span class="o">:</span> <span class="s1">&#39;changed&#39;</span><span class="p">,</span>
+        <span class="nx">immediate</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span> <span class="c1">// 第一次渲染也触发 watch
+</span><span class="c1"></span>    <span class="p">},</span>
+    <span class="s1">&#39;user.nickname&#39;</span><span class="o">:</span> <span class="p">{</span>
+        <span class="nx">handler</span><span class="o">:</span> <span class="s1">&#39;changed&#39;</span><span class="p">,</span>
+        <span class="nx">immediate</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span> <span class="c1">// 第一次渲染也触发 watch
+</span><span class="c1"></span>    <span class="p">},</span>
+    <span class="s1">&#39;user.phone&#39;</span><span class="o">:</span> <span class="p">{</span>
+      <span class="nx">handler</span><span class="o">:</span> <span class="s1">&#39;changed&#39;</span><span class="p">,</span>
+      <span class="nx">immediate</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span> <span class="c1">// 第一次渲染也触发 watch
+</span><span class="c1"></span>    <span class="p">},</span>
+  <span class="p">},</span>
+  <span class="nx">methods</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">changed</span><span class="p">(</span><span class="nx">item</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`item: </span><span class="si">${</span><span class="nx">item</span><span class="si">}</span><span class="sb">`</span><span class="p">)</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">item</span> <span class="o">===</span> <span class="k">this</span><span class="p">.</span><span class="nx">displayName</span><span class="p">)</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`已知this.displayName: </span><span class="si">${</span><span class="k">this</span><span class="p">.</span><span class="nx">displayName</span><span class="si">}</span><span class="sb">`</span><span class="p">)</span>
+      <span class="kr">const</span> <span class="p">{</span><span class="nx">user</span><span class="o">:</span> <span class="p">{</span><span class="nx">email</span><span class="p">,</span> <span class="nx">nickname</span><span class="p">,</span> <span class="nx">phone</span><span class="p">}}</span> <span class="o">=</span> <span class="k">this</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">displayName</span> <span class="o">=</span> <span class="nx">nickname</span> <span class="o">||</span> <span class="nx">email</span> <span class="o">||</span> <span class="nx">phone</span>
+      <span class="p">},</span>
+    <span class="p">},</span>
+  <span class="p">}</span>
+<span class="p">})</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><code>immediate</code>：是否在第一次渲染时运行<code>watch</code>函数监听数据初始值</li>
+<li>注意<code>watch</code>监听<code>data</code>第二层数据<code>user.email</code>的写法</li>
+<li><code>watch</code>一般不监听初始的值：从无到有，即第一次数据是空值</li>
+<li>除非设置<code>watch</code>内部对象的属性<code>immediate: true</code> 使得第一次渲染也触发 <code>watch</code></li>
+<li>都是在数据变化的时候执行一个函数</li>
+<li><code>computed</code>着重依赖之间的变化和缓存</li>
+<li><code>watch</code>着重变化后执行函数，而不是得到的结果</li>
+</ul>
+<h3 id="数据变化-a-hrefcatalogue--a">数据变化 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+<ul>
+<li><a href="https://codesandbox.io/s/still-snowflake-m62t1">示例代码6</a></li>
+<li><code>obj</code>原本是<code>{a: 'a'}</code>，变为<code>obj = {a: 'a'}</code>，地址变了，而<code>obj.a</code>的值没变</li>
+<li>简单类型看值，复杂类型（对象看地址）</li>
+<li>对象的属性变了，但对象的地址没变，<code>Vue</code>认为对象没变</li>
+<li>和<code>===</code>的规则相同</li>
+</ul>
+<h3 id="watch-类型语法"><code>watch</code> 类型语法</h3>
+<ul>
+<li><code>watch: { [key: string]: string | Function | Object | Array }</code></li>
+<li>常用<code>watch: {fn(new, old) {...}}</code></li>
+</ul>
+<blockquote>
+<p>语法1 <a href="https://cn.vuejs.org/v2/api/#watch">文档</a></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nx">watch</span><span class="o">:</span> <span class="p">{</span>
+    <span class="c1">// o0: () =&gt; {} // 箭头函数this是全局对象
+</span><span class="c1"></span>    <span class="nx">o1</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">value</span><span class="p">,</span> <span class="nx">oldValue</span><span class="p">)</span> <span class="p">{...},</span>
+    <span class="nx">o2</span><span class="p">(</span><span class="nx">value</span><span class="p">,</span> <span class="nx">oldValue</span><span class="p">)</span> <span class="p">{...},</span>
+    <span class="nx">o3</span><span class="o">:</span> <span class="p">[</span><span class="nx">f1</span><span class="p">,</span> <span class="nx">f2</span><span class="p">],</span>
+    <span class="nx">o4</span><span class="o">:</span> <span class="s1">&#39;methodName&#39;</span><span class="p">,</span>
+    <span class="nx">o5</span><span class="o">:</span> <span class="p">{</span><span class="nx">handler</span><span class="o">:</span> <span class="nx">fn</span><span class="p">,</span> <span class="nx">deep</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nx">immediate</span><span class="o">:</span> <span class="kc">true</span><span class="p">},</span>
+    <span class="s1">&#39;object.a&#39;</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>语法2 <a href="https://cn.vuejs.org/v2/api/#vm-watch">实例方法 / 数据 - 使用命令式的 vm.$watch</a></p>
+</blockquote>
+<ul>
+<li><code>Vue</code> 实例将会在实例化时调用 <code>$watch()</code>，遍历 <code>watch</code> 对象的每一个 <code>property</code></li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nx">vm</span><span class="p">.</span><span class="nx">$watch</span><span class="p">(</span><span class="s1">&#39;xxx&#39;</span><span class="p">,</span> <span class="nx">fn</span><span class="p">,</span> <span class="p">{</span><span class="nx">deep</span><span class="o">:</span> <span class="p">...,</span> <span class="nx">immediate</span><span class="o">:</span> <span class="p">...})</span>
+<span class="c1">// &#39;xxx&#39;可以改为一个返回字符串的函数
+</span><span class="c1">// 在组件中可写到钩子函数里
+</span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>语法3 钩子函数中写 <code>this.$watch(...)</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="p">...,</span>
+  <span class="nx">created</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">$watch</span><span class="p">(</span><span class="s1">&#39;xxx&#39;</span><span class="p">,</span> <span class="nx">fn</span><span class="p">,</span> <span class="p">{</span><span class="nx">deep</span><span class="o">:</span> <span class="p">...,</span> <span class="nx">immediate</span><span class="o">:</span> <span class="p">...})</span>
+    <span class="c1">// &#39;xxx&#39;可以改为一个返回字符串的函数
+</span><span class="c1"></span>  <span class="p">}</span>
+<span class="p">...</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="深入监听deep-true-a-hrefcatalogue--a">深入监听<code>deep: true</code> <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h4>
+<ul>
+<li>如果<code>object.a</code>变了，<code>deep: true</code>控制<code>object</code>变了</li>
+<li>如果<code>object.a</code>变了，<code>deep: false</code>控制<code>object</code>不变</li>
+<li><code>deep</code>即监听<code>object</code>深入监听</li>
+<li>不仅比较地址，任何一层的值变了，都判定数据变化，都受到监听</li>
+<li>即不需要再监听对象里面的属性变化，只要监听外层，同时监听了内部数据变化</li>
+<li><code>deep</code>默认值是<code>false</code></li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kr">const</span> <span class="nx">vmWatchDeep</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
+  <span class="nx">template</span><span class="o">:</span> <span class="sb">`
+</span><span class="sb">      &lt;div&gt;
+</span><span class="sb">          &lt;hr&gt;
+</span><span class="sb">          &lt;button @click=&#34;n += 1&#34;&gt;n + 1&lt;/button&gt;
+</span><span class="sb">          &lt;button @click=&#34;m += 1&#34;&gt;m + 1&lt;/button&gt;
+</span><span class="sb">          &lt;button @click=&#34;obj.a += &#39;hi&#39;&#34;&gt;obj.a + &#39;hi&#39;&lt;/button&gt;
+</span><span class="sb">          &lt;button @click=&#34;obj1.a += &#39;ho&#39;&#34;&gt;obj1.a + &#39;ho&#39;&lt;/button&gt;
+</span><span class="sb">          &lt;button @click=&#34;obj = {a: &#39;a&#39;}&#34;&gt;obj = 新对象&lt;/button&gt;
+</span><span class="sb">      &lt;/div&gt;
+</span><span class="sb">  `</span><span class="p">,</span>
+  <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;WatchDeep&#39;</span><span class="p">,</span>
+  <span class="nx">data</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">{</span>
+      <span class="nx">n</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span>
+      <span class="nx">obj</span><span class="o">:</span> <span class="p">{</span>
+        <span class="nx">a</span><span class="o">:</span> <span class="s2">&#34;a&#34;</span>
+      <span class="p">},</span>
+      <span class="nx">obj1</span><span class="o">:</span> <span class="p">{</span>
+        <span class="nx">a</span><span class="o">:</span> <span class="s2">&#34;a&#34;</span>
+      <span class="p">},</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="nx">created</span><span class="p">(){</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">$watch</span><span class="p">(</span><span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;m 也变了&#34;</span><span class="p">)</span>
+    <span class="p">},{</span><span class="nx">immediate</span><span class="o">:</span> <span class="kc">true</span><span class="p">})</span>
+  <span class="p">},</span>
+  <span class="nx">watch</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">n</span><span class="p">()</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;n 变了&#34;</span><span class="p">)</span>
+    <span class="p">},</span>
+    <span class="nx">obj</span><span class="p">()</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;obj 变了&#34;</span><span class="p">)</span>
+    <span class="p">},</span>
+    <span class="s2">&#34;obj.a&#34;</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;obj.a 变了&#34;</span><span class="p">)</span>
+    <span class="p">},</span>
+    <span class="nx">obj1</span><span class="o">:</span> <span class="p">{</span>
+      <span class="nx">handler</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;obj1变了&#39;</span><span class="p">)</span>
+      <span class="p">},</span>
+      <span class="nx">deep</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="s2">&#34;obj1.a&#34;</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;obj1.a 变了&#34;</span><span class="p">)</span>
+    <span class="p">},</span>
+  <span class="p">}</span>
+<span class="p">}).</span><span class="nx">$mount</span><span class="p">(</span><span class="s1">&#39;#watchDeep&#39;</span><span class="p">)</span>
+
+<span class="nx">vmWatchDeep</span><span class="p">.</span><span class="nx">$watch</span><span class="p">(</span><span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;n 也变222了&#34;</span><span class="p">)</span>
+<span class="p">},{</span><span class="nx">immediate</span><span class="o">:</span> <span class="kc">true</span><span class="p">})</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>写在外面太丑，可写在生命周期的钩子中</li>
+<li>和<code>DOM</code>无关，放在<code>created</code>中，创建完立即监听数据</li>
+</ul>
+<hr>
+<blockquote>
+<p>简述 computed 和 watch 的区别 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></p>
+</blockquote>
+<ul>
+<li>翻译成中文</li>
+<li>各自描述（可用代码例子）</li>
+</ul>
+<blockquote>
+<p>标准答案</p>
+</blockquote>
+<ul>
+<li>把 <code>computed</code> 翻译为计算属性</li>
+<li>把 <code>watch</code> 翻译为监听/观察/侦听</li>
+<li>描述 <code>computed</code> 的功能：用于计算一个新的属性，并提及「依赖」和「缓存」</li>
+<li>描述了 <code>watch</code> 的功能：在数据变化时执行一个函数</li>
+<li>其他正确的描述：
+<ul>
+<li><code>computed</code>计算出的值不需要加括号，在<code>template</code>中，直接当做属性来用</li>
+<li><code>computed</code>根据「依赖」会自动「缓存」，依赖不变，不会重新计算值</li>
+<li><code>watch</code>监听某个属性变化了，就执行一个函数</li>
+<li><code>watch</code>中的<code>immediate</code>表示是否在第一次渲染中监听属性</li>
+<li><code>watch</code>中的<code>deep</code>是否监听对象内部属性的变化</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>详细描述 计算属性<code>computed</code>：</p>
+</blockquote>
+<ul>
+<li>用来计算一个值，这个值使用时不需要加函数执行的括号，直接当属性来用；值会根据所依赖的数据动态显示新的计算结果，并自动缓存，即依赖不变，不会重新计算</li>
+<li>支持缓存，只有依赖数据发生改变，才会重新进行计算</li>
+<li>不支持异步，当<code>computed</code>内有异步操作时无效，无法监听数据的变化</li>
+<li>可用<code>Vue</code>提供的异步函数<code>nextTick</code></li>
+<li><code>computed</code> 属性值会默认走缓存，计算属性是基于它们的响应式依赖进行缓存的</li>
+<li>即基于<code>data</code>中声明过的数据或者父组件传递的<code>props</code>中的数据通过计算得到的值</li>
+<li>如果一个属性是由其他属性计算而来的，即这个<strong>属性（数据）依赖其他属性（数据）</strong>，是<em><strong>多对一</strong></em>或者<em><strong>一对一</strong></em>，可用<code>computed</code></li>
+<li>如果<code>computed</code>属性值是函数，那么默认会走<code>get</code>方法；函数的返回值就是属性的属性值；在<code>computed</code>中的，属性都有一个<code>get</code>和一个<code>set</code>方法，当数据变化时，调用<code>set</code>方法。</li>
+</ul>
+<blockquote>
+<p>详细描述 监听属性<code>watch</code>：</p>
+</blockquote>
+<ul>
+<li>对<code>data</code>的监听回调，即当依赖的<code>data</code>数据变化，执行回调函数</li>
+<li>监听某个属性变化了，就执行一个函数</li>
+<li>不支持缓存，数据被监，数据不变就不触发回调；</li>
+<li><code>watch</code>支持异步；</li>
+<li>监听的函数接收两个参数，第一个参数是最新的值；第二个参数是输入之前的值；</li>
+<li>当一个属性发生变化时，需要执行对应的操作；<em><strong>一对多</strong></em>；</li>
+<li>监听数据必须是<code>data</code>中声明过的数据或者父组件传递过来的<code>props</code>中的数据，当数据变化时，触发其他操作</li>
+<li><code>immediate</code> 组件加载立即触发回调函数执行，即第一次渲染时就会执行这个函数</li>
+<li><code>deep</code> 监听器会一层层的往下遍历，给对象的所有属性都加上这个监听器</li>
+<li>监听某个数据的变化时用<code>watch</code></li>
+<li>不可使用箭头函数来定义 watcher 回调函数，箭头函数绑定了父级作用域的上下文，this 将不会按照期望指向 Vue 实例</li>
+</ul>
+<hr>
+<blockquote>
+<p>小结<!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>区别</th>
+<th>computed</th>
+<th>watch</th>
+<th>watchEffect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>作用简述</td>
+<td>动态显示计算值</td>
+<td>监听数据变化，执行回调函数</td>
+<td>&mdash;</td>
+</tr>
+<tr>
+<td>初始数据</td>
+<td>属性值</td>
+<td><code>immediate</code>属性可监听初始值，否则为空</td>
+<td>&mdash;</td>
+</tr>
+<tr>
+<td>缓存</td>
+<td>支持</td>
+<td>不支持</td>
+<td>&mdash;</td>
+</tr>
+<tr>
+<td>异步</td>
+<td>不支持</td>
+<td>支持</td>
+<td>&mdash;</td>
+</tr>
+<tr>
+<td>特点1</td>
+<td>不需要加括号，可以当一个属性来用，依赖于其他数据的变化</td>
+<td>仅当数据变化才执行回调函数</td>
+<td>&mdash;</td>
+</tr>
+<tr>
+<td>特点2</td>
+<td>多对一、一对一</td>
+<td>一对多</td>
+<td>&mdash;</td>
+</tr>
+<tr>
+<td>目的</td>
+<td>动态显示计算值</td>
+<td>响应数据的变化，执行相应操作</td>
+<td>&mdash;</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="5-directive-指令a-iddirective-hrefdirective--a-a-hrefcatalogue--a">5. Directive 指令<!-- raw HTML omitted --> § <!-- raw HTML omitted --> <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+<blockquote>
+<p>通过学习自定义指令来掌握<code>Vue</code>的指令，再使用内置指令</p>
+<p>除了核心功能默认内置的指令 (v-model 和 v-show)，Vue 也允许注册自定义指令</p>
+<p>在 <code>Vue2.0</code> 中，代码复用和抽象的主要形式是组件。然而，有的情况下，你仍然需要<strong>对普通 <code>DOM</code> 元素进行底层操作</strong>，这时候就会用到自定义指令</p>
+</blockquote>
+<ul>
+<li><a href="https://cn.vuejs.org/v2/guide/custom-directive.html"><code>Vue2.x</code>自定义指令 文档</a></li>
+<li><a href="https://vue-docs-next-zh-cn.netlify.app/guide/custom-directive.html#%E7%AE%80%E4%BB%8B"><code>Vue3.x</code>自定义指令 文档</a></li>
+<li>自定义指令<code>v-x</code>，点击出现一个<code>x</code></li>
+</ul>
+<blockquote>
+<p>两种写法</p>
+</blockquote>
+<ol>
+<li>全局声明<strong>一个</strong>指令<code>Vue.directive('directiveName', directiveOptions)</code></li>
+<li>局部声明<strong>多个</strong>指令，在<code>options</code>中声明<code>directives: {'directiveName': directiveOptions}</code>对象</li>
+</ol>
+<blockquote>
+<p><code>main.js</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="c1">// 全局指令
+</span><span class="c1"></span><span class="nx">Vue</span><span class="p">.</span><span class="nx">directive</span><span class="p">(</span><span class="s1">&#39;xyz&#39;</span><span class="p">,</span> <span class="p">{</span><span class="cm">/* directiveOptions */</span><span class="p">})</span>
+<span class="c1">// 可在任意组件的标签中使用 v-xyz
+</span><span class="c1"></span>
+<span class="c1">// 局部指令
+</span><span class="c1"></span><span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
+    <span class="p">...,</span>
+    <span class="nx">directives</span><span class="o">:</span> <span class="p">{</span>
+        <span class="s1">&#39;x&#39;</span><span class="o">:</span> <span class="p">{</span><span class="cm">/* directiveOptions */</span><span class="p">},</span>
+        <span class="s1">&#39;y&#39;</span><span class="o">:</span> <span class="p">{</span><span class="cm">/* directiveOptions */</span><span class="p">},</span>
+        <span class="s1">&#39;z&#39;</span><span class="o">:</span> <span class="p">{</span><span class="cm">/* directiveOptions */</span><span class="p">},</span>
+    <span class="p">}</span>
+<span class="p">})</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>目标：造出<code>v-y</code>，点击即出现一个<code>y</code></p>
+</blockquote>
+<ul>
+<li><a href="https://codesandbox.io/s/focused-wind-ircpy?file=/src/main.js">源码</a></li>
+</ul>
+<blockquote>
+<p><code>main.js</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="c1">// 全局指令
+</span><span class="c1"></span><span class="nx">Vue</span><span class="p">.</span><span class="nx">directive</span><span class="p">(</span><span class="s1">&#39;xyz&#39;</span><span class="p">,</span> <span class="p">{</span>
+  <span class="nx">inserted</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">el</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// 点击即出现一个y
+</span><span class="c1"></span>    <span class="nx">el</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+    <span class="p">})</span>
+  <span class="p">},</span>
+<span class="p">})</span>
+
+<span class="c1">// 局部指令 在组件中声明 在组件内 template 使用
+</span><span class="c1"></span><span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
+    <span class="nx">template</span><span class="o">:</span> <span class="sb">`
+</span><span class="sb">        &lt;div v-x v-xyz&gt;
+</span><span class="sb">            hi
+</span><span class="sb">        &lt;/div&gt;
+</span><span class="sb">    `</span><span class="p">,</span>
+    <span class="nx">directives</span><span class="o">:</span> <span class="p">{</span>
+        <span class="s1">&#39;x&#39;</span><span class="o">:</span> <span class="p">{</span>
+            <span class="nx">inserted</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">el</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">el</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+              <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">);</span>
+        <span class="p">})</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+  <span class="p">},</span>
+<span class="p">})</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>声明的局部指令只能用在该实例中</li>
+</ul>
+<h3 id="directiveoptions-a-hrefcatalogue--a"><code>directiveOptions</code> <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+<blockquote>
+<p><code>directiveOptions</code>的五个属性（钩子）<code>Vue2.x</code></p>
+</blockquote>
+<ul>
+<li><code>bind(el, info, vnode, oldVnode)</code>类似<code>created</code></li>
+<li><code>inserted(el, info, vnode, oldVnode)</code>类似<code>mounted</code></li>
+<li><code>updated(el, info, vnode, oldVnode)</code>类似<code>updated</code></li>
+<li><code>componentUpdated(el, info, vnode, oldVnode)</code>，<a href="https://cn.vuejs.org/v2/guide/custom-directive.html#%E9%92%A9%E5%AD%90%E5%87%BD%E6%95%B0">文档</a></li>
+<li><code>unbind(el, info, vnode, oldVnode)</code>类似<code>destroyed</code></li>
+</ul>
+<blockquote>
+<p>自定义指令的生命周期钩子更名了<code>directiveOptions</code>的六个属性（钩子）<code>Vue3.x</code></p>
+</blockquote>
+<hr>
+<blockquote>
+<p>仿<code>v-on</code>指令 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></p>
+</blockquote>
+<ul>
+<li><a href="https://codesandbox.io/s/elated-moon-qpxc0"><code>v-on2</code></a>（省略事件委托）</li>
+</ul>
+<blockquote>
+<p><code>main.js</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
+  <span class="nx">template</span><span class="o">:</span><span class="sb">`
+</span><span class="sb">  &lt;div&gt;
+</span><span class="sb">    &lt;button v-on2:click=&#34;hi&#34;&gt;点&lt;/button&gt;
+</span><span class="sb">  &lt;/div&gt;
+</span><span class="sb">  `</span><span class="p">,</span>
+  <span class="nx">directives</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s1">&#39;on2&#39;</span><span class="o">:</span> <span class="p">{</span>
+      <span class="c1">// inserted 可以改为 bind
+</span><span class="c1"></span>      <span class="nx">inserted</span><span class="p">(</span><span class="nx">el</span><span class="p">,</span> <span class="nx">info</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`el: </span><span class="si">${</span><span class="nx">el</span><span class="si">}</span><span class="sb">`</span><span class="p">)</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">el</span><span class="p">)</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`info: </span><span class="si">${</span><span class="nx">info</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">info</span><span class="p">)</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`info.arg: </span><span class="si">${</span><span class="nx">info</span><span class="p">.</span><span class="nx">arg</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">info</span><span class="p">.</span><span class="nx">value</span><span class="p">)</span>
+        <span class="nx">el</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="nx">info</span><span class="p">.</span><span class="nx">arg</span><span class="p">,</span> <span class="nx">info</span><span class="p">.</span><span class="nx">value</span><span class="p">(</span><span class="s2">&#34;hi&#34;</span><span class="p">))</span>
+      <span class="p">},</span>
+      <span class="nx">unbind</span><span class="p">(</span><span class="nx">el</span><span class="p">,</span> <span class="nx">info</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">el</span><span class="p">.</span><span class="nx">removeEventListener</span><span class="p">(</span><span class="nx">info</span><span class="p">.</span><span class="nx">arg</span><span class="p">,</span> <span class="nx">info</span><span class="p">.</span><span class="nx">value</span><span class="p">)</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+  <span class="p">},</span>
+  <span class="nx">methods</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">hi</span><span class="p">(</span><span class="nx">words</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`</span><span class="si">${</span><span class="nx">words</span><span class="si">}</span><span class="sb">`</span><span class="p">)</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+<span class="p">})</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><code>inserted</code>时添加事件监听</li>
+<li><code>unbind</code>时解除事件监听</li>
+<li>简化了在<code>created</code>和<code>beforeDestroy</code>时原本的<code>DOM</code>操作</li>
+</ul>
+<blockquote>
+<p>缩写</p>
+</blockquote>
+<ul>
+<li><code>directiveOptions</code>在某些条件下可以缩写为函数，<a href="https://cn.vuejs.org/v2/guide/custom-directive.html#%E5%87%BD%E6%95%B0%E7%AE%80%E5%86%99">文档</a></li>
+</ul>
+<h3 id="指令的作用-a-hrefcatalogue--a">指令的作用 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+<blockquote>
+<p>用于<code>DOM</code>操作</p>
+</blockquote>
+<ul>
+<li><code>Vue</code>的实例/组件用于数据绑定、事件监听、<code>DOM</code>更新</li>
+<li><code>Vue</code>的指令主要目的就是原生<code>DOM</code>操作</li>
+</ul>
+<blockquote>
+<p>减少重复</p>
+</blockquote>
+<ul>
+<li>封装为自定义指令，复用<code>DOM</code>操作</li>
+<li>封装为自定义指令，简化<code>DOM</code>操作</li>
+</ul>
+<hr>
+<h2 id="6-mixin-混入a-idmixin-hrefmixin--a-a-hrefcatalogue--a">6. <code>Mixin</code> 混入<!-- raw HTML omitted --> § <!-- raw HTML omitted --> <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+<h3 id="mixin减少重复"><code>Mixin</code>减少重复</h3>
+<blockquote>
+<p>混入 (mixin) 提供了一种非常灵活的方式，来<strong>分发 Vue 组件中的可复用功能</strong></p>
+<p>就是复制</p>
+</blockquote>
+<ul>
+<li><code>Directive</code> 指令的作用是减少<code>DOM</code>操作的重复</li>
+<li><code>Mixin</code> 混入的作用是减少<code>data</code>、<code>methods</code>、钩子的重复</li>
+</ul>
+<blockquote>
+<p>场景描述 <code>Mixin.vue</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-HTML" data-lang="HTML"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;mixins&#34;</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">Child1</span> <span class="na">v-if</span><span class="o">=</span><span class="s">&#34;child1Visible&#34;</span> <span class="p">/&gt;</span>
+  <span class="p">&lt;</span><span class="nt">button</span> <span class="err">@</span><span class="na">click</span><span class="o">=</span><span class="s">&#34;child1Visible = false&#34;</span><span class="p">&gt;</span>x<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">Child2</span> <span class="na">v-if</span><span class="o">=</span><span class="s">&#34;child2Visible&#34;</span> <span class="p">/&gt;</span>
+  <span class="p">&lt;</span><span class="nt">button</span> <span class="err">@</span><span class="na">click</span><span class="o">=</span><span class="s">&#34;child2Visible = false&#34;</span><span class="p">&gt;</span>x<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">Child3</span> <span class="na">v-if</span><span class="o">=</span><span class="s">&#34;child3Visible&#34;</span> <span class="p">/&gt;</span>
+  <span class="p">&lt;</span><span class="nt">button</span> <span class="err">@</span><span class="na">click</span><span class="o">=</span><span class="s">&#34;child3Visible = false&#34;</span><span class="p">&gt;</span>x<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="kr">import</span> <span class="nx">Child1</span> <span class="nx">from</span> <span class="s1">&#39;./Child1.vue&#39;</span>
+<span class="kr">import</span> <span class="nx">Child2</span> <span class="nx">from</span> <span class="s1">&#39;./Child2.vue&#39;</span>
+<span class="kr">import</span> <span class="nx">Child3</span> <span class="nx">from</span> <span class="s1">&#39;./Child3.vue&#39;</span>
+<span class="kr">export</span> <span class="k">default</span> <span class="p">{</span>
+  <span class="nx">name</span><span class="o">:</span> <span class="s2">&#34;Mixins&#34;</span><span class="p">,</span>
+  <span class="nx">components</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">Child1</span><span class="p">,</span>
+    <span class="nx">Child2</span><span class="p">,</span>
+    <span class="nx">Child3</span><span class="p">,</span>
+  <span class="p">},</span>
+  <span class="nx">data</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">{</span>
+      <span class="nx">name</span><span class="o">:</span> <span class="s2">&#34;Mixins&#34;</span><span class="p">,</span>
+      <span class="nx">child1Visible</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+      <span class="nx">child2Visible</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+      <span class="nx">child3Visible</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>假设需要在多个组件上添加<code>name</code>和<code>time</code></li>
+<li>在<code>created</code>、~~<code>destroyed</code>~~时，打出提示，并报出存活时间</li>
+<li>一共有五个组件
+<ul>
+<li>给每个组件添加<code>data</code>和钩子，共五次？</li>
+<li>使用<code>mixin</code>减少重复</li>
+</ul>
+</li>
+<li><a href="https://codesandbox.io/s/elegant-haibt-pdf18">示例链接</a></li>
+</ul>
+<blockquote>
+<p><code>./mixins/log.js</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kr">export</span> <span class="k">default</span> <span class="p">{</span>
+  <span class="nx">data</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">{</span>
+      <span class="nx">name</span><span class="o">:</span> <span class="kc">undefined</span><span class="p">,</span>
+      <span class="nx">time</span><span class="o">:</span> <span class="kc">undefined</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="nx">created</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s1">&#39;need name&#39;</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">time</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">();</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`</span><span class="si">${</span><span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="si">}</span><span class="sb">出生了`</span><span class="p">);</span>
+  <span class="p">},</span>
+  <span class="nx">beforeDestroy</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kr">const</span> <span class="nx">now</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">()</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`</span><span class="si">${</span><span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="si">}</span><span class="sb">死亡了， 共生存了</span><span class="si">${</span><span class="nx">now</span> <span class="o">-</span> <span class="k">this</span><span class="p">.</span><span class="nx">time</span><span class="si">}</span><span class="sb">ms`</span><span class="p">);</span>
+  <span class="p">},</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p><a href="https://codesandbox.io/s/brave-dijkstra-memmm?file=/src/components/Child1.vue"><code>Child1.vue</code></a></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-HTML" data-lang="HTML"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+  Child1
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="kr">import</span> <span class="nx">log</span> <span class="nx">from</span> <span class="s1">&#39;../mixins/log.js&#39;</span>
+<span class="kr">export</span> <span class="k">default</span> <span class="p">{</span>
+  <span class="nx">data</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">{</span>
+      <span class="nx">name</span><span class="o">:</span> <span class="s2">&#34;Child1&#34;</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="nx">mixins</span><span class="o">:</span> <span class="p">[</span><span class="nx">log</span><span class="p">],</span>
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="mixins用法"><code>mixins</code>用法</h3>
+<ul>
+<li><code>mixins</code> 选项接收一个混入对象的数组 <code>mixins: [obj1, ...]</code></li>
+<li>这些混入对象可以像正常的实例对象一样包含实例选项<code>options</code></li>
+<li>当组件使用混入对象时，这些选项将会被合并到该组件本的选项形成身最终的选项，使用的是和 <code>Vue.extend()</code> 一样的选项合并逻辑</li>
+<li>比如混入包含一个 <code>created</code> 钩子，而创建组件本身也有一个，那么两个函数都会被调用</li>
+<li><code>Mixin</code> 钩子按照传入顺序依次调用，并在调用组件自身的钩子之前被调用</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kr">const</span> <span class="nx">mixin</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nx">created</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="p">}</span>
+<span class="p">}</span>
+<span class="kr">const</span> <span class="nx">vm</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
+  <span class="nx">created</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="p">},</span>
+  <span class="nx">mixins</span><span class="o">:</span> <span class="p">[</span><span class="nx">mixin</span><span class="p">]</span>
+<span class="p">})</span>
+<span class="c1">// =&gt; 1
+</span><span class="c1">// =&gt; 2
+</span><span class="c1"></span>
+<span class="c1">// 定义一个混入对象
+</span><span class="c1"></span><span class="kr">const</span> <span class="nx">myMixin</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nx">created</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">hello</span><span class="p">()</span>
+  <span class="p">},</span>
+  <span class="nx">methods</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">hello</span><span class="p">()</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;hello from mixin!&#39;</span><span class="p">)</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// 定义一个使用混入对象的组件
+</span><span class="c1"></span><span class="kr">const</span> <span class="nx">Component</span> <span class="o">=</span> <span class="nx">Vue</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+  <span class="nx">mixins</span><span class="o">:</span> <span class="p">[</span><span class="nx">myMixin</span><span class="p">]</span>
+<span class="p">})</span>
+
+<span class="kr">const</span> <span class="nx">component</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Component</span><span class="p">()</span> <span class="c1">// =&gt; &#34;hello from mixin!&#34;
+</span></code></pre></td></tr></table>
+</div>
+</div><hr>
+<h3 id="mixin技巧"><code>mixin</code>技巧</h3>
+<blockquote>
+<p>选项智能合并</p>
+</blockquote>
+<ul>
+<li><a href="https://cn.vuejs.org/v2/guide/mixins.html#%E9%80%89%E9%A1%B9%E5%90%88%E5%B9%B6">文档 选项合并</a></li>
+<li>当组件和混入对象含有<strong>同名选项</strong>时，这些选项将以恰当的方式进行“合并”</li>
+<li>可以添加相应操作，同名覆盖
+<ul>
+<li>数据对象在内部会进行<strong>递归合并</strong>，并在发生冲突时以<strong>组件</strong>数据优先</li>
+<li>同名钩子函数将合并为一个<strong>数组</strong>，因此都将被调用</li>
+<li><strong>混入对象</strong>的钩子将在组件自身钩子<strong>之前</strong>调用</li>
+<li>值为<strong>对象</strong>的选项，例如<code>methods</code>、<code>components</code> 和 <code>directives</code>，将被合并为<strong>同一个对象</strong>。两个对象键名冲突时，取<strong>组件</strong>对象的键值对</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="cm">/* 混入对象 */</span>
+<span class="kr">const</span> <span class="nx">mixin</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nx">created</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;混入对象的钩子被调用&#39;</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="cm">/* 组件 */</span>
+<span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
+  <span class="nx">mixins</span><span class="o">:</span> <span class="p">[</span><span class="nx">mixin</span><span class="p">],</span>
+  <span class="nx">created</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;组件钩子被调用&#39;</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">})</span>
+
+<span class="c1">// =&gt; &#34;混入对象的钩子被调用&#34;
+</span><span class="c1">// =&gt; &#34;组件钩子被调用&#34;
+</span><span class="c1"></span>
+<span class="cm">/* 同名覆盖 */</span>
+<span class="kd">var</span> <span class="nx">mixin</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nx">methods</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">conflicting</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;from mixin&#39;</span><span class="p">)</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">vm</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
+  <span class="nx">mixins</span><span class="o">:</span> <span class="p">[</span><span class="nx">mixin</span><span class="p">],</span>
+  <span class="nx">methods</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">conflicting</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;from self&#39;</span><span class="p">)</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">})</span>
+
+<span class="nx">vm</span><span class="p">.</span><span class="nx">conflicting</span><span class="p">()</span> <span class="c1">// =&gt; &#34;from self&#34;
+</span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><code>Vue.extend()</code> 也使用同样的策略进行合并</li>
+</ul>
+<blockquote>
+<p>全局混入<code>Vue.mixin</code></p>
+</blockquote>
+<ul>
+<li>全局注册一个混入，影响注册之后所有创建的每个 Vue 实例</li>
+<li><a href="https://cn.vuejs.org/v2/api/#Vue-mixin">文档</a> 不推荐使用</li>
+<li>注意所有组件的<code>data</code>中需要相应的数据是否声明完整</li>
+<li>范围过大，插件作者可以使用混入，向组件注入自定义的行为，以避免重复应用混入。<strong>不推荐在应用代码中使用</strong></li>
+</ul>
+<blockquote>
+<p><code>Vue3.x</code>混入(mixin) 将不再作为推荐使用， <code>Composition</code> <code>API</code>可以实现更灵活且无副作用的复用代码</p>
+</blockquote>
+<ul>
+<li><a href="https://vue-docs-next-zh-cn.netlify.app/guide/migration/data-option.html#mixin-%E5%90%88%E5%B9%B6%E8%A1%8C%E4%B8%BA%E5%8F%98%E6%9B%B4"><code>Vue3.x</code> 中<code>Mixin</code> 合并行为变更</a></li>
+<li><code>Vue3.x</code> 中，冲突合并的结果是组件中键值对完全替代<code>mixins</code>的，浅层次执行合并，并不深入比对每一项</li>
+<li>对于依赖对象声明的用户，建议
+<ul>
+<li>将共享数据提取到外部对象并将其用作 <code>data</code> 中的每个 <code>property</code></li>
+<li>重写对共享数据的引用以指向新的共享对象</li>
+<li>对于依赖 <code>mixin</code> 的深度合并行为的用户，建议重构代码以完全避免这种依赖，因为 <code>mixin</code> 的深度合并非常隐式，让代码逻辑更难理解和调试</li>
+<li>或使用<code>Composition</code>代替</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="7-extend-继承扩展a-idextends-hrefextends--aa-hrefcatalogue--a">7. <code>Extend</code> 继承、扩展<!-- raw HTML omitted --> § <!-- raw HTML omitted --><!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+<h3 id="extend减少mixin的重复"><code>Extend</code>减少<code>Mixin</code>的重复</h3>
+<ul>
+<li>不每次都写一个<code>mixins</code></li>
+<li>使用<code>Vue.extend</code>或<code>options.extends</code></li>
+</ul>
+<blockquote>
+<p><code>MyVue.js</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kr">import</span> <span class="nx">Vue</span> <span class="nx">from</span> <span class="s1">&#39;vue&#39;</span>
+<span class="kr">const</span> <span class="nx">MyVue</span> <span class="o">=</span> <span class="nx">Vue</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+  <span class="nx">data</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">{</span>
+      <span class="nx">name</span><span class="o">:</span> <span class="kc">undefined</span><span class="p">,</span>
+      <span class="nx">time</span><span class="o">:</span> <span class="kc">undefined</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="nx">created</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s1">&#39;need name&#39;</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">time</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">();</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`</span><span class="si">${</span><span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="si">}</span><span class="sb">出生了`</span><span class="p">);</span>
+
+  <span class="p">},</span>
+  <span class="nx">beforeDestroy</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kr">const</span> <span class="nx">now</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">()</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`</span><span class="si">${</span><span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="si">}</span><span class="sb">死亡了， 共生存了</span><span class="si">${</span><span class="nx">now</span> <span class="o">-</span> <span class="k">this</span><span class="p">.</span><span class="nx">time</span><span class="si">}</span><span class="sb">ms`</span><span class="p">);</span>
+  <span class="p">},</span>
+<span class="p">})</span>
+<span class="kr">export</span> <span class="k">default</span> <span class="nx">MyVue</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>在组件<code>Child1</code>中使用或者<code>new MyVue(options)</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-HTML" data-lang="HTML"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>Child1<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="kr">import</span> <span class="nx">MyVue</span> <span class="nx">from</span> <span class="s2">&#34;../MyVue.js&#34;</span><span class="p">;</span>
+<span class="kr">export</span> <span class="k">default</span> <span class="p">{</span>
+  <span class="nx">name</span><span class="o">:</span> <span class="s2">&#34;use extends&#34;</span><span class="p">,</span>
+  <span class="nx">data</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">{</span>
+      <span class="nx">name</span><span class="o">:</span> <span class="s2">&#34;Child1&#34;</span><span class="p">,</span>
+    <span class="p">};</span>
+  <span class="p">},</span>
+  <span class="kr">extends</span><span class="o">:</span> <span class="nx">MyVue</span><span class="p">,</span> <span class="c1">// 只有一项 不可用数组 单继承
+</span><span class="c1"></span><span class="p">};</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p><code>extend</code> 是比 <code>mixin</code> 更抽象的封装</p>
+</blockquote>
+<ul>
+<li>写一次<code>extend</code>代替写多次<code>mixin</code>，较少用到</li>
+</ul>
+<h2 id="8-provide-和-injecta-idprovideinject-hrefprovideinject--aa-hrefcatalogue--a">8. <code>Provide</code> 和 <code>Inject</code><!-- raw HTML omitted --> § <!-- raw HTML omitted --><!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+<ul>
+<li><a href="https://cn.vuejs.org/v2/api/#provide-inject"><code>Provide</code> 和 <code>Inject</code> 文档</a></li>
+<li><a href="https://cn.vuejs.org/v2/guide/components-edge-cases.html#%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5">依赖注入</a></li>
+</ul>
+<blockquote>
+<p>提供和注入，需求描述</p>
+</blockquote>
+<ul>
+<li>一键换肤功能：默认蓝色，切换为红色</li>
+<li>文字大小：默认正常，切换大小</li>
+<li><a href="https://codesandbox.io/s/fragrant-rain-h8lm6?file=/src/main.js">示例链接</a></li>
+</ul>
+<blockquote>
+<p><code>Provide-Inject.vue</code> - Provide</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-HTML" data-lang="HTML"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;provideInject&#34;</span> <span class="na">:class</span><span class="o">=</span><span class="s">&#34;`app theme-${themeName} fontSize-${fontSizeName}`&#34;</span><span class="p">&gt;</span>
+  <span class="c">&lt;!-- :class=&#34;`app theme-${themeName}`&#34; 双引号中的是值 反引号中的是JS字符串 --&gt;</span>
+  <span class="p">&lt;</span><span class="nt">ChangeThemeButton</span> <span class="p">/&gt;</span>
+  <span class="p">&lt;</span><span class="nt">change-theme-button</span> <span class="p">/&gt;</span>
+  <span class="p">&lt;</span><span class="nt">Child1</span> <span class="p">/&gt;</span>
+  <span class="p">&lt;</span><span class="nt">button</span><span class="p">&gt;</span>x<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">Child2</span> <span class="p">/&gt;</span>
+  <span class="p">&lt;</span><span class="nt">button</span><span class="p">&gt;</span>x<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="kr">import</span> <span class="nx">Child1</span> <span class="nx">from</span> <span class="s2">&#34;./Child1.vue&#34;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">Child2</span> <span class="nx">from</span> <span class="s2">&#34;./Child2.vue&#34;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">ChangeThemeButton</span> <span class="nx">from</span> <span class="s2">&#34;./ChangeThemeButton.vue&#34;</span><span class="p">;</span>
+<span class="kr">export</span> <span class="k">default</span> <span class="p">{</span>
+  <span class="nx">name</span><span class="o">:</span> <span class="s2">&#34;ProvideInject&#34;</span><span class="p">,</span>
+  <span class="nx">data</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">{</span>
+      <span class="nx">themeName</span><span class="o">:</span> <span class="s2">&#34;blue&#34;</span><span class="p">,</span> <span class="c1">// &#34;red&#34;
+</span><span class="c1"></span>      <span class="nx">fontSizeName</span><span class="o">:</span> <span class="s2">&#34;normal&#34;</span><span class="p">,</span> <span class="c1">// &#34;big&#34; | &#34;small&#34;
+</span><span class="c1"></span>    <span class="p">};</span>
+  <span class="p">},</span>
+  <span class="nx">provide</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">{</span>
+      <span class="nx">themeName</span><span class="o">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">themeName</span><span class="p">,</span>
+      <span class="nx">changeTheme</span><span class="o">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">changeTheme</span><span class="p">,</span>
+      <span class="nx">changeFontSize</span><span class="o">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">changeFontSize</span><span class="p">,</span>
+    <span class="p">};</span>
+  <span class="p">},</span>
+  <span class="nx">components</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">Child1</span><span class="p">,</span>
+    <span class="nx">Child2</span><span class="p">,</span>
+    <span class="nx">ChangeThemeButton</span><span class="p">,</span>
+  <span class="p">},</span>
+  <span class="nx">methods</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">changeTheme</span><span class="p">()</span> <span class="p">{</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">themeName</span> <span class="o">===</span> <span class="s2">&#34;blue&#34;</span> <span class="o">?</span>
+        <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">themeName</span> <span class="o">=</span> <span class="s2">&#34;red&#34;</span><span class="p">)</span> <span class="o">:</span>
+        <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">themeName</span> <span class="o">=</span> <span class="s2">&#34;blue&#34;</span><span class="p">);</span>
+      <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">themeName</span><span class="p">;</span>
+    <span class="p">},</span>
+    <span class="nx">changeFontSize</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+      <span class="cm">/*
+</span><span class="cm">      if (name === &#34;normal&#34; || name === &#34;big&#34; || name === &#34;small&#34;) {
+</span><span class="cm">        this.fontSizeName = name;
+</span><span class="cm">      }
+</span><span class="cm">       */</span>
+
+      <span class="k">if</span> <span class="p">([</span><span class="s2">&#34;normal&#34;</span><span class="p">,</span> <span class="s2">&#34;big&#34;</span><span class="p">,</span> <span class="s2">&#34;small&#34;</span><span class="p">].</span><span class="nx">indexOf</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">fontSizeName</span> <span class="o">=</span> <span class="nx">name</span><span class="p">;</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+  <span class="p">},</span>
+<span class="p">};</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">style</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;scss&#34;</span> <span class="na">scoped</span><span class="p">&gt;</span>
+<span class="p">.</span><span class="nc">app</span> <span class="p">{</span>
+  <span class="k">font-family</span><span class="p">:</span> <span class="s2">&#34;Avenir&#34;</span><span class="p">,</span> <span class="n">Helvetica</span><span class="p">,</span> <span class="kc">sans-serif</span><span class="p">;</span>
+  <span class="k">text-align</span><span class="p">:</span> <span class="kc">center</span><span class="p">;</span>
+  <span class="k">color</span><span class="p">:</span> <span class="mh">#2c3ef0</span><span class="p">;</span>
+  <span class="k">margin-top</span><span class="p">:</span> <span class="mi">60</span><span class="kt">px</span><span class="p">;</span>
+
+  <span class="err">//</span> <span class="err">.app.theme-blue</span> <span class="err">（注意没有空格）表示同时满足</span> <span class="err">.app</span> <span class="err">和</span> <span class="err">.theme-blue</span> <span class="err">两个类</span>
+  <span class="err">//</span> <span class="err">但我用SCSS</span>
+
+  <span class="err">&amp;.theme-blue</span> <span class="err">{</span>
+    <span class="k">color</span><span class="p">:</span> <span class="mh">#2c3ef0</span><span class="p">;</span>
+
+    <span class="err">button</span> <span class="err">{</span>
+      <span class="k">background-color</span><span class="p">:</span> <span class="kc">blue</span><span class="p">;</span>
+      <span class="k">color</span><span class="p">:</span> <span class="kc">white</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="err">}</span>
+
+  <span class="o">&amp;</span><span class="p">.</span><span class="nc">theme-red</span> <span class="p">{</span>
+    <span class="k">color</span><span class="p">:</span> <span class="kc">darkgoldenrod</span><span class="p">;</span>
+
+    <span class="err">button</span> <span class="err">{</span>
+      <span class="k">background-color</span><span class="p">:</span> <span class="kc">red</span><span class="p">;</span>
+      <span class="k">color</span><span class="p">:</span> <span class="kc">white</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="err">}</span>
+
+  <span class="o">&amp;</span> <span class="nt">button</span> <span class="p">{</span>
+    <span class="k">font-size</span><span class="p">:</span> <span class="kc">inherit</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="o">&amp;</span><span class="p">.</span><span class="nc">fontSize-normal</span> <span class="p">{</span>
+    <span class="k">font-size</span><span class="p">:</span> <span class="mi">16</span><span class="kt">px</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="o">&amp;</span><span class="p">.</span><span class="nc">fontSize-big</span> <span class="p">{</span>
+    <span class="k">font-size</span><span class="p">:</span> <span class="mi">26</span><span class="kt">px</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="o">&amp;</span><span class="p">.</span><span class="nc">fontSize-small</span> <span class="p">{</span>
+    <span class="k">font-size</span><span class="p">:</span> <span class="mi">12</span><span class="kt">px</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="err">}</span>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p><code>Child1.vue</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-HTML" data-lang="HTML"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+  Child1
+  <span class="c">&lt;!-- &lt;change-theme-button /&gt;
+</span><span class="c">  &lt;ChangeThemeButton /&gt; --&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="kr">import</span> <span class="nx">ChangeThemeButton</span> <span class="nx">from</span> <span class="s2">&#34;./ChangeThemeButton.vue&#34;</span><span class="p">;</span>
+<span class="kr">export</span> <span class="k">default</span> <span class="p">{</span>
+  <span class="nx">data</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">{</span>
+      <span class="nx">name</span><span class="o">:</span> <span class="s2">&#34;Child1&#34;</span><span class="p">,</span>
+    <span class="p">};</span>
+  <span class="p">},</span>
+  <span class="nx">components</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">ChangeThemeButton</span><span class="p">,</span>
+  <span class="p">},</span>
+<span class="p">};</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p><code>ChangeThemeButton.vue</code> - Inject</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-HTML" data-lang="HTML"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">button</span> <span class="err">@</span><span class="na">click</span><span class="o">=</span><span class="s">&#34;changeColor&#34;</span><span class="p">&gt;</span>
+    当前主题色： {{ displayColor }} 换肤 换成{{ showThemeName }}
+  <span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">button</span> <span class="err">@</span><span class="na">click</span><span class="o">=</span><span class="s">&#34;changeFontSize(&#39;big&#39;)&#34;</span><span class="p">&gt;</span>大字<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">button</span> <span class="err">@</span><span class="na">click</span><span class="o">=</span><span class="s">&#34;changeFontSize(&#39;small&#39;)&#34;</span><span class="p">&gt;</span>小字<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">button</span> <span class="err">@</span><span class="na">click</span><span class="o">=</span><span class="s">&#34;changeFontSize(&#39;normal&#39;)&#34;</span><span class="p">&gt;</span>正常字<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="kr">export</span> <span class="k">default</span> <span class="p">{</span>
+  <span class="nx">inject</span><span class="o">:</span> <span class="p">[</span><span class="s2">&#34;themeName&#34;</span><span class="p">,</span> <span class="s2">&#34;changeTheme&#34;</span><span class="p">,</span> <span class="s2">&#34;changeFontSize&#34;</span><span class="p">],</span>
+  <span class="nx">data</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">{</span>
+      <span class="nx">currentColor</span><span class="o">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">themeName</span><span class="p">,</span>
+    <span class="p">};</span>
+  <span class="p">},</span>
+  <span class="nx">computed</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">displayColor</span><span class="p">()</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">currentColor</span><span class="p">;</span>
+    <span class="p">},</span>
+    <span class="nx">showThemeName</span><span class="p">()</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">currentColor</span> <span class="o">===</span> <span class="s2">&#34;blue&#34;</span> <span class="o">?</span> <span class="s2">&#34;red&#34;</span> <span class="o">:</span> <span class="s2">&#34;blue&#34;</span><span class="p">;</span>
+    <span class="p">},</span>
+  <span class="p">},</span>
+  <span class="nx">methods</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">changeColor</span><span class="p">()</span> <span class="p">{</span>
+      <span class="kr">const</span> <span class="nx">currentColor</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">changeTheme</span><span class="p">();</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">currentColor</span><span class="p">);</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">currentColor</span> <span class="o">=</span> <span class="nx">currentColor</span><span class="p">;</span>
+    <span class="p">},</span>
+  <span class="p">},</span>
+<span class="p">};</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><code>.app.fontSize-normal</code> 是同一个选择器，同时满足两种类</li>
+<li><code>[&quot;normal&quot;, &quot;big&quot;, &quot;small&quot;].indexOf(name) &gt;= 0</code>代替短路判断</li>
+<li><code>fontSize</code>默认不继承</li>
+</ul>
+<blockquote>
+<p><code>Provide</code> 和 <code>Inject</code>小结</p>
+</blockquote>
+<ul>
+<li>在提供数据的地方写<code>Provide</code>，<code>Provide</code>为函数形式，返回提供的数据的拷贝（比如字符串）
+<ul>
+<li>如果在注入的地方修改，就需要再提供一个修改的函数到<code>Provide</code>，让注入拿到函数的引用</li>
+<li>或者用复杂类型的引用</li>
+</ul>
+</li>
+<li>在需要数据的地方写<code>Inject</code>，<code>Inject</code>为数组<code>['InjectData1', 'InjectData2', ...]</code></li>
+<li><code>Provide</code> 和 <code>Inject</code>作用是大范围的 <strong>数据<code>data</code></strong> 和 <strong>方法<code>methods</code></strong> 共用，<code>Provide</code>把东西提供给所有人去引用，让<code>Inject</code>去调用</li>
+<li>注意点：示例中不可只传<code>themeName</code>而不传<code>changeTheme</code>，因为<code>themeName</code>的<em><strong>值是被复制给<code>provide</code></strong></em></li>
+<li>不推荐传引用，变量容易失控，<a href="https://note.youdao.com/">示例</a></li>
+</ul>
+<hr>
+<h2 id="总结a-hrefcatalogue--a">总结<!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+<ul>
+<li><code>computed</code> 计算属性（数据）
+<ul>
+<li>全局用<code>Vue.</code></li>
+<li>局部用<code>options.</code></li>
+<li>作用是``</li>
+</ul>
+</li>
+<li><code>watch</code> 监听属性（数据）
+<ul>
+<li>全局用<code>Vue.</code></li>
+<li>局部用<code>$watch()</code></li>
+<li>作用是``</li>
+</ul>
+</li>
+<li><code>directive</code> 指令（资源）
+<ul>
+<li>全局用<code>Vue.directive({...})</code></li>
+<li>局部用<code>options.directives</code></li>
+<li>作用是减少<code>DOM</code>操作相关的代码重复</li>
+</ul>
+</li>
+<li><code>mixin</code> 混入（组合）
+<ul>
+<li>全局用<code>Vue.mixin({...})</code></li>
+<li>局部用<code>options.mixins: [mixin1, mixin2]</code></li>
+<li>作用是减少<code>options</code>里的代码重复</li>
+</ul>
+</li>
+<li><code>extend</code> 继承、扩展（组合）
+<ul>
+<li>全局用<code>Vue.extend({...})</code></li>
+<li>局部用<code>options.extends: {...}</code></li>
+<li>作用是类似<code>mixin</code>，只是形式不同</li>
+</ul>
+</li>
+<li><code>provide</code> 和 <code>inject</code>（组合）
+<ul>
+<li>祖先组件不需要知道哪些后代组件使用它提供的 property</li>
+<li>后代组件不需要知道被注入的 property 来自哪里</li>
+<li>祖代提供东西，后代注入使用</li>
+<li>作用是祖代提供，隔<code>N</code>代共享信息，反过来不行</li>
+</ul>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<hr>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<hr>
+<h3 id="参考文章">参考文章</h3>
+<ul>
+<li><a href="https://static.xiedaimala.com/xdml/file/3ac7c224-c23d-491f-84b5-4fabfbeab9b8/2019-12-18-23-28-46.pdf">computed 和 watch.pdf</a></li>
+<li><a href="https://static.xiedaimala.com/xdml/file/3ac7c224-c23d-491f-84b5-4fabfbeab9b8/2020-1-7-18-26-15.pdf">Vue 进阶属性.pdf</a></li>
+<li>代码链接:
+<ul>
+<li><a href="https://codesandbox.io/s/modest-matsumoto-pd03w">不用 computed 筛选男女</a></li>
+<li><a href="https://codesandbox.io/s/little-breeze-hdx44">用 computed 筛选男女</a></li>
+</ul>
+</li>
+</ul>
+<h3 id="相关文章">相关文章</h3>
+<ul>
+<li>无</li>
+</ul>
+<hr>
+<ul>
+<li>作者： Joel</li>
+<li>文章链接：</li>
+<li><a href="http://xmasuhai.xyz/posts/%E7%89%88%E6%9D%83%E5%A3%B0%E6%98%8E%E9%93%BE%E6%8E%A5/">版权声明</a></li>
+<li>非自由转载-非商用-非衍生-保持署名</li>
+<li><!-- raw HTML omitted -->河<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->掘<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->思<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->知<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->简<!-- raw HTML omitted --></li>
+</ul>
+<hr>
+
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Joel Xu</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2020-09-27
+      
+        
+        
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="http://xmasuhai.xyz/tags/vue/">Vue</a>
+          <a href="http://xmasuhai.xyz/tags/vue3.x/">Vue3.x</a>
+          <a href="http://xmasuhai.xyz/tags/computed/">computed</a>
+          <a href="http://xmasuhai.xyz/tags/watch/">watch</a>
+          <a href="http://xmasuhai.xyz/tags/directive/">directive</a>
+          <a href="http://xmasuhai.xyz/tags/mixin/">mixin</a>
+          <a href="http://xmasuhai.xyz/tags/extend/">extend</a>
+          <a href="http://xmasuhai.xyz/tags/provide-inject/">provide &amp; inject</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/project/money/%E9%A1%B9%E7%9B%AE-%E5%96%B5%E5%86%85%E8%AE%B0%E8%B4%A6-meoney-00%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84%E8%AF%B4%E6%98%8E/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">【项目-记账-meoney-00】目录结构说明</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/vue/vue%E9%9D%9E%E5%85%A8%E8%A7%A3%E6%A8%A1%E6%9D%BF%E6%8C%87%E4%BB%A4%E4%B8%8E%E4%BF%AE%E9%A5%B0%E7%AC%A6/">
+            <span class="next-text nav-default">【Vue非全解】模板、指令与修饰符</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:xmasuhai@163.com" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="https://github.com/xmasuhai" rel="me noopener" class="iconfont"
+      title="github"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M512 12.672c-282.88 0-512 229.248-512 512 0 226.261333 146.688 418.133333 350.08 485.76 25.6 4.821333 34.986667-11.008 34.986667-24.618667 0-12.16-0.426667-44.373333-0.64-87.04-142.421333 30.890667-172.458667-68.693333-172.458667-68.693333C188.672 770.986667 155.008 755.2 155.008 755.2c-46.378667-31.744 3.584-31.104 3.584-31.104 51.413333 3.584 78.421333 52.736 78.421333 52.736 45.653333 78.293333 119.850667 55.68 149.12 42.581333 4.608-33.109333 17.792-55.68 32.426667-68.48-113.706667-12.8-233.216-56.832-233.216-253.013333 0-55.893333 19.84-101.546667 52.693333-137.386667-5.76-12.928-23.04-64.981333 4.48-135.509333 0 0 42.88-13.738667 140.8 52.48 40.96-11.392 84.48-17.024 128-17.28 43.52 0.256 87.04 5.888 128 17.28 97.28-66.218667 140.16-52.48 140.16-52.48 27.52 70.528 10.24 122.581333 5.12 135.509333 32.64 35.84 52.48 81.493333 52.48 137.386667 0 196.693333-119.68 240-233.6 252.586667 17.92 15.36 34.56 46.762667 34.56 94.72 0 68.522667-0.64 123.562667-0.64 140.202666 0 13.44 8.96 29.44 35.2 24.32C877.44 942.592 1024 750.592 1024 524.672c0-282.752-229.248-512-512-512"></path>
+</svg>
+
+    </a>
+  
+    <a href="https://www.zhihu.com/people/xue-shou-41/posts" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+
+
+<a href="http://xmasuhai.xyz/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane">Jane</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy;
+    
+      2019 -
+    2022
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Joel Xu
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

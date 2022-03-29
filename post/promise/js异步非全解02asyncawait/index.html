@@ -1,0 +1,2534 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>【JS异步非全解02】async、await - Joel in The House</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="Joel Xu" />
+  <meta name="description" content="异步非全解 async、await 代码仓库 test-node-module-promise 大纲链接§ [toc] 了解async和await的基本使用⇧ async/await是 ES8 (ECMAScript 2017)引入的新语" />
+
+  <meta name="keywords" content="Hugo, theme, jane" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.91.2" />
+
+
+<link rel="canonical" href="http://xmasuhai.xyz/post/promise/js%E5%BC%82%E6%AD%A5%E9%9D%9E%E5%85%A8%E8%A7%A302asyncawait/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="【JS异步非全解02】async、await" />
+<meta property="og:description" content="异步非全解 async、await 代码仓库 test-node-module-promise 大纲链接§ [toc] 了解async和await的基本使用⇧ async/await是 ES8 (ECMAScript 2017)引入的新语" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://xmasuhai.xyz/post/promise/js%E5%BC%82%E6%AD%A5%E9%9D%9E%E5%85%A8%E8%A7%A302asyncawait/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2021-12-31T22:53:52+08:00" />
+<meta property="article:modified_time" content="2021-12-31T23:00:00+08:00" />
+
+<meta itemprop="name" content="【JS异步非全解02】async、await">
+<meta itemprop="description" content="异步非全解 async、await 代码仓库 test-node-module-promise 大纲链接§ [toc] 了解async和await的基本使用⇧ async/await是 ES8 (ECMAScript 2017)引入的新语"><meta itemprop="datePublished" content="2021-12-31T22:53:52+08:00" />
+<meta itemprop="dateModified" content="2021-12-31T23:00:00+08:00" />
+<meta itemprop="wordCount" content="7012">
+<meta itemprop="keywords" content="FrontEnd," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="【JS异步非全解02】async、await"/>
+<meta name="twitter:description" content="异步非全解 async、await 代码仓库 test-node-module-promise 大纲链接§ [toc] 了解async和await的基本使用⇧ async/await是 ES8 (ECMAScript 2017)引入的新语"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Joel in The House</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/post/">文档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/categories/">目录</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/about/">关于我</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          <div class="mobile-menu-parent">
+            <span class="mobile-submenu-open"></span>
+            <a href="http://xmasuhai.xyz/">
+              docs
+            </a>
+          </div>
+          <ul class="mobile-submenu-list">
+            
+              <li>
+                <a href="http://xmasuhai.xyz/post/test/syntax-highlighting/">Syntax Highlighting</a>
+              </li>
+            
+              <li>
+                <a href="http://xmasuhai.xyz/post/test/mytest/">my Syntax Highlighting &amp; ShortCode Test</a>
+              </li>
+            
+          </ul>
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Joel in The House
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/post/">文档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/categories/">目录</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/about/">关于我</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          <a class="menu-item-link menu-parent" href="http://xmasuhai.xyz/">docs</a>
+          <ul class="submenu">
+            
+              <li>
+                <a href="http://xmasuhai.xyz/post/test/syntax-highlighting/">Syntax Highlighting</a>
+              </li>
+            
+              <li>
+                <a href="http://xmasuhai.xyz/post/test/mytest/">my Syntax Highlighting &amp; ShortCode Test</a>
+              </li>
+            
+          </ul>
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">【JS异步非全解02】async、await</h1>
+      
+      <div class="post-meta">
+        <time datetime="2021-12-31" class="post-time">
+          2021-12-31
+        </time>
+        <div class="post-category">
+            <a href="http://xmasuhai.xyz/categories/frontend/"> FrontEnd </a>
+            
+          </div>
+        <span class="more-meta"> 约 7012 字 </span>
+          <span class="more-meta"> 预计阅读 14 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#了解async和await的基本使用a-hrefcatalogue--a">了解<code>async</code>和<code>await</code>的基本使用<!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a>
+      <ul>
+        <li><a href="#asyncawait的基本使用a-hrefcatalogue--a"><code>async/await</code>的基本使用<!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
+        <li><a href="#asyncawait注意事项a-hrefcatalogue--a"><code>async/await</code>注意事项<!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
+        <li><a href="#asyncawait-错误处理">async/await 错误处理</a></li>
+        <li><a href="#在条件分支中进一步解套-promise">在条件分支中进一步解套 Promise</a></li>
+        <li><a href="#promise-结果逐层依赖省略中间值">promise 结果逐层依赖，省略中间值</a></li>
+        <li><a href="#判断执行顺序">判断执行顺序</a></li>
+        <li><a href="#其他使用示例a-hrefcatalogue--a">其他使用示例<!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
+      </ul>
+    </li>
+    <li><a href="#为何说-async-函数是语法糖">为何说 async 函数是语法糖</a></li>
+    <li><a href="#async-相较于-promise-的优势">async 相较于 Promise 的优势</a>
+      <ul>
+        <li><a href="#相较于-promise能更好地处理-then-链">相较于 Promise，能更好地处理 then 链</a></li>
+        <li><a href="#中间值">中间值</a></li>
+        <li><a href="#更易调试">更易调试</a></li>
+      </ul>
+    </li>
+    <li><a href="#无法替代-promise-的场景">无法替代 Promise 的场景</a></li>
+    <li><a href="#asyncawait-的错误使用">async/await 的错误使用</a></li>
+    <li><a href="#参考文章">参考文章</a></li>
+    <li><a href="#相关文章">相关文章</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      <h1 id="异步非全解-asyncawait">异步非全解 async、await</h1>
+<ul>
+<li><a href="https://github.com/xmasuhai/test-node-module-promise">代码仓库 test-node-module-promise</a></li>
+</ul>
+<hr>
+<blockquote>
+<p>大纲链接<!-- raw HTML omitted --> § <!-- raw HTML omitted --></p>
+</blockquote>
+<p>[toc]</p>
+<hr>
+<h2 id="了解async和await的基本使用a-hrefcatalogue--a">了解<code>async</code>和<code>await</code>的基本使用<!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+<blockquote>
+<p><code>async/await</code>是 ES8 (ECMAScript 2017)引入的新语法，用来简化 Promise 异步操作</p>
+<p><code>async</code>和<code>await</code>是 Generator 函数的语法糖</p>
+<p>使用关键字 async 来修饰 function 或者箭头函数<code>async() =&gt; {}</code></p>
+<p>在函数内部使用 await 来表示 <strong>等待异部操作的结果</strong>，用变量来接收</p>
+</blockquote>
+<ul>
+<li>在 <code>async/await</code> 出现前，开发者只能通过 链式 .then() 的方式处理 Promise 异步操作</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="kr">import</span> <span class="nx">thenFs</span> <span class="nx">from</span> <span class="s1">&#39;then-fs&#39;</span>
+
+<span class="nx">thenFs</span><span class="p">.</span><span class="nx">readFile</span><span class="p">(</span><span class="s1">&#39;./files/1.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;utf8&#39;</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">rt1</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">rt1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nx">thenFs</span><span class="p">.</span><span class="nx">readFile</span><span class="p">(</span><span class="s1">&#39;./files/2.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;utf8&#39;</span><span class="p">)</span>
+  <span class="p">})</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">rt2</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">rt2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nx">thenFs</span><span class="p">.</span><span class="nx">readFile</span><span class="p">(</span><span class="s1">&#39;./files/3.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;utf8&#39;</span><span class="p">)</span>
+  <span class="p">})</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">rt3</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">rt3</span><span class="p">)</span>
+  <span class="p">})</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>.then() 的链式调用解决了回调地狱的问题</li>
+<li>.then() 的链式调用缺点: 代码仍旧冗余、阅读性差，不易理解</li>
+</ul>
+<hr>
+<h3 id="asyncawait的基本使用a-hrefcatalogue--a"><code>async/await</code>的基本使用<!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="kr">import</span> <span class="nx">thenFs</span> <span class="nx">from</span> <span class="s1">&#39;then-fs&#39;</span>
+
+<span class="c1">// 按顺序读取文件1、2、3的内容
+</span><span class="c1"></span><span class="kr">async</span> <span class="kd">function</span> <span class="nx">getAllFiles</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">r1</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">thenFs</span><span class="p">.</span><span class="nx">readFile</span><span class="p">(</span><span class="s1">&#39;./files/1.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;utf8&#39;</span><span class="p">)</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">r1</span><span class="p">);</span>
+  <span class="kr">const</span> <span class="nx">r2</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">thenFs</span><span class="p">.</span><span class="nx">readFile</span><span class="p">(</span><span class="s1">&#39;./files/2.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;utf8&#39;</span><span class="p">)</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">r2</span><span class="p">);</span>
+  <span class="kr">const</span> <span class="nx">r3</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">thenFs</span><span class="p">.</span><span class="nx">readFile</span><span class="p">(</span><span class="s1">&#39;./files/3.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;utf8&#39;</span><span class="p">)</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">r3</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nx">getAllFiles</span><span class="p">()</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>在一个方法返回的 Promise 实例对象前加 <code>await</code> 可以直接返回异步的结果
+<ul>
+<li>例如直接获取读取文件的内容</li>
+<li><code>const r1 = await thenFs.readFile('./files/1.txt', 'utf8')</code></li>
+</ul>
+</li>
+<li><code>await</code> 的外层函数前必须有 <code>async</code> 修饰</li>
+<li>不再需要使用 <code>.then()</code> 的方法拿到异步结果</li>
+<li><code>async/await</code> 可以使异步代码在形式上更接近于同步代码</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="p">;(</span><span class="kr">async</span> <span class="kd">function</span> <span class="nx">testAsync</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">p3</span> <span class="o">=</span> <span class="nb">Promise</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+
+  <span class="nx">p3</span>
+    <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">data</span> <span class="p">=&gt;</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;p3data&#34;</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span>
+    <span class="p">})</span>
+
+  <span class="c1">// 第一种 await 后面是个Promise对象
+</span><span class="c1"></span>  <span class="kr">const</span> <span class="nx">data1</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">p3</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;data1&#34;</span><span class="p">,</span> <span class="nx">data1</span><span class="p">)</span>
+
+  <span class="c1">// 第二种 await 后面是个普通的值
+</span><span class="c1"></span>  <span class="kr">const</span> <span class="nx">data2</span> <span class="o">=</span> <span class="kr">await</span> <span class="mi">4</span>  <span class="c1">// await Promise.resolve(4) // 自动封装成 promise 对象
+</span><span class="c1"></span>  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;data2&#34;</span><span class="p">,</span> <span class="nx">data2</span><span class="p">)</span>
+
+  <span class="c1">// 第三种 await 后面是个函数
+</span><span class="c1"></span>  <span class="kr">const</span> <span class="nx">data3</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">test1</span><span class="p">()</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;data3&#34;</span><span class="p">,</span> <span class="nx">data3</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">)()</span>
+
+<span class="p">;(</span><span class="kr">async</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">a</span> <span class="o">=</span> <span class="kr">await</span> <span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;hi&#39;</span><span class="p">)}</span> <span class="p">)</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">typeof</span> <span class="nx">a</span><span class="p">)</span> <span class="c1">// function
+</span><span class="c1"></span>  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="nx">a</span><span class="p">)</span> <span class="c1">// () =&gt; {console.log(&#39;hi&#39;)}
+</span><span class="c1"></span><span class="p">})();</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>参考</p>
+</blockquote>
+<ul>
+<li><a href="https://juejin.cn/post/6981317692275818527">Promise？async？await</a></li>
+</ul>
+<h3 id="asyncawait注意事项a-hrefcatalogue--a"><code>async/await</code>注意事项<!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+<blockquote>
+<p>async 函数的 <strong>返回值也是一个 Promise 实例</strong></p>
+</blockquote>
+<ul>
+<li>使用 <code>async</code> 声明一个 <strong>异步函数</strong>，并总是 <strong>返回一个 promise 对象</strong>，其他值将自动被包装在一个 resolved 的 promise 中
+<ul>
+<li>因此可以直接 return 变量或值，无需手动显式地调用 <code>Promise.resolve()</code> 进行转换</li>
+<li>使用 return 关键字返回了值，就会被 <code>Promise.resolve()</code>包装成一个 promise 对象
+<ul>
+<li>如果不显式地 return 一个值，默认返回 <code>Promise.resolve(undefined)</code></li>
+<li>被 <code>Promise.resolve(undefined)</code>包装后得到 一个<code>fulfilled</code>状态的 <code>Promise {&lt;fulfilled&gt;: undefined}</code> 实例对象</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>调用 <code>.then()</code> 可以得到返回值</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="kr">async</span> <span class="kd">function</span> <span class="nx">f</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">f</span><span class="p">().</span><span class="nx">then</span><span class="p">(</span><span class="nx">alert</span><span class="p">);</span> <span class="c1">// 1
+</span><span class="c1"></span>
+<span class="c1">// 也可以显式地返回一个 promise，结果是一样的
+</span><span class="c1"></span><span class="kr">async</span> <span class="kd">function</span> <span class="nx">f</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nb">Promise</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nx">f</span><span class="p">().</span><span class="nx">then</span><span class="p">(</span><span class="nx">alert</span><span class="p">);</span> <span class="c1">// 1
+</span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>async 确保了函数返回一个 promise，也会将非 promise 的值包装进 Promise 里去</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="kr">async</span> <span class="kd">function</span> <span class="nx">foo</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+  <span class="k">return</span> <span class="mi">3</span>
+<span class="p">}</span>
+
+<span class="c1">// 返回的promise调用 then 方法
+</span><span class="c1"></span><span class="nx">foo</span><span class="p">().</span><span class="nx">then</span><span class="p">(</span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">)</span>
+
+<span class="p">;(</span><span class="kr">async</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">a</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">foo</span><span class="p">()</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span>
+<span class="p">})();</span>
+</code></pre></td></tr></table>
+</div>
+</div><hr>
+<blockquote>
+<p><code>await</code></p>
+</blockquote>
+<ul>
+<li><code>async</code>总是与 <code>await</code> 一起使用
+<ul>
+<li>并且 <code>await</code> <strong>只能在 async 修饰的异步函数体内</strong> 使用</li>
+<li>不能在 <strong>顶级作用域</strong>  中，如<code>&lt;script&gt;</code>标签或模块（*P.S. 新特性：从 V8 引擎 8.9+ 版本开始，顶层 await 可以在 模块 中工作）中使用
+<ul>
+<li>因为顶级作用域不是一个 <code>async</code> 方法</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="p">;(</span><span class="kr">async</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="c1">// 只在 async 函数内工作
+</span><span class="c1"></span>  <span class="kr">const</span> <span class="nx">value</span> <span class="o">=</span> <span class="kr">await</span> <span class="p">(</span><span class="nb">Promise</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="mi">1</span><span class="p">));</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span>
+  <span class="k">return</span> <span class="nx">value</span>
+<span class="p">})();</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>关键字 <code>await</code> 让 JavaScript 引擎等待直到 promise 完成（settle）并返回结果</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="kr">async</span> <span class="kd">function</span> <span class="nx">f</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">promise</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Promise</span><span class="p">((</span><span class="nx">resolve</span><span class="cm">/*, reject*/</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="nx">setTimeout</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="nx">resolve</span><span class="p">(</span><span class="s2">&#34;done!&#34;</span><span class="p">),</span> <span class="mi">1000</span><span class="p">)</span>
+  <span class="p">});</span>
+  <span class="kr">const</span> <span class="nx">result</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">promise</span><span class="p">;</span> <span class="c1">// 等待，直到 promise resolve (*)
+</span><span class="c1"></span>  <span class="nx">alert</span><span class="p">(</span><span class="nx">result</span><span class="p">);</span> <span class="c1">// &#34;done!&#34;
+</span><span class="c1"></span>  <span class="k">return</span> <span class="nx">result</span> <span class="c1">// 相当于 // return Promise.resolve(result)
+</span><span class="c1"></span><span class="p">}</span>
+
+<span class="nx">f</span><span class="p">();</span>
+<span class="c1">// 这个函数在执行的时候，“暂停”在了 (*) 那一行
+</span><span class="c1">// 并在 promise settle 时，拿到 result 作为结果继续往下执行
+</span><span class="c1">// 所以上面这段代码在一秒后显示 “done!”
+</span><span class="c1"></span><span class="nx">f</span><span class="p">().</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="p">=&gt;</span> <span class="p">{</span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">res</span><span class="p">)})</span> <span class="c1">// done!
+</span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p><code>async</code> 函数执行的过程</p>
+</blockquote>
+<ul>
+<li>未遇到 <code>await</code> 的代码同步执行</li>
+<li>一旦遇到 <code>await</code> 就会先在内部 <strong>得到 pending(进行中) 状态的 Promise 实例</strong></li>
+<li>将第一个 <code>await</code> 表达式，看做一个微任务，推送到微任务队列，等待调用</li>
+<li>第一个<code>await</code> 表达式后的所有语句统一看做这个 <strong>微任务中的(宏/微/同步)任务（嵌套）</strong></li>
+<li>并且暂停执行 <code>await</code> 表达式后的所有语句</li>
+<li>等到主线程中同步任务执行完毕，开始抓取微任务队列的任务执行</li>
+<li>当执行到此 <code>await</code> 表达式时
+<ul>
+<li>如果 <code>await</code> 表达式后是同步代码，则紧跟 <code>await</code> 表达式一起执行</li>
+<li>如果 <code>await</code> 表达式后是异步代码，再将 <code>await</code> 表达式之后的异步代码，按照微/宏任务，分别推送到微/宏任务队列，等待依次调用</li>
+</ul>
+</li>
+<li><code>await</code> 是个运算符，用于组成表达式，它会 <strong>阻塞</strong> 后面的代码，即暂停执行 <code>await</code> 表达式后的所有语句</li>
+</ul>
+<blockquote>
+<p><code>async</code> 函数执行的结果</p>
+</blockquote>
+<ul>
+<li>如果 <code>await</code> 调用异步函数后，等到的是 <code>Promise</code> 对象
+<ul>
+<li>则 <strong>得到其 resolve 值</strong></li>
+<li>否则，会将非<code>Promise</code> 对象得值进行 <code>Promise.resolve()</code> 包装</li>
+</ul>
+</li>
+<li>执行 <code>async</code> 函数，返回的都是一个 <code>Promise</code> 对象
+<ul>
+<li>该 <code>Promise</code> 对象 最终 <code>resolve</code> 的值就是在函数中 <code>return</code> 的内容</li>
+</ul>
+</li>
+<li><code>async</code> 语句 <strong>全部执行完毕</strong> 且 <strong>无错误</strong> 的情况下
+<ul>
+<li>则返回的 Promise 实例会变为已成功</li>
+<li>否则会变为已失败</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><code>async</code> 函数其他注意点</p>
+</blockquote>
+<ul>
+<li><code>async</code> 内部不用写 <code>.then</code> 及其回调函数
+<ul>
+<li>这会减少代码行数，也避免了代码书写形式上的嵌套，但运行机制上还是嵌套</li>
+</ul>
+</li>
+<li>所有异步调用，可以写在 <strong>同一个代码块</strong> 中，无需定义多余的中间变量
+<ul>
+<li>比如 <code>.then()</code>链式调用中的<code>resolve</code>和<code>reject</code></li>
+</ul>
+</li>
+<li>一个 <code>await</code> 就是一层嵌套，嵌套包裹 <code>await</code> 表达式后面的代码，一层嵌套就是 一整个微任务，代码形式上是 <strong>同步</strong>
+<ul>
+<li>相似的，一个 <code>.then()</code> 就是一层回调嵌套，就是 一整个微任务，只不过代码形式上是 <strong>链式调用</strong></li>
+</ul>
+</li>
+<li><code>async/await</code>使 <em><strong>异步代码，在形式上，等同于同步代码</strong></em>
+<ul>
+<li>好比将套娃展开陈列，而回调函数则是层层嵌套</li>
+</ul>
+</li>
+<li>在 <code>async</code> 方法中，<strong>首个 await 之前</strong> 的代码会 <strong>同步执行</strong></li>
+<li>首个 <code>await</code> 之后的代码包括表达式内的JS代码，会 <strong>异步执行</strong></li>
+<li><code>async/await</code> 是建立在 <code>Promises</code>上的，不能被使用在普通回调函数以及节点回调</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="kr">async</span> <span class="kd">function</span> <span class="nx">foo</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="kr">await</span> <span class="nb">Promise</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="s1">&#39;8-1&#39;</span><span class="p">))</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="kr">await</span> <span class="nb">Promise</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="s1">&#39;8-2&#39;</span><span class="p">))</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kr">async</span> <span class="kd">function</span> <span class="nx">bar</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="kr">await</span> <span class="s1">&#39;6-1&#39;</span><span class="p">)</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="kr">await</span> <span class="s1">&#39;6-2&#39;</span><span class="p">)</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="nx">foo</span><span class="p">()</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="nx">bar</span><span class="p">()</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="cm">/*
+</span><span class="cm">console.log(1) // sync code 
+</span><span class="cm">console.log(2) // sync
+</span><span class="cm">// add to microtask queue
+</span><span class="cm">// [{console.log(await Promise.resolve(&#39;8-1)&#39;)...}]
+</span><span class="cm">console.log(3) // sync
+</span><span class="cm">console.log(4) // sync
+</span><span class="cm">// add to microtask queue
+</span><span class="cm">// [{console.log(await Promise.resolve(&#39;8-1&#39;))...}, {console.log(await &#39;6-1&#39;)...}]
+</span><span class="cm">console.log(5) // sync code all over
+</span><span class="cm">// grab one microtask from microtask queue
+</span><span class="cm">console.log(&#39;8-1&#39;) // invoke microtask {console.log(await Promise.resolve(8-1))...}
+</span><span class="cm">// add to microtask queue
+</span><span class="cm">// microtask queue [{console.log(await 6-1)...}, {console.log(await Promise.resolve(8-2))...}]
+</span><span class="cm">// grab one microtask from microtask queue
+</span><span class="cm">console.log(&#39;6-1&#39;) // invoke microtask {console.log(await Promise.resolve(6-1))...}
+</span><span class="cm">// add to microtask queue
+</span><span class="cm">// microtask queue [{console.log(await Promise.resolve(8-2))...}, {console.log(await 6-2)...}]
+</span><span class="cm">// grab one microtask from microtask queue
+</span><span class="cm">console.log(&#39;8-2&#39;) // invoke microtask {console.log(await Promise.resolve(8-2)), console.log(9)}
+</span><span class="cm">console.log(9)
+</span><span class="cm">// microtask queue [{console.log(await 6-2)...}]
+</span><span class="cm">// grab one microtask from microtask queue
+</span><span class="cm">console.log(&#39;6-2&#39;) // invoke microtask {console.log(await 6-2), console.log(7)}
+</span><span class="cm">console.log(7)
+</span><span class="cm">*/</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>await 实际上会暂停函数的执行，直到 promise 状态变为 settled</li>
+<li>然后以 promise 的结果继续执行</li>
+<li>这个行为不会耗费任何 CPU 资源，因为 JavaScript 引擎可以同时处理其他任务：执行其他脚本，处理事件等</li>
+<li>相比于 promise.then，它只是获取 promise 的结果的一个更优雅的语法，同时也更易于读写</li>
+</ul>
+<blockquote>
+<p>以读取文件为例：</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="kr">import</span> <span class="nx">thenFs</span> <span class="nx">from</span> <span class="s1">&#39;then-fs&#39;</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;sync step A&#39;</span><span class="p">);</span>
+
+<span class="kr">export</span> <span class="kr">async</span> <span class="kd">function</span> <span class="nx">getAllFile</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;sync step B&#39;</span><span class="p">);</span>
+  <span class="kr">const</span> <span class="nx">r1</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">thenFs</span><span class="p">.</span><span class="nx">readFile</span><span class="p">(</span><span class="s1">&#39;./files/1.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;utf8&#39;</span><span class="p">)</span>
+  <span class="kr">const</span> <span class="nx">r2</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">thenFs</span><span class="p">.</span><span class="nx">readFile</span><span class="p">(</span><span class="s1">&#39;./files/2.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;utf8&#39;</span><span class="p">)</span>
+  <span class="kr">const</span> <span class="nx">r3</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">thenFs</span><span class="p">.</span><span class="nx">readFile</span><span class="p">(</span><span class="s1">&#39;./files/3.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;utf8&#39;</span><span class="p">)</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">r1</span><span class="p">,</span> <span class="nx">r2</span><span class="p">,</span> <span class="nx">r3</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;async step D&#39;</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nx">getAllFile</span><span class="p">();</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;sync step C&#39;</span><span class="p">);</span>
+
+<span class="c1">// sync step A
+</span><span class="c1">// sync step B &lt;-- getAllFile()
+</span><span class="c1">// sync step C
+</span><span class="c1">// 111 222 333
+</span><span class="c1">// async step D
+</span><span class="c1"></span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>不要是异步就要去用 async/await，要满足两点，优势才能体现：</p>
+</blockquote>
+<ul>
+<li>1️⃣要执行多个异步任务</li>
+<li>2️⃣并且这些个任务都有前后依赖的关系(比如后者依赖前者的结果)</li>
+<li>主要就是用来解套，让代码更清晰</li>
+<li>没有前后依赖那不如用 promise 了</li>
+</ul>
+<blockquote>
+<p>假设有一个 getJSONData 方法，返回一个 promise 对象</p>
+<p>该 promise对象 会被 resolve 为一个 JSON 对象</p>
+<p>调用该方法，输出得到的 JSON 对象，最后返回&quot;done&quot;。</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="c1">// 使用promise的实现方式
+</span><span class="c1"></span><span class="kr">const</span> <span class="nx">makeRequestByPromise</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span>
+  <span class="nx">getJSONData</span><span class="p">()</span>
+    <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">data</span> <span class="p">=&gt;</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span>
+      <span class="k">return</span> <span class="s2">&#34;done&#34;</span>
+    <span class="p">})</span>
+
+<span class="nx">makeRequestByPromise</span><span class="p">()</span>
+
+<span class="c1">// 使用async/await
+</span><span class="c1"></span><span class="kr">const</span> <span class="nx">makeRequestByAsync</span> <span class="o">=</span> <span class="kr">async</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">data</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">getJSON</span><span class="p">()</span> <span class="c1">// 直到 getJSON() 返回的 promise resolve 后 才得到值
+</span><span class="c1"></span>  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span>
+  <span class="k">return</span> <span class="s2">&#34;done&#34;</span>
+<span class="p">}</span>
+
+<span class="nx">makeRequestByAsync</span><span class="p">()</span>
+
+<span class="c1">// this will not work in top level
+</span><span class="c1"></span><span class="kr">await</span> <span class="nx">makeRequestByPromise</span><span class="p">()</span>
+    
+<span class="c1">// this will work
+</span><span class="c1"></span><span class="nx">makeRequestByPromise</span><span class="p">()</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">result</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="c1">// do something
+</span><span class="c1"></span>  <span class="p">})</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>不需要为 .then 编写一个匿名函数来处理返回结果 <code>(resolve) =&gt; {}</code></li>
+</ul>
+<hr>
+<h3 id="asyncawait-错误处理">async/await 错误处理</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="kr">const</span> <span class="nx">makeRequest</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="k">try</span> <span class="p">{</span>
+    <span class="nx">getJSON</span><span class="p">()</span>
+      <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">result</span> <span class="p">=&gt;</span> <span class="p">{</span>
+        <span class="c1">// this parse may fail
+</span><span class="c1"></span>        <span class="kr">const</span> <span class="nx">data</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">result</span><span class="p">)</span> <span class="c1">// try/catch 不能捕获 成功回调resolve中 JSON.parse 抛出的异常
+</span><span class="c1"></span>        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span>
+      <span class="p">})</span>
+      <span class="cm">/* uncomment this block to handle asynchronous errors */</span>
+      <span class="cm">/*
+</span><span class="cm">      .catch((err) =&gt; {
+</span><span class="cm">        console.log(err)
+</span><span class="cm">      })
+</span><span class="cm">      */</span>
+  <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="c1">// try/catch 不能捕获 JSON.parse 抛出的异常
+</span><span class="c1"></span>  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>try/catch 不能捕获 <strong>成功回调resolve</strong> 中 JSON.parse 抛出的异常</li>
+</ul>
+<blockquote>
+<p>改用 async/await</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="kr">const</span> <span class="nx">makeRequest</span> <span class="o">=</span> <span class="kr">async</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="k">try</span> <span class="p">{</span>
+    <span class="c1">// this parse may fail
+</span><span class="c1"></span>    <span class="kr">const</span> <span class="nx">data</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="kr">await</span> <span class="nx">getJSON</span><span class="p">())</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span>
+  <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>此处catch代码块可以捕获JSON.parse抛出的异常</li>
+</ul>
+<h3 id="在条件分支中进一步解套-promise">在条件分支中进一步解套 Promise</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="kr">const</span> <span class="nx">makeRequest</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span> <span class="c1">// 第一层
+</span><span class="c1"></span>  <span class="k">return</span> <span class="nx">getJSON</span><span class="p">()</span> <span class="c1">// 请求数据
+</span><span class="c1"></span>    <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">data</span> <span class="p">=&gt;</span> <span class="p">{</span> <span class="c1">// 第二层
+</span><span class="c1"></span>      <span class="c1">// 根据返回数据中的某些内容 进一步判断
+</span><span class="c1"></span>      <span class="k">if</span> <span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">needsAnotherRequest</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// 第三层
+</span><span class="c1"></span>        <span class="k">return</span> <span class="nx">makeAnotherRequest</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span>
+          <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">moreData</span> <span class="p">=&gt;</span> <span class="p">{</span> <span class="c1">// 第四层
+</span><span class="c1"></span>            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">moreData</span><span class="p">)</span>
+            <span class="k">return</span> <span class="nx">moreData</span>
+          <span class="p">})</span>
+      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nx">data</span>
+      <span class="p">}</span>
+    <span class="p">})</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>请求数据，然后根据返回数据中的某些内容决定
+<ul>
+<li>是直接返回这些数据</li>
+<li>还是继续请求更多数据</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>使用 async/await 改写</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="kr">const</span> <span class="nx">makeRequest</span> <span class="o">=</span> <span class="kr">async</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">data</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">getJSON</span><span class="p">()</span> <span class="c1">// 请求数据
+</span><span class="c1"></span>  <span class="k">if</span> <span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">needsAnotherRequest</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kr">const</span> <span class="nx">moreData</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">makeAnotherRequest</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span> <span class="c1">// 进一步请求数据
+</span><span class="c1"></span>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">moreData</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nx">moreData</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nx">data</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="promise-结果逐层依赖省略中间值">promise 结果逐层依赖，省略中间值</h3>
+<blockquote>
+<p>请求 promise1，使用它的返回值请求 promise2，最后使用这两个 promise 的值请求 promise3</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="kr">const</span> <span class="nx">makeRequest</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">promise1</span><span class="p">()</span>
+    <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">value1</span> <span class="p">=&gt;</span> <span class="p">{</span>
+      <span class="c1">// do something
+</span><span class="c1"></span>      <span class="k">return</span> <span class="nx">promise2</span><span class="p">(</span><span class="nx">value1</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">value2</span> <span class="p">=&gt;</span> <span class="p">{</span>
+          <span class="c1">// do something          
+</span><span class="c1"></span>          <span class="k">return</span> <span class="nx">promise3</span><span class="p">(</span><span class="nx">value1</span><span class="p">,</span> <span class="nx">value2</span><span class="p">)</span>
+        <span class="p">})</span>
+    <span class="p">})</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>如果 promise3 没有用到 value1，则可以把这几个 promise 改成嵌套的模式</p>
+<p>也可以把 value1 和 value2 封装在一个 Promise.all 调用中以避免深层次的嵌套</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="kr">const</span> <span class="nx">makeRequest</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">promise1</span><span class="p">()</span>
+    <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">value1</span> <span class="p">=&gt;</span> <span class="p">{</span>
+      <span class="c1">// do something
+</span><span class="c1"></span>      <span class="k">return</span> <span class="nb">Promise</span><span class="p">.</span><span class="nx">all</span><span class="p">([</span><span class="nx">value1</span><span class="p">,</span> <span class="nx">promise2</span><span class="p">(</span><span class="nx">value1</span><span class="p">)])</span>
+    <span class="p">})</span>
+    <span class="p">.</span><span class="nx">then</span><span class="p">(([</span><span class="nx">value1</span><span class="p">,</span> <span class="nx">value2</span><span class="p">])</span> <span class="p">=&gt;</span> <span class="p">{</span>
+      <span class="c1">// do something          
+</span><span class="c1"></span>      <span class="k">return</span> <span class="nx">promise3</span><span class="p">(</span><span class="nx">value1</span><span class="p">,</span> <span class="nx">value2</span><span class="p">)</span>
+    <span class="p">})</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>这种方式为了保证可读性而牺牲了语义</li>
+<li>除了避免嵌套的 promise，没有其它理由要把 value1 和 value2 放到一个数组里</li>
+</ul>
+<blockquote>
+<p>async</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="kr">const</span> <span class="nx">makeRequest</span> <span class="o">=</span> <span class="kr">async</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">value1</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">promise1</span><span class="p">()</span>
+  <span class="kr">const</span> <span class="nx">value2</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">promise2</span><span class="p">(</span><span class="nx">value1</span><span class="p">)</span>
+  <span class="k">return</span> <span class="nx">promise3</span><span class="p">(</span><span class="nx">value1</span><span class="p">,</span> <span class="nx">value2</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="判断执行顺序">判断执行顺序</h3>
+<blockquote>
+<p>第一题</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">waitHandle</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kr">async</span> <span class="kd">function</span> <span class="nx">asyncFn</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="kr">await</span> <span class="nx">waitHandle</span><span class="p">()</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="nx">asyncFn</span><span class="p">()</span>
+<span class="c1">// 1 3 2
+</span><span class="c1"></span>
+<span class="c1">// 转换为 Promise.then() 等效的执行顺序
+</span><span class="c1"></span><span class="kd">function</span> <span class="nx">asyncPfn</span><span class="p">(){</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="nb">Promise</span><span class="p">((</span><span class="nx">res</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+        <span class="nx">waitHandle</span><span class="p">()</span> <span class="c1">// console.log(3)
+</span><span class="c1"></span>    <span class="p">})</span>
+    <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">res</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+        <span class="c1">// await 执行完毕后才会执行后面的操作
+</span><span class="c1"></span>        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="p">})</span>
+<span class="p">}</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>第二题</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="c1">//不加async await
+</span><span class="c1"></span> <span class="kd">function</span> <span class="nx">foo</span> <span class="p">()</span> <span class="p">{</span>
+   <span class="nb">Promise</span><span class="p">.</span><span class="nx">resolve</span><span class="p">()</span>
+     <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">resolve</span> <span class="p">=&gt;</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;1&#34;</span><span class="p">);</span>
+  <span class="p">});</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="nx">foo</span><span class="p">();</span>
+<span class="c1">// 3  1
+</span><span class="c1"></span>
+<span class="c1">//加了async await
+</span><span class="c1"></span><span class="kr">async</span> <span class="kd">function</span> <span class="nx">foo2</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="kr">await</span> <span class="nb">Promise</span><span class="p">.</span><span class="nx">resolve</span><span class="p">()</span>
+    <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">resolve</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;1&#34;</span><span class="p">);</span>
+  <span class="p">});</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="nx">foo2</span><span class="p">();</span>
+<span class="c1">// 1 3
+</span><span class="c1"></span>
+</code></pre></td></tr></table>
+</div>
+</div><hr>
+<h3 id="其他使用示例a-hrefcatalogue--a">其他使用示例<!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+<h4 id="配合-promiseall-使用a-hrefcatalogue--a">配合 <code>Promise.all</code> 使用<!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="kr">import</span> <span class="p">{</span> <span class="nx">promisify</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;util&#39;</span><span class="p">;</span>
+<span class="kr">const</span> <span class="nx">sleep</span> <span class="o">=</span> <span class="nx">promisify</span><span class="p">(</span><span class="nx">setTimeout</span><span class="p">);</span>
+
+<span class="kr">async</span> <span class="kd">function</span> <span class="nx">f1</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kr">await</span> <span class="nx">sleep</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kr">async</span> <span class="kd">function</span> <span class="nx">f2</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kr">await</span> <span class="nx">sleep</span><span class="p">(</span><span class="mi">2000</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kr">async</span> <span class="kd">function</span> <span class="nx">f3</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kr">await</span> <span class="nx">sleep</span><span class="p">(</span><span class="mi">3000</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="p">(</span><span class="kr">async</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">time</span><span class="p">(</span><span class="s1">&#39;sequential separate&#39;</span><span class="p">);</span>
+  <span class="kr">await</span> <span class="nx">f1</span><span class="p">();</span>
+  <span class="kr">await</span> <span class="nx">f2</span><span class="p">();</span>
+  <span class="kr">await</span> <span class="nx">f3</span><span class="p">();</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">timeEnd</span><span class="p">(</span><span class="s1">&#39;sequential separate&#39;</span><span class="p">);</span>
+<span class="p">})();</span>
+
+<span class="p">(</span><span class="kr">async</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">time</span><span class="p">(</span><span class="s1">&#39;concurrent promise.all&#39;</span><span class="p">);</span>
+  <span class="kr">await</span> <span class="nb">Promise</span><span class="p">.</span><span class="nx">all</span><span class="p">([</span><span class="nx">f1</span><span class="p">(),</span> <span class="nx">f2</span><span class="p">(),</span> <span class="nx">f3</span><span class="p">()]);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">timeEnd</span><span class="p">(</span><span class="s1">&#39;concurrent promise.all&#39;</span><span class="p">);</span>
+<span class="p">})();</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>Promise 是并发的，但如你一个一个地等待它们，会太费时间</li>
+<li>Promise.all() 可以节省很多时间</li>
+</ul>
+<h2 id="为何说-async-函数是语法糖">为何说 async 函数是语法糖</h2>
+<blockquote>
+<p>async 函数的实现，其实就是将 Generator 函数和自动执行器，包装在一个函数里。</p>
+</blockquote>
+<ul>
+<li>参考 非前端<a href="http://www.ruanyifeng.com/blog/2015/05/async.html">阮一峰写的 《async 函数的含义和用法》</a> 一文</li>
+<li>转码器 Babel 已经支持，转码后就能使用</li>
+</ul>
+<h2 id="async-相较于-promise-的优势">async 相较于 Promise 的优势</h2>
+<ul>
+<li>相较于 Promise，能更好地处理 then 链</li>
+<li>中间值</li>
+<li>调试</li>
+</ul>
+<blockquote>
+<p>Promise</p>
+</blockquote>
+<ul>
+<li>ECMAScript 6 新增的引用类型 Promise</li>
+<li>可以通过 new 操作符来实例化</li>
+<li>创建新期约时需要传入执行器（executor）函数作为参数</li>
+<li>三个状态，分别是pending（执行中）、success（成功）、rejected（失败）</li>
+<li>无论 <code>resolve()</code> 和 <code>reject()</code> 中的哪个被先调用，状态转换都不可撤销
+<ul>
+<li>后调用的方法继续修改状态会静默失败</li>
+</ul>
+</li>
+<li>为避免期约卡在待定状态，可以添加一个定时退出功能
+<ul>
+<li>比如，可以通过 setTimeout 设置一个 10000 秒钟后无论如何都会拒绝期约的回调</li>
+<li><code>const p = new Promise((resolve, reject) =&gt; { /*...*/ setTimeout(reject, 10000);}</code></li>
+<li>10 秒后调用 reject() // 执行函数的逻辑</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="相较于-promise能更好地处理-then-链">相较于 Promise，能更好地处理 then 链</h3>
+<blockquote>
+<p>假设有三个表示处理一系列连续步骤的函数 <code>stepFn.js</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="kr">export</span> <span class="kr">const</span> <span class="nx">takeLongTime</span> <span class="o">=</span> <span class="p">(</span><span class="nx">n</span><span class="p">,</span> <span class="nx">name</span><span class="p">,</span> <span class="p">...</span><span class="nx">args</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="k">new</span> <span class="nb">Promise</span><span class="p">(</span><span class="nx">resolve</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="nx">setTimeout</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="nx">resolve</span><span class="p">(</span><span class="nx">n</span> <span class="o">+</span> <span class="mi">200</span><span class="p">,</span> <span class="nx">name</span><span class="p">,</span> <span class="p">...</span><span class="nx">args</span><span class="p">),</span> <span class="nx">n</span><span class="p">)</span>
+  <span class="p">})</span>
+<span class="p">}</span>
+
+<span class="kr">export</span> <span class="kr">const</span> <span class="nx">step1</span> <span class="o">=</span> <span class="p">(</span><span class="nx">n</span><span class="p">,</span> <span class="nx">name</span><span class="p">,</span> <span class="p">...</span><span class="nx">args</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`</span><span class="si">${</span><span class="nx">name</span><span class="si">}</span><span class="sb"> step1 with </span><span class="si">${</span><span class="nx">n</span><span class="si">}</span><span class="sb">`</span><span class="p">)</span>
+  <span class="k">return</span> <span class="nx">takeLongTime</span><span class="p">(</span><span class="nx">n</span><span class="p">,</span> <span class="nx">name</span><span class="p">,</span> <span class="p">...</span><span class="nx">args</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kr">export</span> <span class="kr">const</span> <span class="nx">step2</span> <span class="o">=</span> <span class="p">(</span><span class="nx">n</span><span class="p">,</span> <span class="nx">name</span><span class="p">,</span> <span class="p">...</span><span class="nx">args</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`</span><span class="si">${</span><span class="nx">name</span><span class="si">}</span><span class="sb"> step2 with </span><span class="si">${</span><span class="nx">n</span><span class="si">}</span><span class="sb">`</span><span class="p">)</span>
+  <span class="k">return</span> <span class="nx">takeLongTime</span><span class="p">(</span><span class="nx">n</span><span class="p">,</span> <span class="nx">name</span><span class="p">,</span> <span class="p">...</span><span class="nx">args</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kr">export</span> <span class="kr">const</span> <span class="nx">step3</span> <span class="o">=</span> <span class="p">(</span><span class="nx">n</span><span class="p">,</span> <span class="nx">name</span><span class="p">,</span> <span class="p">...</span><span class="nx">args</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`</span><span class="si">${</span><span class="nx">name</span><span class="si">}</span><span class="sb"> step3 with </span><span class="si">${</span><span class="nx">n</span><span class="si">}</span><span class="sb">`</span><span class="p">)</span>
+  <span class="k">return</span> <span class="nx">takeLongTime</span><span class="p">(</span><span class="nx">n</span><span class="p">,</span> <span class="nx">name</span><span class="p">,</span> <span class="p">...</span><span class="nx">args</span><span class="p">)</span>
+<span class="p">}</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>现在用 Promise 方式来实现这三个步骤的处理 <code>step.js</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="c1">// 运行 node async_await/step.js
+</span><span class="c1"></span><span class="kr">import</span> <span class="p">{</span><span class="nx">step1</span><span class="p">,</span> <span class="nx">step2</span><span class="p">,</span> <span class="nx">step3</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;./stepFn.js&#39;</span>
+
+<span class="c1">// Promise
+</span><span class="c1"></span><span class="kr">const</span> <span class="nx">doItPromise</span> <span class="o">=</span> <span class="p">(</span><span class="nx">name</span> <span class="o">=</span> <span class="s1">&#39;doItPromise&#39;</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">time</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span>
+  <span class="kr">const</span> <span class="nx">time1</span> <span class="o">=</span> <span class="mi">300</span>
+  <span class="nx">step1</span><span class="p">(</span><span class="nx">time1</span><span class="p">,</span> <span class="nx">name</span><span class="p">)</span>
+    <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">time2</span> <span class="p">=&gt;</span> <span class="nx">step2</span><span class="p">(</span><span class="nx">time2</span><span class="p">,</span> <span class="nx">name</span><span class="p">))</span>
+    <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">time3</span> <span class="p">=&gt;</span> <span class="nx">step3</span><span class="p">(</span><span class="nx">time3</span><span class="p">,</span> <span class="nx">name</span><span class="p">))</span>
+    <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">result</span> <span class="p">=&gt;</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`</span><span class="si">${</span><span class="nx">name</span><span class="si">}</span><span class="sb"> result is </span><span class="si">${</span><span class="nx">result</span><span class="si">}</span><span class="sb">`</span><span class="p">)</span>
+    <span class="p">})</span>
+    <span class="p">.</span><span class="k">finally</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">timeEnd</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span>
+    <span class="p">})</span>
+<span class="p">}</span>
+
+<span class="nx">doItPromise</span><span class="p">()</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>用 async/await 来实现</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="c1">// 运行 node async_await/step.js
+</span><span class="c1"></span><span class="kr">import</span> <span class="p">{</span><span class="nx">step1</span><span class="p">,</span> <span class="nx">step2</span><span class="p">,</span> <span class="nx">step3</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;./stepFn.js&#39;</span>
+
+<span class="c1">// async Function
+</span><span class="c1"></span><span class="kr">const</span> <span class="nx">doItAsync</span> <span class="o">=</span> <span class="kr">async</span> <span class="p">(</span><span class="nx">name</span> <span class="o">=</span> <span class="s1">&#39;doItAsync&#39;</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">time</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span>
+  <span class="kr">const</span> <span class="nx">time1</span> <span class="o">=</span> <span class="mi">300</span>
+  <span class="kr">const</span> <span class="nx">time2</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">step1</span><span class="p">(</span><span class="nx">time1</span><span class="p">,</span> <span class="nx">name</span><span class="p">)</span>
+  <span class="kr">const</span> <span class="nx">time3</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">step2</span><span class="p">(</span><span class="nx">time2</span><span class="p">,</span> <span class="nx">name</span><span class="p">)</span>
+  <span class="kr">const</span> <span class="nx">result</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">step3</span><span class="p">(</span><span class="nx">time3</span><span class="p">,</span> <span class="nx">name</span><span class="p">)</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`</span><span class="si">${</span><span class="nx">name</span><span class="si">}</span><span class="sb"> result is </span><span class="si">${</span><span class="nx">result</span><span class="si">}</span><span class="sb">`</span><span class="p">)</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">timeEnd</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="nx">doItAsync</span><span class="p">()</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>结果和之前的 Promise 实现是一样的</li>
+<li>但代码更清晰，和同步代码一样</li>
+</ul>
+<hr>
+<h3 id="中间值">中间值</h3>
+<blockquote>
+<p>仍然是三个步骤，但每一个步骤都需要之前所有步骤的结果</p>
+<p>Promise的实现看着很晕，传递参数太过麻烦</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="c1">// 运行 node async_await/step-median.js
+</span><span class="c1"></span><span class="kr">import</span> <span class="p">{</span><span class="nx">step1</span><span class="p">,</span> <span class="nx">step2</span><span class="p">,</span> <span class="nx">step3</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;./stepFn.js&#39;</span>
+
+<span class="c1">// Promise
+</span><span class="c1"></span><span class="kr">const</span> <span class="nx">doItPromise</span> <span class="o">=</span> <span class="p">(</span><span class="nx">name</span> <span class="o">=</span> <span class="s1">&#39;doItPromise&#39;</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">time</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span>
+  <span class="kr">const</span> <span class="nx">time1</span> <span class="o">=</span> <span class="mi">300</span>
+  <span class="c1">// 每一个步骤都需要之前每个步骤的结果
+</span><span class="c1"></span>  <span class="nx">step1</span><span class="p">(</span><span class="nx">time1</span><span class="p">,</span> <span class="nx">name</span><span class="p">)</span>
+    <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">time2</span> <span class="p">=&gt;</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="nx">step2</span><span class="p">(</span><span class="nx">time2</span><span class="p">,</span> <span class="nx">name</span><span class="p">)</span>
+        <span class="c1">// median // then 返回的中间值
+</span><span class="c1"></span>        <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">time3</span> <span class="p">=&gt;</span> <span class="p">[</span><span class="nx">time1</span><span class="p">,</span> <span class="nx">time2</span><span class="p">,</span> <span class="nx">time3</span><span class="p">])</span>
+    <span class="p">})</span>
+    <span class="c1">// median 中间值 times
+</span><span class="c1"></span>    <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">times</span> <span class="p">=&gt;</span> <span class="p">{</span>
+      <span class="kr">const</span> <span class="p">[</span><span class="nx">time1</span><span class="p">,</span> <span class="nx">time2</span><span class="p">,</span> <span class="nx">time3</span><span class="p">]</span> <span class="o">=</span> <span class="nx">times</span>
+      <span class="k">return</span> <span class="nx">step3</span><span class="p">(</span><span class="nx">time3</span><span class="p">,</span> <span class="nx">name</span><span class="p">)</span>
+        <span class="c1">// median // then 返回的中间值
+</span><span class="c1"></span>        <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">result</span> <span class="p">=&gt;</span> <span class="p">[</span><span class="nx">time1</span><span class="p">,</span> <span class="nx">time2</span><span class="p">,</span> <span class="nx">time3</span><span class="p">,</span> <span class="nx">result</span><span class="p">])</span>
+    <span class="p">})</span>
+    <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">resultList</span> <span class="p">=&gt;</span> <span class="p">{</span>
+      <span class="kr">const</span> <span class="p">[,</span> <span class="p">,</span> <span class="p">,</span> <span class="nx">result</span><span class="p">]</span> <span class="o">=</span> <span class="nx">resultList</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`</span><span class="si">${</span><span class="nx">name</span><span class="si">}</span><span class="sb"> result is </span><span class="si">${</span><span class="nx">result</span><span class="si">}</span><span class="sb">`</span><span class="p">)</span>
+    <span class="p">})</span>
+    <span class="p">.</span><span class="k">finally</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">timeEnd</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span>
+    <span class="p">})</span>
+<span class="p">}</span>
+
+<span class="nx">doItPromise</span><span class="p">()</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>用 async/await 来写：</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="c1">// 运行 node async_await/step-median.js
+</span><span class="c1"></span><span class="kr">import</span> <span class="p">{</span><span class="nx">step1</span><span class="p">,</span> <span class="nx">step2</span><span class="p">,</span> <span class="nx">step3</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;./stepFn.js&#39;</span>
+
+<span class="c1">// async
+</span><span class="c1"></span><span class="kr">const</span> <span class="nx">doItAsync</span> <span class="o">=</span> <span class="kr">async</span> <span class="p">(</span><span class="nx">name</span> <span class="o">=</span> <span class="s1">&#39;doItAsync&#39;</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">time</span><span class="p">(</span><span class="nx">name</span><span class="p">);</span>
+  <span class="kr">const</span> <span class="nx">time1</span> <span class="o">=</span> <span class="mi">300</span><span class="p">;</span>
+  <span class="kr">const</span> <span class="nx">time2</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">step1</span><span class="p">(</span><span class="nx">time1</span><span class="p">,</span> <span class="nx">name</span><span class="p">);</span>
+  <span class="kr">const</span> <span class="nx">time3</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">step2</span><span class="p">(</span><span class="nx">time2</span><span class="p">,</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">time1</span><span class="p">);</span>
+  <span class="kr">const</span> <span class="nx">result</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">step3</span><span class="p">(</span><span class="nx">time3</span><span class="p">,</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">time2</span><span class="p">,</span> <span class="nx">time1</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`</span><span class="si">${</span><span class="nx">name</span><span class="si">}</span><span class="sb"> result is </span><span class="si">${</span><span class="nx">result</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">timeEnd</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="nx">doItAsync</span><span class="p">();</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><hr>
+<h3 id="更易调试">更易调试</h3>
+<blockquote>
+<p>较 Promise 更易于调试</p>
+</blockquote>
+<ul>
+<li>因为没有代码块，所以不能在一个<strong>返回的箭头函数</strong>中<strong>设置断点</strong></li>
+<li>如果在一个 .then 代码块中使用调试器的步进(step-over)功能，<em><strong>调试器并不会进入后续的 .then 代码块</strong></em></li>
+<li>因为调试器<strong>只能跟踪同步代码</strong>的每一步</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="kr">const</span> <span class="nx">makeRequest</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">callOnePromise</span><span class="p">()</span>
+    <span class="p">.</span><span class="nx">then</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="nx">callOnePromise</span><span class="p">())</span>
+    <span class="c1">// step-over 将跳过以下的 .then()
+</span><span class="c1"></span>    <span class="p">.</span><span class="nx">then</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="nx">callOnePromise</span><span class="p">())</span>
+    <span class="p">.</span><span class="nx">then</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="nx">callOnePromise</span><span class="p">())</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>使用 async/await，就不必再使用箭头函数</p>
+</blockquote>
+<ul>
+<li><strong>可以对 await 语句执行步进操作</strong>，就好像他们都是普通的同步语句一样</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="kr">const</span> <span class="nx">makeRequest</span> <span class="o">=</span> <span class="kr">async</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="kr">await</span> <span class="nx">callOnePromise</span><span class="p">()</span>
+  <span class="kr">await</span> <span class="nx">callOnePromise</span><span class="p">()</span>
+  <span class="kr">await</span> <span class="nx">callOnePromise</span><span class="p">()</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>JavaScript的异步编写方式，从 <strong>回调函数</strong> 到 <strong>Promise</strong>、<strong>Generator</strong> 再到 <strong>Async/Await</strong>。表面上只是写法的变化，但本质上则是语言层的一次次抽象。让我们可以用更简单的方式实现同样的功能，而不需要去考虑代码是如何执行的</p>
+</blockquote>
+<hr>
+<h2 id="无法替代-promise-的场景">无法替代 Promise 的场景</h2>
+<blockquote>
+<p>前端进行并发请求，都请求完执行操作A; 否则执行操作B。</p>
+</blockquote>
+<ul>
+<li>这种情况就是用的 Promise.all()</li>
+<li>Async/Await　对　Generator是取代关系，但不能完全取代 Promise</li>
+<li>处理并发请求（只是处理并发请求，而不是并发）的时候，可采用 axios.all()，拿到的最终结果还是个Promise</li>
+<li>然后再去业务层处理A，在这时与 Promise.all() 的效果相同</li>
+<li>用 await/async 是串行，用 Promise.all() 是处理并发</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="kr">const</span> <span class="nx">serial</span> <span class="o">=</span>  <span class="kr">async</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">promiseA</span> <span class="o">=</span> <span class="nx">promiseFnA</span><span class="p">()</span>
+  <span class="kr">const</span> <span class="nx">promiseB</span> <span class="o">=</span> <span class="nx">promiseFnB</span><span class="p">()</span>
+
+  <span class="k">try</span> <span class="p">{</span>
+    <span class="c1">// do something on valueA and valueB
+</span><span class="c1"></span>    <span class="kr">const</span> <span class="nx">valueA</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">promiseA</span>
+    <span class="kr">const</span> <span class="nx">valueB</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">promiseB</span>
+  <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">throw</span> <span class="nx">error</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>串行/并发</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="c1">// 运行 node async_await/serialConcurrent.js
+</span><span class="c1"></span><span class="kr">const</span> <span class="nx">delay</span> <span class="o">=</span> <span class="p">(</span><span class="nx">ms</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="k">new</span> <span class="nb">Promise</span><span class="p">(</span><span class="nx">resolve</span> <span class="p">=&gt;</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">setTimeout</span><span class="p">(</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">ms</span><span class="p">)})</span>
+<span class="p">};</span>
+
+<span class="c1">// 串行 async serial
+</span><span class="c1"></span><span class="p">;(</span><span class="kr">async</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">p1</span> <span class="o">=</span> <span class="nx">delay</span><span class="p">(</span><span class="mi">2000</span><span class="p">)</span>
+  <span class="kr">const</span> <span class="nx">p2</span> <span class="o">=</span> <span class="nx">delay</span><span class="p">(</span><span class="mi">2000</span><span class="p">)</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">time</span><span class="p">(</span><span class="s1">&#39;delay_serial&#39;</span><span class="p">)</span>
+  <span class="kr">await</span> <span class="nx">p1</span>
+  <span class="kr">await</span> <span class="nx">p2</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">timeEnd</span><span class="p">(</span><span class="s1">&#39;delay_serial&#39;</span><span class="p">)</span>
+<span class="p">})();</span>
+
+<span class="c1">// 并发 Promise.all
+</span><span class="c1"></span><span class="p">;(</span><span class="kr">async</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">p1</span> <span class="o">=</span> <span class="nx">delay</span><span class="p">(</span><span class="mi">2000</span><span class="p">)</span>
+  <span class="kr">const</span> <span class="nx">p2</span> <span class="o">=</span> <span class="nx">delay</span><span class="p">(</span><span class="mi">2000</span><span class="p">)</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">time</span><span class="p">(</span><span class="s1">&#39;delay_concurrent&#39;</span><span class="p">)</span>
+  <span class="kr">await</span> <span class="nb">Promise</span><span class="p">.</span><span class="nx">all</span><span class="p">([</span><span class="nx">p1</span><span class="p">,</span> <span class="nx">p2</span><span class="p">])</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">timeEnd</span><span class="p">(</span><span class="s1">&#39;delay_concurrent&#39;</span><span class="p">)</span>
+<span class="p">})();</span>
+
+<span class="c1">// 显然两段代码的都 delay: 2000 ms
+</span><span class="c1"></span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>当调用 <code>promise = delay(2000)</code> 的时候，已发起 delay 的异步处理 setTimeout</li>
+<li>此时 promise 的状态是 pending</li>
+<li>await 需要等 promise 状态变成 resolved(rejected则抛出异常)，才会继续后面的操作,可以理解为阻塞</li>
+<li>如果是后一次的 delay 调用是等待前一次 resolve 才发起的，那么两次 delay 表现出来是串行的</li>
+<li>在 await 之前就已经调用了两次 delay，所以表现出来的就是并发</li>
+<li>就像调用 Promise.all，要求传入的参数是promise对象数组</li>
+<li>调用 <code>Promise.all([delay(2000), delay(2000)])</code></li>
+<li>其实相当于分两步走：
+<ul>
+<li><code>const p1 = delay(2000) // 已经发起异步处理</code></li>
+<li><code>const p2 = delay(2000) // 已经发起异步处理</code></li>
+<li><code>Promise.all([p1, p2]);</code></li>
+</ul>
+</li>
+<li>step2 其实在传给 Promise.all 之前，异步处理已经都发起了</li>
+<li>所以并发并不是 Promise.all 处理的</li>
+<li>Promise.all 只是做了类似如下操作：</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="kr">async</span> <span class="nx">all</span><span class="p">(</span><span class="nx">promiseList</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">result</span> <span class="o">=</span> <span class="p">[];</span>
+  <span class="k">for</span><span class="p">(</span><span class="kr">const</span> <span class="nx">promise</span> <span class="k">of</span> <span class="nx">promiseList</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">result</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="kr">await</span> <span class="nx">promise</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="nx">result</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><hr>
+<blockquote>
+<p>示例</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="kr">const</span> <span class="nx">sleep</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="k">new</span> <span class="nb">Promise</span><span class="p">(</span><span class="nx">resolve</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="nx">setTimeout</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">resolve</span><span class="p">(</span><span class="mi">300</span><span class="p">)</span>
+      <span class="p">},</span>
+      <span class="mi">1000</span><span class="p">)</span>
+  <span class="p">})</span>
+<span class="p">};</span>
+
+<span class="p">;(</span><span class="kr">async</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="c1">// await 后面放置的不是一个 Promise 实例
+</span><span class="c1"></span>  <span class="c1">// 则浏览器默认会把其转换为一个“状态为成功
+</span><span class="c1"></span>  <span class="c1">// 值就是 await 后的值”的 promise 实例
+</span><span class="c1"></span>  <span class="kd">let</span> <span class="nx">result</span> <span class="o">=</span> <span class="kr">await</span> <span class="mi">1</span> <span class="c1">// await Promise.resolve(1)
+</span><span class="c1"></span>  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;result 1st&#39;</span><span class="p">,</span> <span class="nx">result</span><span class="p">)</span>
+
+  <span class="nx">result</span> <span class="o">=</span> <span class="kr">await</span> <span class="nb">Promise</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;result 2nd&#39;</span><span class="p">,</span> <span class="nx">result</span><span class="p">)</span>
+
+  <span class="nx">result</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">sleep</span><span class="p">()</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;result 3rd&#39;</span><span class="p">,</span> <span class="nx">result</span><span class="p">)</span>
+  <span class="c1">// 先 sleep 执行
+</span><span class="c1"></span>  <span class="c1">// 把返回的 promise 实例放在 await 后面等着
+</span><span class="c1"></span>  <span class="c1">// 当前案例只有 1000ms 后，才能知道实例状态
+</span><span class="c1"></span><span class="p">})()</span>
+
+<span class="cm">/*
+</span><span class="cm">result 1st 1
+</span><span class="cm">result 2nd 2
+</span><span class="cm">result 3rd 300
+</span><span class="cm">* */</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>await 需要等待<strong>后面的 promise 实例是状态为成功</strong>时，才会执行之后的代码</li>
+<li>首先 当前上下文中，await 之后的代码都是<strong>异步微任务</strong> @aw</li>
+<li>如果已经知道 await 后面的实例状态是成功的话
+<ul>
+<li>则 @aw 直接放在 Event Queue 中，等待执行即可</li>
+</ul>
+</li>
+<li>如果 await 后面实例状态是失败的话
+<ul>
+<li>则 @aw 在 Web API 中永远不会进入到 Event Queue 中，因为永远不会执行</li>
+</ul>
+</li>
+<li>如果暂时还不知道是成功还是失败，则 @aw 先放置在 Web API 中
+<ul>
+<li>等到知道实例状态是成功后，再挪至到 Event Queue 中等待执行</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="asyncawait-的错误使用">async/await 的错误使用</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="p">;(</span><span class="kr">async</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">pizzaData</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">getPizzaData</span><span class="p">();</span> <span class="c1">// async call
+</span><span class="c1"></span>  <span class="kr">const</span> <span class="nx">drinkData</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">getDrinkData</span><span class="p">();</span> <span class="c1">// async call
+</span><span class="c1"></span>  <span class="kr">const</span> <span class="nx">chosenPizza</span> <span class="o">=</span> <span class="nx">choosePizza</span><span class="p">();</span> <span class="c1">// sync call
+</span><span class="c1"></span>  <span class="kr">const</span> <span class="nx">chosenDrink</span> <span class="o">=</span> <span class="nx">chooseDrink</span><span class="p">();</span> <span class="c1">// sync call
+</span><span class="c1"></span>  <span class="kr">await</span> <span class="nx">addPizzaToCart</span><span class="p">(</span><span class="nx">chosenPizza</span><span class="p">);</span> <span class="c1">// async call
+</span><span class="c1"></span>  <span class="kr">await</span> <span class="nx">addDrinkToCart</span><span class="p">(</span><span class="nx">chosenDrink</span><span class="p">);</span> <span class="c1">// async call
+</span><span class="c1"></span>  <span class="nx">orderItems</span><span class="p">();</span> <span class="c1">// async call
+</span><span class="c1"></span><span class="p">})();</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>几个错误点</p>
+</blockquote>
+<ul>
+<li><code>pizzaData</code> 与 <code>drinkData</code> 之间没有依赖
+<ul>
+<li>顺序的 await 会最多让执行时间增加一倍的 <code>getPizzaData</code> 函数时间</li>
+<li>因为 getPizzaData 与 getDrinkData 应该并行执行</li>
+</ul>
+</li>
+<li>正确的做法应该是先同时执行函数，再 await 返回值，这样可以并行执行异步函数</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="p">;(</span><span class="kr">async</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">pizzaPromise</span> <span class="o">=</span> <span class="nx">selectPizza</span><span class="p">();</span> <span class="c1">// sync call
+</span><span class="c1"></span>  <span class="kr">const</span> <span class="nx">drinkPromise</span> <span class="o">=</span> <span class="nx">selectDrink</span><span class="p">();</span> <span class="c1">// sync call
+</span><span class="c1"></span>  <span class="kr">await</span> <span class="nx">pizzaPromise</span><span class="p">;</span> <span class="c1">// async call
+</span><span class="c1"></span>  <span class="kr">await</span> <span class="nx">drinkPromise</span><span class="p">;</span> <span class="c1">// async call
+</span><span class="c1"></span>  <span class="nx">orderItems</span><span class="p">();</span> <span class="c1">// async call
+</span><span class="c1"></span><span class="p">})();</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>使用 Promise.all 并行处理</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="p">;(</span><span class="kr">async</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="nb">Promise</span><span class="p">.</span><span class="nx">all</span><span class="p">([</span>
+    <span class="nx">selectPizza</span><span class="p">(),</span>
+    <span class="nx">selectDrink</span><span class="p">()</span>
+    <span class="p">])</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">orderItems</span><span class="p">);</span> <span class="c1">// async call
+</span><span class="c1"></span><span class="p">})();</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>async/await 虽然层级形式上一致了，但逻辑上还是嵌套关系，转换还是隐式的</li>
+<li>async/await 只能实现一部分回调函数支持的功能，也就是仅能方便应对 <strong>层层嵌套</strong> 的场景</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="c1">// 比如两对回调
+</span><span class="c1"></span><span class="nx">a</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="nx">b</span><span class="p">();</span>
+<span class="p">});</span>
+
+<span class="nx">c</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="nx">d</span><span class="p">();</span>
+<span class="p">});</span>
+
+<span class="c1">// 性能低效的执行方式
+</span><span class="c1"></span><span class="kr">await</span> <span class="nx">a</span><span class="p">();</span>
+<span class="kr">await</span> <span class="nx">b</span><span class="p">();</span>
+<span class="kr">await</span> <span class="nx">c</span><span class="p">();</span>
+<span class="kr">await</span> <span class="nx">d</span><span class="p">();</span>
+
+<span class="c1">// 翻译成回调
+</span><span class="c1"></span><span class="nx">a</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="nx">b</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="nx">c</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+      <span class="nx">d</span><span class="p">();</span>
+    <span class="p">});</span>
+  <span class="p">});</span>
+<span class="p">});</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>原始代码中，函数 c 可以与 a 同时执行</li>
+<li>async/await 语法在 b 执行完后，再执行 c</li>
+<li>async/await 性能地狱</li>
+</ul>
+<blockquote>
+<p>完全脱离无关依赖</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="c1">// 隔离成两个函数
+</span><span class="c1"></span><span class="p">(</span><span class="kr">async</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="kr">await</span> <span class="nx">a</span><span class="p">();</span>
+  <span class="nx">b</span><span class="p">();</span>
+<span class="p">})();</span>
+
+<span class="p">(</span><span class="kr">async</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="kr">await</span> <span class="nx">c</span><span class="p">();</span>
+  <span class="nx">d</span><span class="p">();</span>
+<span class="p">})();</span>
+
+<span class="c1">// 或者利用 Promise.all
+</span><span class="c1"></span><span class="kr">async</span> <span class="kd">function</span> <span class="nx">ab</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kr">await</span> <span class="nx">a</span><span class="p">();</span>
+  <span class="nx">b</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="kr">async</span> <span class="kd">function</span> <span class="nx">cd</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kr">await</span> <span class="nx">c</span><span class="p">();</span>
+  <span class="nx">d</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="nb">Promise</span><span class="p">.</span><span class="nx">all</span><span class="p">([</span><span class="nx">ab</span><span class="p">(),</span> <span class="nx">cd</span><span class="p">()]);</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>大部分场景代码是非常复杂的，同步与 await 混杂在一起</li>
+<li>不用一昧追求 async/await 语法，在必要情况下适当使用回调，是可以增加代码可读性的</li>
+</ul>
+<hr>
+<h2 id="参考文章">参考文章</h2>
+<ul>
+<li><a href="https://learn.coderslang.com/0029-javascript-promise-chains/">JavaScript, Promise creation and Promise chains</a></li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Guide/Using_promises">使用 Promise MDN</a></li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise MDN</a></li>
+<li><a href="https://zh.javascript.info/callbacks">现代 JavaScript 教程 / JavaScript 编程语言 / Promise，async/await / 简介：回调</a></li>
+<li><a href="https://zh.javascript.info/promise-basics">现代 JavaScript 教程 / JavaScript 编程语言 / Promise，async/await / Promise</a></li>
+<li><a href="https://zh.javascript.info/promise-chaining">现代 JavaScript 教程 / JavaScript 编程语言 / Promise，async/await / Promise 链</a></li>
+<li><a href="https://zh.javascript.info/promise-error-handling">现代 JavaScript 教程 / JavaScript 编程语言 / Promise，async/await / 使用 promise 进行错误处理</a></li>
+<li><a href="https://zh.javascript.info/promise-api">现代 JavaScript 教程 / JavaScript 编程语言 / Promise，async/await / Promise API</a></li>
+<li><a href="https://zh.javascript.info/promisify">现代 JavaScript 教程 / JavaScript 编程语言 / Promise，async/await / Promisification</a></li>
+<li><a href="https://zh.javascript.info/microtask-queue">现代 JavaScript 教程 / JavaScript 编程语言 / Promise，async/await / 微任务（Microtask）</a></li>
+<li><a href="https://zh.javascript.info/async-await">现代 JavaScript 教程 / JavaScript 编程语言 / Promise，async/await / Async/await</a></li>
+<li><a href="https://zh.javascript.info/async-await">现代 JavaScript 教程 / JavaScript 编程语言 / Generator，高级 iteration / 异步迭代和 generator</a></li>
+<li><a href="https://wangdoc.com/javascript/async/general.html">Wangdoc 异步操作概述</a></li>
+<li><a href="https://es6.ruanyifeng.com/#docs/promise">阮一峰 ES6 Promise 对象</a></li>
+<li><a href="http://www.axios-js.com/zh-cn/docs/">axios 中文文档</a></li>
+<li><a href="https://github.com/axios/axios">axios/axios</a></li>
+<li><a href="https://axios-http.com/">https://axios-http.com/</a></li>
+<li><a href="https://github.com/then/promise/blob/master/src/core.js">Promise源码</a></li>
+<li><a href="https://promisesaplus.com/">PromiseA+规范</a></li>
+<li><a href="https://tc39.es/ecma262/#sec-promise-abstract-operations">ecma262: Promise Abstract Operations</a></li>
+</ul>
+<h2 id="相关文章">相关文章</h2>
+<ul>
+<li><a href="http://note.youdao.com/noteshare?id=7b5ebe053ac7a1d270784f635c7b5141&amp;sub=088D07070F0B401E916EB1247A54D15B">JS异步编程模型与Promise初探</a></li>
+<li><a href="https://juejin.cn/post/7034661345148534815?utm_source=gold_browser_extension">使用 Promise 时的5个常见错误</a></li>
+<li><a href="http://www.axios-js.com/zh-cn/blogs/">axios, ajax和fetch的比较</a></li>
+<li><a href="https://juejin.cn/post/6847902216028848141">如何中断Promise？</a></li>
+<li><a href="https://juejin.cn/post/6999804617320038408">Promise深度解析10个常用模块</a></li>
+<li><a href="https://juejin.cn/post/6844904131702833159">前端 Promise 常见的应用场景</a></li>
+<li><a href="https://juejin.cn/post/6844903842723659790">async/await 之于 Promise，正如 do 之于 monad（译文）</a></li>
+<li><a href="https://segmentfault.com/a/1190000007535316">理解 JavaScript 的 async/await</a></li>
+<li><a href="https://juejin.cn/post/6844903602645909518">精读《async/await 是把双刃剑》</a></li>
+</ul>
+<hr>
+<ul>
+<li>作者： Joel</li>
+<li>文章链接：</li>
+<li><a href="http://xmasuhai.xyz/posts/%E7%89%88%E6%9D%83%E5%A3%B0%E6%98%8E%E9%93%BE%E6%8E%A5/">版权声明</a></li>
+<li>非自由转载-非商用-非衍生-保持署名</li>
+<li><!-- raw HTML omitted -->河<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->掘<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->思<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->知<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->简<!-- raw HTML omitted --></li>
+</ul>
+<hr>
+<hr>
+
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Joel Xu</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2021-12-31
+      
+        
+        
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="http://xmasuhai.xyz/tags/frontend/">FrontEnd</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/promise/js%E5%BC%82%E6%AD%A5%E9%9D%9E%E5%85%A8%E8%A7%A304%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF%E6%9C%BA%E5%88%B6%E4%B8%8E%E6%B5%8F%E8%A7%88%E5%99%A8eventloop/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">【JS异步非全解04】事件循环机制与浏览器EventLoop</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/promise/js%E5%BC%82%E6%AD%A5%E9%9D%9E%E5%85%A8%E8%A7%A301%E6%9C%9F%E7%BA%A6promise/">
+            <span class="next-text nav-default">【JS异步非全解01】期约Promise</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:xmasuhai@163.com" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="https://github.com/xmasuhai" rel="me noopener" class="iconfont"
+      title="github"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M512 12.672c-282.88 0-512 229.248-512 512 0 226.261333 146.688 418.133333 350.08 485.76 25.6 4.821333 34.986667-11.008 34.986667-24.618667 0-12.16-0.426667-44.373333-0.64-87.04-142.421333 30.890667-172.458667-68.693333-172.458667-68.693333C188.672 770.986667 155.008 755.2 155.008 755.2c-46.378667-31.744 3.584-31.104 3.584-31.104 51.413333 3.584 78.421333 52.736 78.421333 52.736 45.653333 78.293333 119.850667 55.68 149.12 42.581333 4.608-33.109333 17.792-55.68 32.426667-68.48-113.706667-12.8-233.216-56.832-233.216-253.013333 0-55.893333 19.84-101.546667 52.693333-137.386667-5.76-12.928-23.04-64.981333 4.48-135.509333 0 0 42.88-13.738667 140.8 52.48 40.96-11.392 84.48-17.024 128-17.28 43.52 0.256 87.04 5.888 128 17.28 97.28-66.218667 140.16-52.48 140.16-52.48 27.52 70.528 10.24 122.581333 5.12 135.509333 32.64 35.84 52.48 81.493333 52.48 137.386667 0 196.693333-119.68 240-233.6 252.586667 17.92 15.36 34.56 46.762667 34.56 94.72 0 68.522667-0.64 123.562667-0.64 140.202666 0 13.44 8.96 29.44 35.2 24.32C877.44 942.592 1024 750.592 1024 524.672c0-282.752-229.248-512-512-512"></path>
+</svg>
+
+    </a>
+  
+    <a href="https://www.zhihu.com/people/xue-shou-41/posts" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+
+
+<a href="http://xmasuhai.xyz/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane">Jane</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy;
+    
+      2019 -
+    2022
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Joel Xu
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

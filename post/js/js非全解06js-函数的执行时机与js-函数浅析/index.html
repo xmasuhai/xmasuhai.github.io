@@ -1,0 +1,2840 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>【JS非全解06】JS 函数的执行时机与JS 函数浅析 - Joel in The House</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="Joel Xu" />
+  <meta name="description" content="重点内容提要：JS 函数的执行时机 1）为什么如下代码会打印 6 个 6 1 2 3 4 5 6 let i = 0 for(i = 0; i&amp;lt;6; i&#43;&#43;){ setTimeout(()=&amp;gt;{ console.log(i) },0) } 我认为本篇正文涉及到的知识（作用域、闭包" />
+
+  <meta name="keywords" content="Hugo, theme, jane" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.91.2" />
+
+
+<link rel="canonical" href="http://xmasuhai.xyz/post/js/js%E9%9D%9E%E5%85%A8%E8%A7%A306js-%E5%87%BD%E6%95%B0%E7%9A%84%E6%89%A7%E8%A1%8C%E6%97%B6%E6%9C%BA%E4%B8%8Ejs-%E5%87%BD%E6%95%B0%E6%B5%85%E6%9E%90/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="【JS非全解06】JS 函数的执行时机与JS 函数浅析" />
+<meta property="og:description" content="重点内容提要：JS 函数的执行时机 1）为什么如下代码会打印 6 个 6 1 2 3 4 5 6 let i = 0 for(i = 0; i&lt;6; i&#43;&#43;){ setTimeout(()=&gt;{ console.log(i) },0) } 我认为本篇正文涉及到的知识（作用域、闭包" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://xmasuhai.xyz/post/js/js%E9%9D%9E%E5%85%A8%E8%A7%A306js-%E5%87%BD%E6%95%B0%E7%9A%84%E6%89%A7%E8%A1%8C%E6%97%B6%E6%9C%BA%E4%B8%8Ejs-%E5%87%BD%E6%95%B0%E6%B5%85%E6%9E%90/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2020-02-26T00:58:40+08:00" />
+<meta property="article:modified_time" content="2020-02-26T13:01:08+08:00" />
+
+<meta itemprop="name" content="【JS非全解06】JS 函数的执行时机与JS 函数浅析">
+<meta itemprop="description" content="重点内容提要：JS 函数的执行时机 1）为什么如下代码会打印 6 个 6 1 2 3 4 5 6 let i = 0 for(i = 0; i&lt;6; i&#43;&#43;){ setTimeout(()=&gt;{ console.log(i) },0) } 我认为本篇正文涉及到的知识（作用域、闭包"><meta itemprop="datePublished" content="2020-02-26T00:58:40+08:00" />
+<meta itemprop="dateModified" content="2020-02-26T13:01:08+08:00" />
+<meta itemprop="wordCount" content="9667">
+<meta itemprop="keywords" content="JavaScript,JS函数,执行时机,闭包,this,调用栈," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="【JS非全解06】JS 函数的执行时机与JS 函数浅析"/>
+<meta name="twitter:description" content="重点内容提要：JS 函数的执行时机 1）为什么如下代码会打印 6 个 6 1 2 3 4 5 6 let i = 0 for(i = 0; i&lt;6; i&#43;&#43;){ setTimeout(()=&gt;{ console.log(i) },0) } 我认为本篇正文涉及到的知识（作用域、闭包"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Joel in The House</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/post/">文档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/categories/">目录</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/about/">关于我</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          <div class="mobile-menu-parent">
+            <span class="mobile-submenu-open"></span>
+            <a href="http://xmasuhai.xyz/">
+              docs
+            </a>
+          </div>
+          <ul class="mobile-submenu-list">
+            
+              <li>
+                <a href="http://xmasuhai.xyz/post/test/syntax-highlighting/">Syntax Highlighting</a>
+              </li>
+            
+              <li>
+                <a href="http://xmasuhai.xyz/post/test/mytest/">my Syntax Highlighting &amp; ShortCode Test</a>
+              </li>
+            
+          </ul>
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Joel in The House
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/post/">文档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/categories/">目录</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/about/">关于我</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          <a class="menu-item-link menu-parent" href="http://xmasuhai.xyz/">docs</a>
+          <ul class="submenu">
+            
+              <li>
+                <a href="http://xmasuhai.xyz/post/test/syntax-highlighting/">Syntax Highlighting</a>
+              </li>
+            
+              <li>
+                <a href="http://xmasuhai.xyz/post/test/mytest/">my Syntax Highlighting &amp; ShortCode Test</a>
+              </li>
+            
+          </ul>
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">【JS非全解06】JS 函数的执行时机与JS 函数浅析</h1>
+      
+      <div class="post-meta">
+        <time datetime="2020-02-26" class="post-time">
+          2020-02-26
+        </time>
+        <div class="post-category">
+            <a href="http://xmasuhai.xyz/categories/frontend/"> FrontEnd </a>
+            <a href="http://xmasuhai.xyz/categories/2020/"> 2020 </a>
+            
+          </div>
+        <span class="more-meta"> 约 9667 字 </span>
+          <span class="more-meta"> 预计阅读 20 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#1为什么如下代码会打印-6-个-6">1）为什么如下代码会打印 6 个 <code>6</code></a></li>
+        <li><a href="#2让上面代码打印-012345-的方法">2）让上面代码打印 <code>0、1、2、3、4、5</code> 的方法</a></li>
+        <li><a href="#3可以打印出-012345的方法汇总">3）可以打印出 <code>0、1、2、3、4、5</code>的方法汇总</a></li>
+      </ul>
+    </li>
+    <li><a href="#四种方法定义一个函数">四种方法定义一个函数</a>
+      <ul>
+        <li><a href="#基本语法">基本语法</a></li>
+        <li><a href="#定义匿名函数">定义匿名函数</a></li>
+        <li><a href="#用es6箭头函数">用ES6箭头函数</a></li>
+        <li><a href="#用构造函数">用构造函数</a></li>
+      </ul>
+    </li>
+    <li><a href="#函数自身-vs-函数调用">函数自身 V.S. 函数调用</a>
+      <ul>
+        <li><a href="#函数自身">函数自身</a></li>
+        <li><a href="#函数调用">函数调用</a></li>
+        <li><a href="#fn和fn本质"><code>fn</code>和<code>fn()</code>本质</a></li>
+      </ul>
+    </li>
+    <li><a href="#函数的要素">函数的要素</a>
+      <ul>
+        <li><a href="#执行时机">执行时机</a></li>
+        <li><a href="#作用域">作用域</a></li>
+        <li><a href="#作用域规则">作用域规则</a></li>
+        <li><a href="#闭包">闭包</a></li>
+        <li><a href="#形式参数">形式参数</a></li>
+        <li><a href="#返回值">返回值</a></li>
+        <li><a href="#小结">小结</a></li>
+        <li><a href="#调用栈">调用栈</a></li>
+        <li><a href="#递归函数的调用栈">递归函数的调用栈</a></li>
+        <li><a href="#函数提升">函数提升</a></li>
+        <li><a href="#arguments和this除了箭头函数没有"><code>arguments</code>和<code>this</code>（除了箭头函数没有）</a></li>
+      </ul>
+    </li>
+    <li><a href="#this小结"><code>this</code>小结</a></li>
+    <li><a href="#函数两种调用模式">函数两种调用模式</a>
+      <ul>
+        <li><a href="#小白调用法">小白调用法</a></li>
+        <li><a href="#老油条调用法">老油条调用法</a></li>
+        <li><a href="#this的两种使用方法"><code>this</code>的两种使用方法</a></li>
+        <li><a href="#强制绑定this">强制绑定<code>this</code></a></li>
+      </ul>
+    </li>
+    <li><a href="#箭头函数">箭头函数</a></li>
+    <li><a href="#总结">总结</a></li>
+    <li><a href="#立即执行函数">立即执行函数</a>
+      <ul>
+        <li><a href="#关于-this">关于 this</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      <blockquote>
+<p>重点内容提要：JS 函数的执行时机</p>
+</blockquote>
+<h3 id="1为什么如下代码会打印-6-个-6">1）为什么如下代码会打印 6 个 <code>6</code></h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span><span class="p">(</span><span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="mi">6</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">){</span>
+  <span class="nx">setTimeout</span><span class="p">(()=&gt;{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span>
+  <span class="p">},</span><span class="mi">0</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>我认为本篇正文涉及到的知识（作用域、闭包的定义、 调用时机、调用栈等）不足以解释</p>
+<p>任何试图解释这个现象的尝试目前都是徒劳</p>
+<p>所以我直接搜了并总结了各类答案：setTimeout函数在队列任务执行完后执行<code>console.log(i)</code>，在此之前，<code>for</code>的判断表达式与自增语句就早已全部走完，<code>i</code>值为<code>6</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span><span class="p">(</span><span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">6</span><span class="p">;</span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;自增语句前的i：&#39;</span> <span class="o">+</span> <span class="nx">i</span><span class="p">)</span> <span class="o">||</span> <span class="nx">i</span><span class="o">++</span> <span class="o">&amp;&amp;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;自增语句后的i：&#39;</span> <span class="o">+</span> <span class="nx">i</span><span class="p">)){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;循环体中setTimeOut()前的i：&#39;</span> <span class="o">+</span> <span class="nx">i</span><span class="p">)</span> <span class="c1">// 0、1、2、3、4、5
+</span><span class="c1"></span>  <span class="nx">setTimeout</span><span class="p">(()=&gt;{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;setTimeOut延时打印出的i：&#39;</span> <span class="o">+</span> <span class="nx">i</span><span class="p">)</span> <span class="c1">// 6个6
+</span><span class="c1"></span>  <span class="p">},</span><span class="mi">0</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;循环体中setTimeOut()后的i：&#39;</span> <span class="o">+</span> <span class="nx">i</span><span class="p">)</span> <span class="c1">// 0、1、2、3、4、5
+</span><span class="c1"></span><span class="p">}</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;循环外打印出的i：&#39;</span> <span class="o">+</span> <span class="nx">i</span><span class="p">)</span> <span class="c1">// 6个6
+</span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>可能至少但不限于先要了解的知识，如下</p>
+</blockquote>
+<ul>
+<li><a href="https://zhuanlan.zhihu.com/p/101092477">闭包的作用</a></li>
+<li><a href="https://wangdoc.com/javascript/async/general.html">异步与JS单线程模型</a></li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Window/setTimeout">window.setTimeout</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/34924059">事件循环与任务队列</a></li>
+<li><a href="http://jirengu.github.io/fe2/markdown/garbage_collection.html">JS引擎的垃圾回收机制与性能</a></li>
+</ul>
+<blockquote>
+<p>提供了几个思考的维度</p>
+<p>以后慢慢填坑，还瞥见了Promise、V8</p>
+<p>先交次作业再说</p>
+</blockquote>
+<h3 id="2让上面代码打印-012345-的方法">2）让上面代码打印 <code>0、1、2、3、4、5</code> 的方法</h3>
+<ul>
+<li>ES6方法</li>
+</ul>
+<blockquote>
+<p>利用 <em><strong><code>for let</code></strong></em> 配合</p>
+</blockquote>
+<ul>
+<li>最简洁的办法，最省脑子，最易上手，代码量最少，工作效率</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="k">for</span><span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="mi">6</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">){</span>
+  <span class="nx">setTimeout</span><span class="p">(()=&gt;{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span>
+  <span class="p">},</span><span class="mi">0</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>利用 <em><strong>const</strong></em> 声明常量</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">i</span>
+<span class="k">for</span><span class="p">(</span><span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="mi">6</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">){</span>
+    <span class="kr">const</span> <span class="nx">x</span> <span class="o">=</span> <span class="nx">i</span>
+    <span class="nx">setTimeout</span><span class="p">(()=&gt;{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span>
+    <span class="p">})</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="3可以打印出-012345的方法汇总">3）可以打印出 <code>0、1、2、3、4、5</code>的方法汇总</h3>
+<blockquote>
+<p>试图让变量 <code>i</code> 执行看起来“符合人们的对逻辑（的幻想）”</p>
+</blockquote>
+<h4 id="1利用-es-6-方法">1.利用 <code>ES 6</code> 方法</h4>
+<blockquote>
+<p>具体代码实现见上文</p>
+</blockquote>
+<ul>
+<li><code>for</code> 循环头部的 <code>let</code> 声明还会有一个特殊的行为。</li>
+<li>这个行为指出变量在循环过程中不止被声明一次</li>
+<li>每次迭代都会重新声明一次<code>i</code>，然后保存在，然后销毁</li>
+<li>随后的每个迭代都会使用上一个迭代结束时的值来初始化这个变量。</li>
+</ul>
+<blockquote>
+<p>之后全是<code>ES6</code>前的方法，所以原本想只用<code>var</code>，但是考虑到<code>var</code>可能引起的问题，还是老实地用<code>let</code></p>
+<p>两者都可通过在浏览器控制台打出代码验证有效</p>
+<p>以下都是变通方法，将要要消耗更多资源，见<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Window/setTimeout#%E5%8F%98%E9%80%9A%E6%96%B9%E6%B3%95">翻译不完整的MDN window.setTimeout</a></p>
+</blockquote>
+<h4 id="2用闭包与自执行函数">2.用闭包与自执行函数</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span><span class="p">(</span><span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span><span class="nx">i</span><span class="o">&lt;</span><span class="mi">6</span><span class="p">;</span><span class="nx">i</span> <span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">i</span><span class="p">){</span>
+        <span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span>
+        <span class="p">},</span> <span class="mi">0</span> <span class="cm">/* 想慢点就改成 `i * 1000 ` */</span><span class="p">);</span>
+    <span class="p">})(</span><span class="nx">i</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>使用匿名函数包裹你的回调函数</p>
+<p>利用函数创建一个局部变量，保留了调用时的局部变量 <code>i</code></p>
+<p><code>ES6</code>引入更简洁的箭头函数，可完全代替这里的所有匿名函数</p>
+<p><em><strong>箭头函数</strong></em> 声明的匿名函数</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span><span class="p">(</span><span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span><span class="nx">i</span><span class="o">&lt;</span><span class="mi">6</span><span class="p">;</span><span class="nx">i</span> <span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">i</span><span class="p">){</span>
+        <span class="nx">setTimeout</span><span class="p">((</span> <span class="cm">/* 这里不能瞎写i，我试过，传入形参就相当于重新声明，会覆盖掉函数体里的全局变量 */</span> <span class="p">)=&gt;</span> <span class="p">{</span>
+            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span>
+        <span class="p">},</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="p">})(</span><span class="nx">i</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="3利用-bind-函数">3.利用 bind 函数</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="k">for</span> <span class="p">(</span><span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">6</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span> <span class="c1">//这里使用匿名函数，具名函数也可，只是得不偿失
+</span><span class="c1"></span>        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span>
+    <span class="p">}.</span><span class="nx">bind</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span><span class="nx">i</span><span class="p">),</span> <span class="mi">0</span> <span class="p">)</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>如果 <code>bind</code> 方法的第一个参数是 <code>null</code> 或 <code>undefined</code></li>
+<li>等于将 <code>this</code> 绑定到全局对象</li>
+<li>函数运行时 <code>this</code> 指向顶层对象（浏览器为 <code>window</code>）</li>
+<li>bind 还可以接受更多的参数，将这些参数绑定原函数的参数</li>
+</ul>
+<h4 id="4利用-settimeout-的第三个参数">4.利用 <code>setTimeout</code> 的第三个参数</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+ <span class="k">for</span> <span class="p">(</span><span class="nx">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">6</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+     <span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span> <span class="c1">//这里使用匿名函数
+</span><span class="c1"></span>         <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span>
+     <span class="p">},</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span>
+ <span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><code>setTimeout</code>函数的第三个参数及以后的参数，都可以作为传入<code>setTimeout</code>的匿名函数函数的参数</li>
+</ul>
+<blockquote>
+<p>其他参考文章与相关文章</p>
+</blockquote>
+<p><a href="https://developer.mozilla.org/zh-CN/docs/learn/JavaScript/%E5%BC%82%E6%AD%A5/%E8%B6%85%E6%97%B6%E5%92%8C%E9%97%B4%E9%9A%94">MDN 合作异步JavaScript: 超时和间隔</a></p>
+<p><a href="https://wangdoc.com/javascript/async/general.html">网道 / WangDoc.com 异步操作概述</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/66235337">从setTimeout和Promise比较js执行机制</a></p>
+<p><a href="https://www.zhihu.com/question/25371869/answer/30577793">JS setTimeout 问题 贺师俊的回答</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/34924059">Event Loop、计时器、nextTick By 方应杭</a></p>
+<p>JSConfEU的一个油管视频解释了一部分原理</p>
+<hr>
+<p>正文开始</p>
+<hr>
+<blockquote>
+<p>结构看起来不像对象，但函数，就只是一种内置对象</p>
+</blockquote>
+<h2 id="四种方法定义一个函数">四种方法定义一个函数</h2>
+<h3 id="基本语法">基本语法</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">function</span> <span class="nx">函数名</span><span class="p">(</span><span class="nx">形式函数1</span><span class="p">,</span><span class="nx">形式函数n</span><span class="p">){</span>
+    <span class="nx">语句</span>
+    <span class="k">return</span> <span class="nx">返回值</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="定义匿名函数">定义匿名函数</h3>
+<ul>
+<li>上面的具名函数，去掉函数名就是匿名函数</li>
+<li>而<code>let a = function(x,y){return x+y}</code></li>
+<li>也叫函数表达式，注意函数表达式是指<code>=</code>右边的部分</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">function</span> <span class="nx">fn</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">y</span><span class="p">){</span>
+    <span class="k">return</span> <span class="nx">x</span><span class="o">+</span><span class="nx">y</span>
+<span class="p">}</span>
+<span class="kd">let</span> <span class="nx">a</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">y</span><span class="p">){</span>
+    <span class="k">return</span> <span class="nx">x</span><span class="o">+</span><span class="nx">y</span>
+<span class="p">}</span>
+<span class="kd">let</span> <span class="nx">a1</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">fn1</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">y</span><span class="p">){</span>
+    <span class="k">return</span> <span class="nx">x</span><span class="o">+</span><span class="nx">y</span>
+<span class="p">}</span>
+
+<span class="nx">fn1</span><span class="p">()</span> <span class="c1">// 报错
+</span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>函数表达式中，如果函数<code>fn()</code>在等号右边，那么<code>fn()</code>的作用域就只在等号右边，超过函数体，<code>fn()</code>就不存在，就只能用<code>a1()</code></p>
+<p>没有等于号，作用域就在当前作用域的全局下</p>
+</blockquote>
+<h3 id="用es6箭头函数">用ES6箭头函数</h3>
+<blockquote>
+<p>箭头函数，箭头左边就是输入参数，右边就是输出参数</p>
+<p>两个或两个以上输入或输出，用括号括起来，而且有返回值的话，不能省略<code>return</code></p>
+<p>箭头右边有两个或两个以上语句，则要用花括号括起来</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">f1</span> <span class="o">=</span> <span class="nx">x</span> <span class="p">=&gt;</span> <span class="nx">x</span><span class="o">*</span><span class="nx">x</span>
+<span class="kd">let</span> <span class="nx">f2</span> <span class="o">=</span> <span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">y</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="nx">x</span><span class="o">+</span><span class="nx">y</span> <span class="c1">//形参的圆括号不可省略，没有返回值的话，花括号可以省，并且必须省略`return`
+</span><span class="c1"></span><span class="kd">let</span> <span class="nx">f3</span> <span class="o">=</span> <span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">y</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;hi&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nx">x</span><span class="o">+</span><span class="nx">y</span>
+<span class="p">}</span> <span class="c1">//有返回值，花括号不可省略
+</span><span class="c1"></span><span class="kd">let</span> <span class="nx">f4</span> <span class="o">=</span> <span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">y</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">({</span><span class="nx">name</span><span class="o">:</span><span class="nx">x</span><span class="p">,</span> <span class="nx">age</span><span class="o">:</span><span class="nx">y</span><span class="p">})</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>箭头函数字节返回对象会出错，需要加个圆括号</p>
+<p>JS中，<code>{}</code>优先被当做代码块，即<code>{</code>当做块的起始</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">f4</span> <span class="o">=</span> <span class="nx">x</span> <span class="p">=&gt;</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span><span class="nx">x</span><span class="p">}</span> <span class="c1">// 语法错误
+</span><span class="c1"></span><span class="kd">let</span> <span class="nx">f5</span> <span class="o">=</span> <span class="nx">x</span> <span class="p">=&gt;</span> <span class="p">({</span><span class="nx">name</span><span class="o">:</span><span class="nx">x</span><span class="p">})</span> <span class="c1">// 语法对了，就显得有些Zz
+</span><span class="c1"></span>
+<span class="nx">f4</span><span class="p">(</span><span class="s1">&#39;frank&#39;</span><span class="p">)</span> <span class="c1">// undefined ，JS解释器认为是一个label 标签语句
+</span><span class="c1"></span><span class="nx">f5</span><span class="p">(</span><span class="s1">&#39;frank&#39;</span><span class="p">)</span> <span class="c1">// {name: &#34;frank&#34;}
+</span></code></pre></td></tr></table>
+</div>
+</div><h3 id="用构造函数">用构造函数</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">ff</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Function</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">,</span><span class="s1">&#39;return x+y&#39;</span><span class="p">)</span> 
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>基本没人用，但是能让你知道函数时谁构造的</li>
+<li>所有函数都是<code>Function</code>构造出来的，是JS世界的创世神</li>
+<li>包括<code>Object</code>、<code>Array</code>、<code>Function</code>自身也是</li>
+</ul>
+<h2 id="函数自身-vs-函数调用">函数自身 V.S. 函数调用</h2>
+<blockquote>
+<p>fn V.S. fn()</p>
+</blockquote>
+<h3 id="函数自身">函数自身</h3>
+<blockquote>
+<p>代码</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">fn</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;hi&#39;</span><span class="p">)</span>
+<span class="nx">fn</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>结果</p>
+</blockquote>
+<ul>
+<li>不会有任何结果</li>
+<li>因为<code>fn</code>没有执行</li>
+</ul>
+<h3 id="函数调用">函数调用</h3>
+<blockquote>
+<p>代码</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">fn</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;hi&#39;</span><span class="p">)</span>
+<span class="nx">fn</span><span class="p">()</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>结果</p>
+</blockquote>
+<ul>
+<li>打印出<code>hi</code></li>
+<li>有圆括号才是调用，即执行<code>fn()</code></li>
+</ul>
+<blockquote>
+<p>再进一步</p>
+</blockquote>
+<h3 id="fn和fn本质"><code>fn</code>和<code>fn()</code>本质</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">fn</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;hi&#39;</span><span class="p">)</span>
+<span class="kd">let</span> <span class="nx">fn2</span> <span class="o">=</span> <span class="nx">fn</span>
+<span class="nx">fn2</span><span class="p">()</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>结果</p>
+</blockquote>
+<ul>
+<li><code>let fn = () =&gt;({})</code>表示<code>fn</code>保存了匿名函数的地址</li>
+<li><code>let fn2 = fn</code>表示这个地址被赋值给了<code>fn2</code></li>
+<li><code>fn2()</code>调用了匿名函数</li>
+<li><code>fn</code>和<code>fn2</code>都是匿名函数的引用而已</li>
+<li>真正的函数既不是<code>fn</code>也不是<code>fn2</code>，而是存在内存中的代码<code>() =&gt; console.log('hi')</code></li>
+</ul>
+<hr>
+<h2 id="函数的要素">函数的要素</h2>
+<blockquote>
+<p>每个函数都有这些独特的属性</p>
+</blockquote>
+<ul>
+<li>调用时机</li>
+<li>作用域</li>
+<li>闭包</li>
+<li>形式参数</li>
+<li>返回值</li>
+<li>调用栈</li>
+<li>函数提升</li>
+<li><code>arguments</code>（除了箭头函数没有）</li>
+<li><code>this</code>（除了箭头函数没有）</li>
+</ul>
+<blockquote>
+<p>下面开始逐一初步解释</p>
+</blockquote>
+<hr>
+<h3 id="执行时机">执行时机</h3>
+<blockquote>
+<p>函数调用时机不同，结果不同，联想刻舟求剑</p>
+</blockquote>
+<p>例1：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="kd">function</span> <span class="nx">fn</span><span class="p">(){</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>问打印出多少</p>
+<p>答：不打印，因为没有调用代码</p>
+</blockquote>
+<p>例2：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="kd">function</span> <span class="nx">fn</span><span class="p">(){</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="nx">fn</span><span class="p">()</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>问打印出多少</p>
+<p>答：打印1</p>
+</blockquote>
+<p>例3：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="kd">function</span> <span class="nx">fn</span><span class="p">(){</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="nx">a</span> <span class="o">=</span> <span class="mi">2</span> <span class="c1">//此时，fn()没有执行，不要刻舟求剑，a已经被赋了新的值2
+</span><span class="c1"></span><span class="nx">fn</span><span class="p">()</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>问打印出多少</p>
+<p>答：打印2</p>
+</blockquote>
+<ul>
+<li>例4</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="kd">function</span> <span class="nx">fn</span><span class="p">(){</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="nx">fn</span><span class="p">()</span>
+<span class="nx">a</span> <span class="o">=</span> <span class="mi">2</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>问打印出多少</p>
+<p>答：打印1</p>
+</blockquote>
+<ul>
+<li>例5</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="kd">function</span> <span class="nx">fn</span><span class="p">(){</span>
+    <span class="nx">setTimeout</span><span class="p">(()=&gt;{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span>
+    <span class="p">},</span><span class="mi">0</span><span class="p">)</span>
+    <span class="c1">// 在一段时间后，执行，多少时间根本不是关键
+</span><span class="c1"></span>    <span class="c1">// 而是setTimeout()里的代码的执行时机
+</span><span class="c1"></span>    <span class="c1">// 要等后续代码执行完后，再执行setTimeout()
+</span><span class="c1"></span>    <span class="c1">// 期间setTimeout()里的所有变量都受到后续代码的影响
+</span><span class="c1"></span><span class="p">}</span>
+<span class="nx">fn</span><span class="p">()</span>
+<span class="nx">a</span> <span class="o">=</span> <span class="mi">2</span> <span class="c1">// 打印的时机是在 a = 2 之后
+</span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>问打印出多少</p>
+<p>答：打印2</p>
+</blockquote>
+<ul>
+<li>例6</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span><span class="p">(</span><span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">6</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">){</span>
+    <span class="nx">setTimeout</span><span class="p">(()=&gt;{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span>
+    <span class="p">},</span><span class="mi">0</span><span class="p">)</span>
+<span class="p">}</span> <span class="c1">// 先执行完setTimeout()外的代码，这里是for循环，最终 i = 6，之后setTimeout()执行6次
+</span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>问打印出多少</p>
+<p>答：打印6个6，而不是0、1、2、3、4、5</p>
+</blockquote>
+<ul>
+<li>例6</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="k">for</span><span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">6</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">){</span>
+    <span class="nx">setTimeout</span><span class="p">(()=&gt;{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span>
+    <span class="p">},</span><span class="mi">0</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>问打印出多少</p>
+<p>答：打印0、1、2、3、4、5</p>
+</blockquote>
+<ul>
+<li>因为JS在<code>for</code>和<code>let</code>一起使用的时候会加料</li>
+<li>每次循环多创建一个<code>i</code>，留在<code>setTimeout()</code>里，保留<code>i</code>的值，不跟随新的<code>i</code>值变化</li>
+<li>即生成6个新的<code>i</code>，加上原本的初始，一共有7个<code>i</code></li>
+<li>刻舟求剑实现啦</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="kd">function</span> <span class="nx">print</span><span class="p">()</span> <span class="p">{</span> <span class="c1">// 用函数作用域包裹
+</span><span class="c1"></span>    <span class="kd">var</span> <span class="nx">p</span> <span class="o">=</span> <span class="nx">i</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;p: &#39;</span><span class="o">+</span><span class="nx">p</span><span class="p">,</span> <span class="s1">&#39;i: &#39;</span><span class="o">+</span><span class="nx">i</span><span class="p">)</span>
+    <span class="nx">setTimeout</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">p</span><span class="p">)</span>
+    <span class="p">},</span><span class="mi">0</span><span class="p">)</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;p: &#39;</span><span class="o">+</span><span class="nx">p</span><span class="p">,</span> <span class="s1">&#39;i: &#39;</span><span class="o">+</span><span class="nx">i</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="k">for</span> <span class="p">(</span><span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">6</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">){</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;i: &#39;</span><span class="o">+</span><span class="nx">i</span><span class="p">)</span>
+    <span class="nx">print</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>每次求值、取值的时候，都要想想执行时机，代码顺序，值可能是以前的，错的或是非预期的，可用<code>console.log</code>确认</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="kd">function</span> <span class="nx">print</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">setTimeout</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span>
+    <span class="p">},</span><span class="mi">0</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="k">for</span> <span class="p">(</span><span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">6</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">){</span>
+    <span class="nx">print</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>使用闭包 自执行函数</p>
+</blockquote>
+<h3 id="作用域">作用域</h3>
+<blockquote>
+<p>每个函数都会默认创建一个作用域</p>
+</blockquote>
+<p>例1：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">function</span> <span class="nx">fn</span><span class="p">(){</span>
+    <span class="kd">let</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1">// let 的作用域就是离左边最近不成对的 &#39;{&#39;，离右边最近不成对的 &#39;}&#39;，两者之内的区域
+</span><span class="c1"></span><span class="p">}</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span> <span class="c1">//a不存在
+</span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>问：是不是因为<code>fn</code>没执行导致</p>
+<p>答：就算<code>fn</code>执行了，也访问不到作用域里面的变量<code>a</code></p>
+<p><code>fn</code>执行完了，作用域内的变量就被JS垃圾回收机制干掉了</p>
+</blockquote>
+<p>例2：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">function</span> <span class="nx">fn</span><span class="p">(){</span>
+    <span class="kd">let</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="p">}</span>
+<span class="nx">fn</span><span class="p">()</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span> <span class="c1">//a还是不存在
+</span></code></pre></td></tr></table>
+</div>
+</div><h4 id="全局变量-vs-局部变量">全局变量 V.S. 局部变量</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">b</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="nb">window</span><span class="p">.</span><span class="nx">c</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="kd">function</span> <span class="nx">f1</span><span class="p">(){</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">c</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="nx">f1</span><span class="p">()</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>1.在顶级作用域声明的变量是全局变量</p>
+<p>2.<code>window</code>的属性是全局变量，不管你在什么地方定义变量，挂在<code>window</code>上的自动提升为全局变量</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">b</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="kd">function</span> <span class="nx">f2</span><span class="p">(){</span>
+    <span class="nb">window</span><span class="p">.</span><span class="nx">c</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="p">}</span>
+<span class="nx">f2</span><span class="p">()</span> <span class="c1">//要执行，才能把c挂到window上
+</span><span class="c1"></span><span class="kd">function</span> <span class="nx">f1</span><span class="p">(){</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">c</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="nx">f1</span><span class="p">()</span> <span class="c1">//2  在f1内可以访问到c
+</span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>包括<code>window.Object</code>、<code>window.Array</code>、<code>window.Function</code>、<code>window.parseInt()</code>等都是全局变量，哪里都可以用</li>
+</ul>
+<blockquote>
+<p>除了这两种情况，其他都是局部变量</p>
+<p>函数可嵌套，作用域也可嵌套</p>
+</blockquote>
+<p>例3：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">function</span> <span class="nx">f1</span><span class="p">(){</span>
+    <span class="kd">let</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="kr">const</span> <span class="nx">b</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="kd">function</span> <span class="nx">f2</span><span class="p">(){</span>
+        <span class="kd">let</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">2</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span>
+    <span class="p">}</span> <span class="c1">// f2()
+</span><span class="c1"></span>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span>
+    <span class="nx">a</span> <span class="o">=</span> <span class="mi">3</span> <span class="c1">//就是唬你的
+</span><span class="c1"></span>    <span class="nx">f2</span><span class="p">()</span>
+<span class="p">}</span> <span class="c1">// f1()
+</span><span class="c1"></span><span class="nx">f1</span><span class="p">()</span> <span class="c1">//f1()也是唬你的
+</span><span class="c1"></span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;a:&#39;</span> <span class="o">+</span> <span class="nx">a</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="作用域规则">作用域规则</h3>
+<blockquote>
+<p>如果多个作用域有同名变量<code>a</code></p>
+</blockquote>
+<ul>
+<li>查找<code>a</code>的声明时，向上取最近的作用域，简称「最近原则」</li>
+<li>干掉（无视）此作用域中嵌套的作用域</li>
+<li>查找<code>a</code>的过程与函数执行无关</li>
+<li>但<code>a</code>的值与函数执行有关</li>
+</ul>
+<p>例4：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">function</span> <span class="nx">f1</span><span class="p">(){</span>
+    <span class="kd">let</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="kd">function</span> <span class="nx">f2</span><span class="p">(){</span>
+        <span class="kd">let</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">2</span>
+        <span class="kd">function</span> <span class="nx">f3</span><span class="p">(){</span>
+            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span>  <span class="c1">//向上取最近的作用域，即f2()中，let a = 2
+</span><span class="c1"></span>        <span class="p">}</span>
+        <span class="nx">a</span> <span class="o">=</span> <span class="mi">22</span>
+        <span class="nx">f3</span><span class="p">()</span> <span class="c1">// 当要确定`a`的值的时候，才与函数执行有关
+</span><span class="c1"></span>    <span class="p">}</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span>
+    <span class="nx">a</span> <span class="o">=</span> <span class="mi">100</span>
+    <span class="nx">f2</span><span class="p">()</span>
+<span class="p">}</span>
+<span class="nx">f1</span><span class="p">()</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>和函数执行无关的作用域，成为静态作用域，也叫词法作用域，JS目前（2020）只有这一类作用域，涉及到编译原理的知识</p>
+</blockquote>
+<h3 id="闭包">闭包</h3>
+<blockquote>
+<p>上文已经包含了「闭包」（Closure），变量<code>a</code>和函数<code>f3</code>形成了闭包</p>
+<p>JS函数会就近寻找“最近的”变量，这就是闭包~</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">function</span> <span class="nx">f1</span><span class="p">(){</span>
+    <span class="kd">let</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="kd">function</span> <span class="nx">f2</span><span class="p">(){</span>
+<span class="o">====================</span>
+        <span class="kd">let</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">2</span>
+        <span class="kd">function</span> <span class="nx">f3</span><span class="p">(){</span>
+            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span>  <span class="c1">//f3用到了外部的变量a，那么，这个f3加上a，就形成「闭包」
+</span><span class="c1"></span>        <span class="p">}</span>
+<span class="o">====================</span>
+        <span class="nx">a</span> <span class="o">=</span> <span class="mi">22</span>
+        <span class="nx">f3</span><span class="p">()</span>
+    <span class="p">}</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span>
+    <span class="nx">a</span> <span class="o">=</span> <span class="mi">100</span>
+    <span class="nx">f2</span><span class="p">()</span>
+<span class="p">}</span>
+<span class="nx">f1</span><span class="p">()</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>问：什么是闭包</p>
+<p>答：如果一个函数用到了外部的变量，那么，这个函数加上，这个变量，就叫做「闭包」</p>
+<p>作用以后介绍，现在只说定义</p>
+</blockquote>
+<ul>
+<li><em><strong>「函数」和「函数内部能访问到的变量」（也叫环境）的总和，就是一个闭包。</strong></em></li>
+</ul>
+<h4 id="闭包的用途">闭包的用途</h4>
+<blockquote>
+<p>看这篇文章</p>
+</blockquote>
+<p><a href="https://xiedaimala.com/posts/62c7446c-dac8-4d95-b965-db3fb8fc1187">JS 中的闭包是什么？</a></p>
+<blockquote>
+<p>举例：下例中，闭包在哪</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">6</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">setTimeout</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span>
+  <span class="p">},</span> <span class="mi">0</span><span class="p">)</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;我先运行了第&#39;</span> <span class="o">+</span> <span class="nx">i</span> <span class="o">+</span> <span class="s1">&#39;次 i&#39;</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="kd">function</span> <span class="nx">doSetTimeout</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">setTimeout</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span>
+  <span class="p">},</span> <span class="mi">0</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="k">for</span> <span class="p">(</span><span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">6</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">doSetTimeout</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;我先运行了第&#39;</span> <span class="o">+</span> <span class="nx">i</span> <span class="o">+</span> <span class="s1">&#39;次 i&#39;</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><hr>
+<h3 id="形式参数">形式参数</h3>
+<blockquote>
+<p>形式参数就是非实际参数</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">function</span> <span class="nx">add</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">y</span><span class="p">){</span>
+    <span class="k">return</span> <span class="nx">x</span><span class="o">+</span><span class="nx">y</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>其中<code>x</code>和<code>y</code>就是形参，因为并不是实际的参数（指定了调用时传入函数的参数的顺序）</li>
+<li>调用<code>add(1,2)</code>时，<code>1</code>和<code>2</code>就是实际参数，会被分别按次序赋值给<code>x</code>和<code>y</code></li>
+</ul>
+<blockquote>
+<p>形参的本质是变量声明</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="c1">//上面的代码近似等价于下面的代码
+</span><span class="c1"></span><span class="kd">function</span> <span class="nx">add</span><span class="p">(){</span>
+    <span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="nx">arguments</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="kd">var</span> <span class="nx">y</span> <span class="o">=</span> <span class="nx">arguments</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">return</span> <span class="nx">x</span><span class="o">+</span><span class="nx">y</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>形参只是语法糖</p>
+<p>形参可多可少，只是给参数取名字，比较随意，形参类型无语法层面上的限制，和TypeScipt不同</p>
+<p>“值传递”和“地址传递”？</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">function</span> <span class="nx">add</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">y</span><span class="p">){</span>
+    <span class="k">return</span> <span class="nx">x</span><span class="o">+</span><span class="nx">y</span>
+<span class="p">}</span>
+<span class="nx">add</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span> <span class="c1">//3
+</span><span class="c1"></span>
+<span class="kd">function</span> <span class="nx">add2</span><span class="p">(</span><span class="nx">x</span><span class="p">){</span>
+    <span class="k">return</span> <span class="nx">x</span> <span class="o">+</span> <span class="nx">arguments</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="p">}</span>
+<span class="nx">add2</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="cm">/* 将内存里Stack保存的地址，传给形参 */</span>
+<span class="kd">let</span> <span class="nx">a</span> <span class="o">=</span> <span class="p">{</span><span class="nx">value</span><span class="o">:</span><span class="mi">1</span><span class="p">}</span> <span class="c1">//内存里Stack保存的地址
+</span><span class="c1"></span><span class="kd">let</span> <span class="nx">b</span> <span class="o">=</span> <span class="p">{</span><span class="nx">value</span><span class="o">:</span><span class="mi">2</span><span class="p">}</span>
+<span class="kd">function</span> <span class="nx">addObject</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">y</span><span class="p">){</span> <span class="c1">//内存里Stack保存的地址拷贝给x,y
+</span><span class="c1"></span>    <span class="nx">x</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="s1">&#39;xxx&#39;</span> <span class="c1">//改变对象的属性，根据内存图全部复制
+</span><span class="c1"></span>    <span class="k">return</span> <span class="nx">x</span><span class="p">.</span><span class="nx">value</span> <span class="o">+</span> <span class="nx">y</span><span class="p">.</span><span class="nx">value</span>
+<span class="p">}</span>
+<span class="nx">addObject</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span><span class="nx">b</span><span class="p">)</span><span class="c1">//3
+</span><span class="c1"></span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="返回值">返回值</h3>
+<blockquote>
+<p>每个函数都有返回值</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">function</span> <span class="nx">hi</span><span class="p">(){</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;hi&#39;</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="nx">hi</span><span class="p">()</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>没写<code>return</code>，所以返回值是<code>undefined</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">function</span> <span class="nx">hi</span><span class="p">(){</span> <span class="c1">// 不执行，就不存在返回值
+</span><span class="c1"></span>    <span class="k">return</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;hi&#39;</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="nx">hi</span><span class="p">()</span> <span class="c1">//undefined
+</span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>返回值为<code>console.log('hi')</code>的值，<code>console.log()</code>返回值仍为<code>undefined</code>，打印值和返回值不同</p>
+</blockquote>
+<ul>
+<li>只有函数执行完了后才会有返回值</li>
+<li>不执行，就不存在返回值</li>
+<li>只有函数有返回值</li>
+<li><del><code>1+2</code>的返回值为<code>3</code></del></li>
+<li><input checked="" disabled="" type="checkbox"> <code>1+2</code>的值为<code>3</code></li>
+</ul>
+<h3 id="小结">小结</h3>
+<p>作用域：就近原则 &amp; 闭包</p>
+<hr>
+<h3 id="调用栈">调用栈</h3>
+<blockquote>
+<p>函数执行时要进入一另个环境，执行完，再返回回来</p>
+<p>有时函数执行，进入嵌套函数，返回路径是怎样</p>
+<p>调用栈就是记录函数执行完后，回去到哪里</p>
+<p>什么是调用栈（Call stack）</p>
+</blockquote>
+<ul>
+<li>JS引擎在调用一个函数前</li>
+<li>需要把函数所在的环境<code>push</code>到一个数组里</li>
+<li>这个数组叫做调用栈</li>
+<li>等函数执行完了，就会把环境<code>pop</code>出来</li>
+<li>然后<code>return</code>到之前的环境，继续执行后续代码</li>
+</ul>
+<blockquote>
+<p>举例</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;1+2的结果为&#39;</span> <span class="o">+</span> <span class="nx">add</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><code>frankFang</code>的理解</li>
+</ul>
+<blockquote>
+<p>执行<code>console.log(1)</code>的过程：进入<code>log函数</code>，压入栈，调用栈记录<code>回到第1行</code>（地址）-&gt;打印<code>1</code>-&gt;弹栈，读取调用栈-&gt;<code>回到第1行</code></p>
+<p>执行<code>console.log('1+2的结果为' + add(1,2))</code>的过程：压栈，调用栈记录<code>回到第2行/21列</code>-&gt;执行<code>add(1+2)</code>-&gt;压栈，计算结果<code>3</code>-&gt;弹栈，回<code>2/21</code>-&gt;得到字符串<code>'1+2'的结果为3</code>-&gt;进入<code>console.log</code>函数，压栈，调用栈记录<code>回到第2行</code>-&gt;打印字符串<code>'1+2'的结果为3</code>-&gt;弹栈，读取调用栈-&gt;<code>回到第2行</code></p>
+</blockquote>
+<ul>
+<li>每次调用函数，都要记录一次返回地址，写到调用栈里，如果还要进入嵌套的函数，调用栈再次记录里一个返回地址，等函数执行完，就弹栈，回去记录的返回地址</li>
+</ul>
+<p><a href="https://developer.mozilla.org/zh-CN/docs/Glossary/Call_stack">Call stack（调用栈）MDN的解释</a></p>
+<ul>
+<li>1.函数将要执行</li>
+<li>2.压栈（记录执行的函数到调用栈）</li>
+<li>3.执行函数体代码，执行完了</li>
+<li>4.弹栈（删除调用栈中的函数）</li>
+<li>如果有嵌套的函数，重复执行<code>1234</code></li>
+</ul>
+<hr>
+<blockquote>
+<p>递归函数</p>
+<p>使用递归函数有可能把栈压满，即爆栈</p>
+</blockquote>
+<ul>
+<li>阶乘</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">function</span> <span class="nx">f</span><span class="p">(</span><span class="nx">n</span><span class="p">){</span>
+    <span class="k">return</span> <span class="nx">n</span> <span class="o">!==</span> <span class="mi">1</span> <span class="o">?</span> <span class="nx">n</span><span class="o">*</span><span class="nx">f</span><span class="p">(</span><span class="nx">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">:</span> <span class="mi">1</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>理解递归</p>
+<blockquote>
+<p>f(4)</p>
+<p>= 4 * f(3)</p>
+<p>= 4 * (3 * f(2)</p>
+<p>= 4 * (3 * (2 * f(1)))</p>
+<p>= 4 * (3 * (2 * (1)))</p>
+<p>= 4 * (3 * (2))</p>
+<p>= 4 * (6)</p>
+<p>= 24</p>
+</blockquote>
+<ul>
+<li>递归就是：先递进，再回归</li>
+</ul>
+<h3 id="递归函数的调用栈">递归函数的调用栈</h3>
+<ul>
+<li>递归函数而调用栈很长</li>
+</ul>
+<blockquote>
+<p>画出阶乘(6)的调用栈</p>
+<p>压6次栈，弹6次栈（递进6次，回归6次）</p>
+</blockquote>
+<ul>
+<li>调用栈最长有多少</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">function</span> <span class="nx">computeMaxCallStackSize</span><span class="p">(){</span>
+    <span class="k">try</span><span class="p">{</span>
+        <span class="k">return</span> <span class="mi">1</span> <span class="o">+</span> <span class="nx">computeMaxCallStackSize</span><span class="p">();</span>
+    <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">e</span><span class="p">){</span>
+    <span class="c1">//报错说明stack overflow了
+</span><span class="c1"></span>        <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>Chrome 12578</p>
+<p>Firefox 26773</p>
+<p>Node 12536</p>
+<p>Safari 31713</p>
+<p>爆栈：如果调用栈中压入的帧过多，程序就会崩溃</p>
+</blockquote>
+<hr>
+<h3 id="函数提升">函数提升</h3>
+<blockquote>
+<p>什么是函数提升</p>
+</blockquote>
+<ul>
+<li><code>function fn(){}</code></li>
+<li>不管吧具名函数声明在哪里，都会提升到第一行</li>
+</ul>
+<blockquote>
+<p>什么不是函数提升</p>
+</blockquote>
+<ul>
+<li><code>let fn = function(){}</code></li>
+<li>函数表达式是赋值，右面的函数声明不会提升</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nx">add</span><span class="p">()</span> <span class="c1">//fine
+</span><span class="c1"></span><span class="kd">function</span> <span class="nx">add</span><span class="p">(){}</span>
+
+<span class="kd">let</span> <span class="nx">add1</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1">//let 不允许重复声明
+</span><span class="c1"></span><span class="kd">function</span> <span class="nx">add1</span><span class="p">(){}</span> <span class="c1">//SyntaxError: redeclaration of let add1 ，声明提前，和let声明的add1重复
+</span><span class="c1"></span>
+<span class="kd">var</span> <span class="nx">add2</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1">//var 允许重复声明，所以有风险，不可用
+</span><span class="c1"></span><span class="kd">function</span> <span class="nx">add2</span><span class="p">(){}</span>
+
+<span class="kd">var</span> <span class="nx">add3</span>
+<span class="kd">function</span> <span class="nx">add3</span><span class="p">(){}</span> <span class="c1">//&gt;add3  &lt;f add3(){}
+</span><span class="c1"></span>
+<span class="nx">fucntion</span> <span class="nx">add4</span><span class="p">(){}</span>
+<span class="kd">var</span> <span class="nx">add4</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1">//&gt;add3  &lt;1
+</span><span class="c1"></span>
+<span class="nx">add5</span><span class="p">()</span>
+<span class="kd">let</span> <span class="nx">add5</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){}</span> <span class="c1">//报错
+</span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>抛弃<code>var</code>，用<code>let</code></li>
+</ul>
+<hr>
+<h3 id="arguments和this除了箭头函数没有"><code>arguments</code>和<code>this</code>（除了箭头函数没有）</h3>
+<blockquote>
+<p>代码</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">function</span> <span class="nx">fn</span><span class="p">(){</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">arguments</span><span class="p">)</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">)</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">Array</span><span class="p">.</span><span class="nx">from</span><span class="p">(</span><span class="nx">arguments</span><span class="p">))</span> <span class="c1">//变为真·数组
+</span><span class="c1"></span><span class="p">}</span>
+<span class="nx">fn</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="nx">fn</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+
+<span class="nx">fn</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="nx">fn</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="s1">&#39;xxx&#39;</span><span class="p">)</span> <span class="c1">//&#39;xxx&#39;会被自动转化（封装）成对象，即包装对象
+</span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>如何传<code>arguments</code></p>
+</blockquote>
+<ul>
+<li>包含所有参数的伪数组</li>
+<li>调用<code>fn</code>即可传值给<code>arguments</code></li>
+<li><code>fn(1,2,3)</code>，那么<code>arguments</code>就是<code>[1,2,3]</code>的伪数组</li>
+<li>没有JS数组的方法，<code>__proto__</code>的构造函数是<code>Object</code>（原型链直接指向<code>Object.prototype</code>的地址）</li>
+<li>用<code>Array.from(arguments)</code>变为真·数组</li>
+</ul>
+<hr>
+<blockquote>
+<p>代码</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">function</span> <span class="nx">fn</span><span class="p">(){</span>
+    <span class="cm">/* &#39;use strict &#39; */</span> <span class="c1">//强制 this 传值时 不封装为对象
+</span><span class="c1"></span>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;this:&#39;</span><span class="p">)</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="nx">fn</span><span class="p">()</span> <span class="c1">//没有其他任何条件，this 默认指向window
+</span><span class="c1"></span><span class="nx">fn</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="c1">// 返回Number对象
+</span><span class="c1"></span><span class="nx">fn</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="s1">&#39;xxx&#39;</span><span class="p">)</span> <span class="c1">// 返回String对象 //&#39;xxx&#39;会被自动转化（封装）成对象，即包装对象
+</span><span class="c1"></span><span class="nx">fn</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="kc">undefined</span><span class="p">)</span> <span class="c1">//默认window
+</span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>如何传<code>this</code></p>
+</blockquote>
+<ul>
+<li>目前可以用<code>fn.call('xxx',1,2,3)</code>传<code>this</code>和<code>arguments</code>，其中<code>xxx</code>，就是传给<code>this</code>的值，后面的参数会被传给<code>arguments</code></li>
+<li>而且<code>xxx</code>会被自动转化（封装）成对象，即包装对象，例如<code>Number {1}</code>、<code>String {''}</code></li>
+<li>除非在<code>fn</code>代码块顶部写一句<code>use strict</code>，但会带来许多其他问题</li>
+<li><em><strong>这是JS的糟粕之一</strong></em></li>
+</ul>
+<blockquote>
+<p><code>this</code>默认指向<code>window</code>（控制台打出的是<code>Window</code>），一般不需要</p>
+<p><code>this</code>是隐藏参数，<code>arguments</code>是普通参数</p>
+<p><code>this</code>是参数，个人观点</p>
+<p>假设没有<code>this</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">person</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;You&#39;</span><span class="p">,</span>
+    <span class="nx">sayFuck</span><span class="p">(){</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`您好，我叫`</span> <span class="o">+</span> <span class="nx">person</span><span class="p">.</span><span class="nx">name</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>分析</p>
+</blockquote>
+<ul>
+<li>我们可以用直接赋值（保存了对象地址）的<em><strong>变量</strong></em>获取<code>name</code>属性</li>
+<li>我们可以吧这种办法简称为<em><strong>引用</strong></em></li>
+</ul>
+<hr>
+<ul>
+<li>问题一</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">sayHi</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`您好，我叫`</span> <span class="o">+</span> <span class="cm">/*person.*/</span><span class="nx">name</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="kd">let</span> <span class="nx">person</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;frank&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;sayHi&#39;</span><span class="o">:</span> <span class="nx">sayHi</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>分析</p>
+</blockquote>
+<ul>
+<li>用函数表达式，变量名未知</li>
+<li><code>person</code>如果改名，<code>sayHi</code>函数就挂了</li>
+<li><code>sayHi</code>函数甚至有可能在另一个文件里面</li>
+<li>所以不希望<code>sayHi</code>函数里出现<code>person</code>引用</li>
+</ul>
+<hr>
+<blockquote>
+<p>问题二</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kr">class</span> <span class="nx">Person</span><span class="p">{</span>
+    <span class="nx">constructor</span><span class="p">(</span><span class="nx">name</span><span class="p">){</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">name</span> <span class="c1">//这里的this是new强制指定的
+</span><span class="c1"></span>    <span class="p">}</span>
+    <span class="nx">sayHi</span><span class="p">(){</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="cm">/* ??? */</span><span class="p">)</span> <span class="c1">//没有实例化，无法引用
+</span><span class="c1"></span>    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>分析</p>
+</blockquote>
+<ul>
+<li>这里只有类，还没创建对象，所以不可能获取对象的引用</li>
+<li>那么如何拿到对象的<code>name</code>属性？</li>
+</ul>
+<blockquote>
+<p>需要有一种办法拿到对象，这样才能获取对象的<code>name</code>属性</p>
+</blockquote>
+<ul>
+<li>一种土办法：用参数，用形式参数</li>
+</ul>
+<blockquote>
+<p>对象</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">person</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;frank&#39;</span><span class="p">,</span>
+    <span class="nx">sayHi</span><span class="p">(</span><span class="nx">p</span><span class="p">){</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`您好，我叫`</span> <span class="o">+</span> <span class="nx">p</span><span class="p">.</span><span class="nx">name</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="nx">person</span><span class="p">.</span><span class="nx">sayHi</span><span class="p">(</span><span class="nx">person</span><span class="p">)</span> <span class="c1">//丑
+</span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>类</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kr">class</span> <span class="nx">Person</span><span class="p">{</span>
+    <span class="nx">constructor</span><span class="p">(</span><span class="nx">name</span><span class="p">){</span> <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">name</span><span class="p">}</span>
+    <span class="nx">sayHi</span><span class="p">(</span><span class="nx">p</span><span class="p">){</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`您好，我叫`</span> <span class="o">+</span> <span class="nx">p</span><span class="p">.</span><span class="nx">name</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="kd">let</span> <span class="nx">person</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">(</span><span class="nx">person</span><span class="p">)</span> <span class="c1">//丑
+</span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p><code>Python</code>就用了</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="k">class</span> <span class="nc">Person</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span> <span class="c1"># 构造函数 声明一个self 参数，即未来声明新对象</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+    
+    <span class="c1"># 回车</span>
+    
+    <span class="k">def</span> <span class="nf">sayHi</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Hi,I am&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+<span class="n">person</span> <span class="o">=</span> <span class="n">Person</span><span class="p">(</span><span class="s1">&#39;frank&#39;</span><span class="p">)</span>
+<span class="n">person</span><span class="o">.</span><span class="n">sayHi</span><span class="p">()</span> <span class="c1"># 自动传参 self</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>特点</p>
+</blockquote>
+<ul>
+<li>每个函数都接受一个额外的<code>self</code></li>
+<li>这个<code>self</code>就是传入的新对象</li>
+<li>只不过<code>Python</code>会偷偷帮你传对象</li>
+<li><code>Python</code>中<code>person.sayHi()</code>等价于<code>person.sayHi(person)</code></li>
+<li><code>Python</code>中<code>person</code>就被传给<code>self</code>了</li>
+</ul>
+<blockquote>
+<p>解决的问题是：怎么得到未来要创建的新对象的引用</p>
+<p>JS没有模仿<code>Python</code>的思路，走了另一条更难理解的思路</p>
+<p>JS在每个函数里加了<code>this</code></p>
+</blockquote>
+<ul>
+<li>用<code>this</code>获取那个未被创建出，还不知道名字的对象</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">person</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;frank&#39;</span><span class="p">,</span>
+    <span class="nx">sayHi</span><span class="p">(</span><span class="cm">/* this */</span><span class="p">){</span> <span class="c1">//JS 也自动把this 传给函数sayHi
+</span><span class="c1"></span>        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`你好，我叫`</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="p">)</span>
+    <span class="p">}</span> <span class="c1">//淘宝号的this 接受了person
+</span><span class="c1"></span><span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>分析</p>
+</blockquote>
+<ul>
+<li><code>JS</code>中<code>person.sayHi()</code>相当于<code>person.sayHi(person)</code></li>
+<li>然后<code>person</code>被自动传给<code>this</code>了（<code>person</code>是个地址）</li>
+<li>这样，每个函数都能用<code>this</code>来获取一个 <em><strong>未知对象的引用</strong></em> 了</li>
+</ul>
+<blockquote>
+<p><code>person.sayHi()</code>会隐式地把<code>person</code>作为<code>this</code>传给<code>sayHi</code></p>
+<p>方便<code>sayHi</code>获取<code>person</code>对应的对象</p>
+</blockquote>
+<hr>
+<h2 id="this小结"><code>this</code>小结</h2>
+<ul>
+<li>想让函数获取未知对象的引用</li>
+<li>但是并不想通过变量名做到，变量名未知</li>
+<li><code>Python</code>通过额外地<code>self</code>参数做到</li>
+<li><code>JS</code>通过额外的<code>this</code>做到</li>
+</ul>
+<blockquote>
+<p>1.<code>person.sayHi()</code>会把<code>person</code>自动传给<code>sayHi</code></p>
+<p>2.<code>sayHi</code>可以通过<code>this</code>引用<code>person</code></p>
+</blockquote>
+<p>其他</p>
+<ul>
+<li>注意<code>person.sayHi</code>和<code>person.sayHi()</code>的区别</li>
+<li>注意<code>person.sayHi()</code>的断句<code>(person.sayHi)()</code></li>
+</ul>
+<blockquote>
+<p>class也一样</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kr">class</span> <span class="nx">Person</span><span class="p">{</span>
+    <span class="nx">sayHi</span><span class="p">(){</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="kd">let</span> <span class="nx">p</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">()</span>
+<span class="nx">p</span><span class="p">.</span><span class="nx">sayHi</span><span class="p">()</span> <span class="c1">// JS引擎自动把 this = p
+</span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><code>this</code>就是最终调用<code>sayHi()</code>的对象</li>
+</ul>
+<hr>
+<blockquote>
+<p>这就引出另一个问题</p>
+</blockquote>
+<ul>
+<li>到底哪个对</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">person</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;frank&#39;</span><span class="p">,</span>
+    <span class="nx">sayHi</span><span class="p">(</span> <span class="cm">/* this */</span> <span class="p">){</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`你好，我叫`</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="nx">person</span><span class="p">.</span><span class="nx">sayHi</span><span class="p">()</span>
+<span class="nx">person</span><span class="p">.</span><span class="nx">sayHi</span><span class="p">(</span><span class="nx">person</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>省略形式反而对了，完整形式是错的</li>
+</ul>
+<blockquote>
+<p>传到哪里了</p>
+<p><code>person.sayHi()</code>对，JS怎么解决这种不和谐</p>
+</blockquote>
+<ul>
+<li>提供两种调用模式</li>
+</ul>
+<h2 id="函数两种调用模式">函数两种调用模式</h2>
+<h3 id="小白调用法">小白调用法</h3>
+<blockquote>
+<p>会自动把<code>person</code>传到函数里</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nx">person</span><span class="p">.</span><span class="nx">sayHi</span><span class="p">()</span> <span class="c1">//隐藏太多细节，不清不楚
+</span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>会自动把<code>person</code>传到函数里，作为<code>this</code></li>
+</ul>
+<h3 id="老油条调用法">老油条调用法</h3>
+<ul>
+<li>需要手动吧<code>person</code>传到函数里，作为<code>this</code></li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nx">person</span><span class="p">.</span><span class="nx">sayHi</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">person</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>该学那种？默认用第二种</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">person</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">name</span> <span class="o">:</span> <span class="s1">&#39;frank&#39;</span><span class="p">,</span>
+    <span class="nx">sayHi</span><span class="p">(){</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="nx">person</span><span class="p">.</span><span class="nx">sayHi</span><span class="p">.</span><span class="nx">call</span><span class="p">({</span><span class="nx">name</span><span class="o">:</span><span class="mi">1</span><span class="p">})</span> <span class="c1">//1 //使得调用变得清晰
+</span><span class="c1"></span>
+<span class="nx">person</span><span class="p">.</span><span class="nx">sayHi</span><span class="p">.</span><span class="nx">call</span><span class="p">({</span><span class="nx">name</span><span class="o">:</span><span class="s1">&#39;Jack&#39;</span><span class="p">})</span> <span class="c1">//Jack
+</span><span class="c1"></span><span class="nx">person</span><span class="p">.</span><span class="nx">sayHi</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">person</span><span class="p">)</span> <span class="c1">//frank
+</span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>为了记忆，之后调用函数都用 <em><strong><code>object.fn.call()</code></strong></em> 写法</li>
+</ul>
+<p>例1</p>
+<blockquote>
+<p>未用到<code>this</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">function</span> <span class="nx">add</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">y</span><span class="p">){</span>
+    <span class="k">return</span> <span class="nx">x</span><span class="o">+</span><span class="nx">y</span>
+<span class="p">}</span>
+<span class="nx">add</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="kc">undefined</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span> <span class="c1">// 3
+</span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>为什么要多写一个<code>undefined</code></p>
+</blockquote>
+<ul>
+<li>因为第一个参数要作为<code>this</code></li>
+<li>但是代码里没有<code>this</code></li>
+<li>所以只能用<code>undefined</code>占位</li>
+<li>其实用<code>null</code>也可以</li>
+</ul>
+<p>例2</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nb">Array</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">forEach2</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="kd">let</span> <span class="nx">arr</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+<span class="nx">arr</span><span class="p">.</span><span class="nx">forEach2</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">arr</span><span class="p">)</span> <span class="c1">//[1,2,3]
+</span><span class="c1"></span><span class="nx">arr</span><span class="p">.</span><span class="nx">forEach2</span><span class="p">()</span> <span class="c1">//[1,2,3]
+</span></code></pre></td></tr></table>
+</div>
+</div><p><code>arr.forEach2.call(arr)</code>等价于<code>arr.forEach2()</code></p>
+<blockquote>
+<p>完整版模拟<code>forEach()</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nb">Array</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">forEach2</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">fn</span><span class="p">){</span>
+    <span class="k">for</span><span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">){</span>
+        <span class="nx">fn</span><span class="p">(</span><span class="k">this</span><span class="p">[</span><span class="nx">i</span><span class="p">],</span><span class="nx">i</span><span class="p">,</span><span class="k">this</span><span class="p">)</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;this[i]: &#39;</span> <span class="o">+</span> <span class="k">this</span><span class="p">[</span><span class="nx">i</span><span class="p">])</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;i: &#39;</span> <span class="o">+</span> <span class="nx">i</span><span class="p">)</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;this: &#39;</span> <span class="o">+</span> <span class="k">this</span><span class="p">)</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">dir</span><span class="p">(</span><span class="k">this</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">let</span> <span class="nx">arr</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+<span class="nx">arr</span><span class="p">.</span><span class="nx">forEach2</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">arr</span><span class="p">,(</span><span class="nx">item</span><span class="p">)=&gt;</span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">item</span><span class="p">))</span> <span class="c1">// 手动把arr作为this，手动[滑稽]
+</span><span class="c1"></span><span class="cm">/* 等价于 */</span>
+<span class="nx">arr</span><span class="p">.</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">item</span><span class="p">)=&gt;</span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">item</span><span class="p">))</span> <span class="c1">// 自动把arr作为this
+</span><span class="c1"></span>
+<span class="nb">Array</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">forEach</span><span class="p">.</span><span class="nx">call</span><span class="p">({</span><span class="mi">0</span><span class="o">:</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="o">:</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="nx">length</span><span class="o">:</span><span class="mi">2</span><span class="p">})</span>
+<span class="nb">Array</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">forEach2</span><span class="p">.</span><span class="nx">call</span><span class="p">({</span><span class="mi">0</span><span class="o">:</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="nx">length</span><span class="o">:</span><span class="mi">3</span><span class="p">},(</span><span class="nx">item</span><span class="p">)=&gt;</span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">item</span><span class="p">))</span>
+<span class="nb">Array</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">forEach2</span><span class="p">.</span><span class="nx">call</span><span class="p">({</span><span class="mi">0</span><span class="o">:</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="nx">length</span><span class="o">:</span><span class="mi">1</span><span class="p">},(</span><span class="nx">item</span><span class="p">)=&gt;</span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">item</span><span class="p">))</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p><code>this</code>是什么</p>
+</blockquote>
+<ul>
+<li>一回答就错了，还没有传值，只有在<code>call(xxx)</code>的时候才能确定，所以不知道<code>this</code>是什么</li>
+<li>由于大家使用<code>forEach2</code>的时候总是会用<code>arr.forEach2</code></li>
+<li>所以<code>arr</code>就被自动传给<code>forEach2</code>，作为<code>this</code></li>
+</ul>
+<blockquote>
+<p><code>this</code>一定是数组吗</p>
+</blockquote>
+<ul>
+<li>不一定，比如<code>Array.prototype.forEach.call({0: '1', 1: 'b',length:2})</code>这样的伪数组</li>
+<li><code>this</code>只是一个可以任意指定的参数而已</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="p">[].</span><span class="nx">forEach2</span><span class="p">.</span><span class="nx">call</span><span class="p">({</span><span class="mi">0</span><span class="o">:</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="nx">length</span><span class="o">:</span><span class="mi">1</span><span class="p">},(</span><span class="nx">item</span><span class="p">)=&gt;</span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">item</span><span class="p">))</span>
+<span class="p">[].</span><span class="nx">forEach2</span><span class="p">.</span><span class="nx">call</span><span class="p">([{},[],</span><span class="s1">&#39;&#39;</span><span class="p">,</span><span class="kc">NaN</span><span class="p">,</span><span class="kc">undefined</span><span class="p">,</span><span class="kc">null</span><span class="p">],(</span><span class="nx">item</span><span class="p">)=&gt;</span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">item</span><span class="p">))</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="this的两种使用方法"><code>this</code>的两种使用方法</h3>
+<ul>
+<li>隐式传递</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nx">fn</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span> <span class="c1">//等价于 fn.call(undefined,1,2)
+</span><span class="c1"></span><span class="nx">fn</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="kc">undefined</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="cm">/*  如果是对象的属性的函数，this就传此对象的此属性 */</span>
+<span class="nx">obj</span><span class="p">.</span><span class="nx">child</span><span class="p">.</span><span class="nx">fn</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="c1">//等价于 obj.child.fn.call(obj.child,1)
+</span><span class="c1"></span><span class="nx">obj</span><span class="p">.</span><span class="nx">child</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">obj</span><span class="p">.</span><span class="nx">child</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>不管用什么方式调用函数，都传递一个this对应的值</p>
+<p>问题在于，是否知道传的this是什么</p>
+</blockquote>
+<ul>
+<li>显示传递</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nx">fn</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="kc">undefined</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="nx">fn</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="kc">undefined</span><span class="p">,[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span> <span class="c1">//参数要用数组的形式传值
+</span></code></pre></td></tr></table>
+</div>
+</div><h3 id="强制绑定this">强制绑定<code>this</code></h3>
+<blockquote>
+<p>如果不能确定this到底是什么</p>
+</blockquote>
+<ul>
+<li>可以使用<code>.bind</code>可以让<code>this</code>不被改变</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">function</span> <span class="nx">f1</span><span class="p">(</span><span class="nx">p1</span><span class="p">,</span><span class="nx">p2</span><span class="p">){</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">,</span><span class="nx">p1</span><span class="p">,</span><span class="nx">p2</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="kd">let</span> <span class="nx">f2</span> <span class="o">=</span> <span class="nx">f1</span><span class="p">.</span><span class="nx">bind</span><span class="p">({</span><span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;frank&#39;</span><span class="p">})</span> <span class="c1">// f2就是 f1 绑定了 this 之后的新函数
+</span><span class="c1"></span><span class="nx">f2</span><span class="p">()</span> <span class="c1">// 调用f2，就等价于 f1.call({name: &#39;frank&#39;})
+</span><span class="c1"></span><span class="nx">f1</span><span class="p">.</span><span class="nx">call</span><span class="p">({</span><span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;frank&#39;</span><span class="p">})</span> <span class="c1">//f2是f1强制绑定了参数{name: &#39;frank&#39;}的版本
+</span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><code>.bind</code>还可以绑定其他参数</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">function</span> <span class="nx">f1</span><span class="p">(</span><span class="nx">p1</span><span class="p">,</span><span class="nx">p2</span><span class="p">){</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">,</span><span class="nx">p1</span><span class="p">,</span><span class="nx">p2</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="kd">let</span> <span class="nx">f3</span> <span class="o">=</span> <span class="nx">f1</span><span class="p">.</span><span class="nx">bind</span><span class="p">({</span><span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;frank&#39;</span><span class="p">},</span> <span class="s1">&#39;hi&#39;</span><span class="p">)</span> <span class="c1">// this是{name: &#39;frank&#39;}，第一个参数是&#39;hi&#39;，已经绑死了
+</span><span class="c1"></span><span class="nx">f3</span><span class="p">()</span>  <span class="c1">//等价于 f1.call({name: &#39;frank&#39;}, &#39;hi&#39;)
+</span><span class="c1"></span><span class="nx">f3</span><span class="p">(</span><span class="s1">&#39;fuck&#39;</span><span class="p">)</span> <span class="c1">// Object { name: &#34;frank&#34; } hi fuck 
+</span><span class="c1"></span>           <span class="c1">//之后传入的形式参数就从第二个开始传了
+</span></code></pre></td></tr></table>
+</div>
+</div><h2 id="箭头函数">箭头函数</h2>
+<blockquote>
+<p>没有<code>arguments</code>和<code>this</code></p>
+</blockquote>
+<ul>
+<li>箭头函数的this就是普通变量</li>
+<li>里面的<code>this</code>就是外面的<code>this</code></li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">)</span> <span class="c1">//window
+</span><span class="c1"></span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span> <span class="o">===</span> <span class="nb">window</span><span class="p">)</span> <span class="c1">//true
+</span><span class="c1"></span><span class="kd">let</span> <span class="nx">fn</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">)</span>
+
+<span class="kd">let</span> <span class="nx">b</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="kd">let</span> <span class="nx">fn</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">b</span><span class="p">)</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">)</span>
+<span class="kd">let</span> <span class="nx">fn2</span> <span class="o">=</span> <span class="p">()=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">)</span>
+<span class="nx">fn2</span><span class="p">()</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>就算你加<code>call</code>或者<code>bind</code>都没有</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">fn</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">)</span>
+<span class="nx">fn</span><span class="p">.</span><span class="nx">call</span><span class="p">({</span><span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;frank&#39;</span><span class="p">})</span> <span class="c1">//window
+</span><span class="c1"></span><span class="nx">fn</span><span class="p">()</span> <span class="c1">//window
+</span><span class="c1"></span><span class="nx">fn</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="c1">//window
+</span><span class="c1"></span>
+<span class="kd">let</span> <span class="nx">fn3</span> <span class="o">=</span> <span class="p">()=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">arguments</span><span class="p">)</span>
+<span class="nx">fn3</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><hr>
+<h2 id="总结">总结</h2>
+<blockquote>
+<p>每个函数都有这些独特的属性</p>
+</blockquote>
+<ul>
+<li>调用时机</li>
+<li>作用域</li>
+<li>闭包</li>
+<li>形式参数</li>
+<li>返回值</li>
+<li>调用栈</li>
+<li>函数提升</li>
+<li><code>arguments</code>（除了箭头函数没有）</li>
+<li><code>this</code>（除了箭头函数没有）</li>
+</ul>
+<hr>
+<h2 id="立即执行函数">立即执行函数</h2>
+<blockquote>
+<p>只有JS有的变态玩法，ES6后用得少</p>
+</blockquote>
+<p>原理</p>
+<ul>
+<li>ES5时代，为了得到局部变量，必须引入一个函数</li>
+<li>但是这个函数如果有名字，就声明了一个全局函数，得不偿失</li>
+<li>于是这个函数必须是匿名函数</li>
+<li>声明匿名函数，然后立即加个<code>()</code>执行它</li>
+<li>但JS标准认为这种语法不合法</li>
+<li>最终发现，只要在匿名函数前加个运算符即可</li>
+<li><code>!</code>、<code>~</code>、<code>()</code>、<code>+</code>、<code>-</code>都可以</li>
+<li>往上走</li>
+<li>只用<code>!</code></li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1">// 全局变量
+</span><span class="c1"></span><span class="kd">function</span> <span class="nx">fn</span><span class="p">(){</span> <span class="c1">// 全局函数
+</span><span class="c1"></span>    <span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">2</span> <span class="c1">// 局部变量
+</span><span class="c1"></span>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span>
+<span class="nx">fn</span><span class="p">()</span>
+
+<span class="cm">/* 声明一个匿名函数 直接调用 */</span>
+<span class="kd">function</span><span class="p">(){</span>
+    <span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span>
+<span class="p">}</span> <span class="p">()</span> <span class="c1">//报错
+</span><span class="c1"></span>
+<span class="o">!</span><span class="kd">function</span><span class="p">(){</span>
+    <span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">2</span> <span class="c1">// 局部作用域
+</span><span class="c1"></span>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span>
+<span class="p">}</span> <span class="p">()</span> <span class="c1">//true 不报错 虽然返回了一个不需要的值
+</span><span class="c1"></span>
+<span class="cm">/* 带来的问题 */</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;hi&#39;</span><span class="p">)</span> <span class="c1">// undefined
+</span><span class="c1"></span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;hi&#39;</span><span class="p">)})()</span> <span class="c1">// JS里回车没有意义，相当于 undefined(function(){console.log(&#39;hi&#39;)})()
+</span><span class="c1"></span>
+<span class="cm">/* 除非加个“;” ，也是JS里少数几个必须加分号的地方 还有 `([]) !== ([]);({}) !== ({});`等设计圆括号的 */</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;hi&#39;</span><span class="p">)</span>
+<span class="p">;(</span><span class="kd">function</span><span class="p">(){</span>
+    <span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">2</span> <span class="c1">// 局部作用域
+</span><span class="c1"></span>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span>
+<span class="p">}</span> <span class="p">)()</span>
+
+<span class="cm">/* ES6 局部变量 */</span>
+<span class="p">{</span>
+    <span class="kd">let</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span>
+<span class="p">}</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><hr>
+<h3 id="关于-this">关于 this</h3>
+<blockquote>
+<p>这篇Blog初步讲了 this，不过相信 this 作为 JS 的第二座大山，不是那么容易能理解的。</p>
+<p>前期以记忆为主，后面几节才有可能真正理解 this。</p>
+<p>从下节开始，所有函数调用使用 call 的形式，直到理解 this</p>
+</blockquote>
+<!-- raw HTML omitted -->
+<hr>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<hr>
+<h4 id="参考文章">参考文章</h4>
+<ul>
+<li><a href="https://static.xiedaimala.com/xdml/file/3ac7c224-c23d-491f-84b5-4fabfbeab9b8/2019-9-24-12-5-18.pdf">JS 函数.pdf</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/101092477">闭包的作用</a></li>
+<li><a href="https://wangdoc.com/javascript/async/general.html">异步与JS单线程模型</a></li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Window/setTimeout">window.setTimeout</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/34924059">事件循环与任务队列</a></li>
+<li><a href="http://jirengu.github.io/fe2/markdown/garbage_collection.html">JS引擎的垃圾回收机制</a></li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/learn/JavaScript/%E5%BC%82%E6%AD%A5/%E8%B6%85%E6%97%B6%E5%92%8C%E9%97%B4%E9%9A%94">MDN 合作异步JavaScript: 超时和间隔</a></li>
+<li><a href="https://wangdoc.com/javascript/async/general.html">网道 / WangDoc.com 异步操作概述</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/66235337">从setTimeout和Promise比较js执行机制</a></li>
+<li><a href="https://www.zhihu.com/question/25371869/answer/30577793">JS setTimeout 问题 贺师俊的回答</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/34924059">Event Loop、计时器、nextTick By 方应杭</a></li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Glossary/Call_stack">Call stack（调用栈）MDN的解释</a></li>
+</ul>
+<h4 id="相关文章">相关文章</h4>
+<ul>
+<li>无</li>
+</ul>
+<hr>
+<ul>
+<li>作者： Joel</li>
+<li>文章链接：</li>
+<li><a href="http://xmasuhai.xyz/posts/%E7%89%88%E6%9D%83%E5%A3%B0%E6%98%8E%E9%93%BE%E6%8E%A5/">版权声明</a></li>
+<li>非自由转载-非商用-非衍生-保持署名</li>
+<li><!-- raw HTML omitted -->河<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->掘<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->思<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->知<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->简<!-- raw HTML omitted --></li>
+</ul>
+<hr>
+
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Joel Xu</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2020-02-26
+      
+        
+        
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="http://xmasuhai.xyz/tags/javascript/">JavaScript</a>
+          <a href="http://xmasuhai.xyz/tags/js%E5%87%BD%E6%95%B0/">JS函数</a>
+          <a href="http://xmasuhai.xyz/tags/%E6%89%A7%E8%A1%8C%E6%97%B6%E6%9C%BA/">执行时机</a>
+          <a href="http://xmasuhai.xyz/tags/%E9%97%AD%E5%8C%85/">闭包</a>
+          <a href="http://xmasuhai.xyz/tags/this/">this</a>
+          <a href="http://xmasuhai.xyz/tags/%E8%B0%83%E7%94%A8%E6%A0%88/">调用栈</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/js/js%E9%9D%9E%E5%85%A8%E8%A7%A307js-%E5%AE%9E%E6%88%98%E4%BC%9A%E5%8A%A8%E7%9A%84%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0%E5%85%A8%E7%A8%8B%E8%AE%B0%E5%BD%95/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">【JS非全解07】JS 实战，会动的代码实现全程记录</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/js/js%E9%9D%9E%E5%85%A8%E8%A7%A305js-%E6%95%B0%E7%BB%84/">
+            <span class="next-text nav-default">【JS非全解05】JS 数组</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:xmasuhai@163.com" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="https://github.com/xmasuhai" rel="me noopener" class="iconfont"
+      title="github"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M512 12.672c-282.88 0-512 229.248-512 512 0 226.261333 146.688 418.133333 350.08 485.76 25.6 4.821333 34.986667-11.008 34.986667-24.618667 0-12.16-0.426667-44.373333-0.64-87.04-142.421333 30.890667-172.458667-68.693333-172.458667-68.693333C188.672 770.986667 155.008 755.2 155.008 755.2c-46.378667-31.744 3.584-31.104 3.584-31.104 51.413333 3.584 78.421333 52.736 78.421333 52.736 45.653333 78.293333 119.850667 55.68 149.12 42.581333 4.608-33.109333 17.792-55.68 32.426667-68.48-113.706667-12.8-233.216-56.832-233.216-253.013333 0-55.893333 19.84-101.546667 52.693333-137.386667-5.76-12.928-23.04-64.981333 4.48-135.509333 0 0 42.88-13.738667 140.8 52.48 40.96-11.392 84.48-17.024 128-17.28 43.52 0.256 87.04 5.888 128 17.28 97.28-66.218667 140.16-52.48 140.16-52.48 27.52 70.528 10.24 122.581333 5.12 135.509333 32.64 35.84 52.48 81.493333 52.48 137.386667 0 196.693333-119.68 240-233.6 252.586667 17.92 15.36 34.56 46.762667 34.56 94.72 0 68.522667-0.64 123.562667-0.64 140.202666 0 13.44 8.96 29.44 35.2 24.32C877.44 942.592 1024 750.592 1024 524.672c0-282.752-229.248-512-512-512"></path>
+</svg>
+
+    </a>
+  
+    <a href="https://www.zhihu.com/people/xue-shou-41/posts" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+
+
+<a href="http://xmasuhai.xyz/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane">Jane</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy;
+    
+      2019 -
+    2022
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Joel Xu
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

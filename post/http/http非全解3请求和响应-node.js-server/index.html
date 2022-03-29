@@ -1,0 +1,1751 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>【HTTP非全解】请求和响应 &amp; Node.Js Server - Joel in The House</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="Joel Xu" />
+  <meta name="description" content="记得用完服务器机器要关机（并选择停止计费） 记得用完服务器机器要关机（并选择停止计费） 记得用完服务器机器要关机（并选择停止计费） 记得用完服务器" />
+
+  <meta name="keywords" content="Hugo, theme, jane" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.91.2" />
+
+
+<link rel="canonical" href="http://xmasuhai.xyz/post/http/http%E9%9D%9E%E5%85%A8%E8%A7%A33%E8%AF%B7%E6%B1%82%E5%92%8C%E5%93%8D%E5%BA%94-node.js-server/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="【HTTP非全解】请求和响应 &amp; Node.Js Server" />
+<meta property="og:description" content="记得用完服务器机器要关机（并选择停止计费） 记得用完服务器机器要关机（并选择停止计费） 记得用完服务器机器要关机（并选择停止计费） 记得用完服务器" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://xmasuhai.xyz/post/http/http%E9%9D%9E%E5%85%A8%E8%A7%A33%E8%AF%B7%E6%B1%82%E5%92%8C%E5%93%8D%E5%BA%94-node.js-server/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2020-01-25T00:52:10+08:00" />
+<meta property="article:modified_time" content="2022-01-10T10:30:07+08:00" />
+
+<meta itemprop="name" content="【HTTP非全解】请求和响应 &amp; Node.Js Server">
+<meta itemprop="description" content="记得用完服务器机器要关机（并选择停止计费） 记得用完服务器机器要关机（并选择停止计费） 记得用完服务器机器要关机（并选择停止计费） 记得用完服务器"><meta itemprop="datePublished" content="2020-01-25T00:52:10+08:00" />
+<meta itemprop="dateModified" content="2022-01-10T10:30:07+08:00" />
+<meta itemprop="wordCount" content="6469">
+<meta itemprop="keywords" content="HTTP," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="【HTTP非全解】请求和响应 &amp; Node.Js Server"/>
+<meta name="twitter:description" content="记得用完服务器机器要关机（并选择停止计费） 记得用完服务器机器要关机（并选择停止计费） 记得用完服务器机器要关机（并选择停止计费） 记得用完服务器"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Joel in The House</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/post/">文档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/categories/">目录</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/about/">关于我</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          <div class="mobile-menu-parent">
+            <span class="mobile-submenu-open"></span>
+            <a href="http://xmasuhai.xyz/">
+              docs
+            </a>
+          </div>
+          <ul class="mobile-submenu-list">
+            
+              <li>
+                <a href="http://xmasuhai.xyz/post/test/syntax-highlighting/">Syntax Highlighting</a>
+              </li>
+            
+              <li>
+                <a href="http://xmasuhai.xyz/post/test/mytest/">my Syntax Highlighting &amp; ShortCode Test</a>
+              </li>
+            
+          </ul>
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Joel in The House
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/post/">文档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/categories/">目录</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/about/">关于我</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          <a class="menu-item-link menu-parent" href="http://xmasuhai.xyz/">docs</a>
+          <ul class="submenu">
+            
+              <li>
+                <a href="http://xmasuhai.xyz/post/test/syntax-highlighting/">Syntax Highlighting</a>
+              </li>
+            
+              <li>
+                <a href="http://xmasuhai.xyz/post/test/mytest/">my Syntax Highlighting &amp; ShortCode Test</a>
+              </li>
+            
+          </ul>
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">【HTTP非全解】请求和响应 &amp; Node.Js Server</h1>
+      
+      <div class="post-meta">
+        <time datetime="2020-01-25" class="post-time">
+          2020-01-25
+        </time>
+        <div class="post-category">
+            <a href="http://xmasuhai.xyz/categories/2020/"> 2020 </a>
+            
+          </div>
+        <span class="more-meta"> 约 6469 字 </span>
+          <span class="more-meta"> 预计阅读 13 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#记得用完服务器机器要关机并选择停止计费-1"><strong>记得用完服务器机器要关机（并选择停止计费）</strong></a>
+      <ul>
+        <li><a href="#记得用完服务器机器要关机并选择停止计费-2"><strong>记得用完服务器机器要关机（并选择停止计费）</strong></a></li>
+      </ul>
+    </li>
+    <li><a href="#前置条件">前置条件</a></li>
+    <li><a href="#演示-nodejs-server">演示 Node.js Server</a>
+      <ul>
+        <li><a href="#请求与响应模型">请求与响应模型</a></li>
+        <li><a href="#如何发请求">如何发请求</a></li>
+        <li><a href="#如何模拟一个响应">如何模拟一个响应</a></li>
+      </ul>
+    </li>
+    <li><a href="#nodejs-test">nodejs-test</a>
+      <ul>
+        <li><a href="#启动应用">启动应用</a></li>
+        <li><a href="#添加路由">添加路由</a></li>
+        <li><a href="#后台启动应用">后台启动应用</a></li>
+        <li><a href="#用curl访问8888或者用浏览器">用<code>curl</code>访问<code>8888</code>，或者用浏览器</a></li>
+        <li><a href="#遥想当年李爵士">遥想当年李爵士</a></li>
+        <li><a href="#要记住的">要记住的</a></li>
+        <li><a href="#后缀是垃圾">后缀是垃圾</a></li>
+      </ul>
+    </li>
+    <li><a href="#系统学习http">系统学习HTTP</a>
+      <ul>
+        <li><a href="#必须学会什么">必须学会什么</a></li>
+        <li><a href="#如何学">如何学</a></li>
+        <li><a href="#开发者工具">开发者工具</a></li>
+        <li><a href="#http基础概念请求">HTTP基础概念：请求</a></li>
+        <li><a href="#http基础概念响应">HTTP基础概念：响应</a></li>
+        <li><a href="#要记住关于http请求和响应的规范写法">要记住关于HTTP：请求和响应的规范写法</a></li>
+      </ul>
+    </li>
+    <li><a href="#用curl构造请求">用curl构造请求</a>
+      <ul>
+        <li><a href="#设置请求动词">设置请求动词</a></li>
+        <li><a href="#设置路径和查询参数">设置路径和查询参数</a></li>
+        <li><a href="#设置请求头">设置请求头</a></li>
+        <li><a href="#设置请求体">设置请求体</a></li>
+      </ul>
+    </li>
+    <li><a href="#用nodejs读取请求">用Node.js读取请求</a>
+      <ul>
+        <li><a href="#读取请求动词">读取请求动词</a></li>
+        <li><a href="#读取路径">读取路径</a></li>
+        <li><a href="#读取请求头">读取请求头</a></li>
+        <li><a href="#读取请求体">读取请求体</a></li>
+      </ul>
+    </li>
+    <li><a href="#用nodejs设置响应">用Node.js设置响应</a>
+      <ul>
+        <li><a href="#设置响应状态码">设置响应状态码</a></li>
+        <li><a href="#设置响应头">设置响应头</a></li>
+        <li><a href="#设置响应体">设置响应体</a></li>
+      </ul>
+    </li>
+    <li><a href="#404页面是什么">404页面是什么</a></li>
+    <li><a href="#如何调试js">如何调试JS</a>
+      <ul>
+        <li><a href="#第一次讲consolelog调试大法">第一次讲console.log调试大法</a></li>
+      </ul>
+    </li>
+    <li><a href="#100元购买阿里云服务器">100元购买阿里云服务器</a>
+      <ul>
+        <li><a href="#购买一台服务器">购买一台服务器</a></li>
+        <li><a href="#为什么要用收费的服务器">为什么要用收费的服务器</a></li>
+        <li><a href="#购买阿里云服务器">购买阿里云服务器</a></li>
+        <li><a href="#允许8888端口">允许<code>8888</code>端口</a></li>
+        <li><a href="#使用服务器">使用服务器</a></li>
+      </ul>
+    </li>
+    <li><a href="#服务器配置">服务器配置</a>
+      <ul>
+        <li><a href="#ssh远程登录"><code>ssh</code>远程登录</a></li>
+        <li><a href="#成功界面">成功界面</a></li>
+        <li><a href="#创建普通应用账户">创建普通应用账户</a></li>
+        <li><a href="#sudo"><code>sudo</code></a></li>
+      </ul>
+    </li>
+    <li><a href="#部署-nodejs-代码">部署 Node.js 代码</a>
+      <ul>
+        <li><a href="#安装nodejs-8x">安装<code>Node.js 8.x+</code></a></li>
+        <li><a href="#安装git">安装<code>git</code></a></li>
+        <li><a href="#部署应用">部署应用</a></li>
+        <li><a href="#如何重启应用">如何重启应用</a></li>
+      </ul>
+    </li>
+    <li><a href="#回顾">回顾</a></li>
+    <li><a href="#阿里云停机操作">阿里云停机操作</a>
+      <ul>
+        <li><a href="#记得用完服务器机器要关机并选择停止计费-4"><strong>记得用完服务器机器要关机（并选择停止计费）</strong></a></li>
+      </ul>
+    </li>
+    <li><a href="#nodejs-初体验">Node.js 初体验</a></li>
+    <li><a href="#方便大家复制的代码">方便大家复制的代码</a>
+      <ul>
+        <li><a href="#有问题的代码">有问题的代码</a></li>
+        <li><a href="#ssh-远程登录">ssh 远程登录</a></li>
+        <li><a href="#防止-ssh-卡住">防止 ssh 卡住</a></li>
+        <li><a href="#创建应用账户">创建应用账户</a></li>
+        <li><a href="#安装-nodejs-8和git">安装 Node.js 8和git</a></li>
+        <li><a href="#部署应用2">部署应用2</a></li>
+        <li><a href="#如何重启应用2">如何重启应用2</a></li>
+      </ul>
+    </li>
+    <li><a href="#记得用完服务器机器要关机并选择停止计费-6"><strong>!记得用完服务器机器要关机（并选择停止计费!）</strong></a>
+      <ul>
+        <li><a href="#参考文章">参考文章</a></li>
+        <li><a href="#相关文章">相关文章</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      <h1 id="记得用完服务器机器要关机并选择停止计费"><strong>记得用完服务器机器要关机（并选择停止计费）</strong></h1>
+<h2 id="记得用完服务器机器要关机并选择停止计费-1"><strong>记得用完服务器机器要关机（并选择停止计费）</strong></h2>
+<h3 id="记得用完服务器机器要关机并选择停止计费-2"><strong>记得用完服务器机器要关机（并选择停止计费）</strong></h3>
+<h4 id="记得用完服务器机器要关机并选择停止计费-3"><strong>记得用完服务器机器要关机（并选择停止计费）</strong></h4>
+<hr>
+<h2 id="前置条件">前置条件</h2>
+<ul>
+<li>安装Node.js 8+</li>
+<li>理解IP和端口</li>
+<li>理解URL路径和查询参数</li>
+<li>不需要会JavaScript</li>
+<li>本节所有代码建议复制使用</li>
+</ul>
+<h2 id="演示-nodejs-server">演示 Node.js Server</h2>
+<h3 id="请求与响应模型">请求与响应模型</h3>
+<p>前端的代码在客户端Client（浏览器、APP）</p>
+<p>IP 124.124.233.233:80</p>
+<p>请求-&gt;服务器（Sever）</p>
+<p>服务器（Sever）</p>
+<p>IP 123.123.233.233:80</p>
+<p>响应-&gt;客户端</p>
+<h3 id="如何发请求">如何发请求</h3>
+<h4 id="方法">方法</h4>
+<ul>
+<li>用Chrome（地址栏输入URL）</li>
+<li>用<code>curl</code>命令</li>
+</ul>
+<p>开发者工具Network面板，刷新页面</p>
+<p>响应看<code>Response</code>，HTML CSS JS image等</p>
+<h4 id="概念">概念</h4>
+<ul>
+<li>帮你发送请求的工具叫「用户代理」</li>
+<li>即「User Agent」</li>
+<li>用Chrome时的用户代理就是Chrome</li>
+<li>用<code>curl</code>时的用户代理就是curl</li>
+</ul>
+<h3 id="如何模拟一个响应">如何模拟一个响应</h3>
+<p>用<code>curl</code></p>
+<h4 id="需用编程">需用编程</h4>
+<ul>
+<li>Node.js有一个http模块可以做到</li>
+<li>使用以下<a href="https://github.com/FrankFang/nodejs-test/blob/master/server.js">初始代码</a>：</li>
+</ul>
+<p>全部测试代码</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">var</span> <span class="nx">http</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;http&#39;</span><span class="p">)</span>
+<span class="kd">var</span> <span class="nx">fs</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;fs&#39;</span><span class="p">)</span>
+<span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;url&#39;</span><span class="p">)</span>
+<span class="kd">var</span> <span class="nx">port</span> <span class="o">=</span> <span class="nx">process</span><span class="p">.</span><span class="nx">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+
+<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">port</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;请指定端口号好不啦？\nnode server.js 8888 这样不会吗？&#39;</span><span class="p">)</span>
+  <span class="nx">process</span><span class="p">.</span><span class="nx">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">server</span> <span class="o">=</span> <span class="nx">http</span><span class="p">.</span><span class="nx">createServer</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">request</span><span class="p">,</span> <span class="nx">response</span><span class="p">){</span>
+  <span class="kd">var</span> <span class="nx">parsedUrl</span> <span class="o">=</span> <span class="nx">url</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">request</span><span class="p">.</span><span class="nx">url</span><span class="p">,</span> <span class="kc">true</span><span class="p">)</span>
+  <span class="kd">var</span> <span class="nx">pathWithQuery</span> <span class="o">=</span> <span class="nx">request</span><span class="p">.</span><span class="nx">url</span> 
+  <span class="kd">var</span> <span class="nx">queryString</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+  <span class="k">if</span><span class="p">(</span><span class="nx">pathWithQuery</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="s1">&#39;?&#39;</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">){</span> <span class="nx">queryString</span> <span class="o">=</span> <span class="nx">pathWithQuery</span><span class="p">.</span><span class="nx">substring</span><span class="p">(</span><span class="nx">pathWithQuery</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="s1">&#39;?&#39;</span><span class="p">))</span> <span class="p">}</span>
+  <span class="kd">var</span> <span class="nx">path</span> <span class="o">=</span> <span class="nx">parsedUrl</span><span class="p">.</span><span class="nx">pathname</span>
+  <span class="kd">var</span> <span class="nx">query</span> <span class="o">=</span> <span class="nx">parsedUrl</span><span class="p">.</span><span class="nx">query</span>
+  <span class="kd">var</span> <span class="nx">method</span> <span class="o">=</span> <span class="nx">request</span><span class="p">.</span><span class="nx">method</span>
+
+  <span class="cm">/******** 从这里开始看，上面不要看 ************/</span>
+
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;有个傻子发请求过来啦！路径（带查询参数）为：&#39;</span> <span class="o">+</span> <span class="nx">pathWithQuery</span><span class="p">)</span>
+
+  <span class="k">if</span><span class="p">(</span><span class="nx">path</span> <span class="o">===</span> <span class="s1">&#39;/&#39;</span><span class="p">){</span>
+    <span class="nx">response</span><span class="p">.</span><span class="nx">statusCode</span> <span class="o">=</span> <span class="mi">200</span>
+    <span class="nx">response</span><span class="p">.</span><span class="nx">setHeader</span><span class="p">(</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">,</span> <span class="s1">&#39;text/html;charset=utf-8&#39;</span><span class="p">)</span>
+    <span class="nx">response</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="sb">`二哈`</span><span class="p">)</span>
+    <span class="nx">response</span><span class="p">.</span><span class="nx">end</span><span class="p">()</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="nx">path</span> <span class="o">===</span> <span class="s1">&#39;/x&#39;</span><span class="p">){</span>
+    <span class="nx">response</span><span class="p">.</span><span class="nx">statusCode</span> <span class="o">=</span> <span class="mi">200</span>
+    <span class="nx">response</span><span class="p">.</span><span class="nx">setHeader</span><span class="p">(</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">,</span> <span class="s1">&#39;text/css;charset=utf-8&#39;</span><span class="p">)</span>
+    <span class="nx">response</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="sb">`body{color: red;}`</span><span class="p">)</span>
+    <span class="nx">response</span><span class="p">.</span><span class="nx">end</span><span class="p">()</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="nx">response</span><span class="p">.</span><span class="nx">statusCode</span> <span class="o">=</span> <span class="mi">404</span>
+    <span class="nx">response</span><span class="p">.</span><span class="nx">setHeader</span><span class="p">(</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">,</span> <span class="s1">&#39;text/html;charset=utf-8&#39;</span><span class="p">)</span>
+    <span class="nx">response</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="sb">`你输入的路径不存在对应的内容`</span><span class="p">)</span>
+    <span class="nx">response</span><span class="p">.</span><span class="nx">end</span><span class="p">()</span>
+  <span class="p">}</span>
+
+  <span class="cm">/******** 代码结束，下面不要看 ************/</span>
+<span class="p">})</span>
+
+<span class="nx">server</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="nx">port</span><span class="p">)</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;监听 &#39;</span> <span class="o">+</span> <span class="nx">port</span> <span class="o">+</span> <span class="s1">&#39; 成功\n请用在空中转体720度然后用电饭煲打开 http://localhost:&#39;</span> <span class="o">+</span> <span class="nx">port</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>只要请求了<code>8888</code>端口，就会被<code>server.js</code>监听，每一次请求，就运行一遍此代码</p>
+<h4 id="注意事项">注意事项</h4>
+<ul>
+<li>这些代码就是服务器代码，一般放在服务器上</li>
+<li><code>path</code>是不带查询参数的路径<code>/x</code></li>
+<li><code>query</code>是查询参数的对象形式<code>{a:'1'}</code></li>
+<li><code>queryString</code>是查询参数的字符串形式<code>?a=1</code></li>
+<li><code>pathWithQuery</code>是带查询参数的路径，一般不用</li>
+<li><code>request</code>是请求对象</li>
+<li><code>response</code>是响应对象</li>
+</ul>
+<h4 id="主要代码">主要代码</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="cm">/******** 从这里开始看，上面不要看 ************/</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;有个傻子发请求过来啦！路径（带查询参数）为：&#39;</span> <span class="o">+</span> <span class="nx">pathWithQuery</span><span class="p">)</span>
+
+  <span class="k">if</span><span class="p">(</span><span class="nx">path</span> <span class="o">===</span> <span class="s1">&#39;/&#39;</span><span class="p">){</span>
+    <span class="nx">response</span><span class="p">.</span><span class="nx">statusCode</span> <span class="o">=</span> <span class="mi">200</span>
+    <span class="nx">response</span><span class="p">.</span><span class="nx">setHeader</span><span class="p">(</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">,</span> <span class="s1">&#39;text/html;charset=utf-8&#39;</span><span class="p">)</span>
+    <span class="nx">response</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="sb">`二哈`</span><span class="p">)</span>
+    <span class="nx">response</span><span class="p">.</span><span class="nx">end</span><span class="p">()</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="nx">path</span> <span class="o">===</span> <span class="s1">&#39;/x&#39;</span><span class="p">){</span>
+    <span class="nx">response</span><span class="p">.</span><span class="nx">statusCode</span> <span class="o">=</span> <span class="mi">200</span>
+    <span class="nx">response</span><span class="p">.</span><span class="nx">setHeader</span><span class="p">(</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">,</span> <span class="s1">&#39;text/css;charset=utf-8&#39;</span><span class="p">)</span>
+    <span class="nx">response</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="sb">`body{color: red;}`</span><span class="p">)</span>
+    <span class="nx">response</span><span class="p">.</span><span class="nx">end</span><span class="p">()</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="nx">response</span><span class="p">.</span><span class="nx">statusCode</span> <span class="o">=</span> <span class="mi">404</span>
+    <span class="nx">response</span><span class="p">.</span><span class="nx">setHeader</span><span class="p">(</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">,</span> <span class="s1">&#39;text/html;charset=utf-8&#39;</span><span class="p">)</span>
+    <span class="nx">response</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="sb">`你输入的路径不存在对应的内容`</span><span class="p">)</span>
+    <span class="nx">response</span><span class="p">.</span><span class="nx">end</span><span class="p">()</span>
+  <span class="p">}</span>
+
+  <span class="cm">/******** 代码结束，下面不要看 ************/</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="代码逻辑">代码逻辑</h4>
+<h5 id="语法">语法</h5>
+<blockquote>
+<p>注意``，和<code>''</code>是不同的符号</p>
+</blockquote>
+<ul>
+<li>``，这种字符串里面可以回车</li>
+<li>''，这种字符串要回车只能用<code>\n</code>表示</li>
+</ul>
+<h5 id="逻辑">逻辑</h5>
+<ul>
+<li>每次受到请求都会把中间的代码执行一遍</li>
+<li>用<code>if else</code>判断路径，并返回响应</li>
+<li>如果是已知路径，一律返回<code>200</code></li>
+<li>如果是位置路径，一律返回<code>400</code></li>
+<li><code>Content-Type</code>标示内容的「类型/语法」</li>
+<li><code>response.write()</code>可以填写返回的内容</li>
+<li><code>response.end()</code>表示响应可以发给用户了</li>
+</ul>
+<h2 id="nodejs-test">nodejs-test</h2>
+<h3 id="启动应用">启动应用</h3>
+<p><code>node server.js 8888</code></p>
+<p>或者</p>
+<p><code>node server 8888</code></p>
+<h3 id="添加路由">添加路由</h3>
+<ol>
+<li>编辑 <code>server.js</code> 文件，添加 <code>if else</code></li>
+<li>重新运行 <code>node server.js 8888</code></li>
+</ol>
+<h3 id="后台启动应用">后台启动应用</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">touch log
+node server.js <span class="m">8888</span> &gt;log log 2&gt;<span class="p">&amp;</span><span class="m">1</span> <span class="p">&amp;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="用curl访问8888或者用浏览器">用<code>curl</code>访问<code>8888</code>，或者用浏览器</h3>
+<p>用<code>curl</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">node server.js 8888/x
+curl http://127.0.0.1:8888
+</code></pre></td></tr></table>
+</div>
+</div><p>用浏览器</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">node server.js <span class="m">8888</span>
+localhost:8888/x
+</code></pre></td></tr></table>
+</div>
+</div><p>查看终端的变化</p>
+<h3 id="遥想当年李爵士">遥想当年李爵士</h3>
+<p>Li写了世界上第一个服务器程序</p>
+<ul>
+<li>自己也完成了一个服务器程序，虽然代码是抄来的</li>
+</ul>
+<p>Li写了世界上第一个网站</p>
+<ul>
+<li>自己在<code>/</code>路径返回一个<code>HTML</code>内容</li>
+<li>然后再<code>/x</code>路径返回一个<code>CSS</code>内容</li>
+<li>然后再<code>/y</code>路径返回一个<code>JS</code>内容</li>
+</ul>
+<h3 id="要记住的">要记住的</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nx">response</span><span class="p">.</span><span class="nx">statusCode</span> <span class="o">=</span> <span class="mi">200</span>
+<span class="nx">response</span><span class="p">.</span><span class="nx">setHeader</span><span class="p">(</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">,</span> <span class="s1">&#39;text/css;charset=utf-8&#39;</span><span class="p">)</span>
+<span class="nx">response</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="sb">`some CSS style code`</span><span class="p">)</span>
+<span class="nx">response</span><span class="p">.</span><span class="nx">end</span><span class="p">()</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>本质就是根据路径返回一个字符串或者文件</p>
+</blockquote>
+<h3 id="后缀是垃圾">后缀是垃圾</h3>
+<ul>
+<li>URL里的后缀卵用没有，eg:<code>/y.css</code>不一定是CSS内容</li>
+<li><code>Content-Type</code>才是决定文件类型的关键</li>
+</ul>
+<h2 id="系统学习http">系统学习HTTP</h2>
+<p>HTTP到底是个啥</p>
+<h3 id="必须学会什么">必须学会什么</h3>
+<ul>
+<li>基础概念（必会知识）：请求和响应</li>
+<li>如何调试（用的是Node.js，可以用<code>log/debugger</code>，但本质还是HTTP）</li>
+<li>在哪查资料（用的是Node.js，看Node.js文档）</li>
+<li>标准制定者（HTTP规格文档：<code>RFC 2612</code>等）</li>
+</ul>
+<h3 id="如何学">如何学</h3>
+<ul>
+<li>Copy 抄文档</li>
+<li>Run 放在自己的机器上运行成功</li>
+<li>Modify 加入一点自己的想法，然后重新运行</li>
+</ul>
+<h3 id="开发者工具">开发者工具</h3>
+<p>查看<code>Network</code>：分<code>General</code>、<code>Response Headers</code>即请求、<code>Request Headers</code>即响应</p>
+<h3 id="http基础概念请求">HTTP基础概念：请求</h3>
+<h4 id="请求的组成">请求的组成</h4>
+<ul>
+<li><strong>请求动词</strong> + <em>路径查询参数</em> + <em><strong>协议/版本</strong></em>（请求行）</li>
+<li><code>Host</code>:域名或IP及端口（请求头）</li>
+<li><code>Accept</code>:表示接受的内容格式，text/html（请求头）</li>
+<li><code>Content-Type</code>:请求体的格式（请求头）</li>
+<li>回车</li>
+<li>请求体（即放上传内容，可以是任意内容，但格式必须在请求头中写明）</li>
+</ul>
+<p>测试查看</p>
+<blockquote>
+<p><code>curl -v POST --data '上传内容' http://localhost:8888/</code></p>
+</blockquote>
+<h4 id="细节">细节</h4>
+<ul>
+<li>三部分：请求行、请求头、请求体</li>
+<li>请求动词有<code>GET/POST/PUT/PATCH/DELETE</code>等</li>
+<li><code>Get</code> :获取；<code>Post</code>: 上传</li>
+<li><code>/?wd=hi</code>：路径及查询参数</li>
+<li><code>HTTP/1.1</code>协议及版本号</li>
+<li>请求体在<code>GET</code>中一般为空</li>
+<li>文档位于 <a href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec5.html">RFC 2612第五章</a></li>
+<li>大小写不明感（随意，但涉及JS代码是大小写敏感的）</li>
+</ul>
+<h3 id="http基础概念响应">HTTP基础概念：响应</h3>
+<h4 id="响应的组成">响应的组成</h4>
+<ul>
+<li><strong>协议名/版本</strong> + <em>状态码</em> + <em><strong>状态字符串</strong></em>（状态行）</li>
+<li><code>Content-Type</code>：响应体的格式<code>text/html;charset=utf-8</code>（响应头）</li>
+<li>回车</li>
+<li>响应体（即下载内容，可以在<code>Response</code>选项中查看具体内容）</li>
+</ul>
+<h4 id="细节-1">细节</h4>
+<ul>
+<li>三部分：状态行、响应头、响应体</li>
+<li>常见状态码（面试重点）</li>
+<li>文档位于 <a href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec6.html">RFC 2612 第六章</a></li>
+</ul>
+<h3 id="要记住关于http请求和响应的规范写法">要记住关于HTTP：请求和响应的规范写法</h3>
+<ul>
+<li>请求的组成：请求行「<strong>请求动词</strong> + <em>路径查询参数</em> + <em><strong>协议/版本</strong></em>」+ 请求头「<code>Host</code> + <code>Accept</code> + <code>Content-Type</code>等」+ 请求体</li>
+<li>响应的组成：状态行「<strong>协议名/版本</strong> + <em>状态码</em> + <em><strong>状态字符串</strong></em>」+ 响应头「<code>Content-Type</code>等」+ 响应体</li>
+<li>常见状态码</li>
+</ul>
+<h2 id="用curl构造请求">用curl构造请求</h2>
+<blockquote>
+<p>回忆 curl 五行请求&hellip;</p>
+</blockquote>
+<p>在<code>server.js</code>开启的前提下：</p>
+<p><code>curl -v http://127.0.0.1:8888</code></p>
+<p><code>curl -v http://localhost:8888</code></p>
+<ul>
+<li><code>-v</code>：verbose，看过程</li>
+<li>注意不是<code>https://</code></li>
+</ul>
+<h3 id="设置请求动词">设置请求动词</h3>
+<ul>
+<li><code>-X POST</code></li>
+<li>注意大小写敏感</li>
+<li><code>curl -v -X POST http://localhost:8888</code></li>
+<li><code>curl -v -X POST http://localhost:8888/xxx?wd=hi</code>加个查询</li>
+<li><code>curl -v -X POST http://localhost:8888/xxx\?wd=hi</code>加个查询，用Mac的终端</li>
+<li><code>curl -v -X POST http://localhost:8888/xxx?wd=hi#nihao</code>锚点不会发送到服务器</li>
+<li>看终端里返回的请求行</li>
+</ul>
+<h3 id="设置路径和查询参数">设置路径和查询参数</h3>
+<ul>
+<li>直接在url后面加</li>
+</ul>
+<h3 id="设置请求头">设置请求头</h3>
+<ul>
+<li><code>-H 'Name:Value'</code>或者<code>--header 'Name:Value'</code></li>
+<li>单引号内必须是以键值对的形式</li>
+</ul>
+<p>比如</p>
+<p><code>curl -v -H 'Accept:text/html' http://localhost:8888/xxx\?wd=hi#nihao</code></p>
+<h3 id="设置请求体">设置请求体</h3>
+<ul>
+<li><code>-d '内容'</code>或者<code>--data '内容'</code></li>
+</ul>
+<p>比如</p>
+<p><code>curl -v -H 'Accept:text/html' -H 'FSociety:FyE' -H 'Content-Type:text/plain;charset:utf-8' -d '请求体的内容' http://localhost:8888/xxx\?wd=hi#nihao</code></p>
+<ul>
+<li>看终端里返回的请求行</li>
+</ul>
+<h2 id="用nodejs读取请求">用Node.js读取请求</h2>
+<h3 id="读取请求动词">读取请求动词</h3>
+<ul>
+<li><code>request.method</code></li>
+</ul>
+<h3 id="读取路径">读取路径</h3>
+<ul>
+<li>
+<p><code>request.url</code>路径，带查询参数</p>
+</li>
+<li>
+<p><code>path</code>纯路径，不带查询参数</p>
+</li>
+<li>
+<p><code>query</code>只有查询参数</p>
+</li>
+<li>
+<p><code>curl http://localhost:8888/\?hihihi=hohoho</code></p>
+</li>
+<li>
+<p>看终端里返回的请求行</p>
+</li>
+</ul>
+<h3 id="读取请求头">读取请求头</h3>
+<ul>
+<li>
+<p><code>request.headers['Accept']</code></p>
+</li>
+<li>
+<p><code>curl -v -H 'Hi:nihao' http://localhost:8888/</code></p>
+</li>
+<li>
+<p>看终端里返回的请求行，可以得到所有符合格式的请求头</p>
+</li>
+</ul>
+<h3 id="读取请求体">读取请求体</h3>
+<ul>
+<li>比较复杂，待续~~~</li>
+</ul>
+<h2 id="用nodejs设置响应">用Node.js设置响应</h2>
+<h3 id="设置响应状态码">设置响应状态码</h3>
+<ul>
+<li><code>response.statusCode = 200</code></li>
+<li><code>response.statusCode = 201</code></li>
+<li><code>response.statusCode = 299</code></li>
+<li><code>response.statusCode = 300</code></li>
+</ul>
+<h3 id="设置响应头">设置响应头</h3>
+<ul>
+<li><code>response.setHeader('Content-Type','text/html')</code></li>
+</ul>
+<h3 id="设置响应体">设置响应体</h3>
+<ul>
+<li><code>response.write('内容')</code></li>
+<li>可追加内容</li>
+</ul>
+<blockquote>
+<p>代码具体细节先不管，直接抄，运行看</p>
+</blockquote>
+<ul>
+<li>整个响应都可以有node来控制，包括响应状态码、响应头、响应体</li>
+</ul>
+<hr>
+<h2 id="404页面是什么">404页面是什么</h2>
+<ul>
+<li><code>curl</code>不仅可以用来测试，还可用来下载<code>curl https://xxx.jpg &gt; 1.jpg</code></li>
+<li><code>curl</code>可以完成Chrome除了显示界面外的几乎所有功能</li>
+<li>即使状态码为404，还是能接受到响应体，需要设置</li>
+<li>状态码和内容没有直接的关系，即不管状态码是什么，都可以是任何内容</li>
+<li>大部分服务器不设置404页面，不返回任何其他内容</li>
+</ul>
+<h2 id="如何调试js">如何调试JS</h2>
+<blockquote>
+<p>怎么知道自己写错了还是写对了</p>
+</blockquote>
+<p><em><strong><code>console.log调试大法</code></strong></em></p>
+<blockquote>
+<p>不要相信直觉，相信<code>console.log</code></p>
+<p>debug就是不断<em><strong>质疑自己</strong></em>的过程</p>
+</blockquote>
+<p>不信，比如，只看，下面代码哪里有问题？</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="k">if</span><span class="p">(</span><span class="nx">path</span> <span class="o">===</span> <span class="s1">&#39;/&#39;</span><span class="p">){</span>
+    <span class="nx">response</span><span class="p">.</span><span class="nx">statusCode</span> <span class="o">=</span> <span class="mi">200</span>
+    <span class="nx">response</span><span class="p">.</span><span class="nx">setHeader</span><span class="p">(</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">,</span><span class="s1">&#39;text/html;charset=utf-8&#39;</span><span class="p">)</span>
+    <span class="nx">response</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="sb">`
+</span><span class="sb">        &lt;link rel=&#34;stylesheet&#34; href=&#34;./style.css&#34;&gt;
+</span><span class="sb">        &lt;h1&gt;你好&lt;/h1&gt;
+</span><span class="sb">    `</span><span class="p">)</span>
+    <span class="nx">response</span><span class="p">.</span><span class="nx">end</span><span class="p">()</span>
+<span class="p">}</span><span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="nx">path</span> <span class="o">===</span> <span class="s1">&#39;./style.css&#39;</span><span class="p">){</span>
+    <span class="nx">response</span><span class="p">.</span><span class="nx">statusCode</span> <span class="o">=</span> <span class="mi">200</span>
+    <span class="nx">response</span><span class="p">.</span><span class="nx">setHeader</span><span class="p">(</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">,</span><span class="s1">&#39;text/css;charset=utf-8&#39;</span><span class="p">)</span>
+    <span class="nx">response</span><span class="p">.</span><span class="nx">statusCode</span><span class="p">(</span><span class="sb">`h1{color: red;}`</span><span class="p">)</span>
+    <span class="nx">response</span><span class="p">.</span><span class="nx">end</span><span class="p">()</span>
+<span class="p">}</span><span class="k">else</span><span class="p">{</span>
+    <span class="nx">response</span><span class="p">.</span><span class="nx">statusCode</span> <span class="o">=</span> <span class="mi">404</span>
+    <span class="nx">response</span><span class="p">.</span><span class="nx">end</span><span class="p">()</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>出bug就是因为自己太过自信了</p>
+</blockquote>
+<p>找到bug之时，就是发现自己傻X之日</p>
+<h3 id="第一次讲consolelog调试大法">第一次讲console.log调试大法</h3>
+<p><code>console.log</code>可以验证对错</p>
+<p>针对之前的错误代码，可以在<code>if</code>判断前可以加上：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;path:&#34;</span> <span class="o">+</span> <span class="nx">path</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;path === &#39;./style.css:&#39;&#34;</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">path</span> <span class="o">===</span> <span class="s1">&#39;./style.css&#39;</span><span class="p">);</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>false</p>
+<blockquote>
+<p>不要相信自己，要相信<code>console.log</code></p>
+<p>答案揭晓：所有HTTP路径都是以<code>/</code>开头，<code>./</code>就访问不了，404了</p>
+<p>把自己认为对的变量或者判断语句打出来</p>
+</blockquote>
+<hr>
+<h2 id="100元购买阿里云服务器">100元购买阿里云服务器</h2>
+<h3 id="购买一台服务器">购买一台服务器</h3>
+<blockquote>
+<p>阿里云按量付费，即用即停
+最低配，按量计费，Ubuntu 64</p>
+</blockquote>
+<h3 id="为什么要用收费的服务器">为什么要用收费的服务器</h3>
+<h4 id="好处">好处</h4>
+<ul>
+<li>一个你可以完全自由掌控的Linux机器</li>
+<li>一个其他人可以访问的IP</li>
+<li>可以作为博客、作品展示、简历展示</li>
+<li>速度快于GitHub</li>
+<li>HK地区机器，可作为FQ代理，但不能备案，所以不选</li>
+<li>如果备案了，还可以把域名绑定到这台机器</li>
+</ul>
+<h4 id="代价">代价</h4>
+<ul>
+<li>100RMB用1000hrs</li>
+<li>记得关服务器</li>
+</ul>
+<h3 id="购买阿里云服务器">购买阿里云服务器</h3>
+<p>流程</p>
+<ol>
+<li>注册账号</li>
+<li>进入云服务器ECS（可以搜索）</li>
+<li>创建实例-&gt;<strong>按量付费</strong>-&gt;入门级-&gt;最便宜或打折优惠</li>
+<li>镜像选<code>Ubuntu 18.04 64位</code>，最容易搜教程</li>
+<li>其他不改，下一步</li>
+<li>充值100</li>
+<li>公网宽带选<code>按流量+1s</code>，哦不<code>按流量+1Maps</code></li>
+<li>其他不改，下一步</li>
+<li>勾选服务协议，创建实例，弹出界面点击管理控制台</li>
+<li>等待实例启动成功，状态变为运行中</li>
+<li>购买完毕</li>
+</ol>
+<h3 id="允许8888端口">允许<code>8888</code>端口</h3>
+<h4 id="加入安全组">加入安全组</h4>
+<p>流程</p>
+<ol>
+<li><code>更改实例规格&gt;更多&gt;网络和安全组&gt;加入安全组</code>，点击加入安全组</li>
+<li>如果没有安全组，就新建一个</li>
+<li>加入之后，<code>更改实例规格&gt;更多&gt;网络和安全组&gt;安全组配置</code>，点击安全组配置</li>
+<li>点击配置规则</li>
+<li>点击添加安入组规则</li>
+<li>端口填写<code>8888/8888</code>，（任意超过1234，小于65535的范围比如<code>8000/8999</code>）</li>
+<li>授权对象填写<code>0.0.0.0/0</code>表示任何人都能访问</li>
+<li>点击确定，并输入手机验证码</li>
+<li>此时，就可通过<code>http://实例IP:8888</code>访问了</li>
+</ol>
+<blockquote>
+<p>请根据实际场景设置授权对象的CIDR，另外，0.0.0.0/0 代表允许或拒绝所有IP的访问，设置时请务必谨慎。参考<a href="https://help.aliyun.com/document_detail/25475.html?spm=5176.2020520101.0.0.4e974df5oAsNll">帮助文档</a></p>
+</blockquote>
+<h3 id="使用服务器">使用服务器</h3>
+<p>流程</p>
+<ol>
+<li>重置实例密码：更改实例规格&gt;更多&gt;密码/密钥&gt;重置实例密码</li>
+<li>填写<em><strong>新的密码两次</strong></em>和手机验证码</li>
+<li>实例状态-&gt;重启实例</li>
+<li>重启完了后点击远程连接</li>
+<li>复制远程密码</li>
+<li>在实例上新建标签，键为key，值为复制的密码</li>
+<li>再次点击远程连接，输入连接密码</li>
+<li><code>login:</code>后输入<code>root</code></li>
+<li><code>password:</code>输入密码，输入的时候没有反应为正常情况</li>
+</ol>
+<blockquote>
+<p>现在，已经有一台<code>Linux</code>机器，不管是阿里云上的，还是本地的虚拟机</p>
+<p>具体过程可能改版更新，密码可以随时修改，远程连接码不一定使用，使用实例密码即可</p>
+</blockquote>
+<h2 id="服务器配置">服务器配置</h2>
+<h3 id="ssh远程登录"><code>ssh</code>远程登录</h3>
+<p>流程</p>
+<ol>
+<li>首先登陆<code>root</code>账户（阿里云网页登陆或者其他）</li>
+<li>成功看到<code>Welcome...</code>后</li>
+<li>把本地的SSH公钥复制到<code>~/.ssh/authorized_keys</code>，用<code>echo 'xxx公钥' &gt;&gt;</code></li>
+<li>建议把上面命令在VSCode上编辑好再复制</li>
+<li>新建终端，在本地运行<code>ssh root@实例IP</code></li>
+<li>看到<code>Welcome to Alibaba Cloud Elastic Compute Service !</code>后，此时，就可以在本地终端用<code>ssh</code>操作云服务器了</li>
+</ol>
+<h3 id="成功界面">成功界面</h3>
+<p><code>Welcome to...</code></p>
+<p>用<code>exit</code>退出，logout</p>
+<h4 id="刚才做了什么">刚才做了什么</h4>
+<ul>
+<li>把本地的公钥复制到阿里云的<code>~/.ssh/authorized_keys</code></li>
+<li>在本地用<code>ssh root@实例IP</code>来远程操作云机器</li>
+<li>以后都用<code>ssh root@实例IP</code>的方式即可</li>
+<li>可以在hosts里给实例IP取个别名</li>
+<li>要退出云机器，输入<code>exit</code>，回车</li>
+<li>如果卡了，直接<code>Ctrl + w</code>退出终端</li>
+</ul>
+<h4 id="如何防止ssh卡住可跳过">如何防止<code>ssh卡住</code>（可跳过）</h4>
+<ul>
+<li>在<code>/etc/ssh/ssh_config</code>最后加下面两句话</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">Host *
+    ServerAliveInterval <span class="m">30</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>用VScode打开这个文件会失败</li>
+<li>可以用两次echo搞定</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">echo</span> <span class="s2">&#34;Host *&#34;</span> &gt;&gt; /etc/ssh/ssh_config
+<span class="nb">echo</span> <span class="s2">&#34;ServerAliveInterval 30&#34;</span> &gt;&gt; /etc/ssh/ssh_config
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>不要少写了空格</li>
+<li>重启终端生效，如果没有就重启</li>
+<li>从这里<a href="https://unix.stackexchange.com/questions/200239/how-can-i-keep-my-ssh-sessions-from-freezing/200256#200256">抄来的</a></li>
+<li>工具能用就行</li>
+</ul>
+<h3 id="创建普通应用账户">创建普通应用账户</h3>
+<h4 id="为什么">为什么</h4>
+<blockquote>
+<p><code>Linux</code>的<code>root</code>账户拥有最高权限，一旦被攻克&hellip;</p>
+</blockquote>
+<h4 id="步骤">步骤</h4>
+<ol>
+<li><code>root</code>账户账户下</li>
+<li><code>adduser yourname</code>注意必须都小写</li>
+<li><code>Enter new UNIX password:</code>输入密码</li>
+<li>再次输入密码，可以和<code>root</code>的一样</li>
+<li>一直回车，直到结束，运行如下命令</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">mkdir /home/yourname/.ssh <span class="c1">#创建路径</span>
+cp ~/.ssh/authorized_keys /home/yourname/.ssh/ <span class="c1">#复制公钥</span>
+chmod <span class="m">755</span> /home/yourname/.ssh/authorized_keys <span class="c1">#将路径变为可读</span>
+chown yourname:yourname /home/yourname/.ssh/authorized_keys <span class="c1">#把key的拥有者变更为登录用户</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>现在<code>ssh yourname@实例IP</code>就可以使用了</p>
+</blockquote>
+<p>多账户示意：</p>
+<ul>
+<li><code>ssh root@ip</code>访问<code>root /root</code></li>
+<li><code>ssh frank@ip</code>访问<code>frank /home/frank</code></li>
+</ul>
+<h3 id="sudo"><code>sudo</code></h3>
+<h4 id="给user添加sudo权限">给<code>user</code>添加<code>sudo</code>权限</h4>
+<p><code>adduser username sudo</code></p>
+<h4 id="sudo是什么"><code>sudo</code>是什么</h4>
+<ul>
+<li>全称<code>super user do</code></li>
+<li>类似于win的「以管理员身份运行」</li>
+<li>平时不该使用<code>root</code>账户，而是<code>frank</code>账户</li>
+<li>遇到特殊操作，就在前面加<code>sudo</code>，请出<code>root</code></li>
+<li>需要输入<code>frank</code>的密码，不是<code>root</code>的密码</li>
+<li>使用<code>ctrl + a</code>可以快速回到命令前面，<code>ctrl + e</code>到最后</li>
+<li><code>sudo!!</code>的意思是用<code>sudo</code>执行上一句命令</li>
+<li>比如运行<code>apt-get update</code>更新包</li>
+</ul>
+<h2 id="部署-nodejs-代码">部署 Node.js 代码</h2>
+<blockquote>
+<p>安装过<code>Node.js</code>和<code>git</code>的可跳过，直接看<code>### 部署应用</code></p>
+</blockquote>
+<h3 id="安装nodejs-8x">安装<code>Node.js 8.x+</code></h3>
+<p>流程</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">curl -sL https://deb.nodesource.com/setup_12.x <span class="p">|</span> sudo bash -
+sudo sed -i <span class="s1">&#39;s/deb.nodesource.com\/node_12.x/mirrors.tuna.tsinghua.edu.cn\/nodesource\/deb_12.x/g&#39;</span> /etc/apt/sources.list.d/nodesource.list
+sudo apt-get update
+sudo apt-get install -y nodejs
+node -v
+npm -v
+npx -v
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="安装git">安装<code>git</code></h3>
+<h4 id="命令">命令</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">sudo apt install git
+<span class="c1"># 遇到[Y/n]输入回车，或者y回车</span>
+git --version
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="注意">注意</h4>
+<ul>
+<li>由于远程无界面环境，安装不了VSCode，虽然vim可以</li>
+<li>不使用<code>git commit -v</code>，改用<code>git commit -m &quot;xxx&quot;</code></li>
+<li>如果想学习<code>vim</code>，在本地电脑输入<code>vimtutor</code>看完</li>
+<li>一开始不要浪费时间学<code>vim</code>，推荐若愚的<a href="https://xiedaimala.com/tasks/2ed4ca18-f1d6-42df-baab-69657416bdc7">vim教程</a></li>
+<li>自行搜报错信息</li>
+<li>实在不行，就去阿里云页面重启机器即可</li>
+</ul>
+<h3 id="部署应用">部署应用</h3>
+<h4 id="下载代码">下载代码</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">git clone https://github.com/FrankFang/nodejs-test.git
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>这个地址可以改成仓库的<code>https</code>地址，只是下载测试，所以不要使用<code>ssh</code>地址，使用<code>https</code></p>
+</blockquote>
+<h4 id="启动应用2">启动应用2</h4>
+<ol>
+<li><code>cd nodejs-test</code></li>
+<li><code>touch log</code></li>
+<li>启动命令：<code>node server.js 8888 &gt; log 2&gt;&amp;1 &amp;</code></li>
+<li>把启动命令做成<code>start</code>文件：<code>touch start</code></li>
+<li>添加可执行权限：<code>chmod +x ./start</code>，使其可执行带<code>rw-x</code></li>
+<li>运行<code>sh ./start</code>得到一个进程号<code>pid</code>，记下来，比如是：<code>[1] 19225</code></li>
+<li><code>tail log</code>看<code>log</code>内容</li>
+<li><code>kill -9 pid</code>可以关掉进程，即<code>kill -9 19225</code></li>
+<li><code>killall node</code>可以关掉所有<code>node</code>进程</li>
+</ol>
+<h3 id="如何重启应用">如何重启应用</h3>
+<h4 id="上传代码">上传代码</h4>
+<blockquote>
+<p>本地改完代码后，<code>git push</code></p>
+</blockquote>
+<h4 id="下载代码2">下载代码2</h4>
+<ul>
+<li><code>ssh frank@实例IP</code></li>
+<li><code>cd nodejs-test/</code></li>
+<li><code>git pull</code></li>
+<li><code>killall node</code>（因为忘了进程号，实际上可以记下来）</li>
+<li><code>sh./start</code></li>
+<li>重启完毕</li>
+</ul>
+<h2 id="回顾">回顾</h2>
+<ul>
+<li>请求和响应分别有那几部分</li>
+<li>请求动词有哪些</li>
+<li>状态码有哪些</li>
+<li>用<code>curl</code>构造请求</li>
+<li>用<code>Node.js</code>读取请求，造响应</li>
+<li><code>HTML/CSS/JS</code>本质都是字符串</li>
+<li>部署<code>Node.js</code>应用到云服务器</li>
+</ul>
+<h2 id="阿里云停机操作">阿里云停机操作</h2>
+<h3 id="记得用完服务器机器要关机并选择停止计费-4"><strong>记得用完服务器机器要关机（并选择停止计费）</strong></h3>
+<h4 id="记得用完服务器机器要关机并选择停止计费-5"><strong>记得用完服务器机器要关机（并选择停止计费）</strong></h4>
+<h2 id="nodejs-初体验">Node.js 初体验</h2>
+<h2 id="方便大家复制的代码">方便大家复制的代码</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">curl -v http://127.0.0.1:8888
+
+request.getHeader<span class="o">(</span><span class="s1">&#39;Accept&#39;</span><span class="o">)</span>
+response.statusCode <span class="o">=</span> <span class="m">200</span>
+response.setHeader<span class="o">(</span><span class="s1">&#39;Content-Type&#39;</span>, <span class="s1">&#39;text/html&#39;</span><span class="o">)</span><span class="p">;</span>
+response.write<span class="o">(</span><span class="s1">&#39;内容&#39;</span><span class="o">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="有问题的代码">有问题的代码</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="k">if</span><span class="p">(</span><span class="nx">path</span> <span class="o">===</span> <span class="s1">&#39;/&#39;</span><span class="p">){</span>
+  <span class="nx">response</span><span class="p">.</span><span class="nx">statusCode</span> <span class="o">=</span> <span class="mi">200</span>
+  <span class="nx">response</span><span class="p">.</span><span class="nx">setHeader</span><span class="p">(</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">,</span> <span class="s1">&#39;text/html;charset=utf-8&#39;</span><span class="p">)</span>
+  <span class="nx">response</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="sb">`
+</span><span class="sb">    &lt;link rel=&#34;stylesheet&#34; href=&#34;./style.css&#34;&gt;
+</span><span class="sb">    &lt;h1&gt;你好&lt;/h1&gt;
+</span><span class="sb">  `</span><span class="p">)</span>
+  <span class="nx">response</span><span class="p">.</span><span class="nx">end</span><span class="p">()</span>
+<span class="p">}</span> <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="nx">path</span> <span class="o">===</span> <span class="s1">&#39;./style.css&#39;</span><span class="p">){</span>
+  <span class="nx">response</span><span class="p">.</span><span class="nx">statusCode</span> <span class="o">=</span> <span class="mi">200</span>
+  <span class="nx">response</span><span class="p">.</span><span class="nx">setHeader</span><span class="p">(</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">,</span> <span class="s1">&#39;text/css;charset=utf-8&#39;</span><span class="p">)</span>
+  <span class="nx">response</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="sb">`h1{color: red;}`</span><span class="p">)</span>
+  <span class="nx">response</span><span class="p">.</span><span class="nx">end</span><span class="p">()</span>
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+  <span class="nx">response</span><span class="p">.</span><span class="nx">statusCode</span> <span class="o">=</span> <span class="mi">404</span>
+  <span class="nx">response</span><span class="p">.</span><span class="nx">end</span><span class="p">()</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="ssh-远程登录">ssh 远程登录</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">echo</span> <span class="s1">&#39;复制本地~/.ssh/id_rsa.pub内容&#39;</span> &gt;&gt; ~/.ssh/authorized_keys
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="防止-ssh-卡住">防止 ssh 卡住</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">echo</span> <span class="s2">&#34;Host *&#34;</span> &gt;&gt; /etc/ssh/ssh_config
+<span class="nb">echo</span> <span class="s2">&#34;  ServerAliveInterval 30&#34;</span> &gt;&gt; /etc/ssh/ssh_config
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="创建应用账户">创建应用账户</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">adduser frank
+mkdir  /home/frank/.ssh
+cp ~/.ssh/authorized_keys /home/frank/.ssh/
+chmod <span class="m">755</span> /home/frank/.ssh/authorized_keys
+chown frank:frank /home/frank/.ssh/authorized_keys
+
+adduser frank sudo
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="安装-nodejs-8和git">安装 Node.js 8和git</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">curl -sL https://deb.nodesource.com/setup_8.x <span class="p">|</span> sudo bash -
+sudo sed -i <span class="s1">&#39;s/deb.nodesource.com\/node_8.x/mirrors.tuna.tsinghua.edu.cn\/nodesource\/deb_8.x/g&#39;</span> /etc/apt/sources.list.d/nodesource.list
+sudo apt-get update
+sudo apt-get install -y nodejs
+node -v
+npm -v
+npx -v
+
+sudo apt install git
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="部署应用2">部署应用2</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">git clone https://github.com/FrankFang/nodejs-test.git
+<span class="nb">cd</span> nodejs-test
+touch log
+启动命令：node server.js <span class="m">8888</span> &gt; log 2&gt;<span class="p">&amp;</span><span class="m">1</span> <span class="p">&amp;</span>
+把启动命令做成 start 文件
+添加执行权限 chmod +x ./start
+运行 sh ./start 得到一个进程号 pid
+tail log 看 log 内容
+<span class="nb">kill</span> -9 pid 可以关掉进程
+killall node 可以关掉所有 node 进程
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="如何重启应用2">如何重启应用2</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">ssh frank@实例ip
+<span class="nb">cd</span> nodejs-test
+git pull
+killall node（因为忘了进程号，实际上可以记下来）
+sh ./start
+</code></pre></td></tr></table>
+</div>
+</div><p>强烈建议购买阿里云服务器最低配</p>
+<h2 id="记得用完服务器机器要关机并选择停止计费-6"><strong>!记得用完服务器机器要关机（并选择停止计费!）</strong></h2>
+<!-- raw HTML omitted -->
+<hr>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<hr>
+<h3 id="参考文章">参考文章</h3>
+<ul>
+<li>
+<p><a href="https://static.xiedaimala.com/xdml/file/3ac7c224-c23d-491f-84b5-4fabfbeab9b8/2019-8-29-11-22-40.js%20%E6%9C%8D%E5%8A%A1%E5%99%A8.pdf">HTTP 请求与响应 &amp; Node.js 服务器.pdf</a></p>
+</li>
+<li>
+<p><a href="https://zhih.me/how-the-web-works/">WEB是如何工作的 By底噪</a></p>
+</li>
+</ul>
+<h3 id="相关文章">相关文章</h3>
+<ul>
+<li>无</li>
+</ul>
+<hr>
+<ul>
+<li>作者： Joel</li>
+<li>文章链接：</li>
+<li><a href="http://xmasuhai.xyz/posts/%E7%89%88%E6%9D%83%E5%A3%B0%E6%98%8E%E9%93%BE%E6%8E%A5/">版权声明</a></li>
+<li>非自由转载-非商用-非衍生-保持署名</li>
+<li><!-- raw HTML omitted -->河<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->掘<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->思<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->知<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->简<!-- raw HTML omitted --></li>
+</ul>
+
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Joel Xu</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2022-01-10
+      
+        
+        
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="http://xmasuhai.xyz/tags/http/">HTTP</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/css/css%E9%9D%9E%E5%85%A8%E8%A7%A307css%E5%AE%9A%E4%BD%8D/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">【CSS非全解07】CSS定位</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/css/css%E9%9D%9E%E5%85%A8%E8%A7%A306css%E5%B8%83%E5%B1%80_grid%E5%B8%83%E5%B1%80/">
+            <span class="next-text nav-default">【CSS非全解06】CSS布局_Grid布局</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:xmasuhai@163.com" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="https://github.com/xmasuhai" rel="me noopener" class="iconfont"
+      title="github"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M512 12.672c-282.88 0-512 229.248-512 512 0 226.261333 146.688 418.133333 350.08 485.76 25.6 4.821333 34.986667-11.008 34.986667-24.618667 0-12.16-0.426667-44.373333-0.64-87.04-142.421333 30.890667-172.458667-68.693333-172.458667-68.693333C188.672 770.986667 155.008 755.2 155.008 755.2c-46.378667-31.744 3.584-31.104 3.584-31.104 51.413333 3.584 78.421333 52.736 78.421333 52.736 45.653333 78.293333 119.850667 55.68 149.12 42.581333 4.608-33.109333 17.792-55.68 32.426667-68.48-113.706667-12.8-233.216-56.832-233.216-253.013333 0-55.893333 19.84-101.546667 52.693333-137.386667-5.76-12.928-23.04-64.981333 4.48-135.509333 0 0 42.88-13.738667 140.8 52.48 40.96-11.392 84.48-17.024 128-17.28 43.52 0.256 87.04 5.888 128 17.28 97.28-66.218667 140.16-52.48 140.16-52.48 27.52 70.528 10.24 122.581333 5.12 135.509333 32.64 35.84 52.48 81.493333 52.48 137.386667 0 196.693333-119.68 240-233.6 252.586667 17.92 15.36 34.56 46.762667 34.56 94.72 0 68.522667-0.64 123.562667-0.64 140.202666 0 13.44 8.96 29.44 35.2 24.32C877.44 942.592 1024 750.592 1024 524.672c0-282.752-229.248-512-512-512"></path>
+</svg>
+
+    </a>
+  
+    <a href="https://www.zhihu.com/people/xue-shou-41/posts" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+
+
+<a href="http://xmasuhai.xyz/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane">Jane</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy;
+    
+      2019 -
+    2022
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Joel Xu
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>【JS非全解00】内存图与JS世界 - Joel in The House</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="Joel Xu" />
+  <meta name="description" content="一切都运行在内存里 开机 操作系统在 C 盘（macOS 的在根目录下的多个目录里） 当按下开机键，主板通电，开始读取固件 固件就是固定在主板上的存储设备" />
+
+  <meta name="keywords" content="Hugo, theme, jane" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.91.2" />
+
+
+<link rel="canonical" href="http://xmasuhai.xyz/post/js/js%E9%9D%9E%E5%85%A8%E8%A7%A300%E5%86%85%E5%AD%98%E5%9B%BE%E4%B8%8Ejs%E4%B8%96%E7%95%8C/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="【JS非全解00】内存图与JS世界" />
+<meta property="og:description" content="一切都运行在内存里 开机 操作系统在 C 盘（macOS 的在根目录下的多个目录里） 当按下开机键，主板通电，开始读取固件 固件就是固定在主板上的存储设备" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://xmasuhai.xyz/post/js/js%E9%9D%9E%E5%85%A8%E8%A7%A300%E5%86%85%E5%AD%98%E5%9B%BE%E4%B8%8Ejs%E4%B8%96%E7%95%8C/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2020-02-14T02:00:49+08:00" />
+<meta property="article:modified_time" content="2020-02-26T00:56:49+08:00" />
+
+<meta itemprop="name" content="【JS非全解00】内存图与JS世界">
+<meta itemprop="description" content="一切都运行在内存里 开机 操作系统在 C 盘（macOS 的在根目录下的多个目录里） 当按下开机键，主板通电，开始读取固件 固件就是固定在主板上的存储设备"><meta itemprop="datePublished" content="2020-02-14T02:00:49+08:00" />
+<meta itemprop="dateModified" content="2020-02-26T00:56:49+08:00" />
+<meta itemprop="wordCount" content="3533">
+<meta itemprop="keywords" content="JavaScript," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="【JS非全解00】内存图与JS世界"/>
+<meta name="twitter:description" content="一切都运行在内存里 开机 操作系统在 C 盘（macOS 的在根目录下的多个目录里） 当按下开机键，主板通电，开始读取固件 固件就是固定在主板上的存储设备"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Joel in The House</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/post/">文档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/categories/">目录</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/about/">关于我</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          <div class="mobile-menu-parent">
+            <span class="mobile-submenu-open"></span>
+            <a href="http://xmasuhai.xyz/">
+              docs
+            </a>
+          </div>
+          <ul class="mobile-submenu-list">
+            
+              <li>
+                <a href="http://xmasuhai.xyz/post/test/syntax-highlighting/">Syntax Highlighting</a>
+              </li>
+            
+              <li>
+                <a href="http://xmasuhai.xyz/post/test/mytest/">my Syntax Highlighting &amp; ShortCode Test</a>
+              </li>
+            
+          </ul>
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Joel in The House
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/post/">文档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/categories/">目录</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/about/">关于我</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          <a class="menu-item-link menu-parent" href="http://xmasuhai.xyz/">docs</a>
+          <ul class="submenu">
+            
+              <li>
+                <a href="http://xmasuhai.xyz/post/test/syntax-highlighting/">Syntax Highlighting</a>
+              </li>
+            
+              <li>
+                <a href="http://xmasuhai.xyz/post/test/mytest/">my Syntax Highlighting &amp; ShortCode Test</a>
+              </li>
+            
+          </ul>
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">【JS非全解00】内存图与JS世界</h1>
+      
+      <div class="post-meta">
+        <time datetime="2020-02-14" class="post-time">
+          2020-02-14
+        </time>
+        <div class="post-category">
+            <a href="http://xmasuhai.xyz/categories/2020/"> 2020 </a>
+            
+          </div>
+        <span class="more-meta"> 约 3533 字 </span>
+          <span class="more-meta"> 预计阅读 8 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#一切都运行在内存里">一切都运行在内存里</a>
+      <ul>
+        <li><a href="#开机">开机</a></li>
+        <li><a href="#操作系统以-linux-为例">操作系统（以 Linux 为例）</a></li>
+      </ul>
+    </li>
+    <li><a href="#打开浏览器">打开浏览器</a>
+      <ul>
+        <li><a href="#chromeexe">Chrome.exe</a></li>
+        <li><a href="#浏览器的功能">浏览器的功能</a></li>
+      </ul>
+    </li>
+    <li><a href="#js-引擎">JS 引擎</a>
+      <ul>
+        <li><a href="#js-引擎举例">JS 引擎举例</a></li>
+        <li><a href="#主要功能">主要功能</a></li>
+      </ul>
+    </li>
+    <li><a href="#执行-js-代码">执行 JS 代码</a>
+      <ul>
+        <li><a href="#准备工作">准备工作</a></li>
+        <li><a href="#等一下">等一下</a></li>
+      </ul>
+    </li>
+    <li><a href="#内存图">内存图</a>
+      <ul>
+        <li><a href="#其中tab1又可细分为许多线程threads">其中<code>Tab1</code>又可细分为(许多线程<code>Threads</code>)</a></li>
+      </ul>
+    </li>
+    <li><a href="#数据区stack连续存储区和heap链接存储区">数据区（<code>Stack</code>连续存储区和<code>Heap</code>链接存储区）</a>
+      <ul>
+        <li><a href="#作用">作用</a></li>
+        <li><a href="#stack-和-heap">Stack 和 Heap</a></li>
+      </ul>
+    </li>
+    <li><a href="#stack-和-heap-代码举例">Stack 和 Heap 代码举例</a>
+      <ul>
+        <li><a href="#代码">代码</a></li>
+        <li><a href="#规律">规律</a></li>
+        <li><a href="#区分值和地址">区分值和地址</a></li>
+        <li><a href="#对象被篡改了">对象被篡改了</a></li>
+      </ul>
+    </li>
+    <li><a href="#js-世界">JS 世界</a>
+      <ul>
+        <li><a href="#js-要些什么">JS 要些什么</a></li>
+      </ul>
+    </li>
+    <li><a href="#内存图表示window">内存图表示<code>window</code></a>
+      <ul>
+        <li><a href="#tab1">Tab1</a></li>
+        <li><a href="#其中-js-引擎">其中 JS 引擎</a></li>
+        <li><a href="#未知区里的window的数据">未知区里的<code>window</code>的数据</a></li>
+        <li><a href="#其中heap">其中<code>Heap</code></a></li>
+        <li><a href="#另一种画法">另一种画法</a></li>
+      </ul>
+    </li>
+    <li><a href="#细节">细节</a>
+      <ul>
+        <li><a href="#关于window">关于<code>window</code></a></li>
+        <li><a href="#同理">同理</a></li>
+      </ul>
+    </li>
+    <li><a href="#原型链">原型链</a>
+      <ul>
+        <li><a href="#原型链作用">原型链作用</a></li>
+        <li><a href="#隐藏属性__proto__">隐藏属性<code>__proto__</code></a></li>
+        <li><a href="#prototype和__proto__区别是"><code>prototype</code>和<code>__proto__</code>区别是</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      <h2 id="一切都运行在内存里">一切都运行在内存里</h2>
+<h3 id="开机">开机</h3>
+<ul>
+<li>操作系统在 C 盘（macOS 的在根目录下的多个目录里）</li>
+<li>当按下开机键，主板通电，开始读取固件</li>
+<li>固件就是固定在主板上的存储设备，里面有开机程序</li>
+<li>开机程序会将文件里的<strong>操作系统</strong>加载到内存中运行</li>
+</ul>
+<h3 id="操作系统以-linux-为例">操作系统（以 Linux 为例）</h3>
+<ul>
+<li>首先加载操作系统内核</li>
+<li>然后启动初始化进程，编号为 1，每个进程都有编号</li>
+<li>启动系统服务：文件、安全、联网服务等</li>
+<li>等待用户登录：输入密码登录/ssh 登录</li>
+<li>登录后，运行<code>shell</code>，用户就可以和操作系统对话了</li>
+<li><code>bash</code>是一种<code>shell</code>，图形化界面也可以认为是一种<code>shell</code></li>
+</ul>
+<h2 id="打开浏览器">打开浏览器</h2>
+<h3 id="chromeexe">Chrome.exe</h3>
+<ul>
+<li>双击 Chrome 图标，就会运行 Chrome.exe 文件</li>
+<li>开启 Chrome 进程，作为主进程</li>
+<li>主进程会开启一些副主进程，如网络服务、GPU 加速</li>
+<li>每新建一个网页，就有<strong>可能</strong>会开启一个子进程<code>Child Process</code></li>
+</ul>
+<h3 id="浏览器的功能">浏览器的功能</h3>
+<ul>
+<li>发起请求，下载 HTML，解析 HTML， 下载 CSS， 解析 CSS， 下载 JS， 解析 JS，执行 JS 等</li>
+<li>功能模块：用户界面、<strong><em>渲染引擎</em></strong>、<strong><em>JS 引擎</em></strong>、存储等，网络模块（下载，上传）</li>
+<li>上面功能模块一般各处于不同的<strong>线程</strong>（比进程小）</li>
+<li>如果进程是车间，那么线程就是车间里的流水线</li>
+<li>JS 是单线程<a href="https://zhuanlan.zhihu.com/p/74879045">（不用<code>Workers Thread Module</code>或<code>Web Worker</code>的话）</a></li>
+</ul>
+<blockquote>
+<p>JS 怎么渲染</p>
+</blockquote>
+<ul>
+<li>JS 通过跨线程通信去渲染（Chrome 提供 API），慢于 JS 线程内的代码，所以<code>DOM</code>操作慢</li>
+</ul>
+<h2 id="js-引擎">JS 引擎</h2>
+<h3 id="js-引擎举例">JS 引擎举例</h3>
+<ul>
+<li>Chrome 用的是<code>V8</code>引擎，C++编写</li>
+<li>网景用的是<code>SpiderMonkey</code>，后 Firefox 继承使用，C++</li>
+<li>Safari 用的是<code>JavaScriptCore</code></li>
+<li>Edge 用的是<code>Chakra(JavaScript)</code></li>
+<li>Node.js 用的是<code>V8</code></li>
+</ul>
+<h3 id="主要功能">主要功能</h3>
+<ul>
+<li>编译：把 JS 代码编译为机器能执行的字节码或机器码</li>
+<li>优化：改写代码，使其更高效</li>
+<li>执行：执行上面的字节码或机器码</li>
+<li>垃圾回收：把 JS 用完的内存回收，方便之后再用</li>
+</ul>
+<h2 id="执行-js-代码">执行 JS 代码</h2>
+<blockquote>
+<p>打开控制台之前发生了什么</p>
+<p>输入<code>window</code>，得到一串东西</p>
+<p><code>window</code>在开控制台前就有了</p>
+<p>输入<code>console</code>、<code>object</code>、<code>setTimeout</code>、<code>document</code>、<code>navigator</code>等，也一样在开控制台前就有了</p>
+<p>JS 引擎提供了什么</p>
+</blockquote>
+<h3 id="准备工作">准备工作</h3>
+<ul>
+<li>Chrome 提供 API：<code>window/document/setTimeout</code>的对象等</li>
+<li>上面的都不是 JS 自身具备的功能，只是通过 API 调用</li>
+<li>将这些功能统称为运行环境<code>runtime env</code></li>
+<li>一旦把 JS 放进页面，就开始执行 JS</li>
+</ul>
+<h3 id="等一下">等一下</h3>
+<blockquote>
+<p>JS 代码在哪里运行？</p>
+</blockquote>
+<ul>
+<li>内存</li>
+</ul>
+<blockquote>
+<p>内存哪？</p>
+</blockquote>
+<h2 id="内存图">内存图</h2>
+<blockquote>
+<p>内存被不同的程序瓜分</p>
+</blockquote>
+<p>浏览器程序（以 Chrome 为例）怎样**<em>瓜分内存</em>**</p>
+<p>开启许多不同的进程<code>Processes</code></p>
+<ul>
+<li>OS 占据一小部分</li>
+<li>Chrome 主进程</li>
+<li>Chrome 辅助主进程</li>
+<li>Chrome 的 Tab1（zhiHu）</li>
+<li>Chrome 的 Tab2（xdml）</li>
+<li>Chrome 的 Tab3&hellip;</li>
+</ul>
+<h3 id="其中tab1又可细分为许多线程threads">其中<code>Tab1</code>又可细分为(许多线程<code>Threads</code>)</h3>
+<ul>
+<li>用户界面</li>
+<li>渲染线程</li>
+<li><strong><em>JS 引擎</em></strong>（代码区、未知区、数据区&lt;{ 栈区 Stack、堆区 Heap }&gt;等等）
+<ul>
+<li>代码区</li>
+<li>未知区（存变量名，环境），具体值存入数据区（Stack 或 Heap）</li>
+<li>数据区（Stack 和 Heap）
+<ul>
+<li>栈区 Stack 连续存储</li>
+<li>堆区 Heap 链接存储</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="数据区stack连续存储区和heap链接存储区">数据区（<code>Stack</code>连续存储区和<code>Heap</code>链接存储区）</h2>
+<h3 id="作用">作用</h3>
+<ul>
+<li>专用来存放数据</li>
+<li>并不存变量名，变量名在未知区</li>
+<li>每种浏览器的分配规则不同，未知区的名字也不同</li>
+<li>并不完整</li>
+<li>未画出「调用栈」、「任务队列」、「垃圾回收」等区域</li>
+</ul>
+<h3 id="stack-和-heap">Stack 和 Heap</h3>
+<ul>
+<li>Stack 堆和 Heap 堆</li>
+<li>解释「栈」需要数据结构相关知识</li>
+<li>Stack 区特点：每个数据顺序存放</li>
+<li>Heap 区特点：每个数据随机存放</li>
+</ul>
+<h2 id="stack-和-heap-代码举例">Stack 和 Heap 代码举例</h2>
+<h3 id="代码">代码</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="kd">var</span> <span class="nx">b</span> <span class="o">=</span> <span class="nx">a</span>
+<span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span><span class="s1">&#39;frank&#39;</span><span class="p">,</span><span class="nx">child</span><span class="o">:</span><span class="p">{</span><span class="nx">name</span><span class="o">:</span><span class="s1">&#39;jack&#39;</span><span class="p">}}</span>
+<span class="kd">var</span> <span class="nx">person2</span> <span class="o">=</span> <span class="nx">person</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="规律">规律</h3>
+<ul>
+<li>数据分两种：非对象（数字、字符串、布尔值）和对象</li>
+<li>非对象都存在<code>Stack</code></li>
+<li>对象都存在<code>Heap</code>，开辟一块空间存</li>
+<li>对象里只可存非对象或另一对象的引用地址</li>
+<li>另一对象需开辟<code>Heap</code>一块新空间存</li>
+<li><code>=</code>总是把右边的东西复制到左边（不存在什么传值和传址）</li>
+</ul>
+<h3 id="区分值和地址">区分值和地址</h3>
+<blockquote>
+<p>内存图里见分晓</p>
+</blockquote>
+<h3 id="对象被篡改了">对象被篡改了</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span><span class="s1">&#39;frank&#39;</span><span class="p">}</span>
+<span class="kd">var</span> <span class="nx">person2</span> <span class="o">=</span> <span class="nx">person</span>
+<span class="nx">person</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="s1">&#39;ryan&#39;</span><span class="c1">//同一块内存区的数据改变
+</span><span class="c1"></span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">.</span><span class="nx">name</span><span class="p">)</span><span class="c1">//&#39;ryan&#39;
+</span></code></pre></td></tr></table>
+</div>
+</div><h2 id="js-世界">JS 世界</h2>
+<h3 id="js-要些什么">JS 要些什么</h3>
+<ul>
+<li>浏览器提供<code>window</code>，可以在控制台里打出<code>window.xxx</code></li>
+<li>要<code>console</code>，并挂到<code>window</code>上，打<code>console</code>或<code>window.console</code>，后面一样</li>
+<li>要<code>document</code>，并挂到<code>window</code>上</li>
+<li>要对象<code>Object</code>，并挂到<code>window</code>上（<code>var person = {}</code>就等价于<code>var a = new Object()</code>）</li>
+<li>要有数组<code>Array</code>（一种特殊对象），并挂到<code>window</code>上（<code>var a = [1,2,3]</code>等价于<code>var a = new Array(1,2,3)</code>）</li>
+<li>要有函数<code>Function</code>（一种特殊对象），，并挂到<code>window</code>上（<code>function f(){}</code>等价于<code>var f = new Function()</code>）</li>
+<li>等</li>
+</ul>
+<blockquote>
+<p><code>var a = [];function f(){}</code></p>
+<p>用字符字面量代码量上更少，其他都一样</p>
+<p>怎么都挂在<code>window</code>上</p>
+<p>因为方便，挂在<code>window</code>上的东西，可以在任何地方<strong>直接</strong>用，即省略<code>window.</code>，只有<code>window</code>有这功能</p>
+</blockquote>
+<h2 id="内存图表示window">内存图表示<code>window</code></h2>
+<h3 id="tab1">Tab1</h3>
+<ul>
+<li>用户界面</li>
+<li>渲染引擎</li>
+<li>JS 引擎</li>
+</ul>
+<h3 id="其中-js-引擎">其中 JS 引擎</h3>
+<ul>
+<li>代码区</li>
+<li>未知区：<code>window</code></li>
+</ul>
+<h3 id="未知区里的window的数据">未知区里的<code>window</code>的数据</h3>
+<ul>
+<li><code>Stack</code>：<code>#90</code>（对应<code>window</code>地址）</li>
+<li><code>Heap</code></li>
+</ul>
+<h3 id="其中heap">其中<code>Heap</code></h3>
+<ul>
+<li>排名不分先后</li>
+<li><code>#28</code>:(存了<code>log: #200</code>)</li>
+<li><code>#105</code>:(存了函数代码)</li>
+<li><code>#200</code>:(存了函数代码)</li>
+<li><code>#90</code>:(存了<code>console: #28</code>和<code>Object: #105</code>)</li>
+</ul>
+<h3 id="另一种画法">另一种画法</h3>
+<h4 id="window-保存着以下地址俗称指向引用">window 保存着以下地址（俗称指向/引用）</h4>
+<ul>
+<li><code>console</code></li>
+<li><code>Object</code></li>
+<li><code>Array</code></li>
+</ul>
+<h5 id="console"><code>console</code></h5>
+<ul>
+<li><code>log</code></li>
+<li><code>clear</code></li>
+</ul>
+<h5 id="object"><code>Object</code></h5>
+<p>函数实现</p>
+<ul>
+<li><code>keys</code></li>
+<li><code>prototype</code></li>
+</ul>
+<h5 id="array"><code>Array</code></h5>
+<p>函数实现</p>
+<ul>
+<li><code>isArray</code></li>
+<li><code>prototype</code></li>
+</ul>
+<blockquote>
+<p>可以在控制台打<code>console.dir(window.Object)</code>查看</p>
+<p>对象首字母大写，一般都有&rsquo;prototype&rsquo;属性</p>
+</blockquote>
+<h2 id="细节">细节</h2>
+<h3 id="关于window">关于<code>window</code></h3>
+<ul>
+<li><code>window变量</code>和<code>window对象</code>是两个东西</li>
+<li><code>window变量</code>是一个容器，存放<code>window对象</code>的地址</li>
+<li><code>window对象</code>是<code>Heap</code>里的一坨数据</li>
+<li>eg. <code>var x = window</code>，那么这个 x 就指向了<code>window对象</code>，和<code>window变量</code>的作用相同</li>
+</ul>
+<h3 id="同理">同理</h3>
+<ul>
+<li><code>console</code>和<code>console对象</code>不是一个东西</li>
+<li><code>Object</code>和<code>Object函数对象</code>不是一个东西</li>
+<li>前者是内存地址，变量名，存在未知区，对象里只保存引用地址</li>
+<li>后者是一坨内存，存在数据区的堆区<code>Heap</code>里</li>
+<li>举例：<code>window.jQuery = function(xxx){}</code></li>
+<li>然后<code>var $ = jQuery</code></li>
+<li>调用<code>$.xxx（）</code></li>
+</ul>
+<h2 id="原型链">原型链</h2>
+<blockquote>
+<p><code>window.Object.prototype</code></p>
+<p><code>console.dir(window.Object.prototype)</code></p>
+<p><code>window.</code>可省略</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>看代码举例解释 1</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="nx">obj</span><span class="p">.</span><span class="nx">toString</span><span class="p">()</span><span class="c1">//&#34;[object Object]&#34;
+</span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>空对象的<code>toString</code>为什么可以运行，不报错</p>
+</blockquote>
+<ul>
+<li><code>obj</code>有一个隐藏属性</li>
+<li>隐藏属性存储了<code>Object.prototype</code>对象的地址</li>
+<li><code>obj.toString()</code>发现 obj 上没有<code>toString</code></li>
+<li>就去隐藏属性对应的对象里找，找到<code>Object.prototype.toString</code></li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="nx">obj</span><span class="p">.</span><span class="nx">toString</span> <span class="o">===</span> <span class="nb">window</span><span class="p">.</span><span class="nb">Object</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">toString</span> <span class="c1">//true
+</span><span class="c1"></span><span class="kd">var</span> <span class="nx">arr</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="nx">arr</span><span class="p">.</span><span class="nx">push</span> <span class="o">===</span> <span class="nb">window</span><span class="p">.</span><span class="nb">Array</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">push</span> <span class="c1">//true
+</span></code></pre></td></tr></table>
+</div>
+</div><hr>
+<blockquote>
+<p>看代码举例解释 2</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">var</span> <span class="nx">obj2</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="nx">obj2</span><span class="p">.</span><span class="nx">toString</span><span class="p">()</span><span class="c1">//可运行
+</span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p><code>obj</code>和<code>obj2</code>的联系</p>
+</blockquote>
+<ul>
+<li>都可调用<code>.toString()</code></li>
+<li>地址不同<code>obj !== obj2</code></li>
+<li>可以拥有不同属性，反过来就是没有共同属性，就得每次重写</li>
+</ul>
+<blockquote>
+<p><code>XXX.prototype</code>存储了<code>XXX</code>对象的共同属性</p>
+<p>这就是原型</p>
+</blockquote>
+<h3 id="原型链作用">原型链作用</h3>
+<blockquote>
+<p>可无需重复声明共有属性</p>
+<p>省代码，省内存</p>
+</blockquote>
+<h3 id="隐藏属性__proto__">隐藏属性<code>__proto__</code></h3>
+<blockquote>
+<p>每个对象都有一个隐藏属性，指向共有属性，即使是<code>Object</code>本身</p>
+<p>小写的对象名，才去关心隐藏属性<code>__proto__</code></p>
+<p>大写的对象名，只要知道，通常都有一个<code>prototype</code>属性 ，不用去关心大写对象名的对象的隐藏属性<code>__proto__</code></p>
+<p>指向原型（对象）</p>
+</blockquote>
+<h3 id="prototype和__proto__区别是"><code>prototype</code>和<code>__proto__</code>区别是</h3>
+<ul>
+<li>都存着原型的地址</li>
+<li><code>prototype</code>挂在函数（大写<code>Object</code>）上</li>
+<li><code>__proto__</code>挂在每个新生成的对象上</li>
+<li><code>prototype</code> 是构造函数的属性，而<code>__proto__</code> 是对象的属性，一般意义上的【实例的原型】</li>
+<li><code>prototype</code> 指向一块内存，这个内存里面有共用属性</li>
+<li><code>__proto__</code> 指向同一块内存</li>
+</ul>
+<blockquote>
+<p>prototype 的意义就是把共有属性预先定义好，给之后的对象用。</p>
+<p><code>prototype</code>是一个属性，<code>__proto__</code>才是原型，<code>__proto__</code>是非标准用法，不是所有的 JS 引擎都支持</p>
+</blockquote>
+<p><img src="../../../images/JS/Xmind_prototype.jpg" alt="脑图"></p>
+<hr>
+<blockquote>
+<p>看代码举例解释 3</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">var</span> <span class="nx">arr</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="nx">arr</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">)</span><span class="c1">//可运行，不报错
+</span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>以上是只有读的时候符合的情况，改的逻辑不一样，即改默认隐藏属性，两层引用只会走一层，无法直接篡改</p>
+</blockquote>
+<ul>
+<li>图解</li>
+</ul>
+<p><img src="../../../../images/JS/Heap.jpg" alt="内存图"></p>
+<ul>
+<li><code>arr</code>有个隐藏属性</li>
+<li>隐藏属性存储了<code>Array.prototype</code>对象的地址</li>
+<li><code>arr.join()</code>发现<code>arr</code>上没有<code>join</code></li>
+<li>就去隐藏属性对应的对象里找</li>
+<li>于是找到了<code>Array.prototype.join</code></li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">var</span> <span class="nx">obj1</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="kd">var</span> <span class="nx">obj2</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="nx">obj1</span><span class="p">.</span><span class="nx">toString</span> <span class="o">===</span> <span class="nx">obj2</span><span class="p">.</span><span class="nx">toString</span> <span class="c1">//true
+</span><span class="c1"></span><span class="nx">obj1</span><span class="p">.</span><span class="nx">toString</span> <span class="o">=</span> <span class="s1">&#39;xxx&#39;</span>
+<span class="nx">obj2</span><span class="p">.</span><span class="nx">toString</span> <span class="c1">// &lt; toString(){[native code]}
+</span><span class="c1"></span><span class="nx">obj1</span><span class="p">.</span><span class="nx">toString</span> <span class="o">===</span> <span class="nx">obj2</span><span class="p">.</span><span class="nx">toString</span> <span class="c1">//false
+</span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>问：<code>arr.hasOwnProperty()</code>怎么找到内存中的地址</p>
+<p>找三次，最后找到 Object 的<code>hasOwnProperty</code></p>
+</blockquote>
+<hr>
+<p><a href="https://static.xiedaimala.com/xdml/file/3ac7c224-c23d-491f-84b5-4fabfbeab9b8/2019-9-6-15-40-27.pdf">内存图与 JS 世界.pdf</a></p>
+<p><a href="http://www.ruanyifeng.com/blog/2013/04/processes_and_threads.html">进程与线程的一个简单解释</a></p>
+<p><a href="https://imweb.io/topic/58e3bfa845e5c13468f567d5">浏览器进程？线程？傻傻分不清楚</a></p>
+<p><a href="https://www.html5rocks.com/zh/tutorials/internals/howbrowserswork/#1_1">浏览器的工作原理：新式网络浏览器幕后揭秘</a></p>
+<p><a href="https://blog.sessionstack.com/how-javascript-works-inside-the-v8-engine-5-tips-on-how-to-write-optimized-code-ac089e62b12e">How JavaScript works: inside the V8 engine + 5 tips on how to write optimized code</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/103701362">Node.js 多线程</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/74879045">理解 Node.js 中的&quot;多线程&quot;</a></p>
+<p><a href="https://blog.csdn.net/azard5/article/details/85016412">Node.js 真·多线程 Worker Threads 初探</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/100650777">工作线程：节点并行</a></p>
+<p><a href="https://www.zhihu.com/question/56770432/answer/315342130">JS 中 <code>__proto__</code> 和 <code>prototype</code> 存在的意义是什么</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/23090041">什么是 JS 原型链</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/23987456">JS 的 new 到底是干什么的</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/23804247">this 的值到底是什么？一次说清楚</a></p>
+<hr>
+<hr>
+
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Joel Xu</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2020-02-26
+      
+        
+        
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="http://xmasuhai.xyz/tags/javascript/">JavaScript</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/js/js%E9%9D%9E%E5%85%A8%E8%A7%A303js%E5%AF%B9%E8%B1%A1%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">【JS非全解03】JS对象基本用法</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/js/js%E9%9D%9E%E5%85%A8%E8%A7%A300javascript-%E6%A6%82%E8%A7%88/">
+            <span class="next-text nav-default">【JS非全解00】JavaScript 概览</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:xmasuhai@163.com" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="https://github.com/xmasuhai" rel="me noopener" class="iconfont"
+      title="github"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M512 12.672c-282.88 0-512 229.248-512 512 0 226.261333 146.688 418.133333 350.08 485.76 25.6 4.821333 34.986667-11.008 34.986667-24.618667 0-12.16-0.426667-44.373333-0.64-87.04-142.421333 30.890667-172.458667-68.693333-172.458667-68.693333C188.672 770.986667 155.008 755.2 155.008 755.2c-46.378667-31.744 3.584-31.104 3.584-31.104 51.413333 3.584 78.421333 52.736 78.421333 52.736 45.653333 78.293333 119.850667 55.68 149.12 42.581333 4.608-33.109333 17.792-55.68 32.426667-68.48-113.706667-12.8-233.216-56.832-233.216-253.013333 0-55.893333 19.84-101.546667 52.693333-137.386667-5.76-12.928-23.04-64.981333 4.48-135.509333 0 0 42.88-13.738667 140.8 52.48 40.96-11.392 84.48-17.024 128-17.28 43.52 0.256 87.04 5.888 128 17.28 97.28-66.218667 140.16-52.48 140.16-52.48 27.52 70.528 10.24 122.581333 5.12 135.509333 32.64 35.84 52.48 81.493333 52.48 137.386667 0 196.693333-119.68 240-233.6 252.586667 17.92 15.36 34.56 46.762667 34.56 94.72 0 68.522667-0.64 123.562667-0.64 140.202666 0 13.44 8.96 29.44 35.2 24.32C877.44 942.592 1024 750.592 1024 524.672c0-282.752-229.248-512-512-512"></path>
+</svg>
+
+    </a>
+  
+    <a href="https://www.zhihu.com/people/xue-shou-41/posts" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+
+
+<a href="http://xmasuhai.xyz/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane">Jane</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy;
+    
+      2019 -
+    2022
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Joel Xu
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

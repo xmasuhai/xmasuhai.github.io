@@ -1,0 +1,1860 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>【JS编程接口01】DOM - Joel in The House</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="Joel Xu" />
+  <meta name="description" content="DOM 编程 目录 前置知识 DOM是一棵树 手写 DOM 库 前置知识 简单JS语法（变量、if else、循环） JS的七种数据类型 JS的五个Falsy值 函数、数组是" />
+
+  <meta name="keywords" content="Hugo, theme, jane" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.91.2" />
+
+
+<link rel="canonical" href="http://xmasuhai.xyz/post/api/dom/js%E7%BC%96%E7%A8%8B%E6%8E%A5%E5%8F%A301dom/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="【JS编程接口01】DOM" />
+<meta property="og:description" content="DOM 编程 目录 前置知识 DOM是一棵树 手写 DOM 库 前置知识 简单JS语法（变量、if else、循环） JS的七种数据类型 JS的五个Falsy值 函数、数组是" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://xmasuhai.xyz/post/api/dom/js%E7%BC%96%E7%A8%8B%E6%8E%A5%E5%8F%A301dom/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2020-04-01T02:51:56+08:00" />
+<meta property="article:modified_time" content="2020-06-10T06:13:29+08:00" />
+
+<meta itemprop="name" content="【JS编程接口01】DOM">
+<meta itemprop="description" content="DOM 编程 目录 前置知识 DOM是一棵树 手写 DOM 库 前置知识 简单JS语法（变量、if else、循环） JS的七种数据类型 JS的五个Falsy值 函数、数组是"><meta itemprop="datePublished" content="2020-04-01T02:51:56+08:00" />
+<meta itemprop="dateModified" content="2020-06-10T06:13:29+08:00" />
+<meta itemprop="wordCount" content="6422">
+<meta itemprop="keywords" content="DOM,JavaScript,API," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="【JS编程接口01】DOM"/>
+<meta name="twitter:description" content="DOM 编程 目录 前置知识 DOM是一棵树 手写 DOM 库 前置知识 简单JS语法（变量、if else、循环） JS的七种数据类型 JS的五个Falsy值 函数、数组是"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Joel in The House</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/post/">文档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/categories/">目录</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/about/">关于我</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          <div class="mobile-menu-parent">
+            <span class="mobile-submenu-open"></span>
+            <a href="http://xmasuhai.xyz/">
+              docs
+            </a>
+          </div>
+          <ul class="mobile-submenu-list">
+            
+              <li>
+                <a href="http://xmasuhai.xyz/post/test/syntax-highlighting/">Syntax Highlighting</a>
+              </li>
+            
+              <li>
+                <a href="http://xmasuhai.xyz/post/test/mytest/">my Syntax Highlighting &amp; ShortCode Test</a>
+              </li>
+            
+          </ul>
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Joel in The House
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/post/">文档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/categories/">目录</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/about/">关于我</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          <a class="menu-item-link menu-parent" href="http://xmasuhai.xyz/">docs</a>
+          <ul class="submenu">
+            
+              <li>
+                <a href="http://xmasuhai.xyz/post/test/syntax-highlighting/">Syntax Highlighting</a>
+              </li>
+            
+              <li>
+                <a href="http://xmasuhai.xyz/post/test/mytest/">my Syntax Highlighting &amp; ShortCode Test</a>
+              </li>
+            
+          </ul>
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">【JS编程接口01】DOM</h1>
+      
+      <div class="post-meta">
+        <time datetime="2020-04-01" class="post-time">
+          2020-04-01
+        </time>
+        <div class="post-category">
+            <a href="http://xmasuhai.xyz/categories/2020/"> 2020 </a>
+            <a href="http://xmasuhai.xyz/categories/dom/"> DOM </a>
+            <a href="http://xmasuhai.xyz/categories/api/"> API </a>
+            
+          </div>
+        <span class="more-meta"> 约 6422 字 </span>
+          <span class="more-meta"> 预计阅读 13 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#dom-编程">DOM 编程</a></li>
+    <li><a href="#目录">目录</a></li>
+    <li><a href="#前置知识">前置知识</a></li>
+    <li><a href="#网页dom是一棵树">网页DOM是一棵树</a>
+      <ul>
+        <li><a href="#js如何操作这棵树">JS如何操作这棵树</a></li>
+      </ul>
+    </li>
+    <li><a href="#具体操作">具体操作</a></li>
+    <li><a href="#获取元素标签">获取元素（标签）</a>
+      <ul>
+        <li><a href="#有很多api">有很多<code>API</code></a></li>
+        <li><a href="#判断用哪一个">判断用哪一个</a></li>
+        <li><a href="#获取特定的元素">获取特定的元素</a></li>
+        <li><a href="#获取的元素是什么">获取的元素是什么</a></li>
+      </ul>
+    </li>
+    <li><a href="#consoledirdiv1原型链"><code>console.dir(div1)</code>原型链</a></li>
+    <li><a href="#div完整原型链">div完整原型链</a></li>
+    <li><a href="#节点和元素">节点和元素</a></li>
+    <li><a href="#节点的增删改查">节点的增删改查</a>
+      <ul>
+        <li><a href="#增创建元素的api">增：创建元素的API</a></li>
+        <li><a href="#增续">增（续）</a></li>
+        <li><a href="#删">删</a></li>
+        <li><a href="#改属性">改属性</a></li>
+        <li><a href="#改事件处理函数">改事件处理函数</a></li>
+        <li><a href="#改内容">改内容</a></li>
+        <li><a href="#查看元素的api">查看元素的API</a></li>
+        <li><a href="#查续">查（续）</a></li>
+      </ul>
+    </li>
+    <li><a href="#dom跨线程操作">DOM跨线程操作</a>
+      <ul>
+        <li><a href="#跨线程操作">跨线程操作</a></li>
+      </ul>
+    </li>
+    <li><a href="#propertyjs执行线程-vs-attribute渲染线程-html页面属性"><code>Property</code>（JS执行线程） V.S. <code>Attribute</code>（渲染线程 HTML页面属性）</a></li>
+    <li><a href="#封装-dom-库">封装 DOM 库</a>
+      <ul>
+        <li><a href="#参考文章">参考文章</a></li>
+        <li><a href="#相关文章">相关文章</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      <h2 id="dom-编程">DOM 编程</h2>
+<h2 id="目录">目录</h2>
+<ul>
+<li>前置知识</li>
+<li>DOM是一棵树</li>
+<li>手写 DOM 库</li>
+</ul>
+<hr>
+<h2 id="前置知识">前置知识</h2>
+<ul>
+<li>简单JS语法（变量、if else、循环）</li>
+<li>JS的七种数据类型</li>
+<li>JS的五个<code>Falsy</code>值</li>
+<li>函数、数组是对象</li>
+<li>用<code>div</code>和<code>span</code>标签</li>
+<li>简单CSS布局</li>
+</ul>
+<h2 id="网页dom是一棵树">网页DOM是一棵树</h2>
+<h3 id="js如何操作这棵树">JS如何操作这棵树</h3>
+<blockquote>
+<p>浏览器往window上加一个<code>document</code></p>
+</blockquote>
+<p>在控制台中打</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nb">window</span><span class="p">.</span><span class="nb">document</span>
+<span class="c1">// #document 操作整个网页
+</span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>JS用<code>document</code>操作网页</li>
+</ul>
+<blockquote>
+<p>即文档对象模型<code>Document Object Model</code></p>
+<ul>
+<li><code>DOM</code>很难用</li>
+</ul>
+</blockquote>
+<h2 id="具体操作">具体操作</h2>
+<ul>
+<li>获取元素（标签）</li>
+<li>节点的增删改查</li>
+</ul>
+<h2 id="获取元素标签">获取元素（标签）</h2>
+<h3 id="有很多api">有很多<code>API</code></h3>
+<ul>
+<li><code>window.id_xxx</code>或者<code>id_xxx</code>，有可能取不到</li>
+<li><code>document.getElementById('id_xxx')</code>，无<code>#</code>号</li>
+<li><code>document.getElementsByTagName('div')[0]</code>，伪数组</li>
+<li><code>document.getElementsByClassName('red')[0]</code>，伪数组</li>
+<li><code>document.querySelector('#id_xxx')</code></li>
+<li><code>document.querySelectorAll('.red')</code>[0]，伪数组</li>
+</ul>
+<blockquote>
+<p>直接用 ID （省略 id）获取</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nb">window</span><span class="p">.</span><span class="nx">kw</span> <span class="c1">// 页面地址为 baidu.com 时 &lt;input id=&#34;kw&#34;&gt;
+</span></code></pre></td></tr></table>
+</div>
+</div><p>如果 id 值为 <code>window</code>下已存在的属性，比如<code>parent</code>，只可用<code>document.getElementById('parent')</code>才能获取到，但工作中不使用这样与全局属性冲突的命名</p>
+<h3 id="判断用哪一个">判断用哪一个</h3>
+<ul>
+<li>工作中用<code>querySelector</code>和<code>querySelectorAll</code></li>
+<li>做<code>demo</code>直接用<code>id_xxx</code>，千万别让人发现</li>
+<li>兼容IE用<code>getElement(s)ByXXX</code>，IE已死有事烧纸</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="c1">// 借鉴了 CSS 的语法
+</span><span class="c1"></span><span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">&#39;div&gt;span:nth-child(2)&#39;</span><span class="p">)</span>
+<span class="c1">// 可以在 chrome 中右键点击 reveal in Elements panel 中查看
+</span></code></pre></td></tr></table>
+</div>
+</div><h3 id="获取特定的元素">获取特定的元素</h3>
+<blockquote>
+<p>获取<code>html</code>元素</p>
+</blockquote>
+<ul>
+<li><code>document.documentElement</code></li>
+<li>反人类<code>document.documentElement.tagName</code>，返回的值<code>HTML</code></li>
+</ul>
+<blockquote>
+<p>获取<code>head</code>元素</p>
+</blockquote>
+<ul>
+<li><code>document.head</code></li>
+</ul>
+<blockquote>
+<p>获取<code>body</code>元素</p>
+</blockquote>
+<ul>
+<li><code>document.body</code></li>
+</ul>
+<blockquote>
+<p>获取窗口（不是元素）</p>
+</blockquote>
+<ul>
+<li><code>window</code></li>
+<li>可以监听事件<code>window.onclick = ()=&gt;{console.log('Hi')}</code></li>
+</ul>
+<blockquote>
+<p>获取所有元素</p>
+</blockquote>
+<ul>
+<li><code>document.all</code></li>
+<li>这个<code>document.all</code>是个奇葩，第6个<code>falsy</code>值</li>
+<li>IE 专属，被用来判断是否 IE</li>
+<li>隔绝 ie 代码</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="k">if</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">all</span><span class="p">){</span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;true&#39;</span><span class="p">)}</span><span class="k">else</span><span class="p">{</span><span class="nx">console</span><span class="p">.</span><span class="nx">clog</span><span class="p">(</span><span class="s1">&#39;falsy&#39;</span><span class="p">)}</span>
+<span class="k">if</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">all</span><span class="p">){</span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;ie&#39;</span><span class="p">)}</span><span class="k">else</span><span class="p">{</span><span class="nx">console</span><span class="p">.</span><span class="nx">clog</span><span class="p">(</span><span class="s1">&#39;other browser&#39;</span><span class="p">)}</span>
+<span class="c1">// 但功能仍可用
+</span><span class="c1"></span><span class="nb">document</span><span class="p">.</span><span class="nx">all</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="获取的元素是什么">获取的元素是什么</h3>
+<blockquote>
+<p>显然是一个对象，需要搞清它的原型</p>
+<p>拿<code>div</code>对象举例</p>
+</blockquote>
+<h2 id="consoledirdiv1原型链"><code>console.dir(div1)</code>原型链</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="c1">// baidu.com
+</span><span class="c1"></span><span class="kd">let</span> <span class="nx">div</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementBiTagName</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">dir</span><span class="p">(</span><span class="nx">div</span><span class="p">)</span>
+<span class="c1">// 查看返回的对象，隐藏属性`__proto__`指向这个对象的原型
+</span><span class="c1"></span><span class="nx">div</span><span class="p">.</span><span class="nx">__proto__</span> <span class="o">===</span> <span class="nx">HTMLDivElement</span> <span class="c1">// false
+</span><span class="c1"></span><span class="nx">div</span><span class="p">.</span><span class="nx">__proto__</span> <span class="o">===</span> <span class="nx">HTMLDivElement</span><span class="p">.</span><span class="nx">prototype</span> <span class="c1">// true
+</span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><code>chrome</code>显示错了，应该加<code>xxx.prototype</code></li>
+<li>自身属性：<code>className</code>、<code>id</code>、<code>style</code>等等</li>
+</ul>
+<blockquote>
+<p>元素的六层原型链图解</p>
+</blockquote>
+<ul>
+<li>第一层：<code>HTMLDivElement.prototype</code>，这里面是所有div共有的属性，不用细看</li>
+<li>第二层：<code>HTMLElement.prototype</code>，这里面是所有HTML标签的共有属性，不用细看</li>
+<li>第三层：<code>Element.prototype</code>，这里面是所有XML、HTML标签的共有属性</li>
+<li>第四层：<code>Node.prototype</code>，这里是所有节点的共有属性，节点包括XML标签、文本、注释和HTML标签。文本，注释等等</li>
+<li>第五层：<code>EventTarget.prototype</code>，这里最重要的函数属性是<code>addEventListener</code></li>
+<li>第六层，最后一层原型就是<code>Object.prototype</code>了</li>
+</ul>
+<h2 id="div完整原型链">div完整原型链</h2>
+<blockquote>
+<p>包括自身属性和共有属性</p>
+</blockquote>
+<h2 id="节点和元素">节点和元素</h2>
+<blockquote>
+<p><code>MDN</code>有完整描述：<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Node/nodeType"><code>Node.nodeType</code></a>，<code>xxx.nodeType</code>得到一个数字</p>
+<p>节点<code>Node</code>包括以下几种</p>
+</blockquote>
+<ul>
+<li><code>1</code>表示元素<code>Element</code>，也叫标签<code>Tag</code></li>
+<li><code>3</code>表示文本<code>Text</code></li>
+<li><code>8</code>表示注释<code>Comment</code></li>
+<li><code>9</code>表示文档<code>Document</code></li>
+<li><code>11</code>表示文档片段<code>DocumentFragment</code></li>
+</ul>
+<blockquote>
+<p>记住1和2即可</p>
+</blockquote>
+<hr>
+<h2 id="节点的增删改查">节点的增删改查</h2>
+<h3 id="增创建元素的api">增：创建元素的API</h3>
+<blockquote>
+<p>创建一个标签节点</p>
+</blockquote>
+<ul>
+<li><code>let div1 = document.createElement('div')</code></li>
+<li><code>document.createElement('style')</code></li>
+<li><code>document.createElement('script')</code></li>
+<li><code>document.createElement('li')</code></li>
+</ul>
+<blockquote>
+<p>创建一个文本节点</p>
+</blockquote>
+<ul>
+<li><code>let text1 = document.createTextNode('你好')</code>，将字符串变为文本节点（对象）</li>
+<li>text1-&gt; Text-&gt; CharacterData-&gt; Node</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nx">console</span><span class="p">.</span><span class="nx">dir</span><span class="p">(</span><span class="nx">text1</span><span class="p">)</span> <span class="c1">// 查看原型链 text1-&gt; Text-&gt; CharacterData-&gt; Node-&gt; EventTarget-&gt; Object
+</span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>标签里面插入文本</p>
+</blockquote>
+<ul>
+<li>Node 层提供的接口<code>div1.appendChild(text1)</code>，连接标签和文本节点，<code>appendChild()</code>的参数只接受节点类型<code>type 'Node'</code></li>
+<li><code>div1.innerText = '你好'</code></li>
+<li>Element层提供的接口<code>div1.textContent = '不送'</code></li>
+<li>但是注意不能混用：<code>div1.appendChild('走好')</code></li>
+<li>分别是6层不同原型上的不同接口</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="c1">// 在页面中显示一段文字
+</span><span class="c1"></span><span class="kd">let</span> <span class="nx">div1</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">)</span>
+<span class="kd">let</span> <span class="nx">text1</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createTextNode</span><span class="p">(</span><span class="s1">&#39;你好&#39;</span><span class="p">)</span>
+<span class="nx">div1</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">text1</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="增续">增（续）</h3>
+<blockquote>
+<p>插入并显示到页面中</p>
+</blockquote>
+<ul>
+<li>创建的标签默认处于JS线程中</li>
+<li>必须把它插入到<code>body</code>或者<code>head</code>里面，才会生效</li>
+<li><code>document.body.appendChild(div1)</code></li>
+<li>或者找到 <code>已在页面中的元素(标签).appendChild(div)</code></li>
+<li>注意分清括号里的是否有引号</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">div1</span><span class="p">)</span> <span class="c1">// &lt;div&gt;你好&lt;/div&gt;
+</span><span class="c1"></span><span class="nx">div1</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">position</span> <span class="o">=</span> <span class="s1">&#39;fixed&#39;</span>
+<span class="nx">div1</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">top</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="nx">div1</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">left</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="nx">div1</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">color</span> <span class="o">=</span> <span class="s1">&#39;red&#39;</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>问题<code>appendChild()</code>的独占性</p>
+</blockquote>
+<ul>
+<li>代码</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">test1</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">),</span>
+<span class="nx">test2</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">)</span>
+<span class="nx">test1</span><span class="p">.</span><span class="nx">id</span> <span class="o">=</span> <span class="s2">&#34;test1&#34;</span>
+<span class="nx">test2</span><span class="p">.</span><span class="nx">id</span> <span class="o">=</span> <span class="s2">&#34;test2&#34;</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">test1</span><span class="p">)</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">test2</span><span class="p">)</span>
+
+<span class="kd">let</span> <span class="nx">div</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">)</span>
+<span class="nx">test1</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">div</span><span class="p">)</span>
+<span class="nx">test2</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">div</span><span class="p">)</span> <span class="c1">// 移走
+</span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>问：最终div出现在哪里？</p>
+</blockquote>
+<ul>
+<li>答：出现在test2里，同一个元素（节点）不能出现在 DOM  的两个地方，除非复制一份（<code>let div2 = div1.cloneNode()</code>），否则会被移走</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="c1">// 复制节点
+</span><span class="c1"></span><span class="kd">let</span> <span class="nx">div1</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">)</span>
+<span class="kd">let</span> <span class="nx">div2</span> <span class="o">=</span> <span class="nx">div1</span><span class="p">.</span><span class="nx">cloneNode</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span> <span class="c1">// 深拷贝
+</span><span class="c1"></span><span class="nb">document</span><span class="p">.</span><span class="nx">head</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">div1</span><span class="p">)</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">div2</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="删">删</h3>
+<blockquote>
+<p>两种方法</p>
+</blockquote>
+<ul>
+<li>旧方法：<code>parentNode.removeChild(childNode)</code>，由<code>Node</code>提供（或者<code>parentElement.removeChild(childNode)</code>）</li>
+<li>新方法：<code>childNode.remove()</code>，由<code>Element</code>提供，不支持 IE</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nx">div1</span><span class="p">.</span><span class="nx">parentNode</span><span class="p">.</span><span class="nx">removeChild</span><span class="p">(</span><span class="nx">div1</span><span class="p">)</span>
+<span class="nx">div2</span><span class="p">.</span><span class="nx">parentElement</span><span class="p">.</span><span class="nx">removeChild</span><span class="p">(</span><span class="nx">div2</span><span class="p">)</span>
+<span class="c1">// 再加回来，因为还在内存里
+</span><span class="c1"></span><span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">div2</span><span class="p">)</span>
+<span class="c1">// 除非释放（删掉） div2
+</span><span class="c1"></span><span class="nx">div2</span><span class="p">.</span><span class="nx">remove</span><span class="p">()</span> <span class="c1">// 还在内存里
+</span><span class="c1"></span><span class="nx">div2</span> <span class="o">=</span> <span class="kc">null</span> <span class="c1">// 垃圾回收
+</span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>思考</p>
+</blockquote>
+<ul>
+<li>如果一个<code>node</code>被移除页面（DOM树）</li>
+<li>那么它还可以再次回到页面中吗？</li>
+<li>可以，只是移出页面，还存在与 JS 线程中</li>
+</ul>
+<h3 id="改属性">改属性</h3>
+<blockquote>
+<p>写标准属性</p>
+</blockquote>
+<ul>
+<li>改<code>id</code>：<code>div2.id = 'div2'</code></li>
+<li>改<code>class</code>：<code>div.className = 'red blue' // 全覆盖</code>，不于保留字冲突</li>
+<li><code>div2 += ' red'</code>，注意有空格，加一个，不覆盖属性</li>
+<li>改<code>class</code>：<code>div.classList.add('red')</code>，新 API</li>
+<li>改<code>style</code>覆盖之前全部：<code>div.style = 'width:100px;color:blue;'</code>，一般不用</li>
+<li>改<code>style</code>的一部分：<code>div.style.width = '200px'</code></li>
+<li><code>div2.style.color = 'blue'</code>，改什么就写什么</li>
+<li>大小写法：<code>div.style.backgroundColor = 'white'</code>，JS 不支持含有<code>-</code>的 key，全部改为大小写组成的字符串</li>
+<li>麻烦的写法：<code>div2.style['background-color'] = 'gray'</code></li>
+<li>改<code>data-*</code>属性：<code>div.dataset.xxx =  'fuck'</code></li>
+<li><code>div2.setAttribute('data-xxx','text内容')</code></li>
+</ul>
+<blockquote>
+<p>不用<code>div2.class = 'red'</code></p>
+</blockquote>
+<ul>
+<li><code>class</code>为保留字，JS 对象不能用保留字作为<code>key</code></li>
+<li>比如<code>idv.if</code>非法只能用<code>div2.className = 'blue'</code></li>
+</ul>
+<blockquote>
+<p>加一个，不覆盖</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nx">div2</span><span class="p">.</span><span class="nx">className</span> <span class="o">+=</span> <span class="s1">&#39; red&#39;</span> <span class="c1">// 难用
+</span><span class="c1"></span><span class="nx">div2</span><span class="p">.</span><span class="nx">classList</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="s1">&#39;green&#39;</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>读标准属性，获取</p>
+</blockquote>
+<ul>
+<li><code>div.classList</code>或<code>a.href</code>，或<code>div2.dataset.xxx</code></li>
+<li><code>div.getAttribute('class')</code>或<code>a.getAttribute('href')</code>，更保险</li>
+<li>两者皆可，但值可能不同</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="c1">// 读
+</span><span class="c1"></span><span class="nx">div2</span><span class="p">.</span><span class="nx">id</span>
+<span class="nx">div2</span><span class="p">.</span><span class="nx">style</span>
+<span class="nx">div2</span><span class="p">.</span><span class="nx">className</span>
+<span class="c1">// 获取值
+</span><span class="c1"></span><span class="nx">div2</span><span class="p">.</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s1">&#39;data-xxx&#39;</span><span class="p">)</span>
+<span class="nx">div2</span><span class="p">.</span><span class="nx">dataset</span><span class="p">.</span><span class="nx">xxx</span>
+<span class="c1">// 特殊 坑
+</span><span class="c1">// &lt;a id= &#34;test&#34; href=&#34;/xxx&#34;&gt; /xxx 相对路径&lt;/a&gt;
+</span><span class="c1"></span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">test</span><span class="p">.</span><span class="nx">href</span><span class="p">)</span> <span class="c1">// 返回http://js.jirengu.com/
+</span><span class="c1">// 直接读取 JS 属性  浏览器加了一些工，自动域名补全
+</span><span class="c1"></span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">test</span><span class="p">.</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s1">&#39;href&#39;</span><span class="p">))</span> <span class="c1">// 返回原本的值&#39;/xxx&#39;，符合预期，更保险
+</span></code></pre></td></tr></table>
+</div>
+</div><p>小结</p>
+<hr>
+<h3 id="改事件处理函数">改事件处理函数</h3>
+<blockquote>
+<p><code>div.onclick</code>默认为<code>null</code></p>
+</blockquote>
+<p>运行原理</p>
+<ul>
+<li>默认点击<code>div</code>不发生任何事，应为并未赋值</li>
+<li>如果把<code>div.onclick</code>改为一个函数<code>fn</code>，点击会使浏览器调用它</li>
+<li>这样调用的：<code>fn.call(div, event)</code>的 div 会被当做<code>this</code></li>
+<li><code>event</code>则包含了点击事件的所有信息，比如坐标</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="c1">// &lt;div id=&#34;target&#34;&gt;target&lt;/div&gt;
+</span><span class="c1"></span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">target</span><span class="p">.</span><span class="nx">onclick</span><span class="p">)</span> <span class="c1">// null
+</span><span class="c1">// 简单赋值 改写 （箭头函数不支持内部 this）
+</span><span class="c1"></span><span class="nx">target</span><span class="p">.</span><span class="nx">onclick</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">){</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;hi&#39;</span><span class="p">)</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">)</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="c1">// 包含了点击事件的所有信息
+</span><span class="c1"></span><span class="p">}</span>
+
+<span class="c1">// target.onclick.call(target, event)
+</span><span class="c1">// this &lt;- target
+</span><span class="c1">// event &lt;- e
+</span><span class="c1">// this 是浏览器在用户点击时，用 .call() 按顺序传进来的
+</span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p><code>div.addEventListener</code></p>
+</blockquote>
+<ul>
+<li>是<code>div.onclick</code>的升级版，就像推荐用<code>.call()</code>，只使用它</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript">
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="改内容">改内容</h3>
+<blockquote>
+<p>改文本内容</p>
+</blockquote>
+<ul>
+<li><code>div.innerText = 'xxx'</code></li>
+<li><code>div.textContent = 'xxx'</code>，标准浏览器</li>
+<li>两者几乎没有区别</li>
+</ul>
+<blockquote>
+<p>改HTML内容（包括文本和标签节点）</p>
+</blockquote>
+<ul>
+<li><code>div.innerHTML = '&lt;strong&gt;重要内容&lt;/strong&gt;'</code>，显示粗体的文本</li>
+<li>赋值给<code>innerHTML</code>的字符过长会影响页面加载</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nx">test</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="sb">`
+</span><span class="sb">&lt;p&gt;
+</span><span class="sb">    &lt;strong&gt;Hi&lt;/strong&gt;
+</span><span class="sb">&lt;/p&gt;
+</span><span class="sb">`</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>改子标签</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nx">div</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1">// 先清空
+</span><span class="c1"></span><span class="nx">div</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">div2</span><span class="p">)</span> <span class="c1">// 再加内容
+</span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>改父标签</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nx">anyNewParent</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">div</span><span class="p">)</span> <span class="c1">// 新父节点的引用，直接从原来的地方消失，即改变节点的位置
+</span></code></pre></td></tr></table>
+</div>
+</div><h3 id="查看元素的api">查看元素的API</h3>
+<blockquote>
+<p>查自己：直接打出 id</p>
+</blockquote>
+<blockquote>
+<p>查父标签：<code>parentNode</code>或<code>parentElement</code></p>
+</blockquote>
+<ul>
+<li><code>node.parentNode</code>或者<code>node.parentElement</code></li>
+</ul>
+<blockquote>
+<p>查祖标签：调两次<code>parentNode</code>或<code>parentElement</code></p>
+</blockquote>
+<ul>
+<li><code>node.parentNode.parentElement</code></li>
+</ul>
+<blockquote>
+<p>查子代标签</p>
+</blockquote>
+<ul>
+<li><code>div.childNodes</code>，返回伪数组<code>NodeList[]</code></li>
+<li><code>node.childNodes</code>或者<code>node.children</code></li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="cm">/* &lt;ul id=&#34;test&#34;&gt;
+</span><span class="cm">*       &lt;li&gt;1&lt;/li&gt;
+</span><span class="cm">*       &lt;li&gt;2&lt;/li&gt;
+</span><span class="cm">*       &lt;li&gt;3&lt;/li&gt;
+</span><span class="cm">*   &lt;/ul&gt;
+</span><span class="cm">*
+</span><span class="cm">**/</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">test</span><span class="p">.</span><span class="nx">childNodes</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span> <span class="c1">// 7
+</span><span class="c1">// 第一处的回车也会被认为是一个节点 缩成一个空格
+</span><span class="c1"></span>
+<span class="cm">/* &lt;ul id=&#34;test&#34;&gt; // 第一个回车缩成的 空文本节点
+</span><span class="cm">*       &lt;li&gt;1&lt;/li&gt; // 第二个li 加 第三个 回车缩成的 空文本节点
+</span><span class="cm">*       &lt;li&gt;2&lt;/li&gt; // 第四个li 加 第五个 回车缩成的 空文本节点
+</span><span class="cm">*       &lt;li&gt;3&lt;/li&gt; // 第六个li 加 第七个 回车缩成的 空文本节点
+</span><span class="cm">*   &lt;/ul&gt;
+</span><span class="cm">*
+</span><span class="cm">**/</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">test</span><span class="p">.</span><span class="nx">childNode</span><span class="p">)</span> <span class="c1">// 看具体的节点
+</span><span class="c1"></span><span class="cm">/* 在一行时 无空格 */</span>
+<span class="cm">/* &lt;ul id=&#34;test&#34;&gt;&lt;li&gt;1&lt;/li&gt;&lt;li&gt;2&lt;/li&gt;&lt;li&gt;3&lt;/li&gt;&lt;/ul&gt;
+</span><span class="cm">*
+</span><span class="cm">**/</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">test</span><span class="p">.</span><span class="nx">childNodes</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span> <span class="c1">// 3
+</span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>为了解决不确定性，使用<code>Element</code>提供的 API：<code>.children</code>，来代替<code>Node</code>提供的 API，<code>childNodes</code></li>
+<li>即使有回车，也只返回元素（标签）</li>
+<li>优先使用不包括文本节点的<code>.children</code></li>
+</ul>
+<p>思考：当子代变化时，两者也会实时变化吗？</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="cm">/* &lt;ul id=&#34;test&#34;&gt;
+</span><span class="cm">*       &lt;li&gt;1&lt;/li&gt;
+</span><span class="cm">*       &lt;li&gt;2&lt;/li&gt;
+</span><span class="cm">*       &lt;li&gt;3&lt;/li&gt;
+</span><span class="cm">*   &lt;/ul&gt;
+</span><span class="cm">*
+</span><span class="cm">**/</span>
+<span class="cm">/* 判断test.childNodes的长度是否会变化  */</span>
+<span class="kd">let</span> <span class="nx">c</span> <span class="o">=</span> <span class="nx">test</span><span class="p">.</span><span class="nx">childNodes</span> <span class="c1">// 不再次获取对象长度 将对象缓存起来
+</span><span class="c1"></span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">c</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span> <span class="c1">// 7
+</span><span class="c1"></span><span class="nx">test</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">&#39;li&#39;</span><span class="p">).</span><span class="nx">remove</span><span class="p">()</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">c</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span> <span class="c1">// 6
+</span><span class="c1"></span>
+<span class="cm">/* &lt;ul id=&#34;test&#34;&gt;
+</span><span class="cm">*       &lt;li&gt;1&lt;/li&gt;
+</span><span class="cm">*       &lt;li&gt;2&lt;/li&gt;
+</span><span class="cm">*       &lt;li&gt;3&lt;/li&gt;
+</span><span class="cm">*   &lt;/ul&gt;
+</span><span class="cm">*
+</span><span class="cm">**/</span>
+<span class="cm">/* 判断test.children的长度是否会变化  */</span>
+<span class="kd">let</span> <span class="nx">c</span> <span class="o">=</span> <span class="nx">test</span><span class="p">.</span><span class="nx">children</span> <span class="c1">// 不再次获取对象长度 将对象缓存起来
+</span><span class="c1"></span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">c</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span> <span class="c1">// 3
+</span><span class="c1"></span><span class="nx">test</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">&#39;li&#39;</span><span class="p">).</span><span class="nx">remove</span><span class="p">()</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">c</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span> <span class="c1">// 2
+</span><span class="c1"></span>
+<span class="cm">/* &lt;ul id=&#34;test&#34;&gt;
+</span><span class="cm">*       &lt;li&gt;1&lt;/li&gt;
+</span><span class="cm">*       &lt;li&gt;2&lt;/li&gt;
+</span><span class="cm">*       &lt;li&gt;3&lt;/li&gt;
+</span><span class="cm">*   &lt;/ul&gt;
+</span><span class="cm">*
+</span><span class="cm">**/</span>
+<span class="cm">/* 判断document.querySelectorAll(&#39;li&#39;)的长度是否会变化  */</span>
+<span class="kd">let</span> <span class="nx">c</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelectorAll</span><span class="p">(</span><span class="s1">&#39;li&#39;</span><span class="p">)</span> <span class="c1">// 不再次获取对象长度 将对象缓存起来
+</span><span class="c1"></span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">c</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span> <span class="c1">// 3
+</span><span class="c1"></span><span class="nx">test</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">&#39;li&#39;</span><span class="p">).</span><span class="nx">remove</span><span class="p">()</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">c</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span> <span class="c1">// 3
+</span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><code>querySelectorAll</code>不会实时响应页面的改变</li>
+<li>即获取一次后就不变</li>
+<li>实时更新</li>
+<li>区别于<code>computedStyle</code>和<code>getComputedStyle()</code></li>
+</ul>
+<blockquote>
+<p>查兄弟标签</p>
+</blockquote>
+<ul>
+<li><code>node.parentNode.childNodes</code>并且排除自己，还得排除所有文本节点</li>
+<li><code>node.parentElement.children</code>并且排除自己</li>
+</ul>
+<blockquote>
+<p>遍历并排除自己</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="c1">// div2.parentElement.children
+</span><span class="c1"></span><span class="kd">let</span> <span class="nx">siblings</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="kd">let</span> <span class="nx">c</span> <span class="o">=</span> <span class="nx">div2</span><span class="p">.</span><span class="nx">parentElement</span><span class="p">.</span><span class="nx">children</span>
+<span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">c</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">){</span>
+    <span class="k">if</span><span class="p">(</span><span class="nx">c</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">!=</span> <span class="nx">div2</span>  <span class="p">){</span> <span class="c1">// 不相同的放入数组 siblings
+</span><span class="c1"></span>        <span class="nx">siblings</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">c</span><span class="p">.[</span><span class="nx">i</span><span class="p">])</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="查续">查（续）</h3>
+<blockquote>
+<p>查看老大</p>
+</blockquote>
+<ul>
+<li><code>node.firstChild</code></li>
+</ul>
+<blockquote>
+<p>查看老幺</p>
+</blockquote>
+<ul>
+<li><code>node.lastChild</code></li>
+</ul>
+<blockquote>
+<p>查看上一个兄弟</p>
+</blockquote>
+<ul>
+<li><code>node.previousSibling</code></li>
+<li><code>node.previousElementSibling</code></li>
+</ul>
+<blockquote>
+<p>查看下一个兄弟</p>
+</blockquote>
+<ul>
+<li><code>node.nextSibling</code></li>
+<li><code>node.nextElementSibling</code></li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">children</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">firstChild</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">lastChild</span>
+<span class="cm">/* 注意没有 ‘s’ */</span>
+<span class="nx">div2</span><span class="p">.</span><span class="nx">previousSibling</span> <span class="c1">// 有可能查到文本节点
+</span><span class="c1"></span><span class="nx">div2</span><span class="p">.</span><span class="nx">nextSibling</span> <span class="c1">// 有可能查到文本节点
+</span><span class="c1"></span><span class="nx">div2</span><span class="p">.</span><span class="nx">previousElementSibling</span>
+<span class="nx">div2</span><span class="p">.</span><span class="nx">nextElementSibling</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>查所有</p>
+</blockquote>
+<ul>
+<li>遍历一个元素里的所有标签</li>
+<li>即数据结构中的遍历一棵树</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="c1">// 只遍历元素 暂不遍历文本节点
+</span><span class="c1"></span><span class="nx">travel</span> <span class="o">=</span> <span class="p">(</span><span class="nx">node</span><span class="p">,</span> <span class="nx">fn</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="nx">fn</span><span class="p">(</span><span class="nx">node</span><span class="p">)</span> <span class="c1">// 先调用一下 处理当前节点
+</span><span class="c1"></span>    <span class="k">if</span><span class="p">(</span><span class="nx">node</span><span class="p">.</span><span class="nx">children</span><span class="p">){</span> <span class="c1">// 如果当前节点存在子节点
+</span><span class="c1"></span>        <span class="k">for</span><span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">node</span><span class="p">.</span><span class="nx">children</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">){</span>
+            <span class="nx">travel</span><span class="p">(</span><span class="nx">node</span><span class="p">.</span><span class="nx">children</span><span class="p">[</span><span class="nx">i</span><span class="p">],</span> <span class="nx">fn</span><span class="p">)</span> <span class="c1">// 回调节点
+</span><span class="c1"></span>        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nx">travel</span><span class="p">(</span><span class="nx">div1</span><span class="p">,</span> <span class="p">(</span><span class="nx">node</span><span class="p">)=&gt;</span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">node</span><span class="p">))</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>DOM 就是数据结构中的树</li>
+</ul>
+<hr>
+<h2 id="dom跨线程操作">DOM跨线程操作</h2>
+<blockquote>
+<p>为什么 DOM 操作慢</p>
+</blockquote>
+<ul>
+<li>浏览器分为渲染引擎和JS引擎</li>
+</ul>
+<h3 id="跨线程操作">跨线程操作</h3>
+<h4 id="各线程各司其职互不相干">各线程各司其职，互不相干</h4>
+<ul>
+<li>JS引擎不能操作页面，只能操作JS window、DOM、BOM 对象</li>
+<li>渲染引擎不能操作JS，只能操作页面</li>
+<li><code>document.body.appendChild(div1)</code>是通过跨线程通信，改变页面</li>
+</ul>
+<h4 id="跨线程通信">跨线程通信</h4>
+<ul>
+<li>当浏览器发现JS在body里面加了个<code>div1</code>对象</li>
+<li>浏览器就会通知其渲染引擎在页面里也新增一个div元素</li>
+<li>新增的div元素所有属性都照抄<code>div1</code>对象</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">div</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s2">&#34;div&#34;</span><span class="p">)</span>
+<span class="nx">div</span><span class="p">.</span><span class="nx">textContent</span>  <span class="o">=</span> <span class="s2">&#34;hi&#34;</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">div</span><span class="p">)</span> <span class="c1">// 浏览器发现body 有新的子节点加入，通知渲染引擎进行渲染
+</span><span class="c1">// ... 省略 100 行
+</span><span class="c1"></span><span class="nx">div</span><span class="p">.</span><span class="nx">textContent</span> <span class="o">+=</span> <span class="s1">&#39;Jack&#39;</span> <span class="c1">// 浏览器发现 div 内的文本改变了，通知渲染引擎进行渲染
+</span><span class="c1"></span>
+<span class="cm">/* 时间就消耗在浏览器通知渲染引擎的时候
+</span><span class="cm">*  使渲染显得比创建节点、创建文本内容慢
+</span><span class="cm">*  优点是可以分开分别优化各自的不同引擎 解耦
+</span><span class="cm">*  创建过程（JS）-&gt; 通信过程（浏览器）-&gt; 渲染过程（渲染引擎）
+</span><span class="cm">*/</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="插入新标签的完整过程">插入新标签的完整过程</h4>
+<blockquote>
+<p>在<code>div1</code>放入页面之前</p>
+</blockquote>
+<ul>
+<li>对于<code>div1</code>所有的操作都属于JS线程内的操作</li>
+</ul>
+<blockquote>
+<p>把<code>div1</code>放入页面之时</p>
+</blockquote>
+<ul>
+<li>浏览器发现JS的操作</li>
+<li>然后通知渲染进程在页面中渲染<code>div1</code>对应的元素</li>
+</ul>
+<blockquote>
+<p>把<code>div1</code>放入页面之后</p>
+</blockquote>
+<ul>
+<li>对于<code>div1</code>的操作都<em><strong>有可能</strong></em>会触发重新渲染</li>
+<li><code>div1.id = 'newId'</code><strong>可能会</strong>重新渲染，也可能不会（新的 id 有不同的 CSS）</li>
+<li><code>div.title = 'new'</code>根据<a href="https://css-tricks.com/css-content/#article-header-id-4">浏览器内核</a>的不同，<strong>有可能</strong>重新渲染</li>
+<li>如果连续多次对<code>div1</code>操作，浏览器可能会<em><strong>合并成一次操作</strong></em>，也可能不会（<a href="http://js.jirengu.com/yefac/1/edit?html,css,js,output">动画的例子</a>）</li>
+<li>创建过程（JS）-&gt; 通信过程（浏览器）-&gt; 渲染过程（渲染引擎）</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="c1">// &lt;div title=&#34;titlHi&#34;&gt;&lt;/div&gt;
+</span><span class="c1"></span><span class="nx">div</span><span class="o">::</span><span class="nx">after</span><span class="p">{</span>
+    <span class="nx">content</span><span class="o">:</span> <span class="nx">attr</span><span class="p">(</span><span class="nx">titlHi</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="c1">// 之后修改伪元素的内容就有可能重新渲染
+</span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><a href="http://js.jirengu.com/yefac/1/edit?html,css,js,output">过渡动画的例子</a></li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-HTML" data-lang="HTML"><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">&#34;utf-8&#34;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>JS Bin<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span>
+<span class="p">.</span><span class="nc">start</span><span class="p">{</span>
+  <span class="k">border</span><span class="p">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="kc">solid</span> <span class="kc">red</span><span class="p">;</span>
+  <span class="k">width</span><span class="p">:</span> <span class="mi">100</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">height</span><span class="p">:</span> <span class="mi">100</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">transition</span><span class="p">:</span> <span class="k">width</span> <span class="mi">1</span><span class="kt">s</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="p">.</span><span class="nc">end</span><span class="p">{</span>
+  <span class="k">width</span><span class="p">:</span> <span class="mi">200</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;test&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>此时</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nx">test</span><span class="p">.</span><span class="nx">classList</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="s1">&#39;start&#39;</span><span class="p">)</span>
+<span class="c1">// test.clientWidth // 获取test客户端宽度 这句话看似无用，实际会立即触发start的渲染
+</span><span class="c1"></span><span class="nx">test</span><span class="p">.</span><span class="nx">classList</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="s1">&#39;end&#39;</span><span class="p">)</span> <span class="c1">// 读取test.clientWidth 之后重新渲染 end 的样式
+</span><span class="c1">// 注释掉test.clientWidth 浏览器会合并两次操作 集中为 一次渲染 会使动画失效
+</span></code></pre></td></tr></table>
+</div>
+</div><h4 id="属性同步">属性同步</h4>
+<ul>
+<li>看属性，下菜碟</li>
+</ul>
+<blockquote>
+<p>标准属性</p>
+</blockquote>
+<ul>
+<li>对<code>div1</code>的标准属性的修改，会被浏览器<strong>同步</strong>到页面中</li>
+<li>比如<code>id</code>、<code>className</code>、<code>title</code>等</li>
+</ul>
+<blockquote>
+<p><code>data-*</code>属性</p>
+</blockquote>
+<ul>
+<li>同上</li>
+</ul>
+<blockquote>
+<p>非标准属性</p>
+</blockquote>
+<ul>
+<li>对于非标准属性的修改，只会停留在JS线程中</li>
+<li><strong>不会同步</strong>到页面里</li>
+<li>比如<code>x123</code>属性：<a href="http://js.jirengu.com/meviw/2/edit?html,js,output">示例代码</a></li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-HTML" data-lang="HTML"><span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;test&#34;</span> <span class="na">x</span><span class="o">=</span><span class="s">&#34;test&#34;</span> <span class="na">data-x</span><span class="o">=</span><span class="s">&#34;test&#34;</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>id 一开始为 test，后来改为 frank
+  <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>你会发现页面中 id 变为 frank
+  <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>data-x 属性一开始为 test，后来改为 frank
+  <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>你会发现页面中的 data-x 变成了 frank
+  <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>x 属性一开始为 test，后来改为 frank
+  <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>你会发现页面中的 x 还是 test
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>操作JS</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">div1</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">&#39;#test&#39;</span><span class="p">)</span>
+<span class="nx">div1</span><span class="p">.</span><span class="nx">id</span> <span class="o">=</span> <span class="s1">&#39;frank&#39;</span> <span class="c1">// 同步过去了
+</span><span class="c1"></span><span class="nx">div1</span><span class="p">.</span><span class="nx">dataset</span><span class="p">.</span><span class="nx">x</span> <span class="o">=</span> <span class="s1">&#39;frank&#39;</span> <span class="c1">// 同步过去了
+</span><span class="c1"></span><span class="nx">div1</span><span class="p">.</span><span class="nx">x</span> <span class="o">=</span> <span class="s1">&#39;frank&#39;</span> <span class="c1">// 没有同步过去 不影响页面
+</span><span class="c1"></span><span class="nx">div1</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">border</span> <span class="o">=</span> <span class="s1">&#39;1px solid red&#39;</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>启示</p>
+</blockquote>
+<ul>
+<li>如果有自定义属性，又想被同步到页面中，请使用<code>data-</code>作为前缀</li>
+</ul>
+<h2 id="propertyjs执行线程-vs-attribute渲染线程-html页面属性"><code>Property</code>（JS执行线程） V.S. <code>Attribute</code>（渲染线程 HTML页面属性）</h2>
+<blockquote>
+<p><code>property</code>属性</p>
+</blockquote>
+<ul>
+<li>JS线程中<code>div1</code>的所有属性，叫做<code>div1</code>的<code>property</code></li>
+<li><code>style</code>、<code>id</code>、<code>className</code></li>
+</ul>
+<blockquote>
+<p><code>attribute</code>也是属性</p>
+</blockquote>
+<ul>
+<li>渲染引擎中<code>div1</code>对应标签的属性，叫做<code>attribute</code></li>
+</ul>
+<blockquote>
+<p>区别</p>
+</blockquote>
+<ul>
+<li>大部分时候吗，同名的<code>property</code>和<code>attribute</code>的<strong>值</strong>相等</li>
+<li>当不是标准属性，那么两者只会在一开始相等</li>
+<li><code>attribute</code>只支持字符串</li>
+<li><code>property</code>支持字符串、布尔等类型（）</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="c1">// `property`（JS执行线程）--&gt; `attribute`（渲染线程 HTML页面属性）
+</span><span class="c1"></span><span class="nx">div</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">id</span><span class="o">:</span> <span class="s1">&#39;test&#39;</span><span class="p">,</span> <span class="c1">// 自动同步
+</span><span class="c1"></span>    <span class="nx">data</span><span class="o">:</span> <span class="p">{</span> <span class="c1">// 自动同步
+</span><span class="c1"></span>        <span class="nx">x</span><span class="o">:</span> <span class="s1">&#39;test&#39;</span>
+    <span class="p">}</span>
+    <span class="nx">x</span><span class="o">:</span> <span class="s1">&#39;test&#39;</span> <span class="c1">// 不同步
+</span><span class="c1"></span><span class="p">}</span>
+<span class="nx">div</span><span class="p">.</span><span class="nx">id</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">typeof</span> <span class="nx">div</span><span class="p">.</span><span class="nx">id</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>网上都说 DOM 操作慢，实际上只是比 JS 操作慢，DOM 操作比网络请求还是快很多的。
+关于这一部分内容，大家可以延伸阅读一些文章：</p>
+</blockquote>
+<ul>
+<li><a href="https://segmentfault.com/a/1190000004114594">为什么说DOM操作很慢</a></li>
+<li><a href="https://stackoverflow.com/questions/6817093/but-whys-the-browser-dom-still-so-slow-after-10-years-of-effort">为什么经过10年的努力DOM操作还是这么慢</a></li>
+<li>仅供参考</li>
+</ul>
+<p><a href="https://static.xiedaimala.com/xdml/file/3ac7c224-c23d-491f-84b5-4fabfbeab9b8/2019-10-15-11-2-44.pdf">DOM 编程.pdf</a></p>
+<hr>
+<h2 id="封装-dom-库">封装 DOM 库</h2>
+<blockquote>
+<p><code>BOM/DOM/Canvas/jQuery/Date/LocalStorage/RegExp/Lodash/Underscore/URL 处理</code></p>
+</blockquote>
+<hr>
+<p>封装 DOM 实现下面三个接口：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nb">window</span><span class="p">.</span><span class="nx">dom</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">find</span><span class="p">(){</span>
+        <span class="nx">你来补全</span>
+    <span class="p">},</span>
+    <span class="nx">style</span><span class="p">(){</span>
+        <span class="nx">你来补全</span>
+    <span class="p">},</span>
+    <span class="nx">each</span><span class="p">(){</span>
+        <span class="nx">你来补全</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kr">const</span> <span class="nx">div</span> <span class="o">=</span> <span class="nx">dom</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s1">&#39;#test&gt;.red&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="c1">// 获取对应的元素
+</span><span class="c1"></span><span class="nx">dom</span><span class="p">.</span><span class="nx">style</span><span class="p">(</span><span class="nx">div</span><span class="p">,</span> <span class="s1">&#39;color&#39;</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span><span class="p">)</span> <span class="c1">// 设置 div.style.color
+</span><span class="c1"></span>
+<span class="kr">const</span> <span class="nx">divList</span> <span class="o">=</span> <span class="nx">dom</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s1">&#39;.red&#39;</span><span class="p">)</span> <span class="c1">// 获取多个 div.red 元素
+</span><span class="c1"></span><span class="nx">dom</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="nx">divList</span><span class="p">,</span> <span class="p">(</span><span class="nx">n</span><span class="p">)=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">n</span><span class="p">))</span> <span class="c1">// 遍历 divList 里的所有元素
+</span></code></pre></td></tr></table>
+</div>
+</div><p>GitHub Repo源代码链接</p>
+<p>手写 DOM 库 代码：https://github.com/FrankFang/dom-demo-1/tree/master</p>
+<!-- raw HTML omitted -->
+<hr>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<hr>
+<h3 id="参考文章">参考文章</h3>
+<ul>
+<li><a href="https://static.xiedaimala.com/xdml/file/3ac7c224-c23d-491f-84b5-4fabfbeab9b8/2019-11-30-16-42-7.pdf">封装DOM.pdf</a></li>
+<li><a href="https://wangdoc.com/javascript/dom/index.html">网道 DOM</a></li>
+</ul>
+<h3 id="相关文章">相关文章</h3>
+<ul>
+<li>无</li>
+</ul>
+<hr>
+<ul>
+<li>作者： Joel</li>
+<li>文章链接：</li>
+<li><a href="http://xmasuhai.xyz/posts/%E7%89%88%E6%9D%83%E5%A3%B0%E6%98%8E%E9%93%BE%E6%8E%A5/">版权声明</a></li>
+<li>非自由转载-非商用-非衍生-保持署名</li>
+<li><!-- raw HTML omitted -->河<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->掘<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->思<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->知<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->简<!-- raw HTML omitted --></li>
+</ul>
+<hr>
+
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Joel Xu</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2020-06-10
+      
+        
+        
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="http://xmasuhai.xyz/tags/dom/">DOM</a>
+          <a href="http://xmasuhai.xyz/tags/javascript/">JavaScript</a>
+          <a href="http://xmasuhai.xyz/tags/api/">API</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/api/dom/js%E7%BC%96%E7%A8%8B%E6%8E%A5%E5%8F%A302%E5%B0%81%E8%A3%85-dom-%E5%BA%93/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">【JS编程接口02】封装 DOM 库</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/algorithm/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%8403%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8A/">
+            <span class="next-text nav-default">【算法与数据结构03】数据结构（上）</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:xmasuhai@163.com" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="https://github.com/xmasuhai" rel="me noopener" class="iconfont"
+      title="github"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M512 12.672c-282.88 0-512 229.248-512 512 0 226.261333 146.688 418.133333 350.08 485.76 25.6 4.821333 34.986667-11.008 34.986667-24.618667 0-12.16-0.426667-44.373333-0.64-87.04-142.421333 30.890667-172.458667-68.693333-172.458667-68.693333C188.672 770.986667 155.008 755.2 155.008 755.2c-46.378667-31.744 3.584-31.104 3.584-31.104 51.413333 3.584 78.421333 52.736 78.421333 52.736 45.653333 78.293333 119.850667 55.68 149.12 42.581333 4.608-33.109333 17.792-55.68 32.426667-68.48-113.706667-12.8-233.216-56.832-233.216-253.013333 0-55.893333 19.84-101.546667 52.693333-137.386667-5.76-12.928-23.04-64.981333 4.48-135.509333 0 0 42.88-13.738667 140.8 52.48 40.96-11.392 84.48-17.024 128-17.28 43.52 0.256 87.04 5.888 128 17.28 97.28-66.218667 140.16-52.48 140.16-52.48 27.52 70.528 10.24 122.581333 5.12 135.509333 32.64 35.84 52.48 81.493333 52.48 137.386667 0 196.693333-119.68 240-233.6 252.586667 17.92 15.36 34.56 46.762667 34.56 94.72 0 68.522667-0.64 123.562667-0.64 140.202666 0 13.44 8.96 29.44 35.2 24.32C877.44 942.592 1024 750.592 1024 524.672c0-282.752-229.248-512-512-512"></path>
+</svg>
+
+    </a>
+  
+    <a href="https://www.zhihu.com/people/xue-shou-41/posts" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+
+
+<a href="http://xmasuhai.xyz/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane">Jane</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy;
+    
+      2019 -
+    2022
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Joel Xu
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

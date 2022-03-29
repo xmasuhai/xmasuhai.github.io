@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>【CSS非全解07】CSS定位 - Joel in The House</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="Joel Xu" />
+  <meta name="description" content="布局和定位的区别 布局是屏幕平面上的 定位是垂直于屏幕的 完全不同的概念 一个 div 的分层 从文档流和盒模型说起 背景的范围是从哪到哪？ border内侧围住" />
+
+  <meta name="keywords" content="Hugo, theme, jane" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.91.2" />
+
+
+<link rel="canonical" href="http://xmasuhai.xyz/post/css/css%E9%9D%9E%E5%85%A8%E8%A7%A307css%E5%AE%9A%E4%BD%8D/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="【CSS非全解07】CSS定位" />
+<meta property="og:description" content="布局和定位的区别 布局是屏幕平面上的 定位是垂直于屏幕的 完全不同的概念 一个 div 的分层 从文档流和盒模型说起 背景的范围是从哪到哪？ border内侧围住" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://xmasuhai.xyz/post/css/css%E9%9D%9E%E5%85%A8%E8%A7%A307css%E5%AE%9A%E4%BD%8D/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2020-02-01T00:40:41+08:00" />
+<meta property="article:modified_time" content="2020-02-18T23:28:55+08:00" />
+
+<meta itemprop="name" content="【CSS非全解07】CSS定位">
+<meta itemprop="description" content="布局和定位的区别 布局是屏幕平面上的 定位是垂直于屏幕的 完全不同的概念 一个 div 的分层 从文档流和盒模型说起 背景的范围是从哪到哪？ border内侧围住"><meta itemprop="datePublished" content="2020-02-01T00:40:41+08:00" />
+<meta itemprop="dateModified" content="2020-02-18T23:28:55+08:00" />
+<meta itemprop="wordCount" content="2696">
+<meta itemprop="keywords" content="CSS,CSS-Position," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="【CSS非全解07】CSS定位"/>
+<meta name="twitter:description" content="布局和定位的区别 布局是屏幕平面上的 定位是垂直于屏幕的 完全不同的概念 一个 div 的分层 从文档流和盒模型说起 背景的范围是从哪到哪？ border内侧围住"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Joel in The House</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/post/">文档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/categories/">目录</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/about/">关于我</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          <div class="mobile-menu-parent">
+            <span class="mobile-submenu-open"></span>
+            <a href="http://xmasuhai.xyz/">
+              docs
+            </a>
+          </div>
+          <ul class="mobile-submenu-list">
+            
+              <li>
+                <a href="http://xmasuhai.xyz/post/test/syntax-highlighting/">Syntax Highlighting</a>
+              </li>
+            
+              <li>
+                <a href="http://xmasuhai.xyz/post/test/mytest/">my Syntax Highlighting &amp; ShortCode Test</a>
+              </li>
+            
+          </ul>
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Joel in The House
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/post/">文档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/categories/">目录</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/about/">关于我</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          <a class="menu-item-link menu-parent" href="http://xmasuhai.xyz/">docs</a>
+          <ul class="submenu">
+            
+              <li>
+                <a href="http://xmasuhai.xyz/post/test/syntax-highlighting/">Syntax Highlighting</a>
+              </li>
+            
+              <li>
+                <a href="http://xmasuhai.xyz/post/test/mytest/">my Syntax Highlighting &amp; ShortCode Test</a>
+              </li>
+            
+          </ul>
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">【CSS非全解07】CSS定位</h1>
+      
+      <div class="post-meta">
+        <time datetime="2020-02-01" class="post-time">
+          2020-02-01
+        </time>
+        <div class="post-category">
+            <a href="http://xmasuhai.xyz/categories/2020/"> 2020 </a>
+            
+          </div>
+        <span class="more-meta"> 约 2696 字 </span>
+          <span class="more-meta"> 预计阅读 6 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#布局和定位的区别">布局和定位的区别</a>
+      <ul>
+        <li><a href="#一个-div-的分层">一个 div 的分层</a></li>
+        <li><a href="#position的五个取值"><code>position</code>的五个取值</a></li>
+        <li><a href="#z-index怎么用"><code>z-index</code>怎么用</a></li>
+      </ul>
+    </li>
+    <li><a href="#层叠上下文">层叠上下文</a>
+      <ul>
+        <li><a href="#定位与层叠上下文">定位与层叠上下文</a></li>
+        <li><a href="#负z-index与层叠上下文">负<code>z-index</code>与层叠上下文</a></li>
+        <li><a href="#优先级-样式继承选择器权重">优先级 样式继承、选择器权重</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      <h2 id="布局和定位的区别">布局和定位的区别</h2>
+<blockquote>
+<p>布局是屏幕平面上的</p>
+<p>定位是垂直于屏幕的</p>
+<p>完全不同的概念</p>
+</blockquote>
+<h3 id="一个-div-的分层">一个 div 的分层</h3>
+<blockquote>
+<p>从文档流和盒模型说起</p>
+<p>背景的范围是从哪到哪？</p>
+</blockquote>
+<ul>
+<li><input disabled="" type="checkbox"> border内侧围住的区域</li>
+<li><input checked="" disabled="" type="checkbox"> border外侧围住的区域</li>
+</ul>
+<blockquote>
+<p>如何验证？border半透明</p>
+</blockquote>
+<p>代码验证：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-CSS" data-lang="CSS"><span class="c">/* 点rgba 按住Alt 上下键 0.1 幅度 Chrome开发者调试 */</span>
+<span class="p">.</span><span class="nc">demo</span> <span class="p">{</span>
+    <span class="k">box-sizing</span><span class="p">:</span> <span class="kc">border-box</span><span class="p">;</span>
+    <span class="k">margin</span><span class="p">:</span> <span class="mi">12</span><span class="kt">px</span><span class="p">;</span>
+    <span class="k">border</span><span class="p">:</span> <span class="mi">15</span><span class="kt">px</span> <span class="kc">solid</span> <span class="nb">rgba</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">.9</span><span class="p">);</span>
+    <span class="k">padding</span><span class="p">:</span> <span class="mi">22</span><span class="kt">px</span><span class="p">;</span>
+    <span class="k">width</span><span class="p">:</span> <span class="mi">300</span><span class="kt">px</span><span class="p">;</span>
+    <span class="k">height</span><span class="p">:</span> <span class="mi">300</span><span class="kt">px</span><span class="p">;</span>
+    <span class="k">background</span><span class="p">:</span> <span class="kc">lightblue</span><span class="p">;</span>
+    <span class="k">color</span><span class="p">:</span> <span class="kc">darkorange</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>做demo验证CSS特性</p>
+</blockquote>
+<p><a href="http://xmasuhai.xyz/demo-test/css-demo-4/css-demo_position_divTest.html">demo_position_divTest</a></p>
+<h4 id="从屏幕侧面看一个div是什么样子">从<strong>屏幕侧面</strong>看一个div，是什么样子</h4>
+<blockquote>
+<p>内容区里的文字会遮住<code>background</code>；</p>
+<p><code>border</code>会遮住<code>background</code></p>
+<p>内容区里的文字会遮住<code>border</code>吗？</p>
+<p>会</p>
+<p>脱离文档流的子元素 比之前高一点（离屏幕近一些）跳出并不再影响原普通文档流</p>
+<p>其实就是浮起来了一点点</p>
+</blockquote>
+<p>代码验证：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-CSS" data-lang="CSS"><span class="c">/* 字体变大 直至覆盖到border */</span>
+<span class="p">.</span><span class="nc">demo</span> <span class="p">{</span>
+    <span class="k">box-sizing</span><span class="p">:</span> <span class="kc">border-box</span><span class="p">;</span>
+    <span class="k">border</span><span class="p">:</span> <span class="mi">15</span><span class="kt">px</span> <span class="kc">solid</span> <span class="kc">red</span><span class="p">;</span>
+    <span class="k">width</span><span class="p">:</span> <span class="mi">300</span><span class="kt">px</span><span class="p">;</span>
+    <span class="k">height</span><span class="p">:</span> <span class="mi">300</span><span class="kt">px</span><span class="p">;</span>
+    <span class="k">background</span><span class="p">:</span> <span class="kc">lightblue</span><span class="p">;</span>
+    <span class="k">color</span><span class="p">:</span> <span class="kc">darkorange</span><span class="p">;</span>
+    <span class="k">font-size</span><span class="p">:</span><span class="mi">120</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>上帝视角看div三维立体结构 <a href="https://docs.microsoft.com/zh-cn/microsoft-edge/devtools-guide-chromium/whats-new/2019/12/devtools#3d-view">IE Edge 3D view</a></p>
+<p>分层：内容文字 &gt; border &gt; background</p>
+<p>较后的子元素里的文字会覆盖较前的</p>
+</blockquote>
+<hr>
+<p><del><a href="https://www.google.com.hk/search?q=+%E8%AE%A9%E6%B5%8F%E8%A7%88%E7%9A%84%E7%BD%91%E9%A1%B5%E5%B8%A6%E6%9C%893D%E6%95%88%E6%9E%9C++%E5%AE%9E%E7%8E%B03D%E8%A7%86%E5%9B%BE%E6%9F%A5%E7%9C%8B%E7%BD%91%E9%A1%B5+++%E6%9F%A5%E7%9C%8B3D%E4%B8%AD%E7%9A%84%E7%BD%91%E7%AB%99%E7%BB%93%E6%9E%84">让浏览的网页带有3D效果 实现3D视图查看网页 查看3D中的网站结构</a></del></p>
+<p><del><a href="https://blog.csdn.net/weixin_42551465/article/details/96868212">火狐（firefox）使用Tilt插件实现3D视图查看网页</a></del></p>
+<p><del><a href="http://www.lingchenliang.com/post/58025.html">firefox扩展Tilt-让浏览的网页带有3D效果</a></del></p>
+<p><del>* 新版火狐本不支持</del></p>
+<p><a href="https://www.31du.cn/blog/3d-chromium.html">Firefox 不要的 3D 视图功能，微软将它引入 Chromium</a></p>
+<hr>
+<h3 id="position的五个取值"><code>position</code>的五个取值</h3>
+<ul>
+<li><code>position:static</code>：默认值，待在文档流里，每个块级元素占据自己的区块（block），元素与元素之间不产生重叠</li>
+<li><code>position:relative</code>：相对定位，升起来，但不脱离文档流（所占据的位置不变，仍在默认位置处占据空间）</li>
+<li><code>position:absolute</code>：绝对定位，定位基准是祖先里最近的非<code>static</code>元素</li>
+<li><code>position:fixed</code>：固定定位，定位基准是viewport（有诈）</li>
+<li><code>position:sticky</code>：粘滞定位，直接举例</li>
+</ul>
+<blockquote>
+<p>注意，<code>position:static</code>定位所导致的元素位置，是浏览器自主决定的，所以这时<code>top</code>、<code>bottom</code>、<code>left</code>、<code>right</code>这四个属性无效。</p>
+</blockquote>
+<h4 id="经验">经验</h4>
+<ul>
+<li>如果在元素上写了<code>position:absolute</code>，一定在父级以上元素补一个<code>position:relative</code></li>
+<li>如果写了<code>position:absolute</code>或<code>position:fixed</code>，一定得补<code>top</code>和<code>left</code></li>
+<li><code>position:sticky</code>兼容性差，主要用于面试</li>
+</ul>
+<p>网站实例：</p>
+<p><a href="https://www.juliusbaer.com/asia/cn/%E6%82%A8%E7%9A%84%E7%A7%81%E4%BA%BA%E9%93%B6%E8%A1%8C/">Julius Bär 宝盛</a></p>
+<h4 id="positionrelative"><code>position:relative</code></h4>
+<blockquote>
+<p>相对于默认位置（即<code>position:static</code>时的位置）进行偏移，即定位基点是元素的默认位置</p>
+<p>所占据的位置不变，仍在默认位置占据空间，只是显示的位置和默认位置间有一个偏移</p>
+<p>必须搭配<code>top</code>、<code>bottom</code>、<code>left</code>、<code>right</code>这四个属性一起使用，用来指定偏移的方向和距离</p>
+</blockquote>
+<h5 id="positionrelative使用场景"><code>position:relative</code>使用场景</h5>
+<ul>
+<li>用于做位移（很少）对齐</li>
+<li>用于给<code>position:absolute</code>元素做父级定位基点</li>
+</ul>
+<h5 id="positionrelative配合z-index"><code>position:relative</code>配合<code>z-index</code></h5>
+<ul>
+<li><code>z-index:auto</code>默认值，计算出的值是<code>0</code>，但不创建新的层叠上下文</li>
+<li><code>z-index:0/1/2</code>创建新的层叠上下文</li>
+<li><code>z-index:-1/-2</code>创建新的层叠上下文</li>
+</ul>
+<blockquote>
+<p><code>z-index:auto</code>和<code>z-index:0</code>是不同的</p>
+</blockquote>
+<h5 id="positionrelative经验"><code>position:relative</code>经验</h5>
+<ul>
+<li>写<code>z-index:9999</code>菜</li>
+<li>学会管理<code>z-index</code></li>
+</ul>
+<h4 id="positionabsolute"><code>position:absolute</code></h4>
+<h5 id="positionabsolute使用场景"><code>position:absolute</code>使用场景</h5>
+<ul>
+<li>脱离原来的位置，另起一层（比如对话框的关闭按钮）</li>
+<li>鼠标提示信息（开发者工具设置展示hover：点击Styles :hov 勾选:hover）</li>
+</ul>
+<h5 id="positionabsolute配合z-index"><code>position:absolute</code>配合<code>z-index</code></h5>
+<p>同之前</p>
+<h5 id="positionabsolute经验"><code>position:absolute</code>经验</h5>
+<ul>
+<li>必须有参考点</li>
+<li><code>position:absolute</code>并不一定是相对于<code>position:relative</code>定位的</li>
+<li>父元素<code>position:relative</code>，不影响父元素，以父元素作为参考点（定位基准是祖先里最近的非<code>static</code>元素）</li>
+<li>不是<code>static</code>就是定位元素</li>
+<li>不设<code>left/top</code>、设为<code>auto</code>时，位置处于默认，即不设绝对定位时的原始位置</li>
+<li>某些浏览器上如果不写<code>top/left</code>会位置错乱</li>
+<li>善用：<code>left:100%</code></li>
+<li>善用：<code>left:50%;</code>加负<code>margin</code>（需计算）</li>
+<li>或者<code>transform: translateX(-50%);</code></li>
+</ul>
+<hr>
+<ul>
+<li>完全脱离普通文档流</li>
+<li>位置无法被其他任何元素改变 但会互相覆盖</li>
+<li><code>left:10px</code> 是自己的 外边距 相对于参考元素的边框内壁 偏移 10px</li>
+<li>宽度收缩 必须 设置 固定宽</li>
+<li>行内元素设置绝对定位后 有 块级特性 可设宽高 但不为 块级元素</li>
+<li>适用 元素重叠 任意放置</li>
+</ul>
+<h4 id="positionfixed"><code>position:fixed</code></h4>
+<blockquote>
+<p>定位基准是viewport（有诈）</p>
+<p>所在的父元素如果有<code>transform:scale(0.9);</code>之类的属性，那就不一定了</p>
+</blockquote>
+<h5 id="positionfixed使用场景"><code>position:fixed</code>使用场景</h5>
+<ul>
+<li>广告</li>
+<li>回到顶部</li>
+</ul>
+<h5 id="positionfixed配合z-index"><code>position:fixed</code>配合<code>z-index</code></h5>
+<p>同之前</p>
+<h5 id="positionfixed经验"><code>position:fixed</code>经验</h5>
+<ul>
+<li>视口不包括滚动条（iframe里的也是不包括）</li>
+<li>手机上尽量不要用这个属性，坑多</li>
+<li>搜索「移动端fixed」</li>
+</ul>
+<h4 id="positionsticky"><code>position:sticky</code></h4>
+<h5 id="positionsticky使用场景"><code>position:sticky</code>使用场景</h5>
+<h5 id="positionsticky配合z-index"><code>position:sticky</code>配合<code>z-index</code></h5>
+<h5 id="positionsticky经验"><code>position:sticky</code>经验</h5>
+<p><a href="http://js.jirengu.com/coguv/2/edit?html,css,output">position:sticky</a></p>
+<p><a href="http://js.jirengu.com/wobav/2/edit?html,css,output">推走标题</a></p>
+<hr>
+<h3 id="z-index怎么用"><code>z-index</code>怎么用</h3>
+<ul>
+<li>只要是给元素定了位（非static），变成定位元素（<code>position:relative | absolute | fixed</code>），自然超越了当前父元素的内容文字之上</li>
+<li>默认<code>z-index:0;</code></li>
+<li>所有定位元素以所处父元素的内容文字所在的层作为基准，默认第一层<code>z-index:0;</code>，越往上数值越大</li>
+<li><code>z-index</code>为负的话，处于父元素的<code>background</code>之后</li>
+<li>定位元素底是当前的层叠上下文，即默认的<code>&lt;html&gt;&lt;/html&gt;</code></li>
+</ul>
+<p><a href="http://xmasuhai.xyz/demo-test/css-demo-4/css-demo_position_divTest.html">demo_position_divTest</a></p>
+<h2 id="层叠上下文">层叠上下文</h2>
+<blockquote>
+<p>也叫堆叠上下文</p>
+<p><code>z-index:10</code>和<code>z-index:5</code>哪个高？</p>
+<p>不一定，要看所处的父元素是否有（形成）自己的层叠上下文</p>
+</blockquote>
+<p><a href="http://xmasuhai.xyz/demo-test/css-demo-4/css-demo_stackingContext.html">demo_stackingContext</a></p>
+<h3 id="定位与层叠上下文">定位与层叠上下文</h3>
+<h4 id="比喻">比喻</h4>
+<ul>
+<li>每个层叠上下文就是一个新的小世界（作用域）</li>
+<li>这个作用域里的<code>z-index</code>和外界无关</li>
+<li>处在同一个作用域的<code>z-index</code>之间才能比较</li>
+<li>默认层叠上下文是根元素<code>&lt;html&gt;&lt;/html&gt;</code></li>
+<li>相当于<code>z-index</code>的作用域</li>
+</ul>
+<p><a href="http://xmasuhai.xyz/demo-test/css-demo-4/css-demo_stackingContext.html">demo</a></p>
+<h4 id="哪些不正交的属性可以创建它">哪些不正交的属性可以创建它</h4>
+<ul>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/Guide/CSS/Understanding_z_index/The_stacking_context">MDN文档</a></li>
+<li>需要记住的：<code>z-index/flex/opacity/transform</code></li>
+<li>只要满足一个条件，就自动创建一个层叠上下文</li>
+<li>其他随时搜索查看即可</li>
+</ul>
+<blockquote>
+<p><code>opacity:0.5;</code>和<code>background:rgba(0,0,0,0.5)</code>的区别</p>
+<p><code>opacity</code>影响整个元素</p>
+</blockquote>
+<h3 id="负z-index与层叠上下文">负<code>z-index</code>与层叠上下文</h3>
+<blockquote>
+<p>也只在其属于的作用域里可比较</p>
+<p>负<code>z-index</code>逃不出所属层叠上下文</p>
+</blockquote>
+<h3 id="优先级-样式继承选择器权重">优先级 样式继承、选择器权重</h3>
+<!-- raw HTML omitted -->
+<hr>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<hr>
+<h4 id="参考文章">参考文章</h4>
+<p><a href="https://static.xiedaimala.com/xdml/file/3ac7c224-c23d-491f-84b5-4fabfbeab9b8/2019-8-30-0-56-25.pdf">CSS 布局.pdf</a></p>
+<h4 id="相关文章">相关文章</h4>
+<ul>
+<li>无</li>
+</ul>
+<hr>
+<ul>
+<li>作者： Joel</li>
+<li>文章链接：</li>
+<li><a href="http://xmasuhai.xyz/posts/%E7%89%88%E6%9D%83%E5%A3%B0%E6%98%8E%E9%93%BE%E6%8E%A5/">版权声明</a></li>
+<li>非自由转载-非商用-非衍生-保持署名</li>
+<li><!-- raw HTML omitted -->河<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->掘<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->思<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->知<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->简<!-- raw HTML omitted --></li>
+</ul>
+<hr>
+
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Joel Xu</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2020-02-18
+      
+        
+        
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="http://xmasuhai.xyz/tags/css/">CSS</a>
+          <a href="http://xmasuhai.xyz/tags/css-position/">CSS-Position</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/css/css%E9%9D%9E%E5%85%A8%E8%A7%A308css-%E5%8A%A8%E7%94%BB_%E5%8A%A8%E7%94%BB%E5%8F%8A%E6%B5%8F%E8%A7%88%E5%99%A8%E6%B8%B2%E6%9F%93%E5%8E%9F%E7%90%86/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">【CSS非全解08】CSS 动画_动画及浏览器渲染原理</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/http/http%E9%9D%9E%E5%85%A8%E8%A7%A33%E8%AF%B7%E6%B1%82%E5%92%8C%E5%93%8D%E5%BA%94-node.js-server/">
+            <span class="next-text nav-default">【HTTP非全解】请求和响应 &amp; Node.Js Server</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:xmasuhai@163.com" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="https://github.com/xmasuhai" rel="me noopener" class="iconfont"
+      title="github"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M512 12.672c-282.88 0-512 229.248-512 512 0 226.261333 146.688 418.133333 350.08 485.76 25.6 4.821333 34.986667-11.008 34.986667-24.618667 0-12.16-0.426667-44.373333-0.64-87.04-142.421333 30.890667-172.458667-68.693333-172.458667-68.693333C188.672 770.986667 155.008 755.2 155.008 755.2c-46.378667-31.744 3.584-31.104 3.584-31.104 51.413333 3.584 78.421333 52.736 78.421333 52.736 45.653333 78.293333 119.850667 55.68 149.12 42.581333 4.608-33.109333 17.792-55.68 32.426667-68.48-113.706667-12.8-233.216-56.832-233.216-253.013333 0-55.893333 19.84-101.546667 52.693333-137.386667-5.76-12.928-23.04-64.981333 4.48-135.509333 0 0 42.88-13.738667 140.8 52.48 40.96-11.392 84.48-17.024 128-17.28 43.52 0.256 87.04 5.888 128 17.28 97.28-66.218667 140.16-52.48 140.16-52.48 27.52 70.528 10.24 122.581333 5.12 135.509333 32.64 35.84 52.48 81.493333 52.48 137.386667 0 196.693333-119.68 240-233.6 252.586667 17.92 15.36 34.56 46.762667 34.56 94.72 0 68.522667-0.64 123.562667-0.64 140.202666 0 13.44 8.96 29.44 35.2 24.32C877.44 942.592 1024 750.592 1024 524.672c0-282.752-229.248-512-512-512"></path>
+</svg>
+
+    </a>
+  
+    <a href="https://www.zhihu.com/people/xue-shou-41/posts" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+
+
+<a href="http://xmasuhai.xyz/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane">Jane</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy;
+    
+      2019 -
+    2022
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Joel Xu
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

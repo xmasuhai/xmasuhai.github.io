@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>【JS非全解09】总结 - Joel in The House</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="Joel Xu" />
+  <meta name="description" content="目录 1. 基本概念（关键词 知识点） 2. 控制语句 3. 对象 4. 难点 5. 最重要的知识 6. 常见错误观点 7. JS世界的构造顺序 8. JS世界的构造顺序（续） 9. 简要的图示 10." />
+
+  <meta name="keywords" content="Hugo, theme, jane" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.91.2" />
+
+
+<link rel="canonical" href="http://xmasuhai.xyz/post/js/js%E9%9D%9E%E5%85%A8%E8%A7%A309%E6%80%BB%E7%BB%93/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="【JS非全解09】总结" />
+<meta property="og:description" content="目录 1. 基本概念（关键词 知识点） 2. 控制语句 3. 对象 4. 难点 5. 最重要的知识 6. 常见错误观点 7. JS世界的构造顺序 8. JS世界的构造顺序（续） 9. 简要的图示 10." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://xmasuhai.xyz/post/js/js%E9%9D%9E%E5%85%A8%E8%A7%A309%E6%80%BB%E7%BB%93/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2020-05-18T02:41:45+08:00" />
+<meta property="article:modified_time" content="2020-05-18T02:49:47+08:00" />
+
+<meta itemprop="name" content="【JS非全解09】总结">
+<meta itemprop="description" content="目录 1. 基本概念（关键词 知识点） 2. 控制语句 3. 对象 4. 难点 5. 最重要的知识 6. 常见错误观点 7. JS世界的构造顺序 8. JS世界的构造顺序（续） 9. 简要的图示 10."><meta itemprop="datePublished" content="2020-05-18T02:41:45+08:00" />
+<meta itemprop="dateModified" content="2020-05-18T02:49:47+08:00" />
+<meta itemprop="wordCount" content="3045">
+<meta itemprop="keywords" content="JavaScript,FrontEnd," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="【JS非全解09】总结"/>
+<meta name="twitter:description" content="目录 1. 基本概念（关键词 知识点） 2. 控制语句 3. 对象 4. 难点 5. 最重要的知识 6. 常见错误观点 7. JS世界的构造顺序 8. JS世界的构造顺序（续） 9. 简要的图示 10."/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Joel in The House</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/post/">文档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/categories/">目录</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/about/">关于我</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          <div class="mobile-menu-parent">
+            <span class="mobile-submenu-open"></span>
+            <a href="http://xmasuhai.xyz/">
+              docs
+            </a>
+          </div>
+          <ul class="mobile-submenu-list">
+            
+              <li>
+                <a href="http://xmasuhai.xyz/post/test/syntax-highlighting/">Syntax Highlighting</a>
+              </li>
+            
+              <li>
+                <a href="http://xmasuhai.xyz/post/test/mytest/">my Syntax Highlighting &amp; ShortCode Test</a>
+              </li>
+            
+          </ul>
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Joel in The House
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/post/">文档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/categories/">目录</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/about/">关于我</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          <a class="menu-item-link menu-parent" href="http://xmasuhai.xyz/">docs</a>
+          <ul class="submenu">
+            
+              <li>
+                <a href="http://xmasuhai.xyz/post/test/syntax-highlighting/">Syntax Highlighting</a>
+              </li>
+            
+              <li>
+                <a href="http://xmasuhai.xyz/post/test/mytest/">my Syntax Highlighting &amp; ShortCode Test</a>
+              </li>
+            
+          </ul>
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">【JS非全解09】总结</h1>
+      
+      <div class="post-meta">
+        <time datetime="2020-05-18" class="post-time">
+          2020-05-18
+        </time>
+        <div class="post-category">
+            <a href="http://xmasuhai.xyz/categories/2020/"> 2020 </a>
+            
+          </div>
+        <span class="more-meta"> 约 3045 字 </span>
+          <span class="more-meta"> 预计阅读 7 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#a-id目录-href目录目录a"><!-- raw HTML omitted -->目录<!-- raw HTML omitted --></a></li>
+    <li><a href="#1-基本概念关键词-知识点a-id基本概念-href基本概念aa-idcata-href目录--a">1. 基本概念（关键词 知识点）<!-- raw HTML omitted -->§<!-- raw HTML omitted --><!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
+    <li><a href="#2-控制语句a-id控制语句-href控制语句a-a-idcata-href目录--a">2. 控制语句<!-- raw HTML omitted -->§<!-- raw HTML omitted --> <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
+    <li><a href="#3-对象a-id对象-href对象a-a-idcata-href目录--a">3. 对象<!-- raw HTML omitted -->§<!-- raw HTML omitted --> <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
+    <li><a href="#4-难点a-id难点-href难点a-a-idcata-href目录--a">4. 难点<!-- raw HTML omitted -->§<!-- raw HTML omitted --> <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
+    <li><a href="#5-最重要的知识a-id最重要的知识-href最重要的知识a-a-idcata-href目录--a">5. 最重要的知识<!-- raw HTML omitted -->§<!-- raw HTML omitted --> <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a>
+      <ul>
+        <li><a href="#51-js公式a-idjs公式-hrefjs公式a-a-idcata-href目录--a">5.1 JS公式<!-- raw HTML omitted -->§<!-- raw HTML omitted --> <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
+        <li><a href="#52-根公理objectprototypea-id根公理-href根公理a-a-idcata-href目录--a">5.2 根公理<code>Object.prototype</code><!-- raw HTML omitted -->§<!-- raw HTML omitted --> <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
+        <li><a href="#53-函数公理a-id函数公理-href函数公理a-a-idcata-href目录--a">5.3 函数公理<!-- raw HTML omitted -->§<!-- raw HTML omitted --> <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
+      </ul>
+    </li>
+    <li><a href="#6-常见错误观点a-id常见错误观点-href常见错误观点-a-a-idcata-href目录--a">6. 常见错误观点<!-- raw HTML omitted --> §<!-- raw HTML omitted --> <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a>
+      <ul>
+        <li><a href="#61-xxx的原型a-idxxx的原型-hrefxxx的原型-aa-idcata-href目录--a">6.1 XXX的原型<!-- raw HTML omitted --> §<!-- raw HTML omitted --><!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
+        <li><a href="#62-所有对象的原型a-id所有对象的原型-href所有对象的原型-aa-idcata-href目录--a">6.2 所有对象的原型<!-- raw HTML omitted --> §<!-- raw HTML omitted --><!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
+        <li><a href="#63-对根对象a-id根对象-href根对象objectprototype的质疑-aa-idcata-href目录--a">6.3 对根对象<!-- raw HTML omitted --><code>Object.prototype</code>的质疑 §<!-- raw HTML omitted --><!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
+      </ul>
+    </li>
+    <li><a href="#7-js世界的构造顺序a-idjs世界的构造顺序-hrefjs世界的构造顺序-aa-idcata-href目录--a">7. JS世界的构造顺序<!-- raw HTML omitted --> §<!-- raw HTML omitted --><!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
+    <li><a href="#8-js世界的构造顺序续a-idjs世界的构造顺序_续-hrefjs世界的构造顺序_续a-a-idcata-href目录--a">8. JS世界的构造顺序（续）<!-- raw HTML omitted -->§<!-- raw HTML omitted --> <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a>
+      <ul>
+        <li><a href="#81-new一个构造函数a-idnew一个构造函数-hrefnew一个构造函数a-a-idcata-href目录--a">8.1 new一个构造函数<!-- raw HTML omitted -->§<!-- raw HTML omitted --> <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
+        <li><a href="#82-自定义构造函数a-id自定义构造函数-href自定义构造函数a-a-idcata-href目录--a">8.2 自定义构造函数<!-- raw HTML omitted -->§<!-- raw HTML omitted --> <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
+      </ul>
+    </li>
+    <li><a href="#9-简要的图示a-id简要的图示-href简要的图示aa-idcata-href目录--a">9. 简要的图示<!-- raw HTML omitted -->§<!-- raw HTML omitted --><!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
+    <li><a href="#10-总结a-id总结-href总结aa-idcata-href目录--a">10. 总结<!-- raw HTML omitted -->§<!-- raw HTML omitted --><!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a>
+      <ul>
+        <li><a href="#101-构造函数a-id构造函数-href构造函数aa-idcata-href目录--a">10.1 构造函数<!-- raw HTML omitted -->§<!-- raw HTML omitted --><!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
+        <li><a href="#102-对象a-id对象-href对象aa-idcata-href目录--a">10.2 对象<!-- raw HTML omitted -->§<!-- raw HTML omitted --><!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
+        <li><a href="#103-思考a-id思考-href思考aa-idcata-href目录--a">10.3 思考<!-- raw HTML omitted -->§<!-- raw HTML omitted --><!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
+      </ul>
+    </li>
+    <li><a href="#11-之后学的a-id未学的-href未学的aa-idcata-href目录--a">11. 之后学的<!-- raw HTML omitted -->§<!-- raw HTML omitted --><!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a>
+      <ul>
+        <li><a href="#参考文章">参考文章</a></li>
+        <li><a href="#相关文章">相关文章</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      <h2 id="a-id目录-href目录目录a"><!-- raw HTML omitted -->目录<!-- raw HTML omitted --></h2>
+<ul>
+<li><!-- raw HTML omitted -->1. 基本概念（关键词 知识点）<!-- raw HTML omitted --></li>
+<li><!-- raw HTML omitted -->2. 控制语句<!-- raw HTML omitted --></li>
+<li><!-- raw HTML omitted -->3. 对象<!-- raw HTML omitted --></li>
+<li><!-- raw HTML omitted -->4. 难点<!-- raw HTML omitted --></li>
+<li><!-- raw HTML omitted -->5. 最重要的知识<!-- raw HTML omitted --></li>
+<li><!-- raw HTML omitted -->6. 常见错误观点<!-- raw HTML omitted --></li>
+<li><!-- raw HTML omitted -->7. JS世界的构造顺序<!-- raw HTML omitted --></li>
+<li><!-- raw HTML omitted -->8. JS世界的构造顺序（续）<!-- raw HTML omitted --></li>
+<li><!-- raw HTML omitted -->9. 简要的图示<!-- raw HTML omitted --></li>
+<li><!-- raw HTML omitted -->10. 总结<!-- raw HTML omitted --></li>
+</ul>
+<h2 id="1-基本概念关键词-知识点a-id基本概念-href基本概念aa-idcata-href目录--a">1. 基本概念（关键词 知识点）<!-- raw HTML omitted -->§<!-- raw HTML omitted --><!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+<ul>
+<li>内存（图）、变量、数据类型、对象;</li>
+</ul>
+<h2 id="2-控制语句a-id控制语句-href控制语句a-a-idcata-href目录--a">2. 控制语句<!-- raw HTML omitted -->§<!-- raw HTML omitted --> <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+<ul>
+<li><code>if..else...</code></li>
+<li><code>for...</code></li>
+</ul>
+<h2 id="3-对象a-id对象-href对象a-a-idcata-href目录--a">3. 对象<!-- raw HTML omitted -->§<!-- raw HTML omitted --> <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+<ul>
+<li>原型（链）</li>
+<li>对象分类</li>
+<li><code>new</code>一个新对象</li>
+<li>构造函数</li>
+<li><code>this</code>的隐式传递和显式传递（call）</li>
+</ul>
+<h2 id="4-难点a-id难点-href难点a-a-idcata-href目录--a">4. 难点<!-- raw HTML omitted -->§<!-- raw HTML omitted --> <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+<ul>
+<li>原型</li>
+<li><code>this</code></li>
+<li><code>AJAX</code></li>
+</ul>
+<h2 id="5-最重要的知识a-id最重要的知识-href最重要的知识a-a-idcata-href目录--a">5. 最重要的知识<!-- raw HTML omitted -->§<!-- raw HTML omitted --> <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+<h3 id="51-js公式a-idjs公式-hrefjs公式a-a-idcata-href目录--a">5.1 JS公式<!-- raw HTML omitted -->§<!-- raw HTML omitted --> <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+<ul>
+<li><code>对象.__proto__ === 其构造函数.prototype</code></li>
+</ul>
+<blockquote>
+<p>JS唯一公式，直接套公式</p>
+</blockquote>
+<h3 id="52-根公理objectprototypea-id根公理-href根公理a-a-idcata-href目录--a">5.2 根公理<code>Object.prototype</code><!-- raw HTML omitted -->§<!-- raw HTML omitted --> <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+<ul>
+<li><code>Object.prototype</code>是所有对象的（直接或间接）原型</li>
+<li><code>Object.prototype</code>的原型是<code>null</code></li>
+</ul>
+<blockquote>
+<p>语言设计之初即规定好的</p>
+</blockquote>
+<h3 id="53-函数公理a-id函数公理-href函数公理a-a-idcata-href目录--a">5.3 函数公理<!-- raw HTML omitted -->§<!-- raw HTML omitted --> <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+<ul>
+<li>所有函数都是由<code>Function</code>构造的</li>
+<li><code>任何函数.__proto__ === Function.prototype</code></li>
+<li>任意函数包括有<code>Object / Array / Function</code></li>
+</ul>
+<blockquote>
+<p>基于这三个知识和基础知识，可以推出JS世界</p>
+</blockquote>
+<h2 id="6-常见错误观点a-id常见错误观点-href常见错误观点-a-a-idcata-href目录--a">6. 常见错误观点<!-- raw HTML omitted --> §<!-- raw HTML omitted --> <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+<h3 id="61-xxx的原型a-idxxx的原型-hrefxxx的原型-aa-idcata-href目录--a">6.1 XXX的原型<!-- raw HTML omitted --> §<!-- raw HTML omitted --><!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+<ul>
+<li>{name:&lsquo;Frank&rsquo;}</li>
+<li>[1,2,3]</li>
+<li>Object</li>
+</ul>
+<blockquote>
+<p>当一问到“它们的原型分别是什么？”</p>
+</blockquote>
+<ul>
+<li>即是在问：“它们的<code>.__proto__</code>是什么？”</li>
+<li>而不是在问：“它们的<code>.prototype</code>是什么？”</li>
+</ul>
+<blockquote>
+<p>正确的概念</p>
+</blockquote>
+<ul>
+<li>「的原型」等价于「.<strong>proto</strong>」</li>
+<li>中文「原型」无法区分<code>.__proto__</code> 和 <code>.prototype</code></li>
+<li>约定：原型默认指<code>.__proto__</code></li>
+<li>只不过<code>.__proto__</code> 正好等于某个函数的一个属性，叫<code>.prototype</code></li>
+</ul>
+<h3 id="62-所有对象的原型a-id所有对象的原型-href所有对象的原型-aa-idcata-href目录--a">6.2 所有对象的原型<!-- raw HTML omitted --> §<!-- raw HTML omitted --><!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+<blockquote>
+<p>矛盾点</p>
+</blockquote>
+<ul>
+<li><code>[1,2,3]</code>的原型是<code>Array.prototype</code></li>
+<li><code>Object.prototype</code>是所有对象的原型</li>
+<li><code>[1,2,3]</code>也是一种对象</li>
+<li>那为什么<code>Object.prototype</code>不是<code>[1,2,3]</code>的原型</li>
+</ul>
+<blockquote>
+<p>正确的概念</p>
+</blockquote>
+<ul>
+<li>原型分两种：直接原型和间接原型</li>
+<li>对于普通对象来说，<code>Object.prototype</code>是直接原型</li>
+<li>对于数组、函数对象来说，<code>Object.prototype</code>是间接原型</li>
+<li>都在原型链上</li>
+</ul>
+<h3 id="63-对根对象a-id根对象-href根对象objectprototype的质疑-aa-idcata-href目录--a">6.3 对根对象<!-- raw HTML omitted --><code>Object.prototype</code>的质疑 §<!-- raw HTML omitted --><!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+<blockquote>
+<p><code>Object.prototype</code>不是根对象（JS公理2 说是根对象）</p>
+</blockquote>
+<p>似是而非的推论：</p>
+<ul>
+<li><code>Object.prototype</code>是所有对象的原型（√）</li>
+<li><code>Object</code>是<code>Function</code>构造出来的（√）</li>
+<li><code>Function</code>构造了<code>Object.prototype</code>（√）</li>
+<li><code>Function</code>看起来更像根对象（×）</li>
+</ul>
+<blockquote>
+<p>正确的概念</p>
+</blockquote>
+<ul>
+<li><code>Object.prototype</code> 和 <strong><code>Object.prototype 对象</code></strong> 的区别</li>
+<li>地址 和 对象的区别</li>
+<li>对象里面从来不会包含另一个对象</li>
+<li>对象里面只包含另一个对象对应的地址 <strong><code>Object.prototype  = #xxx 地址</code></strong></li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="k">typeof</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">prototype</span> <span class="c1">// &#34;object&#34; 不能判断
+</span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>依据内存图，假设<code>Object.prototype</code>指向一块内存<code>#202</code></li>
+<li>问<code>Object.prototype</code>在<code>Object</code>里面吗？（不在）</li>
+<li><code>Object.prototype</code>指向<code>#202</code>是一个地址</li>
+<li><code>#202</code>是在内存中的对象</li>
+<li><code>Object.prototype</code>只表示地址，地址在<code>Object</code>里面</li>
+<li><code>Object.prototype</code>地址所对应的对象不在<code>Object</code>里面</li>
+<li><code>Function</code>构造了<code>Object.prototype</code>的地址，假设为<code>#303</code></li>
+<li><code>Function</code>并未构造<code>#303</code>本身，即未构造根对象本身</li>
+<li><code>Function</code>构造了一个存根对象地址的属性，叫<code>Object.prototype</code></li>
+</ul>
+<h2 id="7-js世界的构造顺序a-idjs世界的构造顺序-hrefjs世界的构造顺序-aa-idcata-href目录--a">7. JS世界的构造顺序<!-- raw HTML omitted --> §<!-- raw HTML omitted --><!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+<ol>
+<li>创建根对象 <code>#101</code>(包含 toString : .. 、valueOf : .. 、<strong>proto</strong>: null)  根对象没有名字</li>
+<li>创建函数的原型 <code>#208</code>(包含 call 、apply 、<strong>proto</strong>: #101) 没有名字</li>
+<li>创建数组的原型 <code>#404</code>(包含 push 、 pop 、 <strong>proto</strong>: #101) 没有名字</li>
+<li>创建没有名字的<code>Function</code> <code>#342</code>(包含 <code>Function.prototype</code>: <code>#208</code>)</li>
+<li>让<code>Function.prototype</code>等于 <code>#208</code> (有地址名字了)</li>
+<li>此时发现 <code>Function</code>的 <code>__proto__</code> 和<code>Function</code>都是 <code>#208</code> （由浏览器指定 <code>Function.__proto__ === Function.prototype</code>）</li>
+<li>用<code>Function</code>创建 <code>Object</code> （实际没有名字） <code>Object.__proto__ === Function.prototype</code> <code>#208</code></li>
+<li>让<code>Object.prototype</code>等于 <code>#101</code> (有地址名字了)</li>
+<li>用<code>Function</code>创建 <code>Array</code> （实际没有名字） <code>Array.__proto__ === Function.prototype</code> <code>#208</code></li>
+<li>让<code>Array.prototype</code>等于 <code>#404</code> (有地址名字了)</li>
+<li>创建<code>window</code>对象（不属于JS世界）</li>
+<li>用<code>window</code>的<code>Object</code>、<code>Array</code>属性将4 7 和 9 中的函数命名<code>window.Function</code>指向<code>#2020</code> <code>window.Object</code>指向<code>#707</code> <code>window.Array</code>指向<code>#909</code> 这三个对象有名字后 根才有名字</li>
+<li>记住一点，JS创建一个对象时，不会给这个对象名字</li>
+</ol>
+<blockquote>
+<p>过程分析</p>
+</blockquote>
+<ul>
+<li>1 2 3 创造原型</li>
+<li>4 构造一个构造出函数的函数 Function 关联 <code>Function.prototype</code></li>
+<li>5 让函数的原型是(创建的)函数的原型</li>
+<li>6 让函数构造出的 函数的原型 也是(创建的)函数的原型</li>
+<li>看起来好像是 Function 自己构造了自己，但实际只是地址相同</li>
+<li>7 用 Function 构造 Object <code>Object._proto__ === Function.prototype</code></li>
+<li>8 Object 构造出来的对象的原型（Object自己去构造对象时 用的公有属性 #101 挂在 Object.prototype上）</li>
+<li>9 用 Function 构造 Array <code>Array._proto__ === Function.prototype</code></li>
+<li>10 Array 构造出来的对象的原型（Array自己去构造对象时 用的公有属性 #404 挂在 Array.prototype上）</li>
+<li>11 之前 都是假想的名字 没有实际的名字 创建 window 之后 将它们命名为 Function Object Array后 才有名字 它们的prototype才有名字</li>
+</ul>
+<h2 id="8-js世界的构造顺序续a-idjs世界的构造顺序_续-hrefjs世界的构造顺序_续a-a-idcata-href目录--a">8. JS世界的构造顺序（续）<!-- raw HTML omitted -->§<!-- raw HTML omitted --> <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+<h3 id="81-new一个构造函数a-idnew一个构造函数-hrefnew一个构造函数a-a-idcata-href目录--a">8.1 new一个构造函数<!-- raw HTML omitted -->§<!-- raw HTML omitted --> <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+<ul>
+<li>用<code>new Object()</code>创建 <code>obj1</code></li>
+<li><code>new</code>会将<code>obj1</code>的原型<code>__proto__</code>设置为<code>Object.prototype</code> (假设)并指向 <code>#101</code>（Object地址 根的地址）</li>
+<li>用<code>new Array()</code>创建 <code>arr1</code></li>
+<li><code>new</code>会将<code>arr1</code>的原型<code>__proto__</code>设置为<code>Array.prototype</code> (假设)并指向 <code>#404</code>（Array的地址）</li>
+<li>用<code>new Function()</code>创建 <code>fn1</code></li>
+<li><code>new</code>会将<code>fn1</code>的原型<code>__proto__</code>设置为<code>Function.prototype</code> (假设)并指向 <code>#208</code>（Function的地址）</li>
+</ul>
+<blockquote>
+<p><code>new Xxx()</code>一个x 就把 <code>x.__proto__</code>设置为<code>Xxx.prototype</code></p>
+</blockquote>
+<h3 id="82-自定义构造函数a-id自定义构造函数-href自定义构造函数a-a-idcata-href目录--a">8.2 自定义构造函数<!-- raw HTML omitted -->§<!-- raw HTML omitted --> <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+<ol>
+<li>自定义构造函数 <code>Person</code> 函数里给 <code>this</code> 加属性</li>
+<li><code>Person</code> 自动创建 <code>prototype</code> 属性 和对应的对象 <code>#502</code></li>
+<li>在 <code>Person.prototype</code> <code>#502</code> 上面加属性</li>
+<li>用 <code>new Person()</code> 创建对象 <code>p</code></li>
+<li><code>new</code> 会将 <code>p</code> 的原型 <code>__proto__</code> 设为 <code>#502</code></li>
+</ol>
+<hr>
+<h2 id="9-简要的图示a-id简要的图示-href简要的图示aa-idcata-href目录--a">9. 简要的图示<!-- raw HTML omitted -->§<!-- raw HTML omitted --><!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+<blockquote>
+<p>举例说明三个圆形、三个函数和三个对象的关系</p>
+</blockquote>
+<ul>
+<li>三个函数：<code>Array</code>函数 <code>Object</code>函数 <code>Function</code>函数</li>
+<li>三个原型：数组的原型 对象的原型 函数的原型</li>
+<li>一一对应</li>
+<li><code>Object</code>函数的<code>prototype</code>存储了 根（对象的原型）</li>
+<li><code>Function</code>函数的<code>prototype</code>存储了 函数的原型</li>
+<li><code>Array</code>函数的<code>prototype</code>存储了 数组的原型</li>
+<li>即 每个函数 都存储了它自己的原型</li>
+<li>每个构造函数 存储了它自己的 对象的原型</li>
+<li>三个函数本身的原型（<code>__proto__</code>）是 函数的原型（#306）</li>
+<li>数组是对象，函数时对象</li>
+<li>函数的构造函数构造出了函数</li>
+<li>数组的构造函数构造出了数组</li>
+<li>对象的构造函数构造出了对象</li>
+</ul>
+<hr>
+<h2 id="10-总结a-id总结-href总结aa-idcata-href目录--a">10. 总结<!-- raw HTML omitted -->§<!-- raw HTML omitted --><!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+<blockquote>
+<p>只能问 某物的原型是什么，单向性的问题</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="k">typeof</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">prototype</span> <span class="c1">// &#34;object&#34;
+</span><span class="c1">// 公理二 Object.prototype 是所有对象的原型
+</span><span class="c1"></span><span class="nb">Object</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">__proto__</span> <span class="o">===</span> <span class="kc">null</span>
+
+<span class="k">typeof</span> <span class="nb">Function</span><span class="p">.</span><span class="nx">prototype</span> <span class="c1">// &#34;function&#34;
+</span><span class="c1"></span><span class="nb">Function</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">__proto__</span> <span class="o">===</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">prototype</span>
+<span class="c1">// Function.prototype 的构造函数
+</span><span class="c1"></span>
+<span class="kr">const</span> <span class="nx">f</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{}</span>
+<span class="nx">f</span><span class="p">.</span><span class="nx">__proto__</span> <span class="o">===</span> <span class="nb">Function</span><span class="p">.</span><span class="nx">prototype</span>
+
+<span class="nb">Function</span><span class="p">.</span><span class="nx">__proto__</span> <span class="o">===</span> <span class="nb">Function</span><span class="p">.</span><span class="nx">prototype</span>
+
+<span class="k">typeof</span> <span class="nb">Array</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">toString</span> <span class="c1">// &#34;function&#34;
+</span><span class="c1"></span><span class="nb">Array</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">toString</span><span class="p">.</span><span class="nx">__proto__</span> <span class="o">===</span> <span class="nb">Function</span><span class="p">.</span><span class="nx">prototype</span>
+
+<span class="nb">Object</span><span class="p">.</span><span class="nx">__proto__</span> <span class="o">===</span> <span class="nb">Function</span><span class="p">.</span><span class="nx">prototype</span>
+
+<span class="nb">Array</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">===</span> <span class="p">[].</span><span class="nx">__proto__</span>
+
+<span class="nb">Array</span><span class="p">.</span><span class="nx">__proto__</span> <span class="o">===</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">prototype</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="101-构造函数a-id构造函数-href构造函数aa-idcata-href目录--a">10.1 构造函数<!-- raw HTML omitted -->§<!-- raw HTML omitted --><!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+<ul>
+<li>是用来构造对象的</li>
+<li>会预先存好对象的原型，原型的原型是根</li>
+<li><code>new</code>的时候讲对象的<code>__proto__</code>对象原型</li>
+</ul>
+<h3 id="102-对象a-id对象-href对象aa-idcata-href目录--a">10.2 对象<!-- raw HTML omitted -->§<!-- raw HTML omitted --><!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+<ul>
+<li>所有对象都直接或间接指向根对象（一层间接的原型公式上加一层<code>__proto__</code> ）</li>
+<li>如果如果对象想要分类，就在原型链上加一环</li>
+<li>用构造函数可以加这一环</li>
+</ul>
+<h3 id="103-思考a-id思考-href思考aa-idcata-href目录--a">10.3 思考<!-- raw HTML omitted -->§<!-- raw HTML omitted --><!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+<ul>
+<li>如果加了这一环后，想再加一环</li>
+<li>要用到「继承」</li>
+</ul>
+<hr>
+<h2 id="11-之后学的a-id未学的-href未学的aa-idcata-href目录--a">11. 之后学的<!-- raw HTML omitted -->§<!-- raw HTML omitted --><!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+<ul>
+<li>错误处理<code>try...catch...</code>/<code>Math</code>/<code>Date</code>/<code>正则</code>/<code>JSON</code></li>
+<li><a href="https://wangdoc.com/javascript/basic/grammar.html">网道</a></li>
+<li>项目中深入理解</li>
+</ul>
+<!-- raw HTML omitted -->
+<hr>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<hr>
+<h3 id="参考文章">参考文章</h3>
+<ul>
+<li><a href="https://static.xiedaimala.com/xdml/file/3ac7c224-c23d-491f-84b5-4fabfbeab9b8/2019-10-9-15-40-31.pdf">JS 总结.pdf</a></li>
+</ul>
+<h3 id="相关文章">相关文章</h3>
+<ul>
+<li>无</li>
+</ul>
+<hr>
+<ul>
+<li>作者： Joel</li>
+<li>文章链接：</li>
+<li><a href="http://xmasuhai.xyz/posts/%E7%89%88%E6%9D%83%E5%A3%B0%E6%98%8E%E9%93%BE%E6%8E%A5/">版权声明</a></li>
+<li>非自由转载-非商用-非衍生-保持署名</li>
+<li><!-- raw HTML omitted -->河<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->掘<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->思<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->知<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->简<!-- raw HTML omitted --></li>
+</ul>
+<hr>
+
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Joel Xu</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2020-05-18
+      
+        
+        
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="http://xmasuhai.xyz/tags/javascript/">JavaScript</a>
+          <a href="http://xmasuhai.xyz/tags/frontend/">FrontEnd</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/api/dom/js%E7%BC%96%E7%A8%8B%E6%8E%A5%E5%8F%A305dom%E4%BA%8B%E4%BB%B6%E4%B8%8E%E4%BA%8B%E4%BB%B6%E5%A7%94%E6%89%98/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">【JS编程接口05】DOM事件与事件委托</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/ajax/%E5%89%8D%E5%90%8E%E5%88%86%E7%A6%BBajax-%E7%9A%84%E5%8E%9F%E7%90%86/">
+            <span class="next-text nav-default">【前后分离】AJAX 的原理</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:xmasuhai@163.com" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="https://github.com/xmasuhai" rel="me noopener" class="iconfont"
+      title="github"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M512 12.672c-282.88 0-512 229.248-512 512 0 226.261333 146.688 418.133333 350.08 485.76 25.6 4.821333 34.986667-11.008 34.986667-24.618667 0-12.16-0.426667-44.373333-0.64-87.04-142.421333 30.890667-172.458667-68.693333-172.458667-68.693333C188.672 770.986667 155.008 755.2 155.008 755.2c-46.378667-31.744 3.584-31.104 3.584-31.104 51.413333 3.584 78.421333 52.736 78.421333 52.736 45.653333 78.293333 119.850667 55.68 149.12 42.581333 4.608-33.109333 17.792-55.68 32.426667-68.48-113.706667-12.8-233.216-56.832-233.216-253.013333 0-55.893333 19.84-101.546667 52.693333-137.386667-5.76-12.928-23.04-64.981333 4.48-135.509333 0 0 42.88-13.738667 140.8 52.48 40.96-11.392 84.48-17.024 128-17.28 43.52 0.256 87.04 5.888 128 17.28 97.28-66.218667 140.16-52.48 140.16-52.48 27.52 70.528 10.24 122.581333 5.12 135.509333 32.64 35.84 52.48 81.493333 52.48 137.386667 0 196.693333-119.68 240-233.6 252.586667 17.92 15.36 34.56 46.762667 34.56 94.72 0 68.522667-0.64 123.562667-0.64 140.202666 0 13.44 8.96 29.44 35.2 24.32C877.44 942.592 1024 750.592 1024 524.672c0-282.752-229.248-512-512-512"></path>
+</svg>
+
+    </a>
+  
+    <a href="https://www.zhihu.com/people/xue-shou-41/posts" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+
+
+<a href="http://xmasuhai.xyz/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane">Jane</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy;
+    
+      2019 -
+    2022
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Joel Xu
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

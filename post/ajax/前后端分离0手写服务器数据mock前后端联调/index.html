@@ -1,0 +1,1866 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>【前后端分离0】手写服务器、数据Mock、前后端联调 - Joel in The House</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="Joel Xu" />
+  <meta name="description" content="手写服务器、数据Mock、前后端联调 代码仓库 test-node-module-promise 大纲链接§ [toc] 前端在开发中如何mock数据 涉及与后端交互，发送Ajax请求，从后台获取数据/向后" />
+
+  <meta name="keywords" content="Hugo, theme, jane" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.91.2" />
+
+
+<link rel="canonical" href="http://xmasuhai.xyz/post/ajax/%E5%89%8D%E5%90%8E%E7%AB%AF%E5%88%86%E7%A6%BB0%E6%89%8B%E5%86%99%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%95%B0%E6%8D%AEmock%E5%89%8D%E5%90%8E%E7%AB%AF%E8%81%94%E8%B0%83/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="【前后端分离0】手写服务器、数据Mock、前后端联调" />
+<meta property="og:description" content="手写服务器、数据Mock、前后端联调 代码仓库 test-node-module-promise 大纲链接§ [toc] 前端在开发中如何mock数据 涉及与后端交互，发送Ajax请求，从后台获取数据/向后" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://xmasuhai.xyz/post/ajax/%E5%89%8D%E5%90%8E%E7%AB%AF%E5%88%86%E7%A6%BB0%E6%89%8B%E5%86%99%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%95%B0%E6%8D%AEmock%E5%89%8D%E5%90%8E%E7%AB%AF%E8%81%94%E8%B0%83/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2021-12-28T22:07:58+08:00" />
+<meta property="article:modified_time" content="2022-01-26T16:46:09+08:00" />
+
+<meta itemprop="name" content="【前后端分离0】手写服务器、数据Mock、前后端联调">
+<meta itemprop="description" content="手写服务器、数据Mock、前后端联调 代码仓库 test-node-module-promise 大纲链接§ [toc] 前端在开发中如何mock数据 涉及与后端交互，发送Ajax请求，从后台获取数据/向后"><meta itemprop="datePublished" content="2021-12-28T22:07:58+08:00" />
+<meta itemprop="dateModified" content="2022-01-26T16:46:09+08:00" />
+<meta itemprop="wordCount" content="5562">
+<meta itemprop="keywords" content="FrontEnd,Mock," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="【前后端分离0】手写服务器、数据Mock、前后端联调"/>
+<meta name="twitter:description" content="手写服务器、数据Mock、前后端联调 代码仓库 test-node-module-promise 大纲链接§ [toc] 前端在开发中如何mock数据 涉及与后端交互，发送Ajax请求，从后台获取数据/向后"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Joel in The House</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/post/">文档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/categories/">目录</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/about/">关于我</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          <div class="mobile-menu-parent">
+            <span class="mobile-submenu-open"></span>
+            <a href="http://xmasuhai.xyz/">
+              docs
+            </a>
+          </div>
+          <ul class="mobile-submenu-list">
+            
+              <li>
+                <a href="http://xmasuhai.xyz/post/test/syntax-highlighting/">Syntax Highlighting</a>
+              </li>
+            
+              <li>
+                <a href="http://xmasuhai.xyz/post/test/mytest/">my Syntax Highlighting &amp; ShortCode Test</a>
+              </li>
+            
+          </ul>
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Joel in The House
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/post/">文档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/categories/">目录</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/about/">关于我</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          <a class="menu-item-link menu-parent" href="http://xmasuhai.xyz/">docs</a>
+          <ul class="submenu">
+            
+              <li>
+                <a href="http://xmasuhai.xyz/post/test/syntax-highlighting/">Syntax Highlighting</a>
+              </li>
+            
+              <li>
+                <a href="http://xmasuhai.xyz/post/test/mytest/">my Syntax Highlighting &amp; ShortCode Test</a>
+              </li>
+            
+          </ul>
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">【前后端分离0】手写服务器、数据Mock、前后端联调</h1>
+      
+      <div class="post-meta">
+        <time datetime="2021-12-28" class="post-time">
+          2021-12-28
+        </time>
+        <div class="post-category">
+            <a href="http://xmasuhai.xyz/categories/frontend/"> FrontEnd </a>
+            
+          </div>
+        <span class="more-meta"> 约 5562 字 </span>
+          <span class="more-meta"> 预计阅读 12 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#大纲链接a-idcatalogue-hrefcatalogue---a">大纲链接<!-- raw HTML omitted --> § <!-- raw HTML omitted --></a></li>
+    <li><a href="#1-nodejs手写服务器mock数据-a-hrefcatalogue--a">1. Node.js手写服务器Mock数据 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a>
+      <ul>
+        <li><a href="#11-使用nodejs手写server-a-hrefcatalogue--a">1.1 使用node.js手写server <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
+        <li><a href="#12-打印urlobj-url字符串解析对象-a-hrefcatalogue--a">1.2 打印<code>urlObj</code> url字符串解析对象 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
+        <li><a href="#13-写一个简单地html-indexhtml-模拟页面发起请求-a-hrefcatalogue--a">1.3 写一个简单地HTML <code>index.html</code> 模拟页面发起请求 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
+        <li><a href="#14-改为使用es6模块-a-hrefcatalogue--a">1.4 改为使用ES6模块 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
+        <li><a href="#15-功能完善-a-hrefcatalogue--a">1.5 功能完善 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
+        <li><a href="#缺点-a-hrefcatalogue--a">缺点 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
+        <li><a href="#16-拓展高级用法手写expressjs-a-hrefcatalogue--a">1.6 拓展：高级用法，手写Express.js <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
+      </ul>
+    </li>
+    <li><a href="#2-mockjs-和-mock-平台介绍和用法-a-hrefcatalogue--a">2 Mock.js 和 Mock 平台介绍和用法 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a>
+      <ul>
+        <li><a href="#21-mockjs用法-a-hrefcatalogue--a">2.1 Mock.js用法 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
+        <li><a href="#使用-mockjs-数据占位符-a-hrefcatalogue--a">使用 <code>Mock.js</code> 数据占位符 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
+      </ul>
+    </li>
+    <li><a href="#3-阿里rap2-mock平台的使用-a-hrefcatalogue--a">3. 阿里Rap2 Mock平台的使用 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a>
+      <ul>
+        <li><a href="#编辑接口添加响应-a-hrefcatalogue--a">编辑接口，添加响应 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
+        <li><a href="#导出接口-a-hrefcatalogue--a">导出接口 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
+        <li><a href="#后端接口检测-a-hrefcatalogue--a">后端接口检测 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
+      </ul>
+    </li>
+    <li><a href="#4-前后端接口规范-a-hrefcatalogue--a">4. 前后端接口规范 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a>
+      <ul>
+        <li><a href="#接口文档-a-hrefcatalogue--a">接口文档 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
+        <li><a href="#接口约定-a-hrefcatalogue--a">接口约定 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
+      </ul>
+    </li>
+    <li><a href="#5-使用curl命令行快速测试已经运行的后端接口-a-hrefcatalogue--a">5. 使用curl命令行快速测试已经运行的后端接口 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a>
+      <ul>
+        <li><a href="#发送get请求-a-hrefcatalogue--a">发送GET请求 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
+        <li><a href="#发送post请求-a-hrefcatalogue--a">发送POST请求 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
+        <li><a href="#发送拥有权限的post请求-a-hrefcatalogue--a">发送拥有权限的POST请求 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
+      </ul>
+    </li>
+    <li><a href="#使用-postmanapifox-或者直接webstorm自带-http-客户端-a-hrefcatalogue--a">使用 POSTMAN、Apifox 或者直接WebStorm自带 http 客户端 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a>
+      <ul>
+        <li><a href="#参考文章-a-hrefcatalogue--a">参考文章 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
+        <li><a href="#相关文章-a-hrefcatalogue--a">相关文章 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      <h1 id="手写服务器数据mock前后端联调">手写服务器、数据Mock、前后端联调</h1>
+<ul>
+<li><a href="https://github.com/xmasuhai/test-node-module-promise">代码仓库 test-node-module-promise</a></li>
+</ul>
+<hr>
+<h2 id="大纲链接a-idcatalogue-hrefcatalogue---a">大纲链接<!-- raw HTML omitted --> § <!-- raw HTML omitted --></h2>
+<p>[toc]</p>
+<hr>
+<blockquote>
+<p>前端在开发中如何mock数据</p>
+</blockquote>
+<ul>
+<li>涉及与后端交互，发送Ajax请求，从后台获取数据/向后端提交数据</li>
+<li>前端按照接口文档模拟接口数据，实现前后端同步开发</li>
+<li>模拟的数据和后端真实数据<strong>遵循同样的格式</strong>，内容无关紧要</li>
+<li>通过模拟数据的字段，将数据展示到页面中</li>
+<li>当后端完成接口后，通过联调，替换真实接口</li>
+</ul>
+<blockquote>
+<p>准备</p>
+</blockquote>
+<ul>
+<li>安装<code>node14+</code> 或者安装<code>node16</code></li>
+</ul>
+<h2 id="1-nodejs手写服务器mock数据-a-hrefcatalogue--a">1. Node.js手写服务器Mock数据 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+<h3 id="11-使用nodejs手写server-a-hrefcatalogue--a">1.1 使用node.js手写server <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+<blockquote>
+<p>20行代码实现server：<code>server.js</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="c1">// 加载 node 模块
+</span><span class="c1"></span><span class="kr">const</span> <span class="nx">http</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;http&#39;</span><span class="p">)</span> <span class="c1">// 创建服务器
+</span><span class="c1"></span><span class="kr">const</span> <span class="nx">fs</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;fs&#39;</span><span class="p">)</span> <span class="c1">// 文件读取模块
+</span><span class="c1"></span><span class="kr">const</span> <span class="nx">url</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;url&#39;</span><span class="p">)</span> <span class="c1">// url解析模块
+</span><span class="c1"></span>
+<span class="kr">const</span> <span class="nx">server</span> <span class="o">=</span> <span class="nx">http</span><span class="p">.</span><span class="nx">createServer</span><span class="p">((</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+
+<span class="p">}).</span><span class="nx">listen</span><span class="p">(</span><span class="mi">8080</span><span class="p">)</span> <span class="c1">// 监听端口
+</span><span class="c1"></span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;open http://localhost:8080&#39;</span><span class="p">);</span> <span class="c1">// 运行`node server.js` ，打开地址，浏览器一直处于等待响应的状态
+</span><span class="c1"></span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>命令行运行<code>node server.js</code></li>
+<li>实现模拟后端</li>
+<li>前端发送请求至模拟后端服务器，给出对应的响应</li>
+<li>调用<code>http.createServer(()=&gt;{}).listen(8080)</code>创建server</li>
+<li>监听8080端口</li>
+<li>服务器是一个运行在机器上的软件，监听一些端口</li>
+<li>当端口监听到到请求时，接收请求并发出响应</li>
+<li>服务器时刻等待请求，做出响应的一个运行中的软件</li>
+</ul>
+<blockquote>
+<p><code>server.js</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="c1">// 加载 node 模块
+</span><span class="c1"></span><span class="kr">const</span> <span class="nx">http</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;http&#39;</span><span class="p">)</span> <span class="c1">// 创建服务器
+</span><span class="c1"></span><span class="kr">const</span> <span class="nx">fs</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;fs&#39;</span><span class="p">)</span> <span class="c1">// 文件读取模块
+</span><span class="c1"></span><span class="kr">const</span> <span class="nx">url</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;url&#39;</span><span class="p">)</span> <span class="c1">// url解析模块
+</span><span class="c1"></span>
+<span class="kr">const</span> <span class="nx">server</span> <span class="o">=</span> <span class="nx">http</span><span class="p">.</span><span class="nx">createServer</span><span class="p">((</span><span class="nx">req</span> <span class="cm">/*请求对象*/</span><span class="p">,</span> <span class="nx">res</span> <span class="cm">/*响应对象*/</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="s1">&#39;hello server&#39;</span><span class="p">)</span>
+<span class="p">}).</span><span class="nx">listen</span><span class="p">(</span><span class="mi">8080</span><span class="p">)</span> <span class="c1">// 运行时一直监听8080端口
+</span><span class="c1"></span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;open http://localhost:8080&#39;</span><span class="p">);</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>运行时一直监听8080端口</li>
+<li>当浏览器输入地址<code>http://localhost:8080</code>时，请求到服务器上</li>
+<li>请求对象<code>req</code>，请求相关信息</li>
+<li>响应对象<code>res</code>：要发送响应的对象</li>
+<li><code>res.end('hello server')</code> 发送响应给浏览器</li>
+</ul>
+<h3 id="12-打印urlobj-url字符串解析对象-a-hrefcatalogue--a">1.2 打印<code>urlObj</code> url字符串解析对象 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="c1">// 加载 node 模块
+</span><span class="c1"></span><span class="kr">const</span> <span class="nx">http</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;http&#39;</span><span class="p">)</span> <span class="c1">// 创建服务器
+</span><span class="c1"></span><span class="kr">const</span> <span class="nx">fs</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;fs&#39;</span><span class="p">)</span> <span class="c1">// 文件读取模块
+</span><span class="c1"></span><span class="kr">const</span> <span class="nx">url</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;url&#39;</span><span class="p">)</span> <span class="c1">// url解析模块 将url字符串解析成一个对象
+</span><span class="c1"></span>
+<span class="kr">const</span> <span class="nx">server</span> <span class="o">=</span> <span class="nx">http</span><span class="p">.</span><span class="nx">createServer</span><span class="p">((</span><span class="nx">req</span> <span class="cm">/*请求对象*/</span><span class="p">,</span> <span class="nx">res</span> <span class="cm">/*响应对象*/</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="kd">let</span> <span class="nx">urlObj</span> <span class="o">=</span> <span class="nx">url</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">url</span><span class="p">)</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">urlObj</span><span class="p">);</span>
+  <span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="s1">&#39;hello server&#39;</span><span class="p">)</span>
+<span class="p">}).</span><span class="nx">listen</span><span class="p">(</span><span class="mi">8080</span><span class="p">)</span> <span class="c1">// 监听端口
+</span><span class="c1"></span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;open http://localhost:8080&#39;</span><span class="p">);</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><code>const url = require('url')</code>：解析<code>url</code>解析模块</li>
+<li><code>url.parse(req.url)</code>将url字符串解析成一个对象</li>
+<li>运行<code>node server.js</code>可以看到以下内容：</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">Url <span class="o">{</span>
+  protocol: null,
+  slashes: null,
+  auth: null,
+  host: null,
+  port: null,
+  hostname: null,
+  hash: null,
+  search: null,
+  query: null,
+  pathname: <span class="s1">&#39;/&#39;</span>,
+  path: <span class="s1">&#39;/&#39;</span>,
+  href: <span class="s1">&#39;/&#39;</span>
+<span class="o">}</span>
+<span class="c1"># 浏览器默认自动发送请求</span>
+Url <span class="o">{</span>
+  protocol: null,
+  slashes: null,
+  auth: null,
+  host: null,
+  port: null,
+  hostname: null,
+  hash: null,
+  search: null,
+  query: null,
+  pathname: <span class="s1">&#39;/favicon.ico&#39;</span>,
+  path: <span class="s1">&#39;/favicon.ico&#39;</span>,
+  href: <span class="s1">&#39;/favicon.ico&#39;</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>在地址栏添加输入任意字符<code>http://localhost:8080/aabbcc</code>后查看可打印以下内容：</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">Url <span class="o">{</span>
+  protocol: null,     
+  slashes: null,      
+  auth: null,
+  host: null,
+  port: null,
+  hostname: null,     
+  hash: null,
+  search: null,       
+  query: null,        
+  pathname: <span class="s1">&#39;/aabbcc&#39;</span>,
+  path: <span class="s1">&#39;/aabbcc&#39;</span>,    
+  href: <span class="s1">&#39;/aabbcc&#39;</span>     
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>在地址栏添加输入任意字符<code>http://localhost:8080/123/abc.html</code>后查看可打印以下内容：</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">Url <span class="o">{</span>
+  protocol: null,
+  slashes: null,
+  auth: null,
+  host: null,
+  port: null,
+  hostname: null,
+  hash: null,
+  search: null,
+  query: null,
+  pathname: <span class="s1">&#39;/123/abc.html&#39;</span>,
+  path: <span class="s1">&#39;/123/abc.html&#39;</span>,
+  href: <span class="s1">&#39;/123/abc.html&#39;</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><code>pathname: '/123/abc.html'</code></li>
+<li><code>pathObj.pathname</code>请求路径参数：指<code>http://localhost:8080/xxx</code>斜杠后的内容（包括斜杠）</li>
+<li>也可以包括<strong>查询参数</strong><code>http://localhost:8080/123/abc.html?a=1&amp;b=2</code></li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">Url <span class="o">{</span>
+  protocol: null,
+  slashes: null,
+  auth: null,
+  host: null,
+  port: null,
+  hostname: null,
+  hash: null,
+  search: <span class="s1">&#39;?a=1&amp;b=2&#39;</span>,
+  query: <span class="s1">&#39;a=1&amp;b=2&#39;</span>,
+  pathname: <span class="s1">&#39;/123/abc.html&#39;</span>,
+  path: <span class="s1">&#39;/123/abc.html?a=1&amp;b=2&#39;</span>,
+  href: <span class="s1">&#39;/123/abc.html?a=1&amp;b=2&#39;</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="13-写一个简单地html-indexhtml-模拟页面发起请求-a-hrefcatalogue--a">1.3 写一个简单地HTML <code>index.html</code> 模拟页面发起请求 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;en&#34;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">&#34;UTF-8&#34;</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>Server<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>天气： <span class="p">&lt;</span><span class="nt">span</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+  <span class="kr">const</span> <span class="nx">xhr</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">()</span>
+  <span class="nx">xhr</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span>
+    <span class="s1">&#39;GET&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;http://localhost:8080/getWeather&#39;</span><span class="p">,</span>
+    <span class="kc">true</span>
+  <span class="p">)</span>
+  <span class="nx">xhr</span><span class="p">.</span><span class="nx">onload</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">&#39;span&#39;</span><span class="p">).</span><span class="nx">innerText</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">xhr</span><span class="p">.</span><span class="nx">responseText</span><span class="p">).</span><span class="nx">data</span>
+  <span class="p">}</span>
+  <span class="nx">xhr</span><span class="p">.</span><span class="nx">send</span><span class="p">()</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p><code>server.js</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="c1">// 加载 node 模块
+</span><span class="c1"></span><span class="kr">const</span> <span class="nx">http</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;http&#39;</span><span class="p">)</span> <span class="c1">// 创建服务器
+</span><span class="c1"></span><span class="kr">const</span> <span class="nx">fs</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;fs&#39;</span><span class="p">)</span> <span class="c1">// 文件读取模块
+</span><span class="c1"></span><span class="kr">const</span> <span class="nx">url</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;url&#39;</span><span class="p">)</span> <span class="c1">// url解析模块 将url字符串解析成一个对象
+</span><span class="c1"></span>
+<span class="kr">const</span> <span class="nx">server</span> <span class="o">=</span> <span class="nx">http</span><span class="p">.</span><span class="nx">createServer</span><span class="p">((</span><span class="nx">req</span> <span class="cm">/*请求对象*/</span><span class="p">,</span> <span class="nx">res</span> <span class="cm">/*响应对象*/</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="kd">let</span> <span class="nx">urlObj</span> <span class="o">=</span> <span class="nx">url</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">url</span><span class="p">)</span>
+
+  <span class="c1">// 读取文件
+</span><span class="c1"></span>  <span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="nx">fs</span><span class="p">.</span><span class="nx">readFileSync</span><span class="p">(</span><span class="nx">__dirname</span> <span class="o">+</span> <span class="s1">&#39;/index.html&#39;</span><span class="p">))</span>
+
+<span class="p">}).</span><span class="nx">listen</span><span class="p">(</span><span class="mi">8080</span><span class="p">)</span> <span class="c1">// 监听端口
+</span><span class="c1"></span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;open http://localhost:8080/index.html&#39;</span><span class="p">)</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>读取文件<code>fs.readFileSync(__dirname + '/...')</code>
+<ul>
+<li>其中<code>fs.readFileSync()</code>方法表示读取</li>
+<li><code>__dirname</code>表示当前路径
+<ul>
+<li>如果在<code>package.json</code>中设置了<code>&quot;type&quot;: &quot;module&quot;,</code>的话，注意<code>There is no __dirname when using ESM modules</code></li>
+<li>添加<code>import * as path from 'path'</code>和<code>const __dirname = path.resolve(path.dirname(''));</code></li>
+</ul>
+</li>
+<li>读取<code>index.html</code>：<code>res.end(fs.readFileSync(__dirname + '/index.html'))</code></li>
+</ul>
+</li>
+<li><code>url.parse(req.url)</code>在<code>node.js 15+</code>后弃用，改为<code>let urlObj = new URL(`${req.url}`, 'http://localhost:8080/')</code></li>
+<li>运行<code>node server.js</code></li>
+<li>在地址栏输入<code>http://localhost:8080/index.html</code>查看network面板</li>
+</ul>
+<h3 id="14-改为使用es6模块-a-hrefcatalogue--a">1.4 改为使用ES6模块 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="c1">// 加载 node 模块
+</span><span class="c1"></span><span class="cm">/*
+</span><span class="cm">const http = require(&#39;http&#39;) // 创建服务器
+</span><span class="cm">const fs = require(&#39;fs&#39;) // 文件读取模块
+</span><span class="cm">const url = require(&#39;url&#39;) // url解析模块 将url字符串解析成一个对象
+</span><span class="cm"> */</span>
+<span class="c1">// 转换为ES6模块
+</span><span class="c1"></span><span class="kr">import</span> <span class="nx">http</span> <span class="nx">from</span> <span class="s1">&#39;http&#39;</span> <span class="c1">// 创建服务器
+</span><span class="c1"></span><span class="kr">import</span> <span class="nx">fs</span> <span class="nx">from</span> <span class="s1">&#39;fs&#39;</span> <span class="c1">// 文件读取模块
+</span><span class="c1"></span><span class="kr">import</span> <span class="o">*</span> <span class="nx">as</span> <span class="nx">path</span> <span class="nx">from</span> <span class="s1">&#39;path&#39;</span>
+
+<span class="kr">const</span> <span class="nx">__dirname</span> <span class="o">=</span> <span class="nx">path</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="nx">path</span><span class="p">.</span><span class="nx">dirname</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">));</span>
+
+<span class="kr">const</span> <span class="nx">server</span> <span class="o">=</span> <span class="nx">http</span><span class="p">.</span><span class="nx">createServer</span><span class="p">((</span><span class="nx">req</span> <span class="cm">/*请求对象*/</span><span class="p">,</span> <span class="nx">res</span> <span class="cm">/*响应对象*/</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="kd">let</span> <span class="nx">urlObj</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">URL</span><span class="p">(</span><span class="sb">`</span><span class="si">${</span><span class="nx">req</span><span class="p">.</span><span class="nx">url</span><span class="si">}</span><span class="sb">`</span><span class="p">,</span> <span class="s1">&#39;http://localhost:8080/&#39;</span><span class="p">)</span>
+  <span class="c1">// There is no __dirname when using ESM modules
+</span><span class="c1"></span>  <span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="nx">fs</span><span class="p">.</span><span class="nx">readFileSync</span><span class="p">(</span><span class="nx">__dirname</span> <span class="o">+</span> <span class="s1">&#39;/index.html&#39;</span><span class="p">))</span>
+
+<span class="p">}).</span><span class="nx">listen</span><span class="p">(</span><span class="mi">8080</span><span class="p">,</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;点击打开： http://localhost:8080/index.html&#39;</span><span class="p">)</span>
+<span class="p">})</span> <span class="c1">// 监听端口
+</span><span class="c1"></span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>读取了<code>index.html</code>并展示到浏览器中，现在的<code>server.js</code>启动服务展示了<code>index.html</code>页面</li>
+<li>模拟Ajax请求</li>
+<li><code>res.end(JSON.stringify())</code>发出响应，传输字符串</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="c1">// 加载 node 模块
+</span><span class="c1"></span><span class="kr">import</span> <span class="nx">http</span> <span class="nx">from</span> <span class="s1">&#39;http&#39;</span> <span class="c1">// 创建服务器
+</span><span class="c1"></span><span class="kr">import</span> <span class="nx">fs</span> <span class="nx">from</span> <span class="s1">&#39;fs&#39;</span> <span class="c1">// 文件读取模块
+</span><span class="c1"></span><span class="kr">import</span> <span class="o">*</span> <span class="nx">as</span> <span class="nx">path</span> <span class="nx">from</span> <span class="s1">&#39;path&#39;</span>
+
+<span class="kr">const</span> <span class="nx">__dirname</span> <span class="o">=</span> <span class="nx">path</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="nx">path</span><span class="p">.</span><span class="nx">dirname</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">))</span>
+
+<span class="kr">const</span> <span class="nx">server</span> <span class="o">=</span> <span class="nx">http</span><span class="p">.</span><span class="nx">createServer</span><span class="p">((</span><span class="nx">req</span> <span class="cm">/*请求对象*/</span><span class="p">,</span> <span class="nx">res</span> <span class="cm">/*响应对象*/</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="kd">let</span> <span class="nx">urlObj</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">URL</span><span class="p">(</span><span class="sb">`</span><span class="si">${</span><span class="nx">req</span><span class="p">.</span><span class="nx">url</span><span class="si">}</span><span class="sb">`</span><span class="p">,</span> <span class="s1">&#39;http://localhost:8080/&#39;</span><span class="p">)</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="nx">urlObj</span><span class="p">.</span><span class="nx">pathname</span> <span class="o">===</span> <span class="s1">&#39;/getWeather&#39;</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span><span class="nx">data</span><span class="o">:</span> <span class="s1">&#39;晴天&#39;</span><span class="p">}))</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="nx">fs</span><span class="p">.</span><span class="nx">readFileSync</span><span class="p">(</span><span class="nx">__dirname</span> <span class="o">+</span> <span class="s1">&#39;/index.html&#39;</span><span class="p">))</span>
+  <span class="p">}</span>
+
+<span class="p">}).</span><span class="nx">listen</span><span class="p">(</span><span class="mi">8080</span><span class="p">,</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;点击打开： http://localhost:8080/index.html&#39;</span><span class="p">)</span>
+<span class="p">})</span> <span class="c1">// 监听端口
+</span><span class="c1"></span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>浏览器打开<code>http://localhost:8080/index.html</code>，向服务器发送请求，请求的<code>urlObj.pathname</code>为<code>/</code>，代表当前主页</li>
+<li>此时<code>urlObj.pathname</code>为<code>/</code>，返回读取当前路径下的<code>index.html</code>文件
+<ul>
+<li>获取文件的绝对路径<code>__dirname + '/index.html'</code></li>
+<li>读取文件内容<code>fs.readFileSync(__dirname + '/index.html')</code></li>
+<li>发送响应<code>res.end(fs.readFileSync(__dirname + '/index.html'))</code>，即发送首页内容</li>
+</ul>
+</li>
+<li>浏览器解析首页，执行<code>script</code>标签中的JS代码
+<ul>
+<li>JS发送Ajax请求<code>xhr.open('GET', 'http://localhost:8080/getWeather', true)</code>到服务器<code>server.js</code></li>
+</ul>
+</li>
+<li>此时<code>urlObj.pathname</code>为<code>/getWeather</code>，返回数据<code>{data: '晴天'}</code></li>
+</ul>
+<blockquote>
+<p>小结</p>
+</blockquote>
+<ul>
+<li>此时的服务器<code>server.js</code>既能够支持当前<code>index.html</code>的页面展示，也能支持当前需要用到的接口</li>
+</ul>
+<h3 id="15-功能完善-a-hrefcatalogue--a">1.5 功能完善 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+<blockquote>
+<p><code>index.html</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;en&#34;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">&#34;UTF-8&#34;</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>Server<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>天气： <span class="p">&lt;</span><span class="nt">span</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+  <span class="kr">const</span> <span class="nx">xhr</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">()</span>
+  <span class="nx">xhr</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span>
+    <span class="s1">&#39;GET&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;http://localhost:8080/getWeather?city=beijing&#39;</span><span class="p">,</span>
+    <span class="kc">true</span>
+  <span class="p">)</span>
+  <span class="nx">xhr</span><span class="p">.</span><span class="nx">onload</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">&#39;span&#39;</span><span class="p">).</span><span class="nx">innerText</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">xhr</span><span class="p">.</span><span class="nx">responseText</span><span class="p">).</span><span class="nx">city</span> <span class="o">+</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">xhr</span><span class="p">.</span><span class="nx">responseText</span><span class="p">).</span><span class="nx">weather</span>
+  <span class="p">}</span>
+  <span class="nx">xhr</span><span class="p">.</span><span class="nx">send</span><span class="p">()</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p><code>node-server/server.js</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="c1">// 加载 node 模块
+</span><span class="c1"></span><span class="cm">/*
+</span><span class="cm">const http = require(&#39;http&#39;) // 创建服务器
+</span><span class="cm">const fs = require(&#39;fs&#39;) // 文件读取模块
+</span><span class="cm">const url = require(&#39;url&#39;) // url解析模块 将url字符串解析成一个对象
+</span><span class="cm"> */</span>
+<span class="c1">// 转换为ES6模块
+</span><span class="c1"></span><span class="kr">import</span> <span class="nx">http</span> <span class="nx">from</span> <span class="s1">&#39;http&#39;</span> <span class="c1">// 创建服务器
+</span><span class="c1"></span><span class="kr">import</span> <span class="nx">fs</span> <span class="nx">from</span> <span class="s1">&#39;fs&#39;</span> <span class="c1">// 文件读取模块
+</span><span class="c1"></span><span class="kr">import</span> <span class="o">*</span> <span class="nx">as</span> <span class="nx">path</span> <span class="nx">from</span> <span class="s1">&#39;path&#39;</span>
+
+<span class="kr">const</span> <span class="nx">__dirname</span> <span class="o">=</span> <span class="nx">path</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="nx">path</span><span class="p">.</span><span class="nx">dirname</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">))</span>
+
+<span class="kr">const</span> <span class="nx">server</span> <span class="o">=</span> <span class="nx">http</span><span class="p">.</span><span class="nx">createServer</span><span class="p">((</span><span class="nx">req</span> <span class="cm">/*请求对象*/</span><span class="p">,</span> <span class="nx">res</span> <span class="cm">/*响应对象*/</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="kd">let</span> <span class="nx">pathObj</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">URL</span><span class="p">(</span><span class="sb">`</span><span class="si">${</span><span class="nx">req</span><span class="p">.</span><span class="nx">url</span><span class="si">}</span><span class="sb">`</span><span class="p">,</span> <span class="s1">&#39;http://localhost:8080/&#39;</span><span class="p">)</span>
+  <span class="c1">// console.log(pathObj)
+</span><span class="c1"></span>  <span class="c1">// console.log(pathObj.searchParams.get(&#39;city&#39;))
+</span><span class="c1"></span>  <span class="k">if</span> <span class="p">(</span><span class="nx">pathObj</span><span class="p">.</span><span class="nx">pathname</span> <span class="o">===</span> <span class="s1">&#39;/getWeather&#39;</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">pathObj</span><span class="p">.</span><span class="nx">searchParams</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;city&#39;</span><span class="p">)</span> <span class="o">===</span> <span class="s1">&#39;beijing&#39;</span>
+      <span class="o">?</span> <span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span><span class="nx">city</span><span class="o">:</span> <span class="s1">&#39;北京&#39;</span><span class="p">,</span> <span class="nx">weather</span><span class="o">:</span> <span class="s1">&#39;晴天&#39;</span><span class="p">}))</span>
+      <span class="o">:</span> <span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span><span class="nx">city</span><span class="o">:</span> <span class="nx">pathObj</span><span class="p">.</span><span class="nx">searchParams</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;city&#39;</span><span class="p">),</span> <span class="nx">weather</span><span class="o">:</span> <span class="s1">&#39;未知&#39;</span><span class="p">}))</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="k">try</span> <span class="p">{</span>
+      <span class="c1">// 默认为index.html
+</span><span class="c1"></span>      <span class="kd">let</span> <span class="nx">pathname</span> <span class="o">=</span> <span class="nx">pathObj</span><span class="p">.</span><span class="nx">pathname</span> <span class="o">===</span> <span class="s1">&#39;/&#39;</span> <span class="o">?</span> <span class="s1">&#39;/index.html&#39;</span> <span class="o">:</span> <span class="nx">pathObj</span><span class="p">.</span><span class="nx">pathname</span>
+      <span class="c1">// 读取非index.html文件的内容
+</span><span class="c1"></span>      <span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="nx">fs</span><span class="p">.</span><span class="nx">readFileSync</span><span class="p">(</span><span class="nx">__dirname</span> <span class="o">+</span> <span class="nx">pathname</span><span class="p">))</span>
+    <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">res</span><span class="p">.</span><span class="nx">writeHead</span><span class="p">(</span><span class="mi">404</span><span class="p">,</span> <span class="s1">&#39;Note Found&#39;</span><span class="p">)</span>
+      <span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="s1">&#39;&lt;h1&gt;404 Page Not Found&lt;/h1&gt;&#39;</span><span class="p">)</span>
+    <span class="p">}</span>
+
+  <span class="p">}</span>
+
+<span class="p">}).</span><span class="nx">listen</span><span class="p">(</span><span class="mi">8080</span><span class="p">,</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;点击打开： http://localhost:8080/index.html&#39;</span><span class="p">)</span>
+<span class="p">})</span> <span class="c1">// 监听端口
+</span><span class="c1"></span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>运行<code>node node-server/server.js</code></li>
+<li>默认首页<code>/</code>，判断请求路径是否为<code>/index.html</code></li>
+<li>注意关闭上一个<code>server.js</code>，避免已使用端口<code>address already in use :::8080</code></li>
+<li>如果路径不为<code>/</code>或<code>/index.html</code>，就读取路径下的文件<code>res.end(fs.readFileSync(__dirname + pathname))</code></li>
+<li>如果读取文件失败，就走<code>catch</code>逻辑</li>
+<li>服务器端告诉浏览器的状态码与提示文字：<code>res.writeHead(404, 'Note Found')</code></li>
+<li><code>pathObj.searchParams.get('city') === 'beijing'</code>：返回一个Map类型的数据，使用Map.prototype.get方法获取值</li>
+</ul>
+<h3 id="缺点-a-hrefcatalogue--a">缺点 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+<ul>
+<li>难以和后端沟通联调，统一接口文档</li>
+</ul>
+<hr>
+<h3 id="16-拓展高级用法手写expressjs-a-hrefcatalogue--a">1.6 拓展：高级用法，手写Express.js <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+<blockquote>
+<p>从实现简易Server到实现node后端框架Express.js</p>
+</blockquote>
+<ul>
+<li><a href="https://github.com/jirengu/node-server">https://github.com/jirengu/node-server</a></li>
+</ul>
+<hr>
+<h2 id="2-mockjs-和-mock-平台介绍和用法-a-hrefcatalogue--a">2 Mock.js 和 Mock 平台介绍和用法 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+<blockquote>
+<p>安装引入<code>Mock.js</code>，在本地模拟数据</p>
+</blockquote>
+<ul>
+<li><a href="http://mockjs.com/examples.html">mockjs文档示例</a></li>
+<li><a href="https://github.com/nuysoft/Mock/wiki/Getting-Started">安装使用mockjs github wiki</a></li>
+</ul>
+<h3 id="21-mockjs用法-a-hrefcatalogue--a">2.1 Mock.js用法 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+<blockquote>
+<p>预先定义好数据范例格式，随机生成数据</p>
+</blockquote>
+<ul>
+<li>比如<a href="http://rap2.taobao.org/">淘宝 Rap2 平台</a>的mock格式</li>
+</ul>
+<h4 id="22-使用-mockjs-构造随机数据示例-a-hrefcatalogue--a">2.2 使用 Mock.js 构造随机数据示例 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h4>
+<blockquote>
+<p>构造重复的字符串</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="c1">// &#39;name|min-max&#39;: string
+</span><span class="c1"></span><span class="nx">Mock</span><span class="p">.</span><span class="nx">mock</span><span class="p">({</span>
+  <span class="s2">&#34;welcome|1-3&#34;</span><span class="o">:</span> <span class="s2">&#34;滚&#34;</span>
+<span class="p">})</span>
+<span class="cm">/*
+</span><span class="cm">{
+</span><span class="cm">  &#34;welcome&#34;: &#34;滚滚滚&#34;
+</span><span class="cm">}
+</span><span class="cm">*/</span>
+
+<span class="cm">/*
+</span><span class="cm">Mock.mock({
+</span><span class="cm">  &#34;表示属性名称|生成规则&#34;: 数据类型
+</span><span class="cm">})
+</span><span class="cm">*/</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>表示生成数据对象的属性名称：合法字符串即可</li>
+<li>生成规则：比如 规定范围、自增+1等</li>
+<li>数据类型：真正决定生成数据类型</li>
+</ul>
+<blockquote>
+<p>生成小数</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="c1">// &#39;name|min-max.dmin-dmax&#39;: number
+</span><span class="c1">// &#39;name|num.dmin-dmax&#39;: number
+</span><span class="c1"></span><span class="nx">Mock</span><span class="p">.</span><span class="nx">mock</span><span class="p">({</span>
+  <span class="s2">&#34;price|1-100.0-2&#34;</span><span class="o">:</span> <span class="mi">1</span>
+<span class="p">})</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>Boolean</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="nx">Mock</span><span class="p">.</span><span class="nx">mock</span><span class="p">({</span>
+  <span class="s2">&#34;idOk|1&#34;</span><span class="o">:</span> <span class="kc">true</span>
+<span class="p">})</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>生成对象，包含任意可选属性</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="c1">// &#39;name|min-max&#39;: object
+</span><span class="c1"></span><span class="nx">Data</span> <span class="nx">Template</span>
+<span class="nx">Mock</span><span class="p">.</span><span class="nx">mock</span><span class="p">({</span>
+  <span class="s2">&#34;邮编|2-4&#34;</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s2">&#34;110000&#34;</span><span class="o">:</span> <span class="s2">&#34;北京市&#34;</span><span class="p">,</span>
+    <span class="s2">&#34;120000&#34;</span><span class="o">:</span> <span class="s2">&#34;天津市&#34;</span><span class="p">,</span>
+    <span class="s2">&#34;130000&#34;</span><span class="o">:</span> <span class="s2">&#34;河北省&#34;</span><span class="p">,</span>
+    <span class="s2">&#34;140000&#34;</span><span class="o">:</span> <span class="s2">&#34;山西省&#34;</span>
+  <span class="p">}</span>
+<span class="p">})</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>生成从数组中挑选任意个数的数据组成的对象</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="c1">// &#39;name|1&#39;: array
+</span><span class="c1">// &#39;name|+1&#39;: array 表示遍历数组
+</span><span class="c1">// &#39;name|1-10&#39;: array 表示范围规定的个数的数据
+</span><span class="c1"></span><span class="nx">Mock</span><span class="p">.</span><span class="nx">mock</span><span class="p">({</span>
+  <span class="s2">&#34;array|1&#34;</span><span class="o">:</span> <span class="p">[</span>
+    <span class="s2">&#34;AMD&#34;</span><span class="p">,</span>
+    <span class="s2">&#34;CMD&#34;</span><span class="p">,</span>
+    <span class="s2">&#34;UMD&#34;</span>
+  <span class="p">]</span>
+<span class="p">})</span>
+
+<span class="nx">Mock</span><span class="p">.</span><span class="nx">mock</span><span class="p">({</span>
+  <span class="s2">&#34;weather|1&#34;</span><span class="o">:</span> <span class="p">[</span>
+    <span class="s2">&#34;毛毛雨&#34;</span><span class="p">,</span>
+    <span class="s2">&#34;大雨&#34;</span><span class="p">,</span>
+    <span class="s2">&#34;十年一遇大雨&#34;</span><span class="p">,</span>
+    <span class="s2">&#34;百年一遇大雨&#34;</span><span class="p">,</span>
+    <span class="s2">&#34;千年一遇大雨&#34;</span><span class="p">,</span>
+  <span class="p">]</span>
+<span class="p">})</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>按正则生成</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="c1">// &#39;name&#39;: regexp
+</span><span class="c1"></span><span class="nx">Mock</span><span class="p">.</span><span class="nx">mock</span><span class="p">({</span>
+  <span class="s1">&#39;password&#39;</span><span class="o">:</span> <span class="sr">/[a-z][A-Z][0-9]/</span>
+<span class="p">})</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="使用-mockjs-数据占位符-a-hrefcatalogue--a">使用 <code>Mock.js</code> 数据占位符 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+<blockquote>
+<p><code>Mock.mock('@...')</code></p>
+</blockquote>
+<ul>
+<li>常用占位符有：
+<ul>
+<li><code>@integer</code></li>
+<li><code>@boolean</code></li>
+<li><code>@string</code></li>
+<li><code>@date</code></li>
+<li><code>@time</code></li>
+<li><code>@datetime</code></li>
+<li><code>@now</code></li>
+<li><code>@image(100x100)</code></li>
+<li><code>@paragraph</code></li>
+<li><code>@cparagraph</code></li>
+<li><code>@name</code></li>
+<li><code>@cname</code></li>
+<li><code>@cword</code></li>
+<li><code>@ctitle(3, 10)</code></li>
+<li><code>@guid</code></li>
+<li><code>@email</code></li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="p">{</span>
+  <span class="s1">&#39;statusCode|1&#39;</span><span class="o">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span>
+  <span class="s1">&#39;msg|1&#39;</span><span class="o">:</span> <span class="s1">&#39;@cword(4, 10)&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;data|4&#39;</span><span class="o">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="nx">id</span><span class="o">:</span> <span class="s1">&#39;@id&#39;</span><span class="p">,</span>
+      <span class="nx">title</span><span class="o">:</span> <span class="s1">&#39;@ctitle&#39;</span><span class="p">,</span>
+      <span class="nx">author</span><span class="o">:</span> <span class="s1">&#39;@cname&#39;</span><span class="p">,</span>
+      <span class="nx">createdAt</span><span class="o">:</span> <span class="s1">&#39;@datetime&#39;</span><span class="p">,</span>
+    <span class="p">}</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><hr>
+<h2 id="3-阿里rap2-mock平台的使用-a-hrefcatalogue--a">3. 阿里Rap2 Mock平台的使用 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+<blockquote>
+<p><a href="http://rap2.taobao.org/">淘宝 Rap2 平台</a></p>
+</blockquote>
+<ul>
+<li>使用不同模块来区分不同类型的功能，比如登录、注册、订单、地址管理模块等</li>
+<li>新建<strong>仓库</strong>-&gt;参考示例模块-&gt;新建<strong>模块</strong>-&gt;新建<strong>接口</strong></li>
+<li>所有新建名称一般为英文，可添加中文描述</li>
+</ul>
+<h3 id="编辑接口添加响应-a-hrefcatalogue--a">编辑接口，添加响应 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+<ul>
+<li>编写相应内容：
+<ul>
+<li>名称</li>
+<li>类型</li>
+<li>初始值</li>
+<li>简介</li>
+</ul>
+</li>
+<li>保存</li>
+</ul>
+<blockquote>
+<p>新建接口 <a href="http://rap2api.taobao.org/app/mock/295128/getUserInfo">getUserInfo</a></p>
+</blockquote>
+<ul>
+<li>名称 <code>getUserInfo</code></li>
+<li>地址 <code>/getUserInfo</code></li>
+<li>类型 <code>GET</code></li>
+<li>状态码 <code>200</code></li>
+<li>简介 <code>获取用户信息</code></li>
+</ul>
+<blockquote>
+<p>编辑接口</p>
+</blockquote>
+<ul>
+<li>添加 <strong>请求参数</strong>
+<ul>
+<li>如果类型是 <code>GET</code>，则请求参数放在<code>Headers</code>或<code>Query Params</code>中，<code>Query Params</code>更常用</li>
+<li>如果类型是 <code>POST</code>，则请求参数放在<code>Query Params</code>中</li>
+<li>前端向此接口发请求时，必须带上这个 <strong>请求参数</strong>，否则报错</li>
+</ul>
+</li>
+<li>添加 <strong>响应内容</strong>
+<ul>
+<li>名称 <code>name</code></li>
+<li>必选</li>
+<li>类型 <code>String</code></li>
+<li>生成规则</li>
+<li>初始值 <code>@cname@canme</code></li>
+<li>简介</li>
+</ul>
+</li>
+<li>保存</li>
+</ul>
+<blockquote>
+<p><code>@cname</code>响应模板的随机数据格式</p>
+</blockquote>
+<ul>
+<li>表示中文名字</li>
+</ul>
+<blockquote>
+<p><a href="https://github.com/nuysoft/Mock/wiki/Syntax-Specification">Mock.js 语法规范</a></p>
+</blockquote>
+<h3 id="导出接口-a-hrefcatalogue--a">导出接口 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+<ul>
+<li>可选择导出格式为markdown的接口文档，给前后端分别按文档去实现接口和mock接口，保证联调效率</li>
+</ul>
+<hr>
+<h3 id="后端接口检测-a-hrefcatalogue--a">后端接口检测 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+<p>rap2无法检测后端接口是否符合规定的格式</p>
+<hr>
+<blockquote>
+<p>沟通确定接口文档</p>
+</blockquote>
+<h2 id="4-前后端接口规范-a-hrefcatalogue--a">4. 前后端接口规范 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+<ul>
+<li><a href="https://www.yuque.com/docs/share/08fd7cfb-6716-4409-9b15-fd9e9d491f34">后端接口规范（范例） by 饥人谷</a></li>
+<li><a href="http://note.youdao.com/noteshare?id=d4c1e403217ce45bc3d257c6962604cb&amp;sub=FE10B9AECB87478195A434663AEE265F">md文件</a></li>
+</ul>
+<h3 id="接口文档-a-hrefcatalogue--a">接口文档 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+<blockquote>
+<p>和后端沟通的过程中，必须确定好接口，根据业务分好模块，根据模块编写对应的接口规则，最终产出文档</p>
+</blockquote>
+<ul>
+<li>前端根据接口文档去mock数据，开发页面</li>
+<li>后端根据接口，开发后端功能</li>
+<li>前后端联调</li>
+<li>需求发生变动，更新接口文档版本，以文档为准</li>
+</ul>
+<h3 id="接口约定-a-hrefcatalogue--a">接口约定 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+<ul>
+<li>当前接口的<strong>路径</strong>，例如：<code>/auth/register</code></li>
+<li>当前接口<strong>提交数据的类型</strong> 即请求动词，（语义化接口，即RESTful风格）例如：
+<ul>
+<li>GET 获取数据</li>
+<li>POST 提交或者创建数据</li>
+<li>PATCH 修改数据（部分修改）</li>
+<li>DELETE 删除数据</li>
+<li>PUT 修改数据（整体替换原有数据）</li>
+</ul>
+</li>
+<li>参数类型/格式，（后端接受和处理方式不同，影响发送请求是否能够被收到）例如：
+<ul>
+<li><code>from-data</code>，<code>json</code> 格式或者 <code>application/x-www-form-urlencoded</code></li>
+</ul>
+</li>
+<li>参数字段（语义化接口<strong>可减少字段的数量</strong>），以及限制条件，例如：用户名、密码等
+<ul>
+<li>前端mock数据必须覆盖所有限制条件，包括成功和失败的所有情况</li>
+</ul>
+</li>
+<li>返回成功的数据格式</li>
+<li>返回失败的数据格式</li>
+</ul>
+<blockquote>
+<p><a href="http://note.youdao.com/noteshare?id=d4c1e403217ce45bc3d257c6962604cb&amp;sub=FE10B9AECB87478195A434663AEE265F">多人共享博客项目的接口文档</a></p>
+</blockquote>
+<hr>
+<h2 id="5-使用curl命令行快速测试已经运行的后端接口-a-hrefcatalogue--a">5. 使用curl命令行快速测试已经运行的后端接口 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+<blockquote>
+<p>当后端接口完成时，还未放入项目代码中，接口对应的UI展示和功能未完成，可以使用命令行对接口进行简单地测试</p>
+</blockquote>
+<ul>
+<li>按接口文档约定的格式、请求动词、对应参数发送请求的时候，返回的响应是否符合规则</li>
+</ul>
+<h3 id="发送get请求-a-hrefcatalogue--a">发送GET请求 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">curl <span class="s2">&#34;http://rap2api.taobao.org/app/mock/244238/getWeather?city=beijing&#34;</span>
+curl <span class="s2">&#34;http://rap2api.taobao.org/app/mock/295128/weather?city=%E7%BA%BD%E7%BA%A6&#34;</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="发送post请求-a-hrefcatalogue--a">发送POST请求 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="c1"># -d 表示提交的参数，默认是POST请求</span>
+curl -d <span class="s2">&#34;username=aaaa&amp;password=bbb&#34;</span> <span class="s2">&#34;http://rap2api.taobao.org/app/mock/244238/login&#34;</span>
+curl -d <span class="s2">&#34;username=aaaa&amp;password=bbb&#34;</span> <span class="s2">&#34;http://rap2api.taobao.org/app/mock/295128/login&#34;</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>加上 <strong><code>-d</code>修饰符</strong>，后带所需要的 <strong>请求信息</strong>，默认为POST请求</li>
+</ul>
+<hr>
+<h3 id="发送拥有权限的post请求-a-hrefcatalogue--a">发送拥有权限的POST请求 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+<ul>
+<li>需要用户登录的信息</li>
+<li>模拟用户的登录，调用接口</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="c1"># -i 展示响应头</span>
+curl -d <span class="s2">&#34;username=hunger12&amp;password=123456&#34;</span> <span class="s2">&#34;http://blog-server.hunger-valley.com/auth/login&#34;</span> -i
+
+<span class="c1"># -H 设置请求头</span>
+curl -H <span class="s2">&#34;Content-Type:application/json&#34;</span> -X POST -d <span class="s1">&#39;{&#34;user&#34;:&#34;admin&#34;,&#34;passwd&#34;:&#34;12345678&#34;}&#39;</span>
+http://127.0.0.1:8000/login
+
+<span class="c1"># -X 设置请求类型</span>
+curl -d <span class="s2">&#34;username=aaaa&amp;password=bbb&#34;</span> -X POST <span class="s2">&#34;http://rap2api.taobao.org/app/mock/244238/login&#34;</span>
+
+<span class="c1"># -b 请求带上 cookie</span>
+curl <span class="s2">&#34;http://blog-server.hunger-valley.com/auth&#34;</span> -b <span class="s2">&#34;connect.sid=s%3AmeDbrn03UtTM8fqChaPQ20wmWlnKeHiu.e3uMtu7j1zQ1iNeaajCmxkYYGQ%2FyHV1ZsozMvZYWC6s&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>常用curl发送POST请求修饰符</p>
+</blockquote>
+<ul>
+<li><code>-i</code> 展示响应头，可放命令行在末尾
+<ul>
+<li>例如登录响应成功时，响应头会带着 <code>token</code> 字段或者 <code>set-cookie</code> 字段，即用户的身份标识</li>
+<li><code>&quot;token&quot;:&quot;Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imh1bmdlcjEyIiwiaWQiOjgzLCJpYXQiOjE2Mzg5OTkyNzUsImV4cCI6MTYz OTI1ODQ3NX0.NYvilBRaPcWqXc3sspuZKk_y1DAkatcOunkRKDyd1Vo&quot;</code></li>
+<li>验证后续的接口时，发送请求时带上这个字段，就会让服务器识别为登录状态</li>
+<li>格式为 <code>curl -H 'Accept: application/json' -H &quot;Authorization: Bearer ${TOKEN}&quot; https://{hostname}/api/myresource</code></li>
+<li>例如： <code>curl -H 'Accept: application/json' -H &quot;Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imh1bmdlcjEyIiwiaWQiOjgzLCJpYXQiOjE2MzkwMDI4MDksImV4cCI6MTYzOTI2MjAwOX0.yyp-DzFe1XZagIjzCiBnbTDYMldT4dyU4Xy_35-BhZ4&quot; &quot;http://blog-server.hunger-valley.com/auth&quot;</code></li>
+<li>google 搜索 <code>curl with token JWT</code></li>
+</ul>
+</li>
+<li><code>-H</code> 设置请求头信息 <code>&quot;Content-Type:application/json&quot;</code>
+<ul>
+<li>在请求头里可设置 JWT Token 信息代替cookie</li>
+<li><code>curl -H 'Accept: application/json' -H &quot;Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imh1bmdlcjEyIiwiaWQiOjgzLCJpYXQiOjE2MzkwMDI4MDksImV4cCI6MTYzOTI2MjAwOX0.yyp-DzFe1XZagIjzCiBnbTDYMldT4dyU4Xy_35-BhZ4&quot; &quot;http://blog-server.hunger-valley.com/auth&quot;</code></li>
+</ul>
+</li>
+<li><code>-X</code> 设置请求类型 请求动词</li>
+<li><code>-b</code> 请求带上 cookie <code> -b &quot;connect.sid=s%3AmeDbrn03UtTM8fqChaPQ20wmWlnKeHiu.e3uMtu7j1zQ1iNeaajCmxkYYGQ%2FyHV1ZsozMvZYWC6s&quot;</code></li>
+</ul>
+<h2 id="使用-postmanapifox-或者直接webstorm自带-http-客户端-a-hrefcatalogue--a">使用 POSTMAN、Apifox 或者直接WebStorm自带 http 客户端 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+<ul>
+<li>测试接口返回不符合文档预期，可及时向后端反馈</li>
+<li>实时跟踪反馈</li>
+<li>自动生成接口文档</li>
+</ul>
+<hr>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<hr>
+<h3 id="参考文章-a-hrefcatalogue--a">参考文章 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+<ul>
+<li><a href="https://nodejs.org/dist/latest-v16.x/docs/api/">Node.js v16.13.1 documentation</a></li>
+<li><a href="https://static.xiedaimala.com/xdml/file/f40ceb64-df08-4420-9226-7f76dbff15d5/2020-2-22-15-51-5.pdf">Mock数据.pdf</a></li>
+</ul>
+<h3 id="相关文章-a-hrefcatalogue--a">相关文章 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+<ul>
+<li><a href="https://mp.weixin.qq.com/s/2Fdq16cLaHIHlrQdm-qGlg">先进开发团队，先用 Apifox，做“API 文档先行”理念的先行者</a></li>
+<li><a href="https://mp.weixin.qq.com/s?__biz=Mzg5NDAwMjYyOA==&amp;mid=2247494770&amp;idx=1&amp;sn=e3466dfefff5dbbad4af98f8fa6220b8&amp;chksm=c02498d9f75311cfe4b55f67266233eab2b33be2794b0ad05cb92374e919b6002f6c17811a52&amp;scene=132#wechat_redirect">聊聊API接口设计</a></li>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MjM5NjkwOTYzMA==&amp;mid=2650615456&amp;idx=1&amp;sn=cd4622389de9d3ee140e005441e0f8f3&amp;chksm=beeb89f1899c00e7152c00a9e6d13f3c06deeb8427341398a1818711b167044fb846172cb1fe&amp;scene=21#wechat_redirect">API文档知多少（一）</a></li>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MjM5NjkwOTYzMA==&amp;mid=2650617869&amp;idx=1&amp;sn=61e3d3dffe5b860d1baec189fed7672a&amp;chksm=beeb9f5c899c164af3f8cfab4008b7a361b1c5829fee151fbe96a0079128d4a46bac3d28f0c5&amp;scene=132#wechat_redirect">API文档知多少（二）</a></li>
+</ul>
+<hr>
+<ul>
+<li>作者： Joel</li>
+<li>文章链接：</li>
+<li><a href="http://xmasuhai.xyz/posts/%E7%89%88%E6%9D%83%E5%A3%B0%E6%98%8E%E9%93%BE%E6%8E%A5/">版权声明</a></li>
+<li>非自由转载-非商用-非衍生-保持署名</li>
+<li><!-- raw HTML omitted -->河<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->掘<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->思<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->知<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->简<!-- raw HTML omitted --></li>
+</ul>
+<hr>
+<hr>
+
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Joel Xu</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2022-01-26
+      
+        
+        
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="http://xmasuhai.xyz/tags/frontend/">FrontEnd</a>
+          <a href="http://xmasuhai.xyz/tags/mock/">Mock</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/promise/js%E5%BC%82%E6%AD%A5%E9%9D%9E%E5%85%A8%E8%A7%A301%E6%9C%9F%E7%BA%A6promise/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">【JS异步非全解01】期约Promise</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/project/money/%E9%A1%B9%E7%9B%AE-%E5%96%B5%E5%86%85%E8%AE%B0%E8%B4%A6-meoney-02money%E7%BB%84%E4%BB%B6/">
+            <span class="next-text nav-default">【项目 喵内记账 Meoney 02】Money组件</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:xmasuhai@163.com" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="https://github.com/xmasuhai" rel="me noopener" class="iconfont"
+      title="github"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M512 12.672c-282.88 0-512 229.248-512 512 0 226.261333 146.688 418.133333 350.08 485.76 25.6 4.821333 34.986667-11.008 34.986667-24.618667 0-12.16-0.426667-44.373333-0.64-87.04-142.421333 30.890667-172.458667-68.693333-172.458667-68.693333C188.672 770.986667 155.008 755.2 155.008 755.2c-46.378667-31.744 3.584-31.104 3.584-31.104 51.413333 3.584 78.421333 52.736 78.421333 52.736 45.653333 78.293333 119.850667 55.68 149.12 42.581333 4.608-33.109333 17.792-55.68 32.426667-68.48-113.706667-12.8-233.216-56.832-233.216-253.013333 0-55.893333 19.84-101.546667 52.693333-137.386667-5.76-12.928-23.04-64.981333 4.48-135.509333 0 0 42.88-13.738667 140.8 52.48 40.96-11.392 84.48-17.024 128-17.28 43.52 0.256 87.04 5.888 128 17.28 97.28-66.218667 140.16-52.48 140.16-52.48 27.52 70.528 10.24 122.581333 5.12 135.509333 32.64 35.84 52.48 81.493333 52.48 137.386667 0 196.693333-119.68 240-233.6 252.586667 17.92 15.36 34.56 46.762667 34.56 94.72 0 68.522667-0.64 123.562667-0.64 140.202666 0 13.44 8.96 29.44 35.2 24.32C877.44 942.592 1024 750.592 1024 524.672c0-282.752-229.248-512-512-512"></path>
+</svg>
+
+    </a>
+  
+    <a href="https://www.zhihu.com/people/xue-shou-41/posts" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+
+
+<a href="http://xmasuhai.xyz/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane">Jane</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy;
+    
+      2019 -
+    2022
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Joel Xu
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
