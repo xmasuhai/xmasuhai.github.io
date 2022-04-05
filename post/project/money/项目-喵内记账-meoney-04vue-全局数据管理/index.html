@@ -23,7 +23,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 
 <meta name="author" content="Joel Xu" />
-  <meta name="description" content="【项目-喵内记账-meoney-04】Vue 全局数据管理 大纲链接§ [toc] 知识点 代码 组件间数据同步/共享 全局数据管理/全局状态管理是啥 store 是啥 store 怎么" />
+  <meta name="description" content="【项目-喵内记账-meoney-04】Vue 全局数据管理 大纲链接§ [toc] 知识点 组件间数据同步/共享 全局数据管理/全局状态管理是啥 store 是啥 store 怎么模块" />
 
   <meta name="keywords" content="Hugo, theme, jane" />
 
@@ -60,19 +60,19 @@
 
 
 <meta property="og:title" content="【项目 喵内记账 Meoney 04】Vue 全局数据管理" />
-<meta property="og:description" content="【项目-喵内记账-meoney-04】Vue 全局数据管理 大纲链接§ [toc] 知识点 代码 组件间数据同步/共享 全局数据管理/全局状态管理是啥 store 是啥 store 怎么" />
+<meta property="og:description" content="【项目-喵内记账-meoney-04】Vue 全局数据管理 大纲链接§ [toc] 知识点 组件间数据同步/共享 全局数据管理/全局状态管理是啥 store 是啥 store 怎么模块" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://xmasuhai.xyz/post/project/money/%E9%A1%B9%E7%9B%AE-%E5%96%B5%E5%86%85%E8%AE%B0%E8%B4%A6-meoney-04vue-%E5%85%A8%E5%B1%80%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2021-11-07T12:06:21+08:00" />
-<meta property="article:modified_time" content="2022-03-29T23:35:42+08:00" />
+<meta property="article:modified_time" content="2022-04-05T15:04:08+08:00" />
 
 <meta itemprop="name" content="【项目 喵内记账 Meoney 04】Vue 全局数据管理">
-<meta itemprop="description" content="【项目-喵内记账-meoney-04】Vue 全局数据管理 大纲链接§ [toc] 知识点 代码 组件间数据同步/共享 全局数据管理/全局状态管理是啥 store 是啥 store 怎么"><meta itemprop="datePublished" content="2021-11-07T12:06:21+08:00" />
-<meta itemprop="dateModified" content="2022-03-29T23:35:42+08:00" />
-<meta itemprop="wordCount" content="11527">
+<meta itemprop="description" content="【项目-喵内记账-meoney-04】Vue 全局数据管理 大纲链接§ [toc] 知识点 组件间数据同步/共享 全局数据管理/全局状态管理是啥 store 是啥 store 怎么模块"><meta itemprop="datePublished" content="2021-11-07T12:06:21+08:00" />
+<meta itemprop="dateModified" content="2022-04-05T15:04:08+08:00" />
+<meta itemprop="wordCount" content="11906">
 <meta itemprop="keywords" content="FrontEnd,Project,money," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="【项目 喵内记账 Meoney 04】Vue 全局数据管理"/>
-<meta name="twitter:description" content="【项目-喵内记账-meoney-04】Vue 全局数据管理 大纲链接§ [toc] 知识点 代码 组件间数据同步/共享 全局数据管理/全局状态管理是啥 store 是啥 store 怎么"/>
+<meta name="twitter:description" content="【项目-喵内记账-meoney-04】Vue 全局数据管理 大纲链接§ [toc] 知识点 组件间数据同步/共享 全局数据管理/全局状态管理是啥 store 是啥 store 怎么模块"/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -345,7 +345,7 @@
             <a href="http://xmasuhai.xyz/categories/money/"> money </a>
             
           </div>
-        <span class="more-meta"> 约 11527 字 </span>
+        <span class="more-meta"> 约 11906 字 </span>
           <span class="more-meta"> 预计阅读 24 分钟 </span>
 
         
@@ -363,17 +363,33 @@
   <div class="post-toc-content">
     <nav id="TableOfContents">
   <ul>
-    <li><a href="#再次封装-recordlistmodelts">再次封装 <code>recordListModel.ts</code></a></li>
-    <li><a href="#用-window-来容纳数据">用 window 来容纳数据</a></li>
-    <li><a href="#用-window-来封装-api-1">用 window 来封装 API 1</a></li>
-    <li><a href="#用-window-来封装-api-2">用 window 来封装 API 2</a></li>
-    <li><a href="#消除对-window-的依赖">消除对 <code>window</code> 的依赖</a></li>
-    <li><a href="#将-model-融合进-store">将 <code>model</code> 融合进 <code>store</code></a></li>
-    <li><a href="#修改tagsvue-统一处理数据">修改<code>Tags.vue</code> 统一处理数据</a></li>
-    <li><a href="#store-的-bug-之值与地址"><code>store</code> 的 <code>bug</code> 之值与地址</a></li>
-    <li><a href="#小技巧可以把-store2-变成-thisstore2进行全局访问">小技巧：可以把 <code>store2</code> 变成 <code>this.$store2</code>进行全局访问</a></li>
-    <li><a href="#全局状态管理的优点">全局状态管理的优点</a></li>
+    <li><a href="#知识点">知识点</a></li>
     <li><a href="#vuex-初体验---数据读写"><code>Vuex</code> 初体验 - 数据读写</a></li>
+    <li><a href="#再次封装-recordlistmodelts">再次封装 <code>recordListModel.ts</code></a></li>
+    <li><a href="#用-window-来容纳数据">用 <code>window</code> 来容纳数据</a></li>
+    <li><a href="#用-window-来封装-api-1">用 <code>window</code> 来封装 API 1</a></li>
+    <li><a href="#用-window-来封装-api-2">用 <code>window</code> 来封装 API 2</a></li>
+    <li><a href="#消除对-window-的依赖">消除对 <code>window</code> 的依赖</a>
+      <ul>
+        <li><a href="#将变量方法都挂在windowstore上">将变量方法都挂在<code>window.store</code>上</a></li>
+        <li><a href="#拆分srcstoreindex2ts中的store2为recordstorets和tagliststorets">拆分<code>src/store/index2.ts</code>中的<code>store2</code>为<code>recordStore.ts</code>和<code>tagListStore.ts</code></a></li>
+      </ul>
+    </li>
+    <li><a href="#将-model-融合进-store">将 <code>model</code> 融合进 <code>store</code></a>
+      <ul>
+        <li><a href="#model和store功能重合"><code>model</code>和<code>store</code>功能重合</a></li>
+      </ul>
+    </li>
+    <li><a href="#全局管理数据">全局管理数据</a>
+      <ul>
+        <li><a href="#tagsvue实现全局管理数据"><code>Tags.vue</code>实现全局管理数据</a></li>
+        <li><a href="#moneyvue中自己到全局store2ts里取数据"><code>Money.vue</code>中自己到全局<code>store2.ts</code>里取数据</a></li>
+      </ul>
+    </li>
+    <li><a href="#store-的-bug-之值与地址"><code>store</code> 的 <code>bug</code> 之值与地址</a></li>
+    <li><a href="#小技巧可以把-store2-变成-thisstore2-进行全局访问">小技巧：可以把 <code>store2</code> 变成 <code>this.$store2</code> 进行全局访问</a></li>
+    <li><a href="#全局状态管理的优点">全局状态管理的优点</a></li>
+    <li><a href="#vuex-官方全局状态管理初体验---数据读写"><code>Vuex</code> 官方全局状态管理初体验 - 数据读写</a></li>
     <li><a href="#在-moneyvue-中使用-vuex">在 <code>Money.vue</code> 中使用 <code>Vuex</code></a>
       <ul>
         <li><a href="#重构moneyvue">重构<code>Money.vue</code></a></li>
@@ -398,62 +414,65 @@
 </blockquote>
 <p>[toc]</p>
 <hr>
-<blockquote>
-<p>知识点 <a href="%E6%89%80%E6%9C%89%E4%BB%A3%E7%A0%81%EF%BC%9Ahttps://github.com/FrankFang/morney-live-store-1">代码</a></p>
-</blockquote>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB0328deb5e6f9b41c67838f58278ddeac?method=download&amp;shareKey=bc2937036e85f2429f3cac45c42b1a22" alt="store"></p>
+<h2 id="知识点">知识点</h2>
 <ul>
 <li>组件间数据同步/共享</li>
 <li>全局数据管理/全局状态管理是啥</li>
-<li>store 是啥</li>
-<li>store 怎么模块化</li>
+<li><code>store</code> 是啥</li>
+<li><code>store</code> 怎么模块化</li>
 <li>如何封装</li>
 <li><a href="https://cn.vuejs.org/v2/guide/state-management.html#%E7%AE%80%E5%8D%95%E7%8A%B6%E6%80%81%E7%AE%A1%E7%90%86%E8%B5%B7%E6%AD%A5%E4%BD%BF%E7%94%A8">简单状态管理起步使用</a></li>
 <li><a href="https://vuex.vuejs.org/zh/">Vuex</a></li>
+<li><a href="https://github.com/FrankFang/morney-live-store-1">所有代码：</a></li>
 </ul>
 <blockquote>
-<p>过程</p>
+<p>组件间数据通信实现过程</p>
 </blockquote>
 <ul>
-<li>再次封装 <code>recordListModel</code></li>
-<li>用 window 来容纳数据</li>
-<li>用 window 来封装 API</li>
-<li>消除对 window 的依赖</li>
-<li>将 model 融合进 store</li>
-<li>修复 <code>Tags.vue</code> 的 bug</li>
-<li>store 的 bug 之值与地址</li>
+<li>再次封装 <code>recordListModel.ts</code></li>
+<li>用 <code>window</code> 来容纳数据
+<ul>
+<li>用 <code>window</code> 来封装 API</li>
+<li>消除对 <code>window</code> 的依赖</li>
+</ul>
+</li>
+<li>将 <code>model</code> 融合进 <code>store</code></li>
+<li>修复 <code>Tags.vue</code> 的 <code>bug</code></li>
+<li><code>store</code> 的 <code>bug</code> 之值与地址</li>
 <li>小技巧：把 <code>store2</code> 变成 <code>this.$store2</code>（不用跟着做）</li>
 <li>全局状态管理的优点</li>
-<li>再次封装 <code>recordListModel</code></li>
+<li>再次封装 <code>recordListModel.ts</code></li>
 </ul>
 <blockquote>
-<p>解决bug</p>
+<p>解决<code>bug</code></p>
 </blockquote>
 <ul>
 <li>标签组件和记账组件不共享标签数据
 <ul>
 <li>在记账组件中新增标签的数据不会同步到标签组件中</li>
 <li>切换标签组件和记账组件时，新增标签的数据丢失</li>
+<li>没有统一的组件间数据通信管理</li>
 </ul>
 </li>
 </ul>
-<blockquote>
-<p>Vuex 初体验 - 数据读写</p>
-</blockquote>
+<hr>
+<h2 id="vuex-初体验---数据读写"><code>Vuex</code> 初体验 - 数据读写</h2>
 <ul>
-<li>在 Money.vue 中使用 Vuex</li>
-<li>重构 Tags.vue 和 Labels.vue</li>
-<li>在 TS 里使用 mixin（重新上传）</li>
-<li>重构 EditLabel.vue</li>
-<li>在 TS 里使用 computed 要用 getter 语法</li>
-<li>继续重构 EditLabel.vue</li>
-<li>Vuex 小结</li>
+<li>在 <code>Money.vue</code> 中使用 <code>Vuex</code></li>
+<li>重构 <code>Tags.vue</code> 和 <code>Labels.vue</code></li>
+<li>在 TS 里使用 <code>mixin</code></li>
+<li>重构 <code>EditLabel.vue</code></li>
+<li>在 TS 里使用 <code>computed</code> 要用 <code>getter</code> 语法</li>
+<li>继续重构 <code>EditLabel.vue</code></li>
+<li><code>Vuex</code> 小结</li>
 </ul>
 <hr>
 <blockquote>
-<p>抽象一个克隆函数模块<code>src/lib/clone.ts</code></p>
+<p>抽象一个克隆数据函数模块<code>src/lib/clone.ts</code></p>
 </blockquote>
 <ul>
-<li><code>recordListModel.clone()</code>功能可复用</li>
+<li><code>recordListModel.clone()</code>功能可复用，仅数据深拷贝</li>
 </ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -473,7 +492,8 @@
 
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="再次封装-recordlistmodelts">再次封装 <code>recordListModel.ts</code></h2>
+</div><hr>
+<h2 id="再次封装-recordlistmodelts">再次封装 <code>recordListModel.ts</code></h2>
 <ul>
 <li>数据变量<code>data: [] as RecordItem[]</code></li>
 <li>获取数据<code>fetchRecord() {... return this.data}</code></li>
@@ -533,7 +553,7 @@
 </code></pre></td></tr></table>
 </div>
 </div><blockquote>
-<p>对应修改<code>Money.vue</code>的 API</p>
+<p>对应修改<code>Money.vue</code>的 API，引入<code>recordListModel.ts</code>并调用方法</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -658,14 +678,15 @@
   <span class="p">}</span>
 <span class="p">}</span>
 <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-<span class="p">...</span>
-</code></pre></td></tr></table>
+<span class="c1">//...
+</span></code></pre></td></tr></table>
 </div>
 </div><hr>
 <blockquote>
-<p>如何解决<code>Money.vue</code>中对于数据<code>tags</code>和<code>recordList</code>各自获取数据时重复调用相同功能的API，同样地，<code>Labels.vue</code>和<code>EditLabel.vue</code>中也如此，优化逻辑，避免每次都<code>fetch</code>，就<code>clone</code>(<code>JSON.parse</code>)一次数据</p>
+<p>如何解决<code>Money.vue</code>中对于数据<code>tags</code>和<code>recordList</code>各自获取数据时， <strong>重复调用相同功能</strong> 的API</p>
+<p>同样地，<code>Labels.vue</code>和<code>EditLabel.vue</code>中也如此，优化逻辑，避免每次都<code>fetch</code>，就<code>clone</code>(<code>JSON.parse</code>)一次数据</p>
 </blockquote>
-<h2 id="用-window-来容纳数据">用 window 来容纳数据</h2>
+<h2 id="用-window-来容纳数据">用 <code>window</code> 来容纳数据</h2>
 <blockquote>
 <p>在<code>Money.vue</code>、<code>Labels.vue</code>和<code>EditLabel.vue</code>的 入口层<code>main.ts</code>中，统管数据</p>
 </blockquote>
@@ -792,11 +813,12 @@
 </code></pre></td></tr></table>
 </div>
 </div><ul>
+<li>统一使用<code>window.tagList = tagListModel.fetch();</code>容纳数据</li>
 <li>这样做的好处是，今后不管是属性还是值的类型写错，都可以得到TS报错的提示</li>
 <li>TS的本质就是用类型去检查代码</li>
 </ul>
 <hr>
-<h2 id="用-window-来封装-api-1">用 window 来封装 API 1</h2>
+<h2 id="用-window-来封装-api-1">用 <code>window</code> 来封装 API 1</h2>
 <ul>
 <li><code>Money.vue</code>中<code>tags = window.tagList;</code>代替<code>tags = tagListModel.fetch();</code></li>
 <li><code>Labels.vue</code>中<code>tags = window.tagList;</code>代替 <code>tagListModel.fetch();</code>  和 <code>tags = tagListModel.data;</code></li>
@@ -809,7 +831,7 @@
 <li>封装“查” <code>window.findTag = (id: string) =&gt; {...}</code></li>
 </ul>
 <blockquote>
-<p><code>main.ts</code></p>
+<p>重构<code>main.ts</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -902,7 +924,7 @@
 </code></pre></td></tr></table>
 </div>
 </div><blockquote>
-<p><code>custom.d.ts</code></p>
+<p>重构<code>custom.d.ts</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -967,7 +989,7 @@
 </code></pre></td></tr></table>
 </div>
 </div><blockquote>
-<p><code>Labels.vue</code></p>
+<p>重构<code>Labels.vue</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -1054,7 +1076,7 @@
 </code></pre></td></tr></table>
 </div>
 </div><blockquote>
-<p><code>EditLabel.vue</code></p>
+<p>重构<code>EditLabel.vue</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -1179,9 +1201,12 @@
 </code></pre></td></tr></table>
 </div>
 </div><hr>
-<h2 id="用-window-来封装-api-2">用 window 来封装 API 2</h2>
+<h2 id="用-window-来封装-api-2">用 <code>window</code> 来封装 API 2</h2>
+<ul>
+<li>同样思路重构<code>main.ts</code>、<code>Money.vue</code>、<code>recordListModel.ts</code>、<code>custom.d.ts</code></li>
+</ul>
 <blockquote>
-<p>同样思路重构<code>main.ts</code> <code>Money.vue</code> <code>recordListModel.ts</code> <code>custom.d.ts</code></p>
+<p><code>main.ts</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -1249,15 +1274,16 @@
 </blockquote>
 <ul>
 <li>全局变量太多，变量可能互相覆盖</li>
-<li>对 window 的依赖</li>
+<li>对 <code>window</code> 的依赖</li>
 </ul>
+<hr>
 <h2 id="消除对-window-的依赖">消除对 <code>window</code> 的依赖</h2>
+<h3 id="将变量方法都挂在windowstore上">将变量方法都挂在<code>window.store</code>上</h3>
 <ul>
-<li>将变量方法都挂在<code>window.store</code>上</li>
-<li>在<code>custom.d.ts</code>中声明<code>window.store</code>类型</li>
+<li>需要在<code>custom.d.ts</code>中声明<code>window.store</code>类型</li>
 </ul>
 <blockquote>
-<p><code>custom.d.ts</code></p>
+<p>重构<code>custom.d.ts</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -1276,8 +1302,8 @@
 </span><span class="lnt">13
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="p">...</span>
-<span class="kr">interface</span> <span class="nx">Window</span> <span class="p">{</span>
+<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="c1">// ...
+</span><span class="c1"></span><span class="kr">interface</span> <span class="nx">Window</span> <span class="p">{</span>
   <span class="nx">store</span><span class="o">:</span> <span class="p">{</span>
     <span class="nx">tagList</span>: <span class="kt">Tag</span><span class="p">[];</span>
     <span class="nx">findTag</span><span class="o">:</span> <span class="p">(</span><span class="nx">id</span>: <span class="kt">string</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">Tag</span> <span class="o">|</span> <span class="kc">undefined</span><span class="p">;</span>
@@ -1292,7 +1318,7 @@
 </code></pre></td></tr></table>
 </div>
 </div><blockquote>
-<p><code>main.ts</code></p>
+<p>重构<code>main.ts</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -1318,9 +1344,9 @@
 </span><span class="lnt">20
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="kr">import</span> <span class="p">...</span>
-<span class="p">...</span>
-<span class="nb">window</span><span class="p">.</span><span class="nx">store</span> <span class="o">=</span> <span class="p">{</span>
+<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="c1">// import ...
+</span><span class="c1">// ...
+</span><span class="c1"></span><span class="nb">window</span><span class="p">.</span><span class="nx">store</span> <span class="o">=</span> <span class="p">{</span>
   <span class="c1">// record store
 </span><span class="c1"></span>  <span class="nx">recordList</span>: <span class="kt">recordListModel.fetchRecord</span><span class="p">(),</span>
   <span class="nx">createRecord</span><span class="p">(</span><span class="nx">record</span>: <span class="kt">RecordItem</span><span class="p">)</span> <span class="p">{...},</span>
@@ -1344,11 +1370,11 @@
 <li>注意改掉箭头函数和<code>this</code>指向</li>
 </ul>
 <blockquote>
-<p>解决依赖 window 将变量挂在<code>src/store/index2.ts</code>上</p>
+<p>解决依赖 <code>window</code> 将变量挂在<code>src/store/index2.ts</code>上</p>
 </blockquote>
 <ul>
 <li>将整个<code>store2</code>对象放到<code>index2.ts</code>里导出</li>
-<li>可同一处引用数据</li>
+<li>可在同一文件模块中引用数据</li>
 <li>TS自动推测<code>store2</code>类型</li>
 </ul>
 <blockquote>
@@ -1429,7 +1455,7 @@
 <li>将<code>window.</code>相关自定义方法改为<code>store2.</code></li>
 </ul>
 <blockquote>
-<p><code>Money.vue</code></p>
+<p>重构<code>Money.vue</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -1504,7 +1530,7 @@
 </code></pre></td></tr></table>
 </div>
 </div><blockquote>
-<p><code>Labels.vue</code></p>
+<p>重构<code>Labels.vue</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -1547,7 +1573,7 @@
 </code></pre></td></tr></table>
 </div>
 </div><blockquote>
-<p><code>EditLabel.vue</code></p>
+<p>重构<code>EditLabel.vue</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -1633,13 +1659,15 @@
 
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
-<p>拆分<code>src/store/index2.ts</code>中的<code>store2</code>为<code>recordStore.ts</code>和<code>tagListStore.ts</code></p>
-</blockquote>
+</div><hr>
+<h3 id="拆分srcstoreindex2ts中的store2为recordstorets和tagliststorets">拆分<code>src/store/index2.ts</code>中的<code>store2</code>为<code>recordStore.ts</code>和<code>tagListStore.ts</code></h3>
 <ul>
 <li><code>...</code>扩展原算符 浅拷贝<code>...recordStore,</code></li>
 <li>注意合并话的同名屏蔽问题，重构重命名</li>
 </ul>
+<blockquote>
+<p><code>src/store/index2.ts</code></p>
+</blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -1745,7 +1773,7 @@
 </code></pre></td></tr></table>
 </div>
 </div><blockquote>
-<p>声明<code>tagListModel</code>类型 <code>custom.d.ts</code></p>
+<p>声明<code>tagListModel</code>类型，统一写到<code>custom.d.ts</code>中</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -1762,8 +1790,8 @@
 </span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="p">...</span>
-<span class="kr">type</span> <span class="nx">TagListModel</span> <span class="o">=</span> <span class="p">{</span>
+<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="c1">// ...
+</span><span class="c1"></span><span class="kr">type</span> <span class="nx">TagListModel</span> <span class="o">=</span> <span class="p">{</span>
   <span class="nx">tagList</span>: <span class="kt">Tag</span><span class="p">[];</span>
   <span class="nx">fetchTags</span><span class="o">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="nx">Tag</span><span class="p">[];</span>
   <span class="nx">findTag</span><span class="o">:</span> <span class="p">(</span><span class="nx">id</span>: <span class="kt">string</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">Tag</span> <span class="o">|</span> <span class="kc">undefined</span><span class="p">;</span>
@@ -1791,15 +1819,13 @@
 </ul>
 <hr>
 <h2 id="将-model-融合进-store">将 <code>model</code> 融合进 <code>store</code></h2>
-<blockquote>
-<p><code>model</code>和<code>store</code>功能重合</p>
-</blockquote>
+<h3 id="model和store功能重合"><code>model</code>和<code>store</code>功能重合</h3>
 <ul>
 <li><code>store</code>多了没必要的中转，比如<code>createRecord: (record: RecordItem) =&gt; { recordListModel.createItem(record); }</code></li>
 <li><code>model</code>合并到<code>store</code></li>
 </ul>
 <blockquote>
-<p><code>recordStore.ts</code></p>
+<p>重构<code>recordStore.ts</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -1868,7 +1894,7 @@
 <li>可以消除闭包，直接内部定义<code>recordList: [] as RecordItem[],</code>，不用箭头函数</li>
 </ul>
 <blockquote>
-<p><code>recordStore.ts</code></p>
+<p>再次重构<code>recordStore.ts</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -1927,7 +1953,7 @@
 </code></pre></td></tr></table>
 </div>
 </div><blockquote>
-<p><code>tagListStore.ts</code></p>
+<p>重构<code>tagListStore.ts</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -2056,7 +2082,8 @@
 <p>可以删除<code>src/model</code>，直接用<code>src/store</code>代替</p>
 </blockquote>
 <hr>
-<h2 id="修改tagsvue-统一处理数据">修改<code>Tags.vue</code> 统一处理数据</h2>
+<h2 id="全局管理数据">全局管理数据</h2>
+<h3 id="tagsvue实现全局管理数据"><code>Tags.vue</code>实现全局管理数据</h3>
 <ul>
 <li><code>Tags.vue</code>中<code>this.$emit('update:dataSource', [...this.dataSource, name];</code>的<code>name</code>产生的<code>bug</code></li>
 <li><code>this.dataSource</code>，即子组件传递事件所必要的外部数据<code>@Prop({required: true}) readonly dataSource!: string[];</code></li>
@@ -2163,7 +2190,7 @@
 </div>
 </div><ul>
 <li>将<code>Tag.vue</code>组件中的<code>this.dataSource</code>通知给父组件的事件改为直接操作<code>store2.ts</code>，使用<code>store2.createTag(name);</code></li>
-<li>把用户输入的<code>name</code>传给<code>store2.ts</code>，做到全局管理数据</li>
+<li>把用户输入的<code>name</code>传给<code>store2.ts</code>，做到全局管理数据，代替原来的父子组件间通信</li>
 <li>无需<code>@Prop({required: true}) readonly dataSource!: string[];</code></li>
 <li>而使用<code>tagList = store2.fetchTags();</code></li>
 <li>原来所有的<code>dataSource</code>改为<code>tagList</code>
@@ -2172,9 +2199,8 @@
 </ul>
 </li>
 </ul>
-<blockquote>
-<p>而在<code>Money.vue</code>中自己到全局<code>store2.ts</code>里取数据</p>
-</blockquote>
+<hr>
+<h3 id="moneyvue中自己到全局store2ts里取数据"><code>Money.vue</code>中自己到全局<code>store2.ts</code>里取数据</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -2283,7 +2309,7 @@
 <li>原始值类型与引用类型的地址</li>
 <li>引用类型变化，个引用其地址的变量也变化</li>
 <li>原始值类型赋值的变量，值改变不会影响（同步到）改变量</li>
-<li>用<code>data</code>获取数据<code>store</code>只会获取一遍</li>
+<li>用<code>data</code>获取数据<code>store</code>只会在<code>created</code>创建阶段获取一遍，不会监听变更并重新渲染</li>
 </ul>
 <blockquote>
 <p>改为使用<code>computed</code></p>
@@ -2295,7 +2321,7 @@
 <li>而使用<code>Vuex</code>即<code>src/store/index.ts</code>则可以被<code>vue</code>监听到</li>
 </ul>
 <hr>
-<h2 id="小技巧可以把-store2-变成-thisstore2进行全局访问">小技巧：可以把 <code>store2</code> 变成 <code>this.$store2</code>进行全局访问</h2>
+<h2 id="小技巧可以把-store2-变成-thisstore2-进行全局访问">小技巧：可以把 <code>store2</code> 变成 <code>this.$store2</code> 进行全局访问</h2>
 <ul>
 <li>在<code>main.ts</code>中引入<code>store2</code>: <code>import store2 from '@/store/index2.ts'</code></li>
 <li>放到<code>Vue</code>的原型上<code>Vue.prototype.$store2 = store2</code></li>
@@ -2312,34 +2338,34 @@
 <p>全局状态管理（也叫全局数据管理）的好处是什么？</p>
 </blockquote>
 <ul>
-<li>解耦：将所有数据相关的逻辑放入 store（也就是 MVC 中的 Model，换了个名字而已）</li>
+<li>解耦：将所有数据相关的逻辑放入 <code>store</code>（也就是 <code>MVC</code> 中的 <code>Model</code>，换了个名字而已）</li>
 <li>数据读写更方便：任何组件不管在哪里，都可以直接读写数据</li>
-<li>控制力更强：组件对数据的读写只能使用 store 提供的 API 进行（当然也不排除有猪队友直接对 tagList 和 recordList 进行 push 等操作，这是没有办法禁止的）</li>
+<li>控制力更强：组件对数据的读写只能使用 <code>store</code> 提供的 <code>API</code> 进行（当然也不排除有猪队友直接对 <code>tagList</code> 和 <code>recordList</code> 进行 <code>push</code> 等操作，这是没有办法禁止的）</li>
 </ul>
 <blockquote>
-<p>Vuex 跟我们手写的 store 没有本质区别。</p>
+<p><code>Vuex</code> 跟我们手写的 <code>store</code> 没有本质区别。</p>
 </blockquote>
 <hr>
-<h2 id="vuex-初体验---数据读写"><code>Vuex</code> 初体验 - 数据读写</h2>
+<h2 id="vuex-官方全局状态管理初体验---数据读写"><code>Vuex</code> 官方全局状态管理初体验 - 数据读写</h2>
 <ul>
-<li><a href="https://vuex.vuejs.org/zh/">Vuex</a> 是一个专为 Vue.js 应用程序开发的状态管理模式</li>
-<li>多个组件共享状态时，单向数据流的简洁性很容易被破坏</li>
-<li>多个视图依赖于同一状态</li>
-<li>来自不同视图的行为需要变更同一状态</li>
+<li><a href="https://vuex.vuejs.org/zh/">Vuex</a> 是一个专为 <code>Vue.js</code> 应用程序开发的状态管理模式</li>
+<li>多个组件共享状态时，<strong>单向数据流</strong> 的简洁性很容易被破坏</li>
+<li><strong>多个视图</strong> 依赖于 <strong>同一状态</strong></li>
+<li>来自不同视图的行为需要 <strong>变更同一状态</strong></li>
 <li><code>Vuex</code>就是一个用于管理数据的工具（对象），提供了读/写（增删改查）数据的<code>API</code></li>
 </ul>
 <blockquote>
 <p>核心概念</p>
 </blockquote>
 <ul>
-<li><code>State</code> 对应<code>data</code>，用于存放数据</li>
-<li><code>Getters</code></li>
+<li><code>State</code> 对应 <code>data</code>，用于存放数据</li>
+<li><code>Getters</code> 对应 <code>computed</code>，用于监听变更</li>
 <li><strong><code>Mutations</code></strong> 对应<code>methods</code>，意为改动、变更，用于写数据，调用同步方法，实时更改数据</li>
 <li><code>Actions</code>对应 调用<code>methods</code>，必须用于异步操作，调用<code>Mutations</code>的方法</li>
 <li><code>Modules</code> 对应<code>components</code> 将 <code>store</code> 分割成模块<code>module</code>，每个模块拥有自己的 <code>state</code>、<code>mutation</code>、<code>action</code>、<code>getter</code>、<code>module</code></li>
 </ul>
 <blockquote>
-<p>在 <code>Money.vue</code> 中目前主要使用 <code>Vuex</code>的<code>State</code> 和 <code>Mutations</code></p>
+<p>在 <code>Money.vue</code> 中目前主要使用 <code>Vuex</code>的 <code>State</code> 和 <code>Mutations</code></p>
 </blockquote>
 <hr>
 <h2 id="在-moneyvue-中使用-vuex">在 <code>Money.vue</code> 中使用 <code>Vuex</code></h2>
@@ -2355,6 +2381,9 @@
 <li>唯一数据源</li>
 <li>处处使用数据</li>
 </ul>
+<blockquote>
+<p><code>main.ts</code></p>
+</blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -2416,6 +2445,9 @@
 </ul>
 </li>
 </ul>
+<blockquote>
+<p><code>main.ts</code></p>
+</blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -2556,7 +2588,7 @@
 <span class="kr">import</span> <span class="nx">store</span> <span class="nx">from</span> <span class="s1">&#39;@/store/index.ts&#39;</span><span class="p">;</span>
 
 <span class="err">@</span><span class="nx">Component</span><span class="p">({</span>
-  <span class="nx">components</span><span class="o">:</span> <span class="p">{...},</span>
+  <span class="nx">components</span><span class="o">:</span> <span class="p">{</span><span class="cm">/*...*/</span><span class="p">},</span>
   <span class="nx">computed</span><span class="o">:</span> <span class="p">{</span>
     <span class="nx">count</span><span class="p">()</span> <span class="p">{</span>
       <span class="k">return</span> <span class="nx">store</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">count</span><span class="p">;</span>
@@ -2565,8 +2597,8 @@
 <span class="p">})</span>
 <span class="kr">export</span> <span class="k">default</span> <span class="kr">class</span> <span class="nx">Money</span> <span class="kr">extends</span> <span class="nx">Vue</span> <span class="p">{</span>
   <span class="nx">dataCount</span> <span class="o">=</span> <span class="nx">store</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">count</span><span class="p">;</span>
-  <span class="p">...</span>
-  <span class="nx">add</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// ...
+</span><span class="c1"></span>  <span class="nx">add</span><span class="p">()</span> <span class="p">{</span>
     <span class="c1">// 对应 import store from &#39;@/store/index.ts&#39;;
 </span><span class="c1"></span>    <span class="nx">store</span><span class="p">.</span><span class="nx">commit</span><span class="p">(</span><span class="s1">&#39;increaseCount&#39;</span><span class="p">);</span> <span class="c1">// +1
 </span><span class="c1"></span>    
@@ -2575,8 +2607,8 @@
 </span><span class="c1"></span>  <span class="p">}</span>
 <span class="p">}</span>
 <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-<span class="p">...</span>
-</code></pre></td></tr></table>
+<span class="c1">// ...
+</span></code></pre></td></tr></table>
 </div>
 </div><ul>
 <li>读数据 <strong><code>@Component({..., computed: {xxx() {return ...}, ...}, ...</code></strong> 计算属性</li>
@@ -2931,11 +2963,11 @@
 <hr>
 <h2 id="在-ts-里使用-mixin">在 TS 里使用 <code>mixin</code></h2>
 <ul>
-<li><a href="https://class-component.vuejs.org/guide/extend-and-mixins.html#extend">Extend and Mixins
-</a></li>
+<li>使用<a href="https://class-component.vuejs.org/guide/extend-and-mixins.html#extend">Extend and Mixins
+</a> 复用逻辑</li>
 </ul>
 <blockquote>
-<p><code>src/mixins/tagHelper.ts</code> 引入 <code>mixin</code>的实例</p>
+<p><code>src/mixins/tagHelper.ts</code> 引入 <code>mixin</code> 的实例</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -2953,12 +2985,12 @@
 </span><span class="lnt">12
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="kr">import</span> <span class="nx">Vue</span> <span class="nx">from</span> <span class="s1">&#39;vue&#39;</span><span class="p">;</span>
-<span class="kr">import</span> <span class="nx">Component</span> <span class="nx">from</span> <span class="s1">&#39;vue-class-component&#39;</span><span class="p">;</span>
+<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="kr">import</span> <span class="nx">Vue</span> <span class="kr">from</span> <span class="s1">&#39;vue&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">Component</span> <span class="kr">from</span> <span class="s1">&#39;vue-class-component&#39;</span><span class="p">;</span>
 
-<span class="err">@</span><span class="nx">Component</span>
+<span class="kd">@Component</span>
 <span class="kr">export</span> <span class="k">default</span> <span class="kr">class</span> <span class="nx">TagHelper</span> <span class="kr">extends</span> <span class="nx">Vue</span> <span class="p">{</span>
-  <span class="nx">createTag</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">createTag() {</span>
     <span class="kr">const</span> <span class="nx">name</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">prompt</span><span class="p">(</span><span class="s1">&#39;请输入标签名&#39;</span><span class="p">);</span>
     <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span><span class="k">return</span> <span class="nb">window</span><span class="p">.</span><span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;没有输入内容，请重新创建标签&#39;</span><span class="p">);}</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">$store</span><span class="p">.</span><span class="nx">commit</span><span class="p">(</span><span class="s1">&#39;createTag&#39;</span><span class="p">,</span> <span class="nx">name</span><span class="p">);</span>
@@ -2968,7 +3000,7 @@
 </code></pre></td></tr></table>
 </div>
 </div><blockquote>
-<p><code>Tags.vue</code></p>
+<p>重构<code>Tags.vue</code>子组件</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -3007,8 +3039,8 @@
 </span><span class="lnt">33
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="p">...</span>
-<span class="p">&lt;</span><span class="nt">script</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="c1">// ...
+</span><span class="c1"></span><span class="p">&lt;</span><span class="nt">script</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
 <span class="kr">import</span> <span class="p">{</span><span class="nx">Component</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue-property-decorator&#39;</span><span class="p">;</span>
 <span class="kr">import</span> <span class="p">{</span><span class="nx">mixins</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue-class-component&#39;</span><span class="p">;</span>
 <span class="kr">import</span> <span class="nx">tagHelper</span> <span class="nx">from</span> <span class="s1">&#39;@/mixins/tagHelper.ts&#39;</span><span class="p">;</span>
@@ -3043,7 +3075,7 @@
 </code></pre></td></tr></table>
 </div>
 </div><blockquote>
-<p><code>Labels.vue</code></p>
+<p>重构<code>Labels.vue</code>子组件</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -3130,8 +3162,8 @@
 </span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-TypeScript" data-lang="TypeScript"><span class="p">...</span>
-<span class="kr">type</span> <span class="nx">RootState</span> <span class="o">=</span> <span class="p">{</span>
+<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="c1">//...
+</span><span class="c1"></span><span class="kr">type</span> <span class="nx">RootState</span> <span class="o">=</span> <span class="p">{</span>
   <span class="nx">tagList</span>: <span class="kt">Tag</span><span class="p">[],</span>
   <span class="nx">recordList</span>: <span class="kt">RecordItem</span><span class="p">[],</span>
   <span class="nx">currentTag?</span>: <span class="kt">Tag</span><span class="p">,</span>
@@ -3252,7 +3284,7 @@
 <p>存在<code>console.log(this.tag)</code>，但会报错提示未设置<code>getter</code> <code>setter</code></p>
 </blockquote>
 <ul>
-<li>在<code>EditLabel.vue</code>中之前使用<code>@component({...tag() {...}})</code>错了</li>
+<li>在<code>EditLabel.vue</code>之前使用<code>@component({...tag() {...}})</code>错了</li>
 </ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -3298,10 +3330,10 @@
 <hr>
 <h2 id="继续重构-editlabelvue">继续重构 <code>EditLabel.vue</code></h2>
 <blockquote>
-<p>在<code>src/store/index.ts</code>中<code>mutations</code>里面的方法<strong>只能接受两个参数</strong></p>
+<p>在<code>src/store/index.ts</code>中<code>mutations</code>里面的方法 <strong>只能接受两个参数</strong></p>
 </blockquote>
 <ul>
-<li><code>Muation</code> 函数<strong>不可为 async函数</strong>, 也不能<strong>使用箭头函数来定义</strong>, 因为代码需要运行在重新绑定执行的上下文</li>
+<li><code>Muation</code> 函数 <strong>不可为 async函数</strong>, 也不能 <strong>使用箭头函数来定义</strong>, 因为代码需要运行在重新绑定执行的上下文</li>
 <li>重构<code>updateTag()</code></li>
 <li>重构<code>removeTag()</code></li>
 </ul>
@@ -3505,7 +3537,7 @@
 </span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
-<p>原来的数据<code>index2.ts</code>姐可以删除了</p>
+<p>原来的数据<code>index2.ts</code>可以删除了</p>
 </blockquote>
 <hr>
 <h2 id="vuex-小结">Vuex 小结</h2>
@@ -3520,10 +3552,10 @@
 <ul>
 <li>声明<code>const store = new Vuex.Store({/*options*/...})</code></li>
 <li><code>{/*options*/...}</code>包括<code>{state: {...}, mutations: {...}, ...}</code>等</li>
-<li><code>state</code>中写表示状态的数据变量</li>
-<li><code>mutations</code>中写表示状态变动的方法
+<li><code>state</code> 中写表示状态的数据变量</li>
+<li><code>mutations</code> 中写表示状态变动的方法
 <ul>
-<li><code>mutations</code>中的方法通过传参<code>state</code>作为代替<code>this</code>指向本状态实例</li>
+<li><code>mutations</code> 中的方法通过传参<code>state</code>作为代替<code>this</code>指向本状态实例</li>
 <li>通过<code>state</code>可访问本实例的状态数据变量进行操作</li>
 <li>传且仅可传第二个参数<code>payload</code>表示接受其余参数</li>
 <li><code>Muation</code> 函数 <strong>不可为 async函数</strong>, 也不能 <strong>使用箭头函数来定义</strong>, 因为代码需要运行在重新绑定执行的上下文</li>
@@ -3569,7 +3601,7 @@
   <p class="copyright-item">
     <span class="item-title">上次更新</span>
     <span class="item-content">
-      2022-03-29
+      2022-04-05
       
         
         
