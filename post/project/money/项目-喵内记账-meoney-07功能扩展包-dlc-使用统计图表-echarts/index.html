@@ -64,12 +64,12 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://xmasuhai.xyz/post/project/money/%E9%A1%B9%E7%9B%AE-%E5%96%B5%E5%86%85%E8%AE%B0%E8%B4%A6-meoney-07%E5%8A%9F%E8%83%BD%E6%89%A9%E5%B1%95%E5%8C%85-dlc-%E4%BD%BF%E7%94%A8%E7%BB%9F%E8%AE%A1%E5%9B%BE%E8%A1%A8-echarts/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2021-12-09T12:16:39+08:00" />
-<meta property="article:modified_time" content="2022-03-31T15:18:34+08:00" />
+<meta property="article:modified_time" content="2022-04-06T14:21:30+08:00" />
 
 <meta itemprop="name" content="【项目 喵内记账 Meoney 07】功能扩展包 DLC-使用统计图表 echarts">
 <meta itemprop="description" content="【项目-喵内0∞0记账-meowney-07】功能扩展包 DLC-使用统计图表 echarts 大纲 统计图表 【数据可视化】Echarts 使用指南 在 Vue 记账中加入"><meta itemprop="datePublished" content="2021-12-09T12:16:39+08:00" />
-<meta itemprop="dateModified" content="2022-03-31T15:18:34+08:00" />
-<meta itemprop="wordCount" content="12210">
+<meta itemprop="dateModified" content="2022-04-06T14:21:30+08:00" />
+<meta itemprop="wordCount" content="14050">
 <meta itemprop="keywords" content="FrontEnd,Project,money," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="【项目 喵内记账 Meoney 07】功能扩展包 DLC-使用统计图表 echarts"/>
 <meta name="twitter:description" content="【项目-喵内0∞0记账-meowney-07】功能扩展包 DLC-使用统计图表 echarts 大纲 统计图表 【数据可视化】Echarts 使用指南 在 Vue 记账中加入"/>
@@ -344,8 +344,8 @@
             <a href="http://xmasuhai.xyz/categories/project/"> Project </a>
             
           </div>
-        <span class="more-meta"> 约 12210 字 </span>
-          <span class="more-meta"> 预计阅读 25 分钟 </span>
+        <span class="more-meta"> 约 14050 字 </span>
+          <span class="more-meta"> 预计阅读 29 分钟 </span>
 
         
         
@@ -364,7 +364,7 @@
   <ul>
     <li><a href="#统计图表">统计图表</a>
       <ul>
-        <li><a href="#数据可视化echarts-使用指南">【数据可视化】Echarts 使用指南</a></li>
+        <li><a href="#数据可视化echarts-使用指南">【数据可视化】<code>Echarts</code> 使用指南</a></li>
         <li><a href="#echarts-图表绘制思路"><code>echarts</code> 图表绘制思路</a></li>
         <li><a href="#引入-echarts">引入 <code>echarts</code></a></li>
         <li><a href="#什么是数据可视化">什么是数据可视化</a></li>
@@ -375,9 +375,16 @@
         <li><a href="#添加日期选择组件">添加日期选择组件</a></li>
         <li><a href="#使用vue-charts的官方封装">使用<code>vue-charts</code>的官方封装</a></li>
         <li><a href="#自己封装echarts">自己封装<code>echarts</code></a></li>
-        <li><a href="#构造数据-前端用到的算法">构造数据 前端用到的算法</a></li>
-        <li><a href="#echarts-的-axislabel">echarts 的 axisLabel</a></li>
-        <li><a href="#当-optioins-变化时更新-chart">当 optioins 变化时，更新 chart</a></li>
+        <li><a href="#构造数据数据排序计数排序的变形-前端用到的算法">构造数据数据排序（计数排序的变形） 前端用到的算法</a></li>
+        <li><a href="#原始数据必须转换为一个数组才能排序">原始数据必须转换为一个数组，才能排序</a></li>
+      </ul>
+    </li>
+    <li><a href="#数据排序后分组">数据排序后分组</a>
+      <ul>
+        <li><a href="#更改template-循环渲染的key">更改<code>template</code> 循环渲染的<code>:key</code></a></li>
+        <li><a href="#echarts-的-axislabel"><code>echarts</code> 的 <code>axisLabel</code></a></li>
+        <li><a href="#当-optioins-变化时更新-chart">当 <code>optioins</code> 变化时，更新 <code>chart</code></a></li>
+        <li><a href="#完整代码">完整代码</a></li>
       </ul>
     </li>
   </ul>
@@ -394,8 +401,8 @@
 <ul>
 <li>统计图表
 <ul>
-<li>【数据可视化】Echarts 使用指南</li>
-<li>在 Vue 记账中加入 ECharts</li>
+<li>【数据可视化】<code>Echarts</code> 使用指南</li>
+<li>在 <code>Vue</code> 记账中加入 <code>ECharts</code></li>
 </ul>
 </li>
 <li><a href="https://github.com/xmasuhai/echarts-demo-1">代码仓库xmasuhai/echarts-demo-1</a></li>
@@ -403,7 +410,7 @@
 <p>[toc]</p>
 <hr>
 <h2 id="统计图表">统计图表</h2>
-<h3 id="数据可视化echarts-使用指南">【数据可视化】Echarts 使用指南</h3>
+<h3 id="数据可视化echarts-使用指南">【数据可视化】<code>Echarts</code> 使用指南</h3>
 <blockquote>
 <p>分别介绍</p>
 </blockquote>
@@ -423,7 +430,7 @@
 <h3 id="引入-echarts">引入 <code>echarts</code></h3>
 <h4 id="无打包工具webpackparcel用于快速调试demo">无打包工具（<code>webpack/parcel</code>）用于快速调试demo</h4>
 <ul>
-<li>直接在 <code>index.html</code>引入<code>&lt;script src=&quot;[path]/echarts.min.js&quot;&gt;&lt;/script&gt;</code>，使用bootCDN</li>
+<li>直接在 <code>index.html</code>引入<code>&lt;script src=&quot;[path]/echarts.min.js&quot;&gt;&lt;/script&gt;</code>，使用 <code>bootCDN</code></li>
 <li>使用全局变量<code>window.echarts</code></li>
 </ul>
 <blockquote>
@@ -499,7 +506,7 @@
 </div>
 </div><h4 id="使用webpackparcelvuecli-vite--ts-用于一般项目">使用<code>webpack/parcel</code>(<code>vue/cli</code> <code>vite</code>) + <code>TS</code> 用于一般项目</h4>
 <blockquote>
-<p>安装（以使用<a href="https://www.parceljs.cn/"><code>Parcel 1+</code></a>为例）</p>
+<p>安装（以使用 <a href="https://www.parceljs.cn/"><code>Parcel 1+</code></a> 为例）</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -518,7 +525,7 @@ yarn add --dev @types/echarts
 </div><ul>
 <li>安装<code>yarn global add parcel-bundler</code>而 <strong>不是<code>yarn global add parcel</code></strong>
 <ul>
-<li><code>yarn global add parcel</code>安装的是<a href="https://v2.parceljs.cn/"><code>Parcel 2+</code></a></li>
+<li><code>yarn global add parcel</code> 安装的是 <a href="https://v2.parceljs.cn/"><code>Parcel 2+</code></a></li>
 </ul>
 </li>
 <li>安装<code>yarn add --dev @types/echarts</code>是为了在<code>WebStorm</code>中输入代码会有提示</li>
@@ -1623,7 +1630,7 @@ yarn add --dev @types/echarts
 </code></pre></td></tr></table>
 </div>
 </div><hr>
-<h4 id="echart-点击事件"><code>echart</code> 点击事件</h4>
+<h4 id="echarts-点击事件"><code>echarts</code> 点击事件</h4>
 <blockquote>
 <p>让用户可以和图表进行交互</p>
 <p>在初始化后的 echarts 实例( <code>const myChart = echarts.init(chartDom, 'light')</code> )上使用 API <code>on</code> 即可</p>
@@ -2076,8 +2083,8 @@ yarn add --dev @types/echarts
 </blockquote>
 <ul>
 <li><a href="https://www.jianshu.com/p/091c6812b0ad">echarts 图表 PC/移动端自适应方案</a></li>
-<li><a href="https://juejin.cn/post/6897857163918573582">echarts图表文字如何适配大屏分辨率</a></li>
-<li><a href="https://www.huaweicloud.com/articles/273c606c14d0371b9f0ce160d6971b83.html">echarts改变字体单位实现自适应</a></li>
+<li><a href="https://juejin.cn/post/6897857163918573582">echarts 图表文字如何适配大屏分辨率</a></li>
+<li><a href="https://www.huaweicloud.com/articles/273c606c14d0371b9f0ce160d6971b83.html">echarts 改变字体单位实现自适应</a></li>
 </ul>
 <hr>
 <h4 id="vue里使用-echarts">Vue里使用 <code>echarts</code></h4>
@@ -2199,9 +2206,9 @@ yarn add --dev @types/vue
 </span><span class="lnt">12
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+<pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
-    Hi
+    <span class="nx">Hi</span>
   <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
 <span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
 
@@ -2299,9 +2306,9 @@ yarn add --dev @types/vue
 </span><span class="lnt">15
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+<pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">div</span> <span class="na">ref</span><span class="o">=</span><span class="s">&#34;container&#34;</span><span class="p">&gt;</span>
-    vue-echarts
+    <span class="nx">vue</span><span class="o">-</span><span class="nx">echarts</span>
   <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
 <span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
 
@@ -2351,10 +2358,10 @@ yarn add --dev @types/vue
 </span><span class="lnt">17
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+<pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;vueChartDemo&#34;</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;</span>在 Vue 中使用 echarts<span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">vue-echarts</span><span class="p">&gt;&lt;/</span><span class="nt">vue-echarts</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;</span><span class="nx">在</span> <span class="nx">Vue</span> <span class="nx">中使用</span> <span class="nx">echarts</span><span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">vue-echarts</span><span class="p">&gt;</span><span class="o">&lt;</span><span class="err">/vue-echarts&gt;</span>
   <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
 <span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
 
@@ -2370,7 +2377,8 @@ yarn add --dev @types/vue
 
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div><hr>
+<blockquote>
 <p>拆开并封装组件<code>./src/modules/lineChart.js</code>和<code>./src/store/options/lineChartOptions.js</code></p>
 <p>重构<code>./src/store/chartData.js</code>和<code>./src/utils/loadMoreButton.js</code></p>
 </blockquote>
@@ -3484,8 +3492,8 @@ yarn add --dev @types/vue
 </span><span class="c1"></span><span class="kr">const</span> <span class="nx">ECharts</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;vue-echarts&#39;</span><span class="p">).</span><span class="k">default</span><span class="p">;</span>
 <span class="kr">import</span> <span class="s1">&#39;echarts/lib/component/tooltip&#39;</span><span class="p">;</span>
 <span class="kr">import</span> <span class="s1">&#39;echarts/lib/chart/line&#39;</span><span class="p">;</span>
-<span class="p">...</span>
-</code></pre></td></tr></table>
+<span class="c1">//...
+</span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
 <p>配置<code>Vue CLI 3+</code> 在 <code>vue.config.js</code> 中的 <code>transpileDependencies</code> 增加 <code>vue-echarts</code> 及 <code>resize-detector</code></p>
@@ -3744,11 +3752,11 @@ yarn add --dev @types/vue
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="p">...</span>
+<pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
     <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;echarts-wrapper&#34;</span> <span class="na">ref</span><span class="o">=</span><span class="s">&#34;vChartWrapper&#34;</span><span class="p">&gt;</span>
       <span class="p">&lt;</span><span class="nt">ECharts</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;echarts&#34;</span> <span class="nt">:options</span><span class="s">=&#34;showEChart&#34;</span><span class="p">/&gt;</span>
     <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<span class="p">...</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
 </code></pre></td></tr></table>
 </div>
 </div><div class="highlight"><div class="chroma">
@@ -3859,7 +3867,7 @@ yarn add --dev @types/vue
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"></code></pre></td></tr></table>
 </div>
 </div><hr>
 <blockquote>
@@ -3953,6 +3961,551 @@ yarn add --dev @types/vue
 </li>
 </ul>
 <hr>
+<h3 id="构造数据数据排序计数排序的变形-前端用到的算法">构造数据数据排序（计数排序的变形） 前端用到的算法</h3>
+<ul>
+<li>遍历对象时，遍历的顺序是否固定
+<ul>
+<li>遍历对象的<code>key</code>，遍历的顺序是否固定</li>
+<li><code>hashTable</code>中的顺序是用户输入得到的，输入顺序不一定符合预期</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>JS 中对象的 <code>key</code> 是有顺序的</p>
+</blockquote>
+<ul>
+<li>JS 中对象的字段遍历顺序是没有保证的，例如 <code>Object.keys</code>函数产生的数组顺序没有保证</li>
+<li>实际上在 <code>ES2015</code> 之后标准规定了 <code>key</code> 的顺序（准确的说是规定了 <code>[[OwnPropertyKeys]]()</code>这个内部方法返回的 <code>key</code> 的顺序）</li>
+</ul>
+<blockquote>
+<p>结论：<code>keys</code> 数组分为三个部分：</p>
+</blockquote>
+<ul>
+<li>可以作为数组索引的 <code>key</code> 按照升序排列，例如 <code>1、2、3</code>。</li>
+<li>是字符串不是 symbol 的 key，按照创建顺序排列。</li>
+<li>symbol 类型的 key 也按照创建顺序排列。</li>
+<li>参考链接 <a href="https://link.zhihu.com/?target=https%3A//262.ecma-international.org/11.0/%23sec-ordinary-object-internal-methods-and-internal-slots-ownpropertykeys">ECMAScript 9.1.11</a></li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="nx">Reflect</span><span class="p">.</span><span class="nx">ownKeys</span><span class="p">({</span>
+  <span class="p">[</span><span class="nx">Symbol</span><span class="p">(</span><span class="s1">&#39;88888&#39;</span><span class="p">)]</span><span class="o">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+  <span class="mi">18</span><span class="o">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+  <span class="nx">star</span><span class="o">:</span> <span class="s1">&#39;☆★&#39;</span><span class="p">,</span>
+  <span class="mi">4</span><span class="o">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+  <span class="nx">hahaha</span><span class="o">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+<span class="p">})</span>
+
+<span class="c1">// [&#39;4&#39;, &#39;18&#39;, &#39;star&#39;, &#39;hahaha&#39;, Symbol(88888)]
+</span></code></pre></td></tr></table>
+</div>
+</div><hr>
+<h3 id="原始数据必须转换为一个数组才能排序">原始数据必须转换为一个数组，才能排序</h3>
+<ul>
+<li>按时间排序，近的排在前面</li>
+<li>显示的顺序为 今天 昨天 （本年内）具体日期 （去年以及之前）具体日期</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="cm">/*
+</span><span class="cm">* [
+</span><span class="cm">*   {title, items},
+</span><span class="cm">*   {title, items},
+</span><span class="cm">*   {title, items},
+</span><span class="cm">* ]
+</span><span class="cm">* */</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>首先拷贝原始数据 <code>clone.ts</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="kd">function</span> <span class="nx">clone</span><span class="p">&lt;</span><span class="nt">T</span><span class="p">&gt;(</span><span class="nx">data</span>: <span class="kt">T</span><span class="p">)</span><span class="o">:</span> <span class="nx">T</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">data</span><span class="p">));</span>
+<span class="p">}</span>
+
+<span class="kr">export</span> <span class="k">default</span> <span class="nx">clone</span><span class="p">;</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>TS 声明类型：
+<ul>
+<li><code>type HashTableValue = { title: string; items: RecordItem[] };</code></li>
+</ul>
+</li>
+<li>查询到对应的<code>title</code>，将<code>recordList</code>排序，依次推入数组</li>
+<li><code>recordList</code>是<code>RecordItem</code>的数组，进行排序<code>.sort((a, b) =&gt; {})</code>
+<ul>
+<li><code>const n = recordList.sort((a, b) =&gt; {a.createdAt});</code></li>
+<li><code>a.createdAt</code>的值为字符串，按<code>ASCII</code>顺序比较大小，不是预期的顺序，<code>'a' - 'b' // NaN</code> 不能用字符串的减法</li>
+<li><strong>使用<code>.sort()</code>必须变为数字类型，用<code>.valueOf()</code></strong>：
+<ul>
+<li><code>dayjs(a.createdAt).valueOf()</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>const newList = recordList.sort((a: RecordItem, b: RecordItem) =&gt; ( dayjs(a.createdAt).valueOf() - dayjs(b.createdAt).valueOf() ));</code></li>
+<li>需要逆向从近期到远期的<code>( dayjs(b.createdAt).valueOf() - dayjs(a.createdAt).valueOf() )</code></li>
+<li>注意<code>.sort()</code>会 <strong>改变原数组自身</strong>，保留原数组，使用 <strong>深克隆</strong> <code>clone.ts</code>
+<ul>
+<li>导入之前的工具函数<code>import clone from '@/lib/clone.ts';</code>的<code>clone()</code></li>
+<li><code>function clone(data: any) { return JSON.parse(JSON.stringify(data)) as RecordItem; }</code></li>
+<li>由于接受的参数类型是<code>any</code>，而<code>JSON.parse()</code>返回值类型也是<code>any</code></li>
+<li>使用泛型<code>function clone&lt;T&gt;(data: T): T {...}</code> 统一入参和返回值的类型
+<ul>
+<li>在尖括号中声明类型</li>
+</ul>
+</li>
+<li>之后使用<code>.sort()</code> TS 会自动推断类型</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>重构<code>Statistic.vue</code>时间排序逻辑</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts">  <span class="c1">//...
+</span><span class="c1"></span>  <span class="kr">get</span> <span class="nx">result() {</span>
+    <span class="kr">const</span> <span class="p">{</span><span class="nx">recordList</span><span class="p">}</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+    <span class="kr">type</span> <span class="nx">HashTableValue</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">title</span>: <span class="kt">string</span><span class="p">;</span> <span class="nx">items</span>: <span class="kt">RecordItem</span><span class="p">[]</span> <span class="p">};</span>
+    <span class="kr">const</span> <span class="nx">hashTable</span>: <span class="kt">HashTableValue</span><span class="p">[]</span> <span class="o">=</span> <span class="p">[];</span>
+    <span class="kr">const</span> <span class="nx">newList</span> <span class="o">=</span> <span class="nx">clone</span><span class="p">(</span><span class="nx">recordList</span><span class="p">).</span><span class="nx">sort</span><span class="p">((</span><span class="nx">a</span>: <span class="kt">RecordItem</span><span class="p">,</span> <span class="nx">b</span>: <span class="kt">RecordItem</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">(</span>
+        <span class="nx">dayjs</span><span class="p">(</span><span class="nx">b</span><span class="p">.</span><span class="nx">createdAt</span><span class="p">).</span><span class="nx">valueOf</span><span class="p">()</span> <span class="o">-</span> <span class="nx">dayjs</span><span class="p">(</span><span class="nx">a</span><span class="p">.</span><span class="nx">createdAt</span><span class="p">).</span><span class="nx">valueOf</span><span class="p">()</span>
+    <span class="p">));</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">newList</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">i</span> <span class="o">=&gt;</span> <span class="nx">i</span><span class="p">.</span><span class="nx">createdAt</span><span class="p">));</span>
+    <span class="k">return</span> <span class="p">[];</span>
+  <span class="p">}</span>
+  <span class="c1">//...
+</span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>先将局部数据<code>recordList</code>排序，再<code>push</code>到数据中</li>
+</ul>
+<hr>
+<h2 id="数据排序后分组">数据排序后分组</h2>
+<ul>
+<li>判断数组长度<code>if(recordList.length === 0) {return []};</code>，确保存在可操作数据</li>
+<li>取出新的<code>newList</code>的第一个数据
+<ul>
+<li><code>const x = [{title: dayjs(recordList[0].createdAt).format('YYYY-MM-DD'), items: [recordList[0]]}];</code></li>
+</ul>
+</li>
+<li>从第二个数据的<code>.createdAt</code>和第一个数据的<code>title</code>和开始循环比较
+<ul>
+<li>新的数据和分组的<code>title</code>是否一致
+<ul>
+<li>一致放入当前组的<code>items</code></li>
+<li>不一致，作为新的一组的<code>title</code>，放入新分组的<code>items</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="cm">/*
+</span><span class="cm">* [
+</span><span class="cm">*   {title: &#39;11&#39;, items: [{11...}, {11...}]},
+</span><span class="cm">*   {title: &#39;12&#39;, items: [{12...}, {12...}, {12...}]},
+</span><span class="cm">*   {title: &#39;13&#39;, items: [{13...}, {13...}]},
+</span><span class="cm">*   {title: &lt;string&gt;, items: [{13...}, {13...}]},
+</span><span class="cm">* ]
+</span><span class="cm">* */</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>统一显示时间戳比较 - 标记问题ok</p>
+</blockquote>
+<ul>
+<li><code>const localDay = dayjs(current.createdAt.split('T')[0]);</code></li>
+<li>由于有时区的概念 <code>dayjs(current.createdAt)</code>算上时间部分的日期会延后一天</li>
+<li>封装倒时差函数<code>clearJetLag(new Date(), '-')</code></li>
+</ul>
+<blockquote>
+<p><code>src/lib/clearJetLag.ts</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="kd">function</span> <span class="nx">clearJetLag</span><span class="p">(</span><span class="nx">isoDate</span>: <span class="kt">Date</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">(),</span> <span class="nx">offsetType</span><span class="o">:</span> <span class="s1">&#39;-&#39;</span> <span class="o">|</span> <span class="s1">&#39;+&#39;</span> <span class="o">|</span> <span class="s1">&#39;&#39;</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">let</span> <span class="nx">localClock</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">offsetType</span> <span class="o">===</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">localClock</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="nx">isoDate</span><span class="p">.</span><span class="nx">getTime</span><span class="p">()).</span><span class="nx">toISOString</span><span class="p">();</span>
+  <span class="p">}</span><span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="nx">offsetType</span> <span class="o">===</span> <span class="s1">&#39;-&#39;</span><span class="p">){</span>
+    <span class="nx">localClock</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="nx">isoDate</span><span class="p">.</span><span class="nx">getTime</span><span class="p">()</span> <span class="o">-</span> <span class="p">(</span><span class="nx">isoDate</span><span class="p">.</span><span class="nx">getTimezoneOffset</span><span class="p">()</span> <span class="o">*</span> <span class="mi">60000</span><span class="p">)).</span><span class="nx">toISOString</span><span class="p">();</span>
+  <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+    <span class="nx">localClock</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="nx">isoDate</span><span class="p">.</span><span class="nx">getTime</span><span class="p">()</span> <span class="o">+</span> <span class="p">(</span><span class="nx">isoDate</span><span class="p">.</span><span class="nx">getTimezoneOffset</span><span class="p">()</span> <span class="o">*</span> <span class="mi">60000</span><span class="p">)).</span><span class="nx">toISOString</span><span class="p">();</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="nx">localClock</span>
+<span class="p">}</span>
+
+<span class="kr">export</span> <span class="k">default</span> <span class="nx">clearJetLag</span><span class="p">;</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>重构<code>src/store/modules/recordStore.ts</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="kr">import</span> <span class="nx">clone</span> <span class="kr">from</span> <span class="s1">&#39;@/lib/clone&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">store</span> <span class="kr">from</span> <span class="s1">&#39;@/store&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">clearJetLag</span> <span class="kr">from</span> <span class="s1">&#39;@/lib/clearJetLag.ts&#39;</span><span class="p">;</span>
+
+<span class="kr">const</span> <span class="nx">recordStore</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="kr">namespace</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+  <span class="nx">state() {</span>
+    <span class="k">return</span> <span class="p">{</span>
+      <span class="nx">recordList</span><span class="o">:</span> <span class="p">[],</span>
+      <span class="nx">localTimeStamp</span><span class="o">:</span> <span class="s1">&#39;&#39;</span>
+    <span class="p">};</span>
+  <span class="p">},</span>
+  <span class="nx">mutations</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">getLocalTimeStamp</span><span class="p">(</span><span class="nx">state</span>: <span class="kt">recordState</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">state</span><span class="p">.</span><span class="nx">localTimeStamp</span> <span class="o">=</span> <span class="nx">clearJetLag</span><span class="p">(</span><span class="k">new</span> <span class="nb">Date</span><span class="p">(),</span> <span class="s1">&#39;-&#39;</span><span class="p">);</span>
+    <span class="p">},</span>
+    <span class="nx">fetchRecords</span><span class="p">(</span><span class="nx">state</span>: <span class="kt">recordState</span><span class="p">)</span> <span class="p">{</span><span class="cm">/*...*/</span><span class="p">},</span>
+    <span class="nx">saveRecords</span><span class="p">(</span><span class="nx">state</span>: <span class="kt">recordState</span><span class="p">)</span> <span class="p">{</span><span class="cm">/*...*/</span><span class="p">},</span>
+    <span class="nx">createRecord</span><span class="p">(</span><span class="nx">state</span>: <span class="kt">recordState</span><span class="p">,</span> <span class="nx">record</span>: <span class="kt">RecordItem</span><span class="p">)</span> <span class="p">{</span>
+      <span class="kr">const</span> <span class="nx">clonedRecord</span> <span class="o">=</span> <span class="nx">clone</span><span class="p">(</span><span class="nx">record</span><span class="p">);</span>
+      <span class="nx">store</span><span class="p">.</span><span class="nx">commit</span><span class="p">(</span><span class="s1">&#39;getLocalTimeStamp&#39;</span><span class="p">);</span>
+      <span class="nx">clonedRecord</span><span class="p">.</span><span class="nx">createdAt</span> <span class="o">=</span> <span class="nx">state</span><span class="p">.</span><span class="nx">localTimeStamp</span><span class="p">;</span>
+      <span class="nx">state</span><span class="p">.</span><span class="nx">recordList</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">clonedRecord</span><span class="p">);</span>
+      <span class="nx">store</span><span class="p">.</span><span class="nx">commit</span><span class="p">(</span><span class="s1">&#39;saveRecords&#39;</span><span class="p">);</span>
+    <span class="p">},</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="kr">export</span> <span class="k">default</span> <span class="nx">recordStore</span><span class="p">;</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>重构命名</p>
+</blockquote>
+<ul>
+<li><code>get groupedList() { ... return rusult;}</code></li>
+</ul>
+<h3 id="更改template-循环渲染的key">更改<code>template</code> 循环渲染的<code>:key</code></h3>
+<ul>
+<li>数据由对象变为数组 <strong>方便排序</strong></li>
+<li><code>li v-for=&quot;(group, index) in groupedList&quot; :key=&quot;index&quot;&gt;</code></li>
+</ul>
+<blockquote>
+<p>类似桶排序</p>
+</blockquote>
+<h3 id="echarts-的-axislabel"><code>echarts</code> 的 <code>axisLabel</code></h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="nx">axisLabel</span><span class="o">:</span> <span class="p">{</span>
+          <span class="nx">formatter</span><span class="o">:</span> <span class="p">(</span><span class="nx">value</span>: <span class="kt">string</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nx">value</span><span class="p">.</span><span class="nx">substr</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
+          <span class="p">}</span>
+        <span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><hr>
+<h3 id="当-optioins-变化时更新-chart">当 <code>optioins</code> 变化时，更新 <code>chart</code></h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts">  <span class="kr">get</span> <span class="nx">chartDataKeyValueList() {</span>
+    <span class="kd">let</span> <span class="nx">array</span> <span class="o">=</span> <span class="p">[];</span> <span class="c1">// 排序桶
+</span><span class="c1"></span>    <span class="c1">// 原数据按录入的顺序排列，数据先要排序，按时间排序
+</span><span class="c1"></span>    <span class="c1">// 显示最多 31 天的数据， 获取 最近 31天的日期
+</span><span class="c1"></span>    <span class="c1">// key为日期， value为当天总计金额
+</span><span class="c1"></span>    <span class="c1">// lastDay - i * 24 * 3600 * 1000 得到每天的日期
+</span><span class="c1"></span>    <span class="c1">// 等价于 day(lastDay).subtract(i, &#39;day&#39;) 每次减去一天
+</span><span class="c1"></span>    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;=</span> <span class="mi">30</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+      <span class="kr">const</span> <span class="nx">everyLastDateString</span> <span class="o">=</span> <span class="nx">dayjs</span><span class="p">(</span><span class="k">new</span> <span class="nb">Date</span><span class="p">())</span>
+        <span class="p">.</span><span class="nx">subtract</span><span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="s1">&#39;day&#39;</span><span class="p">)</span> <span class="c1">// 每次减去一天
+</span><span class="c1"></span>        <span class="p">.</span><span class="nx">format</span><span class="p">(</span><span class="s1">&#39;YYYY-MM-DD&#39;</span><span class="p">);</span> <span class="c1">// 格式化
+</span><span class="c1"></span>      <span class="c1">// 找到 在 recordList 中， 每项日期对应的记录
+</span><span class="c1"></span>      <span class="kr">const</span> <span class="nx">foundRecord</span> <span class="o">=</span> <span class="nx">_</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">groupedList</span><span class="p">,</span> <span class="p">{</span>
+        <span class="nx">title</span>: <span class="kt">everyLastDateString</span>
+      <span class="p">});</span>
+      <span class="c1">// foundRecord?.amount 相当于 foundRecord ? foundRecord.amount: 0
+</span><span class="c1"></span>      <span class="nx">array</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span>
+        <span class="p">{</span>
+          <span class="nx">key</span>: <span class="kt">everyLastDateString</span><span class="p">,</span>
+          <span class="nx">value</span>: <span class="kt">foundRecord?.total</span> <span class="o">||</span> <span class="mi">0</span>
+        <span class="p">}</span>
+      <span class="p">);</span>
+    <span class="p">}</span>
+    <span class="c1">// 图表的数据
+</span><span class="c1"></span>    <span class="nx">array</span> <span class="o">=</span> <span class="nx">array</span><span class="p">.</span><span class="nx">reverse</span><span class="p">();</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">groupedList</span>
+      <span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="nx">record</span> <span class="o">=&gt;</span> <span class="nx">_</span><span class="p">.</span><span class="nx">pick</span><span class="p">(</span><span class="nx">record</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;createdAt&#39;</span><span class="p">,</span> <span class="s1">&#39;amount&#39;</span><span class="p">]));</span>
+    <span class="k">return</span> <span class="nx">array</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="kr">get</span> <span class="nx">myChartOption() {</span>
+    <span class="kr">const</span> <span class="nx">keys</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">chartDataKeyValueList</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">item</span> <span class="o">=&gt;</span> <span class="nx">item</span><span class="p">.</span><span class="nx">key</span><span class="p">);</span>
+    <span class="kr">const</span> <span class="nx">values</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">chartDataKeyValueList</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">item</span> <span class="o">=&gt;</span> <span class="nx">item</span><span class="p">.</span><span class="nx">value</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="p">{</span>
+      <span class="nx">xAxis</span><span class="o">:</span> <span class="p">{</span>
+        <span class="kr">type</span><span class="o">:</span> <span class="s1">&#39;category&#39;</span><span class="p">,</span>
+        <span class="nx">data</span>: <span class="kt">keys</span><span class="p">,</span>
+        <span class="nx">axisTick</span><span class="o">:</span> <span class="p">{</span>
+          <span class="nx">alignWithLabel</span>: <span class="kt">true</span>
+        <span class="p">},</span>
+        <span class="nx">axisLine</span><span class="o">:</span> <span class="p">{</span>
+          <span class="nx">lineStyle</span><span class="o">:</span> <span class="p">{</span>
+            <span class="nx">color</span><span class="o">:</span> <span class="s1">&#39;#666&#39;</span>
+          <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="nx">axisLabel</span><span class="o">:</span> <span class="p">{</span>
+          <span class="nx">formatter</span><span class="o">:</span> <span class="p">(</span><span class="nx">value</span>: <span class="kt">string</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nx">value</span><span class="p">.</span><span class="nx">substr</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
+          <span class="p">}</span>
+        <span class="p">}</span>
+      <span class="p">},</span>
+      <span class="nx">yAxis</span><span class="o">:</span> <span class="p">{</span>
+        <span class="kr">type</span><span class="o">:</span> <span class="s1">&#39;value&#39;</span><span class="p">,</span>
+        <span class="nx">show</span>: <span class="kt">false</span>
+      <span class="p">},</span>
+      <span class="nx">tooltip</span><span class="o">:</span> <span class="p">{</span>
+        <span class="nx">show</span>: <span class="kt">true</span><span class="p">,</span>
+        <span class="nx">triggeron</span>: <span class="kt">this.triggerMethod</span><span class="p">,</span>
+        <span class="nx">confine</span>: <span class="kt">true</span><span class="p">,</span>
+        <span class="nx">position</span><span class="o">:</span> <span class="s1">&#39;top&#39;</span><span class="p">,</span>
+        <span class="nx">formatter</span><span class="o">:</span> <span class="s1">&#39;{c}&#39;</span>
+      <span class="p">},</span>
+      <span class="nx">series</span><span class="o">:</span> <span class="p">[{</span>
+        <span class="kt">symbol</span><span class="o">:</span> <span class="s1">&#39;circle&#39;</span><span class="p">,</span>
+        <span class="nx">data</span>: <span class="kt">values</span><span class="p">,</span>
+        <span class="kr">type</span><span class="o">:</span> <span class="s1">&#39;line&#39;</span><span class="p">,</span>
+        <span class="nx">itemStyle</span><span class="o">:</span> <span class="p">{</span>
+          <span class="nx">borderWidth</span>: <span class="kt">3</span><span class="p">,</span>
+          <span class="nx">borderColor</span><span class="o">:</span> <span class="s1">&#39;#aaa&#39;</span><span class="p">,</span>
+          <span class="nx">color</span><span class="o">:</span> <span class="s1">&#39;#666&#39;</span>
+        <span class="p">},</span>
+        <span class="nx">symbolSize</span>: <span class="kt">12</span><span class="p">,</span>
+        <span class="nx">showBackground</span>: <span class="kt">true</span>
+      <span class="p">}],</span>
+      <span class="nx">animationDuration</span>: <span class="kt">888</span><span class="p">,</span>
+      <span class="nx">grid</span><span class="o">:</span> <span class="p">{</span>
+        <span class="nx">left</span>: <span class="kt">3</span><span class="p">,</span>
+        <span class="nx">right</span>: <span class="kt">0</span><span class="p">,</span>
+        <span class="nx">top</span>: <span class="kt">8</span>
+      <span class="p">}</span>
+    <span class="p">};</span>
+  <span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">ECharts</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;echarts&#34;</span>
+            <span class="nt">:options</span><span class="s">=&#34;myChartOption&#34;</span>
+            <span class="na">ref</span><span class="o">=</span><span class="s">&#34;vChartContent&#34;</span><span class="p">/&gt;</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><hr>
+<h3 id="完整代码">完整代码</h3>
 <blockquote>
 <p><code>./src/view/Statistics.vue</code></p>
 </blockquote>
@@ -4318,23 +4871,54 @@ yarn add --dev @types/vue
 </span><span class="lnt">358
 </span><span class="lnt">359
 </span><span class="lnt">360
+</span><span class="lnt">361
+</span><span class="lnt">362
+</span><span class="lnt">363
+</span><span class="lnt">364
+</span><span class="lnt">365
+</span><span class="lnt">366
+</span><span class="lnt">367
+</span><span class="lnt">368
+</span><span class="lnt">369
+</span><span class="lnt">370
+</span><span class="lnt">371
+</span><span class="lnt">372
+</span><span class="lnt">373
+</span><span class="lnt">374
+</span><span class="lnt">375
+</span><span class="lnt">376
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">Layout</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;statistics&#34;</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">HeaderBar</span> <span class="nt">:header-title</span><span class="s">=&#34;&#39;统计&#39;&#34;</span> <span class="na">router</span><span class="nt">-path</span><span class="err">=&#34;/</span><span class="na">money</span><span class="err">&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">HeaderBar</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">Tabs</span> <span class="na">class</span><span class="nt">-prefix</span><span class="err">=&#34;</span><span class="na">type</span><span class="err">&#34;</span> <span class="nt">:data-source</span><span class="s">=&#34;recordTypeList&#34;</span> <span class="nt">:type.sync</span><span class="s">=&#34;type&#34;</span><span class="p">/&gt;</span>
-    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;echarts-wrapper&#34;</span> <span class="na">ref</span><span class="o">=</span><span class="s">&#34;vChartWrapper&#34;</span><span class="p">&gt;</span>
-      <span class="p">&lt;</span><span class="nt">ECharts</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;echarts&#34;</span> <span class="nt">:options</span><span class="s">=&#34;myChartOption&#34;</span> <span class="na">ref</span><span class="o">=</span><span class="s">&#34;vChartContent&#34;</span><span class="p">/&gt;</span>
+    <span class="p">&lt;</span><span class="nt">HeaderBar</span> <span class="nt">:header-title</span><span class="s">=&#34;&#39;统计&#39;&#34;</span>
+               <span class="na">router</span><span class="nt">-path</span><span class="err">=&#34;/</span><span class="na">money</span><span class="err">&#34;</span><span class="p">/&gt;</span>
+    <span class="p">&lt;</span><span class="nt">Tabs</span> <span class="na">class</span><span class="nt">-prefix</span><span class="err">=&#34;</span><span class="na">type</span><span class="err">&#34;</span>
+          <span class="nt">:data-source</span><span class="s">=&#34;recordTypeList&#34;</span> 
+          <span class="nt">:type.sync</span><span class="s">=&#34;type&#34;</span><span class="p">/&gt;</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;echarts-wrapper&#34;</span>
+         <span class="na">ref</span><span class="o">=</span><span class="s">&#34;vChartWrapper&#34;</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">ECharts</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;echarts&#34;</span> 
+               <span class="nt">:options</span><span class="s">=&#34;myChartOption&#34;</span>
+               <span class="na">ref</span><span class="o">=</span><span class="s">&#34;vChartContent&#34;</span><span class="p">/&gt;</span>
     <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
     <span class="p">&lt;</span><span class="nt">ol</span> <span class="nt">v-if</span><span class="s">=&#34;groupedList.length &gt; 0&#34;&gt;
-</span><span class="s">      &lt;li v-for=&#34;(group, index) in groupedList&#34; :key=&#34;index&#34;&gt;
-</span><span class="s">        &lt;h3 class=&#34;title&#34;&gt;{{ showDay(group.title) }} &lt;span&gt;共计： ￥{{ group.total }}&lt;/span&gt;&lt;/h3&gt;
+</span><span class="s">      &lt;li v-for=&#34;(group, index) in groupedList&#34; 
+</span><span class="s">          :key=&#34;index&#34;&gt;
+</span><span class="s">        &lt;h3 class=&#34;title&#34;&gt;
+</span><span class="s">          {{ showDay(group.title) }} 
+</span><span class="s">          &lt;span&gt;
+</span><span class="s">            共计： ￥{{ group.total }}
+</span><span class="s">          &lt;/span&gt;
+</span><span class="s">        &lt;/h3&gt;
 </span><span class="s">        &lt;ol&gt;
-</span><span class="s">          &lt;li class=&#34;record&#34; v-for=&#34;{amount, id, tags, tips} in group.items&#34; </span><span class="nt">:key</span><span class="s">=&#34;id&#34;</span><span class="p">&gt;</span>
+</span><span class="s">          &lt;li class=&#34;record&#34;
+</span><span class="s">              v-for=&#34;{amount, id, tags, tips} in group.items&#34;
+</span><span class="s">              </span><span class="nt">:key</span><span class="s">=&#34;id&#34;</span><span class="p">&gt;</span>
             <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;recordTag&#34;</span><span class="p">&gt;{{</span> <span class="nx">tagToString</span><span class="p">(</span><span class="nx">tags</span><span class="p">)</span> <span class="p">}}&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
             <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;notes&#34;</span><span class="p">&gt;</span>
-              <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;tips&#34;</span><span class="p">&gt;</span><span class="nx">备注</span><span class="err">：</span><span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;text&#34;</span><span class="p">&gt;{{</span> <span class="nx">tips</span> <span class="p">}}&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+              <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;tips&#34;</span><span class="p">&gt;</span><span class="nx">备注</span><span class="err">：</span><span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+              <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;text&#34;</span><span class="p">&gt;{{</span> <span class="nx">tips</span> <span class="p">}}&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
             <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
             <span class="p">&lt;</span><span class="nt">span</span><span class="p">&gt;</span><span class="err">￥</span> <span class="p">{{</span> <span class="nx">amount</span> <span class="p">}}&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
           <span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
@@ -4356,6 +4940,7 @@ yarn add --dev @types/vue
 <span class="kr">import</span> <span class="nx">_</span> <span class="nx">from</span> <span class="s1">&#39;lodash&#39;</span><span class="p">;</span>
 
 <span class="nx">dayjs</span><span class="p">.</span><span class="nx">locale</span><span class="p">(</span><span class="s1">&#39;zh-cn&#39;</span><span class="p">);</span>
+
 <span class="c1">// utils
 </span><span class="c1"></span><span class="kr">import</span> <span class="nx">clone</span> <span class="nx">from</span> <span class="s1">&#39;@/lib/clone.ts&#39;</span><span class="p">;</span>
 <span class="kr">import</span> <span class="nx">clearJetLag</span> <span class="nx">from</span> <span class="s1">&#39;@/lib/clearJetLag&#39;</span><span class="p">;</span>
@@ -4552,12 +5137,12 @@ yarn add --dev @types/vue
     <span class="k">return</span> <span class="nx">formattedDate</span><span class="p">;</span>
   <span class="p">}</span>
 
-  <span class="c1">// hooks
+  <span class="c1">// lifeCircle hooks
 </span><span class="c1"></span>  <span class="kr">protected</span> <span class="nx">beforeCreate</span><span class="p">()</span><span class="o">:</span> <span class="k">void</span> <span class="p">{</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">$store</span><span class="p">.</span><span class="nx">commit</span><span class="p">(</span><span class="s1">&#39;fetchRecords&#39;</span><span class="p">);</span>
   <span class="p">}</span>
 
-  <span class="nx">mounted</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kr">protected</span> <span class="nx">mounted</span><span class="p">()</span> <span class="p">{</span>
     <span class="kr">const</span> <span class="nx">echartDiv</span> <span class="o">=</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">$refs</span><span class="p">.</span><span class="nx">vChartWrapper</span> <span class="nx">as</span> <span class="nx">HTMLDivElement</span><span class="p">);</span>
     <span class="nx">setTimeout</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
       <span class="nx">echartDiv</span><span class="p">.</span><span class="nx">scrollLeft</span> <span class="o">=</span> <span class="nx">echartDiv</span><span class="p">.</span><span class="nx">scrollWidth</span><span class="p">;</span>
@@ -4683,13 +5268,6 @@ yarn add --dev @types/vue
 </code></pre></td></tr></table>
 </div>
 </div><hr>
-<h3 id="构造数据-前端用到的算法">构造数据 前端用到的算法</h3>
-<blockquote>
-<p>类似桶排序</p>
-</blockquote>
-<h3 id="echarts-的-axislabel">echarts 的 axisLabel</h3>
-<h3 id="当-optioins-变化时更新-chart">当 optioins 变化时，更新 chart</h3>
-<hr>
 <blockquote>
 <p>参考</p>
 </blockquote>
@@ -4714,7 +5292,7 @@ yarn add --dev @types/vue
   <p class="copyright-item">
     <span class="item-title">上次更新</span>
     <span class="item-content">
-      2022-03-31
+      2022-04-06
       
         
         
