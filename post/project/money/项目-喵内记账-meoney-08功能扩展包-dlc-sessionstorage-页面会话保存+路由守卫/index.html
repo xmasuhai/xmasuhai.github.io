@@ -64,12 +64,12 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://xmasuhai.xyz/post/project/money/%E9%A1%B9%E7%9B%AE-%E5%96%B5%E5%86%85%E8%AE%B0%E8%B4%A6-meoney-08%E5%8A%9F%E8%83%BD%E6%89%A9%E5%B1%95%E5%8C%85-dlc-sessionstorage-%E9%A1%B5%E9%9D%A2%E4%BC%9A%E8%AF%9D%E4%BF%9D%E5%AD%98&#43;%E8%B7%AF%E7%94%B1%E5%AE%88%E5%8D%AB/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2021-12-10T12:21:09+08:00" />
-<meta property="article:modified_time" content="2022-03-31T12:39:25+08:00" />
+<meta property="article:modified_time" content="2022-04-07T10:38:47+08:00" />
 
 <meta itemprop="name" content="【项目 喵内记账 Meoney 08】功能扩展包 DLC SessionStorage 页面会话保存&#43;路由守卫">
 <meta itemprop="description" content="【项目-喵内0∞0记账-meowney-08】功能扩展包 DLC-页面会话保存sessionStorage &#43; 路由守卫 大纲 [toc] Vue文档中的路由守"><meta itemprop="datePublished" content="2021-12-10T12:21:09+08:00" />
-<meta itemprop="dateModified" content="2022-03-31T12:39:25+08:00" />
-<meta itemprop="wordCount" content="4517">
+<meta itemprop="dateModified" content="2022-04-07T10:38:47+08:00" />
+<meta itemprop="wordCount" content="4700">
 <meta itemprop="keywords" content="FrontEnd,Project,money," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="【项目 喵内记账 Meoney 08】功能扩展包 DLC SessionStorage 页面会话保存&#43;路由守卫"/>
 <meta name="twitter:description" content="【项目-喵内0∞0记账-meowney-08】功能扩展包 DLC-页面会话保存sessionStorage &#43; 路由守卫 大纲 [toc] Vue文档中的路由守"/>
@@ -344,7 +344,7 @@
             <a href="http://xmasuhai.xyz/categories/project/"> Project </a>
             
           </div>
-        <span class="more-meta"> 约 4517 字 </span>
+        <span class="more-meta"> 约 4700 字 </span>
           <span class="more-meta"> 预计阅读 10 分钟 </span>
 
         
@@ -363,8 +363,21 @@
     <nav id="TableOfContents">
   <ul>
     <li><a href="#vue文档中的路由守卫"><code>Vue</code>文档中的路由守卫</a></li>
-    <li><a href="#sessionstorage-页面会话保存"><code>sessionStorage</code> 页面会话保存</a></li>
-    <li><a href="#组件内路由守卫-使用vue-property-decorator-类组件-ts装饰器">组件内路由守卫 使用<code>vue-property-decorator</code> 类组件 <code>TS</code>装饰器</a></li>
+    <li><a href="#sessionstorage-页面会话保存"><code>sessionStorage</code> 页面会话保存</a>
+      <ul>
+        <li><a href="#需要暂存页面数据的组件">需要暂存页面数据的组件</a></li>
+        <li><a href="#修改moneyvue">修改<code>Money.vue</code></a></li>
+        <li><a href="#修改tagsvue">修改<code>Tags.vue</code></a></li>
+        <li><a href="#修改formitemvue">修改<code>FormItem.vue</code></a></li>
+        <li><a href="#修改tabsvue">修改<code>Tabs.vue</code></a></li>
+      </ul>
+    </li>
+    <li><a href="#组件内路由守卫-使用vue-property-decorator-类组件-ts装饰器">组件内路由守卫 使用<code>vue-property-decorator</code> 类组件 <code>TS</code>装饰器</a>
+      <ul>
+        <li><a href="#moneyvue添加组件内的路由守卫"><code>Money.vue</code>添加组件内的路由守卫</a></li>
+        <li><a href="#使用vuex-ts-decorators-ts-class-组件-状态管理">使用<code>vuex-ts-decorators</code> TS Class 组件 状态管理</a></li>
+      </ul>
+    </li>
     <li><a href="#参考文章">参考文章</a></li>
     <li><a href="#相关文章">相关文章</a></li>
   </ul>
@@ -382,35 +395,35 @@
 <hr>
 <h2 id="vue文档中的路由守卫"><code>Vue</code>文档中的路由守卫</h2>
 <blockquote>
-<p>路由守卫：主要用来通过<strong>跳转</strong>或<strong>取消</strong>的方式，<strong>操控导航逻辑</strong></p>
+<p>路由守卫：主要用来通过 <strong>跳转</strong> 或 <strong>取消</strong> 的方式，<strong>操控导航逻辑</strong></p>
 </blockquote>
 <ul>
 <li>全局路由守卫
 <ul>
-<li>全局<strong>前置守卫</strong> <code>router.beforeEach(to, from, next) =&gt; {...})</code></li>
-<li>全局<strong>解析守卫</strong> <code>router.beforeResolve(to, from, next) =&gt; {...})</code></li>
-<li>全局<strong>后置钩子</strong> <code>router.afterEach(to, from, next) =&gt; {...})</code>
+<li>全局 <strong>前置守卫</strong> <code>router.beforeEach(to, from, next) =&gt; {...})</code></li>
+<li>全局 <strong>解析守卫</strong> <code>router.beforeResolve(to, from, next) =&gt; {...})</code></li>
+<li>全局 <strong>后置钩子</strong> <code>router.afterEach(to, from,) =&gt; {...})</code>
 <ul>
-<li>不会接受 next 函数</li>
+<li>后置钩子不接受 next 函数</li>
 </ul>
 </li>
 </ul>
 </li>
-<li>单个路由
+<li>单个路由，路由独享守卫
 <ul>
-<li>在路由配置<code>./src/router/index.ts(js)</code>上直接定义路由属性<code>beforeEnter: (to, from, next) =&gt; {...},</code></li>
+<li>在路由配置<code>./src/router/index.ts(js)</code>上直接定义路由列表中每个路由对象中的属性<code>beforeEnter: (to, from,) =&gt; {...},</code></li>
 <li>路由独享的守卫 <code>beforeEnter</code></li>
 <li>与全局前置守卫的方法参数是一样的</li>
 </ul>
 </li>
 <li>组件级
 <ul>
-<li>在路由组件内直接定义</li>
-<li>组件内守卫
+<li>在组件内直接定义</li>
+<li>组件内守卫 配置属性
 <ul>
 <li><code>beforeRouteEnter(to, from, next) {...}</code></li>
-<li><code>beforeRouteUpdate(to, from, next) {...}</code></li>
-<li><code>beforeRouteLeave(to, from, next) {...}</code></li>
+<li><code>beforeRouteUpdate(to, from,) {...}</code></li>
+<li><code>beforeRouteLeave(to, from,) {...}</code></li>
 </ul>
 </li>
 </ul>
@@ -445,9 +458,28 @@
 </ul>
 <hr>
 <h2 id="sessionstorage-页面会话保存"><code>sessionStorage</code> 页面会话保存</h2>
-<blockquote>
-<p><code>Money.vue</code>为了保存用户输入的数据，当用户切换页面，触发导航守卫钩子，暂存数据到<code>sessionStorage</code>中</p>
-</blockquote>
+<h3 id="需要暂存页面数据的组件">需要暂存页面数据的组件</h3>
+<ul>
+<li><code>Money.vue</code>
+<ul>
+<li><code>./store/modules/moneySessionStore.ts</code></li>
+</ul>
+</li>
+<li><code>Tags.vue</code></li>
+<li><code>FormItem.vue</code></li>
+<li><code>Tabs.vue</code></li>
+<li><code>Numpad.vue</code>
+<ul>
+<li><code>NumpadOutput.vue</code></li>
+<li><code>NumpadButton.vue</code></li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="修改moneyvue">修改<code>Money.vue</code></h3>
+<ul>
+<li>为了暂存用户输入的数据，当用户切换页面，触发导航守卫钩子，将数据存到<code>sessionStorage</code>中</li>
+</ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -541,54 +573,14 @@
 </span><span class="lnt">89
 </span><span class="lnt">90
 </span><span class="lnt">91
-</span><span class="lnt">92
-</span><span class="lnt">93
-</span><span class="lnt">94
-</span><span class="lnt">95
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">Layout</span> <span class="na">class-prefix</span><span class="o">=</span><span class="s">&#34;layout&#34;</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;layout-content&#34;</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">HeaderBar</span> <span class="na">:header-title</span><span class="o">=</span><span class="s">&#34;&#39;记账&#39;&#34;</span>
-               <span class="na">:hasIcon</span><span class="o">=</span><span class="s">&#34;false&#34;</span><span class="p">&gt;</span>
-    <span class="p">&lt;/</span><span class="nt">HeaderBar</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">Tags</span> <span class="err">@</span><span class="na">update:selectedTags</span><span class="o">=</span><span class="s">&#34;updatePickedTags&#34;</span>
-          <span class="na">:sessionSelectedTags</span><span class="o">=</span><span class="s">&#34;sessionSelectedTags&#34;</span>
-          <span class="na">:is-deselect-tags</span><span class="o">=</span><span class="s">&#34;emptyTags&#34;</span>
-          <span class="na">class</span><span class="o">=</span><span class="s">&#34;tags&#34;</span><span class="p">/&gt;</span>
-    <span class="p">&lt;</span><span class="nt">FormItem</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;form-item&#34;</span>
-              <span class="na">field-name</span><span class="o">=</span><span class="s">&#34;备注&#34;</span>
-              <span class="na">placeholder</span><span class="o">=</span><span class="s">&#34;在这里输入备注&#34;</span>
-              <span class="na">type</span><span class="o">=</span><span class="s">&#34;text&#34;</span>
-              <span class="na">:inputValue</span><span class="err">.</span><span class="na">sync</span><span class="o">=</span><span class="s">&#34;record.tips&#34;</span><span class="p">/&gt;</span>
-    <span class="p">&lt;</span><span class="nt">FormItem</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;form-item&#34;</span>
-              <span class="na">field-name</span><span class="o">=</span><span class="s">&#34;日期&#34;</span>
-              <span class="na">placeholder</span><span class="o">=</span><span class="s">&#34;在这里选择日期&#34;</span>
-              <span class="na">type</span><span class="o">=</span><span class="s">&#34;date&#34;</span>
-              <span class="na">:inputValue</span><span class="err">.</span><span class="na">sync</span><span class="o">=</span><span class="s">&#34;record.createdAt&#34;</span><span class="p">/&gt;</span>
-    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;datePicker&#34;</span><span class="p">&gt;</span>
-      <span class="p">&lt;</span><span class="nt">date-getter</span><span class="p">&gt;&lt;/</span><span class="nt">date-getter</span><span class="p">&gt;</span>
-    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">Tabs</span> <span class="na">:data-source</span><span class="o">=</span><span class="s">&#34;recordTypeList&#34;</span>
-          <span class="na">:type</span><span class="err">.</span><span class="na">sync</span><span class="o">=</span><span class="s">&#34;record.type&#34;</span>
-          <span class="na">class</span><span class="o">=</span><span class="s">&#34;fuckAnt-tabs&#34;</span><span class="p">/&gt;</span>
-    <span class="p">&lt;</span><span class="nt">Numpad</span> <span class="na">:amount</span><span class="err">.</span><span class="na">sync</span><span class="o">=</span><span class="s">&#34;record.amount&#34;</span>
-            <span class="err">@</span><span class="na">submit</span><span class="o">=</span><span class="s">&#34;submit&#34;</span>
-            <span class="err">@</span><span class="na">update:deselectTags</span><span class="o">=</span><span class="s">&#34;deselectTags&#34;</span>
-            <span class="err">@</span><span class="na">checkZero</span><span class="o">=</span><span class="s">&#34;alertInform(&#39;case3&#39;)&#34;</span>
-            <span class="na">:is-reset</span><span class="o">=</span><span class="s">&#34;checkoutResult&#34;</span><span class="p">/&gt;</span>
-  <span class="p">&lt;/</span><span class="nt">Layout</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
-
-<span class="p">&lt;</span><span class="nt">script</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
-<span class="c1">// 框架组件
-</span><span class="c1"></span><span class="kr">import</span> <span class="p">...</span>
-<span class="kr">import</span> <span class="p">{</span><span class="nx">NavigationGuardNext</span><span class="p">,</span> <span class="nx">Route</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue-router&#39;</span><span class="p">;</span>
-<span class="c1">// 页面模块组件
-</span><span class="c1"></span><span class="kr">import</span> <span class="p">...</span>
-<span class="c1">// 数据
-</span><span class="c1"></span><span class="kr">import</span> <span class="p">...</span>
-
+<pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<span class="c1">// 路由 import {NavigationGuardNext, Route} from &#39;vue-router&#39;;
+</span><span class="c1">// 框架组件 import ...
+</span><span class="c1">// 页面模块组件 import ...
+</span><span class="c1">// 数据 import ...
+</span><span class="c1"></span>
 <span class="err">@</span><span class="nx">Component</span><span class="p">({</span>
   <span class="nx">components</span><span class="o">:</span> <span class="p">{</span><span class="nx">HeaderBar</span><span class="p">,</span> <span class="nx">Tabs</span><span class="p">,</span> <span class="nx">FormItem</span><span class="p">,</span> <span class="nx">Tags</span><span class="p">,</span> <span class="nx">Numpad</span><span class="p">,</span> <span class="nx">DateGetter</span><span class="p">},</span>
   <span class="nx">beforeRouteEnter</span><span class="p">(</span><span class="nx">to</span><span class="o">:</span> <span class="nx">Route</span><span class="p">,</span> <span class="nx">from</span><span class="o">:</span> <span class="nx">Route</span><span class="p">,</span> <span class="nx">next</span><span class="o">:</span> <span class="nx">NavigationGuardNext</span><span class="p">)</span><span class="o">:</span> <span class="k">void</span> <span class="p">{</span>
@@ -632,20 +624,52 @@
 </span><span class="c1"></span>    <span class="k">this</span><span class="p">.</span><span class="nx">$store</span><span class="p">.</span><span class="nx">commit</span><span class="p">(</span><span class="s1">&#39;updateTagsStore&#39;</span><span class="p">,</span> <span class="nx">selectedTags</span><span class="p">);</span>
   <span class="p">}</span>
 
-  <span class="nx">deselectTags</span><span class="p">(</span><span class="nx">deselect</span><span class="o">:</span> <span class="kr">boolean</span><span class="p">)</span> <span class="p">{...}</span>
-  <span class="nx">checkoutRecord</span><span class="p">()</span> <span class="p">{...}</span>
-  <span class="nx">alertInform</span><span class="p">(</span><span class="nx">caseName</span><span class="o">:</span> <span class="s1">&#39;case1&#39;</span> <span class="o">|</span> <span class="s1">&#39;case2&#39;</span> <span class="o">|</span> <span class="s1">&#39;case3&#39;</span><span class="p">)</span> <span class="p">{...}</span>
-  <span class="nx">saveRecord</span><span class="p">()</span> <span class="p">{...}</span>
-  <span class="nx">reset</span><span class="p">()</span> <span class="p">{...}</span>
-  <span class="nx">submit</span><span class="p">()</span> <span class="p">{...}</span>
+  <span class="nx">deselectTags</span><span class="p">(</span><span class="nx">deselect</span><span class="o">:</span> <span class="kr">boolean</span><span class="p">)</span> <span class="p">{</span><span class="cm">/*...*/</span><span class="p">}</span>
+  <span class="nx">checkoutRecord</span><span class="p">()</span> <span class="p">{</span><span class="cm">/*...*/</span><span class="p">}</span>
+  <span class="nx">alertInform</span><span class="p">(</span><span class="nx">caseName</span><span class="o">:</span> <span class="s1">&#39;case1&#39;</span> <span class="o">|</span> <span class="s1">&#39;case2&#39;</span> <span class="o">|</span> <span class="s1">&#39;case3&#39;</span><span class="p">)</span> <span class="p">{</span><span class="cm">/*...*/</span><span class="p">}</span>
+  <span class="nx">saveRecord</span><span class="p">()</span> <span class="p">{</span><span class="cm">/*...*/</span><span class="p">}</span>
+  <span class="nx">reset</span><span class="p">()</span> <span class="p">{</span><span class="cm">/*...*/</span><span class="p">}</span>
+  <span class="nx">submit</span><span class="p">()</span> <span class="p">{</span><span class="cm">/*...*/</span><span class="p">}</span>
 
 <span class="p">}</span>
 <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 
+<span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">Layout</span> <span class="na">class</span><span class="nt">-prefix</span><span class="err">=&#34;</span><span class="na">layout</span><span class="err">&#34;</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;layout-content&#34;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">HeaderBar</span> <span class="nt">:header-title</span><span class="s">=&#34;&#39;记账&#39;&#34;</span>
+               <span class="nt">:hasIcon</span><span class="s">=&#34;false&#34;</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">HeaderBar</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">Tags</span> <span class="nt">@update:selectedTags</span><span class="s">=&#34;updatePickedTags&#34;</span>
+          <span class="nt">:sessionSelectedTags</span><span class="s">=&#34;sessionSelectedTags&#34;</span>
+          <span class="nt">:is-deselect-tags</span><span class="s">=&#34;emptyTags&#34;</span>
+          <span class="na">class</span><span class="o">=</span><span class="s">&#34;tags&#34;</span><span class="p">/&gt;</span>
+    <span class="p">&lt;</span><span class="nt">FormItem</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;form-item&#34;</span>
+              <span class="na">field</span><span class="nt">-name</span><span class="err">=&#34;</span><span class="na">备注</span><span class="err">&#34;</span>
+              <span class="na">placeholder</span><span class="o">=</span><span class="s">&#34;在这里输入备注&#34;</span>
+              <span class="na">type</span><span class="o">=</span><span class="s">&#34;text&#34;</span>
+              <span class="nt">:inputValue.sync</span><span class="s">=&#34;record.tips&#34;</span><span class="p">/&gt;</span>
+    <span class="p">&lt;</span><span class="nt">FormItem</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;form-item&#34;</span>
+              <span class="na">field</span><span class="nt">-name</span><span class="err">=&#34;</span><span class="na">日期</span><span class="err">&#34;</span>
+              <span class="na">placeholder</span><span class="o">=</span><span class="s">&#34;在这里选择日期&#34;</span>
+              <span class="na">type</span><span class="o">=</span><span class="s">&#34;date&#34;</span>
+              <span class="nt">:inputValue.sync</span><span class="s">=&#34;record.createdAt&#34;</span><span class="p">/&gt;</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;datePicker&#34;</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">date-getter</span><span class="p">&gt;</span><span class="o">&lt;</span><span class="err">/date-getter&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">Tabs</span> <span class="nt">:data-source</span><span class="s">=&#34;recordTypeList&#34;</span>
+          <span class="nt">:type.sync</span><span class="s">=&#34;record.type&#34;</span>
+          <span class="na">class</span><span class="o">=</span><span class="s">&#34;fuckAnt-tabs&#34;</span><span class="p">/&gt;</span>
+    <span class="p">&lt;</span><span class="nt">Numpad</span> <span class="nt">:amount.sync</span><span class="s">=&#34;record.amount&#34;</span>
+            <span class="nt">@submit</span><span class="s">=&#34;submit&#34;</span>
+            <span class="nt">@update:deselectTags</span><span class="s">=&#34;deselectTags&#34;</span>
+            <span class="nt">@checkZero</span><span class="s">=&#34;alertInform(&#39;case3&#39;)&#34;</span>
+            <span class="nt">:is-reset</span><span class="s">=&#34;checkoutResult&#34;</span><span class="p">/&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">Layout</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
 </code></pre></td></tr></table>
 </div>
 </div><ul>
-<li>分别需要保存 标签<code>tagsStore</code> 备注<code>tipsStore</code> 日期<code>dateStore</code> 收支类型<code>typeStore</code> 金额<code>amountStore</code></li>
+<li>分别需要保存数据： 标签<code>tagsStore</code>、备注<code>tipsStore</code>、日期<code>dateStore</code>、收支类型<code>typeStore</code>、金额<code>amountStore</code></li>
 <li>关闭页面，自动清除<code>sessionStorage</code>数据</li>
 </ul>
 <blockquote>
@@ -708,9 +732,9 @@
 </span><span class="lnt">53
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="kr">const</span> <span class="nx">moneySessionStore</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="nx">namespace</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
-  <span class="nx">state</span><span class="p">()</span> <span class="p">{</span>
+<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="kr">const</span> <span class="nx">moneySessionStore</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="kr">namespace</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+  <span class="nx">state() {</span>
     <span class="k">return</span> <span class="p">{</span>
       <span class="nx">tagsStore</span><span class="o">:</span> <span class="p">[],</span>
       <span class="nx">tipsStore</span><span class="o">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
@@ -720,36 +744,36 @@
     <span class="p">};</span>
   <span class="p">},</span>
   <span class="nx">mutations</span><span class="o">:</span> <span class="p">{</span>
-    <span class="nx">loadMoneySessionStore</span><span class="p">(</span><span class="nx">state</span><span class="o">:</span> <span class="nx">MoneySessionStore</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">loadMoneySessionStore</span><span class="p">(</span><span class="nx">state</span>: <span class="kt">MoneySessionStore</span><span class="p">)</span> <span class="p">{</span>
       <span class="nx">state</span><span class="p">.</span><span class="nx">tagsStore</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">sessionStorage</span><span class="p">.</span><span class="nx">getItem</span><span class="p">(</span><span class="s1">&#39;tagsStore&#39;</span><span class="p">)</span> <span class="o">??</span> <span class="s1">&#39;[]&#39;</span><span class="p">);</span>
       <span class="nx">state</span><span class="p">.</span><span class="nx">tipsStore</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">sessionStorage</span><span class="p">.</span><span class="nx">getItem</span><span class="p">(</span><span class="s1">&#39;tipsStore&#39;</span><span class="p">)</span> <span class="o">??</span> <span class="s1">&#39;[]&#39;</span><span class="p">);</span>
       <span class="nx">state</span><span class="p">.</span><span class="nx">dateStore</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">sessionStorage</span><span class="p">.</span><span class="nx">getItem</span><span class="p">(</span><span class="s1">&#39;dateStore&#39;</span><span class="p">)</span> <span class="o">??</span> <span class="s1">&#39;[]&#39;</span><span class="p">);</span>
       <span class="nx">state</span><span class="p">.</span><span class="nx">typeStore</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">sessionStorage</span><span class="p">.</span><span class="nx">getItem</span><span class="p">(</span><span class="s1">&#39;typeStore&#39;</span><span class="p">)</span> <span class="o">??</span> <span class="s1">&#39;[]&#39;</span><span class="p">);</span>
       <span class="nx">state</span><span class="p">.</span><span class="nx">amountStore</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">sessionStorage</span><span class="p">.</span><span class="nx">getItem</span><span class="p">(</span><span class="s1">&#39;amountStore&#39;</span><span class="p">)</span> <span class="o">??</span> <span class="s1">&#39;[]&#39;</span><span class="p">);</span>
     <span class="p">},</span>
-    <span class="nx">saveMoneySessionStore</span><span class="p">(</span><span class="nx">state</span><span class="o">:</span> <span class="nx">MoneySessionStore</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">saveMoneySessionStore</span><span class="p">(</span><span class="nx">state</span>: <span class="kt">MoneySessionStore</span><span class="p">)</span> <span class="p">{</span>
       <span class="nb">window</span><span class="p">.</span><span class="nx">sessionStorage</span><span class="p">.</span><span class="nx">setItem</span><span class="p">(</span><span class="s1">&#39;tagsStore&#39;</span><span class="p">,</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">state</span><span class="p">.</span><span class="nx">tagsStore</span><span class="p">));</span>
       <span class="nb">window</span><span class="p">.</span><span class="nx">sessionStorage</span><span class="p">.</span><span class="nx">setItem</span><span class="p">(</span><span class="s1">&#39;tipsStore&#39;</span><span class="p">,</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">state</span><span class="p">.</span><span class="nx">tipsStore</span><span class="p">));</span>
       <span class="nb">window</span><span class="p">.</span><span class="nx">sessionStorage</span><span class="p">.</span><span class="nx">setItem</span><span class="p">(</span><span class="s1">&#39;dateStore&#39;</span><span class="p">,</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">state</span><span class="p">.</span><span class="nx">dateStore</span><span class="p">));</span>
       <span class="nb">window</span><span class="p">.</span><span class="nx">sessionStorage</span><span class="p">.</span><span class="nx">setItem</span><span class="p">(</span><span class="s1">&#39;typeStore&#39;</span><span class="p">,</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">state</span><span class="p">.</span><span class="nx">typeStore</span><span class="p">));</span>
       <span class="nb">window</span><span class="p">.</span><span class="nx">sessionStorage</span><span class="p">.</span><span class="nx">setItem</span><span class="p">(</span><span class="s1">&#39;amountStore&#39;</span><span class="p">,</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">state</span><span class="p">.</span><span class="nx">amountStore</span><span class="p">));</span>
     <span class="p">},</span>
-    <span class="nx">updateTagsStore</span><span class="p">(</span><span class="nx">state</span><span class="o">:</span> <span class="nx">MoneySessionStore</span><span class="p">,</span> <span class="nx">tagsList</span><span class="o">:</span> <span class="nx">Tag</span><span class="p">[])</span> <span class="p">{</span>
+    <span class="nx">updateTagsStore</span><span class="p">(</span><span class="nx">state</span>: <span class="kt">MoneySessionStore</span><span class="p">,</span> <span class="nx">tagsList</span>: <span class="kt">Tag</span><span class="p">[])</span> <span class="p">{</span>
       <span class="nx">state</span><span class="p">.</span><span class="nx">tagsStore</span> <span class="o">=</span> <span class="nx">tagsList</span><span class="p">;</span>
     <span class="p">},</span>
-    <span class="nx">updateTipsStore</span><span class="p">(</span><span class="nx">state</span><span class="o">:</span> <span class="nx">MoneySessionStore</span><span class="p">,</span> <span class="nx">newValue</span><span class="o">:</span> <span class="nx">string</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">updateTipsStore</span><span class="p">(</span><span class="nx">state</span>: <span class="kt">MoneySessionStore</span><span class="p">,</span> <span class="nx">newValue</span>: <span class="kt">string</span><span class="p">)</span> <span class="p">{</span>
       <span class="nx">state</span><span class="p">.</span><span class="nx">tipsStore</span> <span class="o">=</span> <span class="nx">newValue</span><span class="p">;</span>
     <span class="p">},</span>
-    <span class="nx">updateDateStore</span><span class="p">(</span><span class="nx">state</span><span class="o">:</span> <span class="nx">MoneySessionStore</span><span class="p">,</span> <span class="nx">newValue</span><span class="o">:</span> <span class="nx">string</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">updateDateStore</span><span class="p">(</span><span class="nx">state</span>: <span class="kt">MoneySessionStore</span><span class="p">,</span> <span class="nx">newValue</span>: <span class="kt">string</span><span class="p">)</span> <span class="p">{</span>
       <span class="nx">state</span><span class="p">.</span><span class="nx">dateStore</span> <span class="o">=</span> <span class="nx">newValue</span><span class="p">;</span>
     <span class="p">},</span>
-    <span class="nx">updateTypeStore</span><span class="p">(</span><span class="nx">state</span><span class="o">:</span> <span class="nx">MoneySessionStore</span><span class="p">,</span> <span class="nx">type</span><span class="o">:</span> <span class="nx">string</span><span class="p">)</span> <span class="p">{</span>
-      <span class="nx">state</span><span class="p">.</span><span class="nx">typeStore</span> <span class="o">=</span> <span class="nx">type</span><span class="p">;</span>
+    <span class="nx">updateTypeStore</span><span class="p">(</span><span class="nx">state</span>: <span class="kt">MoneySessionStore</span><span class="p">,</span> <span class="kr">type</span><span class="o">:</span> <span class="kt">string</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">state</span><span class="p">.</span><span class="nx">typeStore</span> <span class="o">=</span> <span class="kr">type</span><span class="p">;</span>
     <span class="p">},</span>
-    <span class="nx">updateMoneyStore</span><span class="p">(</span><span class="nx">state</span><span class="o">:</span> <span class="nx">MoneySessionStore</span><span class="p">,</span> <span class="nx">output</span><span class="o">:</span> <span class="nx">string</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">updateMoneyStore</span><span class="p">(</span><span class="nx">state</span>: <span class="kt">MoneySessionStore</span><span class="p">,</span> <span class="nx">output</span>: <span class="kt">string</span><span class="p">)</span> <span class="p">{</span>
       <span class="nx">state</span><span class="p">.</span><span class="nx">amountStore</span> <span class="o">=</span> <span class="nx">output</span><span class="p">;</span>
     <span class="p">},</span>
-    <span class="nx">resetMoneySessionStore</span><span class="p">(</span><span class="nx">state</span><span class="o">:</span> <span class="nx">MoneySessionStore</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">resetMoneySessionStore</span><span class="p">(</span><span class="nx">state</span>: <span class="kt">MoneySessionStore</span><span class="p">)</span> <span class="p">{</span>
       <span class="nx">state</span><span class="p">.</span><span class="nx">tagsStore</span> <span class="o">=</span> <span class="p">[];</span>
       <span class="nx">state</span><span class="p">.</span><span class="nx">tipsStore</span> <span class="o">=</span> <span class="p">{};</span>
       <span class="nx">state</span><span class="p">.</span><span class="nx">dateStore</span> <span class="o">=</span> <span class="p">{};</span>
@@ -779,20 +803,19 @@
 </span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="p">...</span>
-<span class="nx">type</span> <span class="nx">MoneySessionStore</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="nx">tagsStore</span><span class="o">:</span> <span class="nx">Tag</span><span class="p">[];</span>
+<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="c1">//...
+</span><span class="c1"></span><span class="kr">type</span> <span class="nx">MoneySessionStore</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nx">tagsStore</span>: <span class="kt">Tag</span><span class="p">[];</span>
   <span class="nx">tipsStore</span><span class="o">:</span> <span class="p">{};</span>
   <span class="nx">dateStore</span><span class="o">:</span> <span class="p">{};</span>
   <span class="nx">typeStore</span><span class="o">:</span> <span class="p">{};</span>
   <span class="nx">amountStore</span><span class="o">:</span> <span class="p">{};</span>
 <span class="p">}</span>
-<span class="p">...</span>
-</code></pre></td></tr></table>
+<span class="c1">//...
+</span></code></pre></td></tr></table>
 </div>
-</div><blockquote>
-<p><code>Tags.vue</code></p>
-</blockquote>
+</div><hr>
+<h3 id="修改tagsvue">修改<code>Tags.vue</code></h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -874,27 +897,9 @@
 </span><span class="lnt">77
 </span><span class="lnt">78
 </span><span class="lnt">79
-</span><span class="lnt">80
-</span><span class="lnt">81
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">section</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;tags&#34;</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">ul</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;current&#34;</span><span class="p">&gt;</span>
-      <span class="p">&lt;</span><span class="nt">li</span> <span class="na">v-for</span><span class="o">=</span><span class="s">&#34;tag in tagsList&#34;</span>
-          <span class="na">:ref</span><span class="o">=</span><span class="s">&#34;tag.name&#34;</span>
-          <span class="na">:key</span><span class="o">=</span><span class="s">&#34;tag.id&#34;</span>
-          <span class="err">@</span><span class="na">click</span><span class="o">=</span><span class="s">&#34;toggle(tag)&#34;</span>
-          <span class="na">:class</span><span class="o">=</span><span class="s">&#34;{selected: (selectedTags.indexOf(tag) &gt;= 0)}&#34;</span><span class="p">&gt;</span>
-        {{ tag.name }}
-      <span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
-    <span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;new&#34;</span><span class="p">&gt;</span>
-      <span class="p">&lt;</span><span class="nt">button</span> <span class="err">@</span><span class="na">click</span><span class="o">=</span><span class="s">&#34;createTag&#34;</span><span class="p">&gt;</span>添加新标签<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
-    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-  <span class="p">&lt;/</span><span class="nt">section</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">script</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
 <span class="kr">import</span> <span class="p">{</span><span class="nx">Component</span><span class="p">,</span> <span class="nx">Prop</span><span class="p">,</span> <span class="nx">Watch</span><span class="p">,}</span> <span class="nx">from</span> <span class="s1">&#39;vue-property-decorator&#39;</span><span class="p">;</span>
 <span class="kr">import</span> <span class="p">{</span><span class="nx">mixins</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue-class-component&#39;</span><span class="p">;</span>
 <span class="kr">import</span> <span class="nx">tagHelper</span> <span class="nx">from</span> <span class="s1">&#39;@/mixins/tagHelper.ts&#39;</span><span class="p">;</span>
@@ -915,7 +920,7 @@
     <span class="c1">// session 数据 循环推入 selectedTags 将样式染到页面
 </span><span class="c1"></span>    <span class="k">this</span><span class="p">.</span><span class="nx">sessionSelectedTags</span><span class="o">?</span><span class="p">.</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">tag</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
       <span class="c1">// 将 selected 样式 加到 selectedTags 中的 tag 上
-</span><span class="c1"></span>      <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">$refs</span><span class="p">[</span><span class="nx">tag</span><span class="p">.</span><span class="nx">name</span><span class="p">]</span> <span class="nx">as</span> <span class="nb">Array</span><span class="o">&lt;</span><span class="nx">HTMLLIElement</span><span class="o">&gt;</span><span class="p">)[</span><span class="mi">0</span><span class="p">].</span><span class="nx">className</span> <span class="o">=</span> <span class="s1">&#39;selected&#39;</span><span class="p">;</span>
+</span><span class="c1"></span>      <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">$refs</span><span class="p">[</span><span class="nx">tag</span><span class="p">.</span><span class="nx">name</span><span class="p">]</span> <span class="nx">as</span> <span class="nb">Array</span><span class="p">&lt;</span><span class="nt">HTMLLIElement</span><span class="p">&gt;)[</span><span class="mi">0</span><span class="p">].</span><span class="nx">className</span> <span class="o">=</span> <span class="s1">&#39;selected&#39;</span><span class="p">;</span>
     <span class="p">});</span>
   <span class="p">}</span>
 
@@ -930,7 +935,7 @@
       <span class="c1">// 存在就 去除 标签列表中 下标对应的那项
 </span><span class="c1"></span>      <span class="k">this</span><span class="p">.</span><span class="nx">selectedTags</span><span class="p">.</span><span class="nx">splice</span><span class="p">(</span><span class="nx">index</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
       <span class="c1">// 并去除 对应样式
-</span><span class="c1"></span>      <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">$refs</span><span class="p">[</span><span class="nx">tag</span><span class="p">.</span><span class="nx">name</span><span class="p">]</span> <span class="nx">as</span> <span class="nb">Array</span><span class="o">&lt;</span><span class="nx">HTMLLIElement</span><span class="o">&gt;</span><span class="p">)[</span><span class="mi">0</span><span class="p">].</span><span class="nx">className</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+</span><span class="c1"></span>      <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">$refs</span><span class="p">[</span><span class="nx">tag</span><span class="p">.</span><span class="nx">name</span><span class="p">]</span> <span class="nx">as</span> <span class="nb">Array</span><span class="p">&lt;</span><span class="nt">HTMLLIElement</span><span class="p">&gt;)[</span><span class="mi">0</span><span class="p">].</span><span class="nx">className</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
     <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
       <span class="c1">// 不存在就将标签推入列表
 </span><span class="c1"></span>      <span class="k">this</span><span class="p">.</span><span class="nx">selectedTags</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">tag</span><span class="p">);</span>
@@ -941,7 +946,7 @@
 
   <span class="c1">// 是否取消选取标签
 </span><span class="c1"></span>  <span class="err">@</span><span class="nx">Watch</span><span class="p">(</span><span class="s1">&#39;isDeselectTags&#39;</span><span class="p">)</span>
-  <span class="nx">deselectTag</span><span class="p">()</span> <span class="p">{...}</span>
+  <span class="nx">deselectTag</span><span class="p">()</span> <span class="p">{</span><span class="cm">/*...*/</span><span class="p">}</span>
 
   <span class="c1">// hooks
 </span><span class="c1"></span>  <span class="nx">created</span><span class="p">()</span> <span class="p">{</span>
@@ -956,18 +961,31 @@
 
 <span class="p">}</span>
 <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span>
-<span class="o">...</span>
-<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">section</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;tags&#34;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">ul</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;current&#34;</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">li</span> <span class="nt">v-for</span><span class="s">=&#34;tag in tagsList&#34;
+</span><span class="s">          :ref=&#34;tag.name&#34;
+</span><span class="s">          :key=&#34;tag.id&#34;
+</span><span class="s">          @click=&#34;toggle(tag)&#34;
+</span><span class="s">          :class=&#34;{selected: (selectedTags.indexOf(tag) &gt;= 0)}&#34;&gt;
+</span><span class="s">        {{ tag.name }}
+</span><span class="s">      &lt;/li&gt;
+</span><span class="s">    &lt;/ul&gt;
+</span><span class="s">    &lt;div class=&#34;new&#34;&gt;
+</span><span class="s">      &lt;button @click=&#34;createTag&#34;</span><span class="p">&gt;</span><span class="na">添加新标签</span><span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">section</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
 </code></pre></td></tr></table>
 </div>
 </div><ul>
 <li>在<code>mounted</code>阶段读取 <code>session</code> 信息，之后渲染页面</li>
 <li>页面数据改变，写入相应的<code>session</code> 数据</li>
 </ul>
-<blockquote>
-<p><code>FormItem.vue</code></p>
-</blockquote>
+<hr>
+<h3 id="修改formitemvue">修改<code>FormItem.vue</code></h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -1032,31 +1050,9 @@
 </span><span class="lnt">60
 </span><span class="lnt">61
 </span><span class="lnt">62
-</span><span class="lnt">63
-</span><span class="lnt">64
-</span><span class="lnt">65
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">section</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;form-wrapper&#34;</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">label</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;form-item&#34;</span><span class="p">&gt;</span>
-      <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;name&#34;</span><span class="p">&gt;</span>{{ fieldName }}<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
-      <span class="p">&lt;</span><span class="nt">template</span> <span class="na">v-if</span><span class="o">=</span><span class="s">&#34;type === &#39;date&#39;&#34;</span><span class="p">&gt;</span>
-        <span class="p">&lt;</span><span class="nt">input</span> <span class="na">:type</span><span class="o">=</span><span class="s">&#34;type&#34;</span>
-               <span class="na">:placeholder</span><span class="o">=</span><span class="s">&#34;placeholder&#34;</span>
-               <span class="na">:value</span><span class="o">=</span><span class="s">&#34;dateFormat(inputValue)&#34;</span>
-               <span class="err">@</span><span class="na">change</span><span class="o">=</span><span class="s">&#34;oninputValueChanged($event.target.value)&#34;</span><span class="p">/&gt;</span>
-      <span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
-      <span class="p">&lt;</span><span class="nt">template</span> <span class="na">v-else</span><span class="p">&gt;</span>
-        <span class="p">&lt;</span><span class="nt">input</span> <span class="na">:type</span><span class="o">=</span><span class="s">&#34;type || &#39;text&#39;&#34;</span>
-               <span class="na">:placeholder</span><span class="o">=</span><span class="s">&#34;placeholder&#34;</span>
-               <span class="na">:value</span><span class="o">=</span><span class="s">&#34;inputValue&#34;</span>
-               <span class="err">@</span><span class="na">input</span><span class="o">=</span><span class="s">&#34;oninputValueChanged($event.target.value)&#34;</span><span class="p">/&gt;</span>
-      <span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
-    <span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
-  <span class="p">&lt;/</span><span class="nt">section</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">script</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
 <span class="kr">import</span> <span class="nx">Vue</span> <span class="nx">from</span> <span class="s1">&#39;vue&#39;</span><span class="p">;</span>
 <span class="kr">import</span> <span class="p">{</span><span class="nx">Component</span><span class="p">,</span> <span class="nx">Prop</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue-property-decorator&#39;</span><span class="p">;</span>
 <span class="kr">import</span> <span class="nx">dayjs</span> <span class="nx">from</span> <span class="s1">&#39;dayjs&#39;</span><span class="p">;</span>
@@ -1077,7 +1073,7 @@
     <span class="p">}</span>
   <span class="p">}</span>
 
-  <span class="nx">dateFormat</span><span class="p">(</span><span class="nx">isoString</span><span class="o">:</span> <span class="nx">string</span><span class="p">)</span> <span class="p">{...}</span>
+  <span class="nx">dateFormat</span><span class="p">(</span><span class="nx">isoString</span><span class="o">:</span> <span class="nx">string</span><span class="p">)</span> <span class="p">{</span><span class="cm">/*...*/</span><span class="p">}</span>
 
   <span class="nx">renderSessionInfo</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">type</span> <span class="o">===</span> <span class="s1">&#39;text&#39;</span><span class="p">)</span> <span class="p">{</span>
@@ -1099,14 +1095,33 @@
 <span class="p">}</span>
 <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 
-<span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span>
-<span class="o">...</span>
-<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">section</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;form-wrapper&#34;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">label</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;form-item&#34;</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;name&#34;</span><span class="p">&gt;{{</span> <span class="nx">fieldName</span> <span class="p">}}&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">template</span> <span class="nt">v-if</span><span class="s">=&#34;type === &#39;date&#39;&#34;</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">input</span> <span class="nt">:type</span><span class="s">=&#34;type&#34;</span>
+               <span class="nt">:placeholder</span><span class="s">=&#34;placeholder&#34;</span>
+               <span class="nt">:value</span><span class="s">=&#34;dateFormat(inputValue)&#34;</span>
+               <span class="nt">@change</span><span class="s">=&#34;oninputValueChanged($event.target.value)&#34;</span><span class="p">/&gt;</span>
+      <span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">template</span> <span class="nt">v-else</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">input</span> <span class="o">:</span><span class="na">type</span><span class="o">=</span><span class="s">&#34;type || &#39;text&#39;&#34;</span>
+               <span class="nt">:placeholder</span><span class="s">=&#34;placeholder&#34;</span>
+               <span class="nt">:value</span><span class="s">=&#34;inputValue&#34;</span>
+               <span class="nt">@input</span><span class="s">=&#34;oninputValueChanged($event.target.value)&#34;</span><span class="p">/&gt;</span>
+      <span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">section</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
-<p><code>Tabs.vue</code></p>
-</blockquote>
+</div><ul>
+<li>在<code>mounted</code>阶段读取 <code>session</code> 信息，之后渲染页面</li>
+<li>页面数据改变，写入相应的<code>session</code> 数据</li>
+</ul>
+<hr>
+<h3 id="修改tabsvue">修改<code>Tabs.vue</code></h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -1151,26 +1166,9 @@
 </span><span class="lnt">40
 </span><span class="lnt">41
 </span><span class="lnt">42
-</span><span class="lnt">43
-</span><span class="lnt">44
-</span><span class="lnt">45
-</span><span class="lnt">46
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">ul</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;tabs&#34;</span> <span class="na">:class</span><span class="o">=</span><span class="s">&#34;{[classPrefix + &#39;-tabs&#39;]: classPrefix}&#34;</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">li</span> <span class="na">v-for</span><span class="o">=</span><span class="s">&#34;item in dataSource&#34;</span>
-        <span class="na">:key</span><span class="o">=</span><span class="s">&#34;item.type&#34;</span>
-        <span class="na">:class</span><span class="o">=</span><span class="s">&#34;liClass(item)&#34;</span>
-        <span class="err">@</span><span class="na">click</span><span class="o">=</span><span class="s">&#34;select(item)&#34;</span>
-        <span class="na">class</span><span class="o">=</span><span class="s">&#34;tabs-item&#34;</span>
-        <span class="na">:style</span><span class="o">=</span><span class="s">&#34;{height: tabsHeight}&#34;</span><span class="p">&gt;</span>
-      {{ item.text }}
-    <span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
-  <span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
-
-<span class="p">&lt;</span><span class="nt">script</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
 <span class="kr">import</span> <span class="nx">Vue</span> <span class="nx">from</span> <span class="s1">&#39;vue&#39;</span><span class="p">;</span>
 <span class="kr">import</span> <span class="p">{</span><span class="nx">Component</span><span class="p">,</span> <span class="nx">Prop</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue-property-decorator&#39;</span><span class="p">;</span>
 
@@ -1200,12 +1198,26 @@
 <span class="p">}</span>
 <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 
-<span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span>
-<span class="o">...</span>
-<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">ul</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;tabs&#34;</span> <span class="o">:</span><span class="na">class</span><span class="o">=</span><span class="s">&#34;{[classPrefix + &#39;-tabs&#39;]: classPrefix}&#34;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">li</span> <span class="nt">v-for</span><span class="s">=&#34;item in dataSource&#34;
+</span><span class="s">        :key=&#34;item.type&#34;
+</span><span class="s">        :class=&#34;liClass(item)&#34;
+</span><span class="s">        @click=&#34;select(item)&#34;
+</span><span class="s">        class=&#34;tabs-item&#34;
+</span><span class="s">        :style=&#34;{height: tabsHeight}&#34;</span><span class="p">&gt;</span>
+      <span class="p">{{</span> <span class="na">item.text</span> <span class="p">}}</span>
+    <span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div><ul>
+<li>在<code>mounted</code>阶段读取 <code>session</code> 信息，之后渲染页面</li>
+<li>页面数据改变，写入相应的<code>session</code> 数据</li>
+</ul>
+<hr>
+<blockquote>
 <p><code>Numpad.vue</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
@@ -1266,36 +1278,11 @@
 </span><span class="lnt">54
 </span><span class="lnt">55
 </span><span class="lnt">56
-</span><span class="lnt">57
-</span><span class="lnt">58
-</span><span class="lnt">59
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">section</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;numpad&#34;</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">numpad-output</span> <span class="na">:output</span><span class="o">=</span><span class="s">&#34;output&#34;</span>
-                   <span class="err">@</span><span class="na">update:output</span><span class="o">=</span><span class="s">&#34;getSessionOutput&#34;</span><span class="p">/&gt;</span>
-    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;buttons&#34;</span>
-         <span class="err">@[</span><span class="na">clientEvent</span><span class="err">]=&#34;</span><span class="na">markButton</span><span class="err">($</span><span class="na">event</span><span class="err">);</span> <span class="na">handleButtonFn</span><span class="err">($</span><span class="na">event</span><span class="err">)&#34;</span>
-         <span class="err">@</span><span class="na">mousemove</span><span class="o">=</span><span class="s">&#34;showSearchlight&#34;</span>
-         <span class="na">:style</span><span class="o">=</span><span class="s">&#34;searchlightStyle&#34;</span><span class="p">&gt;</span>
-      <span class="p">&lt;</span><span class="nt">numpad-button</span>
-        <span class="na">v-for</span><span class="o">=</span><span class="s">&#34;(item, index) in numPadText&#34;</span>
-        <span class="na">:data-bundle-event</span><span class="o">=</span><span class="s">&#34;item.bundleEvent&#34;</span>
-        <span class="na">:button-index</span><span class="o">=</span><span class="s">&#34;index&#34;</span>
-        <span class="na">:currentIndex</span><span class="o">=</span><span class="s">&#34;currentIndex&#34;</span>
-        <span class="na">:key</span><span class="o">=</span><span class="s">&#34;item.id&#34;</span>
-        <span class="na">:class</span><span class="o">=</span><span class="s">&#34;{ok: item.id === &#39;ok&#39;, zero: item.id === &#39;zero&#39;}&#34;</span>
-        <span class="na">:button-text</span><span class="o">=</span><span class="s">&#34;item.text&#34;</span><span class="p">&gt;</span>
-        <span class="p">&lt;</span><span class="nt">Icon</span> <span class="na">v-if</span><span class="o">=</span><span class="s">&#34;[&#39;num&#39;, &#39;dot&#39;].indexOf(item.name) === -1&#34;</span>
-              <span class="na">:name</span><span class="o">=</span><span class="s">&#34;item.id&#34;</span><span class="p">/&gt;</span>
-      <span class="p">&lt;/</span><span class="nt">numpad-button</span><span class="p">&gt;</span>
-    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-  <span class="p">&lt;/</span><span class="nt">section</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
-
-<span class="p">&lt;</span><span class="nt">script</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
-<span class="kr">import</span> <span class="p">...</span>
+<pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<span class="c1">// import ...
+</span><span class="c1"></span>
 <span class="err">@</span><span class="nx">Component</span><span class="p">({</span>
   <span class="nx">components</span><span class="o">:</span> <span class="p">{</span><span class="nx">NumpadOutput</span><span class="p">,</span> <span class="nx">NumpadButton</span><span class="p">}</span>
 <span class="p">})</span>
@@ -1308,16 +1295,16 @@
 </span><span class="c1"></span>  <span class="nx">clientType</span> <span class="o">=</span> <span class="nx">getClientType</span><span class="p">();</span>
 
   <span class="c1">// 数字键盘文字图标数据
-</span><span class="c1"></span>  <span class="nx">numPadText</span> <span class="o">=</span> <span class="p">[...];</span>
+</span><span class="c1"></span>  <span class="nx">numPadText</span> <span class="o">=</span> <span class="p">[</span><span class="cm">/*...*/</span><span class="p">];</span>
 
   <span class="c1">// 返回当前选中按钮的下标
-</span><span class="c1"></span>  <span class="nx">markButton</span><span class="p">(</span><span class="nx">e</span><span class="o">:</span> <span class="nx">UIEvent</span><span class="p">)</span> <span class="p">{...}</span>
+</span><span class="c1"></span>  <span class="nx">markButton</span><span class="p">(</span><span class="nx">e</span><span class="o">:</span> <span class="nx">UIEvent</span><span class="p">)</span> <span class="p">{</span><span class="cm">/*...*/</span><span class="p">}</span>
 
   <span class="c1">// 判断客户端尺寸 返回对应的事件类型
-</span><span class="c1"></span>  <span class="nx">get</span> <span class="nx">clientEvent</span><span class="p">()</span><span class="o">:</span> <span class="nx">string</span> <span class="p">{...}</span>
+</span><span class="c1"></span>  <span class="nx">get</span> <span class="nx">clientEvent</span><span class="p">()</span><span class="o">:</span> <span class="nx">string</span> <span class="p">{</span><span class="cm">/*...*/</span><span class="p">}</span>
 
   <span class="c1">// 给不同的按钮绑定对应事件的处理函数
-</span><span class="c1"></span>  <span class="nx">handleButtonFn</span><span class="p">(</span><span class="nx">e</span><span class="o">:</span> <span class="nx">TapEvent</span><span class="p">)</span> <span class="p">{...}</span>
+</span><span class="c1"></span>  <span class="nx">handleButtonFn</span><span class="p">(</span><span class="nx">e</span><span class="o">:</span> <span class="nx">TapEvent</span><span class="p">)</span> <span class="p">{</span><span class="cm">/*...*/</span><span class="p">}</span>
 
   <span class="c1">// 计算属性 传给子组件 NumpadOutput.vue
 </span><span class="c1"></span>  <span class="nx">getSessionOutput</span><span class="p">(</span><span class="nx">output</span><span class="o">:</span> <span class="nx">string</span><span class="p">)</span> <span class="p">{</span>
@@ -1327,12 +1314,36 @@
 <span class="p">}</span>
 <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 
-<span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span>
-<span class="o">...</span>
-<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">section</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;numpad&#34;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">numpad-output</span> <span class="nt">:output</span><span class="s">=&#34;output&#34;</span>
+                   <span class="nt">@update:output</span><span class="s">=&#34;getSessionOutput&#34;</span><span class="p">/&gt;</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;buttons&#34;</span>
+         <span class="err">@[</span><span class="na">clientEvent</span><span class="err">]=&#34;</span><span class="na">markButton</span><span class="err">($</span><span class="na">event</span><span class="err">);</span> <span class="na">handleButtonFn</span><span class="err">($</span><span class="na">event</span><span class="err">)&#34;</span>
+         <span class="nt">@mousemove</span><span class="s">=&#34;showSearchlight&#34;</span>
+         <span class="nt">:style</span><span class="s">=&#34;searchlightStyle&#34;</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">numpad-button</span>
+        <span class="nt">v-for</span><span class="s">=&#34;(item, index) in numPadText&#34;
+</span><span class="s">        :data-bundle-event=&#34;item.bundleEvent&#34;
+</span><span class="s">        :button-index=&#34;index&#34;
+</span><span class="s">        :currentIndex=&#34;currentIndex&#34;
+</span><span class="s">        :key=&#34;item.id&#34;
+</span><span class="s">        :class=&#34;{ok: item.id === &#39;ok&#39;, zero: item.id === &#39;zero&#39;}&#34;
+</span><span class="s">        :button-text=&#34;item.text&#34;</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">Icon</span> <span class="na">v</span><span class="nt">-if</span><span class="err">=&#34;[&#39;</span><span class="na">num</span><span class="err">&#39;,</span> <span class="err">&#39;</span><span class="na">dot</span><span class="err">&#39;]</span><span class="na">.indexOf</span><span class="err">(</span><span class="na">item.name</span><span class="err">)</span> <span class="err">===</span> <span class="nt">-1</span><span class="err">&#34;</span>
+              <span class="nt">:name</span><span class="s">=&#34;item.id&#34;</span><span class="p">/&gt;</span>
+      <span class="o">&lt;</span><span class="err">/numpad-button&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">section</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div><ul>
+<li><code>NumpadOutput.vue</code></li>
+<li><code>NumpadButton.vue</code></li>
+</ul>
+<hr>
+<blockquote>
 <p><code>NumpadOutput.vue</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
@@ -1370,19 +1381,9 @@
 </span><span class="lnt">31
 </span><span class="lnt">32
 </span><span class="lnt">33
-</span><span class="lnt">34
-</span><span class="lnt">35
-</span><span class="lnt">36
-</span><span class="lnt">37
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;output&#34;</span><span class="p">&gt;</span>
-    {{ localOutput }}
-  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
-
-<span class="p">&lt;</span><span class="nt">script</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
 <span class="kr">import</span> <span class="nx">Vue</span> <span class="nx">from</span> <span class="s1">&#39;vue&#39;</span><span class="p">;</span>
 <span class="kr">import</span> <span class="p">{</span><span class="nx">Component</span><span class="p">,</span> <span class="nx">Prop</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue-property-decorator&#39;</span><span class="p">;</span>
 
@@ -1410,12 +1411,18 @@
 <span class="p">}</span>
 <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 
-<span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span>
-<span class="o">...</span>
-<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;output&#34;</span><span class="p">&gt;</span>
+    <span class="p">{{</span> <span class="nx">localOutput</span> <span class="p">}}</span>
+  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div><ul>
+<li>在<code>mounted</code>阶段读取 <code>session</code> 信息，之后渲染页面</li>
+<li>页面数据改变，写入相应的<code>session</code> 数据</li>
+</ul>
+<blockquote>
 <p>参考</p>
 </blockquote>
 <ul>
@@ -1427,6 +1434,7 @@
 <p>跳转页面 路由守卫钩子 暂存页面数据</p>
 </blockquote>
 <h2 id="组件内路由守卫-使用vue-property-decorator-类组件-ts装饰器">组件内路由守卫 使用<code>vue-property-decorator</code> 类组件 <code>TS</code>装饰器</h2>
+<h3 id="moneyvue添加组件内的路由守卫"><code>Money.vue</code>添加组件内的路由守卫</h3>
 <blockquote>
 <p><code>Money.vue</code></p>
 </blockquote>
@@ -1517,49 +1525,9 @@
 </span><span class="lnt">83
 </span><span class="lnt">84
 </span><span class="lnt">85
-</span><span class="lnt">86
-</span><span class="lnt">87
-</span><span class="lnt">88
-</span><span class="lnt">89
-</span><span class="lnt">90
-</span><span class="lnt">91
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">Layout</span> <span class="na">class-prefix</span><span class="o">=</span><span class="s">&#34;layout&#34;</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;layout-content&#34;</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">HeaderBar</span> <span class="na">:header-title</span><span class="o">=</span><span class="s">&#34;&#39;记账&#39;&#34;</span>
-               <span class="na">:hasIcon</span><span class="o">=</span><span class="s">&#34;false&#34;</span><span class="p">&gt;</span>
-    <span class="p">&lt;/</span><span class="nt">HeaderBar</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">Tags</span> <span class="err">@</span><span class="na">update:selectedTags</span><span class="o">=</span><span class="s">&#34;pickTags&#34;</span>
-          <span class="na">:is-deselect-tags</span><span class="o">=</span><span class="s">&#34;emptyTags&#34;</span>
-          <span class="na">class</span><span class="o">=</span><span class="s">&#34;tags&#34;</span><span class="p">/&gt;</span>
-    <span class="p">&lt;</span><span class="nt">FormItem</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;form-item&#34;</span>
-              <span class="na">field-name</span><span class="o">=</span><span class="s">&#34;备注&#34;</span>
-              <span class="na">placeholder</span><span class="o">=</span><span class="s">&#34;在这里输入备注&#34;</span>
-              <span class="na">type</span><span class="o">=</span><span class="s">&#34;text&#34;</span>
-              <span class="na">:inputValue</span><span class="err">.</span><span class="na">sync</span><span class="o">=</span><span class="s">&#34;record.tips&#34;</span><span class="p">/&gt;</span>
-    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;creatAt&#34;</span><span class="p">&gt;</span>
-      <span class="p">&lt;</span><span class="nt">FormItem</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;form-item&#34;</span>
-                <span class="na">field-name</span><span class="o">=</span><span class="s">&#34;日期&#34;</span>
-                <span class="na">placeholder</span><span class="o">=</span><span class="s">&#34;在这里选择日期&#34;</span>
-                <span class="na">type</span><span class="o">=</span><span class="s">&#34;date&#34;</span>
-                <span class="na">:inputValue</span><span class="err">.</span><span class="na">sync</span><span class="o">=</span><span class="s">&#34;record.createdAt&#34;</span><span class="p">/&gt;</span>
-    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;datePicker&#34;</span><span class="p">&gt;</span>
-      <span class="p">&lt;</span><span class="nt">date-getter</span><span class="p">&gt;&lt;/</span><span class="nt">date-getter</span><span class="p">&gt;</span>
-    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">Tabs</span> <span class="na">:data-source</span><span class="o">=</span><span class="s">&#34;recordTypeList&#34;</span>
-          <span class="na">:type</span><span class="err">.</span><span class="na">sync</span><span class="o">=</span><span class="s">&#34;record.type&#34;</span>
-          <span class="na">class</span><span class="o">=</span><span class="s">&#34;fuckAnt-tabs&#34;</span><span class="p">/&gt;</span>
-    <span class="p">&lt;</span><span class="nt">Numpad</span> <span class="na">:amount</span><span class="err">.</span><span class="na">sync</span><span class="o">=</span><span class="s">&#34;record.amount&#34;</span>
-            <span class="err">@</span><span class="na">submit</span><span class="o">=</span><span class="s">&#34;submit&#34;</span>
-            <span class="err">@</span><span class="na">update:deselectTags</span><span class="o">=</span><span class="s">&#34;deselectTags&#34;</span>
-            <span class="err">@</span><span class="na">checkZero</span><span class="o">=</span><span class="s">&#34;alertInform(&#39;case3&#39;)&#34;</span>
-            <span class="na">:is-reset</span><span class="o">=</span><span class="s">&#34;checkoutResult&#34;</span><span class="p">/&gt;</span>
-  <span class="p">&lt;/</span><span class="nt">Layout</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
-
-<span class="p">&lt;</span><span class="nt">script</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
 <span class="c1">// 框架组件
 </span><span class="c1"></span><span class="kr">import</span> <span class="p">...</span>
 <span class="kr">import</span> <span class="p">{</span><span class="nx">NavigationGuardNext</span><span class="p">,</span> <span class="nx">Route</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue-router&#39;</span><span class="p">;</span>
@@ -1599,23 +1567,51 @@
   <span class="nx">emptyTags</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
 
   <span class="c1">// computed
-</span><span class="c1"></span>  <span class="nx">get</span> <span class="nx">recordList</span><span class="p">()</span> <span class="p">{...}</span>
+</span><span class="c1"></span>  <span class="nx">get</span> <span class="nx">recordList</span><span class="p">()</span> <span class="p">{</span><span class="cm">/*...*/</span><span class="p">}</span>
 
-  <span class="c1">// methods
-</span><span class="c1"></span>  <span class="p">...</span>
-  <span class="nx">deselectTags</span><span class="p">(</span><span class="nx">deselect</span><span class="o">:</span> <span class="kr">boolean</span><span class="p">)</span> <span class="p">{...}</span>
-  <span class="nx">checkoutRecord</span><span class="p">()</span> <span class="p">{...}</span>
-  <span class="nx">alertInform</span><span class="p">(</span><span class="nx">caseName</span><span class="o">:</span> <span class="s1">&#39;case1&#39;</span> <span class="o">|</span> <span class="s1">&#39;case2&#39;</span> <span class="o">|</span> <span class="s1">&#39;case3&#39;</span><span class="p">)</span> <span class="p">{...}</span>
-  <span class="nx">saveRecord</span><span class="p">()</span> <span class="p">{...}</span>
-  <span class="nx">reset</span><span class="p">()</span> <span class="p">{...}</span>
-  <span class="nx">submit</span><span class="p">()</span> <span class="p">{...}</span>
+  <span class="c1">// methods...
+</span><span class="c1"></span>  <span class="nx">deselectTags</span><span class="p">(</span><span class="nx">deselect</span><span class="o">:</span> <span class="kr">boolean</span><span class="p">)</span> <span class="p">{</span><span class="cm">/*...*/</span><span class="p">}</span>
+  <span class="nx">checkoutRecord</span><span class="p">()</span> <span class="p">{</span><span class="cm">/*...*/</span><span class="p">}</span>
+  <span class="nx">alertInform</span><span class="p">(</span><span class="nx">caseName</span><span class="o">:</span> <span class="s1">&#39;case1&#39;</span> <span class="o">|</span> <span class="s1">&#39;case2&#39;</span> <span class="o">|</span> <span class="s1">&#39;case3&#39;</span><span class="p">)</span> <span class="p">{</span><span class="cm">/*...*/</span><span class="p">}</span>
+  <span class="nx">saveRecord</span><span class="p">()</span> <span class="p">{</span><span class="cm">/*...*/</span><span class="p">}</span>
+  <span class="nx">reset</span><span class="p">()</span> <span class="p">{</span><span class="cm">/*...*/</span><span class="p">}</span>
+  <span class="nx">submit</span><span class="p">()</span> <span class="p">{</span><span class="cm">/*...*/</span><span class="p">}</span>
 <span class="p">}</span>
 <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 
-<span class="p">&lt;</span><span class="nt">style</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;scss&#34;</span> <span class="na">scoped</span><span class="p">&gt;</span>
-<span class="o">...</span>
-<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
-
+<span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">Layout</span> <span class="na">class</span><span class="nt">-prefix</span><span class="err">=&#34;</span><span class="na">layout</span><span class="err">&#34;</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;layout-content&#34;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">HeaderBar</span> <span class="nt">:header-title</span><span class="s">=&#34;&#39;记账&#39;&#34;</span>
+               <span class="nt">:hasIcon</span><span class="s">=&#34;false&#34;</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">HeaderBar</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">Tags</span> <span class="nt">@update:selectedTags</span><span class="s">=&#34;pickTags&#34;</span>
+          <span class="nt">:is-deselect-tags</span><span class="s">=&#34;emptyTags&#34;</span>
+          <span class="na">class</span><span class="o">=</span><span class="s">&#34;tags&#34;</span><span class="p">/&gt;</span>
+    <span class="p">&lt;</span><span class="nt">FormItem</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;form-item&#34;</span>
+              <span class="na">field</span><span class="nt">-name</span><span class="err">=&#34;</span><span class="na">备注</span><span class="err">&#34;</span>
+              <span class="na">placeholder</span><span class="o">=</span><span class="s">&#34;在这里输入备注&#34;</span>
+              <span class="na">type</span><span class="o">=</span><span class="s">&#34;text&#34;</span>
+              <span class="nt">:inputValue.sync</span><span class="s">=&#34;record.tips&#34;</span><span class="p">/&gt;</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;creatAt&#34;</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">FormItem</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;form-item&#34;</span>
+                <span class="na">field</span><span class="nt">-name</span><span class="err">=&#34;</span><span class="na">日期</span><span class="err">&#34;</span>
+                <span class="na">placeholder</span><span class="o">=</span><span class="s">&#34;在这里选择日期&#34;</span>
+                <span class="na">type</span><span class="o">=</span><span class="s">&#34;date&#34;</span>
+                <span class="nt">:inputValue.sync</span><span class="s">=&#34;record.createdAt&#34;</span><span class="p">/&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;datePicker&#34;</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">date-getter</span><span class="p">&gt;</span><span class="o">&lt;</span><span class="err">/date-getter&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">Tabs</span> <span class="nt">:data-source</span><span class="s">=&#34;recordTypeList&#34;</span>
+          <span class="nt">:type.sync</span><span class="s">=&#34;record.type&#34;</span>
+          <span class="na">class</span><span class="o">=</span><span class="s">&#34;fuckAnt-tabs&#34;</span><span class="p">/&gt;</span>
+    <span class="p">&lt;</span><span class="nt">Numpad</span> <span class="nt">:amount.sync</span><span class="s">=&#34;record.amount&#34;</span>
+            <span class="nt">@submit</span><span class="s">=&#34;submit&#34;</span>
+            <span class="nt">@update:deselectTags</span><span class="s">=&#34;deselectTags&#34;</span>
+            <span class="nt">@checkZero</span><span class="s">=&#34;alertInform(&#39;case3&#39;)&#34;</span>
+            <span class="nt">:is-reset</span><span class="s">=&#34;checkoutResult&#34;</span><span class="p">/&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">Layout</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
 </code></pre></td></tr></table>
 </div>
 </div><ul>
@@ -1675,12 +1671,7 @@
 <li><a href="https://juejin.cn/post/6844903916899926023">VUE 集成TypeScript之vue-router重构</a></li>
 </ul>
 <hr>
-<blockquote>
-<p>使用<code>vuex-ts-decorators</code> TS Class 组件 状态管理</p>
-</blockquote>
-<ul>
-<li>使用</li>
-</ul>
+<h3 id="使用vuex-ts-decorators-ts-class-组件-状态管理">使用<code>vuex-ts-decorators</code> TS Class 组件 状态管理</h3>
 <blockquote>
 <p><code>Money.vue</code></p>
 </blockquote>
@@ -1862,38 +1853,7 @@
 </span><span class="lnt">174
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">Layout</span> <span class="na">class</span><span class="nt">-prefix</span><span class="err">=&#34;</span><span class="na">layout</span><span class="err">&#34;</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;layout-content&#34;</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">HeaderBar</span> <span class="nt">:header-title</span><span class="s">=&#34;&#39;记账&#39;&#34;</span>
-               <span class="nt">:hasIcon</span><span class="s">=&#34;false&#34;</span><span class="p">&gt;</span>
-    <span class="p">&lt;/</span><span class="nt">HeaderBar</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">Tags</span> <span class="nt">@update:selectedTags</span><span class="s">=&#34;updatePickedTags&#34;</span>
-          <span class="nt">:sessionSelectedTags</span><span class="s">=&#34;sessionSelectedTags&#34;</span>
-          <span class="nt">:is-deselect-tags</span><span class="s">=&#34;emptyTags&#34;</span>
-          <span class="na">class</span><span class="o">=</span><span class="s">&#34;tags&#34;</span><span class="p">/&gt;</span>
-    <span class="p">&lt;</span><span class="nt">FormItem</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;form-item&#34;</span>
-              <span class="na">field</span><span class="nt">-name</span><span class="err">=&#34;</span><span class="na">备注</span><span class="err">&#34;</span>
-              <span class="na">placeholder</span><span class="o">=</span><span class="s">&#34;在这里输入备注&#34;</span>
-              <span class="na">type</span><span class="o">=</span><span class="s">&#34;text&#34;</span>
-              <span class="nt">:inputValue.sync</span><span class="s">=&#34;record.tips&#34;</span><span class="p">/&gt;</span>
-    <span class="p">&lt;</span><span class="nt">FormItem</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;form-item&#34;</span>
-              <span class="na">field</span><span class="nt">-name</span><span class="err">=&#34;</span><span class="na">日期</span><span class="err">&#34;</span>
-              <span class="na">placeholder</span><span class="o">=</span><span class="s">&#34;在这里选择日期&#34;</span>
-              <span class="na">type</span><span class="o">=</span><span class="s">&#34;date&#34;</span>
-              <span class="nt">:inputValue.sync</span><span class="s">=&#34;record.createdAt&#34;</span><span class="p">/&gt;</span>
-    <span class="p">&lt;</span><span class="nt">Tabs</span> <span class="nt">:data-source</span><span class="s">=&#34;recordTypeList&#34;</span>
-          <span class="nt">:type.sync</span><span class="s">=&#34;record.type&#34;</span>
-          <span class="na">class</span><span class="o">=</span><span class="s">&#34;fuckAnt-tabs&#34;</span><span class="p">/&gt;</span>
-    <span class="p">&lt;</span><span class="nt">Numpad</span> <span class="nt">:amount.sync</span><span class="s">=&#34;record.amount&#34;</span>
-            <span class="nt">@submit</span><span class="s">=&#34;submit&#34;</span>
-            <span class="nt">@update:deselectTags</span><span class="s">=&#34;deselectTags&#34;</span>
-            <span class="nt">@checkZero</span><span class="s">=&#34;alertInform(&#39;case3&#39;)&#34;</span>
-            <span class="nt">@update:rerender</span><span class="s">=&#34;rerender&#34;</span>
-            <span class="nt">:is-reset</span><span class="s">=&#34;checkoutResult&#34;</span><span class="p">/&gt;</span>
-  <span class="p">&lt;/</span><span class="nt">Layout</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
-
-<span class="p">&lt;</span><span class="nt">script</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
 <span class="c1">// 框架组件
 </span><span class="c1"></span><span class="kr">import</span> <span class="p">{</span><span class="nx">Component</span><span class="p">,</span> <span class="nx">Vue</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue-property-decorator&#39;</span><span class="p">;</span>
 <span class="kr">import</span> <span class="p">{</span><span class="nx">NavigationGuardNext</span><span class="p">,</span> <span class="nx">Route</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue-router&#39;</span><span class="p">;</span>
@@ -2008,6 +1968,37 @@
 <span class="p">}</span>
 <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 
+<span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">Layout</span> <span class="na">class</span><span class="nt">-prefix</span><span class="err">=&#34;</span><span class="na">layout</span><span class="err">&#34;</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;layout-content&#34;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">HeaderBar</span> <span class="nt">:header-title</span><span class="s">=&#34;&#39;记账&#39;&#34;</span>
+               <span class="nt">:hasIcon</span><span class="s">=&#34;false&#34;</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">HeaderBar</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">Tags</span> <span class="nt">@update:selectedTags</span><span class="s">=&#34;updatePickedTags&#34;</span>
+          <span class="nt">:sessionSelectedTags</span><span class="s">=&#34;sessionSelectedTags&#34;</span>
+          <span class="nt">:is-deselect-tags</span><span class="s">=&#34;emptyTags&#34;</span>
+          <span class="na">class</span><span class="o">=</span><span class="s">&#34;tags&#34;</span><span class="p">/&gt;</span>
+    <span class="p">&lt;</span><span class="nt">FormItem</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;form-item&#34;</span>
+              <span class="na">field</span><span class="nt">-name</span><span class="err">=&#34;</span><span class="na">备注</span><span class="err">&#34;</span>
+              <span class="na">placeholder</span><span class="o">=</span><span class="s">&#34;在这里输入备注&#34;</span>
+              <span class="na">type</span><span class="o">=</span><span class="s">&#34;text&#34;</span>
+              <span class="nt">:inputValue.sync</span><span class="s">=&#34;record.tips&#34;</span><span class="p">/&gt;</span>
+    <span class="p">&lt;</span><span class="nt">FormItem</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;form-item&#34;</span>
+              <span class="na">field</span><span class="nt">-name</span><span class="err">=&#34;</span><span class="na">日期</span><span class="err">&#34;</span>
+              <span class="na">placeholder</span><span class="o">=</span><span class="s">&#34;在这里选择日期&#34;</span>
+              <span class="na">type</span><span class="o">=</span><span class="s">&#34;date&#34;</span>
+              <span class="nt">:inputValue.sync</span><span class="s">=&#34;record.createdAt&#34;</span><span class="p">/&gt;</span>
+    <span class="p">&lt;</span><span class="nt">Tabs</span> <span class="nt">:data-source</span><span class="s">=&#34;recordTypeList&#34;</span>
+          <span class="nt">:type.sync</span><span class="s">=&#34;record.type&#34;</span>
+          <span class="na">class</span><span class="o">=</span><span class="s">&#34;fuckAnt-tabs&#34;</span><span class="p">/&gt;</span>
+    <span class="p">&lt;</span><span class="nt">Numpad</span> <span class="nt">:amount.sync</span><span class="s">=&#34;record.amount&#34;</span>
+            <span class="nt">@submit</span><span class="s">=&#34;submit&#34;</span>
+            <span class="nt">@update:deselectTags</span><span class="s">=&#34;deselectTags&#34;</span>
+            <span class="nt">@checkZero</span><span class="s">=&#34;alertInform(&#39;case3&#39;)&#34;</span>
+            <span class="nt">@update:rerender</span><span class="s">=&#34;rerender&#34;</span>
+            <span class="nt">:is-reset</span><span class="s">=&#34;checkoutResult&#34;</span><span class="p">/&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">Layout</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+
 <span class="p">&lt;</span><span class="nt">style</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;scss&#34;</span> <span class="na">scoped</span><span class="p">&gt;</span>
 <span class="o">::</span><span class="nx">v</span><span class="o">-</span><span class="nx">deep</span> <span class="p">{</span>
   <span class="p">.</span><span class="nx">layout</span><span class="o">-</span><span class="nx">content</span> <span class="p">{</span>
@@ -2077,7 +2068,7 @@
   <p class="copyright-item">
     <span class="item-title">上次更新</span>
     <span class="item-content">
-      2022-03-31
+      2022-04-07
       
         
         
