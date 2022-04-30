@@ -23,7 +23,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 
 <meta name="author" content="Joel Xu" />
-  <meta name="description" content="" />
+  <meta name="description" content="5.1 简单轮子：VueTab 组件 大纲链接§ [toc] 需求分析 用户用例 默认选中第一项 可选择特定页 可切换 可被禁用、被隐藏 可添加icon 横向Tab 默认 竖向Ta" />
 
   <meta name="keywords" content="Hugo, theme, jane" />
 
@@ -60,19 +60,19 @@
 
 
 <meta property="og:title" content="【项目 Vue2 轮子】5.1 简单轮子：VueTab 组件" />
-<meta property="og:description" content="" />
+<meta property="og:description" content="5.1 简单轮子：VueTab 组件 大纲链接§ [toc] 需求分析 用户用例 默认选中第一项 可选择特定页 可切换 可被禁用、被隐藏 可添加icon 横向Tab 默认 竖向Ta" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://xmasuhai.xyz/post/project/vueel2/%E9%A1%B9%E7%9B%AE-vue2-%E8%BD%AE%E5%AD%905.1-%E7%AE%80%E5%8D%95%E8%BD%AE%E5%AD%90-vuetab-%E7%BB%84%E4%BB%B6/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2022-01-16T12:33:42+08:00" />
 <meta property="article:modified_time" content="2022-04-13T13:48:34+08:00" />
 
 <meta itemprop="name" content="【项目 Vue2 轮子】5.1 简单轮子：VueTab 组件">
-<meta itemprop="description" content=""><meta itemprop="datePublished" content="2022-01-16T12:33:42+08:00" />
+<meta itemprop="description" content="5.1 简单轮子：VueTab 组件 大纲链接§ [toc] 需求分析 用户用例 默认选中第一项 可选择特定页 可切换 可被禁用、被隐藏 可添加icon 横向Tab 默认 竖向Ta"><meta itemprop="datePublished" content="2022-01-16T12:33:42+08:00" />
 <meta itemprop="dateModified" content="2022-04-13T13:48:34+08:00" />
-<meta itemprop="wordCount" content="0">
+<meta itemprop="wordCount" content="7843">
 <meta itemprop="keywords" content="FrontEnd,Project,vueel,vue2," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="【项目 Vue2 轮子】5.1 简单轮子：VueTab 组件"/>
-<meta name="twitter:description" content=""/>
+<meta name="twitter:description" content="5.1 简单轮子：VueTab 组件 大纲链接§ [toc] 需求分析 用户用例 默认选中第一项 可选择特定页 可切换 可被禁用、被隐藏 可添加icon 横向Tab 默认 竖向Ta"/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -345,8 +345,8 @@
             <a href="http://xmasuhai.xyz/categories/vue2/"> vue2 </a>
             
           </div>
-        <span class="more-meta"> 约 0 字 </span>
-          <span class="more-meta"> 预计阅读 0 分钟 </span>
+        <span class="more-meta"> 约 7843 字 </span>
+          <span class="more-meta"> 预计阅读 16 分钟 </span>
 
         
         
@@ -361,13 +361,2793 @@
 <div class="post-toc" id="post-toc">
   <h2 class="post-toc-title">文章目录</h2>
   <div class="post-toc-content">
-    <nav id="TableOfContents"></nav>
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#需求分析">需求分析</a></li>
+    <li><a href="#api设计">API设计</a></li>
+    <li><a href="#创建五个组件--展示组件">创建五个组件 + 展示组件</a>
+      <ul>
+        <li><a href="#初步实现vuetab">初步实现<code>VueTab</code></a></li>
+        <li><a href="#初步实现vuetabnav">初步实现<code>VueTabNav</code></a></li>
+        <li><a href="#初步实现vuetabitem">初步实现<code>VueTabItem</code></a></li>
+        <li><a href="#初步实现vuetabcontent">初步实现<code>VueTabContent</code></a></li>
+      </ul>
+    </li>
+    <li><a href="#使用依赖注入和eventbus触发事件和传值">使用依赖注入和<code>eventBus</code>触发事件和传值</a>
+      <ul>
+        <li><a href="#组件间跨级通信">组件间跨级通信</a></li>
+        <li><a href="#使用vue作为事件总线-eventbus">使用<code>vue</code>作为事件总线 <code>EventBus</code></a></li>
+        <li><a href="#实现vuetabitem点击事件发布tabname属性跨级传值">实现<code>VueTabItem</code>点击事件，发布<code>tabName</code>属性，跨级传值</a></li>
+        <li><a href="#实现vuetabpanevue">实现<code>VueTabPane.vue</code></a></li>
+        <li><a href="#补充vue的事件系统">补充<code>vue</code>的事件系统</a></li>
+        <li><a href="#vuetabnav加样式"><code>VueTabNav</code>加样式</a></li>
+      </ul>
+    </li>
+    <li><a href="#实现切换tab">实现切换Tab</a>
+      <ul>
+        <li><a href="#vuetabnavvue"><code>VueTabNav.vue</code></a></li>
+      </ul>
+    </li>
+    <li><a href="#增加样式">增加样式</a></li>
+    <li><a href="#增加-tab-切换动画">增加 tab 切换动画</a>
+      <ul>
+        <li><a href="#增加下划线">增加下划线</a></li>
+        <li><a href="#如何切换">如何切换</a></li>
+        <li><a href="#v-if-与-nexttick"><code>v-if</code> 与 <code>$nextTick</code></a></li>
+      </ul>
+    </li>
+    <li><a href="#重构代码">重构代码</a></li>
+    <li><a href="#解决bug的思路">解决BUG的思路</a></li>
+  </ul>
+</nav>
   </div>
 </div>
 
     
     <div class="post-content">
+      <h1 id="51-简单轮子vuetab-组件">5.1 简单轮子：VueTab 组件</h1>
+<blockquote>
+<p>大纲链接<!-- raw HTML omitted --> § <!-- raw HTML omitted --></p>
+</blockquote>
+<p>[toc]</p>
+<hr>
+<p><img src="https://static.xiedaimala.com/xdml/image/3ac7c224-c23d-491f-84b5-4fabfbeab9b8/2018-7-30-15-44-1.png" alt="头图"></p>
+<h2 id="需求分析">需求分析</h2>
+<blockquote>
+<p>用户用例</p>
+</blockquote>
+<ul>
+<li>默认选中第一项 可选择特定页</li>
+<li>可切换</li>
+<li>可被禁用、被隐藏</li>
+<li>可添加icon</li>
+<li>横向Tab 默认</li>
+<li>竖向Tab
+<ul>
+<li>上下箭头 选择/查看更多</li>
+</ul>
+</li>
+<li>提供 可选的 右侧附带按钮</li>
+<li>卡片式页签，即样式与Tab内容视觉一体化</li>
+<li>可添加、删除Tab页</li>
+<li>Tab页切换动画</li>
+<li>移动端
+<ul>
+<li>可滑动切换Tab页</li>
+<li>置底菜单式Tab页</li>
+<li>可做路由切换</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>参考业界，不增加用户学习成本</p>
+</blockquote>
+<ul>
+<li>antDesign</li>
+</ul>
+<blockquote>
+<p>使用演示示例</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="c">&lt;!-- 区分nav层和content层 --&gt;</span>
+<span class="p">&lt;</span><span class="nt">g-tab</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">g-tab-nav</span> <span class="na">selected</span><span class="o">=</span><span class="s">&#34;tab1&#34;</span><span class="p">&gt;</span>
+    <span class="c">&lt;!-- 带icon --&gt;</span>
+    <span class="p">&lt;</span><span class="nt">g-tab-item</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;tab1&#34;</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">template</span> <span class="na">slot</span><span class="o">=</span><span class="s">&#34;label&#34;</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">g-icon</span><span class="p">&gt;&lt;/</span><span class="nt">g-icon</span><span class="p">&gt;</span>
+        ...
+      <span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">g-tab-item</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">g-tab-item</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;tab2&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">g-tab-item</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">g-tab-item</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;tab3&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">g-tab-item</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">g-tab-nav</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">g-tab-content</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">g-tab-pane</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;tab1&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">g-tab-pane</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">g-tab-pane</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;tab2&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">g-tab-pane</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">g-tab-pane</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;tab3&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">g-tab-pane</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">g-tab-content</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">g-tab</span><span class="p">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><hr>
+<h2 id="api设计">API设计</h2>
+<hr>
+<h2 id="创建五个组件--展示组件">创建五个组件 + 展示组件</h2>
+<ul>
+<li><code>VueTab</code>: <code>&lt;v-tab&gt;&lt;/v-tab&gt;</code></li>
+<li><code>VueTabNav</code>: <code>&lt;v-tab-nav&gt;&lt;/v-tab-nav&gt;</code></li>
+<li><code>VueTabItem</code>: <code>&lt;v-tab-item&gt;&lt;/v-tab-item&gt;</code></li>
+<li><code>VueTabContent</code>: <code>&lt;v-tab-content&gt;&lt;/v-tab-content&gt;</code></li>
+<li><code>VueTabPane</code>: <code>&lt;v-tab-pane&gt;&lt;/v-tab-pane&gt;</code></li>
+<li><code>Tabs</code>: <code>&lt;Tabs&gt;&lt;/Tabs&gt;</code></li>
+</ul>
+<blockquote>
+<p>以<code>VueTab.vue</code>为示例</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;vue-tab&#34;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">slot</span><span class="p">&gt;&lt;/</span><span class="nt">slot</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<span class="kr">import</span> <span class="p">{</span><span class="nx">Component</span><span class="p">,</span> <span class="nx">Vue</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue-property-decorator&#39;</span><span class="p">;</span>
+
+<span class="err">@</span><span class="nx">Component</span>
+<span class="kr">export</span> <span class="k">default</span> <span class="kr">class</span> <span class="nx">VueTab</span> <span class="kr">extends</span> <span class="nx">Vue</span> <span class="p">{</span>
+  <span class="nx">name</span> <span class="o">=</span> <span class="s1">&#39;VueTab&#39;</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">style</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;scss&#34;</span> <span class="na">scoped</span><span class="p">&gt;</span>
+<span class="p">.</span><span class="nx">vue</span><span class="o">-</span><span class="nx">tab</span> <span class="p">{</span>
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>其他组件结构类似，之后具体写出</li>
+</ul>
+<blockquote>
+<p>展示组件 <code>Tabs.vue</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">form</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">fieldset</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">legend</span><span class="p">&gt;</span><span class="nx">Tabs</span> <span class="nx">的基本结构</span><span class="p">&lt;/</span><span class="nt">legend</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">details</span> <span class="na">open</span><span class="p">&gt;</span>
+          <span class="p">&lt;</span><span class="nt">summary</span><span class="p">&gt;</span><span class="nx">Primary</span><span class="p">&lt;/</span><span class="nt">summary</span><span class="p">&gt;</span>
+          <span class="p">&lt;</span><span class="nt">VueTab</span> <span class="nt">:slelected</span><span class="s">=&#34;selectedTab&#34;</span> <span class="nt">@xxx</span><span class="s">=&#34;selectedTab=$event&#34;</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">VueTabNav</span><span class="p">&gt;</span>
+              <span class="p">&lt;</span><span class="nt">VueTabItem</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;tab1&#34;</span><span class="p">&gt;</span><span class="nx">Tab1</span><span class="p">&lt;/</span><span class="nt">VueTabItem</span><span class="p">&gt;</span>
+              <span class="p">&lt;</span><span class="nt">VueTabItem</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;tab2&#34;</span><span class="p">&gt;</span><span class="nx">Tab2</span><span class="p">&lt;/</span><span class="nt">VueTabItem</span><span class="p">&gt;</span>
+              <span class="p">&lt;</span><span class="nt">VueTabItem</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;tab3&#34;</span><span class="p">&gt;</span><span class="nx">Tab3</span><span class="p">&lt;/</span><span class="nt">VueTabItem</span><span class="p">&gt;</span>
+            <span class="p">&lt;/</span><span class="nt">VueTabNav</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">VueTabContent</span><span class="p">&gt;</span>
+              <span class="p">&lt;</span><span class="nt">VueTabPane</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;tab1&#34;</span><span class="p">&gt;</span><span class="nx">Tab1</span> <span class="nx">Content</span><span class="p">&lt;/</span><span class="nt">VueTabPane</span><span class="p">&gt;</span>
+              <span class="p">&lt;</span><span class="nt">VueTabPane</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;tab2&#34;</span><span class="p">&gt;</span><span class="nx">Tab2</span> <span class="nx">Content</span><span class="p">&lt;/</span><span class="nt">VueTabPane</span><span class="p">&gt;</span>
+              <span class="p">&lt;</span><span class="nt">VueTabPane</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;tab3&#34;</span><span class="p">&gt;</span><span class="nx">Tab3</span> <span class="nx">Content</span><span class="p">&lt;/</span><span class="nt">VueTabPane</span><span class="p">&gt;</span>
+            <span class="p">&lt;/</span><span class="nt">VueTabContent</span><span class="p">&gt;</span>
+          <span class="p">&lt;/</span><span class="nt">VueTab</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">details</span><span class="p">&gt;</span>
+      <span class="p">&lt;/</span><span class="nt">fieldset</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">br</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<span class="kr">import</span> <span class="p">{</span><span class="nx">Component</span><span class="p">,</span> <span class="nx">Vue</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue-property-decorator&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">VueTab</span> <span class="nx">from</span> <span class="s1">&#39;./tabs/VueTab.vue&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">VueTabNav</span> <span class="nx">from</span> <span class="s1">&#39;./tabs/VueTabNav.vue&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">VueTabItem</span> <span class="nx">from</span> <span class="s1">&#39;./tabs/VueTabItem.vue&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">VueTabContent</span> <span class="nx">from</span> <span class="s1">&#39;./tabs/VueTabContent.vue&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">VueTabPane</span> <span class="nx">from</span> <span class="s1">&#39;./tabs/VueTabPane.vue&#39;</span><span class="p">;</span>
+
+<span class="err">@</span><span class="nx">Component</span><span class="p">({</span>
+  <span class="nx">components</span><span class="o">:</span> <span class="p">{</span><span class="nx">VueTab</span><span class="p">,</span> <span class="nx">VueTabNav</span><span class="p">,</span> <span class="nx">VueTabPane</span><span class="p">,</span> <span class="nx">VueTabContent</span><span class="p">,</span> <span class="nx">VueTabItem</span><span class="p">}</span>
+<span class="p">})</span>
+<span class="kr">export</span> <span class="k">default</span> <span class="kr">class</span> <span class="nx">Tabs</span> <span class="kr">extends</span> <span class="nx">Vue</span> <span class="p">{</span>
+  <span class="nx">name</span> <span class="o">=</span> <span class="s1">&#39;Tabs&#39;</span><span class="p">;</span>
+  <span class="nx">selectedTab</span> <span class="o">=</span> <span class="s1">&#39;tab1&#39;</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">style</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;scss&#34;</span> <span class="na">scoped</span><span class="p">&gt;</span>
+
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>保证子组件时不能修改父组件任何的值
+<ul>
+<li>改变一个<code>tab</code>不能直接在子组件中改</li>
+<li>必须通知父组件，让父组件去改</li>
+</ul>
+</li>
+<li><code>&lt;VueTab :slelected=&quot;selectedTab&quot; @xxx=&quot;selectedTab=$event&quot;&gt;</code>中触发自定义事件<code>@xxx</code>时执行代码<code>selectedTab=$event</code>
+<ul>
+<li>绑定数据<code>:slelected=&quot;selectedTab&quot;</code></li>
+<li>其中<code>@xxx</code>一般取名为<code>@update:selected</code>
+<ul>
+<li>依据需要改变的数据名<code>selected</code>加上前缀<code>@update:</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>以上可以使用<code>vue2.6+</code>的语法糖<code>.sync</code>来简写
+<ul>
+<li><code>&lt;VueTab :slelected.sync=&quot;selectedTab&quot;&gt;</code></li>
+</ul>
+</li>
+<li>即以下两种写法完全等价
+<ul>
+<li><code>&lt;VueTab :selected.sync=&quot;selectedTab&quot;&gt;&lt;/VueTab&gt;</code></li>
+<li><code>&lt;VueTab :selected=&quot;selectedTab&quot; @updated:selected=&quot;selectedTab=$event&quot;&gt;&lt;/VueTab&gt;</code></li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="初步实现vuetab">初步实现<code>VueTab</code></h3>
+<h4 id="需要传入的外部数据">需要传入的外部数据</h4>
+<ul>
+<li><code>selected</code> 表示选中的 tab 名</li>
+<li><code>direction</code> 表示方向，水平或者竖直，默认为水平</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;vue-tab&#34;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">slot</span><span class="p">&gt;&lt;/</span><span class="nt">slot</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<span class="kr">import</span> <span class="p">{</span><span class="nx">Component</span><span class="p">,</span> <span class="nx">Prop</span><span class="p">,</span> <span class="nx">Vue</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue-property-decorator&#39;</span><span class="p">;</span>
+
+<span class="err">@</span><span class="nx">Component</span>
+<span class="kr">export</span> <span class="k">default</span> <span class="kr">class</span> <span class="nx">VueTab</span> <span class="kr">extends</span> <span class="nx">Vue</span> <span class="p">{</span>
+  <span class="nx">name</span> <span class="o">=</span> <span class="s1">&#39;VueTab&#39;</span><span class="p">;</span>
+  <span class="err">@</span><span class="nx">Prop</span><span class="p">({</span><span class="nx">type</span><span class="o">:</span> <span class="nb">String</span><span class="p">,</span> <span class="nx">required</span><span class="o">:</span> <span class="kc">true</span><span class="p">})</span> <span class="nx">selected</span><span class="o">!:</span> <span class="nx">string</span><span class="p">;</span>
+  <span class="err">@</span><span class="nx">Prop</span><span class="p">({</span>
+    <span class="nx">type</span><span class="o">:</span> <span class="nb">String</span><span class="p">,</span>
+    <span class="k">default</span><span class="o">:</span> <span class="s1">&#39;horizontal&#39;</span><span class="p">,</span>
+    <span class="nx">validator</span><span class="p">(</span><span class="nx">value</span><span class="o">:</span> <span class="nx">string</span><span class="p">)</span><span class="o">:</span> <span class="kr">boolean</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="p">[</span><span class="s1">&#39;horizontal&#39;</span><span class="p">,</span> <span class="s1">&#39;vertical&#39;</span><span class="p">].</span><span class="nx">includes</span><span class="p">(</span><span class="nx">value</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">})</span> <span class="nx">direction</span><span class="o">!:</span> <span class="nx">string</span><span class="p">;</span>
+
+  <span class="nx">created</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// this.$emit(&#39;update:selected&#39;, &#39;xxx&#39;);
+</span><span class="c1"></span>  <span class="p">}</span>
+
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">style</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;scss&#34;</span> <span class="na">scoped</span><span class="p">&gt;</span>
+<span class="p">.</span><span class="nx">vue</span><span class="o">-</span><span class="nx">tab</span> <span class="p">{</span>
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p><code>Tabs.vue</code>中的展示</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">form</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">fieldset</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">legend</span><span class="p">&gt;</span><span class="nx">Tabs</span> <span class="nx">的基本结构</span><span class="p">&lt;/</span><span class="nt">legend</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">details</span> <span class="na">open</span><span class="p">&gt;</span>
+          <span class="p">&lt;</span><span class="nt">summary</span><span class="p">&gt;</span><span class="nx">Primary</span><span class="p">&lt;/</span><span class="nt">summary</span><span class="p">&gt;</span>
+          <span class="p">&lt;</span><span class="nt">VueTab</span> <span class="nt">:selected.sync</span><span class="s">=&#34;selectedTab&#34;</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">VueTabNav</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;custom-class&#34;</span><span class="p">&gt;</span>
+              <span class="p">&lt;</span><span class="nt">VueTabItem</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;tab1&#34;</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">VueIcon</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;settings&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">VueIcon</span><span class="p">&gt;</span>
+                <span class="nx">Tab1</span>
+              <span class="p">&lt;/</span><span class="nt">VueTabItem</span><span class="p">&gt;</span>
+              <span class="p">&lt;</span><span class="nt">VueTabItem</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;tab2&#34;</span> <span class="na">disabled</span><span class="p">&gt;</span><span class="nx">Tab2</span><span class="p">&lt;/</span><span class="nt">VueTabItem</span><span class="p">&gt;</span>
+              <span class="p">&lt;</span><span class="nt">VueTabItem</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;tab3&#34;</span><span class="p">&gt;</span><span class="nx">Tab3</span><span class="p">&lt;/</span><span class="nt">VueTabItem</span><span class="p">&gt;</span>
+            <span class="p">&lt;/</span><span class="nt">VueTabNav</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">VueTabContent</span><span class="p">&gt;</span>
+              <span class="p">&lt;</span><span class="nt">VueTabPane</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;tab1&#34;</span><span class="p">&gt;</span><span class="nx">Tab1</span> <span class="nx">Content</span><span class="p">&lt;/</span><span class="nt">VueTabPane</span><span class="p">&gt;</span>
+              <span class="p">&lt;</span><span class="nt">VueTabPane</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;tab2&#34;</span><span class="p">&gt;</span><span class="nx">Tab2</span> <span class="nx">Content</span><span class="p">&lt;/</span><span class="nt">VueTabPane</span><span class="p">&gt;</span>
+              <span class="p">&lt;</span><span class="nt">VueTabPane</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;tab3&#34;</span><span class="p">&gt;</span><span class="nx">Tab3</span> <span class="nx">Content</span><span class="p">&lt;/</span><span class="nt">VueTabPane</span><span class="p">&gt;</span>
+            <span class="p">&lt;/</span><span class="nt">VueTabContent</span><span class="p">&gt;</span>
+          <span class="p">&lt;/</span><span class="nt">VueTab</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">details</span><span class="p">&gt;</span>
+      <span class="p">&lt;/</span><span class="nt">fieldset</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">br</span><span class="p">&gt;</span>
+    <span class="c">&lt;!--</span> <span class="nx">可提供</span> <span class="nx">可选的</span> <span class="nx">右侧附带按钮</span><span class="o">--&gt;</span>
+    <span class="c">&lt;!--</span> <span class="nx">可被禁用</span><span class="err">、</span><span class="nx">被隐藏</span><span class="o">--&gt;</span>
+    <span class="c">&lt;!--</span> <span class="nx">可添加icon</span><span class="o">--&gt;</span>
+    <span class="c">&lt;!--</span> <span class="nx">可配置方向</span><span class="o">--&gt;</span>
+    <span class="c">&lt;!--</span> <span class="nx">可实现卡片式页签</span><span class="err">，</span><span class="nx">即样式与Tab内容视觉一体化</span><span class="o">--&gt;</span>
+    <span class="c">&lt;!--</span> <span class="nx">可添加</span><span class="err">、</span><span class="nx">删除Tab页</span><span class="o">--&gt;</span>
+    <span class="c">&lt;!--</span> <span class="nx">可被禁用</span><span class="err">、</span><span class="nx">被隐藏</span><span class="o">--&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<span class="kr">import</span> <span class="p">{</span><span class="nx">Component</span><span class="p">,</span> <span class="nx">Vue</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue-property-decorator&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">VueTab</span> <span class="nx">from</span> <span class="s1">&#39;./tabs/VueTab.vue&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">VueTabNav</span> <span class="nx">from</span> <span class="s1">&#39;./tabs/VueTabNav.vue&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">VueTabItem</span> <span class="nx">from</span> <span class="s1">&#39;./tabs/VueTabItem.vue&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">VueTabContent</span> <span class="nx">from</span> <span class="s1">&#39;./tabs/VueTabContent.vue&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">VueTabPane</span> <span class="nx">from</span> <span class="s1">&#39;./tabs/VueTabPane.vue&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">VueIcon</span> <span class="nx">from</span> <span class="s1">&#39;./icon/VueIcon.vue&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">VueButton</span> <span class="nx">from</span> <span class="s1">&#39;@/components/button/VueButton.vue&#39;</span><span class="p">;</span>
+
+<span class="err">@</span><span class="nx">Component</span><span class="p">({</span>
+  <span class="nx">components</span><span class="o">:</span> <span class="p">{</span><span class="nx">VueButton</span><span class="p">,</span> <span class="nx">VueIcon</span><span class="p">,</span> <span class="nx">VueTab</span><span class="p">,</span> <span class="nx">VueTabNav</span><span class="p">,</span> <span class="nx">VueTabPane</span><span class="p">,</span> <span class="nx">VueTabContent</span><span class="p">,</span> <span class="nx">VueTabItem</span><span class="p">}</span>
+<span class="p">})</span>
+<span class="kr">export</span> <span class="k">default</span> <span class="kr">class</span> <span class="nx">Tabs</span> <span class="kr">extends</span> <span class="nx">Vue</span> <span class="p">{</span>
+  <span class="nx">name</span> <span class="o">=</span> <span class="s1">&#39;Tabs&#39;</span><span class="p">;</span>
+  <span class="nx">selectedTab</span> <span class="o">=</span> <span class="s1">&#39;tab1&#39;</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>注意<code>&lt;VueTabNav class=&quot;custom-class&quot;&gt;</code>中，UI使用者可提供自定义样式<code>custom-class</code>
+<ul>
+<li><code>vue</code>默认会将<code>VueTabNav</code>本身的样式和UI使用者提供的样式合并显示在<code>class</code>属性中，而不是后者覆盖前者</li>
+<li><code>vue</code>中只有两个属性如此：<code>class</code>和<code>style</code></li>
+<li>其他属性则直接覆盖</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="初步实现vuetabnav">初步实现<code>VueTabNav</code></h3>
+<h4 id="需要传入的外部数据-1">需要传入的外部数据</h4>
+<ul>
+<li>无</li>
+</ul>
+<h4 id="提供-可选的-右侧附带按钮">提供 可选的 右侧附带按钮</h4>
+<blockquote>
+<p>使用具名插槽<code>&lt;slot name=&quot;actions&quot;&gt;&lt;/slot&gt;</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">nav</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;tab-nav&#34;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">slot</span><span class="p">&gt;&lt;/</span><span class="nt">slot</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">slot</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;actions&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">slot</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">nav</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<span class="kr">import</span> <span class="p">{</span><span class="nx">Component</span><span class="p">,</span> <span class="nx">Vue</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue-property-decorator&#39;</span><span class="p">;</span>
+
+<span class="err">@</span><span class="nx">Component</span>
+<span class="kr">export</span> <span class="k">default</span> <span class="kr">class</span> <span class="nx">VueTabNav</span> <span class="kr">extends</span> <span class="nx">Vue</span> <span class="p">{</span>
+  <span class="nx">name</span> <span class="o">=</span> <span class="s1">&#39;VueTabNav.vue&#39;</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">style</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;scss&#34;</span> <span class="na">scoped</span><span class="p">&gt;</span>
+<span class="p">.</span><span class="nx">tab</span><span class="o">-</span><span class="nx">nav</span> <span class="p">{</span>
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p><code>Tabs.vue</code>中的展示</p>
+</blockquote>
+<ul>
+<li>具名插槽可与匿名插槽<code>&lt;slot&gt;&lt;/slot&gt;</code>同时使用</li>
+<li>使用具名插槽时，<code>&lt;template slot=&quot;xxx&quot;&gt;&lt;/template&gt;</code>包裹内容</li>
+<li><code>&lt;template slot=&quot;actions&quot;&gt; &lt;VueButton&gt;额外的按钮&lt;/VueButton&gt; &lt;/template&gt;</code></li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">form</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">fieldset</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">legend</span><span class="p">&gt;</span><span class="nx">Tabs</span> <span class="nx">提供</span> <span class="nx">可选的</span> <span class="nx">右侧附带按钮</span><span class="p">&lt;/</span><span class="nt">legend</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">details</span> <span class="na">open</span><span class="p">&gt;</span>
+          <span class="p">&lt;</span><span class="nt">summary</span><span class="p">&gt;</span><span class="nx">Primary</span><span class="p">&lt;/</span><span class="nt">summary</span><span class="p">&gt;</span>
+          <span class="p">&lt;</span><span class="nt">VueTab</span> <span class="nt">:selected.sync</span><span class="s">=&#34;selectedTab&#34;</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">VueTabNav</span><span class="p">&gt;</span>
+              <span class="p">&lt;</span><span class="nt">template</span> <span class="na">slot</span><span class="o">=</span><span class="s">&#34;actions&#34;</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">VueButton</span><span class="p">&gt;</span><span class="nx">额外的按钮</span><span class="p">&lt;/</span><span class="nt">VueButton</span><span class="p">&gt;</span>
+              <span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+              <span class="p">&lt;</span><span class="nt">VueTabItem</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;tab1&#34;</span><span class="p">&gt;</span><span class="nx">Tab1</span><span class="p">&lt;/</span><span class="nt">VueTabItem</span><span class="p">&gt;</span>
+              <span class="p">&lt;</span><span class="nt">VueTabItem</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;tab2&#34;</span> <span class="na">disabled</span><span class="p">&gt;</span><span class="nx">Tab2</span><span class="p">&lt;/</span><span class="nt">VueTabItem</span><span class="p">&gt;</span>
+              <span class="p">&lt;</span><span class="nt">VueTabItem</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;tab3&#34;</span><span class="p">&gt;</span><span class="nx">Tab3</span><span class="p">&lt;/</span><span class="nt">VueTabItem</span><span class="p">&gt;</span>
+            <span class="p">&lt;/</span><span class="nt">VueTabNav</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">VueTabContent</span><span class="p">&gt;</span>
+              <span class="p">&lt;</span><span class="nt">VueTabPane</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;tab1&#34;</span><span class="p">&gt;</span><span class="nx">Tab1</span> <span class="nx">Content</span><span class="p">&lt;/</span><span class="nt">VueTabPane</span><span class="p">&gt;</span>
+              <span class="p">&lt;</span><span class="nt">VueTabPane</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;tab2&#34;</span><span class="p">&gt;</span><span class="nx">Tab2</span> <span class="nx">Content</span><span class="p">&lt;/</span><span class="nt">VueTabPane</span><span class="p">&gt;</span>
+              <span class="p">&lt;</span><span class="nt">VueTabPane</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;tab3&#34;</span><span class="p">&gt;</span><span class="nx">Tab3</span> <span class="nx">Content</span><span class="p">&lt;/</span><span class="nt">VueTabPane</span><span class="p">&gt;</span>
+            <span class="p">&lt;/</span><span class="nt">VueTabContent</span><span class="p">&gt;</span>
+          <span class="p">&lt;/</span><span class="nt">VueTab</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">details</span><span class="p">&gt;</span>
+      <span class="p">&lt;/</span><span class="nt">fieldset</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">br</span><span class="p">&gt;</span>
+
+  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<span class="kr">import</span> <span class="p">{</span><span class="nx">Component</span><span class="p">,</span> <span class="nx">Vue</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue-property-decorator&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">VueTab</span> <span class="nx">from</span> <span class="s1">&#39;./tabs/VueTab.vue&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">VueTabNav</span> <span class="nx">from</span> <span class="s1">&#39;./tabs/VueTabNav.vue&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">VueTabItem</span> <span class="nx">from</span> <span class="s1">&#39;./tabs/VueTabItem.vue&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">VueTabContent</span> <span class="nx">from</span> <span class="s1">&#39;./tabs/VueTabContent.vue&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">VueTabPane</span> <span class="nx">from</span> <span class="s1">&#39;./tabs/VueTabPane.vue&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">VueIcon</span> <span class="nx">from</span> <span class="s1">&#39;./icon/VueIcon.vue&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">VueButton</span> <span class="nx">from</span> <span class="s1">&#39;@/components/button/VueButton.vue&#39;</span><span class="p">;</span>
+
+<span class="err">@</span><span class="nx">Component</span><span class="p">({</span>
+  <span class="nx">components</span><span class="o">:</span> <span class="p">{</span><span class="nx">VueButton</span><span class="p">,</span> <span class="nx">VueIcon</span><span class="p">,</span> <span class="nx">VueTab</span><span class="p">,</span> <span class="nx">VueTabNav</span><span class="p">,</span> <span class="nx">VueTabPane</span><span class="p">,</span> <span class="nx">VueTabContent</span><span class="p">,</span> <span class="nx">VueTabItem</span><span class="p">}</span>
+<span class="p">})</span>
+<span class="kr">export</span> <span class="k">default</span> <span class="kr">class</span> <span class="nx">Tabs</span> <span class="kr">extends</span> <span class="nx">Vue</span> <span class="p">{</span>
+  <span class="nx">name</span> <span class="o">=</span> <span class="s1">&#39;Tabs&#39;</span><span class="p">;</span>
+  <span class="nx">selectedTab</span> <span class="o">=</span> <span class="s1">&#39;tab1&#39;</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">style</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;scss&#34;</span> <span class="na">scoped</span><span class="p">&gt;</span>
+<span class="p">.</span><span class="nx">custom</span><span class="o">-</span><span class="kr">class</span> <span class="p">{}</span>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><hr>
+<h3 id="初步实现vuetabitem">初步实现<code>VueTabItem</code></h3>
+<h4 id="需要传入的外部数据-2">需要传入的外部数据</h4>
+<ul>
+<li><code>disabled</code> 表示是否禁用</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">section</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;tab-item&#34;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">slot</span><span class="p">&gt;&lt;/</span><span class="nt">slot</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">section</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<span class="kr">import</span> <span class="p">{</span><span class="nx">Component</span><span class="p">,</span> <span class="nx">Prop</span><span class="p">,</span> <span class="nx">Vue</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue-property-decorator&#39;</span><span class="p">;</span>
+
+<span class="err">@</span><span class="nx">Component</span>
+<span class="kr">export</span> <span class="k">default</span> <span class="kr">class</span> <span class="nx">VueTabItem</span> <span class="kr">extends</span> <span class="nx">Vue</span> <span class="p">{</span>
+  <span class="nx">name</span> <span class="o">=</span> <span class="s1">&#39;VueTabItem&#39;</span><span class="p">;</span>
+  <span class="err">@</span><span class="nx">Prop</span><span class="p">({</span><span class="nx">type</span><span class="o">:</span> <span class="nb">Boolean</span><span class="p">,</span> <span class="k">default</span><span class="o">:</span> <span class="kc">false</span><span class="p">})</span> <span class="nx">disabled</span><span class="o">!:</span> <span class="kr">boolean</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">style</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;scss&#34;</span> <span class="na">scoped</span><span class="p">&gt;</span>
+<span class="p">.</span><span class="nx">tab</span><span class="o">-</span><span class="nx">item</span> <span class="p">{</span>
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="初步实现vuetabcontent">初步实现<code>VueTabContent</code></h3>
+<h4 id="需要传入的外部数据-3">需要传入的外部数据</h4>
+<ul>
+<li>``</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">nav</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;tab-content&#34;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">slot</span><span class="p">&gt;&lt;/</span><span class="nt">slot</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">nav</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<span class="kr">import</span> <span class="p">{</span><span class="nx">Component</span><span class="p">,</span> <span class="nx">Inject</span><span class="p">,</span> <span class="nx">Vue</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue-property-decorator&#39;</span><span class="p">;</span>
+
+<span class="err">@</span><span class="nx">Component</span>
+<span class="kr">export</span> <span class="k">default</span> <span class="kr">class</span> <span class="nx">VueTabContent</span> <span class="kr">extends</span> <span class="nx">Vue</span> <span class="p">{</span>
+  <span class="nx">name</span> <span class="o">=</span> <span class="s1">&#39;VueTabContent.vue&#39;</span><span class="p">;</span>
+  <span class="err">@</span><span class="nx">Inject</span><span class="p">(</span><span class="s1">&#39;eventBus&#39;</span><span class="p">)</span> <span class="nx">readonly</span> <span class="nx">eventBus</span><span class="o">!:</span> <span class="nx">Vue</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">style</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;scss&#34;</span> <span class="na">scoped</span><span class="p">&gt;</span>
+<span class="p">.</span><span class="nx">tab</span><span class="o">-</span><span class="nx">content</span> <span class="p">{</span>
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><hr>
+<h2 id="使用依赖注入和eventbus触发事件和传值">使用依赖注入和<code>eventBus</code>触发事件和传值</h2>
+<h3 id="组件间跨级通信">组件间跨级通信</h3>
+<blockquote>
+<p><code>Tabs</code>结构</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">Tabs  <span class="o">(</span><span class="nv">selected</span> <span class="o">=</span> item1<span class="o">)</span>
+├─ TabNav
+│  ├─ item1
+│  ├─ item2
+│  └─ item3
+└─ TabContent
+   ├─ pane1
+   ├─ pane2
+   └─ pane3
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>在<code>Tabs</code>上默认<code>selected = item1</code></li>
+</ul>
+<blockquote>
+<p>当切换<code>selected = item2</code>，如何通知导航区与内容区同步切换？</p>
+</blockquote>
+<h4 id="逐级通知">逐级通知</h4>
+<ul>
+<li><code>Tabs--&gt;TabNav--&gt;每个item</code>：
+<ul>
+<li>每个item都监听是否选择到自己</li>
+<li>如果显示，则要通知兄弟节点隐藏</li>
+</ul>
+</li>
+<li><code>Tabs--&gt;TabContent--&gt;每个pane</code>：
+<ul>
+<li>每个pane都监听是否选择到自己</li>
+<li>如果显示，则要通知兄弟节点隐藏</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>显然随着层数变得复杂，带来的维护成本急速上升</p>
+</blockquote>
+<ul>
+<li>每个被切换到的<code>item</code>都需要执行：
+<ul>
+<li>1.触发事件 <code>update:selected</code> &ndash;&gt; <code>itwm*</code></li>
+<li>2.显示自己</li>
+<li>3.通知兄弟隐藏</li>
+<li>4.通知对应<code>pane</code>显示</li>
+<li>5.通知其他<code>pane</code>隐藏</li>
+</ul>
+</li>
+<li>逐级通知需要沿着<code>item--&gt;TabNav--&gt;Tabs--&gt;TabContent--&gt;pane1</code>走逻辑
+<ul>
+<li>每条逻辑上都需代码实现，难以维护</li>
+</ul>
+</li>
+</ul>
+<h4 id="跨级通知">跨级通知</h4>
+<blockquote>
+<p>使用事件总线 <code>EventHub</code>或<code>EventBus</code> 作为媒介来统筹全局</p>
+</blockquote>
+<ul>
+<li><code>item--&gt;EventBus--&gt;每个items和每个pane</code></li>
+<li>这种模式称为发布订阅模式
+<ul>
+<li><code>item</code>发布事件</li>
+<li>其他组件监听这个事件</li>
+</ul>
+</li>
+<li>代码实现较逐级通知大大简化</li>
+</ul>
+<h3 id="使用vue作为事件总线-eventbus">使用<code>vue</code>作为事件总线 <code>EventBus</code></h3>
+<blockquote>
+<p>需要配合<code>Provide</code>和<code>Inject</code>来跨级传值，并添加一个<code>data</code>来中转</p>
+</blockquote>
+<ul>
+<li><code>VueTab.vue</code>中可通过<code>this.eventBus</code>直接访问到</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;vue-tab&#34;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">slot</span><span class="p">&gt;&lt;/</span><span class="nt">slot</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<span class="kr">import</span> <span class="p">{</span><span class="nx">Component</span><span class="p">,</span> <span class="nx">Prop</span><span class="p">,</span> <span class="nx">Provide</span><span class="p">,</span> <span class="nx">Vue</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue-property-decorator&#39;</span><span class="p">;</span>
+
+<span class="err">@</span><span class="nx">Component</span>
+<span class="kr">export</span> <span class="k">default</span> <span class="kr">class</span> <span class="nx">VueTab</span> <span class="kr">extends</span> <span class="nx">Vue</span> <span class="p">{</span>
+  <span class="nx">name</span> <span class="o">=</span> <span class="s1">&#39;VueTab&#39;</span><span class="p">;</span>
+  <span class="err">@</span><span class="nx">Prop</span><span class="p">({</span><span class="nx">type</span><span class="o">:</span> <span class="nb">String</span><span class="p">,</span> <span class="nx">required</span><span class="o">:</span> <span class="kc">true</span><span class="p">})</span> <span class="nx">selected</span><span class="o">!:</span> <span class="nx">string</span><span class="p">;</span>
+  <span class="err">@</span><span class="nx">Prop</span><span class="p">({</span>
+    <span class="nx">type</span><span class="o">:</span> <span class="nb">String</span><span class="p">,</span>
+    <span class="k">default</span><span class="o">:</span> <span class="s1">&#39;horizontal&#39;</span><span class="p">,</span>
+    <span class="nx">validator</span><span class="p">(</span><span class="nx">value</span><span class="o">:</span> <span class="nx">string</span><span class="p">)</span><span class="o">:</span> <span class="kr">boolean</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="p">[</span><span class="s1">&#39;horizontal&#39;</span><span class="p">,</span> <span class="s1">&#39;vertical&#39;</span><span class="p">].</span><span class="nx">includes</span><span class="p">(</span><span class="nx">value</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">})</span> <span class="nx">direction</span><span class="o">!:</span> <span class="nx">string</span><span class="p">;</span>
+
+  <span class="nx">eventBus</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Vue</span><span class="p">;</span>
+  <span class="err">@</span><span class="nx">Provide</span><span class="p">(</span><span class="s1">&#39;eventBus&#39;</span><span class="p">)</span> <span class="nx">eBus</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">eventBus</span><span class="p">;</span>
+
+  <span class="nx">created</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;this: &#39;</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;eventBus: &#39;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">eventBus</span><span class="p">);</span>
+    <span class="c1">// this.$emit(&#39;update:selected&#39;, &#39;xxx&#39;);
+</span><span class="c1"></span>  <span class="p">}</span>
+
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>在祖先组件的<code>Provide</code>中添加属性
+<ul>
+<li>则其所有子孙组件的<code>Inject</code>属性中都可访问到</li>
+</ul>
+</li>
+<li><code>Provide</code>配合<code>eventBus</code>(<code>vue</code>的普通实例)实现跨组件通信</li>
+<li>可在控制台看到实例<code>this</code>中的<code>eventBus</code>属性和<code>_provided</code>属性
+<ul>
+<li><code>_*</code>开头的属性为框架内部开发使用，一般UI开发不使用</li>
+<li><code>$*</code>开头的方法是<code>vue</code>提供直接使用者的<code>API</code></li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>在子/孙组件中添加<code>inject</code>，以<code>VueTabNav.vue</code>为例</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">nav</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;tab-nav&#34;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">slot</span><span class="p">&gt;&lt;/</span><span class="nt">slot</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">slot</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;actions&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">slot</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">nav</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<span class="kr">import</span> <span class="p">{</span><span class="nx">Component</span><span class="p">,</span> <span class="nx">Inject</span><span class="p">,</span> <span class="nx">Vue</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue-property-decorator&#39;</span><span class="p">;</span>
+
+<span class="err">@</span><span class="nx">Component</span>
+<span class="kr">export</span> <span class="k">default</span> <span class="kr">class</span> <span class="nx">VueTabNav</span> <span class="kr">extends</span> <span class="nx">Vue</span> <span class="p">{</span>
+  <span class="nx">name</span> <span class="o">=</span> <span class="s1">&#39;VueTabNav.vue&#39;</span><span class="p">;</span>
+  <span class="err">@</span><span class="nx">Inject</span><span class="p">(</span><span class="s1">&#39;eventBus&#39;</span><span class="p">)</span> <span class="nx">readonly</span> <span class="nx">eventBus</span><span class="o">!:</span> <span class="nx">Vue</span><span class="p">;</span>
+
+  <span class="nx">created</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;this&#39;</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;eventBus&#39;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">eventBus</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">style</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;scss&#34;</span> <span class="na">scoped</span><span class="p">&gt;</span>
+<span class="p">.</span><span class="nx">tab</span><span class="o">-</span><span class="nx">nav</span> <span class="p">{</span>
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>可在控制台看到实例<code>this</code>中的<code>eventBus</code>属性</li>
+<li>每个子/孙得到同一个<code>eventBus</code>的引用</li>
+</ul>
+<hr>
+<h3 id="实现vuetabitem点击事件发布tabname属性跨级传值">实现<code>VueTabItem</code>点击事件，发布<code>tabName</code>属性，跨级传值</h3>
+<blockquote>
+<p><code>VueTabItem.vue</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">section</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;tab-item&#34;</span> <span class="nt">@click</span><span class="s">=&#34;xxx&#34;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">slot</span><span class="p">&gt;&lt;/</span><span class="nt">slot</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">section</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<span class="kr">import</span> <span class="p">{</span><span class="nx">Component</span><span class="p">,</span> <span class="nx">Inject</span><span class="p">,</span> <span class="nx">Prop</span><span class="p">,</span> <span class="nx">Vue</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue-property-decorator&#39;</span><span class="p">;</span>
+
+<span class="err">@</span><span class="nx">Component</span>
+<span class="kr">export</span> <span class="k">default</span> <span class="kr">class</span> <span class="nx">VueTabItem</span> <span class="kr">extends</span> <span class="nx">Vue</span> <span class="p">{</span>
+  <span class="nx">name</span> <span class="o">=</span> <span class="s1">&#39;VueTabItem&#39;</span><span class="p">;</span>
+  <span class="err">@</span><span class="nx">Prop</span><span class="p">({</span><span class="nx">type</span><span class="o">:</span> <span class="nb">Boolean</span><span class="p">,</span> <span class="k">default</span><span class="o">:</span> <span class="kc">false</span><span class="p">})</span> <span class="nx">disabled</span><span class="o">!:</span> <span class="kr">boolean</span><span class="p">;</span>
+  <span class="err">@</span><span class="nx">Inject</span><span class="p">(</span><span class="s1">&#39;eventBus&#39;</span><span class="p">)</span> <span class="nx">readonly</span> <span class="nx">eventBus</span><span class="o">!:</span> <span class="nx">Vue</span><span class="p">;</span>
+
+  <span class="err">@</span><span class="nx">Prop</span><span class="p">({</span><span class="nx">type</span><span class="o">:</span> <span class="nb">String</span><span class="p">,</span> <span class="nx">required</span><span class="o">:</span> <span class="kc">true</span><span class="p">})</span> <span class="nx">tabName</span><span class="o">!:</span> <span class="nx">string</span><span class="p">;</span>
+
+  <span class="nx">xxx</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">eventBus</span><span class="p">.</span><span class="nx">$emit</span><span class="p">(</span><span class="s1">&#39;update:selected&#39;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">tabName</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="nx">created</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">eventBus</span><span class="p">.</span><span class="nx">$on</span><span class="p">(</span><span class="s1">&#39;update:selected&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">name</span><span class="o">:</span> <span class="nx">string</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;name: &#39;</span><span class="p">,</span> <span class="nx">name</span><span class="p">);</span>
+    <span class="p">})</span>
+  <span class="p">}</span>
+
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>每个<code>VueTabItem</code>组件
+<ul>
+<li>即点击后发布<code>this.eventBus.$emit('update:selected', this.tabName);</code></li>
+<li>又监听<code>this.eventBus.$on('update:selected', (...)=&gt;{...})</code>事件</li>
+</ul>
+</li>
+</ul>
+<h3 id="实现vuetabpanevue">实现<code>VueTabPane.vue</code></h3>
+<h4 id="需要传入的外部数据-4">需要传入的外部数据</h4>
+<ul>
+<li><code>paneName</code></li>
+</ul>
+<h4 id="监听事件thiseventbusonupdateselected--">监听事件<code>this.eventBus.$on('update:selected', (..)=&gt; {...}</code></h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">section</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;tab-pane&#34;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">slot</span><span class="p">&gt;&lt;/</span><span class="nt">slot</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">section</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<span class="kr">import</span> <span class="p">{</span><span class="nx">Component</span><span class="p">,</span> <span class="nx">Inject</span><span class="p">,</span> <span class="nx">Prop</span><span class="p">,</span> <span class="nx">Vue</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue-property-decorator&#39;</span><span class="p">;</span>
+
+<span class="err">@</span><span class="nx">Component</span>
+<span class="kr">export</span> <span class="k">default</span> <span class="kr">class</span> <span class="nx">VueTabPane</span> <span class="kr">extends</span> <span class="nx">Vue</span> <span class="p">{</span>
+  <span class="nx">name</span> <span class="o">=</span> <span class="s1">&#39;VueTabPane&#39;</span><span class="p">;</span>
+  <span class="err">@</span><span class="nx">Prop</span><span class="p">({</span><span class="nx">type</span><span class="o">:</span> <span class="nb">String</span><span class="p">,</span> <span class="nx">required</span><span class="o">:</span> <span class="kc">true</span><span class="p">})</span> <span class="nx">paneName</span><span class="o">!:</span> <span class="nx">string</span><span class="p">;</span>
+  <span class="err">@</span><span class="nx">Inject</span><span class="p">(</span><span class="s1">&#39;eventBus&#39;</span><span class="p">)</span> <span class="nx">readonly</span> <span class="nx">eventBus</span><span class="o">!:</span> <span class="nx">Vue</span><span class="p">;</span>
+
+  <span class="nx">created</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">eventBus</span><span class="p">.</span><span class="nx">$on</span><span class="p">(</span><span class="s1">&#39;update:selected&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">name</span><span class="o">:</span> <span class="nx">string</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">name</span><span class="p">);</span>
+    <span class="p">});</span>
+  <span class="p">}</span>
+
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>每个<code>VueTabPane</code>组件
+<ul>
+<li>监听<code>this.eventBus.$on('update:selected', (...)=&gt;{...})</code>事件</li>
+</ul>
+</li>
+</ul>
+<h4 id="注意vue不会将事件主动冒泡到外层节点中">注意<code>vue</code>不会将事件主动冒泡到外层节点中</h4>
+<blockquote>
+<p>区分实例本身的<code>this.$emit</code>和<code>eventBus</code>的<code>this.eventBus.$emit</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">VueTab</span> <span class="nt">:selected.sync</span><span class="s">=&#34;selectedTab&#34;</span> <span class="nt">@update:selected</span><span class="s">=&#34;yyy&#34;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">VueTabNav</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;custom-class&#34;</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">VueTabItem</span> <span class="na">tabName</span><span class="o">=</span><span class="s">&#34;item1&#34;</span><span class="p">&gt;</span><span class="nx">Item1</span><span class="p">&lt;/</span><span class="nt">VueTabItem</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">VueTabItem</span> <span class="na">tabName</span><span class="o">=</span><span class="s">&#34;item2&#34;</span> <span class="na">disabled</span><span class="p">&gt;</span><span class="nx">Item2</span><span class="p">&lt;/</span><span class="nt">VueTabItem</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">VueTabItem</span> <span class="na">tabName</span><span class="o">=</span><span class="s">&#34;item3&#34;</span><span class="p">&gt;</span><span class="nx">Item3</span><span class="p">&lt;/</span><span class="nt">VueTabItem</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">VueTabNav</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">VueTabContent</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">VueTabPane</span> <span class="na">paneName</span><span class="o">=</span><span class="s">&#34;pane1&#34;</span><span class="p">&gt;</span><span class="nx">Pane1</span><span class="p">&lt;/</span><span class="nt">VueTabPane</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">VueTabPane</span> <span class="na">paneName</span><span class="o">=</span><span class="s">&#34;pane2&#34;</span><span class="p">&gt;</span><span class="nx">Pane2</span><span class="p">&lt;/</span><span class="nt">VueTabPane</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">VueTabPane</span> <span class="na">paneName</span><span class="o">=</span><span class="s">&#34;pane3&#34;</span><span class="p">&gt;</span><span class="nx">Pane3</span><span class="p">&lt;/</span><span class="nt">VueTabPane</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">VueTabContent</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">VueTab</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<span class="c1">//...
+</span><span class="c1"></span>  <span class="nx">yyy</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">)}</span>
+  
+  <span class="nx">created</span><span class="p">()</span> <span class="p">{</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">$emit</span><span class="p">(</span><span class="s1">&#39;update:selected&#39;</span><span class="p">,</span> <span class="s1">&#39;这是 this.$emit 出来的数据&#39;</span><span class="p">);</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">eventBus</span><span class="p">.</span><span class="nx">$emit</span><span class="p">(</span><span class="s1">&#39;update:selected&#39;</span><span class="p">,</span> <span class="s1">&#39;这是 this.eventBus.$emit 出来的数据&#39;</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="c1">//...
+</span><span class="c1"></span><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>即使绑定监听了自定义事件<code>@update:selected=&quot;yyy&quot;</code>
+<ul>
+<li><code>&lt;VueTab :selected.sync=&quot;selectedTab&quot; @update:selected=&quot;yyy&quot;&gt;</code></li>
+<li>并不会执行<code>yyy</code></li>
+</ul>
+</li>
+<li>而如果在组件实例本身监听<code>this.$emit('update:selected', '这是 this.$emit 出来的数据');</code>
+<ul>
+<li>会执行<code>yyy</code></li>
+</ul>
+</li>
+<li>需要明确自定义事件是在哪个对象上触发的
+<ul>
+<li>在<code>this</code></li>
+<li>在<code>this.eventBus</code></li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>在子组件<code>VueTabNav</code>上发布事件<code>this.$emit('update:selected', '这是 this.$emit 出来的数据');</code>，能否触发父组件上的回调<code>&lt;VueTab :selected.sync=&quot;selectedTab&quot; @update:selected=&quot;yyy&quot;&gt;</code>？</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<span class="c1">// import ...
+</span><span class="c1"></span>
+<span class="err">@</span><span class="nx">Component</span>
+<span class="kr">export</span> <span class="k">default</span> <span class="kr">class</span> <span class="nx">VueTabNav</span> <span class="kr">extends</span> <span class="nx">Vue</span> <span class="p">{</span>
+  <span class="nx">name</span> <span class="o">=</span> <span class="s1">&#39;VueTabNav.vue&#39;</span><span class="p">;</span>
+  <span class="err">@</span><span class="nx">Inject</span><span class="p">(</span><span class="s1">&#39;eventBus&#39;</span><span class="p">)</span> <span class="nx">readonly</span> <span class="nx">eventBus</span><span class="o">!:</span> <span class="nx">Vue</span><span class="p">;</span>
+  <span class="nx">created</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">$emit</span><span class="p">(</span><span class="s1">&#39;update:selected&#39;</span><span class="p">,</span> <span class="s1">&#39;这是 VueTabNav 抛出的数据&#39;</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>并不会触发<code>yyy</code></li>
+<li>在子组件发布中的自定义事件，不会冒泡值父组件上</li>
+<li>除非绑定DOM的默认事件，比如点击事件</li>
+</ul>
+<blockquote>
+<p>小结</p>
+</blockquote>
+<ul>
+<li>明确事件调用的目标对象，即在哪个对象上执行回调，就只能在哪个对象上监听该事件</li>
+<li>事件不会冒泡，即在子组件上的事件，不会自动冒泡到父组件上</li>
+</ul>
+<h3 id="补充vue的事件系统">补充<code>vue</code>的事件系统</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="kr">const</span> <span class="nx">app</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
+    <span class="nx">created() {</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">$emit</span><span class="p">()</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">$on</span><span class="p">()</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">$off</span><span class="p">()</span>
+    <span class="p">}</span>
+<span class="p">})</span>
+
+<span class="nx">app</span><span class="p">.</span><span class="nx">$emit</span><span class="p">()</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">$on</span><span class="p">()</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">$off</span><span class="p">()</span>
+
+<span class="kr">const</span> <span class="nx">eventBus</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Vue</span><span class="p">()</span>
+
+<span class="nx">eventBus</span><span class="p">.</span><span class="nx">$emit</span><span class="p">()</span>
+<span class="nx">eventBus</span><span class="p">.</span><span class="nx">$on</span><span class="p">()</span>
+<span class="nx">eventBus</span><span class="p">.</span><span class="nx">$once</span><span class="p">()</span>
+<span class="nx">eventBus</span><span class="p">.</span><span class="nx">$off</span><span class="p">()</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><code>new Vue()</code>提供一个实例</li>
+<li>只需要借用实例的接口<code>$emit()</code>、<code>$on()</code>、<code>$once()</code>、<code>$off()</code></li>
+<li>需要一个和外界隔离的<code>eventBus</code></li>
+</ul>
+<blockquote>
+<p>参考</p>
+</blockquote>
+<ul>
+<li><a href="https://cn.vuejs.org/v2/api/#%E5%AE%9E%E4%BE%8B%E6%96%B9%E6%B3%95-%E4%BA%8B%E4%BB%B6">vue 实例方法 / 事件</a></li>
+</ul>
+<h3 id="vuetabnav加样式"><code>VueTabNav</code>加样式</h3>
+<ul>
+<li><code>&lt;slot&gt;&lt;/slot&gt;</code>渲染到页面时，会消失，所以不能直接加<code>class</code>属性</li>
+<li>需要包裹一层<code>&lt;div class=&quot;actions-wrapper&quot;&gt;&lt;slot name=&quot;actions&quot;&gt;&lt;/slot&gt;&lt;/div&gt;</code></li>
+</ul>
+<blockquote>
+<p>将元素靠右</p>
+</blockquote>
+<ul>
+<li>加样式<code>margin-left: auto;</code>将元素靠右</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">nav</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;tab-nav&#34;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">slot</span><span class="p">&gt;&lt;/</span><span class="nt">slot</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;actions-wrapper&#34;</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">slot</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;actions&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">slot</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">nav</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<span class="kr">import</span> <span class="p">{</span><span class="nx">Component</span><span class="p">,</span> <span class="nx">Inject</span><span class="p">,</span> <span class="nx">Vue</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue-property-decorator&#39;</span><span class="p">;</span>
+
+<span class="err">@</span><span class="nx">Component</span>
+<span class="kr">export</span> <span class="k">default</span> <span class="kr">class</span> <span class="nx">VueTabNav</span> <span class="kr">extends</span> <span class="nx">Vue</span> <span class="p">{</span>
+  <span class="nx">name</span> <span class="o">=</span> <span class="s1">&#39;VueTabNav.vue&#39;</span><span class="p">;</span>
+  <span class="err">@</span><span class="nx">Inject</span><span class="p">(</span><span class="s1">&#39;eventBus&#39;</span><span class="p">)</span> <span class="nx">readonly</span> <span class="nx">eventBus</span><span class="o">!:</span> <span class="nx">Vue</span><span class="p">;</span>
+
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">style</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;scss&#34;</span> <span class="na">scoped</span><span class="p">&gt;</span>
+<span class="nx">$tab</span><span class="o">-</span><span class="nx">nav</span><span class="o">-</span><span class="nx">height</span><span class="o">:</span> <span class="mi">40</span><span class="nx">px</span><span class="p">;</span>
+<span class="p">.</span><span class="nx">tab</span><span class="o">-</span><span class="nx">nav</span> <span class="p">{</span>
+  <span class="nx">display</span><span class="o">:</span> <span class="nx">flex</span><span class="p">;</span>
+  <span class="nx">height</span><span class="o">:</span> <span class="nx">$tab</span><span class="o">-</span><span class="nx">nav</span><span class="o">-</span><span class="nx">height</span><span class="p">;</span>
+  <span class="nx">justify</span><span class="o">-</span><span class="nx">content</span><span class="o">:</span> <span class="nx">flex</span><span class="o">-</span><span class="nx">start</span><span class="p">;</span>
+  <span class="nx">align</span><span class="o">-</span><span class="nx">items</span><span class="o">:</span> <span class="nx">center</span><span class="p">;</span>
+
+  <span class="o">&gt;</span> <span class="p">.</span><span class="nx">actions</span><span class="o">-</span><span class="nx">wrapper</span> <span class="p">{</span>
+    <span class="nx">margin</span><span class="o">-</span><span class="nx">left</span><span class="o">:</span> <span class="nx">auto</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><hr>
+<h2 id="实现切换tab">实现切换Tab</h2>
+<h3 id="vuetabnavvue"><code>VueTabNav.vue</code></h3>
+<blockquote>
+<p>控制 激活显示tab 的数据 使用<code>data</code>还是<code>props</code>？</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="c1">//...
+</span><span class="c1"></span>  <span class="c1">// data 不需要开发者传值 相当于局部变量
+</span><span class="c1"></span>  <span class="nx">active1</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+  <span class="c1">// 需要开发者传值 相当于入参
+</span><span class="c1"></span>  <span class="kd">@Prop</span><span class="p">()</span> <span class="nx">active2</span><span class="o">!:</span> <span class="kr">boolean</span><span class="p">;</span>
+<span class="c1">//...
+</span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><code>VueTab</code>无需知道内部组件<code>VueTabItem</code>和<code>VueTabPane</code>的<code>active</code>状态，无需手动传<code>props</code>值</li>
+<li>点击<code>VueTabItem</code>
+<ul>
+<li>该<code>VueTabItem</code>状态<code>active</code>变为<code>true</code></li>
+<li>其他<code>VueTabItem</code>状态<code>active</code>变为<code>false</code></li>
+<li>显示对应<code>VueTabPane</code></li>
+<li>隐藏其他<code>VueTabPane</code></li>
+</ul>
+</li>
+</ul>
+<hr>
+<blockquote>
+<p><code>VueTabItem.vue</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">section</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;tab-item&#34;</span> <span class="nt">:class</span><span class="s">=&#34;classes&#34;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">slot</span><span class="p">&gt;&lt;/</span><span class="nt">slot</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">section</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<span class="kr">import</span> <span class="p">{</span><span class="nx">Component</span><span class="p">,</span> <span class="nx">Inject</span><span class="p">,</span> <span class="nx">Prop</span><span class="p">,</span> <span class="nx">Vue</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue-property-decorator&#39;</span><span class="p">;</span>
+
+<span class="err">@</span><span class="nx">Component</span>
+<span class="kr">export</span> <span class="k">default</span> <span class="kr">class</span> <span class="nx">VueTabItem</span> <span class="kr">extends</span> <span class="nx">Vue</span> <span class="p">{</span>
+  <span class="nx">name</span> <span class="o">=</span> <span class="s1">&#39;VueTabItem&#39;</span><span class="p">;</span>
+  <span class="nx">active</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+  <span class="err">@</span><span class="nx">Prop</span><span class="p">({</span><span class="nx">type</span><span class="o">:</span> <span class="nb">Boolean</span><span class="p">,</span> <span class="k">default</span><span class="o">:</span> <span class="kc">false</span><span class="p">})</span> <span class="nx">disabled</span><span class="o">!:</span> <span class="kr">boolean</span><span class="p">;</span>
+  <span class="err">@</span><span class="nx">Inject</span><span class="p">(</span><span class="s1">&#39;eventBus&#39;</span><span class="p">)</span> <span class="nx">readonly</span> <span class="nx">eventBus</span><span class="o">!:</span> <span class="nx">Vue</span><span class="p">;</span>
+
+  <span class="err">@</span><span class="nx">Prop</span><span class="p">({</span><span class="nx">type</span><span class="o">:</span> <span class="nb">String</span><span class="p">,</span> <span class="nx">required</span><span class="o">:</span> <span class="kc">true</span><span class="p">})</span> <span class="nx">tabName</span><span class="o">!:</span> <span class="nx">string</span><span class="p">;</span>
+
+  <span class="nx">xxx</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">eventBus</span><span class="p">.</span><span class="nx">$emit</span><span class="p">(</span><span class="s1">&#39;update:selected&#39;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">tabName</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="nx">get</span> <span class="nx">classes</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">{</span>
+      <span class="nx">active</span><span class="o">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">active</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  
+  <span class="nx">created</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">eventBus</span><span class="p">.</span><span class="nx">$on</span><span class="p">(</span><span class="s1">&#39;update:selected&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">name</span><span class="o">:</span> <span class="nx">string</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">name</span> <span class="o">===</span> <span class="k">this</span><span class="p">.</span><span class="nx">tabName</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`我</span><span class="si">${</span><span class="k">this</span><span class="p">.</span><span class="nx">tabName</span><span class="si">}</span><span class="sb">被子选中了`</span><span class="p">);</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">active</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`我</span><span class="si">${</span><span class="k">this</span><span class="p">.</span><span class="nx">tabName</span><span class="si">}</span><span class="sb">未被子选中`</span><span class="p">);</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">active</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+      <span class="p">}</span>
+    <span class="p">});</span>
+  <span class="p">}</span>
+
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">style</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;scss&#34;</span> <span class="na">scoped</span><span class="p">&gt;</span>
+<span class="p">.</span><span class="nx">tab</span><span class="o">-</span><span class="nx">item</span> <span class="p">{</span> <span class="o">:</span><span class="kr">class</span><span class="o">=</span><span class="s2">&#34;classes&#34;</span>
+  <span class="nx">flex</span><span class="o">-</span><span class="nx">shrink</span><span class="o">:</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="nx">padding</span><span class="o">:</span> <span class="mi">0</span> <span class="mi">1</span><span class="nx">em</span><span class="p">;</span>
+  <span class="o">&amp;</span><span class="p">.</span><span class="nx">active</span> <span class="p">{</span>
+    <span class="nx">background</span><span class="o">-</span><span class="nx">color</span><span class="o">:</span> <span class="err">#</span><span class="nx">eee</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>子组件在创建(created)后绑定监听<code>this.eventBus.$on('update:selected', (name: string) =&gt; {...}</code></li>
+<li>判断传来的值是否为属性<code>this.tabName</code>的值
+<ul>
+<li>是<code>this.active = true</code></li>
+<li>否<code>this.active = false</code></li>
+</ul>
+</li>
+<li>默认<code>active = false;</code></li>
+<li>绑定计算属性<code>:class=&quot;classes&quot;</code>
+<ul>
+<li><code>get classes() { return {  active: this.active } }</code></li>
+</ul>
+</li>
+<li>添加样式<code>.active {  background-color: #eee; }</code></li>
+</ul>
+<blockquote>
+<p><code>VueTab.vue</code></p>
+</blockquote>
+<ul>
+<li>在子组件挂载(mounted)后，将<code>this.selected</code>通过事件总线<code>eventBus</code>给所有子/孙组件发布
+<ul>
+<li><code>this.eventBus.$emit('update:selected', this.selected);</code></li>
+</ul>
+</li>
+<li>相当于广播了一个消息</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;vue-tab&#34;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">slot</span><span class="p">&gt;&lt;/</span><span class="nt">slot</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<span class="kr">import</span> <span class="p">{</span><span class="nx">Component</span><span class="p">,</span> <span class="nx">Prop</span><span class="p">,</span> <span class="nx">Provide</span><span class="p">,</span> <span class="nx">Vue</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue-property-decorator&#39;</span><span class="p">;</span>
+
+<span class="err">@</span><span class="nx">Component</span>
+<span class="kr">export</span> <span class="k">default</span> <span class="kr">class</span> <span class="nx">VueTab</span> <span class="kr">extends</span> <span class="nx">Vue</span> <span class="p">{</span>
+  <span class="nx">name</span> <span class="o">=</span> <span class="s1">&#39;VueTab&#39;</span><span class="p">;</span>
+  <span class="err">@</span><span class="nx">Prop</span><span class="p">({</span><span class="nx">type</span><span class="o">:</span> <span class="nb">String</span><span class="p">,</span> <span class="nx">required</span><span class="o">:</span> <span class="kc">true</span><span class="p">})</span> <span class="nx">selected</span><span class="o">!:</span> <span class="nx">string</span><span class="p">;</span>
+  <span class="err">@</span><span class="nx">Prop</span><span class="p">({</span>
+    <span class="nx">type</span><span class="o">:</span> <span class="nb">String</span><span class="p">,</span>
+    <span class="k">default</span><span class="o">:</span> <span class="s1">&#39;horizontal&#39;</span><span class="p">,</span>
+    <span class="nx">validator</span><span class="p">(</span><span class="nx">value</span><span class="o">:</span> <span class="nx">string</span><span class="p">)</span><span class="o">:</span> <span class="kr">boolean</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="p">[</span><span class="s1">&#39;horizontal&#39;</span><span class="p">,</span> <span class="s1">&#39;vertical&#39;</span><span class="p">].</span><span class="nx">includes</span><span class="p">(</span><span class="nx">value</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">})</span> <span class="nx">direction</span><span class="o">!:</span> <span class="nx">string</span><span class="p">;</span>
+
+  <span class="nx">eventBus</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Vue</span><span class="p">;</span>
+  <span class="err">@</span><span class="nx">Provide</span><span class="p">(</span><span class="s1">&#39;eventBus&#39;</span><span class="p">)</span> <span class="nx">eBus</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">eventBus</span><span class="p">;</span>
+
+  <span class="nx">mounted</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">eventBus</span><span class="p">.</span><span class="nx">$emit</span><span class="p">(</span><span class="s1">&#39;update:selected&#39;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">selected</span><span class="p">);</span>
+  <span class="p">}</span>
+
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">style</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;scss&#34;</span> <span class="na">scoped</span><span class="p">&gt;</span>
+<span class="p">.</span><span class="nx">vue</span><span class="o">-</span><span class="nx">tab</span> <span class="p">{</span>
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p><code>VueTabPane.vue</code></p>
+</blockquote>
+<ul>
+<li>同样地在<code>VueTabPane.vue</code>中通过事件总线监听</li>
+<li>绑定计算属性<code>:class=&quot;classes&quot;</code>
+<ul>
+<li><code>get classes() { return {  active: this.active } }</code></li>
+</ul>
+</li>
+<li>添加样式<code>.active {  background-color: #eee; }</code></li>
+<li>并且隐藏<code>active = false</code>的<code>VueTabPane</code>组件</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">section</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;tab-pane&#34;</span> <span class="nt">:class</span><span class="s">=&#34;classes&#34;</span> <span class="nt">v-if</span><span class="s">=&#34;active&#34;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">slot</span><span class="p">&gt;&lt;/</span><span class="nt">slot</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">section</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<span class="kr">import</span> <span class="p">{</span><span class="nx">Component</span><span class="p">,</span> <span class="nx">Inject</span><span class="p">,</span> <span class="nx">Prop</span><span class="p">,</span> <span class="nx">Vue</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue-property-decorator&#39;</span><span class="p">;</span>
+
+<span class="err">@</span><span class="nx">Component</span>
+<span class="kr">export</span> <span class="k">default</span> <span class="kr">class</span> <span class="nx">VueTabPane</span> <span class="kr">extends</span> <span class="nx">Vue</span> <span class="p">{</span>
+  <span class="nx">name</span> <span class="o">=</span> <span class="s1">&#39;VueTabPane&#39;</span><span class="p">;</span>
+  <span class="nx">active</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+  <span class="err">@</span><span class="nx">Prop</span><span class="p">({</span><span class="nx">type</span><span class="o">:</span> <span class="nb">String</span><span class="p">,</span> <span class="nx">required</span><span class="o">:</span> <span class="kc">true</span><span class="p">})</span> <span class="nx">paneName</span><span class="o">!:</span> <span class="nx">string</span><span class="p">;</span>
+  <span class="err">@</span><span class="nx">Inject</span><span class="p">(</span><span class="s1">&#39;eventBus&#39;</span><span class="p">)</span> <span class="nx">readonly</span> <span class="nx">eventBus</span><span class="o">!:</span> <span class="nx">Vue</span><span class="p">;</span>
+
+  <span class="nx">get</span> <span class="nx">classes</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">{</span>
+      <span class="nx">active</span><span class="o">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">active</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  
+  <span class="nx">created</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">eventBus</span><span class="p">.</span><span class="nx">$on</span><span class="p">(</span><span class="s1">&#39;update:selected&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">name</span><span class="o">:</span> <span class="nx">string</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">name</span> <span class="o">===</span> <span class="k">this</span><span class="p">.</span><span class="nx">paneName</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`我</span><span class="si">${</span><span class="k">this</span><span class="p">.</span><span class="nx">paneName</span><span class="si">}</span><span class="sb">被子选中了`</span><span class="p">);</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">active</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`我</span><span class="si">${</span><span class="k">this</span><span class="p">.</span><span class="nx">paneName</span><span class="si">}</span><span class="sb">未被子选中`</span><span class="p">);</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">active</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+      <span class="p">}</span>
+    <span class="p">});</span>
+  <span class="p">}</span>
+
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">style</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;scss&#34;</span> <span class="na">scoped</span><span class="p">&gt;</span>
+<span class="p">.</span><span class="nx">tab</span><span class="o">-</span><span class="nx">pane</span> <span class="p">{</span>
+  <span class="o">&amp;</span><span class="p">.</span><span class="nx">active</span> <span class="p">{</span>
+    <span class="nx">background</span><span class="o">-</span><span class="nx">color</span><span class="o">:</span> <span class="err">#</span><span class="nx">eee</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>展示组件<code>Tabs.vue</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">form</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">fieldset</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">legend</span><span class="p">&gt;</span><span class="nx">Tabs</span> <span class="nx">的基本结构</span><span class="p">&lt;/</span><span class="nt">legend</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">details</span> <span class="na">open</span><span class="p">&gt;</span>
+          <span class="p">&lt;</span><span class="nt">summary</span><span class="p">&gt;</span><span class="nx">Primary</span><span class="p">&lt;/</span><span class="nt">summary</span><span class="p">&gt;</span>
+          <span class="p">&lt;</span><span class="nt">VueTab</span> <span class="nt">:selected.sync</span><span class="s">=&#34;selectedTab&#34;</span> <span class="nt">@update:selected</span><span class="s">=&#34;yyy&#34;</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">VueTabNav</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;custom-class&#34;</span><span class="p">&gt;</span>
+              <span class="p">&lt;</span><span class="nt">VueTabItem</span> <span class="na">tabName</span><span class="o">=</span><span class="s">&#34;tab1&#34;</span><span class="p">&gt;</span><span class="nx">Item1</span><span class="p">&lt;/</span><span class="nt">VueTabItem</span><span class="p">&gt;</span>
+              <span class="p">&lt;</span><span class="nt">VueTabItem</span> <span class="na">tabName</span><span class="o">=</span><span class="s">&#34;tab2&#34;</span> <span class="na">disabled</span><span class="p">&gt;</span><span class="nx">Item2</span><span class="p">&lt;/</span><span class="nt">VueTabItem</span><span class="p">&gt;</span>
+              <span class="p">&lt;</span><span class="nt">VueTabItem</span> <span class="na">tabName</span><span class="o">=</span><span class="s">&#34;tab3&#34;</span><span class="p">&gt;</span><span class="nx">Item3</span><span class="p">&lt;/</span><span class="nt">VueTabItem</span><span class="p">&gt;</span>
+            <span class="p">&lt;/</span><span class="nt">VueTabNav</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">VueTabContent</span><span class="p">&gt;</span>
+              <span class="p">&lt;</span><span class="nt">VueTabPane</span> <span class="na">paneName</span><span class="o">=</span><span class="s">&#34;tab1&#34;</span><span class="p">&gt;</span><span class="nx">Pane1</span><span class="p">&lt;/</span><span class="nt">VueTabPane</span><span class="p">&gt;</span>
+              <span class="p">&lt;</span><span class="nt">VueTabPane</span> <span class="na">paneName</span><span class="o">=</span><span class="s">&#34;tab2&#34;</span><span class="p">&gt;</span><span class="nx">Pane2</span><span class="p">&lt;/</span><span class="nt">VueTabPane</span><span class="p">&gt;</span>
+              <span class="p">&lt;</span><span class="nt">VueTabPane</span> <span class="na">paneName</span><span class="o">=</span><span class="s">&#34;tab3&#34;</span><span class="p">&gt;</span><span class="nx">Pane3</span><span class="p">&lt;/</span><span class="nt">VueTabPane</span><span class="p">&gt;</span>
+            <span class="p">&lt;/</span><span class="nt">VueTabContent</span><span class="p">&gt;</span>
+          <span class="p">&lt;/</span><span class="nt">VueTab</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">details</span><span class="p">&gt;</span>
+      <span class="p">&lt;/</span><span class="nt">fieldset</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">br</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<span class="kr">import</span> <span class="p">{</span><span class="nx">Component</span><span class="p">,</span> <span class="nx">Vue</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue-property-decorator&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">VueTab</span> <span class="nx">from</span> <span class="s1">&#39;./tabs/VueTab.vue&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">VueTabNav</span> <span class="nx">from</span> <span class="s1">&#39;./tabs/VueTabNav.vue&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">VueTabItem</span> <span class="nx">from</span> <span class="s1">&#39;./tabs/VueTabItem.vue&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">VueTabContent</span> <span class="nx">from</span> <span class="s1">&#39;./tabs/VueTabContent.vue&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">VueTabPane</span> <span class="nx">from</span> <span class="s1">&#39;./tabs/VueTabPane.vue&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">VueIcon</span> <span class="nx">from</span> <span class="s1">&#39;./icon/VueIcon.vue&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">VueButton</span> <span class="nx">from</span> <span class="s1">&#39;@/components/button/VueButton.vue&#39;</span><span class="p">;</span>
+
+<span class="err">@</span><span class="nx">Component</span><span class="p">({</span>
+  <span class="nx">components</span><span class="o">:</span> <span class="p">{</span><span class="nx">VueButton</span><span class="p">,</span> <span class="nx">VueIcon</span><span class="p">,</span> <span class="nx">VueTab</span><span class="p">,</span> <span class="nx">VueTabNav</span><span class="p">,</span> <span class="nx">VueTabPane</span><span class="p">,</span> <span class="nx">VueTabContent</span><span class="p">,</span> <span class="nx">VueTabItem</span><span class="p">}</span>
+<span class="p">})</span>
+<span class="kr">export</span> <span class="k">default</span> <span class="kr">class</span> <span class="nx">Tabs</span> <span class="kr">extends</span> <span class="nx">Vue</span> <span class="p">{</span>
+  <span class="nx">name</span> <span class="o">=</span> <span class="s1">&#39;Tabs&#39;</span><span class="p">;</span>
+  <span class="nx">selectedTab</span> <span class="o">=</span> <span class="s1">&#39;item1&#39;</span><span class="p">;</span>
+
+  <span class="nx">yyy</span><span class="p">(</span><span class="nx">data</span><span class="o">:</span> <span class="nx">any</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">style</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;scss&#34;</span> <span class="na">scoped</span><span class="p">&gt;</span>
+<span class="p">.</span><span class="nx">custom</span><span class="o">-</span><span class="kr">class</span> <span class="p">{</span>
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>在<code>VueTabNav</code>初始传第一个<code>tab</code>的<code>tabName</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">nav</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;tab-nav&#34;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">slot</span><span class="p">&gt;&lt;/</span><span class="nt">slot</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;actions-wrapper&#34;</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">slot</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;actions&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">slot</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">nav</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<span class="kr">import</span> <span class="p">{</span><span class="nx">Component</span><span class="p">,</span> <span class="nx">Inject</span><span class="p">,</span> <span class="nx">Vue</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue-property-decorator&#39;</span><span class="p">;</span>
+
+<span class="err">@</span><span class="nx">Component</span>
+<span class="kr">export</span> <span class="k">default</span> <span class="kr">class</span> <span class="nx">VueTabNav</span> <span class="kr">extends</span> <span class="nx">Vue</span> <span class="p">{</span>
+  <span class="nx">name</span> <span class="o">=</span> <span class="s1">&#39;VueTabNav.vue&#39;</span><span class="p">;</span>
+  <span class="nx">defaultTab</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+  <span class="err">@</span><span class="nx">Inject</span><span class="p">(</span><span class="s1">&#39;eventBus&#39;</span><span class="p">)</span> <span class="nx">readonly</span> <span class="nx">eventBus</span><span class="o">!:</span> <span class="nx">Vue</span><span class="p">;</span>
+
+  <span class="nx">mounted</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">$nextTick</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">eventBus</span><span class="p">.</span><span class="nx">$emit</span><span class="p">(</span><span class="s1">&#39;update:selected&#39;</span><span class="p">,</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">$children</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="nx">as</span> <span class="nx">any</span><span class="p">).</span><span class="nx">tabName</span><span class="p">);</span>
+    <span class="p">});</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">style</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;scss&#34;</span> <span class="na">scoped</span><span class="p">&gt;</span>
+<span class="nx">$tab</span><span class="o">-</span><span class="nx">nav</span><span class="o">-</span><span class="nx">height</span><span class="o">:</span> <span class="mi">40</span><span class="nx">px</span><span class="p">;</span>
+<span class="p">.</span><span class="nx">tab</span><span class="o">-</span><span class="nx">nav</span> <span class="p">{</span>
+  <span class="nx">display</span><span class="o">:</span> <span class="nx">flex</span><span class="p">;</span>
+  <span class="nx">height</span><span class="o">:</span> <span class="nx">$tab</span><span class="o">-</span><span class="nx">nav</span><span class="o">-</span><span class="nx">height</span><span class="p">;</span>
+  <span class="nx">justify</span><span class="o">-</span><span class="nx">content</span><span class="o">:</span> <span class="nx">flex</span><span class="o">-</span><span class="nx">start</span><span class="p">;</span>
+  <span class="nx">align</span><span class="o">-</span><span class="nx">items</span><span class="o">:</span> <span class="nx">center</span><span class="p">;</span>
+
+  <span class="o">&gt;</span> <span class="p">.</span><span class="nx">actions</span><span class="o">-</span><span class="nx">wrapper</span> <span class="p">{</span>
+    <span class="nx">margin</span><span class="o">-</span><span class="nx">left</span><span class="o">:</span> <span class="nx">auto</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><hr>
+<h2 id="增加样式">增加样式</h2>
+<blockquote>
+<p>增加<code>tab</code>的可交互区域 为<code>VueTabNav.vue</code>增加样式</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="p">&lt;</span><span class="nt">style</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;scss&#34;</span> <span class="na">scoped</span><span class="p">&gt;</span>
+<span class="nx">$tab</span><span class="o">-</span><span class="nx">nav</span><span class="o">-</span><span class="nx">height</span><span class="o">:</span> <span class="mi">40</span><span class="nx">px</span><span class="p">;</span>
+<span class="nx">$waterBlue</span><span class="o">:</span> <span class="err">#</span><span class="mi">3</span><span class="nx">ba0e9</span><span class="p">;</span>
+<span class="p">.</span><span class="nx">tab</span><span class="o">-</span><span class="nx">nav</span><span class="o">-</span><span class="nx">wrapper</span> <span class="p">{</span>
+  <span class="p">.</span><span class="nx">tab</span><span class="o">-</span><span class="nx">nav</span> <span class="p">{</span>
+    <span class="nx">display</span><span class="o">:</span> <span class="nx">flex</span><span class="p">;</span>
+    <span class="nx">height</span><span class="o">:</span> <span class="nx">$tab</span><span class="o">-</span><span class="nx">nav</span><span class="o">-</span><span class="nx">height</span><span class="p">;</span>
+    <span class="nx">justify</span><span class="o">-</span><span class="nx">content</span><span class="o">:</span> <span class="nx">flex</span><span class="o">-</span><span class="nx">start</span><span class="p">;</span>
+    <span class="nx">align</span><span class="o">-</span><span class="nx">items</span><span class="o">:</span> <span class="nx">center</span><span class="p">;</span>
+    <span class="nx">position</span><span class="o">:</span> <span class="nx">relative</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="p">.</span><span class="nx">actions</span><span class="o">-</span><span class="nx">wrapper</span> <span class="p">{</span>
+    <span class="nx">margin</span><span class="o">-</span><span class="nx">left</span><span class="o">:</span> <span class="nx">auto</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p><code>VueTabItem.vue</code>增加样式</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="p">&lt;</span><span class="nt">style</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;scss&#34;</span> <span class="na">scoped</span><span class="p">&gt;</span>
+<span class="nx">$waterBlue</span><span class="o">:</span> <span class="err">#</span><span class="mi">3</span><span class="nx">ba0e9</span><span class="p">;</span>
+<span class="p">.</span><span class="nx">tab</span><span class="o">-</span><span class="nx">item</span> <span class="p">{</span>
+  <span class="nx">flex</span><span class="o">-</span><span class="nx">shrink</span><span class="o">:</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="nx">padding</span><span class="o">:</span> <span class="mi">0</span> <span class="mi">1</span><span class="nx">em</span><span class="p">;</span>
+  <span class="nx">cursor</span><span class="o">:</span> <span class="nx">pointer</span><span class="p">;</span>
+  <span class="nx">height</span><span class="o">:</span> <span class="mi">100</span><span class="o">%</span><span class="p">;</span>
+  <span class="nx">display</span><span class="o">:</span> <span class="nx">flex</span><span class="p">;</span>
+  <span class="nx">align</span><span class="o">-</span><span class="nx">items</span><span class="o">:</span> <span class="nx">center</span><span class="p">;</span>
+
+  <span class="o">&amp;</span><span class="p">.</span><span class="nx">active</span> <span class="p">{</span>
+    <span class="nx">color</span><span class="o">:</span> <span class="nx">$waterBlue</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><hr>
+<h2 id="增加-tab-切换动画">增加 tab 切换动画</h2>
+<h3 id="增加下划线">增加下划线</h3>
+<blockquote>
+<p><code>VueTabNav.vue</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;tab-nav-wrapper&#34;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">nav</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;tab-nav&#34;</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">slot</span><span class="p">&gt;&lt;/</span><span class="nt">slot</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;line&#34;</span> <span class="na">ref</span><span class="o">=</span><span class="s">&#34;line&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">nav</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;actions-wrapper&#34;</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">slot</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;actions&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">slot</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+<span class="p">...</span>
+<span class="p">&lt;</span><span class="nt">style</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;scss&#34;</span> <span class="na">scoped</span><span class="p">&gt;</span>
+<span class="nx">$tab</span><span class="o">-</span><span class="nx">nav</span><span class="o">-</span><span class="nx">height</span><span class="o">:</span> <span class="mi">40</span><span class="nx">px</span><span class="p">;</span>
+<span class="nx">$waterBlue</span><span class="o">:</span> <span class="err">#</span><span class="mi">3</span><span class="nx">ba0e9</span><span class="p">;</span>
+<span class="p">.</span><span class="nx">tab</span><span class="o">-</span><span class="nx">nav</span><span class="o">-</span><span class="nx">wrapper</span> <span class="p">{</span>
+  <span class="p">.</span><span class="nx">tab</span><span class="o">-</span><span class="nx">nav</span> <span class="p">{</span>
+    <span class="nx">display</span><span class="o">:</span> <span class="nx">flex</span><span class="p">;</span>
+    <span class="nx">height</span><span class="o">:</span> <span class="nx">$tab</span><span class="o">-</span><span class="nx">nav</span><span class="o">-</span><span class="nx">height</span><span class="p">;</span>
+    <span class="nx">justify</span><span class="o">-</span><span class="nx">content</span><span class="o">:</span> <span class="nx">flex</span><span class="o">-</span><span class="nx">start</span><span class="p">;</span>
+    <span class="nx">align</span><span class="o">-</span><span class="nx">items</span><span class="o">:</span> <span class="nx">center</span><span class="p">;</span>
+    <span class="nx">position</span><span class="o">:</span> <span class="nx">relative</span><span class="p">;</span>
+
+    <span class="o">&gt;</span> <span class="p">.</span><span class="nx">line</span> <span class="p">{</span>
+      <span class="nx">position</span><span class="o">:</span> <span class="nx">absolute</span><span class="p">;</span>
+      <span class="nx">bottom</span><span class="o">:</span> <span class="mi">0</span><span class="p">;</span>
+      <span class="nx">height</span><span class="o">:</span> <span class="mi">0</span><span class="p">;</span>
+      <span class="nx">border</span><span class="o">-</span><span class="nx">bottom</span><span class="o">:</span> <span class="mi">1</span><span class="nx">px</span> <span class="nx">solid</span> <span class="nx">$waterBlue</span><span class="p">;</span>
+    <span class="p">}</span>
+
+  <span class="p">}</span>
+
+  <span class="p">.</span><span class="nx">actions</span><span class="o">-</span><span class="nx">wrapper</span> <span class="p">{</span>
+    <span class="nx">margin</span><span class="o">-</span><span class="nx">left</span><span class="o">:</span> <span class="nx">auto</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>下划线如何加切换效果，使得下划线随着tab切换移动位置</p>
+</blockquote>
+<h3 id="如何切换">如何切换</h3>
+<ul>
+<li>需要获取元素（这里是 VueTabNav 中组件）的宽度与位置（<code>left</code>）</li>
+</ul>
+<blockquote>
+<p><code>update:selected</code>事件触发时，在<code>VueTab.vue</code>中发布多传一个选中实例的参数 到 事件总线</p>
+</blockquote>
+<ul>
+<li>需要找到选择的实例<code>vm</code></li>
+<li>即需要找到子组件中哪一个实例的<code>tabName</code>为<code>this.selected</code>
+<ul>
+<li>先选对子组件<code>vm.$options.name === 'VueTabNav'</code></li>
+<li>再选择出孙级组件<code>item.$options.name === 'VueTabItem' &amp;&amp; item.tabName === this.selected</code></li>
+<li>将选出的组件实例发布到<code>this.eventBus</code>中，让<code>VueTabNav.vue</code>监听到，获得传参</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><code>VueTab.vue</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;vue-tab&#34;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">slot</span><span class="p">&gt;&lt;/</span><span class="nt">slot</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<span class="kr">import</span> <span class="p">{</span><span class="nx">Component</span><span class="p">,</span> <span class="nx">Prop</span><span class="p">,</span> <span class="nx">Provide</span><span class="p">,</span> <span class="nx">Vue</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue-property-decorator&#39;</span><span class="p">;</span>
+
+<span class="err">@</span><span class="nx">Component</span>
+<span class="kr">export</span> <span class="k">default</span> <span class="kr">class</span> <span class="nx">VueTab</span> <span class="kr">extends</span> <span class="nx">Vue</span> <span class="p">{</span>
+  <span class="nx">name</span> <span class="o">=</span> <span class="s1">&#39;VueTab&#39;</span><span class="p">;</span>
+  <span class="err">@</span><span class="nx">Prop</span><span class="p">({</span><span class="nx">type</span><span class="o">:</span> <span class="nb">String</span><span class="p">,</span> <span class="nx">required</span><span class="o">:</span> <span class="kc">true</span><span class="p">})</span> <span class="nx">selected</span><span class="o">!:</span> <span class="nx">string</span><span class="p">;</span>
+  <span class="err">@</span><span class="nx">Prop</span><span class="p">({</span>
+    <span class="nx">type</span><span class="o">:</span> <span class="nb">String</span><span class="p">,</span>
+    <span class="k">default</span><span class="o">:</span> <span class="s1">&#39;horizontal&#39;</span><span class="p">,</span>
+    <span class="nx">validator</span><span class="p">(</span><span class="nx">value</span><span class="o">:</span> <span class="nx">string</span><span class="p">)</span><span class="o">:</span> <span class="kr">boolean</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="p">[</span><span class="s1">&#39;horizontal&#39;</span><span class="p">,</span> <span class="s1">&#39;vertical&#39;</span><span class="p">].</span><span class="nx">includes</span><span class="p">(</span><span class="nx">value</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">})</span> <span class="nx">direction</span><span class="o">!:</span> <span class="nx">string</span><span class="p">;</span>
+
+  <span class="nx">eventBus</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Vue</span><span class="p">;</span>
+  <span class="err">@</span><span class="nx">Provide</span><span class="p">(</span><span class="s1">&#39;eventBus&#39;</span><span class="p">)</span> <span class="nx">eBus</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">eventBus</span><span class="p">;</span>
+
+  <span class="nx">mounted</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// 发布 选中的实例 到 事件总线
+</span><span class="c1"></span>    <span class="k">this</span><span class="p">.</span><span class="nx">$children</span><span class="p">.</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">vm</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">vm</span><span class="p">.</span><span class="nx">$options</span><span class="p">.</span><span class="nx">name</span> <span class="o">===</span> <span class="s1">&#39;VueTabNav&#39;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">vm</span><span class="p">.</span><span class="nx">$children</span><span class="p">.</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">item</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+          <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;item.$options.name: &#39;</span><span class="p">,</span> <span class="nx">item</span><span class="p">.</span><span class="nx">$options</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span>
+          <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;item.tabName: &#39;</span><span class="p">,</span> <span class="nx">item</span><span class="p">.</span><span class="nx">tabName</span><span class="p">);</span>
+          <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;this.selected: &#39;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">selected</span><span class="p">);</span>
+          <span class="k">if</span> <span class="p">(</span><span class="nx">item</span><span class="p">.</span><span class="nx">$options</span><span class="p">.</span><span class="nx">name</span> <span class="o">===</span> <span class="s1">&#39;VueTabItem&#39;</span> <span class="o">&amp;&amp;</span> <span class="nx">item</span><span class="p">.</span><span class="nx">tabName</span> <span class="o">===</span> <span class="k">this</span><span class="p">.</span><span class="nx">selected</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;item.tabName: &#39;</span><span class="p">,</span> <span class="nx">item</span><span class="p">.</span><span class="nx">tabName</span><span class="p">);</span>
+            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;item.$el: &#39;</span><span class="p">,</span> <span class="nx">item</span><span class="p">.</span><span class="nx">$el</span><span class="p">);</span>
+            <span class="c1">// 将 选中的实例名 和 选中实例 一起 发布
+</span><span class="c1"></span>            <span class="k">this</span><span class="p">.</span><span class="nx">eventBus</span><span class="p">.</span><span class="nx">$emit</span><span class="p">(</span><span class="s1">&#39;update:selected&#39;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">selected</span><span class="p">,</span> <span class="nx">item</span><span class="p">);</span>
+          <span class="p">}</span>
+        <span class="p">});</span>
+      <span class="p">}</span>
+    <span class="p">});</span>
+
+  <span class="p">}</span>
+
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">style</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;scss&#34;</span> <span class="na">scoped</span><span class="p">&gt;</span>
+<span class="p">.</span><span class="nx">vue</span><span class="o">-</span><span class="nx">tab</span> <span class="p">{</span>
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>通过两层循环得到选择到的实例<code>item</code></li>
+<li>最关键的一步就是<code>this.eventBus.$emit('update:selected', this.selected, item);</code></li>
+</ul>
+<blockquote>
+<p><code>VueTabNav.vue</code></p>
+</blockquote>
+<ul>
+<li><code>console.log(vm.$el.getBoundingClientRect());</code>中的实例<code>vm</code>在第一次初始化时未从<code>VueTab</code>中传过来
+<ul>
+<li>所以需要先在<code>VueTab.vue</code>中判断选中的实例，将实例传过来</li>
+</ul>
+</li>
+<li><code>Element.getBoundingClientRect()</code>获取元素尺寸与位置
+<ul>
+<li><code>const {width, left} = vm.$el.getBoundingClientRect();</code></li>
+<li>获取宽度 <code>(this.$refs.line as HTMLElement).style.width = </code>${width}px<code>;</code></li>
+<li>获取位置，使其可移动至所需位置 <code>(this.$refs.line as HTMLElement).style.left = </code>${left - parentLeft}px<code>;</code></li>
+<li>使用硬件3D加速 (this.$refs.line as HTMLElement).style.transform = `translateX(${left - parentLeft}px)`;
+});</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;tab-nav-wrapper&#34;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">nav</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;tab-nav&#34;</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">slot</span><span class="p">&gt;&lt;/</span><span class="nt">slot</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;line&#34;</span> <span class="na">ref</span><span class="o">=</span><span class="s">&#34;line&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">nav</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;actions-wrapper&#34;</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">slot</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;actions&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">slot</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<span class="kr">import</span> <span class="p">{</span><span class="nx">Component</span><span class="p">,</span> <span class="nx">Inject</span><span class="p">,</span> <span class="nx">Vue</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue-property-decorator&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span><span class="nx">VueTabItem</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;@/types/VueTabItem&#39;</span><span class="p">;</span>
+
+<span class="err">@</span><span class="nx">Component</span>
+<span class="kr">export</span> <span class="k">default</span> <span class="kr">class</span> <span class="nx">VueTabNav</span> <span class="kr">extends</span> <span class="nx">Vue</span> <span class="p">{</span>
+  <span class="nx">name</span> <span class="o">=</span> <span class="s1">&#39;VueTabNav&#39;</span><span class="p">;</span>
+  <span class="err">@</span><span class="nx">Inject</span><span class="p">(</span><span class="s1">&#39;eventBus&#39;</span><span class="p">)</span> <span class="nx">readonly</span> <span class="nx">eventBus</span><span class="o">!:</span> <span class="nx">Vue</span><span class="p">;</span>
+
+  <span class="nx">created</span><span class="p">()</span> <span class="p">{</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">eventBus</span><span class="p">.</span><span class="nx">$on</span><span class="p">(</span><span class="s1">&#39;update:selected&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">tabName</span><span class="o">:</span> <span class="nx">string</span><span class="p">,</span> <span class="nx">vm</span><span class="o">:</span> <span class="nx">VueTabItem</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
       
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">tabName</span><span class="p">);</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">vm</span><span class="p">.</span><span class="nx">$el</span><span class="p">.</span><span class="nx">getBoundingClientRect</span><span class="p">());</span>
+      
+        <span class="kr">const</span> <span class="p">{</span><span class="nx">width</span><span class="p">,</span> <span class="nx">left</span><span class="p">}</span> <span class="o">=</span> <span class="nx">vm</span><span class="p">.</span><span class="nx">$el</span><span class="p">.</span><span class="nx">getBoundingClientRect</span><span class="p">();</span>
+        <span class="kr">const</span> <span class="nx">parentLeft</span> <span class="o">=</span> <span class="nx">vm</span><span class="p">.</span><span class="nx">$parent</span><span class="p">.</span><span class="nx">$el</span><span class="p">.</span><span class="nx">getBoundingClientRect</span><span class="p">().</span><span class="nx">left</span><span class="p">;</span>
+        <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">$refs</span><span class="p">.</span><span class="nx">line</span> <span class="nx">as</span> <span class="nx">HTMLElement</span><span class="p">).</span><span class="nx">style</span><span class="p">.</span><span class="nx">width</span> <span class="o">=</span> <span class="sb">`</span><span class="si">${</span><span class="nx">width</span><span class="si">}</span><span class="sb">px`</span><span class="p">;</span>
+        <span class="c1">// (this.$refs.line as HTMLElement).style.left = `${left - parentLeft}px`;
+</span><span class="c1"></span>        <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">$refs</span><span class="p">.</span><span class="nx">line</span> <span class="nx">as</span> <span class="nx">HTMLElement</span><span class="p">).</span><span class="nx">style</span><span class="p">.</span><span class="nx">transform</span> <span class="o">=</span> <span class="sb">`translateX(</span><span class="si">${</span><span class="nx">left</span> <span class="o">-</span> <span class="nx">parentLeft</span><span class="si">}</span><span class="sb">px)`</span><span class="p">;</span>
+      <span class="p">});</span>
+  <span class="p">}</span>
+
+  <span class="nx">mounted</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">$nextTick</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">eventBus</span><span class="p">.</span><span class="nx">$emit</span><span class="p">(</span><span class="s1">&#39;update:selected&#39;</span><span class="p">,</span>
+        <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">$children</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="nx">as</span> <span class="nx">VueTabItem</span><span class="p">).</span><span class="nx">tabName</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">$children</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+    <span class="p">});</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><code>created</code>时 下划线元素还未挂载，之后改为在<code>mounted</code>中执行<code> this.eventBus.$on('update:selected', (tabName: string, vm: VueTabItem) =&gt; {...}</code></li>
+</ul>
+<hr>
+<blockquote>
+<p>当点击<code>VueTabItem.vue</code>，再发布一个 选中实例</p>
+</blockquote>
+<ul>
+<li><code>this.eventBus.$emit('update:selected', this.tabName, this);</code></li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">section</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;tab-item&#34;</span> <span class="nt">@click</span><span class="s">=&#34;xxx&#34;</span> <span class="nt">:class</span><span class="s">=&#34;classes&#34;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">slot</span><span class="p">&gt;&lt;/</span><span class="nt">slot</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">section</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<span class="kr">import</span> <span class="p">{</span><span class="nx">Component</span><span class="p">,</span> <span class="nx">Inject</span><span class="p">,</span> <span class="nx">Prop</span><span class="p">,</span> <span class="nx">Vue</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue-property-decorator&#39;</span><span class="p">;</span>
+
+<span class="err">@</span><span class="nx">Component</span>
+<span class="kr">export</span> <span class="k">default</span> <span class="kr">class</span> <span class="nx">VueTabItem</span> <span class="kr">extends</span> <span class="nx">Vue</span> <span class="p">{</span>
+  <span class="nx">name</span> <span class="o">=</span> <span class="s1">&#39;VueTabItem&#39;</span><span class="p">;</span>
+  <span class="nx">active</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+  <span class="err">@</span><span class="nx">Prop</span><span class="p">({</span><span class="nx">type</span><span class="o">:</span> <span class="nb">Boolean</span><span class="p">,</span> <span class="k">default</span><span class="o">:</span> <span class="kc">false</span><span class="p">})</span> <span class="nx">disabled</span><span class="o">!:</span> <span class="kr">boolean</span><span class="p">;</span>
+  <span class="err">@</span><span class="nx">Inject</span><span class="p">(</span><span class="s1">&#39;eventBus&#39;</span><span class="p">)</span> <span class="nx">readonly</span> <span class="nx">eventBus</span><span class="o">!:</span> <span class="nx">Vue</span><span class="p">;</span>
+
+  <span class="err">@</span><span class="nx">Prop</span><span class="p">({</span><span class="nx">type</span><span class="o">:</span> <span class="nb">String</span><span class="p">,</span> <span class="nx">required</span><span class="o">:</span> <span class="kc">true</span><span class="p">})</span> <span class="nx">tabName</span><span class="o">!:</span> <span class="nx">string</span><span class="p">;</span>
+
+  <span class="nx">xxx</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">eventBus</span><span class="p">.</span><span class="nx">$emit</span><span class="p">(</span><span class="s1">&#39;update:selected&#39;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">tabName</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="nx">get</span> <span class="nx">classes</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">{</span>
+      <span class="nx">active</span><span class="o">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">active</span>
+    <span class="p">};</span>
+  <span class="p">}</span>
+
+  <span class="nx">created</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">eventBus</span><span class="p">.</span><span class="nx">$on</span><span class="p">(</span><span class="s1">&#39;update:selected&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">name</span><span class="o">:</span> <span class="nx">string</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">active</span> <span class="o">=</span> <span class="p">(</span><span class="nx">name</span> <span class="o">===</span> <span class="k">this</span><span class="p">.</span><span class="nx">tabName</span><span class="p">);</span>
+    <span class="p">});</span>
+  <span class="p">}</span>
+
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">style</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;scss&#34;</span> <span class="na">scoped</span><span class="p">&gt;</span>
+<span class="nx">$waterBlue</span><span class="o">:</span> <span class="err">#</span><span class="mi">3</span><span class="nx">ba0e9</span><span class="p">;</span>
+<span class="p">.</span><span class="nx">tab</span><span class="o">-</span><span class="nx">item</span> <span class="p">{</span>
+  <span class="nx">flex</span><span class="o">-</span><span class="nx">shrink</span><span class="o">:</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="nx">padding</span><span class="o">:</span> <span class="mi">0</span> <span class="mi">1</span><span class="nx">em</span><span class="p">;</span>
+  <span class="nx">cursor</span><span class="o">:</span> <span class="nx">pointer</span><span class="p">;</span>
+  <span class="nx">height</span><span class="o">:</span> <span class="mi">100</span><span class="o">%</span><span class="p">;</span>
+  <span class="nx">display</span><span class="o">:</span> <span class="nx">flex</span><span class="p">;</span>
+  <span class="nx">align</span><span class="o">-</span><span class="nx">items</span><span class="o">:</span> <span class="nx">center</span><span class="p">;</span>
+
+  <span class="o">&amp;</span><span class="p">.</span><span class="nx">active</span> <span class="p">{</span>
+    <span class="nx">color</span><span class="o">:</span> <span class="nx">$waterBlue</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>在其他组件中的事件总线中监听时多监听一个参数<code>this.eventBus.$on('update:selected', (tabName: string, vm: VueTabItem) =&gt; {...}</code></li>
+</ul>
+<hr>
+<h3 id="v-if-与-nexttick"><code>v-if</code> 与 <code>$nextTick</code></h3>
+<blockquote>
+<p>控制下划线 <code>&lt;div class=&quot;line&quot; ref=&quot;line&quot; v-if=&quot;showLine&quot;&gt;&lt;/div&gt;</code> 出现的时机</p>
+</blockquote>
+<ul>
+<li><code>v-if</code> 会控制 div 出否存在于内存中</li>
+<li><code>this.showLine = true; </code> 改变 <code>v-if=&quot;true&quot;</code> 挂载节点到DOM中 会新增一个「更新UI任务」到任务队列中</li>
+<li>但此时页面还未渲染出 <code>&lt;div class=&quot;line&quot; ref=&quot;line&quot; v-if=&quot;showLine&quot;&gt;&lt;/div&gt;</code>
+<ul>
+<li><code>this.$refs.line</code>为<code>undefined</code></li>
+</ul>
+</li>
+<li>必须使用 <code> this.$nextTick(() =&gt; {...});</code> 将代码执行放到「更新UI任务」之后
+<ul>
+<li>否则取不到<code>this.$refs.line</code></li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;tab-nav-wrapper&#34;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">nav</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;tab-nav&#34;</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">slot</span><span class="p">&gt;&lt;/</span><span class="nt">slot</span><span class="p">&gt;</span>
+      <span class="c">&lt;!--</span> <span class="nx">v</span><span class="o">-</span><span class="k">if</span> <span class="nx">会控制</span> <span class="nx">div</span> <span class="nx">出否存在于内存中</span> <span class="o">--&gt;</span>
+      <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;line&#34;</span> <span class="na">ref</span><span class="o">=</span><span class="s">&#34;line&#34;</span> <span class="nt">v-if</span><span class="s">=&#34;showLine&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">nav</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;actions-wrapper&#34;</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">slot</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;actions&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">slot</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<span class="kr">import</span> <span class="p">{</span><span class="nx">Component</span><span class="p">,</span> <span class="nx">Inject</span><span class="p">,</span> <span class="nx">Vue</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue-property-decorator&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span><span class="nx">VueTabItem</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;@/types/VueTabItem&#39;</span><span class="p">;</span>
+
+<span class="err">@</span><span class="nx">Component</span>
+<span class="kr">export</span> <span class="k">default</span> <span class="kr">class</span> <span class="nx">VueTabNav</span> <span class="kr">extends</span> <span class="nx">Vue</span> <span class="p">{</span>
+  <span class="nx">name</span> <span class="o">=</span> <span class="s1">&#39;VueTabNav&#39;</span><span class="p">;</span>
+  <span class="nx">showLine</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+  <span class="err">@</span><span class="nx">Inject</span><span class="p">(</span><span class="s1">&#39;eventBus&#39;</span><span class="p">)</span> <span class="nx">readonly</span> <span class="nx">eventBus</span><span class="o">!:</span> <span class="nx">Vue</span><span class="p">;</span>
+
+  <span class="nx">initSelectedTabItem</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">eventBus</span><span class="p">.</span><span class="nx">$emit</span><span class="p">(</span><span class="s1">&#39;update:selected&#39;</span><span class="p">,</span>
+      <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">$children</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="nx">as</span> <span class="nx">VueTabItem</span><span class="p">).</span><span class="nx">tabName</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">$children</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+  <span class="p">}</span>
+
+  <span class="c1">// 监听到选择的实例 取得实例元素的尺寸 移动位置
+</span><span class="c1"></span>  <span class="nx">moveTab</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">eventBus</span><span class="p">.</span><span class="nx">$on</span><span class="p">(</span><span class="s1">&#39;update:selected&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">tabName</span><span class="o">:</span> <span class="nx">string</span><span class="p">,</span> <span class="nx">vm</span><span class="o">:</span> <span class="nx">VueTabItem</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+      <span class="kr">const</span> <span class="p">{</span><span class="nx">width</span><span class="p">,</span> <span class="nx">left</span><span class="p">}</span> <span class="o">=</span> <span class="nx">vm</span><span class="p">.</span><span class="nx">$el</span><span class="p">.</span><span class="nx">getBoundingClientRect</span><span class="p">();</span>
+      <span class="kr">const</span> <span class="nx">parentLeft</span> <span class="o">=</span> <span class="nx">vm</span><span class="p">.</span><span class="nx">$parent</span><span class="p">.</span><span class="nx">$el</span><span class="p">.</span><span class="nx">getBoundingClientRect</span><span class="p">().</span><span class="nx">left</span><span class="p">;</span>
+      <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">$refs</span><span class="p">.</span><span class="nx">line</span> <span class="nx">as</span> <span class="nx">HTMLElement</span><span class="p">).</span><span class="nx">style</span><span class="p">.</span><span class="nx">width</span> <span class="o">=</span> <span class="sb">`</span><span class="si">${</span><span class="nx">width</span><span class="si">}</span><span class="sb">px`</span><span class="p">;</span>
+      <span class="c1">// (this.$refs.line as HTMLElement).style.left = `${left - parentLeft}px`;
+</span><span class="c1"></span>      <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">$refs</span><span class="p">.</span><span class="nx">line</span> <span class="nx">as</span> <span class="nx">HTMLElement</span><span class="p">).</span><span class="nx">style</span><span class="p">.</span><span class="nx">transform</span> <span class="o">=</span> <span class="sb">`translateX(</span><span class="si">${</span><span class="nx">left</span> <span class="o">-</span> <span class="nx">parentLeft</span><span class="si">}</span><span class="sb">px)`</span><span class="p">;</span>
+    <span class="p">});</span>
+  <span class="p">}</span>
+
+  <span class="nx">mounted</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">showLine</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span> <span class="c1">// 改变v-if 挂载节点到DOM中 会新增一个「更新UI任务」到任务队列中
+</span><span class="c1"></span>    <span class="k">this</span><span class="p">.</span><span class="nx">$nextTick</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">moveTab</span><span class="p">();</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">initSelectedTabItem</span><span class="p">();</span>
+    <span class="p">});</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">style</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;scss&#34;</span> <span class="na">scoped</span><span class="p">&gt;</span>
+<span class="nx">$tab</span><span class="o">-</span><span class="nx">nav</span><span class="o">-</span><span class="nx">height</span><span class="o">:</span> <span class="mi">40</span><span class="nx">px</span><span class="p">;</span>
+<span class="nx">$waterBlue</span><span class="o">:</span> <span class="err">#</span><span class="mi">3</span><span class="nx">ba0e9</span><span class="p">;</span>
+<span class="p">.</span><span class="nx">tab</span><span class="o">-</span><span class="nx">nav</span><span class="o">-</span><span class="nx">wrapper</span> <span class="p">{</span>
+  <span class="p">.</span><span class="nx">tab</span><span class="o">-</span><span class="nx">nav</span> <span class="p">{</span>
+    <span class="nx">display</span><span class="o">:</span> <span class="nx">flex</span><span class="p">;</span>
+    <span class="nx">height</span><span class="o">:</span> <span class="nx">$tab</span><span class="o">-</span><span class="nx">nav</span><span class="o">-</span><span class="nx">height</span><span class="p">;</span>
+    <span class="nx">justify</span><span class="o">-</span><span class="nx">content</span><span class="o">:</span> <span class="nx">flex</span><span class="o">-</span><span class="nx">start</span><span class="p">;</span>
+    <span class="nx">align</span><span class="o">-</span><span class="nx">items</span><span class="o">:</span> <span class="nx">center</span><span class="p">;</span>
+    <span class="nx">position</span><span class="o">:</span> <span class="nx">relative</span><span class="p">;</span>
+
+    <span class="o">&gt;</span> <span class="p">.</span><span class="nx">line</span> <span class="p">{</span>
+      <span class="nx">position</span><span class="o">:</span> <span class="nx">absolute</span><span class="p">;</span>
+      <span class="nx">bottom</span><span class="o">:</span> <span class="mi">0</span><span class="p">;</span>
+      <span class="nx">height</span><span class="o">:</span> <span class="mi">0</span><span class="p">;</span>
+      <span class="nx">border</span><span class="o">-</span><span class="nx">bottom</span><span class="o">:</span> <span class="mi">1</span><span class="nx">px</span> <span class="nx">solid</span> <span class="nx">$waterBlue</span><span class="p">;</span>
+      <span class="nx">transition</span><span class="o">:</span> <span class="nx">all</span> <span class="mf">.3</span><span class="nx">s</span><span class="p">;</span>
+    <span class="p">}</span>
+
+  <span class="p">}</span>
+
+  <span class="p">.</span><span class="nx">actions</span><span class="o">-</span><span class="nx">wrapper</span> <span class="p">{</span>
+    <span class="nx">margin</span><span class="o">-</span><span class="nx">left</span><span class="o">:</span> <span class="nx">auto</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><hr>
+<h2 id="重构代码">重构代码</h2>
+<hr>
+<hr>
+<h2 id="解决bug的思路">解决BUG的思路</h2>
+<hr>
+<blockquote>
+<p>参考</p>
+</blockquote>
+<ul>
+<li><a href="https://github.com/FrankFang/frank-test-1/tree/tabs">参考gulu代码链接</a></li>
+<li><a href="https://www.yuque.com/u29422/gulu/268970">参考gulu UI</a></li>
+</ul>
+<hr>
+<hr>
+
     </div>
 
     
