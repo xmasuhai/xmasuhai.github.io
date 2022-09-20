@@ -23,7 +23,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 
 <meta name="author" content="Joel Xu" />
-  <meta name="description" content="" />
+  <meta name="description" content="手风琴组件 大纲链接§ [toc] 需求分析 可展开显示项目内容 可折叠隐藏内容区 可禁用 可配置一次只可展开一个项目，折叠其他项目 默认折叠时显示向右箭头，展开时" />
 
   <meta name="keywords" content="Hugo, theme, jane" />
 
@@ -60,19 +60,19 @@
 
 
 <meta property="og:title" content="【项目 Vue2 轮子】8.1 简单轮子：VueCollapse.vue手风琴组件（折叠面板）" />
-<meta property="og:description" content="" />
+<meta property="og:description" content="手风琴组件 大纲链接§ [toc] 需求分析 可展开显示项目内容 可折叠隐藏内容区 可禁用 可配置一次只可展开一个项目，折叠其他项目 默认折叠时显示向右箭头，展开时" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://xmasuhai.xyz/post/project/vueel2/%E9%A1%B9%E7%9B%AE-vue2-%E8%BD%AE%E5%AD%908.1-%E7%AE%80%E5%8D%95%E8%BD%AE%E5%AD%90-vuecollapse%E6%89%8B%E9%A3%8E%E7%90%B4%E7%BB%84%E4%BB%B6%E6%8A%98%E5%8F%A0%E9%9D%A2%E6%9D%BF/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2022-01-25T12:37:54+08:00" />
-<meta property="article:modified_time" content="2022-09-03T10:26:25+08:00" />
+<meta property="article:modified_time" content="2022-06-10T08:21:30+08:00" />
 
 <meta itemprop="name" content="【项目 Vue2 轮子】8.1 简单轮子：VueCollapse.vue手风琴组件（折叠面板）">
-<meta itemprop="description" content=""><meta itemprop="datePublished" content="2022-01-25T12:37:54+08:00" />
-<meta itemprop="dateModified" content="2022-09-03T10:26:25+08:00" />
-<meta itemprop="wordCount" content="0">
+<meta itemprop="description" content="手风琴组件 大纲链接§ [toc] 需求分析 可展开显示项目内容 可折叠隐藏内容区 可禁用 可配置一次只可展开一个项目，折叠其他项目 默认折叠时显示向右箭头，展开时"><meta itemprop="datePublished" content="2022-01-25T12:37:54+08:00" />
+<meta itemprop="dateModified" content="2022-06-10T08:21:30+08:00" />
+<meta itemprop="wordCount" content="1779">
 <meta itemprop="keywords" content="FrontEnd,Project,vueel,vue2," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="【项目 Vue2 轮子】8.1 简单轮子：VueCollapse.vue手风琴组件（折叠面板）"/>
-<meta name="twitter:description" content=""/>
+<meta name="twitter:description" content="手风琴组件 大纲链接§ [toc] 需求分析 可展开显示项目内容 可折叠隐藏内容区 可禁用 可配置一次只可展开一个项目，折叠其他项目 默认折叠时显示向右箭头，展开时"/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -301,8 +301,8 @@
         <div class="post-category">
             
           </div>
-        <span class="more-meta"> 约 0 字 </span>
-          <span class="more-meta"> 预计阅读 0 分钟 </span>
+        <span class="more-meta"> 约 1779 字 </span>
+          <span class="more-meta"> 预计阅读 4 分钟 </span>
 
         
         
@@ -317,13 +317,857 @@
 <div class="post-toc" id="post-toc">
   <h2 class="post-toc-title">文章目录</h2>
   <div class="post-toc-content">
-    <nav id="TableOfContents"></nav>
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#需求分析">需求分析</a></li>
+    <li><a href="#api设计">API设计</a></li>
+    <li><a href="#创建手风琴组件">创建手风琴组件</a>
+      <ul>
+        <li><a href="#显示折叠内容区">显示/折叠内容区</a></li>
+        <li><a href="#禁用显示折叠">禁用显示/折叠</a></li>
+        <li><a href="#一种实现single的方式">一种实现single的方式</a></li>
+        <li><a href="#实现-单向通知-执行回调">实现 单向通知 执行回调</a></li>
+      </ul>
+    </li>
+    <li><a href="#组件经验总结">组件经验总结</a></li>
+  </ul>
+</nav>
   </div>
 </div>
 
     
     <div class="post-content">
-      
+      <h1 id="手风琴组件">手风琴组件</h1>
+<blockquote>
+<p>大纲链接<!-- raw HTML omitted --> § <!-- raw HTML omitted --></p>
+</blockquote>
+<p>[toc]</p>
+<hr>
+<h2 id="需求分析">需求分析</h2>
+<ul>
+<li>可展开显示项目内容</li>
+<li>可折叠隐藏内容区</li>
+<li>可禁用</li>
+<li>可配置一次只可展开一个项目，折叠其他项目</li>
+<li>默认折叠时显示向右箭头，展开时显示向下箭头</li>
+</ul>
+<blockquote>
+<p>项目&gt;标题&gt;内容</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html">...
+  <span class="p">&lt;</span><span class="nt">VueCollapse</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">VueCollapseItem</span> <span class="na">title</span><span class="o">=</span><span class="s">&#34;标题1&#34;</span><span class="p">&gt;</span>内容1<span class="p">&lt;/</span><span class="nt">VueCollapseItem</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">VueCollapseItem</span> <span class="na">title</span><span class="o">=</span><span class="s">&#34;标题2&#34;</span><span class="p">&gt;</span>内容2<span class="p">&lt;/</span><span class="nt">VueCollapseItem</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">VueCollapseItem</span> <span class="na">title</span><span class="o">=</span><span class="s">&#34;标题3&#34;</span><span class="p">&gt;</span>内容3<span class="p">&lt;/</span><span class="nt">VueCollapseItem</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">VueCollapse</span><span class="p">&gt;</span>
+...
+</code></pre></td></tr></table>
+</div>
+</div><hr>
+<h2 id="api设计">API设计</h2>
+<hr>
+<h2 id="创建手风琴组件">创建手风琴组件</h2>
+<ul>
+<li>父组件 <code>VueCollapse.vue</code></li>
+<li>子组件 <code>VueCollapseItem.vue</code></li>
+<li>demo展示组件 <code>Collapses.vue</code></li>
+</ul>
+<h3 id="显示折叠内容区">显示/折叠内容区</h3>
+<blockquote>
+<p><code>VueCollapse.vue</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;collapse&#34;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">slot</span><span class="p">&gt;</span>
+      <span class="c">&lt;!--占位--&gt;</span>
+      <span class="p">&lt;</span><span class="nt">VueCollapseItem</span> <span class="na">v-for</span><span class="o">=</span><span class="s">&#34;(item, index) in itemsData&#34;</span>
+                       <span class="na">:title</span><span class="o">=</span><span class="s">&#34;item.title&#34;</span>
+                       <span class="na">:isOpen</span><span class="o">=</span><span class="s">&#34;item.isOpen&#34;</span>
+                       <span class="na">:key</span><span class="o">=</span><span class="s">&#34;index&#34;</span><span class="p">&gt;</span>
+      <span class="p">&lt;/</span><span class="nt">VueCollapseItem</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">slot</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<span class="kr">import</span> <span class="p">{</span><span class="nx">Component</span><span class="p">,</span> <span class="nx">Prop</span><span class="p">,</span> <span class="nx">Vue</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue-property-decorator&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">VueCollapseItem</span> <span class="nx">from</span> <span class="s1">&#39;./VueCollapseItem.vue&#39;</span><span class="p">;</span>
+
+<span class="err">@</span><span class="nx">Component</span><span class="p">({</span>
+  <span class="nx">components</span><span class="o">:</span> <span class="p">{</span><span class="nx">VueCollapseItem</span><span class="p">}</span>
+<span class="p">})</span>
+<span class="kr">export</span> <span class="k">default</span> <span class="kr">class</span> <span class="nx">VueCollapse</span> <span class="kr">extends</span> <span class="nx">Vue</span> <span class="p">{</span>
+  <span class="nx">name</span> <span class="o">=</span> <span class="s1">&#39;VueCollapse&#39;</span><span class="p">;</span>
+  <span class="c1">// 占位数据
+</span><span class="c1"></span>  <span class="err">@</span><span class="nx">Prop</span><span class="p">({</span>
+    <span class="nx">type</span><span class="o">:</span> <span class="nb">Array</span><span class="p">,</span>
+    <span class="k">default</span><span class="p">()</span> <span class="p">{</span><span class="k">return</span> <span class="p">[];}</span>
+  <span class="p">})</span> <span class="nx">itemsData</span><span class="o">!:</span> <span class="p">[];</span>
+  
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">style</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;scss&#34;</span> <span class="na">scoped</span><span class="p">&gt;</span>
+<span class="o">$</span><span class="nt">grey</span><span class="o">:</span> <span class="p">#</span><span class="nn">999</span><span class="o">;</span>
+<span class="o">$</span><span class="nt">border-radius</span><span class="o">:</span> <span class="nt">4px</span><span class="o">;</span>
+<span class="p">.</span><span class="nc">collapse</span> <span class="p">{</span>
+  <span class="k">border</span><span class="p">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="kc">solid</span> <span class="err">$</span><span class="kc">grey</span><span class="p">;</span>
+  <span class="k">border-radius</span><span class="p">:</span> <span class="err">$</span><span class="k">border-radius</span><span class="p">;</span>
+  <span class="k">display</span><span class="p">:</span> <span class="kc">flex</span><span class="p">;</span>
+  <span class="k">align-items</span><span class="p">:</span> <span class="kc">center</span><span class="p">;</span>
+  <span class="k">flex-wrap</span><span class="p">:</span> <span class="kc">wrap</span><span class="p">;</span>
+  <span class="k">width</span><span class="p">:</span> <span class="mi">100</span><span class="kt">%</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p><code>VueCollapseItem.vue</code></p>
+</blockquote>
+<ul>
+<li>点击切换<code>@click=&quot;toggle&quot;</code></li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;collapse-item&#34;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">header</span>
+      <span class="na">class</span><span class="o">=</span><span class="s">&#34;title&#34;</span>
+      <span class="na">:class</span><span class="o">=</span><span class="s">&#34;{ &#39;title-show&#39;: isOpen}&#34;</span>
+      <span class="err">@</span><span class="na">click</span><span class="o">=</span><span class="s">&#34;toggle&#34;</span><span class="p">&gt;</span>
+      {{ title }}
+    <span class="p">&lt;/</span><span class="nt">header</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">article</span>
+      <span class="na">class</span><span class="o">=</span><span class="s">&#34;content&#34;</span>
+      <span class="na">:class</span><span class="o">=</span><span class="s">&#34;{ &#39;content-show&#39;: isOpen}&#34;</span>
+      <span class="na">v-show</span><span class="o">=</span><span class="s">&#34;isOpen &amp;&amp; !isDisabled&#34;</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">slot</span><span class="p">&gt;</span>
+        VueCollapseItem
+      <span class="p">&lt;/</span><span class="nt">slot</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">article</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<span class="kr">import</span> <span class="p">{</span><span class="nx">Component</span><span class="p">,</span> <span class="nx">Prop</span><span class="p">,</span> <span class="nx">Vue</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue-property-decorator&#39;</span><span class="p">;</span>
+
+<span class="err">@</span><span class="nx">Component</span>
+<span class="kr">export</span> <span class="k">default</span> <span class="kr">class</span> <span class="nx">VueCollapseItem</span> <span class="kr">extends</span> <span class="nx">Vue</span> <span class="p">{</span>
+  <span class="nx">name</span> <span class="o">=</span> <span class="s1">&#39;VueCollapseItem&#39;</span><span class="p">;</span>
+  <span class="nx">isOpen</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+
+  <span class="err">@</span><span class="nx">Prop</span><span class="p">({</span>
+    <span class="nx">type</span><span class="o">:</span> <span class="nb">String</span><span class="p">,</span>
+    <span class="k">default</span><span class="o">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+    <span class="nx">required</span><span class="o">:</span> <span class="kc">true</span>
+  <span class="p">})</span> <span class="nx">title</span><span class="o">!:</span> <span class="nx">string</span><span class="p">;</span>
+
+  <span class="nx">toggle</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">isOpen</span> <span class="o">=</span> <span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">isOpen</span><span class="p">;</span>
+  <span class="p">}</span>
+  
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">style</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;scss&#34;</span> <span class="na">scoped</span><span class="p">&gt;</span>
+<span class="o">$</span><span class="nt">grey</span><span class="o">:</span> <span class="p">#</span><span class="nn">999</span><span class="o">;</span>
+<span class="o">$</span><span class="nt">border-radius</span><span class="o">:</span> <span class="nt">4px</span><span class="o">;</span>
+
+<span class="p">@</span><span class="k">mixin</span> <span class="nt">border-bottom-radius</span><span class="o">($</span><span class="nt">radius</span><span class="o">:</span> <span class="nt">0px</span><span class="o">)</span> <span class="p">{</span>
+  <span class="nt">border-bottom-left-radius</span><span class="o">:</span> <span class="o">$</span><span class="nt">radius</span><span class="o">;</span>
+  <span class="nt">border-bottom-right-radius</span><span class="o">:</span> <span class="o">$</span><span class="nt">radius</span><span class="o">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">collapse-item</span> <span class="p">{</span>
+  <span class="k">display</span><span class="p">:</span> <span class="kc">flex</span><span class="p">;</span>
+  <span class="k">align-items</span><span class="p">:</span> <span class="kc">center</span><span class="p">;</span>
+  <span class="k">flex-wrap</span><span class="p">:</span> <span class="kc">wrap</span><span class="p">;</span>
+  <span class="k">width</span><span class="p">:</span> <span class="mi">100</span><span class="kt">%</span><span class="p">;</span>
+  <span class="k">border-bottom</span><span class="p">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="kc">solid</span> <span class="err">$</span><span class="kc">grey</span><span class="p">;</span>
+
+  <span class="err">&gt;</span> <span class="err">.title</span> <span class="err">{</span>
+    <span class="k">width</span><span class="p">:</span> <span class="mi">100</span><span class="kt">%</span><span class="p">;</span>
+    <span class="k">min-height</span><span class="p">:</span> <span class="mi">32</span><span class="kt">px</span><span class="p">;</span>
+    <span class="k">display</span><span class="p">:</span> <span class="kc">flex</span><span class="p">;</span>
+    <span class="k">align-items</span><span class="p">:</span> <span class="kc">center</span><span class="p">;</span>
+    <span class="k">padding</span><span class="p">:</span> <span class="mi">0</span> <span class="mi">8</span><span class="kt">px</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="o">&gt;</span> <span class="p">.</span><span class="nc">content</span> <span class="p">{</span>
+    <span class="k">width</span><span class="p">:</span> <span class="mi">100</span><span class="kt">%</span><span class="p">;</span>
+    <span class="k">padding</span><span class="p">:</span> <span class="mi">18</span><span class="kt">px</span><span class="p">;</span>
+
+    <span class="err">&amp;.content-show</span> <span class="err">{</span>
+      <span class="k">border-top</span><span class="p">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="kc">solid</span> <span class="err">$</span><span class="kc">grey</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="err">}</span>
+
+  <span class="o">//</span> <span class="p">.</span><span class="nc">collapse-item</span>
+  <span class="o">&amp;</span><span class="p">:</span><span class="nd">first-child</span> <span class="p">{</span>
+
+    <span class="err">&gt;</span> <span class="err">.title</span> <span class="err">{</span>
+      <span class="err">//</span> <span class="err">v-show</span> <span class="err">=</span> <span class="err">true</span>
+      <span class="err">&amp;.title-show</span> <span class="err">{</span>
+        <span class="k">border-top</span><span class="p">:</span> <span class="kc">none</span><span class="p">;</span>
+      <span class="p">}</span>
+    <span class="err">}</span>
+  <span class="err">}</span>
+
+  <span class="o">//</span> <span class="p">.</span><span class="nc">collapse-item</span>
+  <span class="o">&amp;</span><span class="p">:</span><span class="nd">last-child</span> <span class="p">{</span>
+    <span class="k">border-bottom</span><span class="p">:</span> <span class="kc">none</span><span class="p">;</span> <span class="err">//</span>  <span class="err">覆盖</span> <span class="k">border-bottom</span><span class="p">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="kc">solid</span> <span class="err">$</span><span class="kc">grey</span><span class="p">;</span>
+
+    <span class="err">&gt;</span> <span class="err">.title</span> <span class="err">{</span>
+      <span class="err">//</span> <span class="err">v-show</span> <span class="err">=</span> <span class="err">true</span>
+      <span class="err">&amp;.title-show</span> <span class="err">{</span>
+        <span class="err">@include</span> <span class="err">border-bottom-radius</span><span class="p">;</span>
+      <span class="p">}</span>
+    <span class="err">}</span>
+
+    <span class="o">&gt;</span> <span class="p">.</span><span class="nc">content</span> <span class="p">{</span>
+      <span class="err">@include</span> <span class="err">border-bottom-radius($border-radius)</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="err">}</span>
+
+<span class="err">}</span>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p><code>Collapses.vue</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">form</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">fieldset</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">legend</span><span class="p">&gt;</span>Collapse 折叠面板<span class="p">&lt;/</span><span class="nt">legend</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">details</span> <span class="na">open</span><span class="p">&gt;</span>
+          <span class="p">&lt;</span><span class="nt">summary</span><span class="p">&gt;</span>基本样式<span class="p">&lt;/</span><span class="nt">summary</span><span class="p">&gt;</span>
+          <span class="p">&lt;</span><span class="nt">VueCollapse</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">VueCollapseItem</span> <span class="na">title</span><span class="o">=</span><span class="s">&#34;标题1&#34;</span><span class="p">&gt;</span>内容1<span class="p">&lt;/</span><span class="nt">VueCollapseItem</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">VueCollapseItem</span> <span class="na">title</span><span class="o">=</span><span class="s">&#34;标题2&#34;</span><span class="p">&gt;</span>内容2<span class="p">&lt;/</span><span class="nt">VueCollapseItem</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">VueCollapseItem</span> <span class="na">title</span><span class="o">=</span><span class="s">&#34;标题3&#34;</span><span class="p">&gt;</span>内容3<span class="p">&lt;/</span><span class="nt">VueCollapseItem</span><span class="p">&gt;</span>
+          <span class="p">&lt;/</span><span class="nt">VueCollapse</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">details</span><span class="p">&gt;</span>
+      <span class="p">&lt;/</span><span class="nt">fieldset</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
+    
+  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<span class="kr">import</span> <span class="p">{</span><span class="nx">Component</span><span class="p">,</span> <span class="nx">Vue</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue-property-decorator&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">VueCollapse</span> <span class="nx">from</span> <span class="s1">&#39;./collapse/VueCollapse.vue&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">VueCollapseItem</span> <span class="nx">from</span> <span class="s1">&#39;./collapse/VueCollapseItem.vue&#39;</span><span class="p">;</span>
+
+<span class="err">@</span><span class="nx">Component</span><span class="p">({</span>
+  <span class="nx">components</span><span class="o">:</span> <span class="p">{</span><span class="nx">VueCollapseItem</span><span class="p">,</span> <span class="nx">VueCollapse</span><span class="p">}</span>
+<span class="p">})</span>
+<span class="kr">export</span> <span class="k">default</span> <span class="kr">class</span> <span class="nx">Collapses</span> <span class="kr">extends</span> <span class="nx">Vue</span> <span class="p">{</span>
+  <span class="nx">name</span> <span class="o">=</span> <span class="s1">&#39;Collapses&#39;</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="禁用显示折叠">禁用显示/折叠</h3>
+<ul>
+<li>子组件添加<code>@Prop({type: Boolean, default: false}) isDisabled!: boolean;</code></li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;collapse-item&#34;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">header</span>
+      <span class="na">class</span><span class="o">=</span><span class="s">&#34;title&#34;</span>
+      <span class="na">:class</span><span class="o">=</span><span class="s">&#34;{ &#39;title-show&#39;: isOpen &amp;&amp; !isDisabled,
+</span><span class="s">                &#39;disabled&#39;: isDisabled}&#34;</span>
+      <span class="err">@</span><span class="na">click</span><span class="o">=</span><span class="s">&#34;toggle&#34;</span><span class="p">&gt;</span>
+      {{ title }}
+    <span class="p">&lt;/</span><span class="nt">header</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">article</span>
+      <span class="na">class</span><span class="o">=</span><span class="s">&#34;content&#34;</span>
+      <span class="na">:class</span><span class="o">=</span><span class="s">&#34;{ &#39;content-show&#39;: isOpen &amp;&amp; !isDisabled}&#34;</span>
+      <span class="na">v-show</span><span class="o">=</span><span class="s">&#34;isOpen &amp;&amp; !isDisabled&#34;</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">slot</span><span class="p">&gt;</span>
+        VueCollapseItem
+      <span class="p">&lt;/</span><span class="nt">slot</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">article</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<span class="kr">import</span> <span class="p">{</span><span class="nx">Component</span><span class="p">,</span> <span class="nx">Inject</span><span class="p">,</span> <span class="nx">Prop</span><span class="p">,</span> <span class="nx">Vue</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue-property-decorator&#39;</span><span class="p">;</span>
+
+<span class="err">@</span><span class="nx">Component</span>
+<span class="kr">export</span> <span class="k">default</span> <span class="kr">class</span> <span class="nx">VueCollapseItem</span> <span class="kr">extends</span> <span class="nx">Vue</span> <span class="p">{</span>
+  <span class="nx">name</span> <span class="o">=</span> <span class="s1">&#39;VueCollapseItem&#39;</span><span class="p">;</span>
+  <span class="nx">isOpen</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+
+  <span class="err">@</span><span class="nx">Prop</span><span class="p">({</span>
+    <span class="nx">type</span><span class="o">:</span> <span class="nb">String</span><span class="p">,</span>
+    <span class="k">default</span><span class="o">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+    <span class="nx">required</span><span class="o">:</span> <span class="kc">true</span>
+  <span class="p">})</span> <span class="nx">title</span><span class="o">!:</span> <span class="nx">string</span><span class="p">;</span>
+  <span class="err">@</span><span class="nx">Prop</span><span class="p">({</span>
+    <span class="nx">type</span><span class="o">:</span> <span class="nb">Boolean</span><span class="p">,</span>
+    <span class="k">default</span><span class="o">:</span> <span class="kc">false</span>
+  <span class="p">})</span> <span class="nx">isDisabled</span><span class="o">!:</span> <span class="kr">boolean</span><span class="p">;</span>
+
+  <span class="err">@</span><span class="nx">Inject</span><span class="p">()</span> <span class="nx">readonly</span> <span class="nx">eventBus</span><span class="o">!:</span> <span class="nx">Vue</span><span class="p">;</span>
+  <span class="err">@</span><span class="nx">Inject</span><span class="p">()</span> <span class="nx">readonly</span> <span class="nx">isAllShowSingle</span><span class="o">!:</span> <span class="kr">boolean</span><span class="p">;</span>
+
+  <span class="nx">toggle</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">isOpen</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">eventBus</span><span class="p">.</span><span class="nx">$emit</span><span class="p">(</span><span class="s1">&#39;remove:selected&#39;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">title</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">eventBus</span><span class="p">.</span><span class="nx">$emit</span><span class="p">(</span><span class="s1">&#39;add:selected&#39;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">title</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="c1">// listen to parent
+</span><span class="c1"></span>  <span class="nx">addBusListener</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">eventBus</span><span class="o">?</span><span class="p">.</span><span class="nx">$on</span><span class="p">(</span><span class="s1">&#39;update:selected&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">titleList</span><span class="o">:</span> <span class="nb">Array</span><span class="o">&lt;</span><span class="nx">string</span><span class="o">&gt;</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">titleList</span><span class="p">.</span><span class="nx">includes</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">title</span><span class="p">))</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">isOpen</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">isOpen</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+      <span class="p">}</span>
+    <span class="p">});</span>
+
+  <span class="p">}</span>
+
+  <span class="nx">initShow</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">eventBus</span><span class="p">.</span><span class="nx">$once</span><span class="p">(</span><span class="s1">&#39;update:selected&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">titleList</span><span class="o">:</span> <span class="nb">Array</span><span class="o">&lt;</span><span class="nx">string</span><span class="o">&gt;</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">titleList</span><span class="p">.</span><span class="nx">includes</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">title</span><span class="p">))</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">isOpen</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+      <span class="p">}</span>
+    <span class="p">});</span>
+  <span class="p">}</span>
+
+  <span class="nx">mounted</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// listen to parent once
+</span><span class="c1"></span>    <span class="k">this</span><span class="p">.</span><span class="nx">initShow</span><span class="p">();</span>
+    <span class="c1">// listen to parent
+</span><span class="c1"></span>    <span class="k">this</span><span class="p">.</span><span class="nx">addBusListener</span><span class="p">();</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">style</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;scss&#34;</span> <span class="na">scoped</span><span class="p">&gt;</span><span class="o">...</span><span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="一种实现single的方式">一种实现single的方式</h3>
+<ul>
+<li>使用事件总线<code>eventBus</code></li>
+<li>父组件提供数据 <code>@Provide() eventBus = new Vue();</code></li>
+<li>子组件注入数据 <code>@Inject() readonly eventBus!: Vue;</code></li>
+</ul>
+<blockquote>
+<p><code>VueCollapse.vue</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;collapse&#34;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">slot</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">VueCollapseItem</span> <span class="na">v-for</span><span class="o">=</span><span class="s">&#34;(item, index) in itemsData&#34;</span>
+                       <span class="na">:title</span><span class="o">=</span><span class="s">&#34;item.title&#34;</span>
+                       <span class="na">:disabled</span><span class="o">=</span><span class="s">&#34;item.disabled&#34;</span>
+                       <span class="na">:key</span><span class="o">=</span><span class="s">&#34;index&#34;</span><span class="p">&gt;</span>
+      <span class="p">&lt;/</span><span class="nt">VueCollapseItem</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">slot</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<span class="kr">import</span> <span class="p">{</span><span class="nx">Component</span><span class="p">,</span> <span class="nx">Prop</span><span class="p">,</span> <span class="nx">Provide</span><span class="p">,</span> <span class="nx">Vue</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue-property-decorator&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">VueCollapseItem</span> <span class="nx">from</span> <span class="s1">&#39;./VueCollapseItem.vue&#39;</span><span class="p">;</span>
+<span class="err">@</span><span class="nx">Component</span><span class="p">({</span>
+  <span class="nx">components</span><span class="o">:</span> <span class="p">{</span><span class="nx">VueCollapseItem</span><span class="p">}</span>
+<span class="p">})</span>
+<span class="kr">export</span> <span class="k">default</span> <span class="kr">class</span> <span class="nx">VueCollapse</span> <span class="kr">extends</span> <span class="nx">Vue</span> <span class="p">{</span>
+  <span class="nx">name</span> <span class="o">=</span> <span class="s1">&#39;VueCollapse&#39;</span><span class="p">;</span>
+  <span class="err">@</span><span class="nx">Prop</span><span class="p">({</span>
+    <span class="nx">type</span><span class="o">:</span> <span class="nb">Array</span><span class="p">,</span>
+    <span class="k">default</span><span class="p">()</span> <span class="p">{</span><span class="k">return</span> <span class="p">[];}</span>
+  <span class="p">})</span> <span class="nx">itemsData</span><span class="o">!:</span> <span class="p">[];</span>
+  <span class="err">@</span><span class="nx">Provide</span><span class="p">()</span> <span class="nx">eventBus</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Vue</span><span class="p">();</span>
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p><code>VueCollapseItem.vue</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;collapse-item&#34;</span>
+       <span class="na">:class</span><span class="o">=</span><span class="s">&#34;{ &#39;title-show&#39;: isOpen &amp;&amp; !isDisabled}&#34;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">header</span>
+      <span class="na">class</span><span class="o">=</span><span class="s">&#34;title&#34;</span>
+      <span class="na">:class</span><span class="o">=</span><span class="s">&#34;{ &#39;title-show&#39;: isOpen &amp;&amp; !isDisabled,
+</span><span class="s">                &#39;disabled&#39;: isDisabled}&#34;</span>
+      <span class="err">@</span><span class="na">click</span><span class="o">=</span><span class="s">&#34;toggle&#34;</span><span class="p">&gt;</span>
+      {{ title }}
+    <span class="p">&lt;/</span><span class="nt">header</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">article</span>
+      <span class="na">class</span><span class="o">=</span><span class="s">&#34;content&#34;</span>
+      <span class="na">v-show</span><span class="o">=</span><span class="s">&#34;isOpen &amp;&amp; !isDisabled&#34;</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">slot</span><span class="p">&gt;</span>
+        VueCollapseItem
+      <span class="p">&lt;/</span><span class="nt">slot</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">article</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<span class="kr">import</span> <span class="p">{</span><span class="nx">Component</span><span class="p">,</span> <span class="nx">Inject</span><span class="p">,</span> <span class="nx">Prop</span><span class="p">,</span> <span class="nx">Vue</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue-property-decorator&#39;</span><span class="p">;</span>
+<span class="err">@</span><span class="nx">Component</span>
+<span class="kr">export</span> <span class="k">default</span> <span class="kr">class</span> <span class="nx">VueCollapseItem</span> <span class="kr">extends</span> <span class="nx">Vue</span> <span class="p">{</span>
+  <span class="nx">name</span> <span class="o">=</span> <span class="s1">&#39;VueCollapseItem&#39;</span><span class="p">;</span>
+  <span class="nx">isOpen</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+  <span class="err">@</span><span class="nx">Prop</span><span class="p">({</span>
+    <span class="nx">type</span><span class="o">:</span> <span class="nb">String</span><span class="p">,</span>
+    <span class="k">default</span><span class="o">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+    <span class="nx">required</span><span class="o">:</span> <span class="kc">true</span>
+  <span class="p">})</span> <span class="nx">title</span><span class="o">!:</span> <span class="nx">string</span><span class="p">;</span>
+  <span class="err">@</span><span class="nx">Prop</span><span class="p">({</span>
+    <span class="nx">type</span><span class="o">:</span> <span class="nb">Boolean</span><span class="p">,</span>
+    <span class="k">default</span><span class="o">:</span> <span class="kc">false</span>
+  <span class="p">})</span> <span class="nx">isDisabled</span><span class="o">!:</span> <span class="kr">boolean</span><span class="p">;</span>
+  <span class="err">@</span><span class="nx">Inject</span><span class="p">()</span> <span class="nx">readonly</span> <span class="nx">eventBus</span><span class="o">!:</span> <span class="nx">Vue</span><span class="p">;</span>
+  <span class="nx">toggle</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">isOpen</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">isOpen</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">isOpen</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">eventBus</span><span class="p">.</span><span class="nx">$emit</span><span class="p">(</span><span class="s1">&#39;update:selected&#39;</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="nx">close</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">isOpen</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="nx">addBusListener</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">eventBus</span><span class="p">.</span><span class="nx">$on</span><span class="p">(</span><span class="s1">&#39;update:selected&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">vm</span><span class="o">:</span> <span class="nx">Vue</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">vm</span> <span class="o">!==</span> <span class="k">this</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">close</span><span class="p">();</span>
+      <span class="p">}</span>
+    <span class="p">});</span>
+  <span class="p">}</span>
+  <span class="nx">mounted</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">addBusListener</span><span class="p">();</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="实现-单向通知-执行回调">实现 单向通知 执行回调</h3>
+<ul>
+<li>子组件不直接变更状态</li>
+<li>子组件将变更通知发布给<code>eventBus</code></li>
+</ul>
+<hr>
+<h2 id="组件经验总结">组件经验总结</h2>
+<ul>
+<li>单向数据流
+<ul>
+<li>子组件不直接改变数据</li>
+<li>点击子组件不直接改变<code>this.isOpen</code></li>
+</ul>
+</li>
+<li>子组件监听 父组件传递给eventBus的事件，然后执行相应的回调函数</li>
+<li>子组件听从 父组件发布给eventBus的事件 间接改变数据</li>
+</ul>
+<hr>
+<p>参考：</p>
+<ul>
+<li><a href="https://github.com/FrankFang/frank-test-1/blob/callapse/src/collapse.vue">Collapse code</a></li>
+<li><a href="https://github.com/FrankFang/frank-test-1/blob/callapse/src/collapse-item.vue">CollapseItem code</a></li>
+<li><a href="https://github.com/FrankFang/frank-test-1/blob/callapse/test/collapse.test.js">unit test code</a></li>
+<li><a href="https://www.yuque.com/u29422/gulu/268969">设计稿UI</a></li>
+</ul>
+<hr>
+<hr>
+
     </div>
 
     
@@ -336,7 +1180,7 @@
   <p class="copyright-item">
     <span class="item-title">上次更新</span>
     <span class="item-content">
-      2022-09-03
+      2022-06-10
       
         
         

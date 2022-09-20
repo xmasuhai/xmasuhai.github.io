@@ -1,0 +1,1655 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>【项目 多人共享博客】3. 路由的完善 - Joel in The House</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="Joel Xu" />
+  <meta name="description" content="完善路由功能路由 在线接口文档 大纲链接§ [toc] 动态路由&#39;/edit/:blogId&#39; 在请求URL 为 &#39;/edit/:blogId&#39;、&#39;/detail" />
+
+  <meta name="keywords" content="Hugo, theme, jane" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.91.2" />
+
+
+<link rel="canonical" href="http://xmasuhai.xyz/post/project/share-blog/%E9%A1%B9%E7%9B%AE-%E5%A4%9A%E4%BA%BA%E5%85%B1%E4%BA%AB%E5%8D%9A%E5%AE%A23.-%E8%B7%AF%E7%94%B1%E7%9A%84%E5%AE%8C%E5%96%84/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="【项目 多人共享博客】3. 路由的完善" />
+<meta property="og:description" content="完善路由功能路由 在线接口文档 大纲链接§ [toc] 动态路由&#39;/edit/:blogId&#39; 在请求URL 为 &#39;/edit/:blogId&#39;、&#39;/detail" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://xmasuhai.xyz/post/project/share-blog/%E9%A1%B9%E7%9B%AE-%E5%A4%9A%E4%BA%BA%E5%85%B1%E4%BA%AB%E5%8D%9A%E5%AE%A23.-%E8%B7%AF%E7%94%B1%E7%9A%84%E5%AE%8C%E5%96%84/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2022-07-25T10:08:46+08:00" />
+<meta property="article:modified_time" content="2022-06-07T08:48:37+08:00" />
+
+<meta itemprop="name" content="【项目 多人共享博客】3. 路由的完善">
+<meta itemprop="description" content="完善路由功能路由 在线接口文档 大纲链接§ [toc] 动态路由&#39;/edit/:blogId&#39; 在请求URL 为 &#39;/edit/:blogId&#39;、&#39;/detail"><meta itemprop="datePublished" content="2022-07-25T10:08:46+08:00" />
+<meta itemprop="dateModified" content="2022-06-07T08:48:37+08:00" />
+<meta itemprop="wordCount" content="3904">
+<meta itemprop="keywords" content="FrontEnd,Project," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="【项目 多人共享博客】3. 路由的完善"/>
+<meta name="twitter:description" content="完善路由功能路由 在线接口文档 大纲链接§ [toc] 动态路由&#39;/edit/:blogId&#39; 在请求URL 为 &#39;/edit/:blogId&#39;、&#39;/detail"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Joel in The House</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/post/">文档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/categories/">目录</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/about/">关于我</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Joel in The House
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/post/">文档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/categories/">目录</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/about/">关于我</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">【项目 多人共享博客】3. 路由的完善</h1>
+      
+      <div class="post-meta">
+        <time datetime="2022-07-25" class="post-time">
+          2022-07-25
+        </time>
+        <div class="post-category">
+            
+          </div>
+        <span class="more-meta"> 约 3904 字 </span>
+          <span class="more-meta"> 预计阅读 8 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#动态路由editblogid">动态路由<code>'/edit/:blogId'</code></a></li>
+    <li><a href="#添加路由元信息httpsroutervuejsorgzhguideadvancedmetahtmle8b7afe794b1e58583e4bfa1e681af"><a href="https://router.vuejs.org/zh/guide/advanced/meta.html#%E8%B7%AF%E7%94%B1%E5%85%83%E4%BF%A1%E6%81%AF">添加路由元信息</a></a></li>
+    <li><a href="#路由重定向">路由重定向</a>
+      <ul>
+        <li><a href="#路由重定向的bug">路由重定向的bug</a></li>
+      </ul>
+    </li>
+    <li><a href="#异步加载-a-hrefcatalogue--a">异步加载 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
+    <li><a href="#权限验证-a-hrefcatalogue--a">权限验证 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
+    <li><a href="#权限控制-a-hrefcatalogue--a">权限控制 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
+    <li><a href="#其他处理">其他处理</a>
+      <ul>
+        <li><a href="#处理导航结果">处理导航结果</a></li>
+        <li><a href="#路由懒加载">路由懒加载</a></li>
+        <li><a href="#过渡动效">过渡动效</a></li>
+        <li><a href="#滚动行为处理">滚动行为处理</a></li>
+      </ul>
+    </li>
+    <li><a href="#参考文章">参考文章</a></li>
+    <li><a href="#相关文章">相关文章</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      <h1 id="完善路由功能路由">完善路由功能路由</h1>
+<blockquote>
+<p><a href="https://docs.apipost.cn/preview/40d8ed7ff013eb96/5c340e2a63f91973?target_id=9dcb88ac-923d-48cf-8620-3cde224b111f#9dcb88ac-923d-48cf-8620-3cde224b111f">在线接口文档</a></p>
+</blockquote>
+<hr>
+<blockquote>
+<p>大纲链接<!-- raw HTML omitted --> § <!-- raw HTML omitted --></p>
+</blockquote>
+<p>[toc]</p>
+<hr>
+<h2 id="动态路由editblogid">动态路由<code>'/edit/:blogId'</code></h2>
+<ul>
+<li>在请求URL 为 <code>'/edit/:blogId'</code>、<code>'/detail/:blogId'</code>、<code>'/user/:userId'</code>、时需要额外传入动态URL信息</li>
+<li><code>'/detail/:blogId'</code> 博客详情，需要<code>blogId</code>信息</li>
+<li><code>'/edit/:blogId'</code> 博客编辑，需要<code>blogId</code>信息</li>
+<li><code>'/user/:userId'</code> 博客编辑，需要<code>userId</code>信息</li>
+<li>其他比如创建<code>'/create'</code>就无需<code>:blogId</code></li>
+</ul>
+<blockquote>
+<p><a href="https://router.vuejs.org/zh/guide/essentials/dynamic-matching.html#%E5%B8%A6%E5%8F%82%E6%95%B0%E7%9A%84%E5%8A%A8%E6%80%81%E8%B7%AF%E7%94%B1%E5%8C%B9%E9%85%8D"><code>vue-router</code> 动态路由匹配</a></p>
+</blockquote>
+<hr>
+<h2 id="添加路由元信息httpsroutervuejsorgzhguideadvancedmetahtmle8b7afe794b1e58583e4bfa1e681af"><a href="https://router.vuejs.org/zh/guide/advanced/meta.html#%E8%B7%AF%E7%94%B1%E5%85%83%E4%BF%A1%E6%81%AF">添加路由元信息</a></h2>
+<blockquote>
+<p>如何将任意信息附加到路由上，例如：过渡名称、谁可以访问路由等</p>
+</blockquote>
+<ul>
+<li><code>meta</code>字段可以用来附加 <strong>是否需要访问权限</strong>，使得只有经过身份验证的用户才能访问该路由
+<ul>
+<li>否则就重定向到登录页面<code>/login</code></li>
+<li>并且在地址栏中增加重定向信息<code>/login?redirect=/myblog</code>，登录后URL仍可以定向到之前希望访问的页面</li>
+</ul>
+</li>
+<li>在路由列表<code>routes</code>中需要身份认证的路由对象上，添加<code>meta</code>字段来实现：
+<ul>
+<li>在路由配置中添加<code>meta</code>字段</li>
+<li><code>meta: { requiresAuth: true },</code></li>
+<li>在路由全局前置守卫中设置判断条件</li>
+<li>访问需要身份认证的 URL <code>to.matched.some(record =&gt; (record.meta.requiresAuth))</code></li>
+<li>查找配置列表中<code>meta</code>字段的<code>requiresAuth</code>属性</li>
+</ul>
+</li>
+<li>可以在路由地址和导航守卫上都被访问到，配合导航守卫钩子，处理身份认证的逻辑</li>
+</ul>
+<blockquote>
+<p><code>@/router/index.ts</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="kr">import</span> <span class="p">{</span><span class="nx">createRouter</span><span class="p">,</span> <span class="cm">/*createWebHistory*/</span> <span class="nx">createWebHashHistory</span><span class="p">,</span> <span class="nx">RouteRecordRaw</span><span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;vue-router&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">useStore</span> <span class="kr">from</span> <span class="s1">&#39;@/store&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">useAuthStore</span> <span class="kr">from</span> <span class="s1">&#39;@/store/modules/auth&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span><span class="nx">storeToRefs</span><span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;pinia&#39;</span><span class="p">;</span>
+
+<span class="cm">/* 动态加载组件会报警告 component: () =&gt; import(&#39;@/pages/blog/index/BlogIndex&#39;)  改为静态导入 */</span>
+<span class="c1">// components
+</span><span class="c1"></span><span class="kr">import</span> <span class="nx">BlogIndex</span> <span class="kr">from</span> <span class="s1">&#39;@/pages/blog/index/BlogIndex&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">Login</span> <span class="kr">from</span> <span class="s1">&#39;@/pages/login/Login&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">Register</span> <span class="kr">from</span> <span class="s1">&#39;@/pages/register/Register&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">CreateBlog</span> <span class="kr">from</span> <span class="s1">&#39;@/pages/blog/create/CreateBlog&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">EditBlog</span> <span class="kr">from</span> <span class="s1">&#39;@/pages/blog/edit/EditBlog&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">BlogDetail</span> <span class="kr">from</span> <span class="s1">&#39;@/pages/blog/detail/BlogDetail&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">User</span> <span class="kr">from</span> <span class="s1">&#39;@/pages/user/User&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">MyBlog</span> <span class="kr">from</span> <span class="s1">&#39;@/pages/myBlog/MyBlog&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">About</span> <span class="kr">from</span> <span class="s1">&#39;@/pages/About&#39;</span><span class="p">;</span>
+
+<span class="kr">const</span> <span class="nx">routes</span>: <span class="kt">RouteRecordRaw</span><span class="p">[]</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">{</span>
+    <span class="nx">path</span><span class="o">:</span> <span class="s1">&#39;/&#39;</span><span class="p">,</span>
+    <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;BlogIndex&#39;</span><span class="p">,</span>
+    <span class="c1">// import(&#39;&#39;) 必须是静态字符串，不可动态拼接
+</span><span class="c1"></span>    <span class="c1">// The above dynamic import cannot be analyzed by vite
+</span><span class="c1"></span>    <span class="nx">component</span>: <span class="kt">BlogIndex</span><span class="p">,</span> <span class="c1">// 注意这里如果是.vue文件必须要带上 文件后缀.vue
+</span><span class="c1"></span>  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="nx">path</span><span class="o">:</span> <span class="s1">&#39;/login&#39;</span><span class="p">,</span>
+    <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Login&#39;</span><span class="p">,</span>
+    <span class="nx">component</span>: <span class="kt">Login</span><span class="p">,</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="nx">path</span><span class="o">:</span> <span class="s1">&#39;/register&#39;</span><span class="p">,</span>
+    <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Register&#39;</span><span class="p">,</span>
+    <span class="nx">component</span>: <span class="kt">Register</span><span class="p">,</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="nx">path</span><span class="o">:</span> <span class="s1">&#39;/create&#39;</span><span class="p">,</span>
+    <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;CreateBlog&#39;</span><span class="p">,</span>
+    <span class="nx">component</span>: <span class="kt">CreateBlog</span><span class="p">,</span>
+    <span class="c1">// 只有经过身份验证的用户才能创建帖子
+</span><span class="c1"></span>    <span class="nx">meta</span><span class="o">:</span> <span class="p">{</span><span class="nx">requiresAuth</span>: <span class="kt">true</span><span class="p">},</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="nx">path</span><span class="o">:</span> <span class="s1">&#39;/edit/:blogId&#39;</span><span class="p">,</span>
+    <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;EditBlog&#39;</span><span class="p">,</span>
+    <span class="nx">component</span>: <span class="kt">EditBlog</span><span class="p">,</span>
+    <span class="nx">meta</span><span class="o">:</span> <span class="p">{</span><span class="nx">requiresAuth</span>: <span class="kt">true</span><span class="p">},</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="nx">path</span><span class="o">:</span> <span class="s1">&#39;/detail/:blogId&#39;</span><span class="p">,</span>
+    <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;BlogDetail&#39;</span><span class="p">,</span>
+    <span class="nx">component</span>: <span class="kt">BlogDetail</span><span class="p">,</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="nx">path</span><span class="o">:</span> <span class="s1">&#39;/user/:blogId&#39;</span><span class="p">,</span>
+    <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;User&#39;</span><span class="p">,</span>
+    <span class="nx">component</span>: <span class="kt">User</span><span class="p">,</span>
+    <span class="nx">meta</span><span class="o">:</span> <span class="p">{</span><span class="nx">requiresAuth</span>: <span class="kt">true</span><span class="p">},</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="nx">path</span><span class="o">:</span> <span class="s1">&#39;/myblog&#39;</span><span class="p">,</span>
+    <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;MyBlog&#39;</span><span class="p">,</span>
+    <span class="nx">component</span>: <span class="kt">MyBlog</span><span class="p">,</span>
+    <span class="nx">meta</span><span class="o">:</span> <span class="p">{</span><span class="nx">requiresAuth</span>: <span class="kt">true</span><span class="p">},</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="nx">path</span><span class="o">:</span> <span class="s1">&#39;/about&#39;</span><span class="p">,</span>
+    <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;About&#39;</span><span class="p">,</span>
+    <span class="c1">// route level code-splitting
+</span><span class="c1"></span>    <span class="c1">// this generates a separate chunk (about.[hash].js) for this route
+</span><span class="c1"></span>    <span class="c1">// which is lazy-loaded when the route is visited.
+</span><span class="c1"></span>    <span class="nx">component</span>: <span class="kt">About</span>
+  <span class="p">}</span>
+<span class="p">];</span>
+
+<span class="kr">const</span> <span class="nx">router</span> <span class="o">=</span> <span class="nx">createRouter</span><span class="p">({</span>
+  <span class="nx">history</span>: <span class="kt">createWebHashHistory</span><span class="p">(),</span>
+  <span class="nx">routes</span><span class="p">,</span>
+<span class="p">});</span>
+
+<span class="kr">export</span> <span class="k">default</span> <span class="nx">router</span><span class="p">;</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><code>to.matched.some(record =&gt; { return record.meta.requiresAuth; })</code> 遍历匹配， 每一个需要身份认证的 URL
+<ul>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/some">Array.prototype.some() MDN</a></li>
+<li><code>arr.some(callback(element[, index[, array]])[, thisArg]): boolean</code></li>
+</ul>
+</li>
+<li>编程式导航 <code>router.push('/users/posva#bio')</code>
+<ul>
+<li><a href="https://router.vuejs.org/zh/api/#routelocationraw"><code>RouteLocationRaw</code></a></li>
+</ul>
+</li>
+<li>标准化的路由地址
+<ul>
+<li><a href="https://router.vuejs.org/zh/api/#query"><code>query</code></a></li>
+<li><a href="https://router.vuejs.org/zh/api/#matched">matched</a></li>
+</ul>
+</li>
+<li>匹配的组件可以从 <code>router.currentRoute.value.matched</code> 中获取</li>
+</ul>
+<hr>
+<h2 id="路由重定向">路由重定向</h2>
+<blockquote>
+<p>处于未登录状态时，访问需要身份验证(<code>meta: {requiresAuth: true},</code>)的 <code>URL</code>，如何设置 登录后重定向回该 <code>URL</code></p>
+</blockquote>
+<ul>
+<li>在全局路由守卫中设置回调</li>
+<li>取得<code>store</code>中存储的登录信息(使用 <code>pinia</code> 作为状态管理库代替<code>vuex</code>)</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="p">...</span>
+<span class="c1">// 路由全局前置守卫
+</span><span class="c1"></span><span class="nx">router</span><span class="p">.</span><span class="nx">beforeEach</span><span class="p">((</span><span class="nx">to</span><span class="p">,</span> <span class="kr">from</span><span class="p">,</span> <span class="nx">next</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="c1">// 匹配路由元信息
+</span><span class="c1"></span>  <span class="c1">// 判断是需要登录
+</span><span class="c1"></span>  <span class="kr">const</span> <span class="p">{</span><span class="nx">getIsLogin</span><span class="p">,}</span> <span class="o">=</span> <span class="nx">storeToRefs</span><span class="p">(</span><span class="nx">useAuthStore</span><span class="p">());</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="nx">to</span><span class="p">.</span><span class="nx">matched</span><span class="p">.</span><span class="nx">some</span><span class="p">(</span><span class="nx">record</span> <span class="o">=&gt;</span> <span class="p">(</span><span class="nx">record</span><span class="p">.</span><span class="nx">meta</span><span class="p">.</span><span class="nx">requiresAuth</span><span class="p">)))</span> <span class="p">{</span>
+  
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">getIsLogin</span><span class="p">.</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// 未登录
+</span><span class="c1"></span>      <span class="nx">next</span><span class="p">(...);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="c1">// 已登录
+</span><span class="c1"></span>      <span class="nx">next</span><span class="p">();</span>
+    <span class="p">}</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+  <span class="c1">// 访问无需身份认证的 URL
+</span><span class="c1"></span>    <span class="nx">next</span><span class="p">();</span>
+  <span class="p">}</span>
+
+<span class="p">});</span>
+
+<span class="c1">// 路由全局后置守卫
+</span><span class="c1"></span><span class="nx">router</span><span class="p">.</span><span class="nx">afterEach</span><span class="p">((</span><span class="cm">/* to, from, failure */</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="c1">// console.log(&#39;路由全局后置守卫&#39;, to, from);
+</span><span class="c1"></span><span class="p">});</span>
+<span class="p">...</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>举例：</p>
+</blockquote>
+<ul>
+<li>在登录组件<code>Login.tsx</code>的<code>onLogin</code>方法中
+<ul>
+<li>获取当前页面URL的重定向属性值<code>router.currentRoute.value.query.redirect</code></li>
+<li><code>router</code>由<code>const router = useRouter();</code>定义</li>
+<li>调用接口的方法<code>authStore.login(logString).then()</code></li>
+<li><code>return router.push({path: (router.currentRoute.value.query.redirect as string) || '/'  /* 首页保底 */});</code></li>
+<li>成功，跳转重定向页面 或者 首页 作为保底</li>
+</ul>
+</li>
+<li>回顾在路由全局前置钩子中设置：
+<ul>
+<li>判断是需要登录，即匹配路由元信息</li>
+<li>访问需要身份认证的 URL
+<ul>
+<li><code>to.matched.some(record =&gt; (record.meta.requiresAuth))</code>\
+<ul>
+<li>判断 <strong><code>store</code>中</strong> 的登录状态
+<ul>
+<li><code>const {getIsLogin,} = storeToRefs(useAuthStore());</code></li>
+</ul>
+</li>
+<li>未登录<code>!getIsLogin.value</code>
+<ul>
+<li>执行重定向到登录页面：<code>next({ path: '/login', query: {redirect: to.fullPath} });</code></li>
+<li>保留原重定向路径<code>query: {redirect: to.fullPath}</code>，设置到<code>/login</code>后</li>
+</ul>
+</li>
+<li>已登录，直接<code>next()</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>访问无需身份认证的 URL
+<ul>
+<li>直接<code>next()</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>组件中使用<a href="https://router.vuejs.org/zh/api/#currentroute"><code>router.currentRoute.value.query.redirect</code></a>获取查询参数中的重定向字段</li>
+</ul>
+<h3 id="路由重定向的bug">路由重定向的bug</h3>
+<blockquote>
+<p>处于已登录状态时，在编辑博客页面刷新，仍会跳转至登录页面</p>
+</blockquote>
+<ul>
+<li>原因是的全局路由钩子中没有向服务器验证当前登录状态 <code>store.checkLogin()</code></li>
+<li>全局路由钩子中直接获取<code>store</code>中的登录状态的时机出错，此时<code>BlogHeader</code>刚发出请求，还未更新<code>store</code>中的登录状态信息</li>
+<li>而是直接使用了<code>store</code>中的登录状态来判断，即<code>store.getIsLogin</code></li>
+<li>依据当前登录状态来判断是否需要重定向到登录页面</li>
+</ul>
+<blockquote>
+<p><code>Login.tsx</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-tsx" data-lang="tsx"><span class="kr">import</span> <span class="p">{</span><span class="nx">defineComponent</span><span class="p">,</span> <span class="nx">ref</span><span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;vue&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span><span class="nx">useRouter</span><span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;vue-router&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">useAuthStore</span> <span class="kr">from</span> <span class="s1">&#39;@/store/modules/auth&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span><span class="nx">logString</span><span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;@/store/modules/auth/interface&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">cssAuth</span> <span class="kr">from</span> <span class="s1">&#39;@/styles/auth.module.scss&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">UserInput</span> <span class="kr">from</span> <span class="s1">&#39;@/components/user-authentication/UserInput&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">UserSubmitBtnTip</span> <span class="kr">from</span> <span class="s1">&#39;@/components/user-authentication/UserSubmitBtnTip&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">useIdentifyCompName</span> <span class="kr">from</span> <span class="s1">&#39;@/hooks/useIdentifyCompName&#39;</span><span class="p">;</span>
+
+<span class="kr">const</span> <span class="nx">LoginProps</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="c1">// onHandleSubmit: Function as PropType&lt;() =&gt; void&gt;,
+</span><span class="c1"></span><span class="p">};</span>
+
+<span class="kr">export</span> <span class="k">default</span> <span class="nx">defineComponent</span><span class="p">({</span>
+  <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Login&#39;</span><span class="p">,</span>
+  <span class="nx">props</span>: <span class="kt">LoginProps</span><span class="p">,</span>
+  <span class="nx">components</span><span class="o">:</span> <span class="p">{},</span>
+  <span class="nx">setup</span><span class="p">(</span><span class="cm">/*props, ctx*/</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">useIdentifyCompName</span><span class="p">();</span>
+    <span class="kr">const</span> <span class="nx">authStore</span> <span class="o">=</span> <span class="nx">useAuthStore</span><span class="p">();</span>
+    <span class="kr">const</span> <span class="nx">router</span> <span class="o">=</span> <span class="nx">useRouter</span><span class="p">();</span>
+    <span class="kr">const</span> <span class="nx">username</span> <span class="o">=</span> <span class="nx">ref</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">);</span>
+    <span class="kr">const</span> <span class="nx">password</span> <span class="o">=</span> <span class="nx">ref</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">);</span>
+
+    <span class="kr">const</span> <span class="nx">userLoginInfo</span> <span class="o">=</span> <span class="nx">computed</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="p">{</span>
+        <span class="nx">username</span>: <span class="kt">username.value</span><span class="p">,</span>
+        <span class="nx">password</span>: <span class="kt">password.value</span>
+      <span class="p">};</span>
+    <span class="p">});</span>
+
+    <span class="c1">// resolve =&gt; router.push
+</span><span class="c1"></span>    <span class="kr">const</span> <span class="nx">onLogin</span> <span class="o">=</span> <span class="p">(</span><span class="nx">logString</span>: <span class="kt">logString</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="nx">authStore</span><span class="p">.</span><span class="nx">login</span><span class="p">(</span><span class="nx">logString</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">then</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+          <span class="c1">// 成功，跳转重定向页面 或者 首页 作为保底
+</span><span class="c1"></span>          <span class="k">return</span> <span class="nx">router</span><span class="p">.</span><span class="nx">push</span><span class="p">({</span><span class="nx">path</span><span class="o">:</span> <span class="p">(</span><span class="nx">router</span><span class="p">.</span><span class="nx">currentRoute</span><span class="p">.</span><span class="nx">value</span><span class="p">.</span><span class="nx">query</span><span class="p">.</span><span class="nx">redirect</span> <span class="kr">as</span> <span class="kt">string</span><span class="p">)</span> <span class="o">||</span> <span class="s1">&#39;/&#39;</span>  <span class="cm">/* 首页保底 */</span><span class="p">});</span>
+        <span class="p">},</span> <span class="cm">/* reject */</span><span class="p">);</span>
+    <span class="p">};</span>
+
+    <span class="c1">// watch keyup Enter
+</span><span class="c1"></span>    <span class="kr">const</span> <span class="nx">keyUpHandler</span> <span class="o">=</span> <span class="p">(</span><span class="nx">e</span>: <span class="kt">KeyboardEvent</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="p">;[</span><span class="s1">&#39;Enter&#39;</span><span class="p">].</span><span class="nx">includes</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">key</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="nx">onLogin</span><span class="p">({</span>
+        <span class="nx">username</span>: <span class="kt">username.value</span><span class="p">,</span>
+        <span class="nx">password</span>: <span class="kt">password.value</span>
+      <span class="p">});</span>
+    <span class="p">};</span>
+
+    <span class="kr">const</span> <span class="nx">clickHandler</span> <span class="o">=</span> <span class="p">(</span><span class="nx">logString</span>: <span class="kt">logString</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="nx">onLogin</span><span class="p">(</span><span class="nx">logString</span><span class="p">);</span>
+    <span class="p">};</span>
+
+    <span class="k">return</span> <span class="p">{</span>
+      <span class="nx">username</span><span class="p">,</span>
+      <span class="nx">password</span><span class="p">,</span>
+      <span class="nx">userLoginInfo</span><span class="p">,</span>
+      <span class="nx">onLogin</span><span class="p">,</span>
+      <span class="nx">keyUpHandler</span><span class="p">,</span>
+      <span class="nx">clickHandler</span>
+    <span class="p">};</span>
+  <span class="p">},</span>
+  <span class="nx">render() {</span>
+    <span class="k">return</span> <span class="p">(</span>
+      <span class="p">&lt;</span><span class="nt">section</span> <span class="na">class</span><span class="o">=</span><span class="p">{</span><span class="nx">cssAuth</span><span class="p">.</span><span class="nx">login</span><span class="p">}&gt;</span>
+        <span class="p">&lt;</span><span class="nt">UserInput</span> <span class="na">title</span><span class="o">=</span><span class="s">&#34;用户名&#34;</span>
+                   <span class="na">errorText</span><span class="o">=</span><span class="s">&#34;当前用户名已注册&#34;</span>
+                   <span class="na">v</span><span class="err">-</span><span class="na">model</span><span class="o">=</span><span class="p">{[</span><span class="k">this</span><span class="p">.</span><span class="nx">username</span><span class="p">,</span> <span class="s1">&#39;username&#39;</span><span class="p">]}/&gt;</span>
+
+        <span class="p">&lt;</span><span class="nt">UserInput</span> <span class="na">title</span><span class="o">=</span><span class="s">&#34;密码&#34;</span>
+                   <span class="na">inputType</span><span class="o">=</span><span class="s">&#34;password&#34;</span>
+                   <span class="na">errorText</span><span class="o">=</span><span class="s">&#34;当前用户名或密码不匹配&#34;</span>
+                   <span class="na">v</span><span class="err">-</span><span class="na">model</span><span class="o">=</span><span class="p">{[</span><span class="k">this</span><span class="p">.</span><span class="nx">password</span><span class="p">,</span> <span class="s1">&#39;password&#39;</span><span class="p">]}</span>
+                   <span class="na">onKeyUp</span><span class="o">=</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">keyUpHandler</span><span class="p">}/&gt;</span>
+
+        <span class="p">&lt;</span><span class="nt">UserSubmitBtnTip</span> <span class="na">btnName</span><span class="o">=</span><span class="s">&#34;立即登录&#34;</span>
+                          <span class="na">tipText</span><span class="o">=</span><span class="s">&#34;没有账号？&#34;</span>
+                          <span class="na">linkTo</span><span class="o">=</span><span class="s">&#34;/register&#34;</span>
+                          <span class="na">linkText</span><span class="o">=</span><span class="s">&#34;注册新用户&#34;</span>
+                          <span class="na">onHandleSubmit</span><span class="o">=</span><span class="p">{()</span> <span class="o">=&gt;</span> <span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">clickHandler</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">userLoginInfo</span><span class="p">);}}/&gt;</span>
+      <span class="p">&lt;/</span><span class="nt">section</span><span class="p">&gt;</span>
+    <span class="p">);</span>
+  <span class="p">}</span>
+
+<span class="p">});</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><hr>
+<h2 id="异步加载-a-hrefcatalogue--a">异步加载 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+<blockquote>
+<p><code>@/router/index.ts</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="kr">import</span> <span class="p">{</span><span class="nx">createRouter</span><span class="p">,</span> <span class="nx">createWebHashHistory</span><span class="p">,</span> <span class="nx">RouteRecordRaw</span><span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;vue-router&#39;</span><span class="p">;</span>
+
+<span class="kr">const</span> <span class="nx">routes</span>: <span class="kt">RouteRecordRaw</span><span class="p">[]</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">{</span>
+    <span class="nx">path</span><span class="o">:</span> <span class="s1">&#39;/&#39;</span><span class="p">,</span>
+    <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;BlogIndex&#39;</span><span class="p">,</span>
+    <span class="c1">// import(&#39;&#39;) 必须是静态字符串，不可动态拼接
+</span><span class="c1"></span>    <span class="c1">// The above dynamic import cannot be analyzed by vite
+</span><span class="c1"></span>    <span class="nx">component</span><span class="o">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="kr">import</span><span class="p">(</span><span class="s1">&#39;@/pages/blog/index/BlogIndex.vue&#39;</span><span class="p">),</span> <span class="c1">// 注意这里如果是.vue文件必须要带上 文件后缀.vue
+</span><span class="c1"></span>  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="nx">path</span><span class="o">:</span> <span class="s1">&#39;/login&#39;</span><span class="p">,</span>
+    <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Login&#39;</span><span class="p">,</span>
+    <span class="nx">component</span><span class="o">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="kr">import</span><span class="p">(</span><span class="s1">&#39;@/pages/login/Login.vue&#39;</span><span class="p">),</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="nx">path</span><span class="o">:</span> <span class="s1">&#39;/register&#39;</span><span class="p">,</span>
+    <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Register&#39;</span><span class="p">,</span>
+    <span class="nx">component</span><span class="o">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="kr">import</span><span class="p">(</span><span class="s1">&#39;@/pages/register/Register.vue&#39;</span><span class="p">),</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="nx">path</span><span class="o">:</span> <span class="s1">&#39;/create&#39;</span><span class="p">,</span>
+    <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;CreateBlog&#39;</span><span class="p">,</span>
+    <span class="nx">component</span><span class="o">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="kr">import</span><span class="p">(</span><span class="s1">&#39;@/pages/blog/create/CreateBlog.vue&#39;</span><span class="p">),</span>
+    <span class="c1">// 只有经过身份验证的用户才能创建帖子
+</span><span class="c1"></span>    <span class="nx">meta</span><span class="o">:</span> <span class="p">{</span> <span class="nx">requiresAuth</span>: <span class="kt">true</span> <span class="p">},</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="nx">path</span><span class="o">:</span> <span class="s1">&#39;/edit/:blogId&#39;</span><span class="p">,</span>
+    <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;EditBlog&#39;</span><span class="p">,</span>
+    <span class="nx">component</span><span class="o">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="kr">import</span><span class="p">(</span><span class="s1">&#39;@/pages/blog/edit/EditBlog.vue&#39;</span><span class="p">),</span>
+    <span class="nx">meta</span><span class="o">:</span> <span class="p">{</span> <span class="nx">requiresAuth</span>: <span class="kt">true</span> <span class="p">},</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="nx">path</span><span class="o">:</span> <span class="s1">&#39;/detail/:blogId&#39;</span><span class="p">,</span>
+    <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;BlogDetail&#39;</span><span class="p">,</span>
+    <span class="nx">component</span><span class="o">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="kr">import</span><span class="p">(</span><span class="s1">&#39;@/pages/blog/detail/BlogDetail.vue&#39;</span><span class="p">),</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="nx">path</span><span class="o">:</span> <span class="s1">&#39;/user/:blogId&#39;</span><span class="p">,</span>
+    <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;User&#39;</span><span class="p">,</span>
+    <span class="nx">component</span><span class="o">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="kr">import</span><span class="p">(</span><span class="s1">&#39;@/pages/user/User.vue&#39;</span><span class="p">),</span>
+    <span class="nx">meta</span><span class="o">:</span> <span class="p">{</span> <span class="nx">requiresAuth</span>: <span class="kt">true</span> <span class="p">},</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="nx">path</span><span class="o">:</span> <span class="s1">&#39;/myblog&#39;</span><span class="p">,</span>
+    <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;MyBlog&#39;</span><span class="p">,</span>
+    <span class="nx">component</span><span class="o">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="kr">import</span><span class="p">(</span><span class="s1">&#39;@/pages/myblog/MyBlog.vue&#39;</span><span class="p">),</span>
+    <span class="nx">meta</span><span class="o">:</span> <span class="p">{</span> <span class="nx">requiresAuth</span>: <span class="kt">true</span> <span class="p">},</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="nx">path</span><span class="o">:</span> <span class="s1">&#39;/about&#39;</span><span class="p">,</span>
+    <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;About&#39;</span><span class="p">,</span>
+    <span class="c1">// route level code-splitting
+</span><span class="c1"></span>    <span class="c1">// this generates a separate chunk (about.[hash].js) for this route
+</span><span class="c1"></span>    <span class="c1">// which is lazy-loaded when the route is visited.
+</span><span class="c1"></span>    <span class="nx">component</span><span class="o">:</span> <span class="p">()</span> <span class="o">=&gt;</span>
+      <span class="kr">import</span><span class="p">(</span><span class="cm">/* webpackChunkName: &#34;About&#34; */</span> <span class="s1">&#39;@/pages/About&#39;</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">];</span>
+<span class="kr">const</span> <span class="nx">router</span> <span class="o">=</span> <span class="nx">createRouter</span><span class="p">({</span>
+  <span class="nx">history</span>: <span class="kt">createWebHashHistory</span><span class="p">(),</span>
+  <span class="c1">// history: createWebHistory(process.env.BASE_URL),
+</span><span class="c1"></span>  <span class="nx">routes</span><span class="p">,</span>
+<span class="p">});</span>
+
+<span class="p">...</span>
+
+<span class="kr">export</span> <span class="k">default</span> <span class="nx">router</span><span class="p">;</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>打包时会分成不同的<code>.js</code>文件</li>
+</ul>
+<hr>
+<h2 id="权限验证-a-hrefcatalogue--a">权限验证 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+<ul>
+<li>使用 <code>JWT</code>来进行身份验证</li>
+<li>相关<code>API</code>接口</li>
+<li>使用的组件</li>
+</ul>
+<hr>
+<h2 id="权限控制-a-hrefcatalogue--a">权限控制 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+<ul>
+<li>使用的 路由钩子</li>
+<li>相关<code>API</code>接口</li>
+<li>使用的组件</li>
+</ul>
+<hr>
+<blockquote>
+<p>完整<code>@/router/index.ts</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="kr">import</span> <span class="p">{</span><span class="nx">createRouter</span><span class="p">,</span> <span class="cm">/*createWebHistory*/</span> <span class="nx">createWebHashHistory</span><span class="p">,</span> <span class="nx">RouteRecordRaw</span><span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;vue-router&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span><span class="nx">storeToRefs</span><span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;pinia&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">useStore</span> <span class="kr">from</span> <span class="s1">&#39;@/store&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">useAuthStore</span> <span class="kr">from</span> <span class="s1">&#39;@/store/modules/auth&#39;</span><span class="p">;</span>
+
+<span class="cm">/* 动态加载组件出现警告 component: () =&gt; import(&#39;@/pages/blog/index/BlogIndex&#39;)  改为静态导入 */</span>
+<span class="c1">// components
+</span><span class="c1"></span><span class="kr">import</span> <span class="nx">BlogIndex</span> <span class="kr">from</span> <span class="s1">&#39;@/pages/blog/index/BlogIndex&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">Login</span> <span class="kr">from</span> <span class="s1">&#39;@/pages/login/Login&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">Register</span> <span class="kr">from</span> <span class="s1">&#39;@/pages/register/Register&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">CreateBlog</span> <span class="kr">from</span> <span class="s1">&#39;@/pages/blog/create/CreateBlog&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">EditBlog</span> <span class="kr">from</span> <span class="s1">&#39;@/pages/blog/edit/EditBlog&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">BlogDetail</span> <span class="kr">from</span> <span class="s1">&#39;@/pages/blog/detail/BlogDetail&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">User</span> <span class="kr">from</span> <span class="s1">&#39;@/pages/user/User&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">MyBlog</span> <span class="kr">from</span> <span class="s1">&#39;@/pages/myBlog/MyBlog&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">About</span> <span class="kr">from</span> <span class="s1">&#39;@/pages/About&#39;</span><span class="p">;</span>
+
+<span class="kr">const</span> <span class="nx">routes</span>: <span class="kt">RouteRecordRaw</span><span class="p">[]</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">{</span>
+    <span class="nx">path</span><span class="o">:</span> <span class="s1">&#39;/&#39;</span><span class="p">,</span>
+    <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;BlogIndex&#39;</span><span class="p">,</span>
+    <span class="c1">// import(&#39;&#39;) 必须是静态字符串，不可动态拼接
+</span><span class="c1"></span>    <span class="c1">// The above dynamic import cannot be analyzed by vite
+</span><span class="c1"></span>    <span class="nx">component</span>: <span class="kt">BlogIndex</span><span class="p">,</span> <span class="c1">// 注意这里如果是.vue文件必须要带上 文件后缀.vue
+</span><span class="c1"></span>  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="nx">path</span><span class="o">:</span> <span class="s1">&#39;/login&#39;</span><span class="p">,</span>
+    <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Login&#39;</span><span class="p">,</span>
+    <span class="nx">component</span>: <span class="kt">Login</span><span class="p">,</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="nx">path</span><span class="o">:</span> <span class="s1">&#39;/register&#39;</span><span class="p">,</span>
+    <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Register&#39;</span><span class="p">,</span>
+    <span class="nx">component</span>: <span class="kt">Register</span><span class="p">,</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="nx">path</span><span class="o">:</span> <span class="s1">&#39;/detail/:blogId&#39;</span><span class="p">,</span>
+    <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;BlogDetail&#39;</span><span class="p">,</span>
+    <span class="nx">component</span>: <span class="kt">BlogDetail</span><span class="p">,</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="nx">path</span><span class="o">:</span> <span class="s1">&#39;/create&#39;</span><span class="p">,</span>
+    <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;CreateBlog&#39;</span><span class="p">,</span>
+    <span class="nx">component</span>: <span class="kt">CreateBlog</span><span class="p">,</span>
+    <span class="c1">// 只有经过身份验证的用户才能创建帖子
+</span><span class="c1"></span>    <span class="nx">meta</span><span class="o">:</span> <span class="p">{</span><span class="nx">requiresAuth</span>: <span class="kt">true</span><span class="p">},</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="nx">path</span><span class="o">:</span> <span class="s1">&#39;/edit/:blogId&#39;</span><span class="p">,</span>
+    <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;EditBlog&#39;</span><span class="p">,</span>
+    <span class="nx">component</span>: <span class="kt">EditBlog</span><span class="p">,</span>
+    <span class="nx">meta</span><span class="o">:</span> <span class="p">{</span><span class="nx">requiresAuth</span>: <span class="kt">true</span><span class="p">},</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="nx">path</span><span class="o">:</span> <span class="s1">&#39;/user/:blogId&#39;</span><span class="p">,</span>
+    <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;User&#39;</span><span class="p">,</span>
+    <span class="nx">component</span>: <span class="kt">User</span><span class="p">,</span>
+    <span class="nx">meta</span><span class="o">:</span> <span class="p">{</span><span class="nx">requiresAuth</span>: <span class="kt">true</span><span class="p">},</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="nx">path</span><span class="o">:</span> <span class="s1">&#39;/myblog&#39;</span><span class="p">,</span>
+    <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;MyBlog&#39;</span><span class="p">,</span>
+    <span class="nx">component</span>: <span class="kt">MyBlog</span><span class="p">,</span>
+    <span class="nx">meta</span><span class="o">:</span> <span class="p">{</span><span class="nx">requiresAuth</span>: <span class="kt">true</span><span class="p">},</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="nx">path</span><span class="o">:</span> <span class="s1">&#39;/about&#39;</span><span class="p">,</span>
+    <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;About&#39;</span><span class="p">,</span>
+    <span class="c1">// route level code-splitting
+</span><span class="c1"></span>    <span class="c1">// this generates a separate chunk (about.[hash].js) for this route
+</span><span class="c1"></span>    <span class="c1">// which is lazy-loaded when the route is visited.
+</span><span class="c1"></span>    <span class="nx">component</span>: <span class="kt">About</span>
+  <span class="p">}</span>
+<span class="p">];</span>
+
+<span class="kr">const</span> <span class="nx">router</span> <span class="o">=</span> <span class="nx">createRouter</span><span class="p">({</span>
+  <span class="nx">history</span>: <span class="kt">createWebHashHistory</span><span class="p">(),</span>
+  <span class="nx">routes</span><span class="p">,</span>
+<span class="p">});</span>
+
+<span class="c1">// 路由全局前置守卫
+</span><span class="c1"></span><span class="nx">router</span><span class="p">.</span><span class="nx">beforeEach</span><span class="p">((</span><span class="nx">to</span><span class="p">,</span> <span class="kr">from</span><span class="p">,</span> <span class="nx">next</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="c1">// 匹配路由元信息
+</span><span class="c1"></span>  <span class="c1">// 判断是需要登录
+</span><span class="c1"></span>  <span class="c1">// const {getIsLogin,} = storeToRefs(useAuthStore()); // 使用 store.checkLogin() 服务器验证 的登录状态 代替
+</span><span class="c1"></span>
+  <span class="kr">const</span> <span class="nx">store</span> <span class="o">=</span> <span class="nx">useAuthStore</span><span class="p">();</span>
+  <span class="cm">/*
+</span><span class="cm">  * if(to.path === &#39;login&#39;) return next();
+</span><span class="cm">  * if (to.path 受控页面或 未登录) return next(&#39;/login？&#39;);
+</span><span class="cm">  * next()
+</span><span class="cm">  * */</span>
+
+  <span class="kr">const</span> <span class="nx">ifRequiresAuth</span>: <span class="kt">boolean</span> <span class="o">=</span> <span class="nx">to</span><span class="p">.</span><span class="nx">matched</span><span class="p">.</span><span class="nx">some</span><span class="p">(</span><span class="nx">record</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">record</span><span class="p">.</span><span class="nx">meta</span><span class="p">.</span><span class="nx">requiresAuth</span><span class="p">;</span> <span class="p">});</span>
+
+  <span class="c1">// URL 是否需要 身份验证
+</span><span class="c1"></span>  <span class="nx">ifRequiresAuth</span>
+    <span class="o">?</span> <span class="p">(</span><span class="c1">// 需要身份验证的 URL
+</span><span class="c1"></span>      <span class="nx">store</span><span class="p">.</span><span class="nx">checkLogin</span><span class="p">()</span> <span class="c1">// 向服务器请求，获取当前登录状态
+</span><span class="c1"></span>        <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">isLogin</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+          <span class="o">!</span><span class="nx">isLogin</span>
+            <span class="o">?</span> <span class="nx">next</span><span class="p">({</span><span class="nx">path</span><span class="o">:</span> <span class="s1">&#39;/login&#39;</span><span class="p">,</span> <span class="nx">query</span><span class="o">:</span> <span class="p">{</span><span class="nx">redirect</span>: <span class="kt">to.fullPath</span><span class="p">}})</span>
+            <span class="o">:</span> <span class="nx">next</span><span class="p">();</span> <span class="c1">// 服务器响应验证已登录
+</span><span class="c1"></span>        <span class="p">}))</span>
+    <span class="o">:</span> <span class="nx">next</span><span class="p">();</span> <span class="c1">// 不需要身份验证的 URL;
+</span><span class="c1"></span>  <span class="cm">/* 确保最后执行且只一次 next() */</span>
+
+<span class="p">});</span>
+
+<span class="c1">// 路由全局后置守卫
+</span><span class="c1"></span><span class="nx">router</span><span class="p">.</span><span class="nx">afterEach</span><span class="p">((</span><span class="cm">/* to, from, failure */</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="c1">// console.log(&#39;路由全局后置守卫&#39;, to, from);
+</span><span class="c1"></span>
+  <span class="c1">// 清除 记录的 router-view 中的 组件名
+</span><span class="c1"></span>  <span class="kr">const</span> <span class="p">{</span><span class="nx">routerCompName</span><span class="p">,}</span> <span class="o">=</span> <span class="nx">storeToRefs</span><span class="p">(</span><span class="nx">useStore</span><span class="p">());</span>
+  <span class="nx">routerCompName</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+<span class="p">});</span>
+
+<span class="kr">export</span> <span class="k">default</span> <span class="nx">router</span><span class="p">;</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><hr>
+<h2 id="其他处理">其他处理</h2>
+<h3 id="处理导航结果">处理导航结果</h3>
+<ul>
+<li>导航是异步的，需要 await router.push 返回的 promise</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="k">await</span> <span class="nx">router</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="s1">&#39;/my-profile&#39;</span><span class="p">)</span>
+<span class="k">this</span><span class="p">.</span><span class="nx">isMenuOpen</span> <span class="o">=</span> <span class="kc">false</span> <span class="c1">// 如果同步处理会马上关闭菜单
+</span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>通过导航结果来执行后续逻辑
+<ul>
+<li>检测导航故障</li>
+<li>导航故障的属性</li>
+<li>检测重定向</li>
+</ul>
+</li>
+</ul>
+<h3 id="路由懒加载">路由懒加载</h3>
+<ul>
+<li><a href="https://router.vuejs.org/zh/guide/advanced/lazy-loading.html#%E8%B7%AF%E7%94%B1%E6%87%92%E5%8A%A0%E8%BD%BD">路由懒加载</a></li>
+</ul>
+<blockquote>
+<p>打包构建应用时，JavaScript 包会变得非常大，影响页面加载</p>
+</blockquote>
+<ul>
+<li>如果我们能把不同路由对应的组件分割成不同的代码块</li>
+<li>当路由被访问的时候才加载对应组件，这样就更高效</li>
+<li><code>createRouter</code>中的<code>component</code>选项 (和 components) 配置接收一个返回 Promise 组件的函数，Vue Router 只会在第一次进入页面时才会获取这个函数，然后使用缓存数据</li>
+<li>如果使用的是 webpack vite 之类的打包器，它将自动从代码分割中受益</li>
+</ul>
+<blockquote>
+<p>注意 不要在路由中使用异步组件</p>
+</blockquote>
+<ul>
+<li>异步组件仍然可以在路由组件中使用，但路由组件本身就是动态导入的</li>
+</ul>
+<hr>
+<h3 id="过渡动效">过渡动效</h3>
+<ul>
+<li><a href="https://router.vuejs.org/zh/guide/advanced/transitions.html#%E8%BF%87%E6%B8%A1%E5%8A%A8%E6%95%88">过渡动效</a></li>
+</ul>
+<h3 id="滚动行为处理">滚动行为处理</h3>
+<ul>
+<li><a href="https://router.vuejs.org/zh/guide/advanced/scroll-behavior.html#%E6%BB%9A%E5%8A%A8%E8%A1%8C%E4%B8%BA">滚动行为</a></li>
+</ul>
+<blockquote>
+<p>自定义封装一个方法<code>@/utils/scrollToTop.ts</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="kr">export</span> <span class="kr">const</span> <span class="nx">scrollToTop</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">c</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">documentElement</span><span class="p">.</span><span class="nx">scrollTop</span> <span class="o">||</span> <span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">scrollTop</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">c</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nb">window</span><span class="p">.</span><span class="nx">requestAnimationFrame</span><span class="p">(</span><span class="nx">scrollToTop</span><span class="p">);</span>
+    <span class="nb">window</span><span class="p">.</span><span class="nx">scrollTo</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nx">c</span> <span class="o">-</span> <span class="nx">c</span> <span class="o">/</span> <span class="mi">8</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><code>window.requestAnimationFrame()</code> 告诉浏览器希望执行一个动画</li>
+<li>并且要求浏览器在下次重绘之前调用指定的回调函数更新动画</li>
+<li>该方法需要传入一个回调函数作为参数，该回调函数会在浏览器下一次重绘之前执行</li>
+<li><code>requestAnimationFrame</code>：优势：由系统决定回调函数的执行时机</li>
+<li><code>60Hz</code>的刷新频率，那么每次刷新的间隔中会执行一次回调函数，不会引起丢帧，不会卡顿</li>
+</ul>
+<hr>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<hr>
+<h2 id="参考文章">参考文章</h2>
+<ul>
+<li><a href="https://juejin.cn/post/7085637321407594533"><code>vue-router</code> <code>scrollBehavior</code>的使用及使用无效的解决方案</a></li>
+</ul>
+<h2 id="相关文章">相关文章</h2>
+<ul>
+<li>无</li>
+</ul>
+<hr>
+<ul>
+<li>作者： Joel</li>
+<li>文章链接：</li>
+<li><a href="http://xmasuhai.xyz/posts/%E7%89%88%E6%9D%83%E5%A3%B0%E6%98%8E%E9%93%BE%E6%8E%A5/">版权声明</a></li>
+<li>非自由转载-非商用-非衍生-保持署名</li>
+</ul>
+<hr>
+<hr>
+
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Joel Xu</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2022-06-07
+      
+        
+        
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="http://xmasuhai.xyz/tags/frontend/">FrontEnd</a>
+          <a href="http://xmasuhai.xyz/tags/project/">Project</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/project/share-blog/%E9%A1%B9%E7%9B%AE-%E5%A4%9A%E4%BA%BA%E5%85%B1%E4%BA%AB%E5%8D%9A%E5%AE%A24.-%E9%A1%B5%E9%9D%A2%E7%9A%84%E5%AE%8C%E5%96%84/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">【项目 多人共享博客】4. 页面的完善</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/project/share-blog/%E9%A1%B9%E7%9B%AE-%E5%A4%9A%E4%BA%BA%E5%85%B1%E4%BA%AB%E5%8D%9A%E5%AE%A22.-%E4%BD%BF%E7%94%A8vuex%E5%AE%9E%E7%8E%B0%E7%99%BB%E5%BD%95%E6%B3%A8%E5%86%8C%E5%8A%9F%E8%83%BD%E5%8F%8Aauth%E6%A8%A1%E5%9D%97/">
+            <span class="next-text nav-default">【项目 多人共享博客】2. 使用vuex实现登录注册功能及&amp;auth模块</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:xmasuhai@163.com" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="https://github.com/xmasuhai" rel="me noopener" class="iconfont"
+      title="github"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M512 12.672c-282.88 0-512 229.248-512 512 0 226.261333 146.688 418.133333 350.08 485.76 25.6 4.821333 34.986667-11.008 34.986667-24.618667 0-12.16-0.426667-44.373333-0.64-87.04-142.421333 30.890667-172.458667-68.693333-172.458667-68.693333C188.672 770.986667 155.008 755.2 155.008 755.2c-46.378667-31.744 3.584-31.104 3.584-31.104 51.413333 3.584 78.421333 52.736 78.421333 52.736 45.653333 78.293333 119.850667 55.68 149.12 42.581333 4.608-33.109333 17.792-55.68 32.426667-68.48-113.706667-12.8-233.216-56.832-233.216-253.013333 0-55.893333 19.84-101.546667 52.693333-137.386667-5.76-12.928-23.04-64.981333 4.48-135.509333 0 0 42.88-13.738667 140.8 52.48 40.96-11.392 84.48-17.024 128-17.28 43.52 0.256 87.04 5.888 128 17.28 97.28-66.218667 140.16-52.48 140.16-52.48 27.52 70.528 10.24 122.581333 5.12 135.509333 32.64 35.84 52.48 81.493333 52.48 137.386667 0 196.693333-119.68 240-233.6 252.586667 17.92 15.36 34.56 46.762667 34.56 94.72 0 68.522667-0.64 123.562667-0.64 140.202666 0 13.44 8.96 29.44 35.2 24.32C877.44 942.592 1024 750.592 1024 524.672c0-282.752-229.248-512-512-512"></path>
+</svg>
+
+    </a>
+  
+    <a href="https://www.zhihu.com/people/xue-shou-41/posts" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+
+
+<a href="http://xmasuhai.xyz/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane">Jane</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy;
+    
+      2019 -
+    2022
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Joel Xu
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

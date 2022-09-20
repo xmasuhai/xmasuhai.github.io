@@ -1,0 +1,3198 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>【项目 Vue3 轮子】1.4 制作 Button 组件 - Joel in The House</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="Joel Xu" />
+  <meta name="description" content="制作 Button 组件 [toc] 需求分析 借鉴 AntD/ Bulma/Eleme/iView/Vuetify 等 需求 可以有不同的等级 可以是链接，可以是文字 可以 click/focus/鼠标悬浮 可以设置size 可以设置状态为禁" />
+
+  <meta name="keywords" content="Hugo, theme, jane" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.91.2" />
+
+
+<link rel="canonical" href="http://xmasuhai.xyz/post/project/vueel3/%E9%A1%B9%E7%9B%AE-vue3-%E8%BD%AE%E5%AD%901.4-%E5%88%B6%E4%BD%9C-button-%E7%BB%84%E4%BB%B6/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="【项目 Vue3 轮子】1.4 制作 Button 组件" />
+<meta property="og:description" content="制作 Button 组件 [toc] 需求分析 借鉴 AntD/ Bulma/Eleme/iView/Vuetify 等 需求 可以有不同的等级 可以是链接，可以是文字 可以 click/focus/鼠标悬浮 可以设置size 可以设置状态为禁" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://xmasuhai.xyz/post/project/vueel3/%E9%A1%B9%E7%9B%AE-vue3-%E8%BD%AE%E5%AD%901.4-%E5%88%B6%E4%BD%9C-button-%E7%BB%84%E4%BB%B6/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2022-01-30T14:22:44+08:00" />
+<meta property="article:modified_time" content="2022-06-15T08:44:24+08:00" />
+
+<meta itemprop="name" content="【项目 Vue3 轮子】1.4 制作 Button 组件">
+<meta itemprop="description" content="制作 Button 组件 [toc] 需求分析 借鉴 AntD/ Bulma/Eleme/iView/Vuetify 等 需求 可以有不同的等级 可以是链接，可以是文字 可以 click/focus/鼠标悬浮 可以设置size 可以设置状态为禁"><meta itemprop="datePublished" content="2022-01-30T14:22:44+08:00" />
+<meta itemprop="dateModified" content="2022-06-15T08:44:24+08:00" />
+<meta itemprop="wordCount" content="4915">
+<meta itemprop="keywords" content="FrontEnd,Project,vueel," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="【项目 Vue3 轮子】1.4 制作 Button 组件"/>
+<meta name="twitter:description" content="制作 Button 组件 [toc] 需求分析 借鉴 AntD/ Bulma/Eleme/iView/Vuetify 等 需求 可以有不同的等级 可以是链接，可以是文字 可以 click/focus/鼠标悬浮 可以设置size 可以设置状态为禁"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Joel in The House</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/post/">文档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/categories/">目录</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/about/">关于我</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Joel in The House
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/post/">文档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/categories/">目录</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/about/">关于我</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">【项目 Vue3 轮子】1.4 制作 Button 组件</h1>
+      
+      <div class="post-meta">
+        <time datetime="2022-01-30" class="post-time">
+          2022-01-30
+        </time>
+        <div class="post-category">
+            
+          </div>
+        <span class="more-meta"> 约 4915 字 </span>
+          <span class="more-meta"> 预计阅读 10 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#需求分析">需求分析</a></li>
+    <li><a href="#api-设计">API 设计</a></li>
+    <li><a href="#创建-button-组件">创建 Button 组件</a>
+      <ul>
+        <li><a href="#button-基础样式">Button 基础样式</a></li>
+        <li><a href="#让button支持事件">让Button支持事件</a></li>
+        <li><a href="#让div不继承属性">让div不继承属性</a></li>
+      </ul>
+    </li>
+    <li><a href="#vue-3-属性绑定细节">Vue 3 属性绑定细节</a>
+      <ul>
+        <li><a href="#让div里的button显式地绑定attrs">让div里的button显式地绑定<code>$attrs</code></a></li>
+        <li><a href="#让div继承一部分属性让button继承另一部分属性">让div继承一部分属性，让button继承另一部分属性</a></li>
+      </ul>
+    </li>
+    <li><a href="#实现让button支持theme属性">实现让<code>button</code>支持<code>theme</code>属性</a></li>
+    <li><a href="#添加button组件样式">添加button组件样式</a>
+      <ul>
+        <li><a href="#ui库组件的css-的两个注意事项">UI库组件的CSS 的两个注意事项</a></li>
+        <li><a href="#css最小影响原则">CSS最小影响原则</a></li>
+      </ul>
+    </li>
+    <li><a href="#完成-button-组件">完成 Button 组件</a>
+      <ul>
+        <li><a href="#让button支持theme属性">让Button支持theme属性</a></li>
+        <li><a href="#让button支持size属性">让Button支持size属性</a></li>
+        <li><a href="#让button支持level属性">让button支持level属性</a></li>
+        <li><a href="#让button支持disabled属性">让button支持disabled属性</a></li>
+        <li><a href="#让button支持loading属性">让button支持loading属性</a></li>
+      </ul>
+    </li>
+    <li><a href="#知识点小结">知识点小结</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      <h1 id="制作-button-组件">制作 Button 组件</h1>
+<p><img src="https://static.xiedaimala.com/xdml/image/3ac7c224-c23d-491f-84b5-4fabfbeab9b8/2020-8-9-19-38-17.png" alt="Button"></p>
+<p>[toc]</p>
+<hr>
+<h2 id="需求分析">需求分析</h2>
+<ul>
+<li>借鉴 <a href="https://note.youdao.com/">AntD</a>/ <a href="https://note.youdao.com/">Bulma</a>/Eleme/iView/Vuetify 等</li>
+<li>需求
+<ul>
+<li>可以有不同的等级</li>
+<li>可以是链接，可以是文字</li>
+<li>可以 click/focus/鼠标悬浮</li>
+<li>可以设置size</li>
+<li>可以设置状态为禁用</li>
+<li>可以设置状态为加载中</li>
+</ul>
+</li>
+</ul>
+<h2 id="api-设计">API 设计</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">Button</span> <span class="err">@</span><span class="na">click</span><span class="o">=</span><span class="s">?</span>
+        <span class="err">@</span><span class="na">focus</span><span class="o">=</span><span class="s">?</span>
+        <span class="err">@</span><span class="na">mouseover</span><span class="o">=</span><span class="s">?</span>
+        <span class="na">theme</span><span class="o">=</span><span class="s">&#34;button/link/text&#34;</span>
+        <span class="na">level</span><span class="o">=</span><span class="s">&#34;big/normal/small&#34;</span>
+        <span class="na">disabled</span>
+        <span class="na">loading</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">Button</span><span class="p">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><hr>
+<h2 id="创建-button-组件">创建 Button 组件</h2>
+<h3 id="button-基础样式">Button 基础样式</h3>
+<blockquote>
+<p><code>Button.vue</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">button</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">slot</span><span class="p">&gt;&lt;/</span><span class="nt">slot</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<span class="kr">export</span> <span class="k">default</span> <span class="p">{</span>
+  <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Button&#39;</span>
+<span class="p">};</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">style</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;scss&#34;</span> <span class="na">scoped</span><span class="p">&gt;</span>
+
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p><code>ButtonDemo.vue</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<span class="kr">import</span> <span class="nx">Button</span> <span class="nx">from</span> <span class="s1">&#39;@/lib/Button.vue&#39;</span><span class="p">;</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>Button 示例<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;</span>示例一<span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">Button</span><span class="p">&gt;</span>按钮<span class="p">&lt;/</span><span class="nt">Button</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<span class="kr">export</span> <span class="k">default</span> <span class="p">{</span>
+  <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;ButtonDemo&#39;</span>
+<span class="p">};</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>使用<code>&lt;slot&gt;&lt;/slot&gt;</code>来让UI库用户自定义button内部的结构</li>
+</ul>
+<h3 id="让button支持事件">让Button支持事件</h3>
+<blockquote>
+<p><code>Button.vue</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<span class="kr">import</span> <span class="nx">Button</span> <span class="nx">from</span> <span class="s1">&#39;@/lib/Button.vue&#39;</span><span class="p">;</span>
+
+<span class="kr">const</span> <span class="nx">onClick</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;hi&#39;</span><span class="p">);</span>
+<span class="p">};</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>Button 示例<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;</span>示例一<span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">Button</span> <span class="err">@</span><span class="na">click</span><span class="o">=</span><span class="s">&#34;onClick&#34;</span><span class="p">&gt;</span>
+      按钮
+    <span class="p">&lt;/</span><span class="nt">Button</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<span class="kr">export</span> <span class="k">default</span> <span class="p">{</span>
+  <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;ButtonDemo&#39;</span>
+<span class="p">};</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>vue自动将绑定的事件传到子组件中根节点上</li>
+<li>不用再处理事件代理逻辑</li>
+</ul>
+<blockquote>
+<p>这样会带来一个问题：点击外层元素，而未点击到button元素上也会触发事件</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html">// Button.vue
+<span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">button</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">slot</span><span class="p">&gt;&lt;/</span><span class="nt">slot</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<span class="kr">export</span> <span class="k">default</span> <span class="p">{</span>
+  <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Button&#39;</span>
+<span class="p">};</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">style</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;scss&#34;</span> <span class="na">scoped</span><span class="p">&gt;</span>
+<span class="nt">div</span> <span class="p">{</span>
+  <span class="k">border</span><span class="p">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="kc">solid</span> <span class="kc">red</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="让div不继承属性">让div不继承属性</h3>
+<ul>
+<li>使用<code>inheritAttrs: false</code>来禁用 Attribute 继承，。偶人为<code>true</code></li>
+<li>此时事件没有绑在子组件任何一个元素上</li>
+</ul>
+<blockquote>
+<p><code>Button.vue</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">button</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">slot</span><span class="p">&gt;&lt;/</span><span class="nt">slot</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<span class="kr">export</span> <span class="k">default</span> <span class="p">{</span>
+  <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Button&#39;</span><span class="p">,</span>
+  <span class="nx">inheritAttrs</span><span class="o">:</span> <span class="kc">false</span>
+<span class="p">};</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">style</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;scss&#34;</span> <span class="na">scoped</span><span class="p">&gt;</span>
+<span class="nt">div</span> <span class="p">{</span>
+  <span class="k">border</span><span class="p">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="kc">solid</span> <span class="kc">red</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>参考vue文档 <a href="https://v3.cn.vuejs.org/guide/component-attrs.html#attribute-%E7%BB%A7%E6%89%BF">非 Prop 的 Attribute</a></li>
+</ul>
+<hr>
+<h2 id="vue-3-属性绑定细节">Vue 3 属性绑定细节</h2>
+<h3 id="让div里的button显式地绑定attrs">让div里的button显式地绑定<code>$attrs</code></h3>
+<ul>
+<li>在父组件/元素上写<code>$attrs</code>，实现所有属性的祖传孙元素</li>
+<li><code>$attrs</code>会以对象的形式展示所有祖元素/组件上的属性</li>
+<li>使用<code>v-bind=&quot;$attrs&quot;</code>，此处不可缩写</li>
+</ul>
+<blockquote>
+<p><code>Button.vue</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">button</span> <span class="na">v-bind</span><span class="o">=</span><span class="s">&#34;$attrs&#34;</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">slot</span><span class="p">&gt;&lt;/</span><span class="nt">slot</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<span class="kr">export</span> <span class="k">default</span> <span class="p">{</span>
+  <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Button&#39;</span><span class="p">,</span>
+  <span class="nx">inheritAttrs</span><span class="o">:</span> <span class="kc">false</span>
+<span class="p">};</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">style</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;scss&#34;</span> <span class="na">scoped</span><span class="p">&gt;</span>
+<span class="nt">div</span> <span class="p">{</span>
+  <span class="k">border</span><span class="p">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="kc">solid</span> <span class="kc">red</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>小结：让组件内部某一个节点拥有外部（使用该组件时）传入的（写在标签上的）所有属性，而其他节点不同时拥有的情况</li>
+</ul>
+<h3 id="让div继承一部分属性让button继承另一部分属性">让div继承一部分属性，让button继承另一部分属性</h3>
+<ul>
+<li>在<code>setup</code>中使用<code>context.attrs</code>将属性结构出来</li>
+<li>在<code>script setup</code>语法糖中，使用<code>useAttrs()</code>获取<code>$attrs</code>来处理
+<ul>
+<li>解构赋值取出属性<code>const {size, ...rest} = attrs;</code></li>
+<li>在外层div上绑定<code>&lt;div :size=&quot;size&quot;&gt;...&lt;/div&gt;</code></li>
+<li>在button上绑定其他剩余属性<code>&lt;button v-bind=&quot;rest&quot;&gt;&lt;slot&gt;&lt;/slot&gt;&lt;/button&gt;</code></li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><code>Button.vue</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<span class="kr">import</span> <span class="p">{</span><span class="nx">useAttrs</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue&#39;</span><span class="p">;</span>
+
+<span class="kr">const</span> <span class="nx">attrs</span> <span class="o">=</span> <span class="nx">useAttrs</span><span class="p">();</span>
+<span class="kr">const</span> <span class="p">{</span><span class="nx">size</span><span class="p">,</span> <span class="p">...</span><span class="nx">rest</span><span class="p">}</span> <span class="o">=</span> <span class="nx">attrs</span><span class="p">;</span>
+
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">:size</span><span class="o">=</span><span class="s">&#34;size&#34;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">button</span> <span class="na">v-bind</span><span class="o">=</span><span class="s">&#34;rest&#34;</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">slot</span><span class="p">&gt;&lt;/</span><span class="nt">slot</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<span class="kr">export</span> <span class="k">default</span> <span class="p">{</span>
+  <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Button&#39;</span><span class="p">,</span>
+  <span class="nx">inheritAttrs</span><span class="o">:</span> <span class="kc">false</span>
+<span class="p">};</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">style</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;scss&#34;</span> <span class="na">scoped</span><span class="p">&gt;</span>
+<span class="nt">div</span> <span class="p">{</span>
+  <span class="k">border</span><span class="p">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="kc">solid</span> <span class="kc">red</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>小结</p>
+</blockquote>
+<ul>
+<li><code>Vue3</code>属性绑定
+<ul>
+<li>默认所有属性都绑定到根元素</li>
+<li>使用<code>inheritAttrs: false</code>可以取消默认绑定</li>
+<li>使用<code>$attrs</code>或者<code>context.attrs</code>获取使用该组件时绑定的所有属性
+<ul>
+<li>单文件组件 <!-- raw HTML omitted --> 语法糖中由<code>const attrs = useAttrs();</code>获取</li>
+</ul>
+</li>
+<li>使用<code>v-bind=&quot;$attrs&quot;</code>批量绑定属性</li>
+<li>使用<code>const {size, ...rest} = context.attrs</code>将<strong>属性解构分开</strong>
+<ul>
+<li>单文件组件 <!-- raw HTML omitted --> 语法糖中为<code>const {size, ...rest} = attrs;</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="实现让button支持theme属性">实现让<code>button</code>支持<code>theme</code>属性</h2>
+<blockquote>
+<p><code>Button.vue</code>添加属性<code>theme</code>的可选值为<code>button/link/text</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<span class="kr">interface</span> <span class="nx">Props</span> <span class="p">{</span>
+  <span class="nx">theme</span><span class="o">?:</span> <span class="s1">&#39;button&#39;</span> <span class="o">|</span> <span class="s1">&#39;link&#39;</span> <span class="o">|</span> <span class="s1">&#39;text&#39;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kr">const</span> <span class="nx">props</span> <span class="o">=</span> <span class="nx">withDefaults</span><span class="p">(</span><span class="nx">defineProps</span><span class="o">&lt;</span><span class="nx">Props</span><span class="o">&gt;</span><span class="p">(),</span> <span class="p">{</span>
+  <span class="nx">theme</span><span class="o">:</span> <span class="s1">&#39;button&#39;</span>
+<span class="p">});</span>
+<span class="kr">const</span> <span class="p">{</span><span class="nx">theme</span><span class="p">}</span> <span class="o">=</span> <span class="nx">props</span><span class="p">;</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">button</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;vue-button&#34;</span>
+            <span class="na">:class</span><span class="o">=</span><span class="s">&#34;`theme-${theme}`&#34;</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">slot</span><span class="p">&gt;&lt;/</span><span class="nt">slot</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<span class="kr">export</span> <span class="k">default</span> <span class="p">{</span>
+  <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Button&#39;</span>
+<span class="p">};</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>给<code>button</code>添加默认样式类<code>vue-button</code></li>
+<li>动态绑定样式类 <code>:class=&quot;`theme-${theme}`&quot;</code></li>
+<li>外部数据props添加默认值<code>const props = withDefaults(defineProps&lt;Props&gt;(), { theme: 'button' });</code></li>
+</ul>
+<blockquote>
+<p><code>ButtonDemo.vue</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<span class="kr">import</span> <span class="nx">Button</span> <span class="nx">from</span> <span class="s1">&#39;@/lib/Button.vue&#39;</span><span class="p">;</span>
+
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>Button 示例<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;</span>示例一<span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">Button</span> <span class="na">theme</span><span class="o">=</span><span class="s">&#34;button&#34;</span><span class="p">&gt;</span>普通按钮<span class="p">&lt;/</span><span class="nt">Button</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">Button</span> <span class="na">theme</span><span class="o">=</span><span class="s">&#34;link&#34;</span><span class="p">&gt;</span>链接按钮<span class="p">&lt;/</span><span class="nt">Button</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">Button</span> <span class="na">theme</span><span class="o">=</span><span class="s">&#34;text&#34;</span><span class="p">&gt;</span>文字按钮<span class="p">&lt;/</span><span class="nt">Button</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<span class="kr">export</span> <span class="k">default</span> <span class="p">{</span>
+  <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;ButtonDemo&#39;</span>
+<span class="p">};</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><hr>
+<h2 id="添加button组件样式">添加button组件样式</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="p">@</span><span class="k">import</span> <span class="s1">&#39;../var&#39;</span><span class="p">;</span>
+
+<span class="p">.</span><span class="nc">vue-button</span> <span class="p">{</span>
+  <span class="k">align-items</span><span class="p">:</span> <span class="kc">center</span><span class="p">;</span>
+  <span class="k">background</span><span class="p">:</span> <span class="err">$</span><span class="n">button-background</span><span class="p">;</span>
+  <span class="k">border</span><span class="p">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="kc">solid</span> <span class="err">$</span><span class="k">border-color</span><span class="p">;</span>
+  <span class="k">border-radius</span><span class="p">:</span> <span class="err">$</span><span class="n">radius</span><span class="p">;</span>
+  <span class="k">box-shadow</span><span class="p">:</span> <span class="mi">0</span> <span class="mi">1</span><span class="kt">px</span> <span class="mi">0</span> <span class="nf">fade-out</span><span class="p">(</span><span class="err">$</span><span class="n">shadow</span><span class="o">-</span><span class="kc">color</span><span class="p">,</span> <span class="mf">.95</span><span class="p">);</span>
+  <span class="k">color</span><span class="p">:</span> <span class="err">$</span><span class="n">basic-font-color</span><span class="p">;</span>
+  <span class="k">cursor</span><span class="p">:</span> <span class="kc">pointer</span><span class="p">;</span>
+  <span class="k">display</span><span class="p">:</span> <span class="kc">inline-flex</span><span class="p">;</span>
+  <span class="k">height</span><span class="p">:</span> <span class="err">$</span><span class="k">height</span><span class="p">;</span>
+  <span class="k">justify-content</span><span class="p">:</span> <span class="kc">center</span><span class="p">;</span>
+  <span class="k">padding</span><span class="p">:</span> <span class="mi">0</span> <span class="mi">12</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">white-space</span><span class="p">:</span> <span class="kc">nowrap</span><span class="p">;</span>
+
+  <span class="err">&amp;</span> <span class="err">+</span> <span class="err">&amp;</span> <span class="err">{</span>
+    <span class="k">margin-left</span><span class="p">:</span> <span class="mi">8</span><span class="kt">px</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="o">&amp;</span><span class="p">:</span><span class="nd">hover</span><span class="o">,</span>
+  <span class="o">&amp;</span><span class="p">:</span><span class="nd">focus</span> <span class="p">{</span>
+    <span class="k">border-color</span><span class="p">:</span> <span class="err">$</span><span class="n">light-font-color</span><span class="p">;</span>
+    <span class="k">color</span><span class="p">:</span> <span class="err">$</span><span class="n">light-font-color</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="o">&amp;</span><span class="p">:</span><span class="nd">focus</span> <span class="p">{</span>
+    <span class="k">outline</span><span class="p">:</span> <span class="kc">none</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="o">&amp;</span><span class="p">::</span><span class="nd">-moz-focus-inner</span> <span class="p">{</span>
+    <span class="k">border</span><span class="p">:</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="err">}</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="ui库组件的css-的两个注意事项">UI库组件的CSS 的两个注意事项</h3>
+<ul>
+<li>不能使用 <code>scoped</code>
+<ul>
+<li>因为 <code>data-v-xxx</code>中的<code>xxx</code>每次运行可能不同</li>
+<li>必须输出稳定不变的<code>class</code>选择器，方便使用者覆盖</li>
+</ul>
+</li>
+<li>必须加前缀
+<ul>
+<li><code>.vue-button</code> V.S. <code>.button</code></li>
+<li><code>.vue-theme-link</code> V.S. <code>.theme-link</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="css最小影响原则">CSS最小影响原则</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">src
+ ┣ assets
+ ┃ ┗ logo.png
+ ┣ components
+ ┃ ┣ ButtonDemo.vue
+ ┃ ┣ DialogDemo.vue
+ ┃ ┣ DocsDemo.vue
+ ┃ ┣ SwitchDemo.vue
+ ┃ ┣ TabsDemo.vue
+ ┃ ┗ TopNav.vue
+ ┣ lib
+ ┃ ┣ Button.vue
+ ┃ ┣ Switch.vue
+ ┃ ┣ TabItem.vue
+ ┃ ┣ Tabs.vue
+ ┃ ┣ var.scss
+ ┃ ┗ vue-reset.scss
+ ┣ styles
+ ┃ ┗ index.scss
+ ┣ types
+ ┃ ┗ tabs.d.ts
+ ┣ views
+ ┃ ┣ Docs.vue
+ ┃ ┗ Home.vue
+ ┣ App.vue
+ ┣ env.d.ts
+ ┣ main.ts
+ ┗ router.ts
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>CSS不能影响库使用者</p>
+</blockquote>
+<ul>
+<li>使用较特殊的前缀定义样式，重构<code>Button.vue</code></li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<span class="p">...</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">button</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;vue-button&#34;</span>
+          <span class="na">:class</span><span class="o">=</span><span class="s">&#34;`vue-theme-${theme}`&#34;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">slot</span><span class="p">&gt;&lt;/</span><span class="nt">slot</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<span class="kr">export</span> <span class="k">default</span> <span class="p">{</span>
+  <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Button&#39;</span>
+<span class="p">};</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">style</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;scss&#34;</span><span class="p">&gt;</span>
+<span class="p">@</span><span class="k">import</span> <span class="s1">&#39;var&#39;</span><span class="p">;</span>
+
+<span class="p">.</span><span class="nc">vue-button</span> <span class="p">{</span>
+  <span class="k">align-items</span><span class="p">:</span> <span class="kc">center</span><span class="p">;</span>
+  <span class="k">background</span><span class="p">:</span> <span class="err">$</span><span class="n">button-background</span><span class="p">;</span>
+  <span class="k">border</span><span class="p">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="kc">solid</span> <span class="err">$</span><span class="k">border-color</span><span class="p">;</span>
+  <span class="k">border-radius</span><span class="p">:</span> <span class="err">$</span><span class="n">radius</span><span class="p">;</span>
+  <span class="k">box-shadow</span><span class="p">:</span> <span class="mi">0</span> <span class="mi">1</span><span class="kt">px</span> <span class="mi">0</span> <span class="nf">fade-out</span><span class="p">(</span><span class="err">$</span><span class="n">shadow</span><span class="o">-</span><span class="kc">color</span><span class="p">,</span> <span class="mf">.95</span><span class="p">);</span>
+  <span class="k">color</span><span class="p">:</span> <span class="err">$</span><span class="n">basic-font-color</span><span class="p">;</span>
+  <span class="k">cursor</span><span class="p">:</span> <span class="kc">pointer</span><span class="p">;</span>
+  <span class="k">display</span><span class="p">:</span> <span class="kc">inline-flex</span><span class="p">;</span>
+  <span class="k">height</span><span class="p">:</span> <span class="err">$</span><span class="k">height</span><span class="p">;</span>
+  <span class="k">justify-content</span><span class="p">:</span> <span class="kc">center</span><span class="p">;</span>
+  <span class="k">padding</span><span class="p">:</span> <span class="mi">0</span> <span class="mi">12</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">white-space</span><span class="p">:</span> <span class="kc">nowrap</span><span class="p">;</span>
+
+  <span class="err">&amp;</span> <span class="err">+</span> <span class="err">&amp;</span> <span class="err">{</span>
+    <span class="k">margin-left</span><span class="p">:</span> <span class="mi">8</span><span class="kt">px</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="o">&amp;</span><span class="p">:</span><span class="nd">hover</span><span class="o">,</span>
+  <span class="o">&amp;</span><span class="p">:</span><span class="nd">focus</span> <span class="p">{</span>
+    <span class="k">border-color</span><span class="p">:</span> <span class="err">$</span><span class="n">light-font-color</span><span class="p">;</span>
+    <span class="k">color</span><span class="p">:</span> <span class="err">$</span><span class="n">light-font-color</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="o">&amp;</span><span class="p">:</span><span class="nd">focus</span> <span class="p">{</span>
+    <span class="k">outline</span><span class="p">:</span> <span class="kc">none</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="o">&amp;</span><span class="p">::</span><span class="nd">-moz-focus-inner</span> <span class="p">{</span>
+    <span class="k">border</span><span class="p">:</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="err">}</span>
+
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><hr>
+<h2 id="完成-button-组件">完成 Button 组件</h2>
+<h3 id="让button支持theme属性">让Button支持theme属性</h3>
+<blockquote>
+<p>theme的值为button/link/text 默认为button</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span><span class="lnt">86
+</span><span class="lnt">87
+</span><span class="lnt">88
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<span class="kr">interface</span> <span class="nx">Props</span> <span class="p">{</span>
+  <span class="nx">theme</span><span class="o">?:</span> <span class="s1">&#39;button&#39;</span> <span class="o">|</span> <span class="s1">&#39;link&#39;</span> <span class="o">|</span> <span class="s1">&#39;text&#39;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kr">const</span> <span class="nx">props</span> <span class="o">=</span> <span class="nx">withDefaults</span><span class="p">(</span><span class="nx">defineProps</span><span class="o">&lt;</span><span class="nx">Props</span><span class="o">&gt;</span><span class="p">(),</span> <span class="p">{</span>
+  <span class="nx">theme</span><span class="o">:</span> <span class="s1">&#39;button&#39;</span>
+<span class="p">});</span>
+<span class="kr">const</span> <span class="p">{</span><span class="nx">theme</span><span class="p">}</span> <span class="o">=</span> <span class="nx">props</span><span class="p">;</span>
+
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">button</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;vue-button&#34;</span>
+          <span class="na">:class</span><span class="o">=</span><span class="s">&#34;`vue-theme-${theme}`&#34;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">slot</span><span class="p">&gt;&lt;/</span><span class="nt">slot</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<span class="kr">export</span> <span class="k">default</span> <span class="p">{</span>
+  <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Button&#39;</span>
+<span class="p">};</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">style</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;scss&#34;</span><span class="p">&gt;</span>
+<span class="p">@</span><span class="k">import</span> <span class="s1">&#39;var&#39;</span><span class="p">;</span>
+
+<span class="o">//</span> <span class="nt">basic</span>
+<span class="p">.</span><span class="nc">vue-button</span> <span class="p">{</span>
+  <span class="k">align-items</span><span class="p">:</span> <span class="kc">center</span><span class="p">;</span>
+  <span class="k">background</span><span class="p">:</span> <span class="err">$</span><span class="n">button-background</span><span class="p">;</span>
+  <span class="k">border</span><span class="p">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="kc">solid</span> <span class="err">$</span><span class="k">border-color</span><span class="p">;</span>
+  <span class="k">border-radius</span><span class="p">:</span> <span class="err">$</span><span class="n">radius</span><span class="p">;</span>
+  <span class="k">box-shadow</span><span class="p">:</span> <span class="mi">0</span> <span class="mi">1</span><span class="kt">px</span> <span class="mi">0</span> <span class="nf">fade-out</span><span class="p">(</span><span class="err">$</span><span class="n">shadow</span><span class="o">-</span><span class="kc">color</span><span class="p">,</span> <span class="mf">.95</span><span class="p">);</span>
+  <span class="k">color</span><span class="p">:</span> <span class="err">$</span><span class="n">basic-font-color</span><span class="p">;</span>
+  <span class="k">cursor</span><span class="p">:</span> <span class="kc">pointer</span><span class="p">;</span>
+  <span class="k">display</span><span class="p">:</span> <span class="kc">inline-flex</span><span class="p">;</span>
+  <span class="k">height</span><span class="p">:</span> <span class="err">$</span><span class="k">height</span><span class="p">;</span>
+  <span class="k">justify-content</span><span class="p">:</span> <span class="kc">center</span><span class="p">;</span>
+  <span class="k">padding</span><span class="p">:</span> <span class="mi">0</span> <span class="mi">12</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">white-space</span><span class="p">:</span> <span class="kc">nowrap</span><span class="p">;</span>
+
+  <span class="err">&amp;</span> <span class="err">+</span> <span class="err">&amp;</span> <span class="err">{</span>
+    <span class="k">margin-left</span><span class="p">:</span> <span class="mi">8</span><span class="kt">px</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="o">&amp;</span><span class="p">:</span><span class="nd">hover</span><span class="o">,</span>
+  <span class="o">&amp;</span><span class="p">:</span><span class="nd">focus</span> <span class="p">{</span>
+    <span class="k">border-color</span><span class="p">:</span> <span class="err">$</span><span class="n">light-font-color</span><span class="p">;</span>
+    <span class="k">color</span><span class="p">:</span> <span class="err">$</span><span class="n">light-font-color</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="o">&amp;</span><span class="p">:</span><span class="nd">focus</span> <span class="p">{</span>
+    <span class="k">outline</span><span class="p">:</span> <span class="kc">none</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="o">&amp;</span><span class="p">::</span><span class="nd">-moz-focus-inner</span> <span class="p">{</span>
+    <span class="k">border</span><span class="p">:</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="o">//</span> <span class="nt">link</span>
+  <span class="o">&amp;</span><span class="p">.</span><span class="nc">vue-theme-link</span> <span class="p">{</span>
+    <span class="k">border-color</span><span class="p">:</span> <span class="kc">transparent</span><span class="p">;</span>
+    <span class="k">box-shadow</span><span class="p">:</span> <span class="kc">none</span><span class="p">;</span>
+    <span class="k">color</span><span class="p">:</span> <span class="err">$</span><span class="n">light-font-color</span><span class="p">;</span>
+
+    <span class="err">&amp;:hover,</span>
+    <span class="err">&amp;:focus</span> <span class="err">{</span>
+      <span class="k">color</span><span class="p">:</span> <span class="nf">lighten</span><span class="p">(</span><span class="err">$</span><span class="n">light</span><span class="o">-</span><span class="n">font</span><span class="o">-</span><span class="kc">color</span><span class="p">,</span> <span class="mi">10</span><span class="kt">%</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="err">}</span>
+
+  <span class="o">//</span> <span class="nt">text</span>
+  <span class="o">&amp;</span><span class="p">.</span><span class="nc">vue-theme-text</span> <span class="p">{</span>
+    <span class="k">border-color</span><span class="p">:</span> <span class="kc">transparent</span><span class="p">;</span>
+    <span class="k">box-shadow</span><span class="p">:</span> <span class="kc">none</span><span class="p">;</span>
+    <span class="k">color</span><span class="p">:</span> <span class="kc">inherit</span><span class="p">;</span>
+
+    <span class="err">&amp;:hover,</span>
+    <span class="err">&amp;:focus</span> <span class="err">{</span>
+      <span class="k">background</span><span class="p">:</span> <span class="nf">darken</span><span class="p">(</span><span class="kc">white</span><span class="p">,</span> <span class="mi">5</span><span class="kt">%</span><span class="p">);;</span>
+    <span class="p">}</span>
+  <span class="err">}</span>
+<span class="err">}</span>
+
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="让button支持size属性">让Button支持size属性</h3>
+<blockquote>
+<p>size的值为big/normal/small</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<span class="kr">import</span> <span class="p">{</span><span class="nx">computed</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue&#39;</span><span class="p">;</span>
+
+<span class="kr">interface</span> <span class="nx">Props</span> <span class="p">{</span>
+  <span class="nx">theme</span><span class="o">?:</span> <span class="s1">&#39;button&#39;</span> <span class="o">|</span> <span class="s1">&#39;link&#39;</span> <span class="o">|</span> <span class="s1">&#39;text&#39;</span><span class="p">;</span>
+  <span class="nx">size</span><span class="o">?:</span> <span class="s1">&#39;normal&#39;</span> <span class="o">|</span> <span class="s1">&#39;big&#39;</span> <span class="o">|</span> <span class="s1">&#39;small&#39;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kr">const</span> <span class="nx">props</span> <span class="o">=</span> <span class="nx">withDefaults</span><span class="p">(</span><span class="nx">defineProps</span><span class="o">&lt;</span><span class="nx">Props</span><span class="o">&gt;</span><span class="p">(),</span> <span class="p">{</span>
+  <span class="nx">theme</span><span class="o">:</span> <span class="s1">&#39;button&#39;</span><span class="p">,</span>
+  <span class="nx">size</span><span class="o">:</span> <span class="s1">&#39;normal&#39;</span>
+<span class="p">});</span>
+<span class="kr">const</span> <span class="p">{</span><span class="nx">theme</span><span class="p">,</span> <span class="nx">size</span><span class="p">}</span> <span class="o">=</span> <span class="nx">props</span><span class="p">;</span>
+
+<span class="c1">// 计算classes
+</span><span class="c1"></span><span class="kr">const</span> <span class="nx">classes</span> <span class="o">=</span> <span class="nx">computed</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="p">{</span>
+    <span class="p">[</span><span class="sb">`vue-theme-</span><span class="si">${</span><span class="nx">theme</span><span class="si">}</span><span class="sb">`</span><span class="p">]</span><span class="o">:</span> <span class="nx">theme</span><span class="p">,</span>
+    <span class="p">[</span><span class="sb">`vue-size-</span><span class="si">${</span><span class="nx">size</span><span class="si">}</span><span class="sb">`</span><span class="p">]</span><span class="o">:</span> <span class="nx">size</span>
+  <span class="p">};</span>
+<span class="p">});</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">button</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;vue-button&#34;</span>
+          <span class="na">:class</span><span class="o">=</span><span class="s">&#34;classes&#34;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">slot</span><span class="p">&gt;&lt;/</span><span class="nt">slot</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<span class="kr">export</span> <span class="k">default</span> <span class="p">{</span>
+  <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Button&#39;</span>
+<span class="p">};</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">style</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;scss&#34;</span><span class="p">&gt;</span>
+<span class="p">@</span><span class="k">import</span> <span class="s1">&#39;var&#39;</span><span class="p">;</span>
+
+<span class="o">//</span> <span class="nt">basic</span>
+<span class="p">.</span><span class="nc">vue-button</span> <span class="p">{</span>
+  <span class="k">align-items</span><span class="p">:</span> <span class="kc">center</span><span class="p">;</span>
+  <span class="k">background</span><span class="p">:</span> <span class="err">$</span><span class="n">button-background</span><span class="p">;</span>
+  <span class="k">border</span><span class="p">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="kc">solid</span> <span class="err">$</span><span class="k">border-color</span><span class="p">;</span>
+  <span class="k">border-radius</span><span class="p">:</span> <span class="err">$</span><span class="n">radius</span><span class="p">;</span>
+  <span class="k">box-shadow</span><span class="p">:</span> <span class="mi">0</span> <span class="mi">1</span><span class="kt">px</span> <span class="mi">0</span> <span class="nf">fade-out</span><span class="p">(</span><span class="err">$</span><span class="n">shadow</span><span class="o">-</span><span class="kc">color</span><span class="p">,</span> <span class="mf">.95</span><span class="p">);</span>
+  <span class="k">color</span><span class="p">:</span> <span class="err">$</span><span class="n">basic-font-color</span><span class="p">;</span>
+  <span class="k">cursor</span><span class="p">:</span> <span class="kc">pointer</span><span class="p">;</span>
+  <span class="k">display</span><span class="p">:</span> <span class="kc">inline-flex</span><span class="p">;</span>
+  <span class="k">height</span><span class="p">:</span> <span class="err">$</span><span class="k">height</span><span class="p">;</span>
+  <span class="k">justify-content</span><span class="p">:</span> <span class="kc">center</span><span class="p">;</span>
+  <span class="k">padding</span><span class="p">:</span> <span class="mi">0</span> <span class="mi">12</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">white-space</span><span class="p">:</span> <span class="kc">nowrap</span><span class="p">;</span>
+
+  <span class="err">&amp;</span> <span class="err">+</span> <span class="err">&amp;</span> <span class="err">{</span>
+    <span class="k">margin-left</span><span class="p">:</span> <span class="mi">8</span><span class="kt">px</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="o">&amp;</span><span class="p">:</span><span class="nd">hover</span><span class="o">,</span>
+  <span class="o">&amp;</span><span class="p">:</span><span class="nd">focus</span> <span class="p">{</span>
+    <span class="k">border-color</span><span class="p">:</span> <span class="err">$</span><span class="n">light-font-color</span><span class="p">;</span>
+    <span class="k">color</span><span class="p">:</span> <span class="err">$</span><span class="n">light-font-color</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="o">&amp;</span><span class="p">:</span><span class="nd">focus</span> <span class="p">{</span>
+    <span class="k">outline</span><span class="p">:</span> <span class="kc">none</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="o">&amp;</span><span class="p">::</span><span class="nd">-moz-focus-inner</span> <span class="p">{</span>
+    <span class="k">border</span><span class="p">:</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="o">//</span> <span class="nt">big</span>
+  <span class="o">&amp;</span><span class="p">.</span><span class="nc">vue-size-big</span> <span class="p">{</span>
+    <span class="k">font-size</span><span class="p">:</span> <span class="mi">24</span><span class="kt">px</span><span class="p">;</span>
+    <span class="k">height</span><span class="p">:</span> <span class="mi">48</span><span class="kt">px</span><span class="p">;</span>
+    <span class="k">padding</span><span class="p">:</span> <span class="mi">0</span> <span class="mi">16</span><span class="kt">px</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="o">//</span> <span class="nt">small</span>
+  <span class="o">&amp;</span><span class="p">.</span><span class="nc">vue-size-small</span> <span class="p">{</span>
+    <span class="k">font-size</span><span class="p">:</span> <span class="mi">12</span><span class="kt">px</span><span class="p">;</span>
+    <span class="k">height</span><span class="p">:</span> <span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
+    <span class="k">padding</span><span class="p">:</span> <span class="mi">0</span> <span class="mi">4</span><span class="kt">px</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="o">//</span> <span class="nt">link</span>
+  <span class="o">&amp;</span><span class="p">.</span><span class="nc">vue-theme-link</span> <span class="p">{</span>
+    <span class="k">border-color</span><span class="p">:</span> <span class="kc">transparent</span><span class="p">;</span>
+    <span class="k">box-shadow</span><span class="p">:</span> <span class="kc">none</span><span class="p">;</span>
+    <span class="k">color</span><span class="p">:</span> <span class="err">$</span><span class="n">light-font-color</span><span class="p">;</span>
+
+    <span class="err">&amp;:hover,</span>
+    <span class="err">&amp;:focus</span> <span class="err">{</span>
+      <span class="k">color</span><span class="p">:</span> <span class="nf">lighten</span><span class="p">(</span><span class="err">$</span><span class="n">light</span><span class="o">-</span><span class="n">font</span><span class="o">-</span><span class="kc">color</span><span class="p">,</span> <span class="mi">10</span><span class="kt">%</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="err">}</span>
+
+  <span class="o">//</span> <span class="nt">text</span>
+  <span class="o">&amp;</span><span class="p">.</span><span class="nc">vue-theme-text</span> <span class="p">{</span>
+    <span class="k">border-color</span><span class="p">:</span> <span class="kc">transparent</span><span class="p">;</span>
+    <span class="k">box-shadow</span><span class="p">:</span> <span class="kc">none</span><span class="p">;</span>
+    <span class="k">color</span><span class="p">:</span> <span class="kc">inherit</span><span class="p">;</span>
+
+    <span class="err">&amp;:hover,</span>
+    <span class="err">&amp;:focus</span> <span class="err">{</span>
+      <span class="k">background</span><span class="p">:</span> <span class="nf">darken</span><span class="p">(</span><span class="kc">white</span><span class="p">,</span> <span class="mi">5</span><span class="kt">%</span><span class="p">);;</span>
+    <span class="p">}</span>
+  <span class="err">}</span>
+
+<span class="err">}</span>
+
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>使用计算属性代替<code>:class=&quot;</code>vue-theme-${theme}<code>&quot;</code>中的表达式，使得代码更清晰</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="p">...</span>
+<span class="c1">// 计算classes
+</span><span class="c1"></span><span class="kr">const</span> <span class="nx">classes</span> <span class="o">=</span> <span class="nx">computed</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="p">{</span>
+    <span class="p">[</span><span class="sb">`vue-theme-</span><span class="si">${</span><span class="nx">theme</span><span class="si">}</span><span class="sb">`</span><span class="p">]</span><span class="o">:</span> <span class="nx">theme</span><span class="p">,</span>
+    <span class="p">[</span><span class="sb">`vue-size-</span><span class="si">${</span><span class="nx">size</span><span class="si">}</span><span class="sb">`</span><span class="p">]</span><span class="o">:</span> <span class="nx">size</span>
+  <span class="p">};</span>
+<span class="p">});</span>
+<span class="p">...</span>
+</code></pre></td></tr></table>
+</div>
+</div><hr>
+<h3 id="让button支持level属性">让button支持level属性</h3>
+<blockquote>
+<p>level的值为 main/normal/danger</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span><span class="lnt">126
+</span><span class="lnt">127
+</span><span class="lnt">128
+</span><span class="lnt">129
+</span><span class="lnt">130
+</span><span class="lnt">131
+</span><span class="lnt">132
+</span><span class="lnt">133
+</span><span class="lnt">134
+</span><span class="lnt">135
+</span><span class="lnt">136
+</span><span class="lnt">137
+</span><span class="lnt">138
+</span><span class="lnt">139
+</span><span class="lnt">140
+</span><span class="lnt">141
+</span><span class="lnt">142
+</span><span class="lnt">143
+</span><span class="lnt">144
+</span><span class="lnt">145
+</span><span class="lnt">146
+</span><span class="lnt">147
+</span><span class="lnt">148
+</span><span class="lnt">149
+</span><span class="lnt">150
+</span><span class="lnt">151
+</span><span class="lnt">152
+</span><span class="lnt">153
+</span><span class="lnt">154
+</span><span class="lnt">155
+</span><span class="lnt">156
+</span><span class="lnt">157
+</span><span class="lnt">158
+</span><span class="lnt">159
+</span><span class="lnt">160
+</span><span class="lnt">161
+</span><span class="lnt">162
+</span><span class="lnt">163
+</span><span class="lnt">164
+</span><span class="lnt">165
+</span><span class="lnt">166
+</span><span class="lnt">167
+</span><span class="lnt">168
+</span><span class="lnt">169
+</span><span class="lnt">170
+</span><span class="lnt">171
+</span><span class="lnt">172
+</span><span class="lnt">173
+</span><span class="lnt">174
+</span><span class="lnt">175
+</span><span class="lnt">176
+</span><span class="lnt">177
+</span><span class="lnt">178
+</span><span class="lnt">179
+</span><span class="lnt">180
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<span class="kr">import</span> <span class="p">{</span><span class="nx">computed</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue&#39;</span><span class="p">;</span>
+
+<span class="kr">interface</span> <span class="nx">Props</span> <span class="p">{</span>
+  <span class="nx">theme</span><span class="o">?:</span> <span class="s1">&#39;button&#39;</span> <span class="o">|</span> <span class="s1">&#39;link&#39;</span> <span class="o">|</span> <span class="s1">&#39;text&#39;</span><span class="p">;</span>
+  <span class="nx">size</span><span class="o">?:</span> <span class="s1">&#39;normal&#39;</span> <span class="o">|</span> <span class="s1">&#39;big&#39;</span> <span class="o">|</span> <span class="s1">&#39;small&#39;</span><span class="p">;</span>
+  <span class="nx">level</span><span class="o">?:</span> <span class="s1">&#39;normal&#39;</span> <span class="o">|</span> <span class="s1">&#39;primary&#39;</span> <span class="o">|</span> <span class="s1">&#39;danger&#39;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kr">const</span> <span class="nx">props</span> <span class="o">=</span> <span class="nx">withDefaults</span><span class="p">(</span><span class="nx">defineProps</span><span class="o">&lt;</span><span class="nx">Props</span><span class="o">&gt;</span><span class="p">(),</span> <span class="p">{</span>
+  <span class="nx">theme</span><span class="o">:</span> <span class="s1">&#39;button&#39;</span><span class="p">,</span>
+  <span class="nx">size</span><span class="o">:</span> <span class="s1">&#39;normal&#39;</span><span class="p">,</span>
+  <span class="nx">level</span><span class="o">:</span> <span class="s1">&#39;normal&#39;</span>
+<span class="p">});</span>
+<span class="kr">const</span> <span class="p">{</span><span class="nx">theme</span><span class="p">,</span> <span class="nx">size</span><span class="p">,</span> <span class="nx">level</span><span class="p">}</span> <span class="o">=</span> <span class="nx">props</span><span class="p">;</span>
+
+<span class="c1">// 计算classes
+</span><span class="c1"></span><span class="kr">const</span> <span class="nx">classes</span> <span class="o">=</span> <span class="nx">computed</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="p">{</span>
+    <span class="p">[</span><span class="sb">`vue-theme-</span><span class="si">${</span><span class="nx">theme</span><span class="si">}</span><span class="sb">`</span><span class="p">]</span><span class="o">:</span> <span class="nx">theme</span><span class="p">,</span>
+    <span class="p">[</span><span class="sb">`vue-size-</span><span class="si">${</span><span class="nx">size</span><span class="si">}</span><span class="sb">`</span><span class="p">]</span><span class="o">:</span> <span class="nx">size</span><span class="p">,</span>
+    <span class="p">[</span><span class="sb">`vue-level-</span><span class="si">${</span><span class="nx">level</span><span class="si">}</span><span class="sb">`</span><span class="p">]</span><span class="o">:</span> <span class="nx">level</span><span class="p">,</span>
+  <span class="p">};</span>
+<span class="p">});</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">button</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;vue-button&#34;</span>
+          <span class="na">:class</span><span class="o">=</span><span class="s">&#34;classes&#34;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">slot</span><span class="p">&gt;&lt;/</span><span class="nt">slot</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<span class="kr">export</span> <span class="k">default</span> <span class="p">{</span>
+  <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Button&#39;</span>
+<span class="p">};</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">style</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;scss&#34;</span><span class="p">&gt;</span>
+<span class="p">@</span><span class="k">import</span> <span class="s1">&#39;var&#39;</span><span class="p">;</span>
+
+<span class="o">//</span> <span class="nt">basic</span>
+<span class="p">.</span><span class="nc">vue-button</span> <span class="p">{</span>
+  <span class="k">align-items</span><span class="p">:</span> <span class="kc">center</span><span class="p">;</span>
+  <span class="k">background</span><span class="p">:</span> <span class="err">$</span><span class="n">button-background</span><span class="p">;</span>
+  <span class="k">transition</span><span class="p">:</span> <span class="k">background</span> <span class="mi">250</span><span class="kt">ms</span><span class="p">;</span>
+  <span class="k">border</span><span class="p">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="kc">solid</span> <span class="err">$</span><span class="k">border-color</span><span class="p">;</span>
+  <span class="k">border-radius</span><span class="p">:</span> <span class="err">$</span><span class="n">radius</span><span class="p">;</span>
+  <span class="k">box-shadow</span><span class="p">:</span> <span class="mi">0</span> <span class="mi">1</span><span class="kt">px</span> <span class="mi">0</span> <span class="nf">fade-out</span><span class="p">(</span><span class="err">$</span><span class="n">shadow</span><span class="o">-</span><span class="kc">color</span><span class="p">,</span> <span class="mf">.95</span><span class="p">);</span>
+  <span class="k">color</span><span class="p">:</span> <span class="err">$</span><span class="n">basic-font-color</span><span class="p">;</span>
+  <span class="k">cursor</span><span class="p">:</span> <span class="kc">pointer</span><span class="p">;</span>
+  <span class="k">display</span><span class="p">:</span> <span class="kc">inline-flex</span><span class="p">;</span>
+  <span class="k">height</span><span class="p">:</span> <span class="err">$</span><span class="k">height</span><span class="p">;</span>
+  <span class="k">justify-content</span><span class="p">:</span> <span class="kc">center</span><span class="p">;</span>
+  <span class="k">padding</span><span class="p">:</span> <span class="mi">0</span> <span class="mi">12</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">white-space</span><span class="p">:</span> <span class="kc">nowrap</span><span class="p">;</span>
+
+  <span class="err">&amp;</span> <span class="err">+</span> <span class="err">&amp;</span> <span class="err">{</span>
+    <span class="k">margin-left</span><span class="p">:</span> <span class="mi">8</span><span class="kt">px</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="o">&amp;</span><span class="p">:</span><span class="nd">hover</span><span class="o">,</span>
+  <span class="o">&amp;</span><span class="p">:</span><span class="nd">focus</span> <span class="p">{</span>
+    <span class="k">border-color</span><span class="p">:</span> <span class="err">$</span><span class="n">light-font-color</span><span class="p">;</span>
+    <span class="k">color</span><span class="p">:</span> <span class="err">$</span><span class="n">light-font-color</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="o">&amp;</span><span class="p">:</span><span class="nd">focus</span> <span class="p">{</span>
+    <span class="k">outline</span><span class="p">:</span> <span class="kc">none</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="o">&amp;</span><span class="p">::</span><span class="nd">-moz-focus-inner</span> <span class="p">{</span>
+    <span class="k">border</span><span class="p">:</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="o">//</span> <span class="nt">big</span>
+  <span class="o">&amp;</span><span class="p">.</span><span class="nc">vue-size-big</span> <span class="p">{</span>
+    <span class="k">font-size</span><span class="p">:</span> <span class="mi">24</span><span class="kt">px</span><span class="p">;</span>
+    <span class="k">height</span><span class="p">:</span> <span class="mi">48</span><span class="kt">px</span><span class="p">;</span>
+    <span class="k">padding</span><span class="p">:</span> <span class="mi">0</span> <span class="mi">16</span><span class="kt">px</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="o">//</span> <span class="nt">small</span>
+  <span class="o">&amp;</span><span class="p">.</span><span class="nc">vue-size-small</span> <span class="p">{</span>
+    <span class="k">font-size</span><span class="p">:</span> <span class="mi">12</span><span class="kt">px</span><span class="p">;</span>
+    <span class="k">height</span><span class="p">:</span> <span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
+    <span class="k">padding</span><span class="p">:</span> <span class="mi">0</span> <span class="mi">4</span><span class="kt">px</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="o">//</span> <span class="nt">link</span>
+  <span class="o">&amp;</span><span class="p">.</span><span class="nc">vue-theme-link</span> <span class="p">{</span>
+    <span class="k">border-color</span><span class="p">:</span> <span class="kc">transparent</span><span class="p">;</span>
+    <span class="k">box-shadow</span><span class="p">:</span> <span class="kc">none</span><span class="p">;</span>
+    <span class="k">color</span><span class="p">:</span> <span class="err">$</span><span class="n">light-font-color</span><span class="p">;</span>
+
+    <span class="err">&amp;:hover,</span>
+    <span class="err">&amp;:focus</span> <span class="err">{</span>
+      <span class="k">color</span><span class="p">:</span> <span class="nf">lighten</span><span class="p">(</span><span class="err">$</span><span class="n">light</span><span class="o">-</span><span class="n">font</span><span class="o">-</span><span class="kc">color</span><span class="p">,</span> <span class="mi">10</span><span class="kt">%</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="err">}</span>
+
+  <span class="o">//</span> <span class="nt">text</span>
+  <span class="o">&amp;</span><span class="p">.</span><span class="nc">vue-theme-text</span> <span class="p">{</span>
+    <span class="k">border-color</span><span class="p">:</span> <span class="kc">transparent</span><span class="p">;</span>
+    <span class="k">box-shadow</span><span class="p">:</span> <span class="kc">none</span><span class="p">;</span>
+    <span class="k">color</span><span class="p">:</span> <span class="kc">inherit</span><span class="p">;</span>
+
+    <span class="err">&amp;:hover,</span>
+    <span class="err">&amp;:focus</span> <span class="err">{</span>
+      <span class="k">background</span><span class="p">:</span> <span class="nf">darken</span><span class="p">(</span><span class="kc">white</span><span class="p">,</span> <span class="mi">5</span><span class="kt">%</span><span class="p">);;</span>
+    <span class="p">}</span>
+  <span class="err">}</span>
+
+  <span class="o">//</span> <span class="nt">level</span>
+  <span class="o">&amp;</span><span class="p">.</span><span class="nc">vue-theme-button</span> <span class="p">{</span>
+    <span class="err">//</span> <span class="err">primary</span>
+    <span class="err">&amp;.vue-level-primary</span> <span class="err">{</span>
+      <span class="k">background</span><span class="p">:</span> <span class="err">$</span><span class="n">light-font-color</span><span class="p">;</span>
+      <span class="k">color</span><span class="p">:</span> <span class="kc">white</span><span class="p">;</span>
+      <span class="k">border-color</span><span class="p">:</span> <span class="err">$</span><span class="n">light-font-color</span><span class="p">;</span>
+
+      <span class="err">&amp;:hover,</span>
+      <span class="err">&amp;:focus</span> <span class="err">{</span>
+        <span class="k">background</span><span class="p">:</span> <span class="nf">darken</span><span class="p">(</span><span class="err">$</span><span class="n">light</span><span class="o">-</span><span class="n">font</span><span class="o">-</span><span class="kc">color</span><span class="p">,</span> <span class="mi">10</span><span class="kt">%</span><span class="p">);</span>
+        <span class="k">border-color</span><span class="p">:</span> <span class="nf">darken</span><span class="p">(</span><span class="err">$</span><span class="n">light</span><span class="o">-</span><span class="n">font</span><span class="o">-</span><span class="kc">color</span><span class="p">,</span> <span class="mi">10</span><span class="kt">%</span><span class="p">);</span>
+      <span class="p">}</span>
+    <span class="err">}</span>
+
+    <span class="o">//</span> <span class="nt">danger</span>
+    <span class="o">&amp;</span><span class="p">.</span><span class="nc">vue-level-danger</span> <span class="p">{</span>
+      <span class="k">background</span><span class="p">:</span> <span class="err">$</span><span class="n">danger</span><span class="p">;</span>
+      <span class="k">border-color</span><span class="p">:</span> <span class="err">$</span><span class="n">danger</span><span class="p">;</span>
+      <span class="k">color</span><span class="p">:</span> <span class="kc">white</span><span class="p">;</span>
+
+      <span class="err">&amp;:hover,</span>
+      <span class="err">&amp;:focus</span> <span class="err">{</span>
+        <span class="k">background</span><span class="p">:</span> <span class="nf">darken</span><span class="p">(</span><span class="err">$</span><span class="n">danger</span><span class="p">,</span> <span class="mi">10</span><span class="kt">%</span><span class="p">);</span>
+        <span class="k">border-color</span><span class="p">:</span> <span class="nf">darken</span><span class="p">(</span><span class="err">$</span><span class="n">danger</span><span class="p">,</span> <span class="mi">10</span><span class="kt">%</span><span class="p">);</span>
+      <span class="p">}</span>
+    <span class="err">}</span>
+  <span class="err">}</span>
+
+  <span class="o">&amp;</span><span class="p">.</span><span class="nc">vue-theme-link</span> <span class="p">{</span>
+    <span class="err">//</span> <span class="err">danger</span>
+    <span class="err">&amp;.vue-level-danger</span> <span class="err">{</span>
+      <span class="k">color</span><span class="p">:</span> <span class="err">$</span><span class="n">danger</span><span class="p">;</span>
+
+      <span class="err">&amp;:hover,</span>
+      <span class="err">&amp;:focus</span> <span class="err">{</span>
+        <span class="k">color</span><span class="p">:</span> <span class="nf">darken</span><span class="p">(</span><span class="err">$</span><span class="n">danger</span><span class="p">,</span> <span class="mi">10</span><span class="kt">%</span><span class="p">);</span>
+      <span class="p">}</span>
+    <span class="err">}</span>
+  <span class="err">}</span>
+
+  <span class="o">&amp;</span><span class="p">.</span><span class="nc">vue-theme-text</span> <span class="p">{</span>
+    <span class="err">//</span> <span class="err">primary</span>
+    <span class="err">&amp;.vue-level-primary</span> <span class="err">{</span>
+      <span class="k">color</span><span class="p">:</span> <span class="err">$</span><span class="n">light-font-color</span><span class="p">;</span>
+
+      <span class="err">&amp;:hover,</span>
+      <span class="err">&amp;:focus</span> <span class="err">{</span>
+        <span class="k">color</span><span class="p">:</span> <span class="nf">darken</span><span class="p">(</span><span class="err">$</span><span class="n">light</span><span class="o">-</span><span class="n">font</span><span class="o">-</span><span class="kc">color</span><span class="p">,</span> <span class="mi">10</span><span class="kt">%</span><span class="p">);</span>
+      <span class="p">}</span>
+    <span class="err">}</span>
+
+    <span class="o">//</span> <span class="nt">danger</span>
+    <span class="o">&amp;</span><span class="p">.</span><span class="nc">vue-level-danger</span> <span class="p">{</span>
+      <span class="k">color</span><span class="p">:</span> <span class="err">$</span><span class="n">danger</span><span class="p">;</span>
+
+      <span class="err">&amp;:hover,</span>
+      <span class="err">&amp;:focus</span> <span class="err">{</span>
+        <span class="k">color</span><span class="p">:</span> <span class="nf">darken</span><span class="p">(</span><span class="err">$</span><span class="n">danger</span><span class="p">,</span> <span class="mi">10</span><span class="kt">%</span><span class="p">);</span>
+      <span class="p">}</span>
+    <span class="err">}</span>
+  <span class="err">}</span>
+<span class="err">}</span>
+
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><hr>
+<h3 id="让button支持disabled属性">让button支持disabled属性</h3>
+<blockquote>
+<p>disabled的值为 true/false 默认为false</p>
+</blockquote>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> <code>&lt;button disabled&gt;</code></li>
+<li><input checked="" disabled="" type="checkbox"> <code>&lt;button :disabled=&quot;true&quot;&gt;</code></li>
+<li><input disabled="" type="checkbox"> <code>&lt;button disabled=&quot;true&quot;&gt;</code> 错误</li>
+<li><input disabled="" type="checkbox"> <code>&lt;button disabled=&quot;false&quot;&gt;</code> 错误</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span><span class="lnt">126
+</span><span class="lnt">127
+</span><span class="lnt">128
+</span><span class="lnt">129
+</span><span class="lnt">130
+</span><span class="lnt">131
+</span><span class="lnt">132
+</span><span class="lnt">133
+</span><span class="lnt">134
+</span><span class="lnt">135
+</span><span class="lnt">136
+</span><span class="lnt">137
+</span><span class="lnt">138
+</span><span class="lnt">139
+</span><span class="lnt">140
+</span><span class="lnt">141
+</span><span class="lnt">142
+</span><span class="lnt">143
+</span><span class="lnt">144
+</span><span class="lnt">145
+</span><span class="lnt">146
+</span><span class="lnt">147
+</span><span class="lnt">148
+</span><span class="lnt">149
+</span><span class="lnt">150
+</span><span class="lnt">151
+</span><span class="lnt">152
+</span><span class="lnt">153
+</span><span class="lnt">154
+</span><span class="lnt">155
+</span><span class="lnt">156
+</span><span class="lnt">157
+</span><span class="lnt">158
+</span><span class="lnt">159
+</span><span class="lnt">160
+</span><span class="lnt">161
+</span><span class="lnt">162
+</span><span class="lnt">163
+</span><span class="lnt">164
+</span><span class="lnt">165
+</span><span class="lnt">166
+</span><span class="lnt">167
+</span><span class="lnt">168
+</span><span class="lnt">169
+</span><span class="lnt">170
+</span><span class="lnt">171
+</span><span class="lnt">172
+</span><span class="lnt">173
+</span><span class="lnt">174
+</span><span class="lnt">175
+</span><span class="lnt">176
+</span><span class="lnt">177
+</span><span class="lnt">178
+</span><span class="lnt">179
+</span><span class="lnt">180
+</span><span class="lnt">181
+</span><span class="lnt">182
+</span><span class="lnt">183
+</span><span class="lnt">184
+</span><span class="lnt">185
+</span><span class="lnt">186
+</span><span class="lnt">187
+</span><span class="lnt">188
+</span><span class="lnt">189
+</span><span class="lnt">190
+</span><span class="lnt">191
+</span><span class="lnt">192
+</span><span class="lnt">193
+</span><span class="lnt">194
+</span><span class="lnt">195
+</span><span class="lnt">196
+</span><span class="lnt">197
+</span><span class="lnt">198
+</span><span class="lnt">199
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<span class="kr">import</span> <span class="p">{</span><span class="nx">computed</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue&#39;</span><span class="p">;</span>
+
+<span class="kr">interface</span> <span class="nx">Props</span> <span class="p">{</span>
+  <span class="nx">theme</span><span class="o">?:</span> <span class="s1">&#39;button&#39;</span> <span class="o">|</span> <span class="s1">&#39;link&#39;</span> <span class="o">|</span> <span class="s1">&#39;text&#39;</span><span class="p">;</span>
+  <span class="nx">size</span><span class="o">?:</span> <span class="s1">&#39;normal&#39;</span> <span class="o">|</span> <span class="s1">&#39;big&#39;</span> <span class="o">|</span> <span class="s1">&#39;small&#39;</span><span class="p">;</span>
+  <span class="nx">level</span><span class="o">?:</span> <span class="s1">&#39;normal&#39;</span> <span class="o">|</span> <span class="s1">&#39;primary&#39;</span> <span class="o">|</span> <span class="s1">&#39;danger&#39;</span><span class="p">;</span>
+  <span class="nx">disabled</span><span class="o">?:</span> <span class="nb">Boolean</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kr">const</span> <span class="nx">props</span> <span class="o">=</span> <span class="nx">withDefaults</span><span class="p">(</span><span class="nx">defineProps</span><span class="o">&lt;</span><span class="nx">Props</span><span class="o">&gt;</span><span class="p">(),</span> <span class="p">{</span>
+  <span class="nx">theme</span><span class="o">:</span> <span class="s1">&#39;button&#39;</span><span class="p">,</span>
+  <span class="nx">size</span><span class="o">:</span> <span class="s1">&#39;normal&#39;</span><span class="p">,</span>
+  <span class="nx">level</span><span class="o">:</span> <span class="s1">&#39;normal&#39;</span><span class="p">,</span>
+  <span class="nx">disabled</span><span class="o">:</span> <span class="kc">false</span>
+<span class="p">});</span>
+<span class="kr">const</span> <span class="p">{</span><span class="nx">theme</span><span class="p">,</span> <span class="nx">size</span><span class="p">,</span> <span class="nx">level</span><span class="p">,</span> <span class="nx">disabled</span><span class="p">}</span> <span class="o">=</span> <span class="nx">props</span><span class="p">;</span>
+
+<span class="c1">// 计算classes
+</span><span class="c1"></span><span class="kr">const</span> <span class="nx">classes</span> <span class="o">=</span> <span class="nx">computed</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="p">{</span>
+    <span class="p">[</span><span class="sb">`vue-theme-</span><span class="si">${</span><span class="nx">theme</span><span class="si">}</span><span class="sb">`</span><span class="p">]</span><span class="o">:</span> <span class="nx">theme</span><span class="p">,</span>
+    <span class="p">[</span><span class="sb">`vue-size-</span><span class="si">${</span><span class="nx">size</span><span class="si">}</span><span class="sb">`</span><span class="p">]</span><span class="o">:</span> <span class="nx">size</span><span class="p">,</span>
+    <span class="p">[</span><span class="sb">`vue-level-</span><span class="si">${</span><span class="nx">level</span><span class="si">}</span><span class="sb">`</span><span class="p">]</span><span class="o">:</span> <span class="nx">level</span><span class="p">,</span>
+  <span class="p">};</span>
+<span class="p">});</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">button</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;vue-button&#34;</span>
+          <span class="na">:class</span><span class="o">=</span><span class="s">&#34;classes&#34;</span>
+          <span class="na">:disabled</span><span class="o">=</span><span class="s">&#34;disabled&#34;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">slot</span><span class="p">&gt;&lt;/</span><span class="nt">slot</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<span class="kr">export</span> <span class="k">default</span> <span class="p">{</span>
+  <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Button&#39;</span>
+<span class="p">};</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">style</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;scss&#34;</span><span class="p">&gt;</span>
+<span class="p">@</span><span class="k">import</span> <span class="s1">&#39;var&#39;</span><span class="p">;</span>
+
+<span class="o">//</span> <span class="nt">basic</span>
+<span class="p">.</span><span class="nc">vue-button</span> <span class="p">{</span>
+  <span class="k">align-items</span><span class="p">:</span> <span class="kc">center</span><span class="p">;</span>
+  <span class="k">background</span><span class="p">:</span> <span class="err">$</span><span class="n">button-background</span><span class="p">;</span>
+  <span class="k">transition</span><span class="p">:</span> <span class="k">background</span> <span class="mi">250</span><span class="kt">ms</span><span class="p">;</span>
+  <span class="k">border</span><span class="p">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="kc">solid</span> <span class="err">$</span><span class="k">border-color</span><span class="p">;</span>
+  <span class="k">border-radius</span><span class="p">:</span> <span class="err">$</span><span class="n">radius</span><span class="p">;</span>
+  <span class="k">box-shadow</span><span class="p">:</span> <span class="mi">0</span> <span class="mi">1</span><span class="kt">px</span> <span class="mi">0</span> <span class="nf">fade-out</span><span class="p">(</span><span class="err">$</span><span class="n">shadow</span><span class="o">-</span><span class="kc">color</span><span class="p">,</span> <span class="mf">.95</span><span class="p">);</span>
+  <span class="k">color</span><span class="p">:</span> <span class="err">$</span><span class="n">basic-font-color</span><span class="p">;</span>
+  <span class="k">cursor</span><span class="p">:</span> <span class="kc">pointer</span><span class="p">;</span>
+  <span class="k">display</span><span class="p">:</span> <span class="kc">inline-flex</span><span class="p">;</span>
+  <span class="k">height</span><span class="p">:</span> <span class="err">$</span><span class="k">height</span><span class="p">;</span>
+  <span class="k">justify-content</span><span class="p">:</span> <span class="kc">center</span><span class="p">;</span>
+  <span class="k">padding</span><span class="p">:</span> <span class="mi">0</span> <span class="mi">12</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">white-space</span><span class="p">:</span> <span class="kc">nowrap</span><span class="p">;</span>
+
+  <span class="err">&amp;</span> <span class="err">+</span> <span class="err">&amp;</span> <span class="err">{</span>
+    <span class="k">margin-left</span><span class="p">:</span> <span class="mi">8</span><span class="kt">px</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="o">&amp;</span><span class="p">:</span><span class="nd">hover</span><span class="o">,</span>
+  <span class="o">&amp;</span><span class="p">:</span><span class="nd">focus</span> <span class="p">{</span>
+    <span class="k">border-color</span><span class="p">:</span> <span class="err">$</span><span class="n">light-font-color</span><span class="p">;</span>
+    <span class="k">color</span><span class="p">:</span> <span class="err">$</span><span class="n">light-font-color</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="o">&amp;</span><span class="p">:</span><span class="nd">focus</span> <span class="p">{</span>
+    <span class="k">outline</span><span class="p">:</span> <span class="kc">none</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="o">&amp;</span><span class="p">::</span><span class="nd">-moz-focus-inner</span> <span class="p">{</span>
+    <span class="k">border</span><span class="p">:</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="o">//</span> <span class="nt">big</span>
+  <span class="o">&amp;</span><span class="p">.</span><span class="nc">vue-size-big</span> <span class="p">{</span>
+    <span class="k">font-size</span><span class="p">:</span> <span class="mi">24</span><span class="kt">px</span><span class="p">;</span>
+    <span class="k">height</span><span class="p">:</span> <span class="mi">48</span><span class="kt">px</span><span class="p">;</span>
+    <span class="k">padding</span><span class="p">:</span> <span class="mi">0</span> <span class="mi">16</span><span class="kt">px</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="o">//</span> <span class="nt">small</span>
+  <span class="o">&amp;</span><span class="p">.</span><span class="nc">vue-size-small</span> <span class="p">{</span>
+    <span class="k">font-size</span><span class="p">:</span> <span class="mi">12</span><span class="kt">px</span><span class="p">;</span>
+    <span class="k">height</span><span class="p">:</span> <span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
+    <span class="k">padding</span><span class="p">:</span> <span class="mi">0</span> <span class="mi">4</span><span class="kt">px</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="o">//</span> <span class="nt">link</span>
+  <span class="o">&amp;</span><span class="p">.</span><span class="nc">vue-theme-link</span> <span class="p">{</span>
+    <span class="k">border-color</span><span class="p">:</span> <span class="kc">transparent</span><span class="p">;</span>
+    <span class="k">box-shadow</span><span class="p">:</span> <span class="kc">none</span><span class="p">;</span>
+    <span class="k">color</span><span class="p">:</span> <span class="err">$</span><span class="n">light-font-color</span><span class="p">;</span>
+
+    <span class="err">&amp;:hover,</span>
+    <span class="err">&amp;:focus</span> <span class="err">{</span>
+      <span class="k">color</span><span class="p">:</span> <span class="nf">lighten</span><span class="p">(</span><span class="err">$</span><span class="n">light</span><span class="o">-</span><span class="n">font</span><span class="o">-</span><span class="kc">color</span><span class="p">,</span> <span class="mi">10</span><span class="kt">%</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="err">}</span>
+
+  <span class="o">//</span> <span class="nt">text</span>
+  <span class="o">&amp;</span><span class="p">.</span><span class="nc">vue-theme-text</span> <span class="p">{</span>
+    <span class="k">border-color</span><span class="p">:</span> <span class="kc">transparent</span><span class="p">;</span>
+    <span class="k">box-shadow</span><span class="p">:</span> <span class="kc">none</span><span class="p">;</span>
+    <span class="k">color</span><span class="p">:</span> <span class="kc">inherit</span><span class="p">;</span>
+
+    <span class="err">&amp;:hover,</span>
+    <span class="err">&amp;:focus</span> <span class="err">{</span>
+      <span class="k">background</span><span class="p">:</span> <span class="nf">darken</span><span class="p">(</span><span class="kc">white</span><span class="p">,</span> <span class="mi">5</span><span class="kt">%</span><span class="p">);;</span>
+    <span class="p">}</span>
+  <span class="err">}</span>
+
+  <span class="o">//</span> <span class="nt">level</span>
+  <span class="o">&amp;</span><span class="p">.</span><span class="nc">vue-theme-button</span> <span class="p">{</span>
+    <span class="err">//</span> <span class="err">primary</span>
+    <span class="err">&amp;.vue-level-primary</span> <span class="err">{</span>
+      <span class="k">background</span><span class="p">:</span> <span class="err">$</span><span class="n">light-font-color</span><span class="p">;</span>
+      <span class="k">color</span><span class="p">:</span> <span class="kc">white</span><span class="p">;</span>
+      <span class="k">border-color</span><span class="p">:</span> <span class="err">$</span><span class="n">light-font-color</span><span class="p">;</span>
+
+      <span class="err">&amp;:hover,</span>
+      <span class="err">&amp;:focus</span> <span class="err">{</span>
+        <span class="k">background</span><span class="p">:</span> <span class="nf">darken</span><span class="p">(</span><span class="err">$</span><span class="n">light</span><span class="o">-</span><span class="n">font</span><span class="o">-</span><span class="kc">color</span><span class="p">,</span> <span class="mi">10</span><span class="kt">%</span><span class="p">);</span>
+        <span class="k">border-color</span><span class="p">:</span> <span class="nf">darken</span><span class="p">(</span><span class="err">$</span><span class="n">light</span><span class="o">-</span><span class="n">font</span><span class="o">-</span><span class="kc">color</span><span class="p">,</span> <span class="mi">10</span><span class="kt">%</span><span class="p">);</span>
+      <span class="p">}</span>
+    <span class="err">}</span>
+
+    <span class="o">//</span> <span class="nt">danger</span>
+    <span class="o">&amp;</span><span class="p">.</span><span class="nc">vue-level-danger</span> <span class="p">{</span>
+      <span class="k">background</span><span class="p">:</span> <span class="err">$</span><span class="n">danger</span><span class="p">;</span>
+      <span class="k">border-color</span><span class="p">:</span> <span class="err">$</span><span class="n">danger</span><span class="p">;</span>
+      <span class="k">color</span><span class="p">:</span> <span class="kc">white</span><span class="p">;</span>
+
+      <span class="err">&amp;:hover,</span>
+      <span class="err">&amp;:focus</span> <span class="err">{</span>
+        <span class="k">background</span><span class="p">:</span> <span class="nf">darken</span><span class="p">(</span><span class="err">$</span><span class="n">danger</span><span class="p">,</span> <span class="mi">10</span><span class="kt">%</span><span class="p">);</span>
+        <span class="k">border-color</span><span class="p">:</span> <span class="nf">darken</span><span class="p">(</span><span class="err">$</span><span class="n">danger</span><span class="p">,</span> <span class="mi">10</span><span class="kt">%</span><span class="p">);</span>
+      <span class="p">}</span>
+    <span class="err">}</span>
+  <span class="err">}</span>
+
+  <span class="o">&amp;</span><span class="p">.</span><span class="nc">vue-theme-link</span> <span class="p">{</span>
+    <span class="err">//</span> <span class="err">danger</span>
+    <span class="err">&amp;.vue-level-danger</span> <span class="err">{</span>
+      <span class="k">color</span><span class="p">:</span> <span class="err">$</span><span class="n">danger</span><span class="p">;</span>
+
+      <span class="err">&amp;:hover,</span>
+      <span class="err">&amp;:focus</span> <span class="err">{</span>
+        <span class="k">color</span><span class="p">:</span> <span class="nf">darken</span><span class="p">(</span><span class="err">$</span><span class="n">danger</span><span class="p">,</span> <span class="mi">10</span><span class="kt">%</span><span class="p">);</span>
+      <span class="p">}</span>
+    <span class="err">}</span>
+  <span class="err">}</span>
+
+  <span class="o">&amp;</span><span class="p">.</span><span class="nc">vue-theme-text</span> <span class="p">{</span>
+    <span class="err">//</span> <span class="err">primary</span>
+    <span class="err">&amp;.vue-level-primary</span> <span class="err">{</span>
+      <span class="k">color</span><span class="p">:</span> <span class="err">$</span><span class="n">light-font-color</span><span class="p">;</span>
+
+      <span class="err">&amp;:hover,</span>
+      <span class="err">&amp;:focus</span> <span class="err">{</span>
+        <span class="k">color</span><span class="p">:</span> <span class="nf">darken</span><span class="p">(</span><span class="err">$</span><span class="n">light</span><span class="o">-</span><span class="n">font</span><span class="o">-</span><span class="kc">color</span><span class="p">,</span> <span class="mi">10</span><span class="kt">%</span><span class="p">);</span>
+      <span class="p">}</span>
+    <span class="err">}</span>
+
+    <span class="o">//</span> <span class="nt">danger</span>
+    <span class="o">&amp;</span><span class="p">.</span><span class="nc">vue-level-danger</span> <span class="p">{</span>
+      <span class="k">color</span><span class="p">:</span> <span class="err">$</span><span class="n">danger</span><span class="p">;</span>
+
+      <span class="err">&amp;:hover,</span>
+      <span class="err">&amp;:focus</span> <span class="err">{</span>
+        <span class="k">color</span><span class="p">:</span> <span class="nf">darken</span><span class="p">(</span><span class="err">$</span><span class="n">danger</span><span class="p">,</span> <span class="mi">10</span><span class="kt">%</span><span class="p">);</span>
+      <span class="p">}</span>
+    <span class="err">}</span>
+  <span class="err">}</span>
+
+  <span class="o">//</span> <span class="nt">disabled</span>
+  <span class="o">&amp;</span><span class="p">.</span><span class="nc">vue-theme-button</span> <span class="p">{</span>
+    <span class="err">&amp;[disabled]:hover</span> <span class="err">{</span>
+      <span class="k">border-color</span><span class="p">:</span> <span class="err">$</span><span class="kc">grey</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="err">}</span>
+
+  <span class="o">&amp;</span><span class="p">.</span><span class="nc">vue-theme-button</span><span class="o">,</span>
+  <span class="o">&amp;</span><span class="p">.</span><span class="nc">vue-theme-link</span><span class="o">,</span>
+  <span class="o">&amp;</span><span class="p">.</span><span class="nc">vue-theme-text</span> <span class="p">{</span>
+    <span class="err">&amp;[disabled]</span> <span class="err">{</span>
+      <span class="k">cursor</span><span class="p">:</span> <span class="kc">not-allowed</span><span class="p">;</span>
+      <span class="k">color</span><span class="p">:</span> <span class="err">$</span><span class="kc">grey</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="err">}</span>
+<span class="err">}</span>
+
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>如果已经声明外部属性props中的disabled，就不会被继承</li>
+<li>需要手动写明<code>&lt;button :disabled=&quot;disabled&quot;&gt;</code>绑定属性</li>
+</ul>
+<h3 id="让button支持loading属性">让button支持loading属性</h3>
+<blockquote>
+<p>loading的值为 true/false</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span><span class="lnt">126
+</span><span class="lnt">127
+</span><span class="lnt">128
+</span><span class="lnt">129
+</span><span class="lnt">130
+</span><span class="lnt">131
+</span><span class="lnt">132
+</span><span class="lnt">133
+</span><span class="lnt">134
+</span><span class="lnt">135
+</span><span class="lnt">136
+</span><span class="lnt">137
+</span><span class="lnt">138
+</span><span class="lnt">139
+</span><span class="lnt">140
+</span><span class="lnt">141
+</span><span class="lnt">142
+</span><span class="lnt">143
+</span><span class="lnt">144
+</span><span class="lnt">145
+</span><span class="lnt">146
+</span><span class="lnt">147
+</span><span class="lnt">148
+</span><span class="lnt">149
+</span><span class="lnt">150
+</span><span class="lnt">151
+</span><span class="lnt">152
+</span><span class="lnt">153
+</span><span class="lnt">154
+</span><span class="lnt">155
+</span><span class="lnt">156
+</span><span class="lnt">157
+</span><span class="lnt">158
+</span><span class="lnt">159
+</span><span class="lnt">160
+</span><span class="lnt">161
+</span><span class="lnt">162
+</span><span class="lnt">163
+</span><span class="lnt">164
+</span><span class="lnt">165
+</span><span class="lnt">166
+</span><span class="lnt">167
+</span><span class="lnt">168
+</span><span class="lnt">169
+</span><span class="lnt">170
+</span><span class="lnt">171
+</span><span class="lnt">172
+</span><span class="lnt">173
+</span><span class="lnt">174
+</span><span class="lnt">175
+</span><span class="lnt">176
+</span><span class="lnt">177
+</span><span class="lnt">178
+</span><span class="lnt">179
+</span><span class="lnt">180
+</span><span class="lnt">181
+</span><span class="lnt">182
+</span><span class="lnt">183
+</span><span class="lnt">184
+</span><span class="lnt">185
+</span><span class="lnt">186
+</span><span class="lnt">187
+</span><span class="lnt">188
+</span><span class="lnt">189
+</span><span class="lnt">190
+</span><span class="lnt">191
+</span><span class="lnt">192
+</span><span class="lnt">193
+</span><span class="lnt">194
+</span><span class="lnt">195
+</span><span class="lnt">196
+</span><span class="lnt">197
+</span><span class="lnt">198
+</span><span class="lnt">199
+</span><span class="lnt">200
+</span><span class="lnt">201
+</span><span class="lnt">202
+</span><span class="lnt">203
+</span><span class="lnt">204
+</span><span class="lnt">205
+</span><span class="lnt">206
+</span><span class="lnt">207
+</span><span class="lnt">208
+</span><span class="lnt">209
+</span><span class="lnt">210
+</span><span class="lnt">211
+</span><span class="lnt">212
+</span><span class="lnt">213
+</span><span class="lnt">214
+</span><span class="lnt">215
+</span><span class="lnt">216
+</span><span class="lnt">217
+</span><span class="lnt">218
+</span><span class="lnt">219
+</span><span class="lnt">220
+</span><span class="lnt">221
+</span><span class="lnt">222
+</span><span class="lnt">223
+</span><span class="lnt">224
+</span><span class="lnt">225
+</span><span class="lnt">226
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<span class="kr">import</span> <span class="p">{</span><span class="nx">computed</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue&#39;</span><span class="p">;</span>
+
+<span class="kr">interface</span> <span class="nx">Props</span> <span class="p">{</span>
+  <span class="nx">theme</span><span class="o">?:</span> <span class="s1">&#39;button&#39;</span> <span class="o">|</span> <span class="s1">&#39;link&#39;</span> <span class="o">|</span> <span class="s1">&#39;text&#39;</span><span class="p">;</span>
+  <span class="nx">size</span><span class="o">?:</span> <span class="s1">&#39;normal&#39;</span> <span class="o">|</span> <span class="s1">&#39;big&#39;</span> <span class="o">|</span> <span class="s1">&#39;small&#39;</span><span class="p">;</span>
+  <span class="nx">level</span><span class="o">?:</span> <span class="s1">&#39;normal&#39;</span> <span class="o">|</span> <span class="s1">&#39;primary&#39;</span> <span class="o">|</span> <span class="s1">&#39;danger&#39;</span><span class="p">;</span>
+  <span class="nx">disabled</span><span class="o">?:</span> <span class="nb">Boolean</span><span class="p">;</span>
+  <span class="nx">loading</span><span class="o">?:</span> <span class="nb">Boolean</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kr">const</span> <span class="nx">props</span> <span class="o">=</span> <span class="nx">withDefaults</span><span class="p">(</span><span class="nx">defineProps</span><span class="o">&lt;</span><span class="nx">Props</span><span class="o">&gt;</span><span class="p">(),</span> <span class="p">{</span>
+  <span class="nx">theme</span><span class="o">:</span> <span class="s1">&#39;button&#39;</span><span class="p">,</span>
+  <span class="nx">size</span><span class="o">:</span> <span class="s1">&#39;normal&#39;</span><span class="p">,</span>
+  <span class="nx">level</span><span class="o">:</span> <span class="s1">&#39;normal&#39;</span><span class="p">,</span>
+  <span class="nx">disabled</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+  <span class="nx">loading</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+<span class="p">});</span>
+<span class="kr">const</span> <span class="p">{</span><span class="nx">theme</span><span class="p">,</span> <span class="nx">size</span><span class="p">,</span> <span class="nx">level</span><span class="p">,</span> <span class="nx">disabled</span><span class="p">,</span> <span class="nx">loading</span><span class="p">}</span> <span class="o">=</span> <span class="nx">props</span><span class="p">;</span>
+
+<span class="c1">// 计算classes
+</span><span class="c1"></span><span class="kr">const</span> <span class="nx">classes</span> <span class="o">=</span> <span class="nx">computed</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="p">{</span>
+    <span class="p">[</span><span class="sb">`vue-theme-</span><span class="si">${</span><span class="nx">theme</span><span class="si">}</span><span class="sb">`</span><span class="p">]</span><span class="o">:</span> <span class="nx">theme</span><span class="p">,</span>
+    <span class="p">[</span><span class="sb">`vue-size-</span><span class="si">${</span><span class="nx">size</span><span class="si">}</span><span class="sb">`</span><span class="p">]</span><span class="o">:</span> <span class="nx">size</span><span class="p">,</span>
+    <span class="p">[</span><span class="sb">`vue-level-</span><span class="si">${</span><span class="nx">level</span><span class="si">}</span><span class="sb">`</span><span class="p">]</span><span class="o">:</span> <span class="nx">level</span><span class="p">,</span>
+  <span class="p">};</span>
+<span class="p">});</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">button</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;vue-button&#34;</span>
+          <span class="na">:class</span><span class="o">=</span><span class="s">&#34;classes&#34;</span>
+          <span class="na">:disabled</span><span class="o">=</span><span class="s">&#34;disabled&#34;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;vue-loadingIndicator&#34;</span>
+          <span class="na">v-if</span><span class="o">=</span><span class="s">&#34;loading&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">slot</span><span class="p">&gt;&lt;/</span><span class="nt">slot</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<span class="kr">export</span> <span class="k">default</span> <span class="p">{</span>
+  <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Button&#39;</span>
+<span class="p">};</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">style</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;scss&#34;</span><span class="p">&gt;</span>
+<span class="p">@</span><span class="k">import</span> <span class="s1">&#39;var&#39;</span><span class="p">;</span>
+
+<span class="o">//</span> <span class="nt">basic</span>
+<span class="p">.</span><span class="nc">vue-button</span> <span class="p">{</span>
+  <span class="k">align-items</span><span class="p">:</span> <span class="kc">center</span><span class="p">;</span>
+  <span class="k">background</span><span class="p">:</span> <span class="err">$</span><span class="n">button-background</span><span class="p">;</span>
+  <span class="k">transition</span><span class="p">:</span> <span class="k">background</span> <span class="mi">250</span><span class="kt">ms</span><span class="p">;</span>
+  <span class="k">border</span><span class="p">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="kc">solid</span> <span class="err">$</span><span class="k">border-color</span><span class="p">;</span>
+  <span class="k">border-radius</span><span class="p">:</span> <span class="err">$</span><span class="n">radius</span><span class="p">;</span>
+  <span class="k">box-shadow</span><span class="p">:</span> <span class="mi">0</span> <span class="mi">1</span><span class="kt">px</span> <span class="mi">0</span> <span class="nf">fade-out</span><span class="p">(</span><span class="err">$</span><span class="n">shadow</span><span class="o">-</span><span class="kc">color</span><span class="p">,</span> <span class="mf">.95</span><span class="p">);</span>
+  <span class="k">color</span><span class="p">:</span> <span class="err">$</span><span class="n">basic-font-color</span><span class="p">;</span>
+  <span class="k">cursor</span><span class="p">:</span> <span class="kc">pointer</span><span class="p">;</span>
+  <span class="k">display</span><span class="p">:</span> <span class="kc">inline-flex</span><span class="p">;</span>
+  <span class="k">height</span><span class="p">:</span> <span class="err">$</span><span class="k">height</span><span class="p">;</span>
+  <span class="k">justify-content</span><span class="p">:</span> <span class="kc">center</span><span class="p">;</span>
+  <span class="k">padding</span><span class="p">:</span> <span class="mi">0</span> <span class="mi">12</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">white-space</span><span class="p">:</span> <span class="kc">nowrap</span><span class="p">;</span>
+
+  <span class="err">&amp;</span> <span class="err">+</span> <span class="err">&amp;</span> <span class="err">{</span>
+    <span class="k">margin-left</span><span class="p">:</span> <span class="mi">8</span><span class="kt">px</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="o">&amp;</span><span class="p">:</span><span class="nd">hover</span><span class="o">,</span>
+  <span class="o">&amp;</span><span class="p">:</span><span class="nd">focus</span> <span class="p">{</span>
+    <span class="k">border-color</span><span class="p">:</span> <span class="err">$</span><span class="n">light-font-color</span><span class="p">;</span>
+    <span class="k">color</span><span class="p">:</span> <span class="err">$</span><span class="n">light-font-color</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="o">&amp;</span><span class="p">:</span><span class="nd">focus</span> <span class="p">{</span>
+    <span class="k">outline</span><span class="p">:</span> <span class="kc">none</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="o">&amp;</span><span class="p">::</span><span class="nd">-moz-focus-inner</span> <span class="p">{</span>
+    <span class="k">border</span><span class="p">:</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="o">//</span> <span class="nt">big</span>
+  <span class="o">&amp;</span><span class="p">.</span><span class="nc">vue-size-big</span> <span class="p">{</span>
+    <span class="k">font-size</span><span class="p">:</span> <span class="mi">24</span><span class="kt">px</span><span class="p">;</span>
+    <span class="k">height</span><span class="p">:</span> <span class="mi">48</span><span class="kt">px</span><span class="p">;</span>
+    <span class="k">padding</span><span class="p">:</span> <span class="mi">0</span> <span class="mi">16</span><span class="kt">px</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="o">//</span> <span class="nt">small</span>
+  <span class="o">&amp;</span><span class="p">.</span><span class="nc">vue-size-small</span> <span class="p">{</span>
+    <span class="k">font-size</span><span class="p">:</span> <span class="mi">12</span><span class="kt">px</span><span class="p">;</span>
+    <span class="k">height</span><span class="p">:</span> <span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
+    <span class="k">padding</span><span class="p">:</span> <span class="mi">0</span> <span class="mi">4</span><span class="kt">px</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="o">//</span> <span class="nt">link</span>
+  <span class="o">&amp;</span><span class="p">.</span><span class="nc">vue-theme-link</span> <span class="p">{</span>
+    <span class="k">border-color</span><span class="p">:</span> <span class="kc">transparent</span><span class="p">;</span>
+    <span class="k">box-shadow</span><span class="p">:</span> <span class="kc">none</span><span class="p">;</span>
+    <span class="k">color</span><span class="p">:</span> <span class="err">$</span><span class="n">light-font-color</span><span class="p">;</span>
+
+    <span class="err">&amp;:hover,</span>
+    <span class="err">&amp;:focus</span> <span class="err">{</span>
+      <span class="k">color</span><span class="p">:</span> <span class="nf">lighten</span><span class="p">(</span><span class="err">$</span><span class="n">light</span><span class="o">-</span><span class="n">font</span><span class="o">-</span><span class="kc">color</span><span class="p">,</span> <span class="mi">10</span><span class="kt">%</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="err">}</span>
+
+  <span class="o">//</span> <span class="nt">text</span>
+  <span class="o">&amp;</span><span class="p">.</span><span class="nc">vue-theme-text</span> <span class="p">{</span>
+    <span class="k">border-color</span><span class="p">:</span> <span class="kc">transparent</span><span class="p">;</span>
+    <span class="k">box-shadow</span><span class="p">:</span> <span class="kc">none</span><span class="p">;</span>
+    <span class="k">color</span><span class="p">:</span> <span class="kc">inherit</span><span class="p">;</span>
+
+    <span class="err">&amp;:hover,</span>
+    <span class="err">&amp;:focus</span> <span class="err">{</span>
+      <span class="k">background</span><span class="p">:</span> <span class="nf">darken</span><span class="p">(</span><span class="kc">white</span><span class="p">,</span> <span class="mi">5</span><span class="kt">%</span><span class="p">);;</span>
+    <span class="p">}</span>
+  <span class="err">}</span>
+
+  <span class="o">//</span> <span class="nt">level</span>
+  <span class="o">&amp;</span><span class="p">.</span><span class="nc">vue-theme-button</span> <span class="p">{</span>
+    <span class="err">//</span> <span class="err">primary</span>
+    <span class="err">&amp;.vue-level-primary</span> <span class="err">{</span>
+      <span class="k">background</span><span class="p">:</span> <span class="err">$</span><span class="n">light-font-color</span><span class="p">;</span>
+      <span class="k">color</span><span class="p">:</span> <span class="kc">white</span><span class="p">;</span>
+      <span class="k">border-color</span><span class="p">:</span> <span class="err">$</span><span class="n">light-font-color</span><span class="p">;</span>
+
+      <span class="err">&amp;:hover,</span>
+      <span class="err">&amp;:focus</span> <span class="err">{</span>
+        <span class="k">background</span><span class="p">:</span> <span class="nf">darken</span><span class="p">(</span><span class="err">$</span><span class="n">light</span><span class="o">-</span><span class="n">font</span><span class="o">-</span><span class="kc">color</span><span class="p">,</span> <span class="mi">10</span><span class="kt">%</span><span class="p">);</span>
+        <span class="k">border-color</span><span class="p">:</span> <span class="nf">darken</span><span class="p">(</span><span class="err">$</span><span class="n">light</span><span class="o">-</span><span class="n">font</span><span class="o">-</span><span class="kc">color</span><span class="p">,</span> <span class="mi">10</span><span class="kt">%</span><span class="p">);</span>
+      <span class="p">}</span>
+    <span class="err">}</span>
+
+    <span class="o">//</span> <span class="nt">danger</span>
+    <span class="o">&amp;</span><span class="p">.</span><span class="nc">vue-level-danger</span> <span class="p">{</span>
+      <span class="k">background</span><span class="p">:</span> <span class="err">$</span><span class="n">danger</span><span class="p">;</span>
+      <span class="k">border-color</span><span class="p">:</span> <span class="err">$</span><span class="n">danger</span><span class="p">;</span>
+      <span class="k">color</span><span class="p">:</span> <span class="kc">white</span><span class="p">;</span>
+
+      <span class="err">&amp;:hover,</span>
+      <span class="err">&amp;:focus</span> <span class="err">{</span>
+        <span class="k">background</span><span class="p">:</span> <span class="nf">darken</span><span class="p">(</span><span class="err">$</span><span class="n">danger</span><span class="p">,</span> <span class="mi">10</span><span class="kt">%</span><span class="p">);</span>
+        <span class="k">border-color</span><span class="p">:</span> <span class="nf">darken</span><span class="p">(</span><span class="err">$</span><span class="n">danger</span><span class="p">,</span> <span class="mi">10</span><span class="kt">%</span><span class="p">);</span>
+      <span class="p">}</span>
+    <span class="err">}</span>
+  <span class="err">}</span>
+
+  <span class="o">&amp;</span><span class="p">.</span><span class="nc">vue-theme-link</span> <span class="p">{</span>
+    <span class="err">//</span> <span class="err">danger</span>
+    <span class="err">&amp;.vue-level-danger</span> <span class="err">{</span>
+      <span class="k">color</span><span class="p">:</span> <span class="err">$</span><span class="n">danger</span><span class="p">;</span>
+
+      <span class="err">&amp;:hover,</span>
+      <span class="err">&amp;:focus</span> <span class="err">{</span>
+        <span class="k">color</span><span class="p">:</span> <span class="nf">darken</span><span class="p">(</span><span class="err">$</span><span class="n">danger</span><span class="p">,</span> <span class="mi">10</span><span class="kt">%</span><span class="p">);</span>
+      <span class="p">}</span>
+    <span class="err">}</span>
+  <span class="err">}</span>
+
+  <span class="o">&amp;</span><span class="p">.</span><span class="nc">vue-theme-text</span> <span class="p">{</span>
+    <span class="err">//</span> <span class="err">primary</span>
+    <span class="err">&amp;.vue-level-primary</span> <span class="err">{</span>
+      <span class="k">color</span><span class="p">:</span> <span class="err">$</span><span class="n">light-font-color</span><span class="p">;</span>
+
+      <span class="err">&amp;:hover,</span>
+      <span class="err">&amp;:focus</span> <span class="err">{</span>
+        <span class="k">color</span><span class="p">:</span> <span class="nf">darken</span><span class="p">(</span><span class="err">$</span><span class="n">light</span><span class="o">-</span><span class="n">font</span><span class="o">-</span><span class="kc">color</span><span class="p">,</span> <span class="mi">10</span><span class="kt">%</span><span class="p">);</span>
+      <span class="p">}</span>
+    <span class="err">}</span>
+
+    <span class="o">//</span> <span class="nt">danger</span>
+    <span class="o">&amp;</span><span class="p">.</span><span class="nc">vue-level-danger</span> <span class="p">{</span>
+      <span class="k">color</span><span class="p">:</span> <span class="err">$</span><span class="n">danger</span><span class="p">;</span>
+
+      <span class="err">&amp;:hover,</span>
+      <span class="err">&amp;:focus</span> <span class="err">{</span>
+        <span class="k">color</span><span class="p">:</span> <span class="nf">darken</span><span class="p">(</span><span class="err">$</span><span class="n">danger</span><span class="p">,</span> <span class="mi">10</span><span class="kt">%</span><span class="p">);</span>
+      <span class="p">}</span>
+    <span class="err">}</span>
+  <span class="err">}</span>
+
+  <span class="o">//</span> <span class="nt">disabled</span>
+  <span class="o">&amp;</span><span class="p">.</span><span class="nc">vue-theme-button</span> <span class="p">{</span>
+    <span class="err">&amp;[disabled]:hover</span> <span class="err">{</span>
+      <span class="k">border-color</span><span class="p">:</span> <span class="err">$</span><span class="kc">grey</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="err">}</span>
+
+  <span class="o">&amp;</span><span class="p">.</span><span class="nc">vue-theme-button</span><span class="o">,</span>
+  <span class="o">&amp;</span><span class="p">.</span><span class="nc">vue-theme-link</span><span class="o">,</span>
+  <span class="o">&amp;</span><span class="p">.</span><span class="nc">vue-theme-text</span> <span class="p">{</span>
+    <span class="err">&amp;[disabled]</span> <span class="err">{</span>
+      <span class="k">cursor</span><span class="p">:</span> <span class="kc">not-allowed</span><span class="p">;</span>
+      <span class="k">color</span><span class="p">:</span> <span class="err">$</span><span class="kc">grey</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="err">}</span>
+
+  <span class="o">//</span> <span class="nt">loading</span>
+  <span class="o">&gt;</span> <span class="p">.</span><span class="nc">vue-loadingIndicator</span> <span class="p">{</span>
+    <span class="k">width</span><span class="p">:</span> <span class="mi">14</span><span class="kt">px</span><span class="p">;</span>
+    <span class="k">height</span><span class="p">:</span> <span class="mi">14</span><span class="kt">px</span><span class="p">;</span>
+    <span class="k">display</span><span class="p">:</span> <span class="kc">inline-block</span><span class="p">;</span>
+    <span class="k">margin-right</span><span class="p">:</span> <span class="mi">4</span><span class="kt">px</span><span class="p">;</span>
+    <span class="k">border-radius</span><span class="p">:</span> <span class="mi">7</span><span class="kt">px</span><span class="p">;</span>
+    <span class="k">border-color</span><span class="p">:</span> <span class="err">$</span><span class="n">light-font-color</span> <span class="err">$</span><span class="n">light-font-color</span> <span class="err">$</span><span class="n">light-font-color</span> <span class="kc">transparent</span><span class="p">;</span>
+    <span class="k">border-style</span><span class="p">:</span> <span class="kc">solid</span><span class="p">;</span>
+    <span class="k">border-width</span><span class="p">:</span> <span class="mi">2</span><span class="kt">px</span><span class="p">;</span>
+    <span class="k">animation</span><span class="p">:</span> <span class="n">vue-spin</span> <span class="mi">1</span><span class="kt">s</span> <span class="kc">infinite</span> <span class="kc">linear</span><span class="p">;</span>
+  <span class="p">}</span>
+
+<span class="err">}</span>
+
+<span class="p">@</span><span class="k">keyframes</span> <span class="nt">vue-spin</span> <span class="p">{</span>
+  <span class="nt">0</span><span class="o">%</span> <span class="p">{</span>
+    <span class="k">transform</span><span class="p">:</span> <span class="nb">rotate</span><span class="p">(</span><span class="mi">0</span><span class="kt">deg</span><span class="p">)</span>
+  <span class="p">}</span>
+  <span class="nt">100</span><span class="o">%</span> <span class="p">{</span>
+    <span class="k">transform</span><span class="p">:</span> <span class="nb">rotate</span><span class="p">(</span><span class="mi">360</span><span class="kt">deg</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><hr>
+<h2 id="知识点小结">知识点小结</h2>
+<ul>
+<li>Vue属性继承
+<ul>
+<li>默认属性传给根元素</li>
+<li><code>inheritAttrs: false</code>禁用默认继承</li>
+<li><code>v-bind=&quot;$attrs&quot;</code>或<code>context.attrs</code></li>
+</ul>
+</li>
+<li><code>props</code> V.S. <code>attrs</code>
+<ul>
+<li><code>props</code>需要显式地声明属性</li>
+<li>未显示声明的属性都在<code>attrs</code>中</li>
+</ul>
+</li>
+<li>库的CSS要求
+<ul>
+<li>不可用scoped</li>
+<li>每个 CSS 类要加前缀</li>
+<li>CSS最小影响原则</li>
+</ul>
+</li>
+</ul>
+<hr>
+<blockquote>
+<p>UI参考</p>
+</blockquote>
+<ul>
+<li><a href="https://github.com/rough-stuff/wired-elements">Wired Elements</a></li>
+</ul>
+<hr>
+<hr>
+
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Joel Xu</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2022-06-15
+      
+        
+        
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="http://xmasuhai.xyz/tags/frontend/">FrontEnd</a>
+          <a href="http://xmasuhai.xyz/tags/project/">Project</a>
+          <a href="http://xmasuhai.xyz/tags/vueel/">vueel</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/project/share-blog/%E9%A1%B9%E7%9B%AE-%E5%A4%9A%E4%BA%BA%E5%85%B1%E4%BA%AB%E5%8D%9A%E5%AE%A20.1-%E6%8E%A5%E5%8F%A3%E6%96%87%E6%A1%A3/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">【项目 共享博客】前后端接口约定</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/project/vueel3/%E9%A1%B9%E7%9B%AE-vue3-%E8%BD%AE%E5%AD%901.3-%E5%88%B6%E4%BD%9C-tabs-%E7%BB%84%E4%BB%B6/">
+            <span class="next-text nav-default">【项目 Vue3 轮子】1.3 制作 Tabs 组件</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:xmasuhai@163.com" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="https://github.com/xmasuhai" rel="me noopener" class="iconfont"
+      title="github"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M512 12.672c-282.88 0-512 229.248-512 512 0 226.261333 146.688 418.133333 350.08 485.76 25.6 4.821333 34.986667-11.008 34.986667-24.618667 0-12.16-0.426667-44.373333-0.64-87.04-142.421333 30.890667-172.458667-68.693333-172.458667-68.693333C188.672 770.986667 155.008 755.2 155.008 755.2c-46.378667-31.744 3.584-31.104 3.584-31.104 51.413333 3.584 78.421333 52.736 78.421333 52.736 45.653333 78.293333 119.850667 55.68 149.12 42.581333 4.608-33.109333 17.792-55.68 32.426667-68.48-113.706667-12.8-233.216-56.832-233.216-253.013333 0-55.893333 19.84-101.546667 52.693333-137.386667-5.76-12.928-23.04-64.981333 4.48-135.509333 0 0 42.88-13.738667 140.8 52.48 40.96-11.392 84.48-17.024 128-17.28 43.52 0.256 87.04 5.888 128 17.28 97.28-66.218667 140.16-52.48 140.16-52.48 27.52 70.528 10.24 122.581333 5.12 135.509333 32.64 35.84 52.48 81.493333 52.48 137.386667 0 196.693333-119.68 240-233.6 252.586667 17.92 15.36 34.56 46.762667 34.56 94.72 0 68.522667-0.64 123.562667-0.64 140.202666 0 13.44 8.96 29.44 35.2 24.32C877.44 942.592 1024 750.592 1024 524.672c0-282.752-229.248-512-512-512"></path>
+</svg>
+
+    </a>
+  
+    <a href="https://www.zhihu.com/people/xue-shou-41/posts" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+
+
+<a href="http://xmasuhai.xyz/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane">Jane</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy;
+    
+      2019 -
+    2022
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Joel Xu
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
