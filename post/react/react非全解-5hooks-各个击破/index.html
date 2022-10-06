@@ -64,11 +64,11 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://xmasuhai.xyz/post/react/react%E9%9D%9E%E5%85%A8%E8%A7%A3-5hooks-%E5%90%84%E4%B8%AA%E5%87%BB%E7%A0%B4/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2022-10-07T01:31:17+08:00" />
-<meta property="article:modified_time" content="2022-10-07T01:31:17+08:00" />
+<meta property="article:modified_time" content="2022-10-07T01:32:28+08:00" />
 
 <meta itemprop="name" content="【React非全解 5】Hooks 各个击破">
 <meta itemprop="description" content="Hooks 各个击破 大纲链接§ [toc] React 内置的 Hooks 主要有以下几个： useState 组件状态 useEffect 副作用 useLayoutEffect useContext 上下文 useMemo 缓存 useCallback 回调 useReducer 统一状态管理（替代Redux） useRef 引用 useImperativeHandle useDebugValue 自定义 1. useState"><meta itemprop="datePublished" content="2022-10-07T01:31:17+08:00" />
-<meta itemprop="dateModified" content="2022-10-07T01:31:17+08:00" />
+<meta itemprop="dateModified" content="2022-10-07T01:32:28+08:00" />
 <meta itemprop="wordCount" content="8479">
 <meta itemprop="keywords" content="FrontEnd,React," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="【React非全解 5】Hooks 各个击破"/>
@@ -461,7 +461,7 @@
     <span class="p">...</span><span class="nx">user</span><span class="p">,</span>
       <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Jack&#39;</span> <span class="c1">// 同名覆盖原先的name属性
 </span><span class="c1"></span>    <span class="p">})</span>
-    
+
     <span class="cm">/*
 </span><span class="cm">    setUser({
 </span><span class="cm">      name: &#39;Jack&#39; // 缺失 age 属性
@@ -533,7 +533,7 @@
 </span><span class="cm">      ...user,
 </span><span class="cm">      name: &#39;Jack&#39;
 </span><span class="cm">    }) // 传入的是一个新对象
-</span><span class="cm">    
+</span><span class="cm">
 </span><span class="cm">    */</span>
   <span class="p">}</span>
   <span class="k">return</span> <span class="p">(</span>
@@ -606,7 +606,7 @@
     <span class="nx">setN</span><span class="p">(</span><span class="nx">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="c1">// n 不会变
 </span><span class="c1"></span>    <span class="nx">setN</span><span class="p">(</span><span class="nx">n</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span> <span class="c1">// 只有最后一次有效
 </span><span class="c1"></span>    <span class="cm">/* 发现 n 不能 +1 再 +2 */</span>
-    
+
     <span class="c1">// 改为传函数则符合预期
 </span><span class="c1"></span>    <span class="nx">setN</span><span class="p">(</span><span class="nx">i</span> <span class="p">=&gt;</span> <span class="nx">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
     <span class="nx">setN</span><span class="p">(</span><span class="nx">i</span> <span class="p">=&gt;</span> <span class="nx">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
@@ -716,7 +716,7 @@
 </span><span class="c1"></span>    <span class="c1">// return {...state, n: state.n + 1}
 </span><span class="c1"></span>    <span class="k">return</span> <span class="p">{...</span><span class="nx">state</span><span class="p">,</span> <span class="nx">n</span><span class="o">:</span> <span class="nx">state</span><span class="p">.</span><span class="nx">n</span> <span class="o">+</span> <span class="nx">action</span><span class="p">.</span><span class="nx">number</span><span class="p">}</span> <span class="c1">// 还可以传额外属性参数
 </span><span class="c1"></span>  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="nx">action</span><span class="p">.</span><span class="nx">type</span> <span class="o">===</span> <span class="s1">&#39;multi2&#39;</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="p">{...</span><span class="nx">state</span><span class="p">,</span> <span class="nx">n</span><span class="o">:</span> <span class="nx">state</span><span class="p">.</span><span class="nx">n</span> <span class="o">*</span> <span class="mi">2</span><span class="p">}</span> 
+    <span class="k">return</span> <span class="p">{...</span><span class="nx">state</span><span class="p">,</span> <span class="nx">n</span><span class="o">:</span> <span class="nx">state</span><span class="p">.</span><span class="nx">n</span> <span class="o">*</span> <span class="mi">2</span><span class="p">}</span>
   <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
     <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s1">&#39;unknown type&#39;</span><span class="p">)</span>
   <span class="p">}</span>
@@ -726,7 +726,7 @@
   <span class="c1">// 3. 传给 useReducer，获取 读 和 写 的 API
 </span><span class="c1"></span>  <span class="kr">const</span> <span class="p">[</span><span class="nx">state</span><span class="p">,</span> <span class="nx">dispatch</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useReducer</span><span class="p">(</span><span class="nx">reducer</span><span class="p">,</span> <span class="nx">initialValue</span><span class="p">)</span>
   <span class="c1">// 也可以直接解构出属性 const {n} = state
-</span><span class="c1"></span>  
+</span><span class="c1"></span>
   <span class="kr">const</span> <span class="nx">onClick</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
     <span class="c1">// 4. 调用 写dispatch({type: &#39;操作类型&#39;})
 </span><span class="c1"></span>    <span class="c1">// dispatch({type: &#39;add&#39;}) // 调用`add`分支操作
@@ -738,7 +738,7 @@
   <span class="kr">const</span> <span class="nx">onClickMulti2</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
     <span class="nx">dispatch</span><span class="p">({</span><span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;multi2&#39;</span><span class="p">})</span>
   <span class="p">}</span>
-  
+
   <span class="k">return</span> <span class="p">(</span>
     <span class="p">&lt;</span><span class="nt">div</span> <span class="na">className</span><span class="o">=</span><span class="s">&#34;app&#34;</span><span class="p">&gt;</span>
       <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span><span class="nx">n</span><span class="o">:</span> <span class="p">{</span><span class="nx">state</span><span class="p">.</span><span class="nx">n</span><span class="p">}&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
@@ -872,23 +872,23 @@
 
   <span class="c1">// 获取读写接口
 </span><span class="c1"></span>  <span class="kr">const</span> <span class="p">[</span><span class="nx">formData</span><span class="p">,</span> <span class="nx">dispatch</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useReducer</span><span class="p">(</span><span class="nx">reducer</span><span class="p">,</span> <span class="nx">initFormData</span><span class="p">)</span>
-  
+
   <span class="c1">// 表单操作
 </span><span class="c1"></span>  <span class="kr">const</span> <span class="nx">onReset</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span> <span class="nx">dispatch</span><span class="p">({</span><span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;reset&#39;</span><span class="p">})</span> <span class="p">}</span>
   <span class="kr">const</span> <span class="nx">onSubmit</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span><span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;提交了&#39;</span><span class="p">);</span> <span class="nx">onReset</span><span class="p">()}</span>
-  
+
   <span class="c1">// 提取patch公共方法
 </span><span class="c1"></span>  <span class="kr">const</span> <span class="nx">patch</span> <span class="o">=</span> <span class="p">(</span><span class="nx">key</span><span class="p">,</span> <span class="nx">value</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
     <span class="nx">dispatch</span><span class="p">({</span><span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;patch&#39;</span><span class="p">,</span> <span class="nx">formData</span><span class="o">:</span> <span class="p">{[</span><span class="nx">key</span><span class="p">]</span><span class="o">:</span> <span class="nx">value</span><span class="p">}</span> <span class="p">})</span>
   <span class="p">}</span>
-  
+
   <span class="c1">// 表单汇总数据
 </span><span class="c1"></span>  <span class="kr">const</span> <span class="nx">formContentList</span> <span class="o">=</span> <span class="p">[</span>
     <span class="nx">formDataGenerator</span><span class="p">(</span> <span class="s1">&#39;姓名&#39;</span><span class="p">,</span> <span class="nx">formData</span><span class="p">.</span><span class="nx">name</span><span class="p">,</span> <span class="nx">e</span> <span class="p">=&gt;</span> <span class="nx">patch</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="nx">e</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">value</span><span class="p">)</span> <span class="p">),</span>
     <span class="nx">formDataGenerator</span><span class="p">(</span> <span class="s1">&#39;年龄&#39;</span><span class="p">,</span> <span class="nx">formData</span><span class="p">.</span><span class="nx">age</span><span class="p">,</span> <span class="nx">e</span> <span class="p">=&gt;</span> <span class="nx">patch</span><span class="p">(</span><span class="s1">&#39;age&#39;</span><span class="p">,</span> <span class="nx">e</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">value</span><span class="p">)</span> <span class="p">),</span>
     <span class="nx">formDataGenerator</span><span class="p">(</span> <span class="s1">&#39;名族&#39;</span><span class="p">,</span> <span class="nx">formData</span><span class="p">.</span><span class="nx">nationality</span><span class="p">,</span> <span class="nx">e</span> <span class="p">=&gt;</span> <span class="nx">patch</span><span class="p">(</span><span class="s1">&#39;nationality&#39;</span><span class="p">,</span> <span class="nx">e</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">value</span><span class="p">)</span> <span class="p">)</span>
   <span class="p">]</span>
-  
+
   <span class="k">return</span> <span class="p">(</span>
     <span class="p">&lt;</span><span class="nt">form</span> <span class="na">onSubmit</span><span class="o">=</span><span class="p">{</span><span class="nx">onSubmit</span><span class="p">}</span> <span class="na">onReset</span><span class="o">=</span><span class="p">{</span><span class="nx">onReset</span><span class="p">}&gt;</span>
       <span class="p">{</span>
@@ -1301,7 +1301,7 @@
     <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
       <span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;</span><span class="nx">书籍信息</span><span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
       <span class="p">&lt;</span><span class="nt">ol</span><span class="p">&gt;</span>
-        <span class="p">{</span><span class="nx">state</span><span class="p">.</span><span class="nx">books</span> 
+        <span class="p">{</span><span class="nx">state</span><span class="p">.</span><span class="nx">books</span>
           <span class="o">?</span> <span class="nx">state</span><span class="p">.</span><span class="nx">books</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">book</span> <span class="p">=&gt;</span> <span class="p">&lt;</span><span class="nt">li</span> <span class="na">key</span><span class="o">=</span><span class="p">{</span><span class="nx">book</span><span class="p">.</span><span class="nx">id</span><span class="p">}&gt;{</span><span class="nx">book</span><span class="p">.</span><span class="nx">name</span><span class="p">}&lt;/</span><span class="nt">li</span><span class="p">&gt;)</span>
           <span class="o">:</span> <span class="s1">&#39;加载中&#39;</span>
         <span class="p">}</span>
@@ -1320,7 +1320,7 @@
     <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
       <span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;</span><span class="nx">电影信息</span><span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
       <span class="p">&lt;</span><span class="nt">ol</span><span class="p">&gt;</span>
-        <span class="p">{</span><span class="nx">state</span><span class="p">.</span><span class="nx">movies</span> 
+        <span class="p">{</span><span class="nx">state</span><span class="p">.</span><span class="nx">movies</span>
           <span class="o">?</span> <span class="nx">state</span><span class="p">.</span><span class="nx">movies</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">movie</span> <span class="p">=&gt;</span> <span class="p">&lt;</span><span class="nt">li</span> <span class="na">key</span><span class="o">=</span><span class="p">{</span><span class="nx">movie</span><span class="p">.</span><span class="nx">id</span><span class="p">}&gt;{</span><span class="nx">movie</span><span class="p">.</span><span class="nx">name</span><span class="p">}&lt;/</span><span class="nt">li</span><span class="p">&gt;)</span>
           <span class="o">:</span> <span class="s1">&#39;加载中&#39;</span>
         <span class="p">}</span>
@@ -1463,7 +1463,7 @@
 
 <span class="c1">// 统一的reducer操作 查找reducer操作表
 </span><span class="c1"></span><span class="kr">const</span> <span class="nx">reducer</span> <span class="o">=</span> <span class="p">(</span><span class="nx">state</span><span class="p">,</span> <span class="nx">action</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
-  <span class="k">if</span><span class="p">(</span><span class="nx">reducerHash</span><span class="p">[</span><span class="nx">action</span><span class="p">.</span><span class="nx">type</span><span class="p">])</span> <span class="p">{</span>  
+  <span class="k">if</span><span class="p">(</span><span class="nx">reducerHash</span><span class="p">[</span><span class="nx">action</span><span class="p">.</span><span class="nx">type</span><span class="p">])</span> <span class="p">{</span>
     <span class="k">return</span> <span class="nx">reducerHash</span><span class="p">[</span><span class="nx">action</span><span class="p">.</span><span class="nx">type</span><span class="p">](</span><span class="nx">state</span><span class="p">,</span> <span class="nx">action</span><span class="p">)</span>
   <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
     <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s1">&#39;type错误&#39;</span><span class="p">)</span>
@@ -1664,7 +1664,7 @@
     <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
       <span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;</span><span class="nx">书籍信息</span><span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
       <span class="p">&lt;</span><span class="nt">ol</span><span class="p">&gt;</span>
-        <span class="p">{</span><span class="nx">state</span><span class="p">.</span><span class="nx">books</span> 
+        <span class="p">{</span><span class="nx">state</span><span class="p">.</span><span class="nx">books</span>
           <span class="o">?</span> <span class="nx">state</span><span class="p">.</span><span class="nx">books</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">book</span> <span class="p">=&gt;</span> <span class="p">&lt;</span><span class="nt">li</span> <span class="na">key</span><span class="o">=</span><span class="p">{</span><span class="nx">book</span><span class="p">.</span><span class="nx">id</span><span class="p">}&gt;{</span><span class="nx">book</span><span class="p">.</span><span class="nx">name</span><span class="p">}&lt;/</span><span class="nt">li</span><span class="p">&gt;)</span>
           <span class="o">:</span> <span class="s1">&#39;加载中...&#39;</span>
         <span class="p">}</span>
@@ -1719,7 +1719,7 @@
     <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
       <span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;</span><span class="nx">电影信息</span><span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
       <span class="p">&lt;</span><span class="nt">ol</span><span class="p">&gt;</span>
-        <span class="p">{</span><span class="nx">state</span><span class="p">.</span><span class="nx">movies</span> 
+        <span class="p">{</span><span class="nx">state</span><span class="p">.</span><span class="nx">movies</span>
           <span class="o">?</span> <span class="nx">state</span><span class="p">.</span><span class="nx">movies</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">movie</span> <span class="p">=&gt;</span> <span class="p">&lt;</span><span class="nt">li</span> <span class="na">key</span><span class="o">=</span><span class="p">{</span><span class="nx">movie</span><span class="p">.</span><span class="nx">id</span><span class="p">}&gt;{</span><span class="nx">movie</span><span class="p">.</span><span class="nx">name</span><span class="p">}&lt;/</span><span class="nt">li</span><span class="p">&gt;)</span>
           <span class="o">:</span> <span class="s1">&#39;加载中...&#39;</span>
         <span class="p">}</span>
@@ -2041,29 +2041,29 @@
   <span class="kr">const</span> <span class="nx">onClick</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
     <span class="nx">setN</span><span class="p">(</span><span class="nx">i</span> <span class="p">=&gt;</span> <span class="nx">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
   <span class="p">}</span>
-  
+
   <span class="c1">// App第一次渲染 mount
 </span><span class="c1"></span>  <span class="nx">useEffect</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
     <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;第一次渲染之后执行&#39;</span><span class="p">)</span>
   <span class="p">},</span> <span class="p">[])</span> <span class="c1">// 表示 [] 里的状态变化后再次执行，没有变量就不会再次执行
-</span><span class="c1"></span>  
+</span><span class="c1"></span>
   <span class="c1">// App 任何数据更新后渲染 update
 </span><span class="c1"></span>  <span class="nx">useEffect</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
     <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;任何一个state状态变化时，即每次渲染之后都执行&#39;</span><span class="p">)</span>
   <span class="p">})</span> <span class="c1">// 不写第二个参数表示 任何依赖变化时都执行
-</span><span class="c1"></span>  
+</span><span class="c1"></span>
   <span class="c1">// 具体到某个数据更新后渲染 update
 </span><span class="c1"></span>  <span class="nx">useEffect</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
     <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`当依赖n变化，渲染后执行，第</span><span class="si">${</span><span class="nx">n</span><span class="si">}</span><span class="sb">次也变化了`</span><span class="p">)</span>
   <span class="p">},</span> <span class="p">[</span><span class="nx">n</span><span class="p">])</span> <span class="c1">// 依赖n变化时执行
-</span><span class="c1"></span>  
+</span><span class="c1"></span>
   <span class="c1">// 排除第一次初始化数据的更新 具体到某个数据更新后渲染 update
 </span><span class="c1"></span>  <span class="nx">useEffect</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
-    <span class="k">if</span><span class="p">(</span><span class="nx">n</span> <span class="o">!==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>  
+    <span class="k">if</span><span class="p">(</span><span class="nx">n</span> <span class="o">!==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
       <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`当依赖n变化，渲染后执行，不算初始化的那次`</span><span class="p">)</span>
     <span class="p">}</span>
   <span class="p">},</span> <span class="p">[</span><span class="nx">n</span><span class="p">])</span>
-  
+
   <span class="c1">// App第一次渲染 实现 setInterval
 </span><span class="c1"></span>  <span class="nx">useEffect</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
     <span class="kr">const</span> <span class="nx">id</span> <span class="o">=</span> <span class="nx">setInterval</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
@@ -2073,7 +2073,7 @@
       <span class="nb">window</span><span class="p">.</span><span class="nx">clearInterval</span><span class="p">(</span><span class="nx">id</span><span class="p">)</span> <span class="c1">// 防止内存泄漏
 </span><span class="c1"></span>    <span class="p">}</span>
   <span class="p">},</span> <span class="p">[])</span>
-  
+
   <span class="k">return</span> <span class="p">(</span>
     <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
       <span class="nx">n</span><span class="o">:</span> <span class="p">{</span><span class="nx">n</span><span class="p">}</span>
@@ -2213,21 +2213,21 @@
     <span class="nx">setN</span><span class="p">(</span><span class="nx">i</span> <span class="p">=&gt;</span> <span class="nx">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
     <span class="nx">time</span><span class="p">.</span><span class="nx">current</span> <span class="o">=</span> <span class="nx">performance</span><span class="p">.</span><span class="nx">now</span><span class="p">()</span> <span class="c1">// beforeRender
 </span><span class="c1"></span>  <span class="p">}</span>
-  
+
   <span class="nx">useLayoutEffect</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
     <span class="c1">// afterRender
 </span><span class="c1"></span>    <span class="k">if</span><span class="p">(</span><span class="nx">time</span><span class="p">.</span><span class="nx">current</span><span class="p">)</span> <span class="p">{</span>
       <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">performance</span><span class="p">.</span><span class="nx">now</span><span class="p">()</span> <span class="o">-</span> <span class="nx">time</span><span class="p">.</span><span class="nx">current</span><span class="p">)</span>
     <span class="p">}</span>
   <span class="p">})</span>
-  
+
   <span class="nx">useEffect</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
     <span class="c1">// afterRender
 </span><span class="c1"></span>    <span class="k">if</span><span class="p">(</span><span class="nx">time</span><span class="p">.</span><span class="nx">current</span><span class="p">)</span> <span class="p">{</span>
       <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">performance</span><span class="p">.</span><span class="nx">now</span><span class="p">()</span> <span class="o">-</span> <span class="nx">time</span><span class="p">.</span><span class="nx">current</span><span class="p">)</span>
     <span class="p">}</span>
   <span class="p">})</span>
-  
+
   <span class="k">return</span> <span class="p">(</span>
     <span class="p">&lt;</span><span class="nt">div</span> <span class="na">className</span><span class="o">=</span><span class="s">&#34;app&#34;</span><span class="p">&gt;</span>
       <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span><span class="nx">n</span><span class="o">:</span> <span class="p">{</span><span class="nx">n</span><span class="p">}&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
@@ -2720,6 +2720,9 @@
     <span class="item-title">上次更新</span>
     <span class="item-content">
       2022-10-07
+      
+        
+        
       
     </span>
   </p>
