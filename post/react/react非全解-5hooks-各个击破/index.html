@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>【React非全解 5】Hooks 各个击破 - Joel in The House</title>
+  <title>【React非全解 5】React 内置 Hooks 各个击破 - Joel in The House</title>
   
 
 <meta name="renderer" content="webkit" />
@@ -59,19 +59,19 @@
 
 
 
-<meta property="og:title" content="【React非全解 5】Hooks 各个击破" />
+<meta property="og:title" content="【React非全解 5】React 内置 Hooks 各个击破" />
 <meta property="og:description" content="Hooks 各个击破 大纲链接§ [toc] React 内置的 Hooks 主要有以下几个： useState 组件状态 useEffect 副作用 useLayoutEffect useContext 上下文 useMemo 缓存 useCallback 回调 useReducer 统一状态管理（替代Redux） useRef 引用 useImperativeHandle useDebugValue 自定义 1. useState" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://xmasuhai.xyz/post/react/react%E9%9D%9E%E5%85%A8%E8%A7%A3-5hooks-%E5%90%84%E4%B8%AA%E5%87%BB%E7%A0%B4/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2022-10-07T01:31:17+08:00" />
-<meta property="article:modified_time" content="2022-10-07T01:32:28+08:00" />
+<meta property="article:modified_time" content="2022-10-07T01:36:52+08:00" />
 
-<meta itemprop="name" content="【React非全解 5】Hooks 各个击破">
+<meta itemprop="name" content="【React非全解 5】React 内置 Hooks 各个击破">
 <meta itemprop="description" content="Hooks 各个击破 大纲链接§ [toc] React 内置的 Hooks 主要有以下几个： useState 组件状态 useEffect 副作用 useLayoutEffect useContext 上下文 useMemo 缓存 useCallback 回调 useReducer 统一状态管理（替代Redux） useRef 引用 useImperativeHandle useDebugValue 自定义 1. useState"><meta itemprop="datePublished" content="2022-10-07T01:31:17+08:00" />
-<meta itemprop="dateModified" content="2022-10-07T01:32:28+08:00" />
-<meta itemprop="wordCount" content="8479">
+<meta itemprop="dateModified" content="2022-10-07T01:36:52+08:00" />
+<meta itemprop="wordCount" content="12395">
 <meta itemprop="keywords" content="FrontEnd,React," /><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="【React非全解 5】Hooks 各个击破"/>
+<meta name="twitter:title" content="【React非全解 5】React 内置 Hooks 各个击破"/>
 <meta name="twitter:description" content="Hooks 各个击破 大纲链接§ [toc] React 内置的 Hooks 主要有以下几个： useState 组件状态 useEffect 副作用 useLayoutEffect useContext 上下文 useMemo 缓存 useCallback 回调 useReducer 统一状态管理（替代Redux） useRef 引用 useImperativeHandle useDebugValue 自定义 1. useState"/>
 
 <!--[if lte IE 9]>
@@ -292,7 +292,7 @@
           <article class="post bg-white">
     
     <header class="post-header">
-      <h1 class="post-title">【React非全解 5】Hooks 各个击破</h1>
+      <h1 class="post-title">【React非全解 5】React 内置 Hooks 各个击破</h1>
       
       <div class="post-meta">
         <time datetime="2022-10-07" class="post-time">
@@ -302,8 +302,8 @@
             <a href="http://xmasuhai.xyz/categories/react/"> React </a>
             
           </div>
-        <span class="more-meta"> 约 8479 字 </span>
-          <span class="more-meta"> 预计阅读 17 分钟 </span>
+        <span class="more-meta"> 约 12395 字 </span>
+          <span class="more-meta"> 预计阅读 25 分钟 </span>
 
         
         
@@ -355,11 +355,17 @@
         <li><a href="#usecallback是usememo的语法糖"><code>useCallback</code>是<code>useMemo</code>的语法糖</a></li>
       </ul>
     </li>
-    <li><a href="#7-useref-a-hrefcatalogue--a">7. <code>useRef</code> <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-    <li><a href="#8-forwardref-a-hrefcatalogue--a">8. <code>forwardRef</code> <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
+    <li><a href="#7-useref-a-hrefcatalogue--a">7. <code>useRef</code> <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a>
+      <ul>
+        <li><a href="#useref用途a-hrefcatalogue--a"><code>useRef</code>用途：<!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
+        <li><a href="#useref读取值为什么需要currenta-hrefcatalogue--a"><code>useRef</code>读取值为什么需要<code>.current</code>？<!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
+        <li><a href="#useref不能做到变化时自动render刷新ui需要额外步骤-a-hrefcatalogue--a"><code>useRef</code>不能做到变化时自动<code>render</code>刷新<code>UI</code>，需要额外步骤 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
+      </ul>
+    </li>
+    <li><a href="#8-useref配合forwardref用在函数组件中-a-hrefcatalogue--a">8. <code>useRef</code>配合<code>forwardRef</code>用在函数组件中 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
     <li><a href="#9-useimperativehandle-a-hrefcatalogue--a">9. <code>useImperativeHandle</code> <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
     <li><a href="#10-自定义-hook-a-hrefcatalogue--a">10. 自定义 <code>Hook</code> <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-    <li><a href="#11-stale-closure-a-hrefcatalogue--a">11. <code>Stale Closure</code> <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
+    <li><a href="#11-stale-closure过时的闭包-a-hrefcatalogue--a">11. <code>Stale Closure</code>过时的闭包 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
     <li><a href="#12-总结-a-hrefcatalogue--a">12. 总结 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
     <li><a href="#参考文章-a-hrefcatalogue--a">参考文章 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
     <li><a href="#相关文章-a-hrefcatalogue--a">相关文章 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
@@ -2652,14 +2658,1046 @@
 </ul>
 <hr>
 <h2 id="7-useref-a-hrefcatalogue--a">7. <code>useRef</code> <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+<h3 id="useref用途a-hrefcatalogue--a"><code>useRef</code>用途：<!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+<ul>
+<li>如果需要一个值，在组件不断<code>render</code>时保持不变，可以使用<code>useRef</code>
+<ul>
+<li>初始化：<code>const count = useRef(0)</code></li>
+<li>读取值：<code>count.current</code></li>
+</ul>
+</li>
+<li>区别于<code>setN</code>，<code>n</code> 每次渲染都会变更</li>
+</ul>
+<blockquote>
+<p>需求：要知道组件渲染了几次，使用一个变量记录（全局变量会污染命名环境）</p>
+</blockquote>
+<ul>
+<li>使用<code>useRef</code>，每次渲染时更新<code>useEffect(() =&gt; {count.current += 1})</code>，得到一个新的<code>count</code>，而<code>count.value</code>在内存中的引用不变</li>
+<li>渲染 <code>count</code>对象地址不变，其中的<code>current</code>值被记录在<code>useRef</code>对应的一个<code>fiberNode</code>上，<a href="https://codesandbox.io/s/priceless-sound-rtdw68">示例代码</a></li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-jsx" data-lang="jsx"><span class="kd">function</span> <span class="nx">App</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;App 执行&#39;</span><span class="p">)</span>
+  <span class="kr">const</span> <span class="nx">count</span> <span class="o">=</span> <span class="nx">useRef</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+  <span class="kr">const</span> <span class="p">[</span><span class="nx">n</span><span class="p">,</span> <span class="nx">setN</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+  <span class="kr">const</span> <span class="nx">onClick</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="nx">setN</span><span class="p">(</span><span class="nx">i</span> <span class="p">=&gt;</span> <span class="nx">i</span> <span class="o">+</span> <span class="mi">9</span><span class="p">)</span>
+  <span class="p">}</span>
+  <span class="c1">// DidUpdate
+</span><span class="c1"></span>  <span class="nx">useEffect</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="nx">count</span><span class="p">.</span><span class="nx">current</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;count.current&#39;</span><span class="p">,</span> <span class="nx">count</span><span class="p">.</span><span class="nx">current</span><span class="p">)</span>
+  <span class="p">})</span>
+  <span class="k">return</span> <span class="p">(</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">className</span><span class="o">=</span><span class="s">&#34;app&#34;</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">button</span> <span class="na">onClick</span><span class="o">=</span><span class="p">{</span><span class="nx">onClick</span><span class="p">}&gt;</span><span class="nx">update</span> <span class="nx">n</span> <span class="p">{</span><span class="nx">n</span><span class="p">}&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+      <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+  <span class="p">)</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><img src="https://note.youdao.com/yws/api/personal/file/WEB2909e1b6adc6b65eb3a1da02051f2da6?method=download&amp;shareKey=1a4f5d816b41fb1271048c91b734d695" alt="useRef"></p>
 <hr>
-<h2 id="8-forwardref-a-hrefcatalogue--a">8. <code>forwardRef</code> <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+<h3 id="useref读取值为什么需要currenta-hrefcatalogue--a"><code>useRef</code>读取值为什么需要<code>.current</code>？<!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+<ul>
+<li>为了保持新旧组件更新前后两次<code>useRef</code>是同一个引用对象（只有引用能做到，保持引用地址不变）</li>
+</ul>
+<blockquote>
+<p>对比三个数据变化的钩子函数</p>
+</blockquote>
+<ul>
+<li><code>useState/useReducer</code>：<code>n</code>每次都变</li>
+<li><code>usememo/useCallback</code>：在依赖<code>[n]</code>变更时，对应的函数<code>fn</code>改变，有条件地变</li>
+<li><code>useRef</code>：<code>n</code>永远不变</li>
+</ul>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB6ca008fbfd6b39ab335c7eab63979a21?method=download&amp;shareKey=716ea6af63e8455b67b1be70d264ccdf" alt="useHooks_state"></p>
+<blockquote>
+<p>延伸</p>
+</blockquote>
+<ul>
+<li><code>Vue3</code>的 <a href="hhttps://vuejs.org/api/reactivity-core.html#ref"><code>ref()</code></a>
+<ul>
+<li>初始化：<code>const count = ref(0)</code></li>
+<li>读取值：<code>count.value</code></li>
+</ul>
+</li>
+<li>不同点：
+<ul>
+<li>当<code>count.value</code>变化时，<code>Vue3</code>会自动<code>render</code>，帮你实现了<code>UI</code>更新</li>
+<li>而<code>React</code>中使用<code>useRef</code>不会自动更新<code>UI</code>，<a href="https://codesandbox.io/s/zealous-scooby-00zsze">代码示例</a></li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-jsx" data-lang="jsx"><span class="kd">function</span> <span class="nx">App</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;App 执行&#34;</span><span class="p">);</span>
+  <span class="kr">const</span> <span class="nx">count</span> <span class="o">=</span> <span class="nx">useRef</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+  <span class="kr">const</span> <span class="p">[</span><span class="nx">n</span><span class="p">,</span> <span class="nx">setN</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+  <span class="kr">const</span> <span class="nx">onClick</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="nx">setN</span><span class="p">((</span><span class="nx">i</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="nx">i</span> <span class="o">+</span> <span class="mi">9</span><span class="p">);</span>
+  <span class="p">};</span>
+  <span class="kr">const</span> <span class="nx">onClick2</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span> <span class="c1">// 并不会触发UI更新
+</span><span class="c1"></span>    <span class="nx">count</span><span class="p">.</span><span class="nx">current</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;count.current onClick&#34;</span><span class="p">,</span> <span class="nx">count</span><span class="p">.</span><span class="nx">current</span><span class="p">);</span>
+  <span class="p">};</span>
+  <span class="nx">useEffect</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;count.current update&#34;</span><span class="p">,</span> <span class="nx">count</span><span class="p">.</span><span class="nx">current</span><span class="p">);</span>
+  <span class="p">});</span>
+  <span class="k">return</span> <span class="p">(</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">className</span><span class="o">=</span><span class="s">&#34;app&#34;</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">button</span> <span class="na">onClick</span><span class="o">=</span><span class="p">{</span><span class="nx">onClick</span><span class="p">}&gt;</span><span class="nx">update</span> <span class="nx">n</span> <span class="p">{</span><span class="nx">n</span><span class="p">}&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">br</span> <span class="p">/&gt;</span>
+        <span class="p">&lt;</span><span class="nt">button</span> <span class="na">onClick</span><span class="o">=</span><span class="p">{</span><span class="nx">onClick2</span><span class="p">}&gt;</span><span class="nx">update</span> <span class="nx">count</span><span class="p">.</span><span class="nx">current</span> <span class="p">{</span><span class="nx">count</span><span class="p">.</span><span class="nx">current</span><span class="p">}&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+      <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+  <span class="p">);</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><hr>
+<h3 id="useref不能做到变化时自动render刷新ui需要额外步骤-a-hrefcatalogue--a"><code>useRef</code>不能做到变化时自动<code>render</code>刷新<code>UI</code>，需要额外步骤 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+<ul>
+<li>因为不符合<code>React</code>的函数式理念：<code>UI = render(data)</code>
+<ul>
+<li>每次<code>data</code>变化时，使用函数（例如<code>setState</code>）去渲染成新的虚拟<code>DOM</code></li>
+<li>将新的虚拟<code>DOM</code>与页面上旧的虚拟<code>DOM</code>做<code>DOM Diff</code>，得到一个<code>patch</code>补丁</li>
+<li>根据这个<code>patch</code>补丁去重渲染<code>DOM</code></li>
+</ul>
+</li>
+<li>如果想要变化时自动<code>render</code>，可以自定义去实现（使用<code>setN</code>），<code>React</code>不管</li>
+<li>监听<code>ref</code>，当<code>ref.current</code>变化时，再加一个依赖，调用<code>setX</code>即可，<a href="https://codesandbox.io/s/brave-feather-bd6onb">示例代码</a></li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-jsx" data-lang="jsx"><span class="kd">function</span> <span class="nx">App</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;App 执行&#34;</span><span class="p">);</span>
+  <span class="kr">const</span> <span class="nx">count</span> <span class="o">=</span> <span class="nx">useRef</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+  <span class="kr">const</span> <span class="p">[</span><span class="nx">n</span><span class="p">,</span> <span class="nx">setN</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+  <span class="kr">const</span> <span class="p">[</span><span class="nx">_</span><span class="p">,</span> <span class="nx">set_</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
+  <span class="kr">const</span> <span class="nx">onClick</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="nx">setN</span><span class="p">((</span><span class="nx">i</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="nx">i</span> <span class="o">+</span> <span class="mi">9</span><span class="p">);</span>
+  <span class="p">};</span>
+  <span class="kr">const</span> <span class="nx">onClick2</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="nx">count</span><span class="p">.</span><span class="nx">current</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="nx">set_</span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">());</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;count.current onClick&#34;</span><span class="p">,</span> <span class="nx">count</span><span class="p">.</span><span class="nx">current</span><span class="p">);</span>
+  <span class="p">};</span>
+  <span class="nx">useEffect</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;count.current update&#34;</span><span class="p">,</span> <span class="nx">count</span><span class="p">.</span><span class="nx">current</span><span class="p">);</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;--------------------&#34;</span><span class="p">);</span>
+  <span class="p">});</span>
+  <span class="k">return</span> <span class="p">(</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">className</span><span class="o">=</span><span class="s">&#34;app&#34;</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">button</span> <span class="na">onClick</span><span class="o">=</span><span class="p">{</span><span class="nx">onClick</span><span class="p">}&gt;</span><span class="nx">update</span> <span class="nx">n</span> <span class="p">{</span><span class="nx">n</span><span class="p">}&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">br</span> <span class="p">/&gt;</span>
+        <span class="p">&lt;</span><span class="nt">button</span> <span class="na">onClick</span><span class="o">=</span><span class="p">{</span><span class="nx">onClick2</span><span class="p">}&gt;</span><span class="nx">update</span> <span class="nx">count</span><span class="p">.</span><span class="nx">current</span> <span class="p">{</span><span class="nx">count</span><span class="p">.</span><span class="nx">current</span><span class="p">}&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+      <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+  <span class="p">);</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><hr>
+<h2 id="8-useref配合forwardref用在函数组件中-a-hrefcatalogue--a">8. <code>useRef</code>配合<code>forwardRef</code>用在函数组件中 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+<blockquote>
+<p>基本用法：让函数组件 <code>&lt;Button2 /&gt;</code> 支持 <code>ref</code>，获取其虚拟<code>DOM</code>的引用</p>
+</blockquote>
+<ul>
+<li>代替原生使用<code>id</code>，和<code>document.getElementById</code>来获取元素</li>
+</ul>
+<blockquote>
+<p>函数组件中会警告无法直接使用<code>useRef</code> <a href="https://codesandbox.io/s/sad-gagarin-r8whox">代码示例1</a>：<code>props</code>无法传递<code>ref</code>属性</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-jsx" data-lang="jsx"><span class="kd">function</span> <span class="nx">App</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">buttonRef</span> <span class="o">=</span> <span class="nx">useRef</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
+  <span class="k">return</span> <span class="p">(</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">className</span><span class="o">=</span><span class="s">&#34;app&#34;</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">Button2</span> <span class="na">ref</span><span class="o">=</span><span class="p">{</span><span class="nx">buttonRef</span><span class="p">}&gt;</span><span class="nx">按钮</span><span class="p">&lt;/</span><span class="nt">Button2</span><span class="p">&gt;</span>
+      <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+  <span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kr">const</span> <span class="nx">Button2</span> <span class="o">=</span> <span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;props&#34;</span><span class="p">,</span> <span class="nx">props</span><span class="p">);</span>
+  <span class="k">return</span> <span class="p">&lt;</span><span class="nt">button</span> <span class="na">className</span><span class="o">=</span><span class="s">&#34;red&#34;</span> <span class="p">{</span><span class="na">...props</span><span class="p">}&gt;&lt;/</span><span class="nt">button</span><span class="p">&gt;;</span>
+<span class="p">};</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>报警告<code>Warning: Function components cannot be given refs. Attempts to access this ref will fail. Did you mean to use React.forwardRef()?</code></li>
+<li><code>useRef</code>作为元素的引用是在类组件中使用的，即只有类组件可以直接接受<code>ref</code>元素引用</li>
+<li>提示函数组件去使用<code>forwardRef</code></li>
+<li>组件内打印<code>console.log(&quot;props&quot;, props);</code>得到<code>object {children: &quot;按钮&quot;}</code>，只把按钮传过去了，其他属性都忽略了</li>
+</ul>
+<hr>
+<blockquote>
+<p><a href="https://codesandbox.io/s/sleepy-morning-wjp7p7">代码示例2</a>：函数组件中使用<code>React.forwardRef</code>包裹一层组件，可声明第二个形参<code>ref</code>，实现函数组件<code>ref</code>的组件间传递</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-jsx" data-lang="jsx"><span class="kd">function</span> <span class="nx">App</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">buttonRef</span> <span class="o">=</span> <span class="nx">useRef</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
+  <span class="k">return</span> <span class="p">(</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">className</span><span class="o">=</span><span class="s">&#34;App&#34;</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">Button3</span> <span class="na">ref</span><span class="o">=</span><span class="p">{</span><span class="nx">buttonRef</span><span class="p">}&gt;</span><span class="nx">按钮</span><span class="p">&lt;/</span><span class="nt">Button3</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+  <span class="p">);</span>
+<span class="p">}</span>
+
+<span class="cm">/*
+</span><span class="cm">const Button2 = (props, ref) =&gt; {
+</span><span class="cm">  console.log(&#34;props: &#34;, props);
+</span><span class="cm">  console.log(&#34;ref:&#34;, ref);
+</span><span class="cm">  return &lt;button className=&#34;red&#34; ref={ref} {...props} /&gt;;
+</span><span class="cm">};
+</span><span class="cm">const Button3 = forwardRef(Button2);
+</span><span class="cm">*/</span>
+
+<span class="kr">const</span> <span class="nx">Button3</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">forwardRef</span><span class="p">((</span><span class="nx">props</span><span class="p">,</span> <span class="nx">ref</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="p">&lt;</span><span class="nt">button</span> <span class="na">className</span><span class="o">=</span><span class="s">&#34;red&#34;</span> <span class="na">ref</span><span class="o">=</span><span class="p">{</span><span class="nx">ref</span><span class="p">}</span> <span class="p">{</span><span class="na">...props</span><span class="p">}</span> <span class="p">/&gt;;</span>
+<span class="p">});</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>函数组件需要接受外部传来的<code>ref</code>参数，必须用<code>React.forwardRef</code>包起来
+<ul>
+<li><code>&lt;Button ref={buttonRef}&gt;...&lt;/Button&gt;</code></li>
+<li><code>const Button = React.forwardRef((props, ref) =&gt; (&lt;button ref={ref} {...props} /&gt;))</code></li>
+</ul>
+</li>
+</ul>
+<hr>
+<blockquote>
+<p><a href="https://codesandbox.io/s/practical-ride-xumesc">代码示例3</a>：两次<code>ref</code>传递得到<code>button</code>的引用，实现可移动的按钮（高阶组件封装）（仍有bug，待修复）</p>
+</blockquote>
+<ul>
+<li>功能包装：<code>const MovableButton = movable(Button2)</code></li>
+<li>通过<code>ref</code>引用到<code>Button2</code>里面的按钮：<code>const buttonRef = useRef(null)</code>，需要做两次传递
+<ul>
+<li>第一次 将 <code>&lt;MovableButton name=&quot;email&quot; ref={buttonRef}&gt;</code> 传给 <code>movable(Component)</code> 中返回的 <code>&lt;Component ref={ref} {...props} /&gt;</code>
+<ul>
+<li>即<code>movable(Button2)</code> 中返回的 <code>&lt;Button2 ref={ref} {...props} /&gt;</code></li>
+</ul>
+</li>
+<li>第二次 <code>Button2</code> 组件声明时传递 <code>React.forwardRef((props, ref) =&gt; { return &lt;button ref={ref} {...props} /&gt;; });</code></li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-jsx" data-lang="jsx"><span class="kd">function</span> <span class="nx">App</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// 赋上 可拖拽的 功能
+</span><span class="c1"></span>  <span class="kr">const</span> <span class="nx">MovableButton</span> <span class="o">=</span> <span class="nx">movable</span><span class="p">(</span><span class="nx">Button2</span><span class="p">);</span>
+  <span class="c1">// 获取引用
+</span><span class="c1"></span>  <span class="kr">const</span> <span class="nx">buttonRef</span> <span class="o">=</span> <span class="nx">useRef</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
+  <span class="c1">// update
+</span><span class="c1"></span>  <span class="nx">useEffect</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">buttonRef</span><span class="p">.</span><span class="nx">current</span><span class="p">);</span>
+  <span class="p">});</span>
+  <span class="k">return</span> <span class="p">(</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">className</span><span class="o">=</span><span class="s">&#34;App&#34;</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">MovableButton</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;email&#34;</span> <span class="na">ref</span><span class="o">=</span><span class="p">{</span><span class="nx">buttonRef</span><span class="p">}&gt;</span>
+        <span class="nx">按钮</span>
+      <span class="p">&lt;/</span><span class="nt">MovableButton</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+  <span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">// 函数组件 forwardRef 引用包装
+</span><span class="c1"></span><span class="kr">const</span> <span class="nx">Button2</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">forwardRef</span><span class="p">((</span><span class="nx">props</span><span class="p">,</span> <span class="nx">ref</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="p">&lt;</span><span class="nt">button</span> <span class="na">ref</span><span class="o">=</span><span class="p">{</span><span class="nx">ref</span><span class="p">}</span> <span class="p">{</span><span class="na">...props</span><span class="p">}</span> <span class="p">/&gt;;</span>
+<span class="p">});</span>
+
+<span class="c1">// 仅用于实验目的，不要在公司代码中使用
+</span><span class="c1"></span><span class="kd">function</span> <span class="nx">movable</span><span class="p">(</span><span class="nx">Component</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">function</span> <span class="nx">Component2</span><span class="p">(</span><span class="nx">props</span><span class="p">,</span> <span class="nx">ref</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">props</span><span class="p">,</span> <span class="nx">ref</span><span class="p">);</span>
+
+    <span class="c1">// 初始化
+</span><span class="c1"></span>    <span class="kr">const</span> <span class="p">[</span><span class="nx">position</span><span class="p">,</span> <span class="nx">setPosition</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]);</span>
+    <span class="kr">const</span> <span class="nx">lastPosition</span> <span class="o">=</span> <span class="nx">useRef</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
+
+    <span class="c1">// 方法
+</span><span class="c1"></span>    <span class="kr">const</span> <span class="nx">onMouseDown</span> <span class="o">=</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+      <span class="nx">lastPosition</span><span class="p">.</span><span class="nx">current</span> <span class="o">=</span> <span class="p">[</span><span class="nx">e</span><span class="p">.</span><span class="nx">clientX</span><span class="p">,</span> <span class="nx">e</span><span class="p">.</span><span class="nx">clientY</span><span class="p">];</span>
+    <span class="p">};</span>
+    <span class="kr">const</span> <span class="nx">onMouseMove</span> <span class="o">=</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+      <span class="c1">// e.nativeEvent.stopImmediatePropagation(); //阻止冒泡
+</span><span class="c1"></span>      <span class="k">if</span> <span class="p">(</span><span class="nx">lastPosition</span><span class="p">.</span><span class="nx">current</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kr">const</span> <span class="nx">x</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">clientX</span> <span class="o">-</span> <span class="nx">lastPosition</span><span class="p">.</span><span class="nx">current</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+        <span class="kr">const</span> <span class="nx">y</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">clientY</span> <span class="o">-</span> <span class="nx">lastPosition</span><span class="p">.</span><span class="nx">current</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+        <span class="nx">setPosition</span><span class="p">([</span><span class="nx">position</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="nx">x</span><span class="p">,</span> <span class="nx">position</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="nx">y</span><span class="p">]);</span>
+        <span class="nx">lastPosition</span><span class="p">.</span><span class="nx">current</span> <span class="o">=</span> <span class="p">[</span><span class="nx">e</span><span class="p">.</span><span class="nx">clientX</span><span class="p">,</span> <span class="nx">e</span><span class="p">.</span><span class="nx">clientY</span><span class="p">];</span>
+      <span class="p">}</span>
+    <span class="p">};</span>
+    <span class="kr">const</span> <span class="nx">onMouseUp</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+      <span class="nx">lastPosition</span><span class="p">.</span><span class="nx">current</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+    <span class="p">};</span>
+
+    <span class="k">return</span> <span class="p">(</span>
+      <span class="p">&lt;&gt;</span>
+        <span class="p">{</span><span class="cm">/*套一层 div */</span><span class="p">}</span>
+        <span class="p">&lt;</span><span class="nt">div</span>
+          <span class="na">className</span><span class="o">=</span><span class="s">&#34;movable&#34;</span>
+          <span class="na">onMouseDown</span><span class="o">=</span><span class="p">{</span><span class="nx">onMouseDown</span><span class="p">}</span>
+          <span class="na">onMouseMove</span><span class="o">=</span><span class="p">{</span><span class="nx">onMouseMove</span><span class="p">}</span>
+          <span class="na">onMouseUp</span><span class="o">=</span><span class="p">{</span><span class="nx">onMouseUp</span><span class="p">}</span>
+          <span class="na">style</span><span class="o">=</span><span class="p">{{</span>
+            <span class="nx">left</span><span class="o">:</span> <span class="nx">position</span> <span class="o">&amp;&amp;</span> <span class="nx">position</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+            <span class="nx">top</span><span class="o">:</span> <span class="nx">position</span> <span class="o">&amp;&amp;</span> <span class="nx">position</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+          <span class="p">}}</span>
+        <span class="p">&gt;</span>
+          <span class="p">&lt;</span><span class="nt">Component</span> <span class="p">{</span><span class="na">...props</span><span class="p">}</span> <span class="na">ref</span><span class="o">=</span><span class="p">{</span><span class="nx">ref</span><span class="p">}</span> <span class="p">/&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+      <span class="p">&lt;/&gt;</span>
+    <span class="p">);</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="nx">React</span><span class="p">.</span><span class="nx">forwardRef</span><span class="p">(</span><span class="nx">Component2</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p><code>useRef</code> V.S. <code>forwardRef</code></p>
+</blockquote>
+<ul>
+<li>由于大部分时候不需要，所以<code>props</code>不包含<code>ref</code></li>
+<li>由于函数组件的参数 <code>props</code>不包含<code>ref</code>，所以需要<code>React.forwardRef</code>包裹一层，才可以传递 <code>ref</code></li>
+<li><code>React.forwardRef</code>就是在函数组件中用来转发<code>ref</code>的</li>
+</ul>
 <hr>
 <h2 id="9-useimperativehandle-a-hrefcatalogue--a">9. <code>useImperativeHandle</code> <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
-<hr>
+<ul>
+<li><code>Imperative</code> 重要的</li>
+<li>命名太长：其实意思就是<code>setRef</code>：用来变更<code>ref</code></li>
+<li>作用是自定义<code>ref</code>的属性</li>
+</ul>
+<blockquote>
+<p>不用<code>useImperativeHandle</code>的 <a href="https://codesandbox.io/s/awesome-goldwasser-v7vsp">代码示例</a></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-jsx" data-lang="jsx"><span class="kd">function</span> <span class="nx">App</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">buttonRef</span> <span class="o">=</span> <span class="nx">useRef</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
+  <span class="nx">useEffect</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">buttonRef</span><span class="p">.</span><span class="nx">current</span><span class="p">);</span> <span class="c1">// 打印出 &lt;button&gt;按钮&lt;/button&gt;
+</span><span class="c1"></span>  <span class="p">});</span>
+  <span class="k">return</span> <span class="p">(</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">className</span><span class="o">=</span><span class="s">&#34;App&#34;</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">Button2</span> <span class="na">ref</span><span class="o">=</span><span class="p">{</span><span class="nx">buttonRef</span><span class="p">}&gt;</span><span class="nx">按钮</span><span class="p">&lt;/</span><span class="nt">Button2</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">button</span>
+        <span class="na">className</span><span class="o">=</span><span class="s">&#34;close&#34;</span>
+        <span class="na">onClick</span><span class="o">=</span><span class="p">{()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+          <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">buttonRef</span><span class="p">);</span>
+          <span class="nx">buttonRef</span><span class="p">.</span><span class="nx">current</span><span class="p">.</span><span class="nx">remove</span><span class="p">();</span>
+        <span class="p">}}</span>
+      <span class="p">&gt;</span>
+        <span class="nx">x</span>
+      <span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+  <span class="p">);</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>如果希望得到的<code>ref</code>是一个对<code>button</code>的自定义封装对象，则需要使用<code>useImperativeHandle</code></li>
+</ul>
+<blockquote>
+<p>使用<code>useImperativeHandle</code>的 <a href="https://codesandbox.io/s/elegant-poitras-mxoym">代码示例</a></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-jsx" data-lang="jsx"><span class="kd">function</span> <span class="nx">App</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">buttonRef</span> <span class="o">=</span> <span class="nx">useRef</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
+  <span class="nx">useEffect</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">buttonRef</span><span class="p">.</span><span class="nx">current</span><span class="p">);</span> <span class="c1">// 打印出 {x: ƒ x(), realButton: Object}
+</span><span class="c1"></span>  <span class="p">});</span>
+  <span class="k">return</span> <span class="p">(</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">className</span><span class="o">=</span><span class="s">&#34;App&#34;</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">Button2</span> <span class="na">ref</span><span class="o">=</span><span class="p">{</span><span class="nx">buttonRef</span><span class="p">}&gt;</span><span class="nx">按钮</span><span class="p">&lt;/</span><span class="nt">Button2</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">button</span>
+        <span class="na">className</span><span class="o">=</span><span class="s">&#34;close&#34;</span>
+        <span class="na">onClick</span><span class="o">=</span><span class="p">{()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+          <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">buttonRef</span><span class="p">);</span>
+          <span class="nx">buttonRef</span><span class="p">.</span><span class="nx">current</span><span class="p">.</span><span class="nx">x</span><span class="p">();</span>
+        <span class="p">}}</span>
+      <span class="p">&gt;</span>
+        <span class="nx">x</span>
+      <span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+  <span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kr">const</span> <span class="nx">Button2</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">forwardRef</span><span class="p">((</span><span class="nx">props</span><span class="p">,</span> <span class="nx">ref</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">realButton</span> <span class="o">=</span> <span class="nx">createRef</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
+  <span class="kr">const</span> <span class="nx">setRef</span> <span class="o">=</span> <span class="nx">useImperativeHandle</span><span class="p">;</span>
+  <span class="nx">setRef</span><span class="p">(</span><span class="nx">ref</span><span class="p">,</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">{</span>
+      <span class="nx">x</span><span class="o">:</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+        <span class="nx">realButton</span><span class="p">.</span><span class="nx">current</span><span class="p">.</span><span class="nx">remove</span><span class="p">();</span>
+      <span class="p">},</span>
+      <span class="nx">realButton</span><span class="o">:</span> <span class="nx">realButton</span>
+    <span class="p">};</span>
+  <span class="p">});</span>
+  <span class="k">return</span> <span class="p">&lt;</span><span class="nt">button</span> <span class="na">ref</span><span class="o">=</span><span class="p">{</span><span class="nx">realButton</span><span class="p">}</span> <span class="p">{</span><span class="na">...props</span><span class="p">}</span> <span class="p">/&gt;;</span>
+<span class="p">});</span>
+</code></pre></td></tr></table>
+</div>
+</div><hr>
 <h2 id="10-自定义-hook-a-hrefcatalogue--a">10. 自定义 <code>Hook</code> <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+<ul>
+<li>使用自定义 <code>Hook</code> 来封装数据操作</li>
+</ul>
+<blockquote>
+<p>简单<a href="https://codesandbox.io/s/wizardly-tesla-sy077">代码示例</a></p>
+</blockquote>
+<ul>
+<li>直接获取处理过的数据 <code>const { list /*, setList */ } = useList();</code></li>
+<li>处理数据的逻辑封装在自定义<code>Hook</code>中，只暴露读和写的接口</li>
+<li>初始化状态 <code>const [list, setList] = useState(null)</code></li>
+<li><code>DidMount</code>时 请求数据</li>
+<li>返回出读和写的接口</li>
+<li>处理相关的逻辑都写在一个钩子函数中，运行时暴露出读和写的接口</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-jsx" data-lang="jsx"><span class="c1">// import...
+</span><span class="c1"></span><span class="kr">import</span> <span class="nx">useList</span> <span class="nx">from</span> <span class="s2">&#34;./hooks/useList&#34;</span><span class="p">;</span>
+<span class="kd">function</span> <span class="nx">App</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="p">{</span> <span class="nx">list</span> <span class="cm">/*, setList */</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">useList</span><span class="p">();</span>
+  <span class="k">return</span> <span class="p">(</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">className</span><span class="o">=</span><span class="s">&#34;App&#34;</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span><span class="nx">List</span><span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+      <span class="p">{</span><span class="nx">list</span> <span class="o">?</span> <span class="p">(</span>
+        <span class="p">&lt;</span><span class="nt">ol</span><span class="p">&gt;</span>
+          <span class="p">{</span><span class="nx">list</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">item</span> <span class="p">=&gt;</span> <span class="p">(</span>
+            <span class="p">&lt;</span><span class="nt">li</span> <span class="na">key</span><span class="o">=</span><span class="p">{</span><span class="nx">item</span><span class="p">.</span><span class="nx">id</span><span class="p">}&gt;{</span><span class="nx">item</span><span class="p">.</span><span class="nx">name</span><span class="p">}&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+          <span class="p">))}</span>
+        <span class="p">&lt;/</span><span class="nt">ol</span><span class="p">&gt;</span>
+      <span class="p">)</span> <span class="o">:</span> <span class="p">(</span>
+        <span class="s2">&#34;加载中...&#34;</span>
+      <span class="p">)}</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+  <span class="p">);</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><code>useList.js</code></li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-jsx" data-lang="jsx"><span class="kr">import</span> <span class="p">{</span> <span class="nx">useState</span><span class="p">,</span> <span class="nx">useEffect</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">&#34;react&#34;</span><span class="p">;</span>
+
+<span class="kr">const</span> <span class="nx">useList</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="c1">// 初始化 state
+</span><span class="c1"></span>  <span class="kr">const</span> <span class="p">[</span><span class="nx">list</span><span class="p">,</span> <span class="nx">setList</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
+  <span class="c1">// mounted时 请求数据
+</span><span class="c1"></span>  <span class="nx">useEffect</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="nx">ajax</span><span class="p">(</span><span class="s2">&#34;/list&#34;</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nx">list</span> <span class="p">=&gt;</span> <span class="p">{</span>
+      <span class="nx">setList</span><span class="p">(</span><span class="nx">list</span><span class="p">);</span>
+    <span class="p">});</span>
+  <span class="p">},</span> <span class="p">[]);</span> <span class="c1">// [] 确保只在第一次运行
+</span><span class="c1"></span>
+  <span class="c1">// 暴露读和写的接口
+</span><span class="c1"></span>  <span class="k">return</span> <span class="p">{</span>
+    <span class="nx">list</span><span class="o">:</span> <span class="nx">list</span><span class="p">,</span>
+    <span class="nx">setList</span><span class="o">:</span> <span class="nx">setList</span>
+  <span class="p">};</span>
+<span class="p">};</span>
+<span class="kr">export</span> <span class="k">default</span> <span class="nx">useList</span><span class="p">;</span>
+
+<span class="kd">function</span> <span class="nx">ajax</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="k">new</span> <span class="nb">Promise</span><span class="p">((</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="nx">setTimeout</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+      <span class="nx">resolve</span><span class="p">([</span>
+        <span class="p">{</span> <span class="nx">id</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">name</span><span class="o">:</span> <span class="s2">&#34;Frank&#34;</span> <span class="p">},</span>
+        <span class="p">{</span> <span class="nx">id</span><span class="o">:</span> <span class="mi">2</span><span class="p">,</span> <span class="nx">name</span><span class="o">:</span> <span class="s2">&#34;Jack&#34;</span> <span class="p">},</span>
+        <span class="p">{</span> <span class="nx">id</span><span class="o">:</span> <span class="mi">3</span><span class="p">,</span> <span class="nx">name</span><span class="o">:</span> <span class="s2">&#34;Alice&#34;</span> <span class="p">},</span>
+        <span class="p">{</span> <span class="nx">id</span><span class="o">:</span> <span class="mi">4</span><span class="p">,</span> <span class="nx">name</span><span class="o">:</span> <span class="s2">&#34;Bob&#34;</span> <span class="p">}</span>
+      <span class="p">]);</span>
+    <span class="p">},</span> <span class="mi">2000</span><span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>功能更全的<a href="https://codesandbox.io/s/recursing-darkness-zuo4b">代码示例</a></p>
+</blockquote>
+<ul>
+<li>不仅提供了读和写的借口，增删改查等其他功能</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-jsx" data-lang="jsx"><span class="c1">// import...
+</span><span class="c1"></span><span class="kr">import</span> <span class="nx">useList</span> <span class="nx">from</span> <span class="s2">&#34;./hooks/useList&#34;</span><span class="p">;</span>
+<span class="kd">function</span> <span class="nx">App</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="p">{</span> <span class="nx">list</span><span class="p">,</span> <span class="nx">deleteIndex</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">useList</span><span class="p">();</span>
+  <span class="k">return</span> <span class="p">(</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">className</span><span class="o">=</span><span class="s">&#34;App&#34;</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span><span class="nx">List</span><span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+      <span class="p">{</span><span class="nx">list</span> <span class="o">?</span> <span class="p">(</span>
+        <span class="p">&lt;</span><span class="nt">ol</span><span class="p">&gt;</span>
+          <span class="p">{</span><span class="nx">list</span><span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">item</span><span class="p">,</span> <span class="nx">index</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">(</span>
+            <span class="p">&lt;</span><span class="nt">li</span> <span class="na">key</span><span class="o">=</span><span class="p">{</span><span class="nx">item</span><span class="p">.</span><span class="nx">id</span><span class="p">}&gt;</span>
+              <span class="p">{</span><span class="nx">item</span><span class="p">.</span><span class="nx">name</span><span class="p">}</span>
+              <span class="p">&lt;</span><span class="nt">button</span> <span class="na">onClick</span><span class="o">=</span><span class="p">{()</span> <span class="p">=&gt;</span> <span class="p">{</span><span class="nx">deleteIndex</span><span class="p">(</span><span class="nx">index</span><span class="p">);}}&gt;</span>
+                <span class="nx">x</span>
+              <span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+            <span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+          <span class="p">))}</span>
+        <span class="p">&lt;/</span><span class="nt">ol</span><span class="p">&gt;</span>
+      <span class="p">)</span> <span class="o">:</span> <span class="p">(</span>
+        <span class="s2">&#34;加载中...&#34;</span>
+      <span class="p">)}</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+  <span class="p">);</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><code>useList.js</code></li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-jsx" data-lang="jsx"><span class="kr">import</span> <span class="p">{</span> <span class="nx">useState</span><span class="p">,</span> <span class="nx">useEffect</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">&#34;react&#34;</span><span class="p">;</span>
+
+<span class="kr">const</span> <span class="nx">useList</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="p">[</span><span class="nx">list</span><span class="p">,</span> <span class="nx">setList</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
+  <span class="nx">useEffect</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="nx">ajax</span><span class="p">(</span><span class="s2">&#34;/list&#34;</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nx">list</span> <span class="p">=&gt;</span> <span class="p">{</span>
+      <span class="nx">setList</span><span class="p">(</span><span class="nx">list</span><span class="p">);</span>
+    <span class="p">});</span>
+  <span class="p">},</span> <span class="p">[]);</span> <span class="c1">// [] 确保只在第一次运行
+</span><span class="c1"></span>  <span class="k">return</span> <span class="p">{</span>
+    <span class="nx">list</span><span class="o">:</span> <span class="nx">list</span><span class="p">,</span> <span class="c1">// 查
+</span><span class="c1"></span>    <span class="nx">addItem</span><span class="o">:</span> <span class="nx">name</span> <span class="p">=&gt;</span> <span class="p">{</span> <span class="c1">// 增
+</span><span class="c1"></span>      <span class="nx">setList</span><span class="p">([...</span><span class="nx">list</span><span class="p">,</span> <span class="p">{</span> <span class="nx">id</span><span class="o">:</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">(),</span> <span class="nx">name</span><span class="o">:</span> <span class="nx">name</span> <span class="p">}]);</span>
+    <span class="p">},</span>
+    <span class="nx">deleteIndex</span><span class="o">:</span> <span class="nx">index</span> <span class="p">=&gt;</span> <span class="p">{</span> <span class="c1">// 删
+</span><span class="c1"></span>      <span class="nx">setList</span><span class="p">(</span><span class="nx">list</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nx">index</span><span class="p">).</span><span class="nx">concat</span><span class="p">(</span><span class="nx">list</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="nx">index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)));</span>
+    <span class="p">}</span>
+  <span class="p">};</span>
+<span class="p">};</span>
+<span class="kr">export</span> <span class="k">default</span> <span class="nx">useList</span><span class="p">;</span>
+
+<span class="kd">function</span> <span class="nx">ajax</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="k">new</span> <span class="nb">Promise</span><span class="p">((</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="nx">setTimeout</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+      <span class="nx">resolve</span><span class="p">([</span>
+        <span class="p">{</span> <span class="nx">id</span><span class="o">:</span> <span class="s2">&#34;1&#34;</span><span class="p">,</span> <span class="nx">name</span><span class="o">:</span> <span class="s2">&#34;Frank&#34;</span> <span class="p">},</span>
+        <span class="p">{</span> <span class="nx">id</span><span class="o">:</span> <span class="s2">&#34;2&#34;</span><span class="p">,</span> <span class="nx">name</span><span class="o">:</span> <span class="s2">&#34;Jack&#34;</span> <span class="p">},</span>
+        <span class="p">{</span> <span class="nx">id</span><span class="o">:</span> <span class="s2">&#34;3&#34;</span><span class="p">,</span> <span class="nx">name</span><span class="o">:</span> <span class="s2">&#34;Alice&#34;</span> <span class="p">},</span>
+        <span class="p">{</span> <span class="nx">id</span><span class="o">:</span> <span class="s2">&#34;4&#34;</span><span class="p">,</span> <span class="nx">name</span><span class="o">:</span> <span class="s2">&#34;Bob&#34;</span> <span class="p">}</span>
+      <span class="p">]);</span>
+    <span class="p">},</span> <span class="mi">2000</span><span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>分析</p>
+</blockquote>
+<ul>
+<li>还可以在自定义<code>Hook</code>里使用<code>Context</code></li>
+<li><code>useState</code>只说了不能在<code>if</code>里，没说不能在函数里运行
+<ul>
+<li>只要这个函数在函数组件里运行即可</li>
+</ul>
+</li>
+<li>实际业务中，使用良好的组件封装，更抽象的自定义<code>Hook</code>封装，来代替页面组件中直接使用<code>useState</code>、<code>uesEffect</code>等钩子</li>
+<li>使用函数组件，就没有必要使用<code>Redux</code>了</li>
+</ul>
 <hr>
-<h2 id="11-stale-closure-a-hrefcatalogue--a">11. <code>Stale Closure</code> <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+<h2 id="11-stale-closure过时的闭包-a-hrefcatalogue--a">11. <code>Stale Closure</code>过时的闭包 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+<ul>
+<li><a href="https://dmitripavlutin.com/react-hooks-stale-closures/">Be Aware of Stale Closures when Using React Hooks</a></li>
+</ul>
+<blockquote>
+<p><a href="https://codesandbox.io/s/stale-closure-use-effect-broken-2-gyhzk">代码示例</a></p>
+</blockquote>
+<ul>
+<li>期待打印自增的<code>count</code></li>
+<li>结果每次打印都是相同的<code>count</code></li>
+<li>打印的<code>count</code>是过时的闭包，而不是后续操作产生的新的<code>count</code></li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-jsx" data-lang="jsx"><span class="kd">function</span> <span class="nx">WatchCount</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="p">[</span><span class="nx">count</span><span class="p">,</span> <span class="nx">setCount</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+  <span class="nx">useEffect</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">setInterval</span><span class="p">(</span><span class="kd">function</span> <span class="nx">log</span><span class="p">()</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Count is: </span><span class="si">${</span><span class="nx">count</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
+    <span class="p">},</span> <span class="mi">2000</span><span class="p">);</span>
+  <span class="p">},</span> <span class="p">[]);</span>
+  <span class="k">return</span> <span class="p">(</span>
+    <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+      <span class="p">{</span><span class="nx">count</span><span class="p">}</span>
+      <span class="p">&lt;</span><span class="nt">button</span> <span class="na">onClick</span><span class="o">=</span><span class="p">{()</span> <span class="p">=&gt;</span> <span class="nx">setCount</span><span class="p">(</span><span class="nx">count</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="p">}&gt;</span>
+        <span class="nx">Increase</span>
+      <span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+  <span class="p">);</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>把依赖<code>[count]</code>放入<code>useEffect</code>，更新<code>DidUpdate</code>时同时更新闭包</li>
+<li>同时卸载<code>WillUnmount</code>时（<code>return () =&gt; {}</code>） 清除上一次组件卸载时的 <code>id</code>，来干掉旧的闭包</li>
+<li>代码中的两处<code>id</code>调用时机不同</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-jsx" data-lang="jsx"><span class="kd">function</span> <span class="nx">WatchCount</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="p">[</span><span class="nx">count</span><span class="p">,</span> <span class="nx">setCount</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+  <span class="nx">useEffect</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kr">const</span> <span class="nx">id</span> <span class="o">=</span> <span class="nx">setInterval</span><span class="p">(</span><span class="kd">function</span> <span class="nx">log</span><span class="p">()</span> <span class="p">{</span> <span class="c1">// 每次更新时创建新的id
+</span><span class="c1"></span>      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Count is: </span><span class="si">${</span><span class="nx">count</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
+    <span class="p">},</span> <span class="mi">2000</span><span class="p">);</span>
+    <span class="k">return</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+      <span class="nx">clearInterval</span><span class="p">(</span><span class="nx">id</span><span class="p">);</span> <span class="c1">// 清除上一次组件卸载时的id，调用时机不同
+</span><span class="c1"></span>    <span class="p">}</span>
+  <span class="p">},</span> <span class="p">[</span><span class="nx">count</span><span class="p">]);</span>
+  <span class="k">return</span> <span class="p">(</span>
+    <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+      <span class="p">{</span><span class="nx">count</span><span class="p">}</span>
+      <span class="p">&lt;</span><span class="nt">button</span> <span class="na">onClick</span><span class="o">=</span><span class="p">{()</span> <span class="p">=&gt;</span> <span class="nx">setCount</span><span class="p">(</span><span class="nx">count</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="p">}&gt;</span>
+        <span class="nx">Increase</span>
+      <span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+  <span class="p">);</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>避免保留下过时的闭包，每次更新前需要重新获取新的闭包</li>
+<li>或者在返回的函数中 读取最新的闭包，而不是在返回的函数外</li>
+</ul>
+<hr>
+<blockquote>
+<p>题外话</p>
+</blockquote>
+<ul>
+<li><code>JS</code>中有许多需要避免的<code>bug</code>或者反模式
+<ul>
+<li>隐式类型转换，用<code>===</code></li>
+<li>过时的闭包</li>
+<li>空值判断，用<code>??</code></li>
+<li>异步</li>
+<li>过长的条件分支，用策略模式（表驱动）</li>
+</ul>
+</li>
+</ul>
 <hr>
 <h2 id="12-总结-a-hrefcatalogue--a">12. 总结 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
 <div class="highlight"><div class="chroma">
@@ -2672,16 +3710,18 @@
 </span><span class="lnt">6
 </span><span class="lnt">7
 </span><span class="lnt">8
+</span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">flowchart LR
-    React_Hooks --&gt; 状态_useState
-    React_Hooks --&gt; 副作用_useEffect --&gt; useLayoutEffect
-    React_Hooks --&gt; 上下文_useContext
-    React_Hooks --&gt; Redux_useReducer
-    React_Hooks --&gt; 记忆_useMemo --&gt; 回调_useCallback
-    React_Hooks --&gt; 引用_useRef --&gt; useImperativeHandle
-    React_Hooks --&gt; 自定义_Hook --&gt; useDebugValue
+    React_Builtin_Hooks --&gt; 状态...useState
+    React_Builtin_Hooks --&gt; 副作用...useEffect --&gt; useLayoutEffect
+    React_Builtin_Hooks --&gt; 上下文...useContext
+    React_Builtin_Hooks --&gt; Redux...useReducer
+    React_Builtin_Hooks --&gt; 记忆...useMemo...配合React.memo --&gt; 回调...useCallback
+    React_Builtin_Hooks --&gt; 引用...useRef --&gt; forwardRef
+    引用...useRef --&gt; useImperativeHandle
+    React_Builtin_Hooks --&gt; 自定义...Hook --&gt; useDebugValue
 </code></pre></td></tr></table>
 </div>
 </div><hr>
