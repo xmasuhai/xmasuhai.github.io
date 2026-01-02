@@ -1,0 +1,1036 @@
+---
+title: "【CSS非全解01】CSS基础 初识CSS"
+date: 2026-01-02T17:42:23+08:00
+draft: false
+tags: ["CSS"]
+tags_weight: 100
+categories: ["CSS"]
+categoryes_weight: 100
+isCJKLanguage: true
+---
+
+## 引入 `css` 的方式 <a href="#catalogue"> ⇧ </a>
+
+> 三种引入方式
+
+- 行内样式 在元素上添加属性 `style`
+- 页面级样式 使用 `style` 标签
+- 外部`css`文件 使用 `link` 标签
+
+### 行内样式表：行内样式 <a href="#catalogue"> ⇧ </a>
+
+```html
+<div style="
+  width: 100px;
+  height: 100px;
+  "></div>
+```
+
+- 直接写 `css` 属性
+- 无需 `css` 选择器
+
+---
+
+### 内部样式表：页面级样式 `<style>` 元素中 <a href="#catalogue"> ⇧ </a>
+
+```html
+<head>
+  <style type="text/css">
+    div {
+      width: 100px;
+      height: 100px;
+    }
+  </style>
+</head>
+
+<body>
+  <div></div>
+</body>
+```
+
+- `style`标签 属性 `type="text/css"`
+- 一般放在 `head` 元素中，先于 `body` 内容加载，防止页面闪烁
+
+---
+
+### 外部样式表：外部`css`文件 使用`<link>` 元素 <a href="#catalogue"> ⇧ </a>
+
+- 使用单独文件 `xxx.css`
+- 使用 `link` 标签引入
+- 一般放在 `head` 元素中，先于 `body` 内容加载，防止页面闪烁
+
+```html
+<head>
+  <link rel="stylesheet" type="text/css" href="xxx.css">
+</head>
+
+<body>
+  <div></div>
+</body>
+```
+
+> 优点
+
+- 外部样式可以解决多页面样式重复的问题
+- 有利于浏览器缓存，从而提高页面响应速度
+- 有利于代码分离(HTML和C5S)，更容易阅读和维护
+
+---
+
+### `css`资源文件 <a href="#catalogue"> ⇧ </a>
+
+- 服务器上 `192.168.xxx.xxx:xxxx/xxx.css`
+- 开启新线程下载该`css`文件，同时不阻塞原`html`下载线程
+  - 异步加载，同时下载另一个文件
+
+---
+
+## `CSS`基本语法一：样式语法 <a href="#catalogue"> ⇧ </a>
+
+> CSS规则 = 选择器 + 声明块
+
+```CSS
+selectors-list {
+  properties-list
+}
+
+选择器 {
+  属性名:属性值;
+  /* 注释语法：只有多行注释 */
+}
+```
+
+> selectors-list ::=
+    selector[:pseudo-class] [::pseudo-element]
+    [, selectors-list]
+>
+> properties-list ::=
+    [property : value] [; properties-list]
+
+eg.
+
+```CSS
+.a,
+#b,
+[c="d"]>e f,
+g+h,
+i~j{
+    border: 1px red solid;
+}
+
+strong {
+  color: red;
+}
+
+div.menu-bar li:hover > ul {
+  display: block;
+}
+
+```
+
+---
+
+### 基本语法注意事项 <a href="#catalogue"> ⇧ </a>
+
+- 所有符号都是英文符号，IDE只开英语输入，中文从记事本里粘贴进来（开不同应用不同输入法：both Win & Mac）；标点写错，浏览器会警告，但不报错
+> 有可能犯错的地方终究会错——墨菲定律
+
+- 区分大小写，a 和 A 不同
+- 没有//注释，只是把选择器拼错不生效而已
+- 最后一个分号建议不要省略
+- 任何地方写错了，都不报错，浏览器会直接忽略，继续渲染，只给警告⚠️
+- 怎么纠错？调试看下文
+
+> 注意，规则定义中的任何CSS语法错误都将使整个规则无效。无效的规则将被浏览器忽略。
+>
+> 注意CSS定义完全是基于文本(ASCII)的。
+
+eg.
+
+```CSS
+p {
+  /* 正确 */
+  color:red;
+
+  /* 不正规的“注释”：拼错 */
+  xcolor: red;
+  // color: red;
+
+  /* 正确的注释 */
+  /* color:red; */
+  /*
+  color:red;
+  */
+}
+```
+
+> 行内元素标签换行间距问题
+
+```html
+<head>
+  <style>
+    h1 {
+      font-size: 12px;
+    }
+    h1 span {
+      font-size: 12px;
+    }
+  </style>
+</head>
+
+<body>
+  <h1 class="article-title">
+    <span>Xxx</span>
+    <span>123</span>
+  </h1>
+</body>
+```
+
+- `<span>`元素间为保持代码格式而换行，页面显示时会多处一个空格
+- 可以在父元素统一加上 `font-size: 0;`，在子元素中添加 `font-size: 12px;` 处理
+
+---
+
+## 样式选择器 <a href="#catalogue"> ⇧ </a>
+
+> 选择器：帮助你精准的选中想要的元素
+> 基本选择器：
+
+- ID 选择器
+- 类选择器
+- 属性选择器
+- 类型选择器 (元素/标签选择器)
+- 通用选择器（通配符 选择器）
+
+---
+
+### `id` 选择器 <a href="#catalogue"> ⇧ </a>
+
+```html
+<head>
+  <style>
+    #abc {
+      width: 100px;
+      height: 100px;
+      background-color: #060;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="abc"></div>
+</body>
+```
+
+- 需要确保 `id` 唯一对应一个标签
+- 如果重复，后面的会覆盖掉前面的
+
+---
+
+### 类型选择器 `Type selectors` (元素/标签选择器) <a href="#catalogue"> ⇧ </a>
+
+```html
+<head>
+  <style>
+    div {
+      width: 100px;
+      height: 100px;
+      background-color: #060;
+    }
+  </style>
+</head>
+
+<body>
+  <div></div>
+</body>
+```
+
+- 会匹配所有该标签
+- 一般用来初始化浏览器中默认样式 `reset.css`
+
+```css
+a {
+  text-decoration: none;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+```
+
+---
+
+### 类型选择器 `(class` 类选择器) <a href="#catalogue"> ⇧ </a>
+
+```html
+<head>
+  <style>
+    .abc {
+      width: 100px;
+      height: 100px;
+      background-color: #060;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="abc"></div>
+</body>
+```
+
+---
+
+### 属性选择器 <a href="#catalogue"> ⇧ </a>
+
+> 根据属性名和属性值选中元素
+
+```html
+<head>
+  <style>
+    [xxx="yyy"] {
+      width: 100px;
+      height: 100px;
+      background-color: #060;
+    }
+
+    /* 选中所有具有href属性的元素 */
+    [href] {color: red;}
+
+    /* 选中所有具有href属性并且值为 https://zzz.com 的元素 */
+    [href='https://zzz.com'] {color: orange;}
+
+    /* 一般配合元素选择器一起使用 */
+    a[href] {color: red;}
+    a[href='https://zzz.com'] {color: orange;}
+  </style>
+</head>
+
+<body>
+  <div xxx="yyy"></div>
+  <a href="https://xxx.com">xxx</a>
+  <a href="https://yyy.com">yyy</a>
+  <a href=:"https://zzz.com">zzz</a>
+</body>
+```
+
+> 参考
+
+- [属性选择器 MDN](https://developer.mozilla.org/zh-CN/docs/Web/CSS/Attribute_selectors)
+
+---
+
+### 通配符 选择器 <a href="#catalogue"> ⇧ </a>
+
+> 选中所有元素
+
+```html
+<head>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+  </style>
+</head>
+
+<body>
+  <div></div>
+</body>
+```
+
+- 通用选择器（*）、组合符（+、>、~、' '）和调整优先级的选择器（:where()）不会影响优先级。
+- 一般用来初始化浏览器中默认样式 `reset.css`
+
+```css
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+```
+
+---
+
+### 伪选择器（Pseudo） <a href="#catalogue"> ⇧ </a>
+
+> 包括 伪类选择器 和 伪元素选择器
+
+#### 伪类 <a href="#catalogue"> ⇧ </a>
+
+> 选中某些元素的某种状态，先介绍几种常用的
+
+```css
+/* 超链接未访问时的状态 */
+a:link {}
+/* 超链接已访问时的状态 */
+a:visited {}
+/* 鼠标悬停状态 */
+a:hover {}
+/* 用户激活状态 一般为鼠标按下状态 */
+a:active {}
+```
+
+- 在浏览器开发者工具中，打开 `:hov` 状态，查看
+
+![hov](https://share.note.youdao.com/yws/api/personal/file/WEBfabdc975de9c08df80e5a022832ccb0a?method=download&shareKey=abaaaf3c3e2726e244834b691fc00d33)
+
+> 伪类一般书写顺序，保证符合用户直觉的样式
+
+1. `link`
+2. `visited`
+3. `hover`
+4. `active`
+
+---
+
+#### 子伪类选择器 <a href="#catalogue"> ⇧ </a>
+
+-  `:first-child` 选中第一个子元素（当前范围内的第一个子元素）
+  - `a:first-child` 当前范围内的第一个子元素，并且为`a`标签的元素
+  - `a > :first-child` 表示`a`标签内的第一个子元素
+-  `:first-of-type` 表示一组兄弟元素中其类型（比如标签名）的第一个元素
+  - `a:first-of-type` 当前范围内的第一个`a`元素
+- `:last-child`
+- `:last-of-type`
+- `:nth-child()` 选中指定的第几个子元素
+  - `:nth-child(n)`
+  - `:nth-child(-n)`
+  - `:nth-child(2n)`
+  - `:nth-child(n + 1)`
+  - `:nth-child(odd)`
+  - `:nth-child(even)`
+  - `p:nth-child(n+8):nth-child(-n+15)` 表示兄弟元素列表中的第 8 到第 15 个，且为 <p> 元素的元素
+  - `of <selector>` 语法 `chrome@111+`
+    - `:nth-child(-n + 3 of li.important) {}` 匹配属于前三个子元素，且与选择器 li.important 匹配的列表项
+    - `:nth-child(n of :not())`
+- `:nth-of-type()`
+
+> 参考
+
+- [:nth-child()](https://developer.mozilla.org/zh-CN/docs/Web/CSS/Reference/Selectors/:nth-child)
+
+---
+
+#### 否定伪类（negation pseudo-class）（`:not()`） <a href="#catalogue"> ⇧ </a>
+
+```css
+```
+
+---
+
+#### 聚焦内部（`:focus` 和 `:focus-within`） <a href="#catalogue"> ⇧ </a>
+
+```css
+```
+
+---
+
+#### `:has()`
+
+```css
+```
+
+---
+
+#### `:where`
+
+```css
+```
+
+---
+
+#### `:is`
+
+```css
+```
+
+---
+
+#### 前后伪元素 <a href="#catalogue"> ⇧ </a>
+
+> 在元素**中的内容**前或后插入一个额外元素
+
+```html
+<head>
+  <style>
+  /* 插入前后书名号 */
+  .pseudo ::before {
+    content: '《',
+  }
+  .pseudo ::after {
+    content: '》',
+  }
+  </style>
+</head>
+
+<body>
+  <p>
+    <span class="pseudo">JS高级程序指南</span>
+  </p>
+</body>
+```
+
+---
+
+#### 首字母伪元素 `::first-letter` <a href="#catalogue"> ⇧ </a>
+
+- 选中元素中的第一个字母或文字
+
+```html
+<head>
+  <style>
+  </style>
+</head>
+
+<body>
+  <p>
+    <span class="pseudo"></span>
+  </p>
+</body>
+```
+
+---
+
+#### 首行伪元素 `::first-line` <a href="#catalogue"> ⇧ </a>
+
+- 选中元素中第一行的文字
+
+```html
+<head>
+  <style>
+  </style>
+</head>
+
+<body>
+  <p>
+    <span class="pseudo"></span>
+  </p>
+</body>
+```
+
+---
+
+#### 选中伪元素 `::selection` <a href="#catalogue"> ⇧ </a>
+
+- 选中被用户框选的文字
+
+```html
+<head>
+  <style>
+  </style>
+</head>
+
+<body>
+  <p>
+    <span class="pseudo"></span>
+  </p>
+</body>
+```
+
+---
+
+### 分组选择器（Grouping selector） <a href="#catalogue"> ⇧ </a>
+
+> 就是不同选择器的组合方式，可以组合任意选择器，以类选择器为例
+
+#### 选择器并列 <a href="#catalogue"> ⇧ </a>
+
+> 表示需要同时满足多个选择器
+
+```css
+/* id已经唯一匹配了，所以没有什么必要 */
+span#word {}
+/* 匹配多个类型的标签，最为常用 */
+div.a.b {}
+/* 匹配多个属性的标签 */
+p[attrs="abc"] {}
+/* 组合使用 */
+p[attrs="abc"].abc {}
+a:hover {}
+```
+
+---
+
+#### 选择器列表 <a href="#catalogue"> ⇧ </a>
+
+> 语法糖
+
+```css
+.a,
+#b,
+span {}
+```
+
+- 使用逗号分隔，共用相同样式
+
+---
+
+#### 组合器（Combinator） <a href="#catalogue"> ⇧ </a>
+
+- 后代组合器
+- 直接子代组合器
+- 一般兄弟组合器
+- 紧邻兄弟组合器
+
+```css
+.a .b {}
+.a > .b {}
+.a ~ .b {}
+.a + .b {}
+```
+
+---
+
+#### 后代组合器 <a href="#catalogue"> ⇧ </a>
+
+```css
+.a .b {}
+```
+
+- 匹配所有位于任意元素之内
+
+> 选择器匹配顺序
+
+```css
+section p ul li a span em {}
+```
+
+- 从右往左匹配
+
+---
+
+#### 直接子代组合器 <a href="#catalogue"> ⇧ </a>
+
+```css
+.a > .b {}
+```
+
+- 前一个元素的直接子代
+
+---
+
+#### 一般兄弟组合器 <a href="#catalogue"> ⇧ </a>
+
+```css
+.a ~ .b {}
+```
+
+- 共享同一个父节点
+- 匹配到在前一个节点后面的任意位置的选择器
+
+---
+
+#### 紧邻兄弟组合器 <a href="#catalogue"> ⇧ </a>
+
+```css
+.a + .b {}
+```
+
+- 共享同一个父节点
+- 匹配到相邻元素，紧跟在前一个选择器之后的那个选择器
+
+---
+
+## 样式层叠 <a href="#catalogue"> ⇧ </a>
+
+> 样式声明冲突
+
+- 同一个样式，多次应用到同一个元素
+
+> 自定义样式表 与 浏览器默认样式（用户代理样式表）的冲突
+
+- `user agent stylesheet` 通常被用户自定义样式覆盖
+
+> 利用层叠样式的特性，可以先声明一个通用的样式，再对具体每一个选择器，声明特殊的样式
+
+![user agent stylesheet](https://share.note.youdao.com/yws/api/personal/file/WEBa1e486a526c873b376aed9ef77308350?method=download&shareKey=142af9df16c1f91a82552a562a247fef)
+
+- 层叠：解决声明冲突的过程，浏览器自动处理(权重计算)
+- 不用自己计算，主流 `IDE` 和 ***浏览器元素选项卡*** 中，都有明确提示 `(0, 0, 0)`
+
+![CSS Specificity](https://share.note.youdao.com/yws/api/personal/file/WEB87a9b9e3be0d77e66b1b4cbfc92a3cc2?method=download&shareKey=1ff6266066b4a04b9e5dd7902ac5454f)
+
+---
+
+### 样式层叠的顺序，即权重计算顺序 <a href="#catalogue"> ⇧ </a>
+
+1. 比较重要性
+2. 比较特殊性
+3. 比较源次序
+
+---
+
+### 选择器优先级-简单判断 <a href="#catalogue"> ⇧ </a>
+
+- `!important` > 行内样式 > `id`选择器 > `class`选择器 | 属性选择器 > 标签选择器 > 通配符选择器
+
+---
+
+### `css` 权重，真正影响样式的原因 <a href="#catalogue"> ⇧ </a>
+
+| 类型 | 错误地归类（仅帮助理解）-权重 | 官方归类-权重
+| --- | :---: | :---: |
+| 作者样式表的`!important` | `infinity` | 不参与权重计算，但会覆盖其他所有普通规则的层叠样式，也会受到先后顺序和其他样式累加影响
+| 元素标签的行内样式 | `1000` | 可以理解为 `1-0-0-0` 但实际不计入特异性分数，直接覆盖除了`!important`以外的所有样式
+| `id`选择器 | `100` | `1-0-0`
+| `class`选择器/属性选择器/伪类 | `10` | `0-1-0`
+| 标签选择器/伪元素 | `1` | `0-0-1`
+| 通配符选择器 | `0` | 对权重计算无影响 可覆盖 用户代理样式表
+| 浏览器默认样式 `user agent stylesheet` | 无 | 权重最低
+
+- 同一行同类型的选择器权重可累加
+- 旧版浏览器中样式权累加重满 `255` 进位；现代浏览器中各个分开存储，互不影响
+- 作者样式表 `Author Stylesheet`：开发者书写的样式
+- 浏览器默认样式表 `User-Agent Stylesheet`
+- `!important` 最好禁用，覆盖成本巨大
+
+---
+
+### 比较重要性 <a href="#catalogue"> ⇧ </a>
+
+> `CSS` 重要性由低到高
+
+1. 作者样式表中的 `!important` 样式
+2. 作者样式表中的普通样式
+3. 浏览器默认样式表中的样式
+
+### 比较特殊性 <a href="#catalogue"> ⇧ </a>
+
+> 比较重要性后仍有样式重叠冲突，之后需要比较特殊性，作者样式表覆盖浏览器默认样式表
+
+```css
+a {
+  color: red;
+  text-decoration: none;
+  font-style: italic;
+}
+
+.selected {
+  color: #fff;
+  background-color: red;
+}
+```
+
+- 总体规则：看选择器，选择器选中的范围越窄，越特殊
+- 具体规则：
+  - 行内样式具有最高的特异性（Specificity），可以覆盖任何来自样式表（`!important` 除外）的其他常规样式
+  - 通过选择器，计算出一个3位数 `(0-0-0)`
+    - `(n-0-0)` 等于选择器中所有`id`选择器的数量
+    - `(0-n-0)` 等于选择器中所有 ***类型选择器(类、伪类、属性选择器)*** 的数量
+    - `(0-0-n)` 等于选择器中所有 ***元素或伪元素选择器*** 的数量
+  - 三个级别是独立的，没有一个级别会向其更高或更低级别“借位”或“进位”
+  - 浏览器在比较两个特异性时，是按从左到右的顺序逐级比较的，类似于比较数字
+    - 区别于选择器匹配顺序，是从右往左匹配
+
+---
+
+### 比较源次序 <a href="#catalogue"> ⇧ </a>
+
+- 代码书写靠后的胜出
+
+> 一个应用就是当书写 `a` 元素的伪类时，一般需要按以下的次序协选择器：
+
+```css
+a:link {
+  color: green;.
+}
+
+a:visited {
+  color: red;
+}
+
+a:hover {
+  color: chocolate;
+}
+
+a:active {
+  color: #000;
+}
+```
+
+- 适用于各种状态重叠
+
+---
+
+### `css` 层叠特性 权重应用 <a href="#catalogue"> ⇧ </a>
+
+- 重置样式表：书写一些作者样式，覆盖浏览器的默认样式，统一样式
+
+```html
+<head>
+  <link rel="stylesheet" href="style/reset.css"></link>
+  <link rel="stylesheet" href="style/index.css"></link>
+</head>
+```
+
+---
+
+> 参考
+
+- [google.ai 对 CSS 特异性的总结](https://share.google/aimode/6mcoxS0hd7jtWcGun)
+- [CSS 特异性](https://web.dev/learn/css/specificity?hl=zh-cn)
+- [CSS 优先级 Selector Specificity MDN](https://developer.mozilla.org/zh-CN/docs/Web/CSS/CSS_cascade/Specificity)
+- [CSS 层叠、优先级与继承 优先级 MDN](https://developer.mozilla.org/zh-CN/docs/Learn_web_development/Core/Styling_basics/Handling_conflicts#%E4%BC%98%E5%85%88%E7%BA%A7_2)
+- [鱼类类比图 specifishity](https://specifishity.com/)
+- [CSS初始化样式文件.md](https://share.note.youdao.com/s/YSOyrleG)
+
+---
+
+## 选择器嵌套 <a href="#catalogue"> ⇧ </a>
+
+- [when to nest css](https://cloudfour.com/thinks/when-to-nest-css/)
+
+---
+
+## CSS语法二：常用属性 <a href="#catalogue"> ⇧ </a>
+
+- 文字相关 `font`
+  - `font-*`
+    - `font-size` 每个元素必须有字体大小，如果没有声明，则直接使用父元素的字体大小，无父元素使用基准字号
+    - `font-weight` 预设值
+    - `font-family` 必须用户计算机中存在的字体才会有效；使用多个字体，以匹配不同环境
+    - `font-style` 斜体
+  - `color` 字体颜色
+  - `line-height` 行高：
+    - 每行文本的高度，该值越大，每行文本的距离越大
+    - 设置行高为容器的高度，可以让单行文本垂直居中
+    - 行高可以设置为纯数字，表示相对于当前元素的字体大小
+  - `text-align` 文字对齐：元素内部文字的水平排列方式
+  - `text-indent` 首行文本缩进
+  - `text-decoration` 装饰线条
+  - `letter-space` 文字间隙
+  - `text-overflow`
+  - `vertical-align`
+- 容器相关
+  - `margin`
+  - `border`
+  - `padding`
+  - `width`
+  - `height`
+  - 背景相关 `background`
+    - `background-image: url('');`
+    - `background-size: 100px 100px;` 过小则重复平铺图片
+    - `background-repeat: no-repeat;`
+    - `background-position: 100px 100px;`
+- 定位 `position`
+- 光标相关
+  - `cursor`
+
+> 补充：常用单位
+
+- `px`: 像素，绝对单位，简单的理解为文字的高度占多少个像素
+- `em`: 相对单位，相对于父元素的字体大小
+
+---
+
+## 样式继承 <a href="#catalogue"> ⇧ </a>
+
+- 子元素会继承父元素的某些 `CSS` 属性
+- 通常，跟文字内容相关的属性都能被继承
+- 在 `MDN` 中搜索查看 某一个属性是否是可继承的 [font Inheritance](https://developer.mozilla.org/en-US/docs/Web/CSS/font#formal_definition)
+
+![css-inheritance](https://share.note.youdao.com/yws/api/personal/file/WEBb32d268a31f41025ee6d4ec6ecef1724?method=download&shareKey=71e341454ce6f41929695aa6a8536e87)
+
+### 不能被继承的样式 <a href="#catalogue"> ⇧ </a>
+
+- 宽高 `width` `height`
+- `background` 开发者调试面板 `Styles` 中是 淡灰色
+  - 在 `Computed` 面板中中是默认值
+
+![not-inheritance](https://share.note.youdao.com/yws/api/personal/file/WEBe8b569735fe9a6c38a7d7154cc570e59?method=download&shareKey=39ce9c2a1ddea298c7d07b1a4775978a)
+
+> 参考
+
+- [图解CSS：CSS层叠和继承 大漠](https://fedev.cn/css/Illustrated-CSS-details-and-cases-chr2-cascade-and-inherit.html)
+
+---
+
+## 属性值的计算过程 <a href="#catalogue"> ⇧ </a>
+
+> 一个元素一个元素依次渲染，顺序按照页面文档的树形目录结构进行
+
+- 渲染每个元素的前提条件：该元素的所有CSS属性必须有值
+- 一个元素，从所有属性都没有值，到所有的属性都有值，这个计算过程，叫 **`CSS`做属性值计算过程**
+
+### 属性值计算过程 <a href="#catalogue"> ⇧ </a>
+
+1. 确定声明值：开发者样式表声明 和 浏览器默认样式表声明中，参考样式表中没有冲突的声明，先直接作为CSS属性值
+2. 处理 层叠冲突：对样式表有冲突的声明使用层叠规则，确定CSS属性值(比较重要性、比较特殊性、比较源次序)
+3. 使用继承：对仍然没有值的属性，若可以继承，则继承父元素的值
+4. 使用默认值：对仍然没有值的属性，使用默认值
+
+> 问初始条件下，a元素展示的颜色是？
+
+```html
+<head>
+  <style>
+    div {
+      color: red;
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    <a href="">链接</a>
+  </div>
+</body>
+```
+
+- 是浏览器默认样式表中声明的颜色，并没有继承父元素的颜色
+
+> 查看 `reset.css` 中重置a元素的样式
+
+```css
+a {
+  text-decoration: none;
+  /* 颜色继承父元素，但是发生在第一步的确定声明值，而不是发生在使用继承这步 */
+  color: inherit;
+}
+```
+
+> 特殊的两个CSS取值：
+
+- inherit: 手动（强制）继承，将父元素的值取出应用到该元素
+- initial: 初始值，将该属性设置为默认值
+
+---
+
+## CSS语法三：常用`@`语法 `at-rule` <a href="#catalogue"> ⇧ </a>
+
+```css
+/* 必须放在第一行；必须以分号`;`结尾 */
+@charset "UTF-8";
+
+/* 导入另一个CSS文件；必须以分号`;`结尾，一般写在开头 */
+@import url(2.css);
+@import 'reset.css';
+
+/* 媒体查询 */
+@media (min-width:100px) and (max-width:200px){
+    /* 语法一：样式语法 */
+}
+
+/* 自定义字体 */
+@font-face 'xxx';
+/* 自定义字文件 */
+@font-face {
+  font-family: 'xxx-iconfont';
+  src: url('');
+  src: url(''), format('woff2'),
+       url(''), format('truetype'),
+       url(''), format('svg');
+};
+/* 自定义字体图标类 */
+.xxx-iconfont {
+  font-family: 'xxx-iconfont' !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+```
+
+---
+
+### `@import` <a href="#catalogue"> ⇧ </a>
+
+- `@import "path";` 导入另外一个css文件
+- 可以在浏览器的控制台 `Network` 面板查看 `CSS` 资源加载
+- 加载和解析的顺序相反
+- `@import` 必须以分号`;`结尾
+
+---
+
+### `@charset` <a href="#catalogue"> ⇧ </a>
+
+- `@charset` 必须放在第一行，解析中文字符
+- 可以在浏览器的控制台 `Network` 面板查看 `Font` 资源加载
+- `charset`字面是字符集的意思，`UTF-8`是字符编码 `encodeing`
+- 历史遗留问题，`encodeing ∈ charset`，`charset` 指文件编码（而不是字符集）
+- `@charset` 必须以分号`;`结尾
+
+```css
+@charset "UTF-8";
+```
+
+> 参考
+
+- [@charset MDN](https://developer.mozilla.org/zh-CN/docs/Web/CSS/Reference/At-rules/@charset)
+
+---
+
+### `@font-face` <a href="#catalogue"> ⇧ </a>
+
+- [【CSS零碎杂记03】web字体 `@font-face` 和图标](https://share.note.youdao.com/s/SMZMjzEe)
+
+---
+
+### `@media` <a href="#catalogue"> ⇧ </a>
+
+---
+
+## 基本单位 <a href="#catalogue"> ⇧ </a>
+
+### 长度单位 <a href="#catalogue"> ⇧ </a>
+
+- `px`像素
+- `em`相对于自身`font-size`的倍数`1,2,3,4em`=`1x,2x,3x,4x font-size`
+- 百分数
+- 整数
+- `rem`
+- `vw` | `vh`
+- 其他，少，不用了解
+
+---
+
+## 颜色 <a href="#catalogue"> ⇧ </a>
+
+- `hsla(h, s, l, a): (30°, 100%, 100%, 0.5)`
+
+- `rgba(r, g, b,a): (255, 127, 0,0.5)`
+
+- `Hex triplet: #FF7F00`
+
+- 淘宝色`#FF6600`
+- 透明`transparent`
+
+[CSS values and units mdn](https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Values_and_units)
+
+[CSS length mdn](https://developer.mozilla.org/en-US/docs/Web/CSS/length#Relative_length_units)
+
+> 自动填充背景色
+>
+> 在body上添加一个颜色，外面也同样变成这个色，但并不意味着背景全是body，只有加了border，才能看出body的实际范围
+>
+> 用border来确定body在哪
+
+
+---
+
+<!-- Article End -->
+
+<div style="text-align:center;">·未完待续·</div>
+
+---
+
+## 参考文章  <a href="#catalogue"> ⇧ </a>
+
+- [CSS 基础概念.pdf](https://static.xiedaimala.com/xdml/file/3ac7c224-c23d-491f-84b5-4fabfbeab9b8/2019-8-23-12-30-0.pdf)
+- [你不知道的css之 width “继承”篇。](https://www.cnblogs.com/chenshanyuanzi/p/7698867.html)
+- [CSS 选择器 MDN](https://developer.mozilla.org/zh-CN/docs/Web/CSS/CSS_selectors)
+
+## 相关文章  <a href="#catalogue"> ⇧ </a>
+
+- [图解CSS：CSS层叠和继承 大漠](https://fedev.cn/css/Illustrated-CSS-details-and-cases-chr2-cascade-and-inherit.html)
+
+---
+
+- 作者： Joel
+- 文章链接：
+- [版权声明](http://xmasuhai.xyz/posts/版权声明链接/)
+- 非自由转载-非商用-非衍生-保持署名
+
+---
+---
