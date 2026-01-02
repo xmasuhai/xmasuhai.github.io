@@ -7,7 +7,7 @@
   
 
 <meta name="renderer" content="webkit" />
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
 <meta name="MobileOptimized" content="width"/>
 <meta name="HandheldFriendly" content="true"/>
@@ -32,7 +32,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.91.2" />
+<meta name="generator" content="Hugo 0.59.1" />
 
 
 <link rel="canonical" href="http://xmasuhai.xyz/post/addition/composition-api-%E5%AF%B9%E6%AF%94-vue-class-component-%E7%9A%84%E8%A3%85%E9%A5%B0%E5%99%A8%E8%AF%AD%E6%B3%95/" />
@@ -62,15 +62,21 @@
 <meta property="og:title" content="Composition API 对比 Vue Class Component 的装饰器语法" />
 <meta property="og:description" content="Composition API 对比 vue-property-decorator（基于vue-class-component） 的装饰器语法 大纲链接 § [toc] 1. Vue2.x 中 类组件 vue" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://xmasuhai.xyz/post/addition/composition-api-%E5%AF%B9%E6%AF%94-vue-class-component-%E7%9A%84%E8%A3%85%E9%A5%B0%E5%99%A8%E8%AF%AD%E6%B3%95/" /><meta property="article:section" content="post" />
+<meta property="og:url" content="http://xmasuhai.xyz/post/addition/composition-api-%E5%AF%B9%E6%AF%94-vue-class-component-%E7%9A%84%E8%A3%85%E9%A5%B0%E5%99%A8%E8%AF%AD%E6%B3%95/" />
 <meta property="article:published_time" content="2022-09-01T09:29:52+08:00" />
 <meta property="article:modified_time" content="2022-09-19T10:03:55+08:00" />
-
 <meta itemprop="name" content="Composition API 对比 Vue Class Component 的装饰器语法">
-<meta itemprop="description" content="Composition API 对比 vue-property-decorator（基于vue-class-component） 的装饰器语法 大纲链接 § [toc] 1. Vue2.x 中 类组件 vue"><meta itemprop="datePublished" content="2022-09-01T09:29:52+08:00" />
-<meta itemprop="dateModified" content="2022-09-19T10:03:55+08:00" />
-<meta itemprop="wordCount" content="617">
-<meta itemprop="keywords" content="FrontEnd,Composition API,Class Component,Decorator," /><meta name="twitter:card" content="summary"/>
+<meta itemprop="description" content="Composition API 对比 vue-property-decorator（基于vue-class-component） 的装饰器语法 大纲链接 § [toc] 1. Vue2.x 中 类组件 vue">
+
+
+<meta itemprop="datePublished" content="2022-09-01T09:29:52&#43;08:00" />
+<meta itemprop="dateModified" content="2022-09-19T10:03:55&#43;08:00" />
+<meta itemprop="wordCount" content="623">
+
+
+
+<meta itemprop="keywords" content="FrontEnd,Composition API,Class Component,Decorator," />
+<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Composition API 对比 Vue Class Component 的装饰器语法"/>
 <meta name="twitter:description" content="Composition API 对比 vue-property-decorator（基于vue-class-component） 的装饰器语法 大纲链接 § [toc] 1. Vue2.x 中 类组件 vue"/>
 
@@ -302,7 +308,7 @@
             <a href="http://xmasuhai.xyz/categories/blog/"> Blog </a>
             
           </div>
-        <span class="more-meta"> 约 617 字 </span>
+        <span class="more-meta"> 约 623 字 </span>
           <span class="more-meta"> 预计阅读 2 分钟 </span>
 
         
@@ -319,33 +325,46 @@
   <h2 class="post-toc-title">文章目录</h2>
   <div class="post-toc-content">
     <nav id="TableOfContents">
-  <ul>
-    <li><a href="#1-vue2x-中-类组件-vue-property-decorator基于vue-class-component-装饰器写法概述-a-hrefcatalogue--a">1. <code>Vue2.x</code> 中 类组件 <code>vue-property-decorator</code>（基于<code>vue-class-component</code>） 装饰器写法概述 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-    <li><a href="#2-对比-composition-api-写法-a-hrefcatalogue--a">2. 对比 <code>Composition API</code> 写法 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-    <li><a href="#3-在项目中用到过的-类组件装饰器尝试改写为-composition-api-a-hrefcatalogue--a">3. 在项目中用到过的 类组件装饰器，尝试改写为 <code>Composition API</code> <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-    <li><a href="#参考文章-a-hrefcatalogue--a">参考文章 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-    <li><a href="#相关文章-a-hrefcatalogue--a">相关文章 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-  </ul>
+<ul>
+<li><a href="#composition-api-对比-vue-property-decorator-基于-vue-class-component-的装饰器语法"><code>Composition API</code> 对比 <code>vue-property-decorator</code>（基于<code>vue-class-component</code>） 的装饰器语法</a>
+<ul>
+<li><a href="#1-vue2-x-中-类组件-vue-property-decorator-基于-vue-class-component-装饰器写法概述-a-href-catalogue-a">1. <code>Vue2.x</code> 中 类组件 <code>vue-property-decorator</code>（基于<code>vue-class-component</code>） 装饰器写法概述 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#2-对比-composition-api-写法-a-href-catalogue-a">2. 对比 <code>Composition API</code> 写法 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#3-在项目中用到过的-类组件装饰器-尝试改写为-composition-api-a-href-catalogue-a">3. 在项目中用到过的 类组件装饰器，尝试改写为 <code>Composition API</code> <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#参考文章-a-href-catalogue-a">参考文章 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#相关文章-a-href-catalogue-a">相关文章 <a href="#catalogue"> ⇧ </a></a></li>
+</ul></li>
+</ul>
 </nav>
   </div>
 </div>
 
     
     <div class="post-content">
-      <h1 id="composition-api-对比-vue-property-decorator基于vue-class-component-的装饰器语法"><code>Composition API</code> 对比 <code>vue-property-decorator</code>（基于<code>vue-class-component</code>） 的装饰器语法</h1>
+      
+
+<h1 id="composition-api-对比-vue-property-decorator-基于-vue-class-component-的装饰器语法"><code>Composition API</code> 对比 <code>vue-property-decorator</code>（基于<code>vue-class-component</code>） 的装饰器语法</h1>
+
 <blockquote>
-<p>大纲链接 <!-- raw HTML omitted --> § <!-- raw HTML omitted --></p>
+<p>大纲链接 <a id="catalogue" href="#catalogue"> § </a></p>
 </blockquote>
+
 <p>[toc]</p>
-<hr>
-<h2 id="1-vue2x-中-类组件-vue-property-decorator基于vue-class-component-装饰器写法概述-a-hrefcatalogue--a">1. <code>Vue2.x</code> 中 类组件 <code>vue-property-decorator</code>（基于<code>vue-class-component</code>） 装饰器写法概述 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
-<hr>
-<h2 id="2-对比-composition-api-写法-a-hrefcatalogue--a">2. 对比 <code>Composition API</code> 写法 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
-<hr>
-<h2 id="3-在项目中用到过的-类组件装饰器尝试改写为-composition-api-a-hrefcatalogue--a">3. 在项目中用到过的 类组件装饰器，尝试改写为 <code>Composition API</code> <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+
+<hr />
+
+<h2 id="1-vue2-x-中-类组件-vue-property-decorator-基于-vue-class-component-装饰器写法概述-a-href-catalogue-a">1. <code>Vue2.x</code> 中 类组件 <code>vue-property-decorator</code>（基于<code>vue-class-component</code>） 装饰器写法概述 <a href="#catalogue"> ⇧ </a></h2>
+
+<hr />
+
+<h2 id="2-对比-composition-api-写法-a-href-catalogue-a">2. 对比 <code>Composition API</code> 写法 <a href="#catalogue"> ⇧ </a></h2>
+
+<hr />
+
+<h2 id="3-在项目中用到过的-类组件装饰器-尝试改写为-composition-api-a-href-catalogue-a">3. 在项目中用到过的 类组件装饰器，尝试改写为 <code>Composition API</code> <a href="#catalogue"> ⇧ </a></h2>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-sh" data-lang="sh"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -363,7 +382,7 @@
 </span><span class="lnt">16
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">https://juejin.cn/post/6913749452868026376 <span class="p">|</span> vue-property-decorator各个装饰器的基本用法 - 掘金
+<pre class="chroma"><code class="language-sh" data-lang="sh">https://juejin.cn/post/6913749452868026376 <span class="p">|</span> vue-property-decorator各个装饰器的基本用法 - 掘金
 https://juejin.cn/post/6948673246375968782 <span class="p">|</span> Vue Class Component 自定义装饰器 - 掘金
 https://juejin.cn/post/6856517315010232333 <span class="p">|</span> 在Vue中使用装饰器，我是认真的 - 掘金
 https://juejin.cn/post/6844903778366259213 <span class="p">|</span> Vue框架TypeScript装饰器使用指南 - 掘金
@@ -378,29 +397,39 @@ https://juejin.cn/post/6887761458755534862 <span class="p">|</span> 深入理解
 https://juejin.cn/post/6844904177940824071 <span class="p">|</span> Vue的class语法与常规语法对照表 - 掘金
 https://juejin.cn/post/7072883925764276254 <span class="p">|</span> Decorator 装饰器 - 掘金
 https://juejin.cn/post/7060752562332368932 <span class="p">|</span> 40张图全面剖析Vue3核心的CompositionAPI（十四） - 掘金
-https://juejin.cn/column/7054086173311893512 <span class="p">|</span> Vue2（3）全家桶+TS - 云牧的专栏 - 掘金
-</code></pre></td></tr></table>
+https://juejin.cn/column/7054086173311893512 <span class="p">|</span> Vue2（3）全家桶+TS - 云牧的专栏 - 掘金</code></pre></td></tr></table>
 </div>
-</div><hr>
-<!-- raw HTML omitted -->
-<hr>
-<h2 id="参考文章-a-hrefcatalogue--a">参考文章 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+</div>
+<hr />
+
+<div style="text-align:center;">·未完待续·</div>
+
+<hr />
+
+<h2 id="参考文章-a-href-catalogue-a">参考文章 <a href="#catalogue"> ⇧ </a></h2>
+
 <ul>
 <li>无</li>
 </ul>
-<h2 id="相关文章-a-hrefcatalogue--a">相关文章 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+
+<h2 id="相关文章-a-href-catalogue-a">相关文章 <a href="#catalogue"> ⇧ </a></h2>
+
 <ul>
 <li>无</li>
 </ul>
-<hr>
+
+<hr />
+
 <ul>
 <li>作者： Joel</li>
 <li>文章链接：</li>
-<li><a href="http://xmasuhai.xyz/posts/%E7%89%88%E6%9D%83%E5%A3%B0%E6%98%8E%E9%93%BE%E6%8E%A5/">版权声明</a></li>
+<li><a href="http://xmasuhai.xyz/posts/版权声明链接/">版权声明</a></li>
 <li>非自由转载-非商用-非衍生-保持署名</li>
 </ul>
-<hr>
-<hr>
+
+<hr />
+
+<hr />
 
     </div>
 
@@ -565,7 +594,7 @@ https://juejin.cn/column/7054086173311893512 <span class="p">|</span> Vue2（3�
     &copy;
     
       2019 -
-    2022
+    2026
     <span class="heart">
       
       <i class="iconfont">

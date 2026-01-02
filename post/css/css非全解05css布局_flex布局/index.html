@@ -7,7 +7,7 @@
   
 
 <meta name="renderer" content="webkit" />
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
 <meta name="MobileOptimized" content="width"/>
 <meta name="HandheldFriendly" content="true"/>
@@ -32,7 +32,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.91.2" />
+<meta name="generator" content="Hugo 0.59.1" />
 
 
 <link rel="canonical" href="http://xmasuhai.xyz/post/css/css%E9%9D%9E%E5%85%A8%E8%A7%A305css%E5%B8%83%E5%B1%80_flex%E5%B8%83%E5%B1%80/" />
@@ -62,15 +62,21 @@
 <meta property="og:title" content="【CSS非全解05】CSS布局_Flex布局" />
 <meta property="og:description" content="flex布局 教程（来自CSS Tricks） 忘掉 用flex重写float布局 flex布局对性能的影响 FFC 容器container，子项item 一个" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://xmasuhai.xyz/post/css/css%E9%9D%9E%E5%85%A8%E8%A7%A305css%E5%B8%83%E5%B1%80_flex%E5%B8%83%E5%B1%80/" /><meta property="article:section" content="post" />
+<meta property="og:url" content="http://xmasuhai.xyz/post/css/css%E9%9D%9E%E5%85%A8%E8%A7%A305css%E5%B8%83%E5%B1%80_flex%E5%B8%83%E5%B1%80/" />
 <meta property="article:published_time" content="2020-01-17T03:07:53+08:00" />
 <meta property="article:modified_time" content="2022-09-03T10:26:25+08:00" />
-
 <meta itemprop="name" content="【CSS非全解05】CSS布局_Flex布局">
-<meta itemprop="description" content="flex布局 教程（来自CSS Tricks） 忘掉 用flex重写float布局 flex布局对性能的影响 FFC 容器container，子项item 一个"><meta itemprop="datePublished" content="2020-01-17T03:07:53+08:00" />
-<meta itemprop="dateModified" content="2022-09-03T10:26:25+08:00" />
-<meta itemprop="wordCount" content="4438">
-<meta itemprop="keywords" content="CSS flex," /><meta name="twitter:card" content="summary"/>
+<meta itemprop="description" content="flex布局 教程（来自CSS Tricks） 忘掉 用flex重写float布局 flex布局对性能的影响 FFC 容器container，子项item 一个">
+
+
+<meta itemprop="datePublished" content="2020-01-17T03:07:53&#43;08:00" />
+<meta itemprop="dateModified" content="2022-09-03T10:26:25&#43;08:00" />
+<meta itemprop="wordCount" content="4444">
+
+
+
+<meta itemprop="keywords" content="CSS flex," />
+<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="【CSS非全解05】CSS布局_Flex布局"/>
 <meta name="twitter:description" content="flex布局 教程（来自CSS Tricks） 忘掉 用flex重写float布局 flex布局对性能的影响 FFC 容器container，子项item 一个"/>
 
@@ -302,7 +308,7 @@
             <a href="http://xmasuhai.xyz/categories/css/"> CSS </a>
             
           </div>
-        <span class="more-meta"> 约 4438 字 </span>
+        <span class="more-meta"> 约 4444 字 </span>
           <span class="more-meta"> 预计阅读 9 分钟 </span>
 
         
@@ -319,36 +325,79 @@
   <h2 class="post-toc-title">文章目录</h2>
   <div class="post-toc-content">
     <nav id="TableOfContents">
-  <ul>
-    <li><a href="#flex布局"><code>flex</code>布局</a>
-      <ul>
-        <li><a href="#容器container子项item">容器<code>container</code>，子项<code>item</code></a></li>
-        <li><a href="#容器flex-container的样式">容器<code>flex container</code>的样式</a></li>
-        <li><a href="#小结">小结</a></li>
-        <li><a href="#flex-item的样式基本样式"><code>flex item</code>的样式：基本样式</a></li>
-        <li><a href="#flex-item的样式实现flex响应式"><code>flex item</code>的样式：实现<code>flex</code>响应式</a></li>
-        <li><a href="#缩写">缩写</a></li>
-        <li><a href="#align-self特殊定制align-items"><code>align-self</code>特殊定制<code>align-items</code></a></li>
-        <li><a href="#小结3">小结3</a></li>
-        <li><a href="#重点-工作基本只用这些">重点 工作基本只用这些</a></li>
-      </ul>
-    </li>
-    <li><a href="#实践">实践</a>
-      <ul>
-        <li><a href="#经验">经验</a></li>
-        <li><a href="#不写死width100px">不写死<code>width:100px</code></a></li>
-        <li><a href="#负margin">负margin</a></li>
-        <li><a href="#ffc">FFC</a></li>
-      </ul>
-    </li>
-  </ul>
+<ul>
+<li>
+<ul>
+<li><a href="#flex-布局"><code>flex</code>布局</a>
+<ul>
+<li><a href="#容器-container-子项-item">容器<code>container</code>，子项<code>item</code></a></li>
+<li><a href="#容器-flex-container-的样式">容器<code>flex container</code>的样式</a>
+<ul>
+<li><a href="#让一个元素变成-flex-容器">让一个元素变成<code>flex</code>容器</a></li>
+<li><a href="#改变-items-流动方向-主轴main-axis">改变<code>items</code>流动方向（主轴main axis）</a></li>
+<li><a href="#改变折行">改变折行</a></li>
+<li><a href="#flex-flow"><code>flex-flow</code>:</a></li>
+<li><a href="#主轴-main-axis-对齐方式-justify-content">主轴（main axis）对齐方式：<code>justify-content</code></a></li>
+<li><a href="#次轴对齐方式-align-items">次轴对齐方式：<code>align-items</code></a></li>
+<li><a href="#多行内容-很少用到">多行内容（很少用到）</a></li>
+</ul></li>
+<li><a href="#小结">小结</a></li>
+<li><a href="#flex-item-的样式-基本样式"><code>flex item</code>的样式：基本样式</a>
+<ul>
+<li><a href="#item-上面加-order"><code>.item</code> 上面加<code>order</code></a></li>
+</ul></li>
+<li><a href="#flex-item-的样式-实现-flex-响应式"><code>flex item</code>的样式：实现<code>flex</code>响应式</a>
+<ul>
+<li><a href="#flex-响应式实现-1-item-上面加-flex-grow"><code>flex</code>响应式实现_1：<code>.item</code> 上面加<code>flex-grow</code></a></li>
+<li><a href="#flex-响应式实现-2-flex-shrink-控制如何变瘦"><code>flex</code>响应式实现_2：<code>flex-shrink</code>控制如何变瘦</a></li>
+<li><a href="#flex-wrap-对-flex-grow-和-flex-shrink-的影响"><code>flex-wrap</code>对<code>flex-grow</code>和<code>flex-shrink</code>的影响</a>
+<ul>
+<li><a href="#当-flex-wrap-为-wrap-wrap-reverse">当 <code>flex-wrap</code> 为 <code>wrap | wrap-reverse</code></a>
+<ul>
+<li><a href="#且子项宽度和小于父容器宽度时">且子项宽度和小于父容器宽度时</a></li>
+<li><a href="#且子项宽度和超过父容器宽度时">且子项宽度和超过父容器宽度时</a></li>
+</ul></li>
+<li><a href="#当-flex-wrap-为-nowrap-且子项宽度和小于父容器宽度时">当 <code>flex-wrap</code> 为 <code>nowrap</code>，且子项宽度和小于父容器宽度时</a></li>
+<li><a href="#当-flex-wrap-为-nowrap-且子项宽度和超过父容器宽度时">当 <code>flex-wrap</code> 为 <code>nowrap</code>，且子项宽度和超过父容器宽度时</a></li>
+</ul></li>
+<li><a href="#小结2">小结2</a></li>
+<li><a href="#flex-响应式实现-3-flex-basis-控制基准宽度"><code>flex</code>响应式实现_3：<code>flex-basis</code>控制基准宽度</a></li>
+</ul></li>
+<li><a href="#缩写">缩写</a>
+<ul>
+<li><a href="#当-flex-取值为一个非零非负数字">当 <code>flex</code> 取值为一个非零非负数字</a></li>
+<li><a href="#当-flex-取值为-0-时">当 <code>flex</code> 取值为 <code>0</code> 时</a></li>
+<li><a href="#当-flex-取值为一个长度或百分比">当 <code>flex</code> 取值为一个长度或百分比</a></li>
+<li><a href="#当-flex-取值为两个非负数字">当 <code>flex</code> 取值为两个非负数字</a></li>
+<li><a href="#当-flex-取值为一个非负数字和一个长度或百分比">当 <code>flex</code> 取值为一个非负数字和一个长度或百分比</a></li>
+</ul></li>
+<li><a href="#align-self-特殊定制-align-items"><code>align-self</code>特殊定制<code>align-items</code></a></li>
+<li><a href="#小结3">小结3</a></li>
+<li><a href="#重点-工作基本只用这些">重点 工作基本只用这些</a></li>
+</ul></li>
+<li><a href="#实践">实践</a>
+<ul>
+<li><a href="#经验">经验</a></li>
+<li><a href="#不写死-width-100px">不写死<code>width:100px</code></a></li>
+<li><a href="#负margin">负margin</a></li>
+<li><a href="#ffc">FFC</a>
+<ul>
+<li><a href="#参考文章">参考文章</a></li>
+<li><a href="#相关文章">相关文章</a></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
 </nav>
   </div>
 </div>
 
     
     <div class="post-content">
-      <h2 id="flex布局"><code>flex</code>布局</h2>
+      
+
+<h2 id="flex-布局"><code>flex</code>布局</h2>
+
 <ul>
 <li>教程（来自<a href="https://css-tricks.com/snippets/css/a-guide-to-flexbox/#flexbox-background">CSS Tricks</a>）</li>
 <li>忘掉</li>
@@ -356,127 +405,151 @@
 <li>flex布局对性能的影响</li>
 <li>FFC</li>
 </ul>
-<h3 id="容器container子项item">容器<code>container</code>，子项<code>item</code></h3>
+
+<h3 id="容器-container-子项-item">容器<code>container</code>，子项<code>item</code></h3>
+
 <blockquote>
 <p>一个规矩：不缩写具有特殊明确含义或者非约定行业规范、业界共识（HTML CSS JS）的英文，即使很长：<code>class=&quot;container&quot;</code></p>
 </blockquote>
+
 <ul>
 <li>容器<code>.container</code>，作父元素</li>
 <li>直接的子元素，<code>.item</code></li>
 <li>设置了 display: flex 的父元素（在本例中是 <code>.container</code>）被称之为 flex 容器（<code>flex container</code>）</li>
 <li>在 flex 容器中表现为弹性的盒子的元素被称之为 flex 项（<code>flex item</code>）（本例中是<code>.item</code> ）元素</li>
 </ul>
-<hr>
-<h3 id="容器flex-container的样式">容器<code>flex container</code>的样式</h3>
-<h4 id="让一个元素变成flex容器">让一个元素变成<code>flex</code>容器</h4>
+
+<hr />
+
+<h3 id="容器-flex-container-的样式">容器<code>flex container</code>的样式</h3>
+
+<h4 id="让一个元素变成-flex-容器">让一个元素变成<code>flex</code>容器</h4>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-CSS" data-lang="CSS"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-CSS" data-lang="CSS"><span class="p">.</span><span class="nc">container</span><span class="p">{</span>
+<pre class="chroma"><code class="language-CSS" data-lang="CSS"><span class="p">.</span><span class="nc">container</span><span class="p">{</span>
     <span class="k">display</span><span class="p">:</span><span class="kc">flex</span><span class="p">;</span>
     <span class="c">/* or inline-flex */</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<span class="p">}</span></code></pre></td></tr></table>
 </div>
-</div><ul>
+</div>
+<ul>
 <li><code>display:flex;</code>不另起一行</li>
 <li><code>display:inline-flex;</code>另起一行</li>
 <li>直接子元素自动变为<code>flex item</code></li>
 </ul>
+
 <blockquote>
 <p>属性不写就是默认值</p>
 </blockquote>
-<h4 id="改变items流动方向主轴main-axis">改变<code>items</code>流动方向（主轴main axis）</h4>
+
+<h4 id="改变-items-流动方向-主轴main-axis">改变<code>items</code>流动方向（主轴main axis）</h4>
+
 <p>即改变默认文档流方向：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-CSS" data-lang="CSS"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-CSS" data-lang="CSS"><span class="p">.</span><span class="nc">container</span><span class="p">{</span>
+<pre class="chroma"><code class="language-CSS" data-lang="CSS"><span class="p">.</span><span class="nc">container</span><span class="p">{</span>
     <span class="k">display</span><span class="p">:</span><span class="kc">flex</span><span class="p">;</span>
     <span class="k">flex-direction</span><span class="p">:</span><span class="kc">column</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<span class="p">}</span></code></pre></td></tr></table>
 </div>
-</div><ul>
+</div>
+<ul>
 <li>默认取值<code>row</code>，从左往右排列</li>
 <li>弹性盒模型的流<code>flex flow</code>，之前是普通<code>normal flow</code></li>
-<li>可取值：<code>row | row-reverse | column | column-reverse</code></li>
-</ul>
+
+<li><p>可取值：<code>row | row-reverse | column | column-reverse</code></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-CSS" data-lang="CSS"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-CSS" data-lang="CSS"><span class="p">.</span><span class="nc">container</span><span class="p">{</span>
-    <span class="k">display</span><span class="p">:</span><span class="kc">flex</span><span class="p">;</span>
-    <span class="k">flex-direction</span><span class="p">:</span> <span class="kc">row</span> <span class="o">|</span> <span class="kc">row-reverse</span> <span class="o">|</span> <span class="kc">column</span> <span class="o">|</span> <span class="kc">column-reverse</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre class="chroma"><code class="language-CSS" data-lang="CSS"><span class="p">.</span><span class="nc">container</span><span class="p">{</span>
+<span class="k">display</span><span class="p">:</span><span class="kc">flex</span><span class="p">;</span>
+<span class="k">flex-direction</span><span class="p">:</span> <span class="kc">row</span> <span class="o">|</span> <span class="kc">row</span><span class="o">-</span><span class="kc">reverse</span> <span class="o">|</span> <span class="kc">column</span> <span class="o">|</span> <span class="kc">column</span><span class="o">-</span><span class="kc">reverse</span><span class="p">;</span>
+<span class="p">}</span></code></pre></td></tr></table>
 </div>
-</div><hr>
+</div></li>
+</ul>
+
+<hr />
+
 <h4 id="改变折行">改变折行</h4>
+
 <blockquote>
 <p>弹性盒模型中，设置的宽高不是计算宽高（Computed）</p>
+
 <p>挤满一行，有多少空间就挤多少空间</p>
+
 <p><code>wrap-reverse</code>一般不用</p>
 </blockquote>
+
 <ul>
 <li><code>flex-wrap:nowrap;</code>：默认不折行，可能会压缩子元素，强制在一行中显示</li>
-<li>可取值<code>nowrap | wrap | wrap-reverse</code></li>
-</ul>
+
+<li><p>可取值<code>nowrap | wrap | wrap-reverse</code></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-CSS" data-lang="CSS"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-CSS" data-lang="CSS"><span class="p">.</span><span class="nc">container</span><span class="p">{</span>
-    <span class="k">display</span><span class="p">:</span><span class="kc">flex</span><span class="p">;</span>
-    <span class="k">flex-wrap</span><span class="p">:</span> <span class="kc">nowrap</span> <span class="o">|</span> <span class="kc">wrap</span> <span class="o">|</span> <span class="kc">wrap-reverse</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre class="chroma"><code class="language-CSS" data-lang="CSS"><span class="p">.</span><span class="nc">container</span><span class="p">{</span>
+<span class="k">display</span><span class="p">:</span><span class="kc">flex</span><span class="p">;</span>
+<span class="k">flex-wrap</span><span class="p">:</span> <span class="kc">nowrap</span> <span class="o">|</span> <span class="kc">wrap</span> <span class="o">|</span> <span class="kc">wrap</span><span class="o">-</span><span class="kc">reverse</span><span class="p">;</span>
+<span class="p">}</span></code></pre></td></tr></table>
 </div>
-</div><h4 id="flex-flow"><code>flex-flow</code>:</h4>
-<ul>
-<li><code>flex-direction</code> 和 <code>flex-wrap</code> 的缩写形式</li>
+</div></li>
 </ul>
+
+<h4 id="flex-flow"><code>flex-flow</code>:</h4>
+
+<ul>
+<li><p><code>flex-direction</code> 和 <code>flex-wrap</code> 的缩写形式</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-CSS" data-lang="CSS"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-CSS" data-lang="CSS"><span class="p">.</span><span class="nc">container</span> <span class="p">{</span>
-    <span class="k">flex-flow</span><span class="p">:</span> <span class="o">&lt;</span><span class="kc">flex</span><span class="o">-</span><span class="k">direction</span><span class="o">&gt;</span> <span class="o">||</span> <span class="o">&lt;</span><span class="kc">flex</span><span class="o">-</span><span class="kc">wrap</span><span class="o">&gt;</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre class="chroma"><code class="language-CSS" data-lang="CSS"><span class="p">.</span><span class="nc">container</span> <span class="p">{</span>
+<span class="k">flex-flow</span><span class="p">:</span> <span class="o">&lt;</span><span class="kc">flex</span><span class="o">-</span><span class="k">direction</span><span class="o">&gt;</span> <span class="o">||</span> <span class="o">&lt;</span><span class="kc">flex</span><span class="o">-</span><span class="kc">wrap</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="p">}</span></code></pre></td></tr></table>
 </div>
-</div><ul>
-<li>默认值为 <code>flex-flow: row nowrap</code></li>
-<li>如果写了两个值都写了，则第一个为<code>flex-direction</code>，第二为<code>flex-wrap</code></li>
-<li>若只写一个，即简写，则会根据写的内容来判断是<code>flex-direction</code>还是<code>flex-wrap</code></li>
+</div></li>
+
+<li><p>默认值为 <code>flex-flow: row nowrap</code></p></li>
+
+<li><p>如果写了两个值都写了，则第一个为<code>flex-direction</code>，第二为<code>flex-wrap</code></p></li>
+
+<li><p>若只写一个，即简写，则会根据写的内容来判断是<code>flex-direction</code>还是<code>flex-wrap</code></p></li>
 </ul>
-<hr>
-<h4 id="主轴main-axis对齐方式justify-content">主轴（main axis）对齐方式：<code>justify-content</code></h4>
+
+<hr />
+
+<h4 id="主轴-main-axis-对齐方式-justify-content">主轴（main axis）对齐方式：<code>justify-content</code></h4>
+
 <blockquote>
 <p>Emmet缩写<code>jc</code></p>
 </blockquote>
+
 <ul>
 <li>默认从左往右：<code>justify-content:flex-start;</code></li>
 <li>弹性流的方式都往开始那里挤</li>
@@ -485,96 +558,109 @@
 <li><code>flex-end</code>：尽量往后靠</li>
 <li><code>center</code>：居中，尽量往中间靠</li>
 </ul>
+
 <p>还有三种：</p>
+
 <ul>
 <li><code>space-between</code>：把所有剩余空间尽量放到间隙里，和 <code>space-around</code> 非常相似，只是它不会在两端留下任何空间。</li>
 <li><code>space-around</code>：把所有剩余空间平均放到子元素周围（所有子元素左右各得一份相同大小的空间间隙，等分间隙），会使所有 flex 项沿着主轴均匀地分布，在任意一端都会留有一点空间</li>
-<li><code>space-evenly</code>：平均围绕子元素，即所有子元素间的空隙宽度相同，空隙等宽</li>
-</ul>
+
+<li><p><code>space-evenly</code>：平均围绕子元素，即所有子元素间的空隙宽度相同，空隙等宽</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-CSS" data-lang="CSS"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-CSS" data-lang="CSS"><span class="p">.</span><span class="nc">container</span><span class="p">{</span>
-    <span class="k">display</span><span class="p">:</span><span class="kc">flex</span><span class="p">;</span>
-    <span class="k">justify-content</span><span class="p">:</span> <span class="kc">flex-start</span> <span class="o">|</span> <span class="kc">flex-end</span> <span class="o">|</span> <span class="kc">center</span> <span class="o">|</span> <span class="kc">space-between</span> <span class="o">|</span> <span class="kc">space-around</span> <span class="o">|</span> <span class="kc">space</span><span class="o">-</span><span class="n">evenly</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre class="chroma"><code class="language-CSS" data-lang="CSS"><span class="p">.</span><span class="nc">container</span><span class="p">{</span>
+<span class="k">display</span><span class="p">:</span><span class="kc">flex</span><span class="p">;</span>
+<span class="k">justify-content</span><span class="p">:</span> <span class="kc">flex</span><span class="o">-</span><span class="kc">start</span> <span class="o">|</span> <span class="kc">flex</span><span class="o">-</span><span class="kc">end</span> <span class="o">|</span> <span class="kc">center</span> <span class="o">|</span> <span class="kc">space</span><span class="o">-</span><span class="n">between</span> <span class="o">|</span> <span class="kc">space</span><span class="o">-</span><span class="n">around</span> <span class="o">|</span> <span class="kc">space</span><span class="o">-</span><span class="n">evenly</span><span class="p">;</span>
+<span class="p">}</span></code></pre></td></tr></table>
 </div>
-</div><h4 id="次轴对齐方式align-items">次轴对齐方式：<code>align-items</code></h4>
+</div></li>
+</ul>
+
+<h4 id="次轴对齐方式-align-items">次轴对齐方式：<code>align-items</code></h4>
+
 <blockquote>
 <p>默认次轴是纵轴，即交叉轴</p>
+
 <p>子元素高度不一致时用</p>
+
 <p>Emmet缩写<code>ai</code></p>
 </blockquote>
+
 <ul>
 <li>默认值<code>align-items: stretch</code> ：延伸，拉伸</li>
 <li>子元素设固定高度时，容器高度由最高子元素撑开，不会拉长所有子元素，各元素往上顶</li>
 <li>子元素不设固定高度时，高度由内容撑开，会拉长所有子元素，直至和最高一个子元素一样高</li>
 </ul>
+
 <blockquote>
 <p>其会使所有 flex 项沿着交叉轴的方向拉伸以填充父容器。</p>
+
 <p>如果父容器在交叉轴方向上没有固定宽度（即高度），则所有 flex 项将变得与最长的 flex 项一样长（即高度保持一致）</p>
 </blockquote>
+
 <ul>
 <li><code>align-items: flex-start</code> ：各元素往上顶</li>
 <li><code>align-items: flex-end</code> ：各元素往下顶</li>
 <li><code>align-items: center</code>：居中</li>
-<li><code>align-items: baseline</code>及其他：不用，不学</li>
-</ul>
+
+<li><p><code>align-items: baseline</code>及其他：不用，不学</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-CSS" data-lang="CSS"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-CSS" data-lang="CSS"><span class="p">.</span><span class="nc">container</span><span class="p">{</span>
-    <span class="k">display</span><span class="p">:</span><span class="kc">flex</span><span class="p">;</span>
-    <span class="k">align-items</span><span class="p">:</span> <span class="kc">stretch</span> <span class="o">|</span> <span class="kc">flex-start</span> <span class="o">|</span> <span class="kc">flex-end</span> <span class="o">|</span> <span class="kc">center</span> <span class="o">|</span> <span class="n">baseline等</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre class="chroma"><code class="language-CSS" data-lang="CSS"><span class="p">.</span><span class="nc">container</span><span class="p">{</span>
+<span class="k">display</span><span class="p">:</span><span class="kc">flex</span><span class="p">;</span>
+<span class="k">align-items</span><span class="p">:</span> <span class="kc">stretch</span> <span class="o">|</span> <span class="kc">flex</span><span class="o">-</span><span class="kc">start</span> <span class="o">|</span> <span class="kc">flex</span><span class="o">-</span><span class="kc">end</span> <span class="o">|</span> <span class="kc">center</span> <span class="o">|</span> <span class="n">baseline等</span>
+<span class="p">}</span></code></pre></td></tr></table>
 </div>
-</div><p>MDN:</p>
+</div></li>
+</ul>
+
+<p>MDN:</p>
+
 <blockquote>
 <ul>
-<li>
-<p>主轴（main axis）是沿着 flex 元素放置的方向延伸的轴（比如页面上的横向的行、纵向的列）</p>
-</li>
-<li>
-<p>该轴的开始和结束被称为 main start 和 main end</p>
-</li>
-<li>
-<p>交叉轴（cross axis）是垂直于 flex 元素放置方向的轴</p>
-</li>
-<li>
-<p>该轴的开始和结束被称为 cross start 和 cross end</p>
-</li>
+<li><p>主轴（main axis）是沿着 flex 元素放置的方向延伸的轴（比如页面上的横向的行、纵向的列）</p></li>
+
+<li><p>该轴的开始和结束被称为 main start 和 main end</p></li>
+
+<li><p>交叉轴（cross axis）是垂直于 flex 元素放置方向的轴</p></li>
+
+<li><p>该轴的开始和结束被称为 cross start 和 cross end</p></li>
 </ul>
 </blockquote>
-<h4 id="多行内容很少用到">多行内容（很少用到）</h4>
+
+<h4 id="多行内容-很少用到">多行内容（很少用到）</h4>
+
 <blockquote>
 <p>高度、宽度都有多余空间</p>
 </blockquote>
+
 <p>语法</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-CSS" data-lang="CSS"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-CSS" data-lang="CSS"><span class="p">.</span><span class="nc">container</span><span class="p">{</span>
-    <span class="k">align-content</span><span class="p">:</span> <span class="kc">flex-start</span> <span class="o">|</span> <span class="kc">flex-end</span> <span class="o">|</span> <span class="kc">center</span> <span class="o">|</span> <span class="kc">stretch</span> <span class="o">|</span> <span class="kc">space-between</span> <span class="o">|</span> <span class="kc">space-around</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre class="chroma"><code class="language-CSS" data-lang="CSS"><span class="p">.</span><span class="nc">container</span><span class="p">{</span>
+    <span class="k">align-content</span><span class="p">:</span> <span class="kc">flex</span><span class="o">-</span><span class="kc">start</span> <span class="o">|</span> <span class="kc">flex</span><span class="o">-</span><span class="kc">end</span> <span class="o">|</span> <span class="kc">center</span> <span class="o">|</span> <span class="kc">stretch</span> <span class="o">|</span> <span class="kc">space</span><span class="o">-</span><span class="n">between</span> <span class="o">|</span> <span class="kc">space</span><span class="o">-</span><span class="n">around</span><span class="p">;</span>
+<span class="p">}</span></code></pre></td></tr></table>
 </div>
-</div><p>如何分布</p>
+</div>
+<p>如何分布</p>
+
 <ul>
 <li><code>align-content: stretch;</code>：默认值，拉伸</li>
 <li><code>align-content: flex-start;</code>：子元素往上顶，多余的行高全部分配到底部</li>
@@ -584,22 +670,31 @@
 <li><code>align-content: space-around;</code>：所有子元素沿着次轴均匀地各得一份相同大小的空间间隙</li>
 <li><code>align-content: space-evenly;</code>：平均围绕子元素，即所有子元素间的空隙宽度相同，等分间隙，空隙等宽</li>
 </ul>
+
 <p>代码演示：<a href="http://xmasuhai.xyz/demo-test/css-demo-3/css-demo_layout_flexbox_container.html">css-demo_layout_flexbox_container</a></p>
+
 <h3 id="小结">小结</h3>
+
 <p>容器上的属性，有下面六种属性可以设置在容器上，它们分别是：</p>
+
 <ul>
 <li><code>flex-direction</code> 、<code>flex-wrap</code> 、简写<code>flex-flow</code>、 - <code>justify-content</code> 、<code>align-items</code>、 <code>align-content</code></li>
 </ul>
-<hr>
-<h3 id="flex-item的样式基本样式"><code>flex item</code>的样式：基本样式</h3>
-<h4 id="item-上面加order"><code>.item</code> 上面加<code>order</code></h4>
+
+<hr />
+
+<h3 id="flex-item-的样式-基本样式"><code>flex item</code>的样式：基本样式</h3>
+
+<h4 id="item-上面加-order"><code>.item</code> 上面加<code>order</code></h4>
+
 <blockquote>
 <p><code>order</code>默认值为0，取值范围：正负整数，指定取值从小到大排列</p>
+
 <p>改变子元素显示顺序</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-CSS" data-lang="CSS"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -612,7 +707,7 @@
 </span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-CSS" data-lang="CSS"><span class="p">.</span><span class="nc">item</span><span class="p">:</span><span class="nd">first-child</span> <span class="p">{</span>
+<pre class="chroma"><code class="language-CSS" data-lang="CSS"><span class="p">.</span><span class="nc">item</span><span class="p">:</span><span class="nd">first-child</span> <span class="p">{</span>
     <span class="k">order</span><span class="p">:</span><span class="mi">100</span><span class="p">;</span>
 <span class="p">}</span>
 
@@ -622,15 +717,19 @@
 
 <span class="p">.</span><span class="nc">item</span><span class="p">:</span><span class="nd">last-child</span><span class="p">{</span>
     <span class="k">order</span><span class="p">:</span><span class="mi">-1</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<span class="p">}</span></code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p>注意<code>.item:first-child</code>这个选择器冒号<code>:</code>前后，不能有空格</p>
 </blockquote>
-<hr>
-<h3 id="flex-item的样式实现flex响应式"><code>flex item</code>的样式：实现<code>flex</code>响应式</h3>
-<h4 id="flex响应式实现_1item-上面加flex-grow"><code>flex</code>响应式实现_1：<code>.item</code> 上面加<code>flex-grow</code></h4>
+
+<hr />
+
+<h3 id="flex-item-的样式-实现-flex-响应式"><code>flex item</code>的样式：实现<code>flex</code>响应式</h3>
+
+<h4 id="flex-响应式实现-1-item-上面加-flex-grow"><code>flex</code>响应式实现_1：<code>.item</code> 上面加<code>flex-grow</code></h4>
+
 <ul>
 <li>定义了子元素的尺寸增长因子</li>
 <li><code>flex item</code>未设置固定宽度</li>
@@ -640,11 +739,15 @@
 <li>是剩余空间的增长，不是所有的空间</li>
 <li>即使设置了增长因子，<code>flex item</code>也受到内容宽度的影响，<code>overflow: auto;</code>无效</li>
 </ul>
+
 <blockquote>
 <p><code>grow</code> 在 <code>flex container</code> 容器下的子元素的宽度和比容器和小的时候起作用</p>
+
 <p><code>grow</code> 容器中除去子元素之和剩下的尺寸会按照各个子元素的 <code>grow</code> 值进行平分加到各个子元素上</p>
 </blockquote>
-<h4 id="flex响应式实现_2flex-shrink控制如何变瘦"><code>flex</code>响应式实现_2：<code>flex-shrink</code>控制如何变瘦</h4>
+
+<h4 id="flex-响应式实现-2-flex-shrink-控制如何变瘦"><code>flex</code>响应式实现_2：<code>flex-shrink</code>控制如何变瘦</h4>
+
 <ul>
 <li>默认<code>flex item</code>的收缩因子是<code>flex-shrink:1;</code></li>
 <li>收缩是当空间不够时才起效，即<code>flex item</code>的原始宽度被压缩的时候</li>
@@ -653,64 +756,92 @@
 <li>一般写<code>flex-shrink:0;</code>，配合设置<code>min-width</code>，或者<code>flex-basis</code>的值，防止变瘦压缩内容</li>
 <li>一般让内容区正文收缩，其他区域防止收缩</li>
 </ul>
-<h4 id="flex-wrap对flex-grow和flex-shrink的影响"><code>flex-wrap</code>对<code>flex-grow</code>和<code>flex-shrink</code>的影响</h4>
-<h5 id="当-flex-wrap-为-wrap--wrap-reverse">当 <code>flex-wrap</code> 为 <code>wrap | wrap-reverse</code></h5>
+
+<h4 id="flex-wrap-对-flex-grow-和-flex-shrink-的影响"><code>flex-wrap</code>对<code>flex-grow</code>和<code>flex-shrink</code>的影响</h4>
+
+<h5 id="当-flex-wrap-为-wrap-wrap-reverse">当 <code>flex-wrap</code> 为 <code>wrap | wrap-reverse</code></h5>
+
 <h6 id="且子项宽度和小于父容器宽度时">且子项宽度和小于父容器宽度时</h6>
+
 <p><code>flex-grow</code> 会起作用，子项会根据 <code>flex-grow</code> 设定的值放大（为<code>0</code>的项不放大）</p>
+
 <h6 id="且子项宽度和超过父容器宽度时">且子项宽度和超过父容器宽度时</h6>
+
 <p>首先一定会换行，换行后，每一行的右端都可能会有剩余空间（最后一行包含的子项可能比前几行少，所以剩余空间可能会更大）</p>
+
 <p>这时 <code>flex-grow</code> 会起作用，若当前行所有子项的 <code>flex-grow</code> 都为<code>0</code>，则剩余空间保留</p>
+
 <p>若当前行存在一个子项的 <code>flex-grow</code> 不为<code>0</code>，则剩余空间会被 <code>flex-grow</code> 不为<code>0</code>的子项占据</p>
-<h5 id="当-flex-wrap-为-nowrap且子项宽度和小于父容器宽度时">当 <code>flex-wrap</code> 为 <code>nowrap</code>，且子项宽度和小于父容器宽度时</h5>
+
+<h5 id="当-flex-wrap-为-nowrap-且子项宽度和小于父容器宽度时">当 <code>flex-wrap</code> 为 <code>nowrap</code>，且子项宽度和小于父容器宽度时</h5>
+
 <p><code>flex-grow</code> 会起作用，子项会根据 <code>flex-grow</code> 设定的值放大，为<code>0</code>的项不放大</p>
-<h5 id="当-flex-wrap-为-nowrap且子项宽度和超过父容器宽度时">当 <code>flex-wrap</code> 为 <code>nowrap</code>，且子项宽度和超过父容器宽度时</h5>
+
+<h5 id="当-flex-wrap-为-nowrap-且子项宽度和超过父容器宽度时">当 <code>flex-wrap</code> 为 <code>nowrap</code>，且子项宽度和超过父容器宽度时</h5>
+
 <p><code>flex-shrink</code> 会起作用，子项会根据 <code>flex-shrink</code> 设定的值进行缩小（为0的项不缩小）</p>
+
 <p>但这里有一个较为特殊情况，就是当这一行所有子项 <code>flex-shrink</code> 都为<code>0</code>时，也就是说所有的子项都不能缩小，就会出现横向滚动条</p>
+
 <h4 id="小结2">小结2</h4>
+
 <p>可以看出不管在什么情况下，在同一时间，<code>flex-shrink</code> 和 <code>flex-grow</code> 只有一个能起作用</p>
+
 <p>这其中的道理细想起来也很浅显：空间足够时，<code>flex-grow</code> 就有发挥的余地，而空间不足时，<code>flex-shrink</code> 就能起作用</p>
+
 <p>当然，<code>flex-wrap</code> 的值为 <code>wrap | wrap-reverse</code> 时，表明可以换行，既然可以换</p>
+
 <p>一般情况下空间就总是足够的，<code>flex-shrink</code> 当然就不会起作用</p>
-<h4 id="flex响应式实现_3flex-basis控制基准宽度"><code>flex</code>响应式实现_3：<code>flex-basis</code>控制基准宽度</h4>
+
+<h4 id="flex-响应式实现-3-flex-basis-控制基准宽度"><code>flex</code>响应式实现_3：<code>flex-basis</code>控制基准宽度</h4>
+
 <ul>
 <li>未设置<code>flex item</code>的宽度时可用</li>
 <li>不写就是默认值<code>flex-basis:auto;</code>，计算值为<code>width</code>的值</li>
 <li>就是宽度的意思，可以代替宽度</li>
 </ul>
+
 <p>详细地可看以下两篇：</p>
+
 <p><a href="https://www.jianshu.com/p/17b1b445ecd4">【翻译】Flex Basis与Width的区别</a></p>
+
 <p><a href="https://juejin.im/post/5d538d3ce51d4561f95eea1d">【译】 width 与 flex-basis 的区别</a></p>
+
 <h3 id="缩写">缩写</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-CSS" data-lang="CSS"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-CSS" data-lang="CSS"><span class="p">.</span><span class="nc">item</span><span class="p">{</span>
+<pre class="chroma"><code class="language-CSS" data-lang="CSS"><span class="p">.</span><span class="nc">item</span><span class="p">{</span>
     <span class="k">flex</span><span class="p">:</span> <span class="kc">none</span> <span class="o">|</span> <span class="p">[</span> <span class="o">&lt;</span><span class="s1">&#39;flex-grow&#39;</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="s1">&#39;flex-shrink&#39;</span><span class="o">&gt;?</span> <span class="o">||</span> <span class="o">&lt;</span><span class="s1">&#39;flex-basis&#39;</span><span class="o">&gt;</span> <span class="p">]</span>
-<span class="p">}</span> 
-</code></pre></td></tr></table>
+<span class="p">}</span> </code></pre></td></tr></table>
 </div>
-</div><ul>
+</div>
+<ul>
 <li>空格隔开：<code>flex:flex-grow flex-shrink flex-basis;</code></li>
 <li>默认值 <code>flex-grow: 0;</code></li>
 <li>默认值 <code>flex-shrink:1;</code></li>
 <li><code>flex-basis</code>可不写，就是默认值<code>auto</code></li>
 <li>缩写默认值<code>0 1 auto</code></li>
 </ul>
+
 <blockquote>
 <p>关于 flex 取值，还有许多特殊的情况，可以按以下来进行划分：</p>
 </blockquote>
+
 <h4 id="当-flex-取值为一个非零非负数字">当 <code>flex</code> 取值为一个非零非负数字</h4>
+
 <blockquote>
 <p>则该数字为 <code>flex-grow</code> 值，<code>flex-shrink</code> 取 1，<code>flex-basis</code> 取 <code>0%</code></p>
 </blockquote>
+
 <p>如下是等同的：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-CSS" data-lang="CSS"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -719,23 +850,25 @@
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-CSS" data-lang="CSS"><span class="p">.</span><span class="nc">item</span> <span class="p">{</span><span class="k">flex</span><span class="p">:</span> <span class="mi">1</span><span class="p">;}</span>
+<pre class="chroma"><code class="language-CSS" data-lang="CSS"><span class="p">.</span><span class="nc">item</span> <span class="p">{</span><span class="k">flex</span><span class="p">:</span> <span class="mi">1</span><span class="p">;}</span>
 <span class="c">/* 等同 */</span>
 <span class="p">.</span><span class="nc">item</span> <span class="p">{</span>
     <span class="k">flex-grow</span><span class="p">:</span> <span class="mi">1</span><span class="p">;</span>
     <span class="k">flex-shrink</span><span class="p">:</span> <span class="mi">1</span><span class="p">;</span>
     <span class="k">flex-basis</span><span class="p">:</span> <span class="mi">0</span><span class="kt">%</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<span class="p">}</span></code></pre></td></tr></table>
 </div>
-</div><h4 id="当-flex-取值为-0-时">当 <code>flex</code> 取值为 <code>0</code> 时</h4>
+</div>
+<h4 id="当-flex-取值为-0-时">当 <code>flex</code> 取值为 <code>0</code> 时</h4>
+
 <blockquote>
-<p>对应的三个值分别为<code> 0 1 0%</code></p>
+<p>对应的三个值分别为<code>0 1 0%</code></p>
 </blockquote>
+
 <p>如下是等同的：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-CSS" data-lang="CSS"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -744,23 +877,25 @@
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-CSS" data-lang="CSS"><span class="p">.</span><span class="nc">item</span> <span class="p">{</span><span class="k">flex</span><span class="p">:</span> <span class="mi">0</span><span class="p">;}</span>
+<pre class="chroma"><code class="language-CSS" data-lang="CSS"><span class="p">.</span><span class="nc">item</span> <span class="p">{</span><span class="k">flex</span><span class="p">:</span> <span class="mi">0</span><span class="p">;}</span>
 <span class="c">/* 等同 */</span>
 <span class="p">.</span><span class="nc">item</span> <span class="p">{</span>
     <span class="k">flex-grow</span><span class="p">:</span> <span class="mi">0</span><span class="p">;</span>
     <span class="k">flex-shrink</span><span class="p">:</span> <span class="mi">1</span><span class="p">;</span>
     <span class="k">flex-basis</span><span class="p">:</span> <span class="mi">0</span><span class="kt">%</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<span class="p">}</span></code></pre></td></tr></table>
 </div>
-</div><h4 id="当-flex-取值为一个长度或百分比">当 <code>flex</code> 取值为一个长度或百分比</h4>
+</div>
+<h4 id="当-flex-取值为一个长度或百分比">当 <code>flex</code> 取值为一个长度或百分比</h4>
+
 <blockquote>
 <p>则视为 <code>flex-basis</code> 值，<code>flex-grow</code> 取 1，<code>flex-shrink</code> 取 <code>1</code>，有如下等同情况（注意 <code>0%</code> 是一个百分比而不是一个非负数字）</p>
 </blockquote>
+
 <p>如下是等同的：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-CSS" data-lang="CSS"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -777,7 +912,7 @@
 </span><span class="lnt">15
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-CSS" data-lang="CSS"><span class="p">.</span><span class="nc">item-1</span> <span class="p">{</span><span class="k">flex</span><span class="p">:</span> <span class="mi">0</span><span class="kt">%</span><span class="p">;}</span>
+<pre class="chroma"><code class="language-CSS" data-lang="CSS"><span class="p">.</span><span class="nc">item-1</span> <span class="p">{</span><span class="k">flex</span><span class="p">:</span> <span class="mi">0</span><span class="kt">%</span><span class="p">;}</span>
 <span class="c">/* 等同 */</span>
 <span class="p">.</span><span class="nc">item-1</span> <span class="p">{</span>
     <span class="k">flex-grow</span><span class="p">:</span> <span class="mi">1</span><span class="p">;</span>
@@ -791,17 +926,19 @@
     <span class="k">flex-grow</span><span class="p">:</span> <span class="mi">1</span><span class="p">;</span>
     <span class="k">flex-shrink</span><span class="p">:</span> <span class="mi">1</span><span class="p">;</span>
     <span class="k">flex-basis</span><span class="p">:</span> <span class="mi">24</span><span class="kt">px</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<span class="p">}</span></code></pre></td></tr></table>
 </div>
-</div><h4 id="当-flex-取值为两个非负数字">当 <code>flex</code> 取值为两个非负数字</h4>
+</div>
+<h4 id="当-flex-取值为两个非负数字">当 <code>flex</code> 取值为两个非负数字</h4>
+
 <blockquote>
 <p>则分别视为 <code>flex-grow</code> 和 <code>flex-shrink</code> 的值，<code>flex-basis</code> 取 <code>0%</code></p>
 </blockquote>
+
 <p>如下是等同的：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-CSS" data-lang="CSS"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -810,23 +947,25 @@
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-CSS" data-lang="CSS"><span class="p">.</span><span class="nc">item</span> <span class="p">{</span><span class="k">flex</span><span class="p">:</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">;}</span>
+<pre class="chroma"><code class="language-CSS" data-lang="CSS"><span class="p">.</span><span class="nc">item</span> <span class="p">{</span><span class="k">flex</span><span class="p">:</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">;}</span>
 <span class="c">/* 等同 */</span>
 <span class="p">.</span><span class="nc">item</span> <span class="p">{</span>
     <span class="k">flex-grow</span><span class="p">:</span> <span class="mi">2</span><span class="p">;</span>
     <span class="k">flex-shrink</span><span class="p">:</span> <span class="mi">3</span><span class="p">;</span>
     <span class="k">flex-basis</span><span class="p">:</span> <span class="mi">0</span><span class="kt">%</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<span class="p">}</span></code></pre></td></tr></table>
 </div>
-</div><h4 id="当-flex-取值为一个非负数字和一个长度或百分比">当 <code>flex</code> 取值为一个非负数字和一个长度或百分比</h4>
+</div>
+<h4 id="当-flex-取值为一个非负数字和一个长度或百分比">当 <code>flex</code> 取值为一个非负数字和一个长度或百分比</h4>
+
 <blockquote>
 <p>则分别视为 <code>flex-grow</code> 和 <code>flex-basis</code> 的值，<code>flex-shrink</code> 取 <code>1</code></p>
 </blockquote>
+
 <p>如下是等同的：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-CSS" data-lang="CSS"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -835,34 +974,46 @@
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-CSS" data-lang="CSS"><span class="p">.</span><span class="nc">item</span> <span class="p">{</span><span class="k">flex</span><span class="p">:</span> <span class="mi">11</span> <span class="mi">32</span><span class="kt">px</span><span class="p">;}</span>
+<pre class="chroma"><code class="language-CSS" data-lang="CSS"><span class="p">.</span><span class="nc">item</span> <span class="p">{</span><span class="k">flex</span><span class="p">:</span> <span class="mi">11</span> <span class="mi">32</span><span class="kt">px</span><span class="p">;}</span>
 <span class="c">/* 等同 */</span>
 <span class="p">.</span><span class="nc">item</span> <span class="p">{</span>
     <span class="k">flex-grow</span><span class="p">:</span> <span class="mi">11</span><span class="p">;</span>
     <span class="k">flex-shrink</span><span class="p">:</span> <span class="mi">1</span><span class="p">;</span>
     <span class="k">flex-basis</span><span class="p">:</span> <span class="mi">32</span><span class="kt">px</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<span class="p">}</span></code></pre></td></tr></table>
 </div>
-</div><p>如果记不住，就分开写</p>
+</div>
+<p>如果记不住，就分开写</p>
+
 <blockquote>
 <p>以上，即可实现<code>flex</code>响应式</p>
 </blockquote>
-<hr>
-<h3 id="align-self特殊定制align-items"><code>align-self</code>特殊定制<code>align-items</code></h3>
+
+<hr />
+
+<h3 id="align-self-特殊定制-align-items"><code>align-self</code>特殊定制<code>align-items</code></h3>
+
 <ul>
 <li><code>container</code>里设置<code>align-items</code>，是统一控制所有子项</li>
 <li>某个<code>item</code>里设置<code>align-self</code>，是特殊定制这个子项</li>
 </ul>
+
 <p>代码演示：<a href="http://xmasuhai.xyz/demo-test/css-demo-3/css-demo_layout_flexbox_item.html">css-demo_layout_flexbox_item</a></p>
+
 <h3 id="小结3">小结3</h3>
+
 <p>Flex 伸缩项上的属性</p>
+
 <p>伸缩项有6种属性：</p>
+
 <ul>
 <li><code>order</code>、<code>flex-basis</code>、<code>flex-grow</code>、<code>flex-shrink</code> <code>flex</code>、<code>align-self</code></li>
 </ul>
-<hr>
+
+<hr />
+
 <h3 id="重点-工作基本只用这些">重点 工作基本只用这些</h3>
+
 <ul>
 <li><code>display:flex;</code></li>
 <li><code>flex-direction:[row | colum];</code></li>
@@ -870,8 +1021,11 @@
 <li><code>justify-content:[center | space-between]</code></li>
 <li><code>align-items:center</code></li>
 </ul>
+
 <h2 id="实践">实践</h2>
+
 <p>用<code>flex</code>做横向布局：</p>
+
 <ul>
 <li>两栏布局</li>
 <li>三栏布局</li>
@@ -879,8 +1033,11 @@
 <li>平均布局</li>
 <li>组合使用，实现更复杂布局</li>
 </ul>
+
 <p>代码演示：<a href="http://xmasuhai.xyz/demo-test/css-demo-3/css-demo_layout_flexbox.html">css-demo_layout_flexbox</a></p>
+
 <h3 id="经验">经验</h3>
+
 <ul>
 <li>永远不要把<code>width</code>和<code>height</code>写死，除非特殊说明</li>
 <li>用<code>[min-width | max-width | min-height | max-height]</code>代替</li>
@@ -891,57 +1048,89 @@
 <li>去掉图片下方空白：<code>vertical-align: middle;</code></li>
 <li>使图片居中：在图片的父元素上加样式<code>display: flex;</code>和<code>align-items: center;</code></li>
 </ul>
-<h3 id="不写死width100px">不写死<code>width:100px</code></h3>
+
+<h3 id="不写死-width-100px">不写死<code>width:100px</code></h3>
+
 <p>可以是：</p>
+
 <ul>
 <li><code>width:50%;</code></li>
 <li><code>max-width:100px;</code></li>
 <li><code>width:30vw;</code></li>
 <li><code>width:80%;</code></li>
 </ul>
+
 <blockquote>
 <p>要么加前缀<code>min</code>或<code>max</code>，要么别使用<code>px</code></p>
 </blockquote>
+
 <h3 id="负margin">负margin</h3>
+
 <h3 id="ffc">FFC</h3>
+
 <p><a href="https://www.jianshu.com/p/a48a32f574f4">flex项目深入分析</a></p>
-<!-- raw HTML omitted -->
-<hr>
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<hr>
+
+<!-- Article End -->
+
+<hr />
+
+<!-- test -->
+
+<div style="text-align:center;">·未完待续·</div>
+
+<!-- ok -->
+
+<hr />
+
 <h4 id="参考文章">参考文章</h4>
+
 <p><a href="https://www.jianshu.com/p/c997c1a0ed34">FlexBox布局全解</a></p>
+
 <p><a href="https://www.jianshu.com/p/17b1b445ecd4">【翻译】Flex Basis与Width的区别</a></p>
+
 <p><a href="https://juejin.im/post/5d538d3ce51d4561f95eea1d">【译】 width 与 flex-basis 的区别</a></p>
+
 <p><a href="http://www.ruanyifeng.com/blog/2015/07/flex-grammar.html?utm_source=tuicool">Flex 布局教程：语法篇</a></p>
+
 <p><a href="http://www.ruanyifeng.com/blog/2015/07/flex-examples.html">Flex 布局教程：实例篇</a></p>
+
 <p><a href="https://developer.mozilla.org/zh-CN/docs/Learn/CSS/CSS_layout/Flexbox">MDN Flexbox</a></p>
+
 <p><a href="https://app.peterrcook.com/flexplorer/">Flexplorer</a></p>
+
 <p><a href="https://bennettfeely.com/flexplorer/">Flexplorer2</a></p>
+
 <p><a href="https://poonia.github.io/flexbox/">Learnable Flexbox</a></p>
+
 <p><a href="https://flexboxfroggy.com/#zh-cn">Flex小游戏</a></p>
+
 <p><a href="https://static.xiedaimala.com/xdml/file/3ac7c224-c23d-491f-84b5-4fabfbeab9b8/2019-8-30-0-56-25.pdf">CSS 布局.pdf</a></p>
+
 <p><a href="https://www.w3.org/TR/css-flexbox-1/#flex">W3C Flex Layout Box Model</a></p>
+
 <p><a href="https://github.com/mobilejazz/Eixample/">A flexbox grid demo</a></p>
+
 <h4 id="相关文章">相关文章</h4>
+
 <ul>
 <li>无</li>
 </ul>
-<hr>
+
+<hr />
+
 <ul>
 <li>作者： Joel</li>
 <li>文章链接：</li>
-<li><a href="http://xmasuhai.xyz/posts/%E7%89%88%E6%9D%83%E5%A3%B0%E6%98%8E%E9%93%BE%E6%8E%A5/">版权声明</a></li>
+<li><a href="http://xmasuhai.xyz/posts/版权声明链接/">版权声明</a></li>
 <li>非自由转载-非商用-非衍生-保持署名</li>
-<li><!-- raw HTML omitted -->河<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->掘<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->思<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->知<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->简<!-- raw HTML omitted --></li>
+<li><a style='color:#DB2D5D;' href='https://xiedaimala.com/bbs/users/8c266e6f-55a2-4348-a180-17cb8cdb2c46#/?page=1' target='_blank' rel='noreferrer noopener'>河</a>
+<a style='color:#006CFF;' href='https://juejin.im/user/59abfad26fb9a0248f4aa221' target='_blank' rel='noreferrer noopener'>掘</a>
+<a style='color:#009A61;' href='https://segmentfault.com/u/joel_59b17eb9d2155' target='_blank' rel='noreferrer noopener'>思</a>
+<a style='color:#0084FF;' href='https://www.zhihu.com/people/xue-shou-41/posts' target='_blank' rel='noreferrer noopener'>知</a>
+<a style='color:#EA6F5A;' href='https://www.jianshu.com/u/079916729823' target='_blank' rel='noreferrer noopener'>简</a></li>
 </ul>
-<hr>
+
+<hr />
 
     </div>
 
@@ -1103,7 +1292,7 @@
     &copy;
     
       2019 -
-    2022
+    2026
     <span class="heart">
       
       <i class="iconfont">

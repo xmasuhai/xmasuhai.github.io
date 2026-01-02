@@ -7,7 +7,7 @@
   
 
 <meta name="renderer" content="webkit" />
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
 <meta name="MobileOptimized" content="width"/>
 <meta name="HandheldFriendly" content="true"/>
@@ -32,7 +32,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.91.2" />
+<meta name="generator" content="Hugo 0.59.1" />
 
 
 <link rel="canonical" href="http://xmasuhai.xyz/post/addition/vite-%E8%BF%9B%E8%A1%8C%E7%BB%84%E4%BB%B6%E5%BA%93%E7%9A%84%E6%89%93%E5%8C%85-%E5%AF%B9%E6%AF%94-vue-cli%E5%92%8C-webpack%E7%9A%84%E5%BA%93%E6%A8%A1%E5%BC%8F/" />
@@ -62,15 +62,21 @@
 <meta property="og:title" content="Vite的库模式 -进行组件库的打包 对比 vue cli 和 webpack 或 parcel的库模式" />
 <meta property="og:description" content="Vite 的库模式 - 进行组件库的打包 对比 vue cli、 webpack 和 parcel 的库模式 大纲链接 § [toc] 区别于网页应用app，总结一些构建JS库（libraries）的经验，和" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://xmasuhai.xyz/post/addition/vite-%E8%BF%9B%E8%A1%8C%E7%BB%84%E4%BB%B6%E5%BA%93%E7%9A%84%E6%89%93%E5%8C%85-%E5%AF%B9%E6%AF%94-vue-cli%E5%92%8C-webpack%E7%9A%84%E5%BA%93%E6%A8%A1%E5%BC%8F/" /><meta property="article:section" content="post" />
+<meta property="og:url" content="http://xmasuhai.xyz/post/addition/vite-%E8%BF%9B%E8%A1%8C%E7%BB%84%E4%BB%B6%E5%BA%93%E7%9A%84%E6%89%93%E5%8C%85-%E5%AF%B9%E6%AF%94-vue-cli%E5%92%8C-webpack%E7%9A%84%E5%BA%93%E6%A8%A1%E5%BC%8F/" />
 <meta property="article:published_time" content="2022-08-28T09:35:11+08:00" />
 <meta property="article:modified_time" content="2022-09-10T09:58:30+08:00" />
-
 <meta itemprop="name" content="Vite的库模式 -进行组件库的打包 对比 vue cli 和 webpack 或 parcel的库模式">
-<meta itemprop="description" content="Vite 的库模式 - 进行组件库的打包 对比 vue cli、 webpack 和 parcel 的库模式 大纲链接 § [toc] 区别于网页应用app，总结一些构建JS库（libraries）的经验，和"><meta itemprop="datePublished" content="2022-08-28T09:35:11+08:00" />
-<meta itemprop="dateModified" content="2022-09-10T09:58:30+08:00" />
-<meta itemprop="wordCount" content="1111">
-<meta itemprop="keywords" content="FrontEnd," /><meta name="twitter:card" content="summary"/>
+<meta itemprop="description" content="Vite 的库模式 - 进行组件库的打包 对比 vue cli、 webpack 和 parcel 的库模式 大纲链接 § [toc] 区别于网页应用app，总结一些构建JS库（libraries）的经验，和">
+
+
+<meta itemprop="datePublished" content="2022-08-28T09:35:11&#43;08:00" />
+<meta itemprop="dateModified" content="2022-09-10T09:58:30&#43;08:00" />
+<meta itemprop="wordCount" content="1115">
+
+
+
+<meta itemprop="keywords" content="FrontEnd," />
+<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Vite的库模式 -进行组件库的打包 对比 vue cli 和 webpack 或 parcel的库模式"/>
 <meta name="twitter:description" content="Vite 的库模式 - 进行组件库的打包 对比 vue cli、 webpack 和 parcel 的库模式 大纲链接 § [toc] 区别于网页应用app，总结一些构建JS库（libraries）的经验，和"/>
 
@@ -302,7 +308,7 @@
             <a href="http://xmasuhai.xyz/categories/blog/"> Blog </a>
             
           </div>
-        <span class="more-meta"> 约 1111 字 </span>
+        <span class="more-meta"> 约 1115 字 </span>
           <span class="more-meta"> 预计阅读 3 分钟 </span>
 
         
@@ -319,41 +325,63 @@
   <h2 class="post-toc-title">文章目录</h2>
   <div class="post-toc-content">
     <nav id="TableOfContents">
-  <ul>
-    <li><a href="#1-老项目的-vue-cli-构建库-a-hrefcatalogue--a">1. 老项目的 <code>Vue CLI</code> 构建库 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-    <li><a href="#2-老项目的-webpack-构建库-a-hrefcatalogue--a">2. 老项目的 <code>webpack</code> 构建库 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-    <li><a href="#3-parcel3x库模式尝试-a-hrefcatalogue--a">3. <code>parcel3.x</code>库模式尝试 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-    <li><a href="#4-vite-库模式-构建的项目-a-hrefcatalogue--a">4. <code>Vite</code> 库模式 构建的项目 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-    <li><a href="#参考文章-a-hrefcatalogue--a">参考文章 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-    <li><a href="#相关文章-a-hrefcatalogue--a">相关文章 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-  </ul>
+<ul>
+<li><a href="#vite-的库模式-进行组件库的打包-对比-vue-cli-webpack-和-parcel-的库模式"><code>Vite</code> 的库模式 - 进行组件库的打包 对比 <code>vue cli</code>、 <code>webpack</code> 和 <code>parcel</code> 的库模式</a>
+<ul>
+<li><a href="#1-老项目的-vue-cli-构建库-a-href-catalogue-a">1. 老项目的 <code>Vue CLI</code> 构建库 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#2-老项目的-webpack-构建库-a-href-catalogue-a">2. 老项目的 <code>webpack</code> 构建库 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#3-parcel3-x-库模式尝试-a-href-catalogue-a">3. <code>parcel3.x</code>库模式尝试 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#4-vite-库模式-构建的项目-a-href-catalogue-a">4. <code>Vite</code> 库模式 构建的项目 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#参考文章-a-href-catalogue-a">参考文章 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#相关文章-a-href-catalogue-a">相关文章 <a href="#catalogue"> ⇧ </a></a></li>
+</ul></li>
+</ul>
 </nav>
   </div>
 </div>
 
     
     <div class="post-content">
-      <h1 id="vite-的库模式---进行组件库的打包-对比-vue-cli-webpack-和-parcel-的库模式"><code>Vite</code> 的库模式 - 进行组件库的打包 对比 <code>vue cli</code>、 <code>webpack</code> 和 <code>parcel</code> 的库模式</h1>
+      
+
+<h1 id="vite-的库模式-进行组件库的打包-对比-vue-cli-webpack-和-parcel-的库模式"><code>Vite</code> 的库模式 - 进行组件库的打包 对比 <code>vue cli</code>、 <code>webpack</code> 和 <code>parcel</code> 的库模式</h1>
+
 <blockquote>
-<p>大纲链接 <!-- raw HTML omitted --> § <!-- raw HTML omitted --></p>
+<p>大纲链接 <a id="catalogue" href="#catalogue" > § </a></p>
 </blockquote>
+
 <p>[toc]</p>
-<hr>
+
+<hr />
+
 <blockquote>
 <p>区别于网页应用<code>app</code>，总结一些构建<code>JS</code>库（<code>libraries</code>）的经验，和打包工具库模式的对比</p>
 </blockquote>
-<h2 id="1-老项目的-vue-cli-构建库-a-hrefcatalogue--a">1. 老项目的 <code>Vue CLI</code> 构建库 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
-<hr>
-<h2 id="2-老项目的-webpack-构建库-a-hrefcatalogue--a">2. 老项目的 <code>webpack</code> 构建库 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
-<hr>
-<h2 id="3-parcel3x库模式尝试-a-hrefcatalogue--a">3. <code>parcel3.x</code>库模式尝试 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
-<hr>
-<h2 id="4-vite-库模式-构建的项目-a-hrefcatalogue--a">4. <code>Vite</code> 库模式 构建的项目 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
-<hr>
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<hr>
-<h2 id="参考文章-a-hrefcatalogue--a">参考文章 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+
+<h2 id="1-老项目的-vue-cli-构建库-a-href-catalogue-a">1. 老项目的 <code>Vue CLI</code> 构建库 <a href="#catalogue"> ⇧ </a></h2>
+
+<hr />
+
+<h2 id="2-老项目的-webpack-构建库-a-href-catalogue-a">2. 老项目的 <code>webpack</code> 构建库 <a href="#catalogue"> ⇧ </a></h2>
+
+<hr />
+
+<h2 id="3-parcel3-x-库模式尝试-a-href-catalogue-a">3. <code>parcel3.x</code>库模式尝试 <a href="#catalogue"> ⇧ </a></h2>
+
+<hr />
+
+<h2 id="4-vite-库模式-构建的项目-a-href-catalogue-a">4. <code>Vite</code> 库模式 构建的项目 <a href="#catalogue"> ⇧ </a></h2>
+
+<hr />
+
+<!-- Article End -->
+
+<div style="text-align:center;">·未完待续·</div>
+
+<hr />
+
+<h2 id="参考文章-a-href-catalogue-a">参考文章 <a href="#catalogue"> ⇧ </a></h2>
+
 <ul>
 <li><a href="https://github.com/frehner/modern-guide-to-packaging-js-library/blob/main/README-zh_CN.md">打包 JavaScript 库的现代化指南</a></li>
 <li><a href="https://vitejs.dev/guide/build.html#library-mode">Vite Building for Production Library Mode</a></li>
@@ -362,14 +390,18 @@
 <li><a href="https://cn.vuejs.org/guide/scaling-up/tooling.html">Vue.js 工具链</a></li>
 <li><a href="https://cli.vuejs.org/zh/guide/mode-and-env.html#%E7%A4%BA%E4%BE%8B%EF%BC%9Astaging-%E6%A8%A1%E5%BC%8F">Vue CLI 模式和环境变量</a></li>
 </ul>
-<h2 id="相关文章-a-hrefcatalogue--a">相关文章 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+
+<h2 id="相关文章-a-href-catalogue-a">相关文章 <a href="#catalogue"> ⇧ </a></h2>
+
 <ul>
 <li><a href="https://juejin.cn/post/7060673531389935653">Vite 对 TypeScript 的支持及其原理</a></li>
 <li><a href="https://juejin.cn/post/7103165205483356168">写 vite 插件</a></li>
 </ul>
+
 <blockquote>
 <p>自动发布 <code>NPM</code> 包</p>
 </blockquote>
+
 <ul>
 <li><a href="https://juejin.cn/post/7139899195745370143">cimi——一款全自动发布NPM包的工具</a></li>
 <li><a href="https://juejin.cn/post/7053730154710827045">git commit规范 、CHANGELOG生成 和版本发布的标准自动化</a></li>
@@ -378,10 +410,11 @@
 <li><a href="https://juejin.cn/post/7040795364294656013">gitlab-ci组件库版本号自动升级</a></li>
 <li><a href="https://juejin.cn/post/6872914108979609614">前端一键自动部署工具</a></li>
 </ul>
-<hr>
+
+<hr />
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-sh" data-lang="sh"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -403,12 +436,9 @@
 </span><span class="lnt">20
 </span><span class="lnt">21
 </span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">
-https://blog.csdn.net/weixin_42971933/article/details/121821138 <span class="p">|</span> Vuejs 使用 lib 库模式打包 umd 解决 NPM 包发布的问题_吕小胖纸的博客-CSDN博客
+<pre class="chroma"><code class="language-sh" data-lang="sh">https://blog.csdn.net/weixin_42971933/article/details/121821138 <span class="p">|</span> Vuejs 使用 lib 库模式打包 umd 解决 NPM 包发布的问题_吕小胖纸的博客-CSDN博客
 https://www.javaxxz.com/thread-397946-1-1.html <span class="p">|</span> Vuejs 使用 lib 库模式打包 umd 解决 NPM 包发布的问题-百度网盘下载-Java学习者论坛 - Powered by Discuz!
 https://www.jianshu.com/p/2981ec365847 <span class="p">|</span> vue lib 模式构建自己的组件库 - 简书
 https://www.zhihu.com/question/470701634 <span class="p">|</span> vite 打包 npm lib库, 为什么直接引入组件不包含css? - 知乎
@@ -420,28 +450,30 @@ https://dandelioncloud.cn/article/details/1500387731304951809 <span class="p">|<
 https://www.cnblogs.com/wutong-211/p/16263263.html <span class="p">|</span> 使用vue cli 的lib模式打包库，并发布npm包 - 梧桐树211 - 博客园
 https://zhuanlan.zhihu.com/p/417283865 <span class="p">|</span> Vue CLI 模式 - 知乎
 http://www.javashuo.com/article/p-odjnpwjs-wt.html <span class="p">|</span> 详解：Vue cli3 库模式搭建组件库并发布到 npm - JavaShuo
-https://blog.csdn.net/weixin_39853131/article/details/110154237 <span class="p">|</span> vue4 库模式打包_技术篇 <span class="p">|</span> vuecli 3.0+内置webpack定制与打包性能优化_weixin_39853131的博客-CSDN博客
+https://blog.csdn.net/weixin_39853131/article/details/110154237 <span class="p">|</span> vue4 库模式打包_技术篇 <span class="p">|</span> vuecli <span class="m">3</span>.0+内置webpack定制与打包性能优化_weixin_39853131的博客-CSDN博客
 http://www.qb5200.com/article/381862.html <span class="p">|</span> vue cli4环境变量和模式 vue cli4下环境变量和模式示例详解<span class="o">(</span>IT技术<span class="o">)</span>
 https://segmentfault.com/a/1190000040031747 <span class="p">|</span> 从零开始基于@vue/cli4.5手把手搭建组件库 - SegmentFault 思否
-https://blog.51cto.com/u_14115828/3733744 <span class="p">|</span> 29.webpack——library与libraryTarget的用法/如何打包一个库文件_wx5c04c8a88fd20的技术博客_51CTO博客
+https://blog.51cto.com/u_14115828/3733744 <span class="p">|</span> <span class="m">29</span>.webpack——library与libraryTarget的用法/如何打包一个库文件_wx5c04c8a88fd20的技术博客_51CTO博客
 https://segmentfault.com/a/1190000005768185?utm_source<span class="o">=</span>sf-backlinks <span class="p">|</span> 也谈 webpack 及其开发模式 - SegmentFault 思否
 https://www.pudn.com/news/6228c8f09ddf223e1ad09d03.html <span class="p">|</span> 使用lib库模式打包vue组件及组件引用-pudn.com
 https://blog.csdn.net/Smart_J_King/article/details/122455269 <span class="p">|</span> Webpack系列——不同模式的打包_AmSuper-King的博客-CSDN博客_webpack两种模式
 https://segmentfault.com/a/1190000042241061 <span class="p">|</span> webpack5构建一个通用的组件库 - SegmentFault 思否
 https://blog.csdn.net/weixin_43299180/article/details/126059078 <span class="p">|</span> webpack5学习进阶：Library、模块联邦、构建优化_三个木马人的博客-CSDN博客
-https://blog.csdn.net/qq897319645/article/details/118151343 <span class="p">|</span> Vue cli3 库模式搭建组件库并发布到 npm--详解_.︶ㄣ☆.<span class="err">&#39;</span>龍的博客-CSDN博客_vue 库模式
-
-</code></pre></td></tr></table>
+https://blog.csdn.net/qq897319645/article/details/118151343 <span class="p">|</span> Vue cli3 库模式搭建组件库并发布到 npm--详解_.︶ㄣ☆.<span class="err">&#39;</span>龍的博客-CSDN博客_vue 库模式</code></pre></td></tr></table>
 </div>
-</div><hr>
+</div>
+<hr />
+
 <ul>
 <li>作者： Joel</li>
 <li>文章链接：</li>
-<li><a href="http://xmasuhai.xyz/posts/%E7%89%88%E6%9D%83%E5%A3%B0%E6%98%8E%E9%93%BE%E6%8E%A5/">版权声明</a></li>
+<li><a href="http://xmasuhai.xyz/posts/版权声明链接/">版权声明</a></li>
 <li>非自由转载-非商用-非衍生-保持署名</li>
 </ul>
-<hr>
-<hr>
+
+<hr />
+
+<hr />
 
     </div>
 
@@ -603,7 +635,7 @@ https://blog.csdn.net/qq897319645/article/details/118151343 <span class="p">|</s
     &copy;
     
       2019 -
-    2022
+    2026
     <span class="heart">
       
       <i class="iconfont">

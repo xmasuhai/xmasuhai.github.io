@@ -7,7 +7,7 @@
   
 
 <meta name="renderer" content="webkit" />
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
 <meta name="MobileOptimized" content="width"/>
 <meta name="HandheldFriendly" content="true"/>
@@ -32,7 +32,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.91.2" />
+<meta name="generator" content="Hugo 0.59.1" />
 
 
 <link rel="canonical" href="http://xmasuhai.xyz/post/project/vueel3/%E9%A1%B9%E7%9B%AE-vue3-%E8%BD%AE%E5%AD%901.3-%E5%88%B6%E4%BD%9C-tabs-%E7%BB%84%E4%BB%B6/" />
@@ -62,15 +62,21 @@
 <meta property="og:title" content="【项目 Vue3 轮子】1.3 制作 Tabs 组件" />
 <meta property="og:description" content="制作 Tabs 组件 [toc] 需求分析 点击 Tab标签页 切换内容 有一条横线跟随在动 API 设计 使用Tabs组件 标签式 1 2 3 4 5 &lt;Tabs&gt; &lt;TabItem title=&#34;导航1&#34" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://xmasuhai.xyz/post/project/vueel3/%E9%A1%B9%E7%9B%AE-vue3-%E8%BD%AE%E5%AD%901.3-%E5%88%B6%E4%BD%9C-tabs-%E7%BB%84%E4%BB%B6/" /><meta property="article:section" content="post" />
+<meta property="og:url" content="http://xmasuhai.xyz/post/project/vueel3/%E9%A1%B9%E7%9B%AE-vue3-%E8%BD%AE%E5%AD%901.3-%E5%88%B6%E4%BD%9C-tabs-%E7%BB%84%E4%BB%B6/" />
 <meta property="article:published_time" content="2022-01-30T14:22:13+08:00" />
 <meta property="article:modified_time" content="2022-06-14T08:45:02+08:00" />
-
 <meta itemprop="name" content="【项目 Vue3 轮子】1.3 制作 Tabs 组件">
-<meta itemprop="description" content="制作 Tabs 组件 [toc] 需求分析 点击 Tab标签页 切换内容 有一条横线跟随在动 API 设计 使用Tabs组件 标签式 1 2 3 4 5 &lt;Tabs&gt; &lt;TabItem title=&#34;导航1&#34"><meta itemprop="datePublished" content="2022-01-30T14:22:13+08:00" />
-<meta itemprop="dateModified" content="2022-06-14T08:45:02+08:00" />
-<meta itemprop="wordCount" content="8365">
-<meta itemprop="keywords" content="FrontEnd,Project,vueel," /><meta name="twitter:card" content="summary"/>
+<meta itemprop="description" content="制作 Tabs 组件 [toc] 需求分析 点击 Tab标签页 切换内容 有一条横线跟随在动 API 设计 使用Tabs组件 标签式 1 2 3 4 5 &lt;Tabs&gt; &lt;TabItem title=&#34;导航1&#34">
+
+
+<meta itemprop="datePublished" content="2022-01-30T14:22:13&#43;08:00" />
+<meta itemprop="dateModified" content="2022-06-14T08:45:02&#43;08:00" />
+<meta itemprop="wordCount" content="8345">
+
+
+
+<meta itemprop="keywords" content="FrontEnd,Project,vueel," />
+<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="【项目 Vue3 轮子】1.3 制作 Tabs 组件"/>
 <meta name="twitter:description" content="制作 Tabs 组件 [toc] 需求分析 点击 Tab标签页 切换内容 有一条横线跟随在动 API 设计 使用Tabs组件 标签式 1 2 3 4 5 &lt;Tabs&gt; &lt;TabItem title=&#34;导航1&#34"/>
 
@@ -301,7 +307,7 @@
         <div class="post-category">
             
           </div>
-        <span class="more-meta"> 约 8365 字 </span>
+        <span class="more-meta"> 约 8345 字 </span>
           <span class="more-meta"> 预计阅读 17 分钟 </span>
 
         
@@ -318,75 +324,89 @@
   <h2 class="post-toc-title">文章目录</h2>
   <div class="post-toc-content">
     <nav id="TableOfContents">
-  <ul>
-    <li><a href="#需求分析">需求分析</a></li>
-    <li><a href="#api-设计">API 设计</a></li>
-    <li><a href="#创建-tabs-和-tab-组件">创建 Tabs 和 Tab 组件</a></li>
-    <li><a href="#如何检查子组件的类型">如何检查子组件的类型</a></li>
-    <li><a href="#渲染嵌套的插槽">渲染嵌套的插槽</a></li>
-    <li><a href="#显示被选中的导航">显示被选中的导航</a>
-      <ul>
-        <li><a href="#tabsvue组件样式"><code>Tabs.vue</code>组件样式</a></li>
-        <li><a href="#切换标签页">切换标签页</a></li>
-      </ul>
-    </li>
-    <li><a href="#动态设置-div-制作会动的横线">动态设置 div 制作会动的横线</a>
-      <ul>
-        <li><a href="#动态设置-div-的宽度">动态设置 div 的宽度</a></li>
-        <li><a href="#动态设置-div-的位置">动态设置 div 的位置</a></li>
-      </ul>
-    </li>
-    <li><a href="#三处优化代码tabsvue">三处优化代码<code>Tabs.vue</code></a>
-      <ul>
-        <li><a href="#优化一直接获取selecteditem">优化一：直接获取<code>selectedItem</code></a></li>
-        <li><a href="#优化二干掉onmounted和onupdated">优化二：干掉<code>onMounted</code>和<code>onUpdated</code></a></li>
-        <li><a href="#selecteditemvalue-is-null-错误解决过程"><code>selectedItem.value is null</code> 错误解决过程</a></li>
-        <li><a href="#阶段最终代码">阶段最终代码</a></li>
-      </ul>
-    </li>
-    <li><a href="#总结">总结</a></li>
-  </ul>
+<ul>
+<li><a href="#制作-tabs-组件">制作 Tabs 组件</a>
+<ul>
+<li><a href="#需求分析">需求分析</a></li>
+<li><a href="#api-设计">API 设计</a></li>
+<li><a href="#创建-tabs-和-tab-组件">创建 Tabs 和 Tab 组件</a></li>
+<li><a href="#如何检查子组件的类型">如何检查子组件的类型</a></li>
+<li><a href="#渲染嵌套的插槽">渲染嵌套的插槽</a></li>
+<li><a href="#显示被选中的导航">显示被选中的导航</a>
+<ul>
+<li><a href="#tabs-vue-组件样式"><code>Tabs.vue</code>组件样式</a></li>
+<li><a href="#切换标签页">切换标签页</a>
+<ul>
+<li><a href="#用-selected-标记被选中的标签页">用<code>selected</code>标记被选中的标签页</a></li>
+<li><a href="#选中导航标签">选中导航标签</a></li>
+<li><a href="#选中内容">选中内容</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#动态设置-div-制作会动的横线">动态设置 div 制作会动的横线</a>
+<ul>
+<li><a href="#动态设置-div-的宽度">动态设置 div 的宽度</a></li>
+<li><a href="#动态设置-div-的位置">动态设置 div 的位置</a></li>
+</ul></li>
+<li><a href="#三处优化代码-tabs-vue">三处优化代码<code>Tabs.vue</code></a>
+<ul>
+<li><a href="#优化一-直接获取-selecteditem">优化一：直接获取<code>selectedItem</code></a></li>
+<li><a href="#优化二-干掉-onmounted-和-onupdated">优化二：干掉<code>onMounted</code>和<code>onUpdated</code></a></li>
+<li><a href="#selecteditem-value-is-null-错误解决过程"><code>selectedItem.value is null</code> 错误解决过程</a></li>
+<li><a href="#阶段最终代码">阶段最终代码</a></li>
+</ul></li>
+<li><a href="#总结">总结</a></li>
+</ul></li>
+</ul>
 </nav>
   </div>
 </div>
 
     
     <div class="post-content">
-      <h1 id="制作-tabs-组件">制作 Tabs 组件</h1>
-<p><img src="https://static.xiedaimala.com/xdml/image/3ac7c224-c23d-491f-84b5-4fabfbeab9b8/2020-9-2-2-51-0.gif" alt="Tabs"></p>
+      
+
+<h1 id="制作-tabs-组件">制作 Tabs 组件</h1>
+
+<p><img src="https://static.xiedaimala.com/xdml/image/3ac7c224-c23d-491f-84b5-4fabfbeab9b8/2020-9-2-2-51-0.gif" alt="Tabs" /></p>
+
 <p>[toc]</p>
-<hr>
+
+<hr />
+
 <h2 id="需求分析">需求分析</h2>
+
 <ul>
 <li>点击 Tab标签页 切换内容</li>
 <li>有一条横线跟随在动</li>
 </ul>
+
 <h2 id="api-设计">API 设计</h2>
+
 <blockquote>
 <p>使用Tabs组件 标签式</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">Tabs</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">Tabs</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">TabItem</span> <span class="na">title</span><span class="o">=</span><span class="s">&#34;导航1&#34;</span><span class="p">&gt;</span>内容1<span class="p">&lt;/</span><span class="nt">TabItem</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">TabItem</span> <span class="na">title</span><span class="o">=</span><span class="s">&#34;导航2&#34;</span><span class="p">&gt;&lt;</span><span class="nt">Component1</span><span class="p">/&gt;&lt;/</span><span class="nt">TabItem</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">TabItem</span> <span class="na">title</span><span class="o">=</span><span class="s">&#34;导航3&#34;</span><span class="p">&gt;&lt;</span><span class="nt">Component1</span><span class="err">/</span> <span class="na">x</span><span class="o">=</span><span class="s">&#34;hi&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">TabItem</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">Tabs</span><span class="p">&gt;</span>
-</code></pre></td></tr></table>
+<span class="p">&lt;/</span><span class="nt">Tabs</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p>使用Tabs组件 数据式</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -394,21 +414,22 @@
 </span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">Tabs</span> <span class="na">:data</span><span class="o">=</span><span class="s">&#34;[
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">Tabs</span> <span class="na">:data</span><span class="o">=</span><span class="s">&#34;[
 </span><span class="s">  {title: &#39;导航1&#39;, content: &#39;内容&#39;},
 </span><span class="s">  {title: &#39;导航2&#39;, content: Component1},
 </span><span class="s">  {title: &#39;导航3&#39;, content: h(Component1, {x: &#39;hi&#39;})}
 </span><span class="s">]&#34;</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">Tabs</span><span class="p">&gt;</span>
-</code></pre></td></tr></table>
+<span class="p">&lt;/</span><span class="nt">Tabs</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><h2 id="创建-tabs-和-tab-组件">创建 Tabs 和 Tab 组件</h2>
+</div>
+<h2 id="创建-tabs-和-tab-组件">创建 Tabs 和 Tab 组件</h2>
+
 <blockquote>
 <p><code>TabItem.vue</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -420,10 +441,9 @@
 </span><span class="lnt">10
 </span><span class="lnt">11
 </span><span class="lnt">12
-</span><span class="lnt">13
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
 <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 
 <span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
@@ -434,16 +454,15 @@
 <span class="kr">export</span> <span class="k">default</span> <span class="p">{</span>
   <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;TabItem&#39;</span>
 <span class="p">};</span>
-<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-
-</code></pre></td></tr></table>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p><code>Tabs.vue</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -458,7 +477,7 @@
 </span><span class="lnt">13
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
 
 <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 
@@ -470,15 +489,15 @@
 <span class="kr">export</span> <span class="k">default</span> <span class="p">{</span>
   <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Tabs&#39;</span>
 <span class="p">};</span>
-<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-</code></pre></td></tr></table>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p><code>TabsDemo.vue</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -504,7 +523,7 @@
 </span><span class="lnt">24
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
 <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 
 <span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
@@ -527,25 +546,28 @@
     <span class="nx">TabItem</span>
   <span class="p">}</span>
 <span class="p">};</span>
-<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-</code></pre></td></tr></table>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><h2 id="如何检查子组件的类型">如何检查子组件的类型</h2>
+</div>
+<h2 id="如何检查子组件的类型">如何检查子组件的类型</h2>
+
 <blockquote>
 <p>规定子组件的类型为<code>TabItem</code>，否则抛错</p>
 </blockquote>
+
 <ul>
 <li>在父组件<code>Tabs</code>中检查子组件的类型为<code>TabItem</code></li>
 <li>在<code>setup(props, context)</code>中获取<code>[...context.slots.default()]</code>数组</li>
 <li>或在<code>script setup</code>中的<code>useSlots()</code>获取<code>[...slots.default()]</code></li>
 <li>使用<code>console.log</code>打印查看</li>
 </ul>
+
 <blockquote>
 <p><code>Tabs.vue</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -581,10 +603,9 @@
 </span><span class="lnt">34
 </span><span class="lnt">35
 </span><span class="lnt">36
-</span><span class="lnt">37
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
 <span class="kr">import</span> <span class="p">{</span><span class="nx">useAttrs</span><span class="p">,</span> <span class="nx">useSlots</span><span class="p">,</span> <span class="nx">defineEmits</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue&#39;</span><span class="p">;</span>
 
 <span class="c1">// 获取slots
@@ -619,85 +640,82 @@
 <span class="kr">export</span> <span class="k">default</span> <span class="p">{</span>
   <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Tabs&#39;</span>
 <span class="p">};</span>
-<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-
-</code></pre></td></tr></table>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
 </div><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span><span class="lnt">6
 </span><span class="lnt">7
-</span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="c1">// 获取slots
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="c1">// 获取slots
 </span><span class="c1"></span><span class="kr">const</span> <span class="nx">slots</span> <span class="o">=</span> <span class="nx">useSlots</span><span class="p">();</span>
 <span class="k">if</span> <span class="p">(</span><span class="nx">slots</span><span class="p">.</span><span class="k">default</span><span class="p">)</span> <span class="p">{</span>
   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;slots.default(): \n&#39;</span><span class="p">,</span> <span class="p">[...</span><span class="nx">slots</span><span class="p">.</span><span class="k">default</span><span class="p">()][</span><span class="mi">0</span><span class="p">]);</span>
   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;slots.default(): \n&#39;</span><span class="p">,</span> <span class="p">[...</span><span class="nx">slots</span><span class="p">.</span><span class="k">default</span><span class="p">()][</span><span class="mi">1</span><span class="p">]);</span>
   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;slots.default(): \n&#39;</span><span class="p">,</span> <span class="p">[...</span><span class="nx">slots</span><span class="p">.</span><span class="k">default</span><span class="p">()][</span><span class="mi">2</span><span class="p">]);</span>
 <span class="p">}</span>
-
 </code></pre></td></tr></table>
 </div>
-</div><ul>
-<li>可以获取到<code>Tabs</code>中的虚拟节点</li>
-</ul>
+</div>
+<ul>
+<li><p>可以获取到<code>Tabs</code>中的虚拟节点</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
-</span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="c1">// 接收slots.defaults()数组
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="c1">// 接收slots.defaults()数组
 </span><span class="c1"></span><span class="kr">const</span> <span class="nx">slots</span> <span class="o">=</span> <span class="nx">useSlots</span><span class="p">();</span>
 <span class="k">if</span> <span class="p">(</span><span class="nx">slots</span><span class="p">.</span><span class="k">default</span><span class="p">)</span> <span class="p">{</span>
-  <span class="kr">const</span> <span class="nx">defaults</span> <span class="o">=</span> <span class="p">[...</span><span class="nx">slots</span><span class="p">.</span><span class="k">default</span><span class="p">()];</span>
+<span class="kr">const</span> <span class="nx">defaults</span> <span class="o">=</span> <span class="p">[...</span><span class="nx">slots</span><span class="p">.</span><span class="k">default</span><span class="p">()];</span>
 <span class="p">}</span>
-
 </code></pre></td></tr></table>
 </div>
-</div><ul>
-<li>使用<code>&lt;componnets :is=&quot;&quot;&gt;</code>来展示虚拟节点为DOM节点</li>
-</ul>
+</div></li>
+
+<li><p>使用<code>&lt;componnets :is=&quot;&quot;&gt;</code>来展示虚拟节点为DOM节点</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
-</span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="c1">// 接收slots.defaults()数组
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="c1">// 接收slots.defaults()数组
 </span><span class="c1"></span><span class="kr">const</span> <span class="nx">slots</span> <span class="o">=</span> <span class="nx">useSlots</span><span class="p">();</span>
 <span class="k">if</span> <span class="p">(</span><span class="nx">slots</span><span class="p">.</span><span class="k">default</span><span class="p">)</span> <span class="p">{</span>
-  <span class="kr">const</span> <span class="nx">defaults</span> <span class="o">=</span> <span class="p">[...</span><span class="nx">slots</span><span class="p">.</span><span class="k">default</span><span class="p">()];</span>
+<span class="kr">const</span> <span class="nx">defaults</span> <span class="o">=</span> <span class="p">[...</span><span class="nx">slots</span><span class="p">.</span><span class="k">default</span><span class="p">()];</span>
 <span class="p">}</span>
-
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="渲染嵌套的插槽">渲染嵌套的插槽</h2>
+</div></li>
+</ul>
+
+<h2 id="渲染嵌套的插槽">渲染嵌套的插槽</h2>
+
 <ul>
 <li>使用<code>&lt;compoent v-for=&quot;comp in defaluts&quot; :is=&quot;comp&quot; id=&quot;comp&quot;</code>循环渲染组件代替使用<code>&lt;slot/&gt;</code></li>
 <li>即使在组件的标签内 <strong>不显式地写出<code>&lt;slot&gt;后备内容&lt;/slot&gt;</code></strong>，在组件标签内插入节点时，也可以获取到<code>useSlots().default()</code>，原来为<code>$slots.default()</code></li>
 </ul>
+
 <blockquote>
 <p><code>Tabs.vue</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -722,10 +740,9 @@
 </span><span class="lnt">23
 </span><span class="lnt">24
 </span><span class="lnt">25
-</span><span class="lnt">26
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
 <span class="kr">import</span> <span class="p">{</span><span class="nx">useAttrs</span><span class="p">,</span> <span class="nx">useSlots</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue&#39;</span><span class="p">;</span>
 
 <span class="kd">let</span> <span class="nx">defaults</span><span class="p">;</span>
@@ -749,16 +766,15 @@
 <span class="kr">export</span> <span class="k">default</span> <span class="p">{</span>
   <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Tabs&#39;</span>
 <span class="p">};</span>
-<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-
-</code></pre></td></tr></table>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p><code>TabsDemo.vue</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -784,10 +800,9 @@
 </span><span class="lnt">24
 </span><span class="lnt">25
 </span><span class="lnt">26
-</span><span class="lnt">27
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
 <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 
 <span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
@@ -812,16 +827,15 @@
     <span class="nx">TabItem</span>
   <span class="p">}</span>
 <span class="p">};</span>
-<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-
-</code></pre></td></tr></table>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p><code>TabItem.vue</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -834,10 +848,9 @@
 </span><span class="lnt">11
 </span><span class="lnt">12
 </span><span class="lnt">13
-</span><span class="lnt">14
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
     <span class="p">&lt;</span><span class="nt">slot</span><span class="p">&gt;</span>
       Tab内容
@@ -849,21 +862,21 @@
 <span class="kr">export</span> <span class="k">default</span> <span class="p">{</span>
   <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;TabItem&#39;</span>
 <span class="p">};</span>
-<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-
-</code></pre></td></tr></table>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p>获取并渲染 title</p>
 </blockquote>
+
 <ul>
 <li>打印查看插槽中所有标签</li>
 <li>标签中有属性<code>props</code></li>
-<li>属性<code>props</code>中有<code>title</code>属性</li>
-</ul>
+
+<li><p>属性<code>props</code>中有<code>title</code>属性</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -877,50 +890,52 @@
 </span><span class="lnt">12
 </span><span class="lnt">13
 </span><span class="lnt">14
-</span><span class="lnt">15
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="kr">import</span> <span class="p">{</span><span class="nx">useAttrs</span><span class="p">,</span> <span class="nx">useSlots</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue&#39;</span><span class="p">;</span>
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="kr">import</span> <span class="p">{</span><span class="nx">useAttrs</span><span class="p">,</span> <span class="nx">useSlots</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue&#39;</span><span class="p">;</span>
 
 <span class="kd">let</span> <span class="nx">defaults</span><span class="p">;</span>
 <span class="c1">// 获取slots
 </span><span class="c1"></span><span class="kr">const</span> <span class="nx">slots</span> <span class="o">=</span> <span class="nx">useSlots</span><span class="p">();</span>
 <span class="k">if</span> <span class="p">(</span><span class="nx">slots</span><span class="p">.</span><span class="k">default</span><span class="p">)</span> <span class="p">{</span>
-  <span class="nx">defaults</span> <span class="o">=</span> <span class="p">[...</span><span class="nx">slots</span><span class="p">.</span><span class="k">default</span><span class="p">()];</span>
+<span class="nx">defaults</span> <span class="o">=</span> <span class="p">[...</span><span class="nx">slots</span><span class="p">.</span><span class="k">default</span><span class="p">()];</span>
 <span class="p">}</span>
 
 <span class="nx">defaults</span><span class="o">?</span><span class="p">.</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">tag</span><span class="p">)=&gt;</span> <span class="p">{</span>
-  <span class="c1">// console.log({...tag});
-</span><span class="c1"></span>  <span class="c1">// console.log({...tag.props});
-</span><span class="c1"></span>  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">tag</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">title</span><span class="p">);</span>
+<span class="c1">// console.log({...tag});
+</span><span class="c1">// console.log({...tag.props});
+</span><span class="c1"></span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">tag</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">title</span><span class="p">);</span>
 <span class="p">})</span>
-
 </code></pre></td></tr></table>
 </div>
-</div><ul>
-<li>使用变量获取到<code>title</code></li>
-<li>放到模板插值中</li>
-</ul>
+</div></li>
+
+<li><p>使用变量获取到<code>title</code></p></li>
+
+<li><p>放到模板插值中</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
-</span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="kr">const</span> <span class="nx">titles</span> <span class="o">=</span> <span class="nx">defaults</span><span class="o">?</span><span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">tag</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
-  <span class="k">return</span> <span class="nx">tag</span><span class="o">?</span><span class="p">.</span><span class="nx">props</span><span class="o">?</span><span class="p">.</span><span class="nx">title</span><span class="p">;</span>
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="kr">const</span> <span class="nx">titles</span> <span class="o">=</span> <span class="nx">defaults</span><span class="o">?</span><span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">tag</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+<span class="k">return</span> <span class="nx">tag</span><span class="o">?</span><span class="p">.</span><span class="nx">props</span><span class="o">?</span><span class="p">.</span><span class="nx">title</span><span class="p">;</span>
 <span class="p">});</span>
-
 </code></pre></td></tr></table>
 </div>
-</div><hr>
+</div></li>
+</ul>
+
+<hr />
+
 <h2 id="显示被选中的导航">显示被选中的导航</h2>
-<h3 id="tabsvue组件样式"><code>Tabs.vue</code>组件样式</h3>
+
+<h3 id="tabs-vue-组件样式"><code>Tabs.vue</code>组件样式</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -992,10 +1007,9 @@
 </span><span class="lnt">70
 </span><span class="lnt">71
 </span><span class="lnt">72
-</span><span class="lnt">73
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
 <span class="kr">import</span> <span class="p">{</span><span class="nx">useSlots</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue&#39;</span><span class="p">;</span>
 
 <span class="kd">let</span> <span class="nx">defaults</span><span class="p">;</span>
@@ -1045,7 +1059,7 @@
   <span class="err">&amp;-nav</span> <span class="err">{</span>
     <span class="k">display</span><span class="p">:</span> <span class="kc">flex</span><span class="p">;</span>
     <span class="k">color</span><span class="p">:</span> <span class="err">$</span><span class="kc">color</span><span class="p">;</span>
-    <span class="k">border-bottom</span><span class="p">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="kc">solid</span> <span class="err">$</span><span class="k">border-color</span><span class="p">;</span>
+    <span class="k">border-bottom</span><span class="p">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="kc">solid</span> <span class="err">$</span><span class="k">border</span><span class="o">-</span><span class="kc">color</span><span class="p">;</span>
 
     <span class="err">&amp;-item</span> <span class="err">{</span>
       <span class="k">padding</span><span class="p">:</span> <span class="mi">8</span><span class="kt">px</span> <span class="mi">0</span><span class="p">;</span>
@@ -1066,27 +1080,31 @@
     <span class="k">padding</span><span class="p">:</span> <span class="mi">8</span><span class="kt">px</span> <span class="mi">0</span><span class="p">;</span>
   <span class="p">}</span>
 <span class="err">}</span>
-<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
-
-</code></pre></td></tr></table>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><ul>
+</div>
+<ul>
 <li><code>.selected</code>标签导航被选中时的样式</li>
 </ul>
+
 <h3 id="切换标签页">切换标签页</h3>
-<h4 id="用selected标记被选中的标签页">用<code>selected</code>标记被选中的标签页</h4>
+
+<h4 id="用-selected-标记被选中的标签页">用<code>selected</code>标记被选中的标签页</h4>
+
 <ul>
 <li><code>selected</code>用<code>index</code>表示，不推荐，下标在增或删的情况下会出现问题</li>
 <li><code>selected</code>用<code>name</code>表示，不方便</li>
 <li><code>selected</code>用<code>title</code>表示，有漏洞，忌重复</li>
 </ul>
+
 <blockquote>
 <p>先选择作<code>title</code>为<code>selected</code>标记的属性，类型为<code>string</code></p>
 </blockquote>
+
 <h4 id="选中导航标签">选中导航标签</h4>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1140,10 +1158,9 @@
 </span><span class="lnt">52
 </span><span class="lnt">53
 </span><span class="lnt">54
-</span><span class="lnt">55
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;vue-tabs&#34;</span><span class="p">&gt;</span>
     <span class="p">&lt;</span><span class="nt">nav</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;vue-tabs-nav&#34;</span><span class="p">&gt;</span>
       <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;vue-tabs-nav-item&#34;</span>
@@ -1196,39 +1213,42 @@
   <span class="nx">emits</span><span class="p">(</span><span class="s1">&#39;update:selected&#39;</span><span class="p">,</span> <span class="nx">title</span><span class="p">);</span>
 <span class="p">};</span>
 
-<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-
-</code></pre></td></tr></table>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><ul>
+</div>
+<ul>
 <li><code>@click=&quot;select(title)&quot;</code> 点击执行回调</li>
 <li>点击选中项目时执行的方法 通知父组件当前的选中项
+
 <ul>
 <li><code>const select = (title: string) =&gt; {emits('update:selected', title);};</code></li>
+</ul></li>
 </ul>
-</li>
-</ul>
+
 <h4 id="选中内容">选中内容</h4>
+
 <blockquote>
 <p>显示被选中的内容，失败</p>
 </blockquote>
+
 <ul>
 <li>官方不推荐<code>v-if</code>和<code>v-for</code>一起使用</li>
 <li>不循环渲染<code>&lt;component&gt;&lt;/component&gt;</code>，使用获取当前选中的标签传给<code>&lt;component :is=&quot;currentTab&quot;&gt;&lt;/component&gt;</code></li>
 <li>使用计算属性，实时响应<code>currnetTab</code>的变化</li>
 <li><code>&lt;component :is=&quot;currentTab&quot; :key=&quot;currentTab&quot; class=&quot;vue-tabs-content-item&quot;&gt;&lt;/component&gt;</code>
+
 <ul>
 <li>必须加上<code>:key=&quot;currentTab&quot;</code>属性</li>
 <li><code>component</code>传递相同类型的<code>vnode</code>时，编译组件是竞态的，见 <a href="https://github.com/vuejs/vue-next/issues/2013">issue#2013</a></li>
+</ul></li>
 </ul>
-</li>
-</ul>
+
 <blockquote>
 <p><code>Tabs.vue</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1315,10 +1335,9 @@
 </span><span class="lnt">85
 </span><span class="lnt">86
 </span><span class="lnt">87
-</span><span class="lnt">88
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
 <span class="kr">import</span> <span class="p">{</span><span class="nx">computed</span><span class="p">,</span> <span class="nx">useSlots</span><span class="p">,</span> <span class="nx">VNode</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue&#39;</span><span class="p">;</span>
 
 <span class="c1">// 获取slots
@@ -1383,7 +1402,7 @@
   <span class="err">&amp;-nav</span> <span class="err">{</span>
     <span class="k">display</span><span class="p">:</span> <span class="kc">flex</span><span class="p">;</span>
     <span class="k">color</span><span class="p">:</span> <span class="err">$</span><span class="kc">color</span><span class="p">;</span>
-    <span class="k">border-bottom</span><span class="p">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="kc">solid</span> <span class="err">$</span><span class="k">border-color</span><span class="p">;</span>
+    <span class="k">border-bottom</span><span class="p">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="kc">solid</span> <span class="err">$</span><span class="k">border</span><span class="o">-</span><span class="kc">color</span><span class="p">;</span>
 
     <span class="err">&amp;-item</span> <span class="err">{</span>
       <span class="k">padding</span><span class="p">:</span> <span class="mi">8</span><span class="kt">px</span> <span class="mi">0</span><span class="p">;</span>
@@ -1404,24 +1423,24 @@
     <span class="k">padding</span><span class="p">:</span> <span class="mi">8</span><span class="kt">px</span> <span class="mi">0</span><span class="p">;</span>
   <span class="p">}</span>
 <span class="err">}</span>
-<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
-
-</code></pre></td></tr></table>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><ul>
+</div>
+<ul>
 <li><code>setup(){}</code> 在页面挂载前时执行，普通方法或属性只会在渲染的时候计算一遍</li>
 <li>当数据变化时，需要使用计算属性来响应变更
+
 <ul>
 <li>将<code>currentTab</code>变为计算属性</li>
+</ul></li>
 </ul>
-</li>
-</ul>
+
 <blockquote>
 <p><code>TabsDemo.vue</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1452,10 +1471,9 @@
 </span><span class="lnt">29
 </span><span class="lnt">30
 </span><span class="lnt">31
-</span><span class="lnt">32
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
 <span class="kr">import</span> <span class="p">{</span><span class="nx">ref</span><span class="p">,</span> <span class="nx">watchEffect</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue&#39;</span><span class="p">;</span>
 
 <span class="kr">const</span> <span class="nx">defaultTab</span> <span class="o">=</span> <span class="nx">ref</span><span class="p">(</span><span class="s1">&#39;导航1&#39;</span><span class="p">);</span>
@@ -1485,21 +1503,22 @@
     <span class="nx">TabItem</span>
   <span class="p">}</span>
 <span class="p">};</span>
-<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-
-</code></pre></td></tr></table>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><ul>
+</div>
+<ul>
 <li><code>TabsDemo.vue</code>使用<code>v-model:</code>来监听子组件传来的更新属性事件，执行属性更新</li>
 <li>使用<code>watchEffect(() =&gt; console.log(defaultTab.value));</code>查看变更后的属性值</li>
 </ul>
-<hr>
+
+<hr />
+
 <blockquote>
 <p>检查子组件名 <code>Tabs.vue</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1542,7 +1561,7 @@
 </span><span class="lnt">41
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
 <span class="kr">import</span> <span class="p">{</span><span class="nx">computed</span><span class="p">,</span> <span class="nx">onMounted</span><span class="p">,</span> <span class="nx">useSlots</span><span class="p">,</span> <span class="nx">VNode</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue&#39;</span><span class="p">;</span>
 <span class="kr">import</span> <span class="nx">TabItem</span> <span class="nx">from</span> <span class="s1">&#39;@/lib/TabItem.vue&#39;</span><span class="p">;</span>
 <span class="c1">// 获取slots
@@ -1582,16 +1601,17 @@
     <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
   <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
 <span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
-...
-</code></pre></td></tr></table>
+...</code></pre></td></tr></table>
 </div>
-</div><hr>
+</div>
+<hr />
+
 <blockquote>
 <p>替代方案：使用 CSS 切换内容</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="lnt">  1
 </span><span class="lnt">  2
 </span><span class="lnt">  3
 </span><span class="lnt">  4
@@ -1706,10 +1726,9 @@
 </span><span class="lnt">113
 </span><span class="lnt">114
 </span><span class="lnt">115
-</span><span class="lnt">116
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
 <span class="kr">import</span> <span class="p">{</span><span class="nx">computed</span><span class="p">,</span> <span class="nx">onMounted</span><span class="p">,</span> <span class="nx">useSlots</span><span class="p">,</span> <span class="nx">VNode</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue&#39;</span><span class="p">;</span>
 <span class="kr">import</span> <span class="nx">TabItem</span> <span class="nx">from</span> <span class="s1">&#39;@/lib/TabItem.vue&#39;</span><span class="p">;</span>
 <span class="c1">// 获取slots
@@ -1794,7 +1813,7 @@
   <span class="err">&amp;-nav</span> <span class="err">{</span>
     <span class="k">display</span><span class="p">:</span> <span class="kc">flex</span><span class="p">;</span>
     <span class="k">color</span><span class="p">:</span> <span class="err">$</span><span class="kc">color</span><span class="p">;</span>
-    <span class="k">border-bottom</span><span class="p">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="kc">solid</span> <span class="err">$</span><span class="k">border-color</span><span class="p">;</span>
+    <span class="k">border-bottom</span><span class="p">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="kc">solid</span> <span class="err">$</span><span class="k">border</span><span class="o">-</span><span class="kc">color</span><span class="p">;</span>
 
     <span class="err">&amp;-item</span> <span class="err">{</span>
       <span class="k">padding</span><span class="p">:</span> <span class="mi">8</span><span class="kt">px</span> <span class="mi">0</span><span class="p">;</span>
@@ -1823,69 +1842,80 @@
     <span class="err">}</span>
   <span class="err">}</span>
 <span class="err">}</span>
-<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
-
-</code></pre></td></tr></table>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><ul>
+</div>
+<ul>
 <li><code>&lt;component v-for=&quot;comp in defaults&quot; :is=&quot;comp&quot; class=&quot;vue-tabs-content-item&quot; :class=&quot;{selected: comp.props.title === selected}&quot;&gt;&lt;/component&gt;</code></li>
 <li>使用<code>display: none/block;</code>来切换显示隐藏</li>
 </ul>
-<hr>
+
+<hr />
+
 <h2 id="动态设置-div-制作会动的横线">动态设置 div 制作会动的横线</h2>
+
 <h3 id="动态设置-div-的宽度">动态设置 div 的宽度</h3>
+
 <ul>
-<li>官方文档中 <a href="https://v3.cn.vuejs.org/guide/composition-api-template-refs.html">模板引用<code>Template Refs</code> v-for 中的用法</a></li>
-</ul>
+<li><p>官方文档中 <a href="https://v3.cn.vuejs.org/guide/composition-api-template-refs.html">模板引用<code>Template Refs</code> v-for 中的用法</a></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code></code></pre></td>
+<pre class="chroma"><code class="language-html" data-lang="html"></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-html" data-lang="html"></code></pre></td></tr></table>
 </div>
-</div><ul>
-<li>在Template 使用Refs 配合v-for：
+</div></li>
+
+<li><p>在Template 使用Refs 配合v-for：</p>
+
 <ul>
 <li><code>&lt;div class=&quot;vue-tabs-nav-item&quot; v-for=&quot;(title, index) in titles&quot; :key=&quot;index&quot; :ref=&quot;el =&gt; { if (el) navItems[index] = el }&quot;&gt;...&lt;/div&gt;</code></li>
-</ul>
-</li>
-<li>在<code>setup</code>中
+</ul></li>
+
+<li><p>在<code>setup</code>中</p>
+
 <ul>
 <li>获取导航标签项目声明引用 <code>const navItems = ref([]);</code> ，注意传数组默认值 <code>ref([])</code>，而不是传空值<code>ref()</code>或<code>ref(null)</code></li>
 <li>使用泛型传参<code>const navItems = ref&lt;HTMLDivElement&gt;([]);</code></li>
 <li>控制台打出<code>onMounted(() =&gt; { console.log({...navItems.value});});</code>查看</li>
-</ul>
-</li>
-<li>获取选中的项目
+</ul></li>
+
+<li><p>获取选中的项目</p>
+
 <ul>
 <li><code>const divs = navItems.value;</code></li>
 <li><code>const result = divs.find(div =&gt; div.classList.contains('selected'));</code></li>
-</ul>
-</li>
-<li>获取选中的项目元素宽度
+</ul></li>
+
+<li><p>获取选中的项目元素宽度</p>
+
 <ul>
 <li><code>const {width} = result.getBoundingClientRect();</code></li>
-</ul>
-</li>
-<li>引用标签指示横线<code>&lt;div class=&quot;vue-tabs-nav-indicator&quot; ref=&quot;indicator&quot;&gt;&lt;/div&gt;</code>
+</ul></li>
+
+<li><p>引用标签指示横线<code>&lt;div class=&quot;vue-tabs-nav-indicator&quot; ref=&quot;indicator&quot;&gt;&lt;/div&gt;</code></p>
+
 <ul>
 <li><code>const indicator = ref&lt;HTMLDivElement&gt;(null);</code></li>
-</ul>
-</li>
-<li>将获取的宽度赋值给标签指示横线
+</ul></li>
+
+<li><p>将获取的宽度赋值给标签指示横线</p>
+
 <ul>
 <li>indicator.value.style.width = `${width}px`;</li>
+</ul></li>
 </ul>
-</li>
-</ul>
+
 <h3 id="动态设置-div-的位置">动态设置 div 的位置</h3>
-<p><img src="https://note.youdao.com/yws/api/personal/file/2214395154A64F09A8DB5932378AD579?method=download&amp;shareKey=e61912fef3bb97996efa69041db6ae7a" alt="1.3"></p>
+
+<p><img src="https://note.youdao.com/yws/api/personal/file/2214395154A64F09A8DB5932378AD579?method=download&amp;shareKey=e61912fef3bb97996efa69041db6ae7a" alt="1.3" /></p>
+
 <blockquote>
 <p><code>Tabs.vue</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="lnt">  1
 </span><span class="lnt">  2
 </span><span class="lnt">  3
 </span><span class="lnt">  4
@@ -1997,10 +2027,9 @@
 </span><span class="lnt">110
 </span><span class="lnt">111
 </span><span class="lnt">112
-</span><span class="lnt">113
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
 <span class="kr">import</span> <span class="p">{</span><span class="nx">onMounted</span><span class="p">,</span> <span class="nx">ref</span><span class="p">,</span> <span class="nx">useSlots</span><span class="p">,</span> <span class="nx">VNode</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue&#39;</span><span class="p">;</span>
 <span class="kr">import</span> <span class="nx">TabItem</span> <span class="nx">from</span> <span class="s1">&#39;@/lib/TabItem.vue&#39;</span><span class="p">;</span>
 <span class="c1">// 获取slots
@@ -2111,47 +2140,52 @@
 
 <span class="p">&lt;</span><span class="nt">style</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;scss&#34;</span><span class="p">&gt;</span>
 <span class="o">...</span>
-<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
-
-</code></pre></td></tr></table>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><ul>
+</div>
+<ul>
 <li>发现不切换，因为<code>onMounted</code>只在第一次执行计算属性并渲染
+
 <ul>
 <li>将<code>onMounted</code>改为<code>onUpdated</code>，拷贝<code>onMounted</code>同样代码</li>
 <li>提取方法<code>xxx = () =&gt; {...}</code></li>
+</ul></li>
 </ul>
-</li>
-</ul>
+
 <blockquote>
 <p>代码待优化</p>
 </blockquote>
+
 <ul>
 <li>代码冗余
+
 <ul>
 <li>可直接获取<code>selectedItem</code>代替使用<code>navItems</code></li>
-</ul>
-</li>
+</ul></li>
 <li>代码重复
+
 <ul>
 <li><code>onMounted(xxx())</code> 第一次执行</li>
 <li><code>onUpdated(xxx())</code> 后面几次执行</li>
-</ul>
-</li>
+</ul></li>
 <li>检查并删除无用变量</li>
 </ul>
-<hr>
-<h2 id="三处优化代码tabsvue">三处优化代码<code>Tabs.vue</code></h2>
-<h3 id="优化一直接获取selecteditem">优化一：直接获取<code>selectedItem</code></h3>
+
+<hr />
+
+<h2 id="三处优化代码-tabs-vue">三处优化代码<code>Tabs.vue</code></h2>
+
+<h3 id="优化一-直接获取-selecteditem">优化一：直接获取<code>selectedItem</code></h3>
+
 <blockquote>
 <p><code>Tabs.vue</code>原来：从标签数组中得到被选中的标签组件<code>VNode</code>，即</p>
 </blockquote>
+
 <ul>
-<li>获取导航标签项目引用<code>const navItems = ref&lt;HTMLDivElement[]&gt;([]);</code></li>
-</ul>
+<li><p>获取导航标签项目引用<code>const navItems = ref&lt;HTMLDivElement[]&gt;([]);</code></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -2163,25 +2197,25 @@
 </span><span class="lnt">10
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html">...
-  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;vue-tabs-nav-item&#34;</span>
-       <span class="na">v-for</span><span class="o">=</span><span class="s">&#34;(title, index) in titles&#34;</span>
-       <span class="na">:key</span><span class="o">=</span><span class="s">&#34;index&#34;</span>
-       <span class="err">@</span><span class="na">click</span><span class="o">=</span><span class="s">&#34;select(title)&#34;</span>
-       <span class="na">:class</span><span class="o">=</span><span class="s">&#34;{selected: title === selected}&#34;</span>
-       <span class="na">:ref</span><span class="o">=</span><span class="s">&#34;el =&gt; { if (el) navItems[index] = el }&#34;</span><span class="p">&gt;</span>
-  {{ title }}
-  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-...
-</code></pre></td></tr></table>
+<pre class="chroma"><code class="language-html" data-lang="html">...
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;vue-tabs-nav-item&#34;</span>
+   <span class="na">v-for</span><span class="o">=</span><span class="s">&#34;(title, index) in titles&#34;</span>
+   <span class="na">:key</span><span class="o">=</span><span class="s">&#34;index&#34;</span>
+   <span class="err">@</span><span class="na">click</span><span class="o">=</span><span class="s">&#34;select(title)&#34;</span>
+   <span class="na">:class</span><span class="o">=</span><span class="s">&#34;{selected: title === selected}&#34;</span>
+   <span class="na">:ref</span><span class="o">=</span><span class="s">&#34;el =&gt; { if (el) navItems[index] = el }&#34;</span><span class="p">&gt;</span>
+{{ title }}
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+...</code></pre></td></tr></table>
 </div>
-</div><ul>
-<li>获取选中的一项<code>const result = navItems.value.find(div =&gt; div.classList.contains('selected'));</code></li>
-<li>改为直接获取选中的标签引用，不需要绕弯找<code>div.classList.contains('selected')</code></li>
-</ul>
+</div></li>
+
+<li><p>获取选中的一项<code>const result = navItems.value.find(div =&gt; div.classList.contains('selected'));</code></p></li>
+
+<li><p>改为直接获取选中的标签引用，不需要绕弯找<code>div.classList.contains('selected')</code></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="lnt">  1
 </span><span class="lnt">  2
 </span><span class="lnt">  3
 </span><span class="lnt">  4
@@ -2296,34 +2330,33 @@
 </span><span class="lnt">113
 </span><span class="lnt">114
 </span><span class="lnt">115
-</span><span class="lnt">116
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;vue-tabs&#34;</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">nav</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;vue-tabs-nav&#34;</span> <span class="na">ref</span><span class="o">=</span><span class="s">&#34;container&#34;</span><span class="p">&gt;</span>
-      <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;vue-tabs-nav-item&#34;</span>
-           <span class="na">v-for</span><span class="o">=</span><span class="s">&#34;(title, index) in titles&#34;</span>
-           <span class="na">:key</span><span class="o">=</span><span class="s">&#34;index&#34;</span>
-           <span class="err">@</span><span class="na">click</span><span class="o">=</span><span class="s">&#34;select(title)&#34;</span>
-           <span class="na">:class</span><span class="o">=</span><span class="s">&#34;{selected: title === selected}&#34;</span>
-           <span class="na">:ref</span><span class="o">=</span><span class="s">&#34;(el) =&gt; { if (el &amp;&amp; (title === selected)) selectedItem = el&#34;</span><span class="p">&gt;</span>
-        {{ title }}
-      <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-      <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;vue-tabs-nav-indicator&#34;</span>
-           <span class="na">ref</span><span class="o">=</span><span class="s">&#34;indicator&#34;</span><span class="p">&gt;</span>
-      <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-    <span class="p">&lt;/</span><span class="nt">nav</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;vue-tabs-content&#34;</span><span class="p">&gt;</span>
-      <span class="p">&lt;</span><span class="nt">keep-alive</span><span class="p">&gt;</span>
-        <span class="p">&lt;</span><span class="nt">component</span> <span class="na">v-for</span><span class="o">=</span><span class="s">&#34;comp in defaults&#34;</span>
-                   <span class="na">:is</span><span class="o">=</span><span class="s">&#34;comp&#34;</span>
-                   <span class="na">class</span><span class="o">=</span><span class="s">&#34;vue-tabs-content-item&#34;</span>
-                   <span class="na">:class</span><span class="o">=</span><span class="s">&#34;{selected: comp.props.title === selected}&#34;</span><span class="p">&gt;</span>
-        <span class="p">&lt;/</span><span class="nt">component</span><span class="p">&gt;</span>
-      <span class="p">&lt;/</span><span class="nt">keep-alive</span><span class="p">&gt;</span>
-    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;vue-tabs&#34;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">nav</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;vue-tabs-nav&#34;</span> <span class="na">ref</span><span class="o">=</span><span class="s">&#34;container&#34;</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;vue-tabs-nav-item&#34;</span>
+       <span class="na">v-for</span><span class="o">=</span><span class="s">&#34;(title, index) in titles&#34;</span>
+       <span class="na">:key</span><span class="o">=</span><span class="s">&#34;index&#34;</span>
+       <span class="err">@</span><span class="na">click</span><span class="o">=</span><span class="s">&#34;select(title)&#34;</span>
+       <span class="na">:class</span><span class="o">=</span><span class="s">&#34;{selected: title === selected}&#34;</span>
+       <span class="na">:ref</span><span class="o">=</span><span class="s">&#34;(el) =&gt; { if (el &amp;&amp; (title === selected)) selectedItem = el&#34;</span><span class="p">&gt;</span>
+    {{ title }}
   <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;vue-tabs-nav-indicator&#34;</span>
+       <span class="na">ref</span><span class="o">=</span><span class="s">&#34;indicator&#34;</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">nav</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;vue-tabs-content&#34;</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">keep-alive</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">component</span> <span class="na">v-for</span><span class="o">=</span><span class="s">&#34;comp in defaults&#34;</span>
+               <span class="na">:is</span><span class="o">=</span><span class="s">&#34;comp&#34;</span>
+               <span class="na">class</span><span class="o">=</span><span class="s">&#34;vue-tabs-content-item&#34;</span>
+               <span class="na">:class</span><span class="o">=</span><span class="s">&#34;{selected: comp.props.title === selected}&#34;</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">component</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">keep-alive</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
 <span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
 <span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
 <span class="kr">import</span> <span class="p">{</span><span class="nx">onBeforeUpdate</span><span class="p">,</span><span class="cm">/*computed, */</span> <span class="nx">onMounted</span><span class="p">,</span> <span class="nx">onUpdated</span><span class="p">,</span> <span class="nx">ref</span><span class="p">,</span> <span class="nx">useSlots</span><span class="p">,</span> <span class="nx">VNode</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue&#39;</span><span class="p">;</span>
@@ -2336,35 +2369,35 @@
 
 <span class="c1">// 检查子标签名方法
 </span><span class="c1"></span><span class="kr">const</span> <span class="nx">checkTabItem</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
-  <span class="nx">defaults</span><span class="p">.</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">tag</span><span class="o">:</span> <span class="nx">VNode</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span><span class="nx">tag</span><span class="p">.</span><span class="nx">type</span> <span class="o">!==</span> <span class="nx">TabItem</span><span class="p">)</span> <span class="p">{</span>
-      <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s1">&#39;Tabs 子标签必须是 TabItem&#39;</span><span class="p">));</span>
-    <span class="p">}</span>
-  <span class="p">});</span>
+<span class="nx">defaults</span><span class="p">.</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">tag</span><span class="o">:</span> <span class="nx">VNode</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+<span class="k">if</span> <span class="p">(</span><span class="nx">tag</span><span class="p">.</span><span class="nx">type</span> <span class="o">!==</span> <span class="nx">TabItem</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s1">&#39;Tabs 子标签必须是 TabItem&#39;</span><span class="p">));</span>
+<span class="p">}</span>
+<span class="p">});</span>
 <span class="p">};</span>
 
 <span class="c1">// 获取子组件VNode中对应title属性组成的数组 titles: string[]
 </span><span class="c1"></span><span class="kr">const</span> <span class="nx">titles</span> <span class="o">=</span> <span class="nx">defaults</span><span class="o">?</span><span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">tag</span><span class="o">:</span> <span class="nx">VNode</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
-  <span class="k">return</span> <span class="nx">tag</span><span class="o">?</span><span class="p">.</span><span class="nx">props</span><span class="o">?</span><span class="p">.</span><span class="nx">title</span><span class="p">;</span>
+<span class="k">return</span> <span class="nx">tag</span><span class="o">?</span><span class="p">.</span><span class="nx">props</span><span class="o">?</span><span class="p">.</span><span class="nx">title</span><span class="p">;</span>
 <span class="p">});</span>
 
 <span class="c1">// 声明外部数据 获取 props.selected 属性
 </span><span class="c1"></span><span class="kr">const</span> <span class="nx">props</span> <span class="o">=</span> <span class="nx">defineProps</span><span class="p">({</span>
-  <span class="nx">selected</span><span class="o">:</span> <span class="nb">String</span>
+<span class="nx">selected</span><span class="o">:</span> <span class="nb">String</span>
 <span class="p">});</span>
 
 <span class="cm">/*
 </span><span class="cm">// 对比所有项目的title和当前选中项的title 获取当前选中项currentTab
 </span><span class="cm">const currentTab = computed(() =&gt; {
-</span><span class="cm">  return defaults?.filter((tag: VNode) =&gt; {
-</span><span class="cm">    return tag?.props?.title === props.selected;
-</span><span class="cm">  })[0];
+</span><span class="cm">return defaults?.filter((tag: VNode) =&gt; {
+</span><span class="cm">return tag?.props?.title === props.selected;
+</span><span class="cm">})[0];
 </span><span class="cm">});
 </span><span class="cm">
 </span><span class="cm">const currentTitle = computed(() =&gt; {
-</span><span class="cm">  return defaults.find((tag: VNode) =&gt; {
-</span><span class="cm">    return tag!.props!.title === props.selected;
-</span><span class="cm">  })!.props!.title;
+</span><span class="cm">return defaults.find((tag: VNode) =&gt; {
+</span><span class="cm">return tag!.props!.title === props.selected;
+</span><span class="cm">})!.props!.title;
 </span><span class="cm">});
 </span><span class="cm">*/</span>
 
@@ -2372,7 +2405,7 @@
 </span><span class="c1"></span><span class="kr">const</span> <span class="nx">emits</span> <span class="o">=</span> <span class="nx">defineEmits</span><span class="p">([</span><span class="s1">&#39;update:selected&#39;</span><span class="p">]);</span>
 <span class="c1">// 点击选中项目时执行的方法 通知父组件当前的选中项
 </span><span class="c1"></span><span class="kr">const</span> <span class="nx">select</span> <span class="o">=</span> <span class="p">(</span><span class="nx">title</span><span class="o">:</span> <span class="nx">string</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
-  <span class="nx">emits</span><span class="p">(</span><span class="s1">&#39;update:selected&#39;</span><span class="p">,</span> <span class="nx">title</span><span class="p">);</span>
+<span class="nx">emits</span><span class="p">(</span><span class="s1">&#39;update:selected&#39;</span><span class="p">,</span> <span class="nx">title</span><span class="p">);</span>
 <span class="p">};</span>
 
 <span class="c1">// 获取导航标签项目引用
@@ -2387,50 +2420,52 @@
 
 <span class="c1">// 确保在每次更新之前重置ref
 </span><span class="c1"></span><span class="nx">onBeforeUpdate</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
-  <span class="nx">selectedItem</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="nx">div</span>
+<span class="nx">selectedItem</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="nx">div</span>
 <span class="p">})</span>
 
 <span class="c1">// 获取导航项目列表数组
 </span><span class="c1"></span><span class="kr">const</span> <span class="nx">xxx</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
-  <span class="c1">// 获取导航项目列表数组
-</span><span class="c1"></span>  <span class="c1">// const divs = navItems.value;
-</span><span class="c1"></span>  <span class="c1">// const result = divs.filter(div =&gt; div.classList.contains(&#39;selected&#39;))[0];
-</span><span class="c1"></span>  <span class="c1">// const result = divs.find(div =&gt; div.classList.contains(&#39;selected&#39;));
-</span><span class="c1"></span>  <span class="kr">const</span> <span class="p">{</span><span class="nx">width</span><span class="p">,</span> <span class="nx">left</span><span class="p">}</span> <span class="o">=</span> <span class="nx">selectedItem</span><span class="p">.</span><span class="nx">value</span><span class="o">!</span><span class="p">.</span><span class="nx">getBoundingClientRect</span><span class="p">();</span>
-  <span class="kr">const</span> <span class="p">{</span><span class="nx">left</span><span class="o">:</span> <span class="nx">containerLeft</span><span class="p">}</span> <span class="o">=</span> <span class="nx">container</span><span class="o">!</span><span class="p">.</span><span class="nx">value</span><span class="o">!</span><span class="p">.</span><span class="nx">getBoundingClientRect</span><span class="p">();</span>
-  <span class="kr">const</span> <span class="nx">leftPos</span> <span class="o">=</span> <span class="nx">left</span> <span class="o">-</span> <span class="nx">containerLeft</span><span class="p">;</span>
-  <span class="nx">indicator</span><span class="o">!</span><span class="p">.</span><span class="nx">value</span><span class="o">!</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">width</span> <span class="o">=</span> <span class="sb">`</span><span class="si">${</span><span class="nx">width</span><span class="si">}</span><span class="sb">px`</span><span class="p">;</span>
-  <span class="c1">// indicator.value.style.left = `${leftPos}px`;
-</span><span class="c1"></span>  <span class="nx">indicator</span><span class="o">!</span><span class="p">.</span><span class="nx">value</span><span class="o">!</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">transform</span> <span class="o">=</span> <span class="sb">`translate3D(</span><span class="si">${</span><span class="nx">leftPos</span><span class="si">}</span><span class="sb">px, 0, 0)`</span><span class="p">;</span>
+<span class="c1">// 获取导航项目列表数组
+</span><span class="c1">// const divs = navItems.value;
+</span><span class="c1">// const result = divs.filter(div =&gt; div.classList.contains(&#39;selected&#39;))[0];
+</span><span class="c1">// const result = divs.find(div =&gt; div.classList.contains(&#39;selected&#39;));
+</span><span class="c1"></span><span class="kr">const</span> <span class="p">{</span><span class="nx">width</span><span class="p">,</span> <span class="nx">left</span><span class="p">}</span> <span class="o">=</span> <span class="nx">selectedItem</span><span class="p">.</span><span class="nx">value</span><span class="o">!</span><span class="p">.</span><span class="nx">getBoundingClientRect</span><span class="p">();</span>
+<span class="kr">const</span> <span class="p">{</span><span class="nx">left</span><span class="o">:</span> <span class="nx">containerLeft</span><span class="p">}</span> <span class="o">=</span> <span class="nx">container</span><span class="o">!</span><span class="p">.</span><span class="nx">value</span><span class="o">!</span><span class="p">.</span><span class="nx">getBoundingClientRect</span><span class="p">();</span>
+<span class="kr">const</span> <span class="nx">leftPos</span> <span class="o">=</span> <span class="nx">left</span> <span class="o">-</span> <span class="nx">containerLeft</span><span class="p">;</span>
+<span class="nx">indicator</span><span class="o">!</span><span class="p">.</span><span class="nx">value</span><span class="o">!</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">width</span> <span class="o">=</span> <span class="sb">`</span><span class="si">${</span><span class="nx">width</span><span class="si">}</span><span class="sb">px`</span><span class="p">;</span>
+<span class="c1">// indicator.value.style.left = `${leftPos}px`;
+</span><span class="c1"></span><span class="nx">indicator</span><span class="o">!</span><span class="p">.</span><span class="nx">value</span><span class="o">!</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">transform</span> <span class="o">=</span> <span class="sb">`translate3D(</span><span class="si">${</span><span class="nx">leftPos</span><span class="si">}</span><span class="sb">px, 0, 0)`</span><span class="p">;</span>
 <span class="p">};</span>
 
 <span class="nx">onMounted</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
-  <span class="nx">checkTabItem</span><span class="p">();</span>
-  <span class="nx">xxx</span><span class="p">();</span>
+<span class="nx">checkTabItem</span><span class="p">();</span>
+<span class="nx">xxx</span><span class="p">();</span>
 <span class="p">});</span>
 
 <span class="nx">onUpdated</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
-  <span class="nx">xxx</span><span class="p">();</span>
+<span class="nx">xxx</span><span class="p">();</span>
 <span class="p">});</span>
 
-<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-
-</code></pre></td></tr></table>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><h3 id="优化二干掉onmounted和onupdated">优化二：干掉<code>onMounted</code>和<code>onUpdated</code></h3>
+</div></li>
+</ul>
+
+<h3 id="优化二-干掉-onmounted-和-onupdated">优化二：干掉<code>onMounted</code>和<code>onUpdated</code></h3>
+
 <ul>
 <li>使用<code>watchEffect</code>代替钩子函数<code>onMounted</code>和<code>onUpdated</code></li>
 <li><a href="https://note.youdao.com/">watchEffect 文档</a></li>
-<li><code>watchEffect</code>会在第一次就执行回调函数，每次追踪到变更，都执行一次回调，相当于：
+
+<li><p><code>watchEffect</code>会在第一次就执行回调函数，每次追踪到变更，都执行一次回调，相当于：</p>
+
 <ul>
 <li><code>onMounted(xxx())</code> 第一次执行</li>
-<li><code>onUpdated(xxx())</code> 后面几次执行</li>
-</ul>
-</li>
-</ul>
+
+<li><p><code>onUpdated(xxx())</code> 后面几次执行</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -2499,7 +2534,7 @@
 </span><span class="lnt">67
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
 <span class="kr">import</span> <span class="p">{</span><span class="nx">onBeforeUpdate</span><span class="p">,</span><span class="cm">/*computed, */</span> <span class="nx">onMounted</span><span class="p">,</span> <span class="nx">onUpdated</span><span class="p">,</span> <span class="nx">ref</span><span class="p">,</span> <span class="nx">useSlots</span><span class="p">,</span> <span class="nx">VNode</span><span class="p">,</span> <span class="nx">watchEffect</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue&#39;</span><span class="p">;</span>
 <span class="kr">import</span> <span class="nx">TabItem</span> <span class="nx">from</span> <span class="s1">&#39;@/lib/TabItem.vue&#39;</span><span class="p">;</span>
 
@@ -2513,12 +2548,12 @@
 
 <span class="c1">// 获取子组件VNode中对应title属性组成的数组 titles: string[]
 </span><span class="c1"></span><span class="kr">const</span> <span class="nx">titles</span> <span class="o">=</span> <span class="nx">defaults</span><span class="o">?</span><span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">tag</span><span class="o">:</span> <span class="nx">VNode</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
-  <span class="k">return</span> <span class="nx">tag</span><span class="o">?</span><span class="p">.</span><span class="nx">props</span><span class="o">?</span><span class="p">.</span><span class="nx">title</span><span class="p">;</span>
+<span class="k">return</span> <span class="nx">tag</span><span class="o">?</span><span class="p">.</span><span class="nx">props</span><span class="o">?</span><span class="p">.</span><span class="nx">title</span><span class="p">;</span>
 <span class="p">});</span>
 
 <span class="c1">// 声明外部数据 获取 props.selected 属性
 </span><span class="c1"></span><span class="kr">const</span> <span class="nx">props</span> <span class="o">=</span> <span class="nx">defineProps</span><span class="p">({</span>
-  <span class="nx">selected</span><span class="o">:</span> <span class="nb">String</span>
+<span class="nx">selected</span><span class="o">:</span> <span class="nb">String</span>
 <span class="p">});</span>
 
 <span class="c1">// 声明 发布方法名
@@ -2526,7 +2561,7 @@
 
 <span class="c1">// 点击选中项目时执行的方法 通知父组件当前的选中项
 </span><span class="c1"></span><span class="kr">const</span> <span class="nx">select</span> <span class="o">=</span> <span class="p">(</span><span class="nx">title</span><span class="o">:</span> <span class="nx">string</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
-  <span class="nx">emits</span><span class="p">(</span><span class="s1">&#39;update:selected&#39;</span><span class="p">,</span> <span class="nx">title</span><span class="p">);</span>
+<span class="nx">emits</span><span class="p">(</span><span class="s1">&#39;update:selected&#39;</span><span class="p">,</span> <span class="nx">title</span><span class="p">);</span>
 <span class="p">};</span>
 
 <span class="c1">// 获取导航标签项目引用
@@ -2539,41 +2574,41 @@
 
 <span class="c1">// 确保在每次更新之前重置ref
 </span><span class="c1"></span><span class="nx">onBeforeUpdate</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
-  <span class="nx">selectedItem</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="nx">div</span><span class="p">;</span>
+<span class="nx">selectedItem</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="nx">div</span><span class="p">;</span>
 <span class="p">});</span>
 
 <span class="c1">// 获取导航项目列表数组
 </span><span class="c1"></span><span class="kr">const</span> <span class="nx">xxx</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
-  <span class="kr">const</span> <span class="p">{</span><span class="nx">width</span><span class="p">,</span> <span class="nx">left</span><span class="p">}</span> <span class="o">=</span> <span class="nx">selectedItem</span><span class="p">.</span><span class="nx">value</span><span class="o">!</span><span class="p">.</span><span class="nx">getBoundingClientRect</span><span class="p">();</span>
-  <span class="kr">const</span> <span class="p">{</span><span class="nx">left</span><span class="o">:</span> <span class="nx">containerLeft</span><span class="p">}</span> <span class="o">=</span> <span class="nx">container</span><span class="o">!</span><span class="p">.</span><span class="nx">value</span><span class="o">!</span><span class="p">.</span><span class="nx">getBoundingClientRect</span><span class="p">();</span>
-  <span class="kr">const</span> <span class="nx">leftPos</span> <span class="o">=</span> <span class="nx">left</span> <span class="o">-</span> <span class="nx">containerLeft</span><span class="p">;</span>
-  <span class="nx">indicator</span><span class="o">!</span><span class="p">.</span><span class="nx">value</span><span class="o">!</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">width</span> <span class="o">=</span> <span class="sb">`</span><span class="si">${</span><span class="nx">width</span><span class="si">}</span><span class="sb">px`</span><span class="p">;</span>
-  <span class="nx">indicator</span><span class="o">!</span><span class="p">.</span><span class="nx">value</span><span class="o">!</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">transform</span> <span class="o">=</span> <span class="sb">`translate3D(</span><span class="si">${</span><span class="nx">leftPos</span><span class="si">}</span><span class="sb">px, 0, 0)`</span><span class="p">;</span>
+<span class="kr">const</span> <span class="p">{</span><span class="nx">width</span><span class="p">,</span> <span class="nx">left</span><span class="p">}</span> <span class="o">=</span> <span class="nx">selectedItem</span><span class="p">.</span><span class="nx">value</span><span class="o">!</span><span class="p">.</span><span class="nx">getBoundingClientRect</span><span class="p">();</span>
+<span class="kr">const</span> <span class="p">{</span><span class="nx">left</span><span class="o">:</span> <span class="nx">containerLeft</span><span class="p">}</span> <span class="o">=</span> <span class="nx">container</span><span class="o">!</span><span class="p">.</span><span class="nx">value</span><span class="o">!</span><span class="p">.</span><span class="nx">getBoundingClientRect</span><span class="p">();</span>
+<span class="kr">const</span> <span class="nx">leftPos</span> <span class="o">=</span> <span class="nx">left</span> <span class="o">-</span> <span class="nx">containerLeft</span><span class="p">;</span>
+<span class="nx">indicator</span><span class="o">!</span><span class="p">.</span><span class="nx">value</span><span class="o">!</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">width</span> <span class="o">=</span> <span class="sb">`</span><span class="si">${</span><span class="nx">width</span><span class="si">}</span><span class="sb">px`</span><span class="p">;</span>
+<span class="nx">indicator</span><span class="o">!</span><span class="p">.</span><span class="nx">value</span><span class="o">!</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">transform</span> <span class="o">=</span> <span class="sb">`translate3D(</span><span class="si">${</span><span class="nx">leftPos</span><span class="si">}</span><span class="sb">px, 0, 0)`</span><span class="p">;</span>
 <span class="p">};</span>
 
 <span class="nx">watchEffect</span><span class="p">(</span><span class="nx">xxx</span><span class="p">);</span>
 
 <span class="cm">/*
 </span><span class="cm">onMounted(() =&gt; {
-</span><span class="cm">  checkTabItem();
-</span><span class="cm">  xxx();
+</span><span class="cm">checkTabItem();
+</span><span class="cm">xxx();
 </span><span class="cm">});
 </span><span class="cm">
 </span><span class="cm">onUpdated(() =&gt; {
-</span><span class="cm">  xxx();
+</span><span class="cm">xxx();
 </span><span class="cm">});
 </span><span class="cm">*/</span>
 
 <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-...
-</code></pre></td></tr></table>
+...</code></pre></td></tr></table>
 </div>
-</div><ul>
-<li><code>xxx</code>方法只使用了一次，合并到<code>watchEffect</code>中</li>
-</ul>
+</div></li>
+</ul></li>
+
+<li><p><code>xxx</code>方法只使用了一次，合并到<code>watchEffect</code>中</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -2635,10 +2670,9 @@
 </span><span class="lnt">60
 </span><span class="lnt">61
 </span><span class="lnt">62
-</span><span class="lnt">63
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
 <span class="kr">import</span> <span class="p">{</span><span class="nx">onBeforeUpdate</span><span class="p">,</span> <span class="nx">onMounted</span><span class="p">,</span> <span class="nx">ref</span><span class="p">,</span> <span class="nx">useSlots</span><span class="p">,</span> <span class="nx">VNode</span><span class="p">,</span> <span class="nx">watchEffect</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue&#39;</span><span class="p">;</span>
 <span class="kr">import</span> <span class="nx">TabItem</span> <span class="nx">from</span> <span class="s1">&#39;@/lib/TabItem.vue&#39;</span><span class="p">;</span>
 
@@ -2649,28 +2683,28 @@
 
 <span class="c1">// 检查子标签名方法
 </span><span class="c1"></span><span class="kr">const</span> <span class="nx">checkTabItem</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
-  <span class="nx">defaults</span><span class="p">.</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">tag</span><span class="o">:</span> <span class="nx">VNode</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span><span class="nx">tag</span><span class="p">.</span><span class="nx">type</span> <span class="o">!==</span> <span class="nx">TabItem</span><span class="p">)</span> <span class="p">{</span>
-      <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s1">&#39;Tabs 子标签必须是 TabItem&#39;</span><span class="p">));</span>
-    <span class="p">}</span>
-  <span class="p">});</span>
+<span class="nx">defaults</span><span class="p">.</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">tag</span><span class="o">:</span> <span class="nx">VNode</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+<span class="k">if</span> <span class="p">(</span><span class="nx">tag</span><span class="p">.</span><span class="nx">type</span> <span class="o">!==</span> <span class="nx">TabItem</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s1">&#39;Tabs 子标签必须是 TabItem&#39;</span><span class="p">));</span>
+<span class="p">}</span>
+<span class="p">});</span>
 <span class="p">};</span>
 
 <span class="c1">// 获取子组件VNode中对应title属性组成的数组 titles: string[]
 </span><span class="c1"></span><span class="kr">const</span> <span class="nx">titles</span> <span class="o">=</span> <span class="nx">defaults</span><span class="o">?</span><span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">tag</span><span class="o">:</span> <span class="nx">VNode</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
-  <span class="k">return</span> <span class="nx">tag</span><span class="o">?</span><span class="p">.</span><span class="nx">props</span><span class="o">?</span><span class="p">.</span><span class="nx">title</span><span class="p">;</span>
+<span class="k">return</span> <span class="nx">tag</span><span class="o">?</span><span class="p">.</span><span class="nx">props</span><span class="o">?</span><span class="p">.</span><span class="nx">title</span><span class="p">;</span>
 <span class="p">});</span>
 
 <span class="c1">// 声明外部数据 获取 props.selected 属性
 </span><span class="c1"></span><span class="kr">const</span> <span class="nx">props</span> <span class="o">=</span> <span class="nx">defineProps</span><span class="p">({</span>
-  <span class="nx">selected</span><span class="o">:</span> <span class="nb">String</span>
+<span class="nx">selected</span><span class="o">:</span> <span class="nb">String</span>
 <span class="p">});</span>
 
 <span class="c1">// 声明 发布方法名
 </span><span class="c1"></span><span class="kr">const</span> <span class="nx">emits</span> <span class="o">=</span> <span class="nx">defineEmits</span><span class="p">([</span><span class="s1">&#39;update:selected&#39;</span><span class="p">]);</span>
 <span class="c1">// 点击选中项目时执行的方法 通知父组件当前的选中项
 </span><span class="c1"></span><span class="kr">const</span> <span class="nx">select</span> <span class="o">=</span> <span class="p">(</span><span class="nx">title</span><span class="o">:</span> <span class="nx">string</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
-  <span class="nx">emits</span><span class="p">(</span><span class="s1">&#39;update:selected&#39;</span><span class="p">,</span> <span class="nx">title</span><span class="p">);</span>
+<span class="nx">emits</span><span class="p">(</span><span class="s1">&#39;update:selected&#39;</span><span class="p">,</span> <span class="nx">title</span><span class="p">);</span>
 <span class="p">};</span>
 
 <span class="c1">// 获取导航标签项目引用
@@ -2683,42 +2717,43 @@
 
 <span class="c1">// 确保在每次更新之前重置ref
 </span><span class="c1"></span><span class="nx">onBeforeUpdate</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
-  <span class="nx">selectedItem</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="nx">div</span><span class="p">;</span>
+<span class="nx">selectedItem</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="nx">div</span><span class="p">;</span>
 <span class="p">});</span>
 
 <span class="c1">// 获取导航项目列表数组
 </span><span class="c1"></span><span class="nx">watchEffect</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
-  <span class="kr">const</span> <span class="p">{</span><span class="nx">width</span><span class="p">,</span> <span class="nx">left</span><span class="p">}</span> <span class="o">=</span> <span class="nx">selectedItem</span><span class="p">.</span><span class="nx">value</span><span class="o">!</span><span class="p">.</span><span class="nx">getBoundingClientRect</span><span class="p">();</span>
-  <span class="kr">const</span> <span class="p">{</span><span class="nx">left</span><span class="o">:</span> <span class="nx">containerLeft</span><span class="p">}</span> <span class="o">=</span> <span class="nx">container</span><span class="o">!</span><span class="p">.</span><span class="nx">value</span><span class="o">!</span><span class="p">.</span><span class="nx">getBoundingClientRect</span><span class="p">();</span>
-  <span class="kr">const</span> <span class="nx">leftPos</span> <span class="o">=</span> <span class="nx">left</span> <span class="o">-</span> <span class="nx">containerLeft</span><span class="p">;</span>
-  <span class="nx">indicator</span><span class="o">!</span><span class="p">.</span><span class="nx">value</span><span class="o">!</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">width</span> <span class="o">=</span> <span class="sb">`</span><span class="si">${</span><span class="nx">width</span><span class="si">}</span><span class="sb">px`</span><span class="p">;</span>
-  <span class="nx">indicator</span><span class="o">!</span><span class="p">.</span><span class="nx">value</span><span class="o">!</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">transform</span> <span class="o">=</span> <span class="sb">`translate3D(</span><span class="si">${</span><span class="nx">leftPos</span><span class="si">}</span><span class="sb">px, 0, 0)`</span><span class="p">;</span>
+<span class="kr">const</span> <span class="p">{</span><span class="nx">width</span><span class="p">,</span> <span class="nx">left</span><span class="p">}</span> <span class="o">=</span> <span class="nx">selectedItem</span><span class="p">.</span><span class="nx">value</span><span class="o">!</span><span class="p">.</span><span class="nx">getBoundingClientRect</span><span class="p">();</span>
+<span class="kr">const</span> <span class="p">{</span><span class="nx">left</span><span class="o">:</span> <span class="nx">containerLeft</span><span class="p">}</span> <span class="o">=</span> <span class="nx">container</span><span class="o">!</span><span class="p">.</span><span class="nx">value</span><span class="o">!</span><span class="p">.</span><span class="nx">getBoundingClientRect</span><span class="p">();</span>
+<span class="kr">const</span> <span class="nx">leftPos</span> <span class="o">=</span> <span class="nx">left</span> <span class="o">-</span> <span class="nx">containerLeft</span><span class="p">;</span>
+<span class="nx">indicator</span><span class="o">!</span><span class="p">.</span><span class="nx">value</span><span class="o">!</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">width</span> <span class="o">=</span> <span class="sb">`</span><span class="si">${</span><span class="nx">width</span><span class="si">}</span><span class="sb">px`</span><span class="p">;</span>
+<span class="nx">indicator</span><span class="o">!</span><span class="p">.</span><span class="nx">value</span><span class="o">!</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">transform</span> <span class="o">=</span> <span class="sb">`translate3D(</span><span class="si">${</span><span class="nx">leftPos</span><span class="si">}</span><span class="sb">px, 0, 0)`</span><span class="p">;</span>
 <span class="p">});</span>
 
 <span class="nx">onMounted</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
-  <span class="nx">checkTabItem</span><span class="p">();</span>
+<span class="nx">checkTabItem</span><span class="p">();</span>
 <span class="p">});</span>
 
-<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-
-</code></pre></td></tr></table>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><ul>
-<li><code>watchEffect</code>
+</div></li>
+
+<li><p><code>watchEffect</code></p>
+
 <ul>
 <li>非惰性地执行副作用，即立即执行传入的回调函数</li>
 <li>响应式地追踪其依赖，并在其依赖变更时重新运行回调函数</li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<h3 id="selecteditemvalue-is-null-错误解决过程"><code>selectedItem.value is null</code> 错误解决过程</h3>
+
+<h3 id="selecteditem-value-is-null-错误解决过程"><code>selectedItem.value is null</code> 错误解决过程</h3>
+
 <ul>
 <li><code>watchEffect</code>在高在之前就执行回调，导致<code>selectedItem.value</code>还未取到值</li>
-<li>打log查看</li>
-</ul>
+
+<li><p>打log查看</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -2733,28 +2768,29 @@
 </span><span class="lnt">13
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="p">...</span>
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="p">...</span>
 <span class="nx">onMounted</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;mounted&#39;</span><span class="p">)</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;mounted&#39;</span><span class="p">)</span>
 <span class="p">})</span>
 <span class="nx">watchEffect</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
-  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;watchEffect&#39;</span><span class="p">)</span>
-  <span class="kr">const</span> <span class="p">{</span><span class="nx">width</span><span class="p">,</span> <span class="nx">left</span><span class="p">}</span> <span class="o">=</span> <span class="nx">selectedItem</span><span class="p">.</span><span class="nx">value</span><span class="o">!</span><span class="p">.</span><span class="nx">getBoundingClientRect</span><span class="p">();</span>
-  <span class="kr">const</span> <span class="p">{</span><span class="nx">left</span><span class="o">:</span> <span class="nx">containerLeft</span><span class="p">}</span> <span class="o">=</span> <span class="nx">container</span><span class="o">!</span><span class="p">.</span><span class="nx">value</span><span class="o">!</span><span class="p">.</span><span class="nx">getBoundingClientRect</span><span class="p">();</span>
-  <span class="kr">const</span> <span class="nx">leftPos</span> <span class="o">=</span> <span class="nx">left</span> <span class="o">-</span> <span class="nx">containerLeft</span><span class="p">;</span>
-  <span class="nx">indicator</span><span class="o">!</span><span class="p">.</span><span class="nx">value</span><span class="o">!</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">width</span> <span class="o">=</span> <span class="sb">`</span><span class="si">${</span><span class="nx">width</span><span class="si">}</span><span class="sb">px`</span><span class="p">;</span>
-  <span class="nx">indicator</span><span class="o">!</span><span class="p">.</span><span class="nx">value</span><span class="o">!</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">transform</span> <span class="o">=</span> <span class="sb">`translate3D(</span><span class="si">${</span><span class="nx">leftPos</span><span class="si">}</span><span class="sb">px, 0, 0)`</span><span class="p">;</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;watchEffect&#39;</span><span class="p">)</span>
+<span class="kr">const</span> <span class="p">{</span><span class="nx">width</span><span class="p">,</span> <span class="nx">left</span><span class="p">}</span> <span class="o">=</span> <span class="nx">selectedItem</span><span class="p">.</span><span class="nx">value</span><span class="o">!</span><span class="p">.</span><span class="nx">getBoundingClientRect</span><span class="p">();</span>
+<span class="kr">const</span> <span class="p">{</span><span class="nx">left</span><span class="o">:</span> <span class="nx">containerLeft</span><span class="p">}</span> <span class="o">=</span> <span class="nx">container</span><span class="o">!</span><span class="p">.</span><span class="nx">value</span><span class="o">!</span><span class="p">.</span><span class="nx">getBoundingClientRect</span><span class="p">();</span>
+<span class="kr">const</span> <span class="nx">leftPos</span> <span class="o">=</span> <span class="nx">left</span> <span class="o">-</span> <span class="nx">containerLeft</span><span class="p">;</span>
+<span class="nx">indicator</span><span class="o">!</span><span class="p">.</span><span class="nx">value</span><span class="o">!</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">width</span> <span class="o">=</span> <span class="sb">`</span><span class="si">${</span><span class="nx">width</span><span class="si">}</span><span class="sb">px`</span><span class="p">;</span>
+<span class="nx">indicator</span><span class="o">!</span><span class="p">.</span><span class="nx">value</span><span class="o">!</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">transform</span> <span class="o">=</span> <span class="sb">`translate3D(</span><span class="si">${</span><span class="nx">leftPos</span><span class="si">}</span><span class="sb">px, 0, 0)`</span><span class="p">;</span>
 <span class="p">});</span>
 <span class="p">...</span>
 </code></pre></td></tr></table>
 </div>
-</div><ul>
-<li><a href="https://v3.vuejs.org/api/computed-watch-api.html#watcheffect">查看watchEffect API文档</a></li>
-<li>在<code>onMounted</code>中使用<code>watchEffect</code></li>
-</ul>
+</div></li>
+
+<li><p><a href="https://v3.vuejs.org/api/computed-watch-api.html#watcheffect">查看watchEffect API文档</a></p></li>
+
+<li><p>在<code>onMounted</code>中使用<code>watchEffect</code></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -2772,30 +2808,33 @@
 </span><span class="lnt">16
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="p">...</span>
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="p">...</span>
 
 <span class="nx">onMounted</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
-  <span class="nx">checkTabItem</span><span class="p">();</span>
+<span class="nx">checkTabItem</span><span class="p">();</span>
 
 <span class="c1">// 追踪变更，执行回调
-</span><span class="c1"></span>  <span class="nx">watchEffect</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
-    <span class="kr">const</span> <span class="p">{</span><span class="nx">width</span><span class="p">,</span> <span class="nx">left</span><span class="p">}</span> <span class="o">=</span> <span class="nx">selectedItem</span><span class="p">.</span><span class="nx">value</span><span class="o">!</span><span class="p">.</span><span class="nx">getBoundingClientRect</span><span class="p">();</span>
-    <span class="kr">const</span> <span class="p">{</span><span class="nx">left</span><span class="o">:</span> <span class="nx">containerLeft</span><span class="p">}</span> <span class="o">=</span> <span class="nx">container</span><span class="p">.</span><span class="nx">value</span><span class="o">!</span><span class="p">.</span><span class="nx">getBoundingClientRect</span><span class="p">();</span>
-    <span class="kr">const</span> <span class="nx">leftPos</span> <span class="o">=</span> <span class="nx">left</span> <span class="o">-</span> <span class="nx">containerLeft</span><span class="p">;</span>
-    <span class="nx">indicator</span><span class="p">.</span><span class="nx">value</span><span class="o">!</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">width</span> <span class="o">=</span> <span class="sb">`</span><span class="si">${</span><span class="nx">width</span><span class="si">}</span><span class="sb">px`</span><span class="p">;</span>
-    <span class="nx">indicator</span><span class="p">.</span><span class="nx">value</span><span class="o">!</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">transform</span> <span class="o">=</span> <span class="sb">`translate3D(</span><span class="si">${</span><span class="nx">leftPos</span><span class="si">}</span><span class="sb">px, 0, 0)`</span><span class="p">;</span>
-  <span class="p">});</span>
+</span><span class="c1"></span><span class="nx">watchEffect</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+<span class="kr">const</span> <span class="p">{</span><span class="nx">width</span><span class="p">,</span> <span class="nx">left</span><span class="p">}</span> <span class="o">=</span> <span class="nx">selectedItem</span><span class="p">.</span><span class="nx">value</span><span class="o">!</span><span class="p">.</span><span class="nx">getBoundingClientRect</span><span class="p">();</span>
+<span class="kr">const</span> <span class="p">{</span><span class="nx">left</span><span class="o">:</span> <span class="nx">containerLeft</span><span class="p">}</span> <span class="o">=</span> <span class="nx">container</span><span class="p">.</span><span class="nx">value</span><span class="o">!</span><span class="p">.</span><span class="nx">getBoundingClientRect</span><span class="p">();</span>
+<span class="kr">const</span> <span class="nx">leftPos</span> <span class="o">=</span> <span class="nx">left</span> <span class="o">-</span> <span class="nx">containerLeft</span><span class="p">;</span>
+<span class="nx">indicator</span><span class="p">.</span><span class="nx">value</span><span class="o">!</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">width</span> <span class="o">=</span> <span class="sb">`</span><span class="si">${</span><span class="nx">width</span><span class="si">}</span><span class="sb">px`</span><span class="p">;</span>
+<span class="nx">indicator</span><span class="p">.</span><span class="nx">value</span><span class="o">!</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">transform</span> <span class="o">=</span> <span class="sb">`translate3D(</span><span class="si">${</span><span class="nx">leftPos</span><span class="si">}</span><span class="sb">px, 0, 0)`</span><span class="p">;</span>
+<span class="p">});</span>
 
 <span class="p">});</span>
 <span class="p">...</span>
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div></li>
+</ul>
+
+<blockquote>
 <p><code>Tabs.vue</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="lnt">  1
 </span><span class="lnt">  2
 </span><span class="lnt">  3
 </span><span class="lnt">  4
@@ -2941,10 +2980,9 @@
 </span><span class="lnt">144
 </span><span class="lnt">145
 </span><span class="lnt">146
-</span><span class="lnt">147
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
 <span class="kr">import</span> <span class="p">{</span><span class="nx">onBeforeUpdate</span><span class="p">,</span><span class="cm">/*computed, */</span> <span class="nx">onMounted</span><span class="p">,</span> <span class="nx">ref</span><span class="p">,</span> <span class="nx">useSlots</span><span class="p">,</span> <span class="nx">VNode</span><span class="p">,</span> <span class="nx">watchEffect</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue&#39;</span><span class="p">;</span>
 <span class="kr">import</span> <span class="nx">TabItem</span> <span class="nx">from</span> <span class="s1">&#39;@/lib/TabItem.vue&#39;</span><span class="p">;</span>
 
@@ -3049,7 +3087,7 @@
   <span class="err">&amp;-nav</span> <span class="err">{</span>
     <span class="k">display</span><span class="p">:</span> <span class="kc">flex</span><span class="p">;</span>
     <span class="k">color</span><span class="p">:</span> <span class="err">$</span><span class="kc">color</span><span class="p">;</span>
-    <span class="k">border-bottom</span><span class="p">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="kc">solid</span> <span class="err">$</span><span class="k">border-color</span><span class="p">;</span>
+    <span class="k">border-bottom</span><span class="p">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="kc">solid</span> <span class="err">$</span><span class="k">border</span><span class="o">-</span><span class="kc">color</span><span class="p">;</span>
     <span class="k">position</span><span class="p">:</span> <span class="kc">relative</span><span class="p">;</span>
 
     <span class="err">&amp;-item</span> <span class="err">{</span>
@@ -3089,14 +3127,13 @@
     <span class="err">}</span>
   <span class="err">}</span>
 <span class="err">}</span>
-<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
-
-</code></pre></td></tr></table>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><h3 id="阶段最终代码">阶段最终代码</h3>
+</div>
+<h3 id="阶段最终代码">阶段最终代码</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="lnt">  1
 </span><span class="lnt">  2
 </span><span class="lnt">  3
 </span><span class="lnt">  4
@@ -3246,10 +3283,9 @@
 </span><span class="lnt">148
 </span><span class="lnt">149
 </span><span class="lnt">150
-</span><span class="lnt">151
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
 <span class="kr">import</span> <span class="p">{</span><span class="nx">onBeforeUpdate</span><span class="p">,</span> <span class="nx">computed</span><span class="p">,</span> <span class="nx">onMounted</span><span class="p">,</span> <span class="nx">ref</span><span class="p">,</span> <span class="nx">useSlots</span><span class="p">,</span> <span class="nx">VNode</span><span class="p">,</span> <span class="nx">watchEffect</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue&#39;</span><span class="p">;</span>
 <span class="kr">import</span> <span class="nx">TabItem</span> <span class="nx">from</span> <span class="s1">&#39;@/lib/TabItem.vue&#39;</span><span class="p">;</span>
 
@@ -3366,7 +3402,7 @@
   <span class="err">&amp;-nav</span> <span class="err">{</span>
     <span class="k">display</span><span class="p">:</span> <span class="kc">flex</span><span class="p">;</span>
     <span class="k">color</span><span class="p">:</span> <span class="err">$</span><span class="kc">color</span><span class="p">;</span>
-    <span class="k">border-bottom</span><span class="p">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="kc">solid</span> <span class="err">$</span><span class="k">border-color</span><span class="p">;</span>
+    <span class="k">border-bottom</span><span class="p">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="kc">solid</span> <span class="err">$</span><span class="k">border</span><span class="o">-</span><span class="kc">color</span><span class="p">;</span>
     <span class="k">position</span><span class="p">:</span> <span class="kc">relative</span><span class="p">;</span>
 
     <span class="err">&amp;-item</span> <span class="err">{</span>
@@ -3398,48 +3434,54 @@
     <span class="k">padding</span><span class="p">:</span> <span class="mi">8</span><span class="kt">px</span> <span class="mi">0</span><span class="p">;</span>
   <span class="p">}</span>
 <span class="err">}</span>
-<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
-
-</code></pre></td></tr></table>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><hr>
+</div>
+<hr />
+
 <h2 id="总结">总结</h2>
+
 <ul>
 <li>使用JS获取插槽内容<code>const defaults = context.slots.default()</code></li>
 <li>如果使用了script setup法糖，则使用<code>const defaults: VNode[] = [...(slots.default as Function)()];</code></li>
 <li>内置组件<code>&lt;component&gt;&lt;/component&gt;</code>的用法
+
 <ul>
 <li>加<code>:key</code> <code>&lt;component :is=&quot;currentTab&quot; :key=&quot;currentTab&quot;&gt;&lt;/component&gt;</code></li>
-</ul>
-</li>
+</ul></li>
 <li>钩子<code>onMounted/onUpdated/watchEffect</code>的用法</li>
 <li><code>TypeScript</code>的泛型用法
+
 <ul>
 <li><code>const xxx = ref&lt;HTMLDivElement&gt;()</code></li>
-</ul>
-</li>
+</ul></li>
 <li>获取元素宽高位置API + 解构赋值
+
 <ul>
 <li><code>const {width, left} = el.getBoundingClientRect()</code></li>
-</ul>
-</li>
+</ul></li>
 <li>ES6 解构赋值的重命名语法
+
 <ul>
 <li><code>const {left: left2} = xxx.getBoundingClientRect()</code></li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<hr>
+
+<hr />
+
 <blockquote>
 <p>UI参考</p>
 </blockquote>
+
 <ul>
 <li><a href="https://bulma.io/documentation/components/tabs/">Bulma</a></li>
 <li><a href="https://www.antdv.com/components/tabs-cn/">Ant Design Vue</a></li>
 <li><a href="https://ant.design/components/tabs-cn/">Ant Design</a></li>
 </ul>
-<hr>
-<hr>
+
+<hr />
+
+<hr />
 
     </div>
 
@@ -3603,7 +3645,7 @@
     &copy;
     
       2019 -
-    2022
+    2026
     <span class="heart">
       
       <i class="iconfont">

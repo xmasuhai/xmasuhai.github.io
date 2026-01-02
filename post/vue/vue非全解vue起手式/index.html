@@ -7,7 +7,7 @@
   
 
 <meta name="renderer" content="webkit" />
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
 <meta name="MobileOptimized" content="width"/>
 <meta name="HandheldFriendly" content="true"/>
@@ -32,7 +32,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.91.2" />
+<meta name="generator" content="Hugo 0.59.1" />
 
 
 <link rel="canonical" href="http://xmasuhai.xyz/post/vue/vue%E9%9D%9E%E5%85%A8%E8%A7%A3vue%E8%B5%B7%E6%89%8B%E5%BC%8F/" />
@@ -62,15 +62,21 @@
 <meta property="og:title" content="【Vue非全解】Vue2.6起手式&amp;Vue3.0对比" />
 <meta property="og:description" content="目录§ ⇧ 0. Vue前置知识与学习路线 § 1. Vue项目搭建 § 2. @vue/cli § 3. Vue实例 &#43;1 demo § 4. 使用Vue实例 § 5. vue.js 和 vue.runtime.js 的区别和使用方法 § template 和 render 6. Vue实例" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://xmasuhai.xyz/post/vue/vue%E9%9D%9E%E5%85%A8%E8%A7%A3vue%E8%B5%B7%E6%89%8B%E5%BC%8F/" /><meta property="article:section" content="post" />
+<meta property="og:url" content="http://xmasuhai.xyz/post/vue/vue%E9%9D%9E%E5%85%A8%E8%A7%A3vue%E8%B5%B7%E6%89%8B%E5%BC%8F/" />
 <meta property="article:published_time" content="2020-08-04T23:02:28+08:00" />
 <meta property="article:modified_time" content="2022-09-03T10:26:25+08:00" />
-
 <meta itemprop="name" content="【Vue非全解】Vue2.6起手式&amp;Vue3.0对比">
-<meta itemprop="description" content="目录§ ⇧ 0. Vue前置知识与学习路线 § 1. Vue项目搭建 § 2. @vue/cli § 3. Vue实例 &#43;1 demo § 4. 使用Vue实例 § 5. vue.js 和 vue.runtime.js 的区别和使用方法 § template 和 render 6. Vue实例"><meta itemprop="datePublished" content="2020-08-04T23:02:28+08:00" />
-<meta itemprop="dateModified" content="2022-09-03T10:26:25+08:00" />
-<meta itemprop="wordCount" content="9913">
-<meta itemprop="keywords" content="Vue,MVC,@vue/cli,vue.runtime.js,Vue3.x," /><meta name="twitter:card" content="summary"/>
+<meta itemprop="description" content="目录§ ⇧ 0. Vue前置知识与学习路线 § 1. Vue项目搭建 § 2. @vue/cli § 3. Vue实例 &#43;1 demo § 4. 使用Vue实例 § 5. vue.js 和 vue.runtime.js 的区别和使用方法 § template 和 render 6. Vue实例">
+
+
+<meta itemprop="datePublished" content="2020-08-04T23:02:28&#43;08:00" />
+<meta itemprop="dateModified" content="2022-09-03T10:26:25&#43;08:00" />
+<meta itemprop="wordCount" content="9918">
+
+
+
+<meta itemprop="keywords" content="Vue,MVC,@vue/cli,vue.runtime.js,Vue3.x," />
+<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="【Vue非全解】Vue2.6起手式&amp;Vue3.0对比"/>
 <meta name="twitter:description" content="目录§ ⇧ 0. Vue前置知识与学习路线 § 1. Vue项目搭建 § 2. @vue/cli § 3. Vue实例 &#43;1 demo § 4. 使用Vue实例 § 5. vue.js 和 vue.runtime.js 的区别和使用方法 § template 和 render 6. Vue实例"/>
 
@@ -302,7 +308,7 @@
             <a href="http://xmasuhai.xyz/categories/vue/"> Vue </a>
             
           </div>
-        <span class="more-meta"> 约 9913 字 </span>
+        <span class="more-meta"> 约 9918 字 </span>
           <span class="more-meta"> 预计阅读 20 分钟 </span>
 
         
@@ -319,72 +325,91 @@
   <h2 class="post-toc-title">文章目录</h2>
   <div class="post-toc-content">
     <nav id="TableOfContents">
-  <ul>
-    <li><a href="#目录a-idcatalogue-hrefcatalogue---aa-hrefcatalogue--a">目录<!-- raw HTML omitted --> § <!-- raw HTML omitted --><!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-    <li><a href="#0-vue前置知识与学习路线a-id前置知识与学习路线-href前置知识与学习路线--aa-hrefcatalogue--a">0. <code>Vue</code>前置知识与学习路线<!-- raw HTML omitted --> § <!-- raw HTML omitted --><!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-    <li><a href="#1-vue项目搭建a-id项目搭建-href项目搭建--aa-hrefcatalogue--a">1. <code>Vue</code>项目搭建<!-- raw HTML omitted --> § <!-- raw HTML omitted --><!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-    <li><a href="#2-vueclia-idcli-hrefcli--aa-hrefcatalogue--a">2. <code>@vue/cli</code><!-- raw HTML omitted --> § <!-- raw HTML omitted --><!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a>
-      <ul>
-        <li><a href="#vuecli用法a-hrefcatalogue--a"><code>@vue/cli</code>用法<!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-      </ul>
-    </li>
-    <li><a href="#3-vue实例-1-demoa-id实例1-href实例1--aa-hrefcatalogue--a">3. <code>Vue</code>实例 <code>+1 demo</code><!-- raw HTML omitted --> § <!-- raw HTML omitted --><!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a>
-      <ul>
-        <li><a href="#demo1小结a-hrefcatalogue--a"><code>demo1</code>小结<!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-      </ul>
-    </li>
-    <li><a href="#4-使用new-vue实例对象a-id使用-href使用--aa-hrefcatalogue--a">4. 使用<code>new Vue</code>实例对象<!-- raw HTML omitted --> § <!-- raw HTML omitted --><!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a>
-      <ul>
-        <li><a href="#vue的两个版本和三个使用方法a-hrefcatalogue--a">Vue的两个版本和三个使用方法<!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-      </ul>
-    </li>
-    <li><a href="#5-理解vuejs-和-vueruntimejs-的区别和使用方法-最佳实践a-id区别-href区别--aa-hrefcatalogue--a">5. 理解<code>vue.js</code> 和 <code>vue.runtime.js</code> 的区别和使用方法 最佳实践<!-- raw HTML omitted --> § <!-- raw HTML omitted --><!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a>
-      <ul>
-        <li><a href="#最佳实践a-hrefcatalogue--a">最佳实践<!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-        <li><a href="#template-vs-rendera-hrefcatalogue--a"><code>template</code> V.S. <code>render</code><!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-      </ul>
-    </li>
-    <li><a href="#6-vue实例2-井字游戏a-id实例2-href实例2--aa-hrefcatalogue--a">6. <code>Vue</code>实例2 井字游戏<!-- raw HTML omitted --> § <!-- raw HTML omitted --><!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-    <li><a href="#7-用-codesandboxio-写-vue-代码a-idcodesandbox-hrefcodesandbox--aa-hrefcatalogue--a">7. 用 <code>codesandbox.io</code> 写 <code>Vue</code> 代码<!-- raw HTML omitted --> § <!-- raw HTML omitted --><!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a>
-      <ul>
-        <li><a href="#特点">特点</a></li>
-      </ul>
-    </li>
-    <li><a href="#8-用-vuepress-写-文档a-idvuepress-hrefvuepress--aa-hrefcatalogue--a">8. 用 <code>VuePress</code> 写 文档<!-- raw HTML omitted --> § <!-- raw HTML omitted --><!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-    <li><a href="#9-总结a-id总结-href总结--aa-hrefcatalogue--a">9. 总结<!-- raw HTML omitted --> § <!-- raw HTML omitted --><!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a>
-      <ul>
-        <li><a href="#参考文章">参考文章</a></li>
-        <li><a href="#相关文章">相关文章</a></li>
-      </ul>
-    </li>
-  </ul>
+<ul>
+<li>
+<ul>
+<li><a href="#目录-a-id-catalogue-href-catalogue-a-a-href-catalogue-a">目录<a id="catalogue" href="#catalogue" > § </a><a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#0-vue-前置知识与学习路线-a-id-前置知识与学习路线-href-前置知识与学习路线-a-a-href-catalogue-a">0. <code>Vue</code>前置知识与学习路线<a id="前置知识与学习路线" href="#前置知识与学习路线"> § </a><a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#1-vue-项目搭建-a-id-项目搭建-href-项目搭建-a-a-href-catalogue-a">1. <code>Vue</code>项目搭建<a id="项目搭建" href="#项目搭建"> § </a><a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#2-vue-cli-a-id-cli-href-cli-a-a-href-catalogue-a">2. <code>@vue/cli</code><a id="cli" href="#cli"> § </a><a href="#catalogue"> ⇧ </a></a>
+<ul>
+<li><a href="#vue-cli-用法-a-href-catalogue-a"><code>@vue/cli</code>用法<a href="#catalogue"> ⇧ </a></a></li>
+</ul></li>
+<li><a href="#3-vue-实例-1-demo-a-id-实例1-href-实例1-a-a-href-catalogue-a">3. <code>Vue</code>实例 <code>+1 demo</code><a id="实例1" href="#实例1"> § </a><a href="#catalogue"> ⇧ </a></a>
+<ul>
+<li><a href="#demo1-小结-a-href-catalogue-a"><code>demo1</code>小结<a href="#catalogue"> ⇧ </a></a></li>
+</ul></li>
+<li><a href="#4-使用-new-vue-实例对象-a-id-使用-href-使用-a-a-href-catalogue-a">4. 使用<code>new Vue</code>实例对象<a id="使用" href="#使用"> § </a><a href="#catalogue"> ⇧ </a></a>
+<ul>
+<li><a href="#vue的两个版本和三个使用方法-a-href-catalogue-a">Vue的两个版本和三个使用方法<a href="#catalogue"> ⇧ </a></a>
+<ul>
+<li><a href="#方法一-从-html-得到视图-a-href-catalogue-a">方法一：从<code>HTML</code>得到视图<a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#方法二-用-js-构建视图-a-href-catalogue-a">方法二：用<code>JS</code>构建视图<a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#seo-友好-a-href-catalogue-a"><code>SEO</code>友好<a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#方法三-非完整版-vue-的单文件组件-vue-a-href-catalogue-a">方法三：「非完整版」+ <code>Vue</code>的单文件组件<code>*.vue</code> <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#小结-vue-实例作用-a-href-catalogue-a">小结<code>Vue</code>实例作用<a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#runtime-only-和-runtime-compiler-的区别-a-href-catalogue-a"><code>runtime-only</code>和<code>runtime-compiler</code>的区别<a href="#catalogue"> ⇧ </a></a></li>
+</ul></li>
+</ul></li>
+<li><a href="#5-理解-vue-js-和-vue-runtime-js-的区别和使用方法-最佳实践-a-id-区别-href-区别-a-a-href-catalogue-a">5. 理解<code>vue.js</code> 和 <code>vue.runtime.js</code> 的区别和使用方法 最佳实践<a id="区别" href="#区别"> § </a><a href="#catalogue"> ⇧ </a></a>
+<ul>
+<li><a href="#最佳实践-a-href-catalogue-a">最佳实践<a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#template-v-s-render-a-href-catalogue-a"><code>template</code> V.S. <code>render</code><a href="#catalogue"> ⇧ </a></a>
+<ul>
+<li><a href="#template-在完整版-a-href-catalogue-a"><code>template</code>在完整版<a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#template-在运行时版-a-href-catalogue-a"><code>template</code>在运行时版<a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#render-在完整版-a-href-catalogue-a"><code>render</code>在完整版<a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#render-在运行时版-a-href-catalogue-a"><code>render</code>在运行时版<a href="#catalogue"> ⇧ </a></a></li>
+</ul></li>
+</ul></li>
+<li><a href="#6-vue-实例2-井字游戏-a-id-实例2-href-实例2-a-a-href-catalogue-a">6. <code>Vue</code>实例2 井字游戏<a id="实例2" href="#实例2"> § </a><a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#7-用-codesandbox-io-写-vue-代码-a-id-codesandbox-href-codesandbox-a-a-href-catalogue-a">7. 用 <code>codesandbox.io</code> 写 <code>Vue</code> 代码<a id="codesandbox" href="#codesandbox"> § </a><a href="#catalogue"> ⇧ </a></a>
+<ul>
+<li><a href="#特点">特点</a></li>
+</ul></li>
+<li><a href="#8-用-vuepress-写-文档-a-id-vuepress-href-vuepress-a-a-href-catalogue-a">8. 用 <code>VuePress</code> 写 文档<a id="VuePress" href="#VuePress"> § </a><a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#9-总结-a-id-总结-href-总结-a-a-href-catalogue-a">9. 总结<a id="总结" href="#总结"> § </a><a href="#catalogue"> ⇧ </a></a>
+<ul>
+<li><a href="#参考文章">参考文章</a></li>
+<li><a href="#相关文章">相关文章</a></li>
+</ul></li>
+</ul></li>
+</ul>
 </nav>
   </div>
 </div>
 
     
     <div class="post-content">
-      <h2 id="目录a-idcatalogue-hrefcatalogue---aa-hrefcatalogue--a">目录<!-- raw HTML omitted --> § <!-- raw HTML omitted --><!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+      
+
+<h2 id="目录-a-id-catalogue-href-catalogue-a-a-href-catalogue-a">目录<a id="catalogue" href="#catalogue" > § </a><a href="#catalogue"> ⇧ </a></h2>
+
 <ul>
-<li><!-- raw HTML omitted -->0. <code>Vue</code>前置知识与学习路线 § <!-- raw HTML omitted --></li>
-<li><!-- raw HTML omitted -->1. <code>Vue</code>项目搭建 § <!-- raw HTML omitted --></li>
-<li><!-- raw HTML omitted -->2. <code>@vue/cli</code> § <!-- raw HTML omitted --></li>
-<li><!-- raw HTML omitted -->3. <code>Vue</code>实例 <code>+1 demo</code> § <!-- raw HTML omitted --></li>
-<li><!-- raw HTML omitted -->4. 使用<code>Vue</code>实例 § <!-- raw HTML omitted --></li>
-<li><!-- raw HTML omitted -->5. <code>vue.js</code> 和 <code>vue.runtime.js</code> 的区别和使用方法 § <!-- raw HTML omitted -->
+<li><a id="_$0_" href="#前置知识与学习路线">0. <code>Vue</code>前置知识与学习路线 § </a></li>
+<li><a id="_$1_" href="#项目搭建">1. <code>Vue</code>项目搭建 § </a></li>
+<li><a id="_$2_" href="#cli">2. <code>@vue/cli</code> § </a></li>
+<li><a id="_$3_" href="#实例1">3. <code>Vue</code>实例 <code>+1 demo</code> § </a></li>
+<li><a id="_$4_" href="#使用">4. 使用<code>Vue</code>实例 § </a></li>
+<li><a id="_$5_" href="#区别">5. <code>vue.js</code> 和 <code>vue.runtime.js</code> 的区别和使用方法 § </a>
+
 <ul>
 <li><code>template</code> 和 <code>render</code></li>
+</ul></li>
+<li><a id="_$6_" href="#实例2">6. <code>Vue</code>实例2 井字游戏 § </a></li>
+<li><a id="_$7_" href="#codesandbox">7. 用 <code>codesandbox.io</code> 写 <code>Vue</code> 代码 § </a></li>
+<li><a id="_$8_" href="#VuePress">8. <code>VuePress</code> § </a></li>
+<li><a id="_$9_" href="#总结">9. 总结 § </a></li>
 </ul>
-</li>
-<li><!-- raw HTML omitted -->6. <code>Vue</code>实例2 井字游戏 § <!-- raw HTML omitted --></li>
-<li><!-- raw HTML omitted -->7. 用 <code>codesandbox.io</code> 写 <code>Vue</code> 代码 § <!-- raw HTML omitted --></li>
-<li><!-- raw HTML omitted -->8. <code>VuePress</code> § <!-- raw HTML omitted --></li>
-<li><!-- raw HTML omitted -->9. 总结 § <!-- raw HTML omitted --></li>
-</ul>
-<hr>
+
+<hr />
+
 <p>[toc]</p>
-<hr>
-<h2 id="0-vue前置知识与学习路线a-id前置知识与学习路线-href前置知识与学习路线--aa-hrefcatalogue--a">0. <code>Vue</code>前置知识与学习路线<!-- raw HTML omitted --> § <!-- raw HTML omitted --><!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+
+<hr />
+
+<h2 id="0-vue-前置知识与学习路线-a-id-前置知识与学习路线-href-前置知识与学习路线-a-a-href-catalogue-a">0. <code>Vue</code>前置知识与学习路线<a id="前置知识与学习路线" href="#前置知识与学习路线"> § </a><a href="#catalogue"> ⇧ </a></h2>
+
 <ul>
 <li><code>Node.js</code>已安装</li>
 <li><code>HTML/CSS/JS</code>语法</li>
@@ -393,9 +418,11 @@
 <li><a href="https://static.xiedaimala.com/xdml/image/b9807bae-0127-4b33-8530-56e42fd15104/2019-7-18-11-37-50.png">学习路线</a></li>
 <li>需要学的<code>vue | @vue/cli | vuex | vue router | axios</code></li>
 </ul>
+
 <blockquote>
 <p>系统学习 <code>Vue</code></p>
 </blockquote>
+
 <ul>
 <li>CRM，过一遍文档，总结为博客</li>
 <li>目录学习法</li>
@@ -403,165 +430,185 @@
 <li>关键词：<code>Vue 实例</code>、<code>el 和 data</code>、<code>Vue 简单数据变动管理</code></li>
 <li>注意对比<code>vue2.x</code>和<code>vue3.x</code></li>
 </ul>
-<hr>
+
+<hr />
+
 <blockquote>
 <p>目标一：搞出一个使用<code>Vue</code>的项目</p>
 </blockquote>
-<h2 id="1-vue项目搭建a-id项目搭建-href项目搭建--aa-hrefcatalogue--a">1. <code>Vue</code>项目搭建<!-- raw HTML omitted --> § <!-- raw HTML omitted --><!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+
+<h2 id="1-vue-项目搭建-a-id-项目搭建-href-项目搭建-a-a-href-catalogue-a">1. <code>Vue</code>项目搭建<a id="项目搭建" href="#项目搭建"> § </a><a href="#catalogue"> ⇧ </a></h2>
+
 <blockquote>
 <p>方法一：使用<code>Vue CLI (@vue/cli)</code></p>
 </blockquote>
+
 <ul>
 <li>是基于 <code>Vue.js</code> 进行快速开发的完整系统（实现的交互式的项目脚手架）</li>
 <li>搜索<code>@vue/cli</code>文档</li>
 <li>在终端里使用 vue 相关命令</li>
 <li><a href="https://cli.vuejs.org/zh/guide/creating-a-project.html#vue-create">「创建一个项目」</a>CRM</li>
 </ul>
+
 <blockquote>
 <p>方法二：手动配置，从零搭建</p>
 </blockquote>
+
 <ul>
 <li>使用<code>webpack</code>或<code>rollup</code>从零搭建，较复杂</li>
 <li>使用<code>Vite</code>或<code>snowpack</code>从零搭建</li>
 </ul>
+
 <blockquote>
 <p>方法三：第三方在线傻瓜配置，适合<code>demo</code></p>
 </blockquote>
+
 <ul>
 <li>codeSandBox</li>
 <li>codePen</li>
-<li>详见<!-- raw HTML omitted --> 用 <code>codesandbox.io</code> 写 <code>Vue</code> 代码 § <!-- raw HTML omitted --></li>
+<li>详见<a id="codesandbox" href="#codesandbox"> 用 <code>codesandbox.io</code> 写 <code>Vue</code> 代码 § </a></li>
 </ul>
-<hr>
-<h2 id="2-vueclia-idcli-hrefcli--aa-hrefcatalogue--a">2. <code>@vue/cli</code><!-- raw HTML omitted --> § <!-- raw HTML omitted --><!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+
+<hr />
+
+<h2 id="2-vue-cli-a-id-cli-href-cli-a-a-href-catalogue-a">2. <code>@vue/cli</code><a id="cli" href="#cli"> § </a><a href="#catalogue"> ⇧ </a></h2>
+
 <ul>
 <li>CRM <code>@vue/cli</code>提到的工具<a href="https://cli.vuejs.org/zh/guide/">官网示例</a></li>
 <li>通过 <code>vue ui</code> 通过一套图形化界面管理所有项目</li>
 </ul>
+
 <blockquote>
 <p><code>CLI</code> 服务 <code>(@vue/cli-service)</code> 是一个开发环境依赖，局部安装在每个 @vue/cli 创建的项目中</p>
 </blockquote>
+
 <ul>
 <li><code>CLI</code> 服务是构建于 <code>webpack</code> 和 <code>webpack-dev-server</code> 之上。它包含
+
 <ul>
 <li>加载其它 <code>CLI</code> 插件的核心服务；</li>
 <li>一个针对绝大部分应用优化过的内部的 <code>webpack</code> 配置；</li>
 <li>项目内部的 <code>vue-cli-service</code> 命令，提供 <code>serve</code>、<code>build</code> 和 <code>inspect</code> 命令</li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<h3 id="vuecli用法a-hrefcatalogue--a"><code>@vue/cli</code>用法<!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+
+<h3 id="vue-cli-用法-a-href-catalogue-a"><code>@vue/cli</code>用法<a href="#catalogue"> ⇧ </a></h3>
+
 <blockquote>
 <p>全局安装，使用 npm 或 yarn</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">yarn global add @vue/cli
+<pre class="chroma"><code class="language-bash" data-lang="bash">yarn global add @vue/cli
 <span class="c1">#或</span>
-npm install -g @vue/cli
-</code></pre></td></tr></table>
+npm install -g @vue/cli</code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p>查看版本与环境</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">vue --version
-vue info
-</code></pre></td></tr></table>
+<pre class="chroma"><code class="language-bash" data-lang="bash">vue --version
+vue info</code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p>创建目录（新项目的脚手架）</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">vue create &lt;path/name&gt;
-</code></pre></td></tr></table>
+<pre class="chroma"><code class="language-bash" data-lang="bash">vue create &lt;path/name&gt;</code></pre></td></tr></table>
 </div>
-</div><ul>
+</div>
+<ul>
 <li>路径<code>&lt;path&gt;</code>可用点 <code>./</code></li>
 </ul>
+
 <blockquote>
 <p>按提示选择配置</p>
 </blockquote>
+
 <ul>
 <li>提示选取一个 <code>preset</code></li>
 <li>可选默认的包含了基本的 <code>Babel + ESLint</code> 设置的 <code>preset</code></li>
 <li>也可以选“手动选择特性”来选取需要的特性
+
 <ul>
 <li>这个默认的设置非常适合快速创建一个新项目的原型</li>
 <li>而手动设置则提供了更多的选项，它们是面向生产的项目</li>
-</ul>
-</li>
+</ul></li>
 <li>选择配置操作： (回车为进行下一步，↑↓键将光标上下移动选择，空格键选择或取消勾选)</li>
 <li>目前方法 <code>present</code>:
+
 <ul>
 <li><code>Manually select features</code></li>
-</ul>
-</li>
+</ul></li>
 <li>包含特征 <code>features</code>:
+
 <ul>
 <li><code>Babel</code></li>
 <li><code>CSS Pre-processors</code></li>
 <li><code>Linter / Formatter</code></li>
 <li><code>Unit Testing</code></li>
-</ul>
-</li>
+</ul></li>
 <li><code>CSS</code> 预处理器 <code>CSS pre-processors</code>:
+
 <ul>
 <li><code>Sass/SCSS (With dart-sass)</code></li>
-</ul>
-</li>
+</ul></li>
 <li>代码校验/格式化 <code>Linter / Formatter</code>:
+
 <ul>
 <li><code>ESLint with error prevention only</code></li>
-</ul>
-</li>
+</ul></li>
 <li>何时触发校验 <code>additional lint features</code>:
+
 <ul>
 <li><code>Lint and fix on commit</code></li>
-</ul>
-</li>
+</ul></li>
 <li>单元测试方案 <code>unit testing solution</code>:
+
 <ul>
 <li><code>Jest</code></li>
-</ul>
-</li>
+</ul></li>
 <li>如何设置配置文件 <code>prefer placing …</code>:
+
 <ul>
 <li><code>In dedicated config files</code></li>
-</ul>
-</li>
+</ul></li>
 <li>是否把以上选项作为以后项目的默认配置 <code>save this as …</code>:
+
 <ul>
 <li><code>N</code></li>
-</ul>
-</li>
+</ul></li>
 <li>最后一步选<code>N</code>不要保存默认配置 <code>? Save this as a preset for future projects? (y/N) N</code></li>
 </ul>
+
 <blockquote>
 <p>本demo的<code>@vue/cli</code>配置选项</p>
 </blockquote>
+
 <ul>
 <li>选错 <code>Ctrl + c</code>中断重来</li>
 <li>注意默认选项</li>
-<li>仅对此<code>demo</code>适用，自行斟酌真实项目的配置</li>
-</ul>
+
+<li><p>仅对此<code>demo</code>适用，自行斟酌真实项目的配置</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="lnt">  1
 </span><span class="lnt">  2
 </span><span class="lnt">  3
 </span><span class="lnt">  4
@@ -662,33 +709,32 @@ vue info
 </span><span class="lnt"> 99
 </span><span class="lnt">100
 </span><span class="lnt">101
-</span><span class="lnt">102
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">Vue CLI v4.4.6
+<pre class="chroma"><code class="language-bash" data-lang="bash">Vue CLI v4.4.6
 ? Please pick a preset: <span class="o">(</span>Use arrow keys<span class="o">)</span>
-  default <span class="o">(</span>babel, eslint<span class="o">)</span>
+default <span class="o">(</span>babel, eslint<span class="o">)</span>
 &gt; Manually <span class="k">select</span> features
 <span class="c1">########################################</span>
 ? Please pick a preset: Manually <span class="k">select</span> features
 ? Check the features needed <span class="k">for</span> your project:
 &gt;<span class="o">(</span>*<span class="o">)</span> Babel
- <span class="o">(</span> <span class="o">)</span> TypeScript
- <span class="o">(</span> <span class="o">)</span> Progressive Web App <span class="o">(</span>PWA<span class="o">)</span> Support
- <span class="o">(</span> <span class="o">)</span> Router
- <span class="o">(</span> <span class="o">)</span> Vuex
- <span class="o">(</span>*<span class="o">)</span> CSS Pre-processors
- <span class="o">(</span>*<span class="o">)</span> Linter / Formatter
- <span class="o">(</span>*<span class="o">)</span> Unit Testing
- <span class="o">(</span> <span class="o">)</span> E2E Testing
+<span class="o">(</span> <span class="o">)</span> TypeScript
+<span class="o">(</span> <span class="o">)</span> Progressive Web App <span class="o">(</span>PWA<span class="o">)</span> Support
+<span class="o">(</span> <span class="o">)</span> Router
+<span class="o">(</span> <span class="o">)</span> Vuex
+<span class="o">(</span>*<span class="o">)</span> CSS Pre-processors
+<span class="o">(</span>*<span class="o">)</span> Linter / Formatter
+<span class="o">(</span>*<span class="o">)</span> Unit Testing
+<span class="o">(</span> <span class="o">)</span> E2E Testing
 <span class="c1">########################################</span>
 ? Please pick a preset: Manually <span class="k">select</span> features
 ? Check the features needed <span class="k">for</span> your project: Babel, CSS Pre-processors, Linter, Unit
 ? Pick a CSS pre-processor <span class="o">(</span>PostCSS, Autoprefixer and CSS Modules are supported by default<span class="o">)</span>: <span class="o">(</span>Use arrow keys<span class="o">)</span>
 &gt; Sass/SCSS <span class="o">(</span>with dart-sass<span class="o">)</span>
-  Sass/SCSS <span class="o">(</span>with node-sass<span class="o">)</span>
-  Less
-  Stylus
+Sass/SCSS <span class="o">(</span>with node-sass<span class="o">)</span>
+Less
+Stylus
 <span class="c1">########################################</span>
 ? Please pick a preset: Manually <span class="k">select</span> features
 ? Check the features needed <span class="k">for</span> your project: Babel, CSS Pre-processors, Linter, Unit
@@ -696,9 +742,9 @@ vue info
 <span class="o">)</span>
 ? Pick a linter / formatter config: <span class="o">(</span>Use arrow keys<span class="o">)</span>
 &gt; ESLint with error prevention only
-  ESLint + Airbnb config
-  ESLint + Standard config
-  ESLint + Prettier
+ESLint + Airbnb config
+ESLint + Standard config
+ESLint + Prettier
 <span class="c1">########################################</span>
 ? Please pick a preset: Manually <span class="k">select</span> features
 ? Check the features needed <span class="k">for</span> your project: Babel, CSS Pre-processors, Linter, Unit
@@ -706,7 +752,7 @@ vue info
 <span class="o">)</span>
 ? Pick a linter / formatter config: Basic
 ? Pick additional lint features:
- <span class="o">(</span> <span class="o">)</span> Lint on save
+<span class="o">(</span> <span class="o">)</span> Lint on save
 &gt;<span class="o">(</span>*<span class="o">)</span> Lint and fix on commit
 <span class="c1">########################################</span>
 ? Please pick a preset: Manually <span class="k">select</span> features
@@ -716,7 +762,7 @@ vue info
 ? Pick a linter / formatter config: Basic
 ? Pick additional lint features: Lint and fix on commit
 ? Pick a unit testing solution:
-  Mocha + Chai
+Mocha + Chai
 &gt; Jest
 <span class="c1">########################################</span>
 ? Please pick a preset: Manually <span class="k">select</span> features
@@ -728,7 +774,7 @@ vue info
 ? Pick a unit testing solution: Jest
 ? Where <span class="k">do</span> you prefer placing config <span class="k">for</span> Babel, ESLint, etc.? <span class="o">(</span>Use arrow keys<span class="o">)</span>
 &gt; In dedicated config files
-  In package.json
+In package.json
 <span class="c1">########################################</span>
 ? Please pick a preset: Manually <span class="k">select</span> features
 ? Check the features needed <span class="k">for</span> your project: Babel, CSS Pre-processors, Linter, Unit
@@ -751,12 +797,12 @@ vue info
 ? Save this as a preset <span class="k">for</span> future projects? No
 ? Pick the package manager to use when installing dependencies: <span class="o">(</span>Use arrow keys<span class="o">)</span>
 &gt; Use Yarn
-  Use NPM
+Use NPM
 <span class="c1">########################################</span>
 .....
 <span class="c1">########################################</span>
 success Saved lockfile.
-Done in 21.23s.
+Done in <span class="m">21</span>.23s.
 ⚓  Running completion hooks...
 
 �  Generating README.md...
@@ -764,24 +810,28 @@ Done in 21.23s.
 �  Successfully created project vue-demo-2.
 �  Get started with the following commands:
 
- $ <span class="nb">cd</span> vue-demo-2
- $ yarn serve
-
-</code></pre></td></tr></table>
+$ <span class="nb">cd</span> vue-demo-2
+$ yarn serve</code></pre></td></tr></table>
 </div>
-</div><ul>
-<li>根据提示进行下一步</li>
-<li>忽略警告<code>warning</code></li>
-<li>如果发现错误<code>error</code> google</li>
-<li>进入目录，运行<code>yarn serve</code></li>
-<li>自动开启一个本地预览服务器<code>webpack-dev-server</code>来检查项目是否成功创建</li>
+</div></li>
+
+<li><p>根据提示进行下一步</p></li>
+
+<li><p>忽略警告<code>warning</code></p></li>
+
+<li><p>如果发现错误<code>error</code> google</p></li>
+
+<li><p>进入目录，运行<code>yarn serve</code></p></li>
+
+<li><p>自动开启一个本地预览服务器<code>webpack-dev-server</code>来检查项目是否成功创建</p></li>
 </ul>
+
 <blockquote>
 <p>运行<code>yarn serve</code>自动生成后的目录结构</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -804,7 +854,7 @@ Done in 21.23s.
 </span><span class="lnt">21
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">vue-demo-1
+<pre class="chroma"><code class="language-bash" data-lang="bash">vue-demo-1
 ├── node_modules
 ├── public
 │   ├── favicon.ico
@@ -824,42 +874,48 @@ Done in 21.23s.
 ├── package.json
 ├── README.md
 ├── vue.config.js
-└── yarn.lock
-</code></pre></td></tr></table>
+└── yarn.lock</code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p>项目创建成功提示</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># App running at:</span>
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># App running at:</span>
 <span class="c1"># - Local: http://localhost:8080/ (端口号可能不一样)</span>
-<span class="c1"># - Network: http://192.168.31.107:8080/</span>
-</code></pre></td></tr></table>
+<span class="c1"># - Network: http://192.168.31.107:8080/</span></code></pre></td></tr></table>
 </div>
-</div><ul>
+</div>
+<ul>
 <li>用<code>WebStorm</code>或<code>VSCode</code>打开项目</li>
 </ul>
-<hr>
+
+<hr />
+
 <blockquote>
 <p>目标二：做一个简单项目，熟悉涉及的文档</p>
 </blockquote>
-<h2 id="3-vue实例-1-demoa-id实例1-href实例1--aa-hrefcatalogue--a">3. <code>Vue</code>实例 <code>+1 demo</code><!-- raw HTML omitted --> § <!-- raw HTML omitted --><!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+
+<h2 id="3-vue-实例-1-demo-a-id-实例1-href-实例1-a-a-href-catalogue-a">3. <code>Vue</code>实例 <code>+1 demo</code><a id="实例1" href="#实例1"> § </a><a href="#catalogue"> ⇧ </a></h2>
+
 <blockquote>
 <p>需求实现：在 div 里实现一个展示数字的字符串 ，按下<code>+1</code>按钮，更新 <code>data</code> 中数据的内容</p>
 </blockquote>
-<hr>
+
+<hr />
+
 <blockquote>
 <p>CRM 改<code>App.vue</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-vue" data-lang="vue"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -894,7 +950,7 @@ Done in 21.23s.
 </span><span class="lnt">33
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-vue" data-lang="vue"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;app&#34;</span><span class="p">&gt;</span>
     <span class="p">{{</span><span class="nx">n</span><span class="p">}}</span>
     <span class="p">&lt;</span><span class="nt">button</span> <span class="nt">@click</span><span class="s">=&#34;add&#34;</span><span class="p">&gt;</span><span class="err">+</span><span class="na">1</span><span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
@@ -926,29 +982,32 @@ Done in 21.23s.
   <span class="nx">color</span><span class="o">:</span> <span class="err">#</span><span class="mi">2</span><span class="nx">c3e50</span><span class="p">;</span>
   <span class="nx">margin</span><span class="o">-</span><span class="nx">top</span><span class="o">:</span> <span class="mi">60</span><span class="nx">px</span><span class="p">;</span>
 <span class="p">}</span>
-<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
-</code></pre></td></tr></table>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p><code>main.js</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
     <span class="nx">render</span><span class="o">:</span> <span class="nx">h</span> <span class="p">=&gt;</span> <span class="nx">h</span><span class="p">(</span><span class="nx">App</span><span class="p">),</span>
 <span class="p">}).</span><span class="nx">$mount</span><span class="p">(</span><span class="s1">&#39;#app&#39;</span><span class="p">)</span>
 </code></pre></td></tr></table>
 </div>
-</div><h3 id="demo1小结a-hrefcatalogue--a"><code>demo1</code>小结<!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+</div>
+<h3 id="demo1-小结-a-href-catalogue-a"><code>demo1</code>小结<a href="#catalogue"> ⇧ </a></h3>
+
 <blockquote>
 <p>通过这个简单的demo，初步了解以下五个知识点</p>
 </blockquote>
-<ol start="0">
+
+<ol>
 <li><code>el</code></li>
 <li><code>data(){}</code></li>
 <li><code>methods:{}</code></li>
@@ -956,29 +1015,37 @@ Done in 21.23s.
 <li><code>@click=&quot;add&quot;</code></li>
 <li>为什么可以直接导出<code>export default {}</code></li>
 </ol>
+
 <blockquote>
 <p>带着疑问查文档，实例接收配置项</p>
 </blockquote>
+
 <ul>
 <li><code>el</code>：实例负责管理的一个区域。如<code>el: '#app'</code> ，即让这个<code>Vue</code>实例去接管 <code>id</code> 为 <code>app</code> 的<code>DOM</code>元素标签里的所有内容</li>
 <li><code>data</code>：定义了需要传递的一些数据。如 <code>data: { content: 'hello world' }</code> ，即传递了内容为 <code>'hello world'</code> 的数据：<code>content</code> 。这种数据在 <code>dom</code> 元素中用 <code>{{ }}</code> 来来调用对应数据内容</li>
 <li>少了 <code>id</code> ，<code>Vue</code> 实例无法接管一个不用 <code>el</code> 管理的区域，说明 <code>Vue</code> 实例 接管了 <code>el</code> 管理下的 <code>DOM</code> 元素标签下的所有内容，没有被 <code>el</code> 管理过的 dom元素无法显示对应数据</li>
 </ul>
-<hr>
-<h2 id="4-使用new-vue实例对象a-id使用-href使用--aa-hrefcatalogue--a">4. 使用<code>new Vue</code>实例对象<!-- raw HTML omitted --> § <!-- raw HTML omitted --><!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+
+<hr />
+
+<h2 id="4-使用-new-vue-实例对象-a-id-使用-href-使用-a-a-href-catalogue-a">4. 使用<code>new Vue</code>实例对象<a id="使用" href="#使用"> § </a><a href="#catalogue"> ⇧ </a></h2>
+
 <blockquote>
 <p>类比<code>jQuery</code>实例对象<code>const $div = new jQuery('#xxx')</code></p>
 </blockquote>
+
 <ul>
 <li><code>$div</code>封装了对<code>#xxx</code>所有操作，可省略为<code>const $div = jQuery('#xxx')</code>或<code>const $div = $('#xxx')</code></li>
 </ul>
-<hr>
+
+<hr />
+
 <blockquote>
 <p><code>main.js</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -988,7 +1055,7 @@ Done in 21.23s.
 </span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kr">import</span> <span class="nx">Vue</span> <span class="nx">from</span> <span class="s1">&#39;vue&#39;</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kr">import</span> <span class="nx">Vue</span> <span class="nx">from</span> <span class="s1">&#39;vue&#39;</span>
 <span class="kr">import</span> <span class="nx">App</span> <span class="nx">from</span> <span class="s1">&#39;./App.vue&#39;</span>
 
 <span class="nx">Vue</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">productionTip</span> <span class="o">=</span> <span class="kc">false</span>
@@ -998,7 +1065,8 @@ Done in 21.23s.
 <span class="p">}).</span><span class="nx">$mount</span><span class="p">(</span><span class="s1">&#39;#app&#39;</span><span class="p">)</span>
 </code></pre></td></tr></table>
 </div>
-</div><ul>
+</div>
+<ul>
 <li>同样的，<code>const vm = new Vue()</code></li>
 <li><code>vm</code>封装了实例对于组件的所有操作</li>
 <li>封装了对 <code>DOM</code> 的所有操作，封装了对 <code>data</code> 的所有操作</li>
@@ -1006,49 +1074,56 @@ Done in 21.23s.
 <li>初始化<code>./public/index.html</code>中的<code>&lt;div id=&quot;app&quot;&gt;&lt;/div&gt;</code></li>
 <li>改掉默认的，对<code>#app</code>进行一个<code>MVC</code>的封装</li>
 </ul>
+
 <blockquote>
 <p><code>main.js</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kr">import</span> <span class="nx">Vue</span> <span class="nx">from</span> <span class="s1">&#39;vue&#39;</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kr">import</span> <span class="nx">Vue</span> <span class="nx">from</span> <span class="s1">&#39;vue&#39;</span>
 <span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
   <span class="nx">el</span><span class="o">:</span> <span class="s1">&#39;#app&#39;</span>
 <span class="p">})</span>
 </code></pre></td></tr></table>
 </div>
-</div><hr>
+</div>
+<hr />
+
 <blockquote>
 <p>CRM改<code>./public/index.html</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-HTML" data-lang="HTML"><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-HTML" data-lang="HTML"> <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;app&#34;</span><span class="p">&gt;</span>{{n}}<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-</code></pre></td></tr></table>
+<pre class="chroma"><code class="language-HTML" data-lang="HTML"> <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;app&#34;</span><span class="p">&gt;</span>{{n}}<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><ul>
+</div>
+<ul>
 <li>运行<code>yarn serve</code></li>
 <li>报错<code>[Vue warn]: You are using the runtime-only build of Vue where the template compiler is not available. Either pre-compile the templates into render functions, or use the compiler-included build.</code></li>
 <li>提示要么使用<code>loader</code>预编译，要么使用完整版，默认使用运行时版</li>
 <li>安装方法 <a href="https://cn.vuejs.org/v2/guide/installation.html#%E7%9B%B4%E6%8E%A5%E7%94%A8-lt-script-gt-%E5%BC%95%E5%85%A5">直接用 <code>&lt;script&gt;</code> 引入CDN</a></li>
 </ul>
+
 <blockquote>
 <p>vue有两种形式的代码 <code>compiler</code>（模板）模式和 <code>runtime</code> 模式（运行时）</p>
 </blockquote>
+
 <ul>
 <li><code>vue</code>模块的<code>package.json</code>的<code>main</code>字段默认为<code>runtime</code>模式， 指向了<code>&quot;dist/vue.runtime.common.js&quot;</code>位置</li>
 <li>而在<code>main.js</code>文件中，初始化<code>vue</code>使用的是<code>compiler</code>模式，所以就会出现上面的错误信息</li>
 </ul>
-<hr>
+
+<hr />
+
 <ul>
 <li>直接下载并用 <code>&lt;script&gt;</code> 标签引入，<code>Vue</code> 会被注册为一个全局变量</li>
 <li>在开发环境下不要使用压缩版本，不然你就失去了所有常见错误相关的警告!</li>
@@ -1056,40 +1131,47 @@ Done in 21.23s.
 <li>生产版本删除了警告，33.30KB min+gzip</li>
 <li><a href="https://www.mmxiaowu.com/article/58482558d4352863efb55475">各个引用文件的区别</a></li>
 </ul>
+
 <blockquote>
 <p>vue2.x V.S. vue3.x</p>
 </blockquote>
+
 <p>在<code>2.x</code>中通过<code>new Vue()</code>的方法来初始化：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kr">import</span> <span class="nx">App</span> <span class="nx">from</span> <span class="s1">&#39;./App.vue&#39;</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kr">import</span> <span class="nx">App</span> <span class="nx">from</span> <span class="s1">&#39;./App.vue&#39;</span>
 <span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
   <span class="nx">store</span><span class="p">,</span>
   <span class="nx">render</span><span class="o">:</span> <span class="nx">h</span> <span class="p">=&gt;</span> <span class="nx">h</span><span class="p">(</span><span class="nx">App</span><span class="p">)</span>
 <span class="p">}).</span><span class="nx">$mount</span><span class="p">(</span><span class="s1">&#39;#app&#39;</span><span class="p">)</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>在<code>3.x</code>中<code>Vue</code>不再是一个构造函数，通过<code>createApp</code>方法初始化：</p>
+</div>
+<p>在<code>3.x</code>中<code>Vue</code>不再是一个构造函数，通过<code>createApp</code>方法初始化：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kr">import</span> <span class="nx">App</span> <span class="nx">from</span> <span class="s1">&#39;./App.vue&#39;</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kr">import</span> <span class="nx">App</span> <span class="nx">from</span> <span class="s1">&#39;./App.vue&#39;</span>
 <span class="nx">createApp</span><span class="p">(</span><span class="nx">App</span><span class="p">).</span><span class="nx">use</span><span class="p">(</span><span class="nx">store</span><span class="p">).</span><span class="nx">mount</span><span class="p">(</span><span class="s1">&#39;#app&#39;</span><span class="p">)</span>
 </code></pre></td></tr></table>
 </div>
-</div><hr>
-<h3 id="vue的两个版本和三个使用方法a-hrefcatalogue--a">Vue的两个版本和三个使用方法<!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
-<h4 id="方法一从html得到视图a-hrefcatalogue--a">方法一：从<code>HTML</code>得到视图<!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h4>
+</div>
+<hr />
+
+<h3 id="vue的两个版本和三个使用方法-a-href-catalogue-a">Vue的两个版本和三个使用方法<a href="#catalogue"> ⇧ </a></h3>
+
+<h4 id="方法一-从-html-得到视图-a-href-catalogue-a">方法一：从<code>HTML</code>得到视图<a href="#catalogue"> ⇧ </a></h4>
+
 <ul>
 <li>「<strong>完整版</strong><code>Vue</code>」，同时包含编译器和运行时的版本</li>
 <li><strong>编译器</strong>：用来将模板字符串编译成为 <code>JavaScript</code> 渲染函数的代码</li>
@@ -1101,12 +1183,13 @@ Done in 21.23s.
 <li>使用<a href="https://www.bootcdn.cn/vue/"><code>bootCDN vue</code></a>引入</li>
 <li>稳定版<code>&lt;script src=&quot;https://cdn.bootcdn.net/ajax/libs/vue/2.6.11/vue.min.js&quot;&gt;&lt;/script&gt;</code></li>
 </ul>
+
 <blockquote>
 <p><code>./public/index.html</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-HTML" data-lang="HTML"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -1115,21 +1198,21 @@ Done in 21.23s.
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-HTML" data-lang="HTML"><span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-HTML" data-lang="HTML"><span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;app&#34;</span><span class="p">&gt;</span>
   {{n}}
   {{message}}
   <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;https://cdn.bootcdn.net/ajax/libs/vue/2.6.11/vue.min.js&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
-</code></pre></td></tr></table>
+<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p><code>main.js</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1145,7 +1228,7 @@ Done in 21.23s.
 </span><span class="lnt">14
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
   <span class="c1">// 绑定页面元素 element
 </span><span class="c1"></span>  <span class="nx">el</span><span class="o">:</span> <span class="s1">&#39;#app&#39;</span><span class="p">,</span>
   <span class="nx">data</span><span class="o">:</span> <span class="p">{</span>
@@ -1161,42 +1244,46 @@ Done in 21.23s.
 <span class="p">})</span>
 </code></pre></td></tr></table>
 </div>
-</div><ul>
+</div>
+<ul>
 <li>在<code>data</code>定义可以是一个对象或是函数</li>
 <li><code>data</code>中的<code>n</code>对应<code>index.html&gt;#app</code>内的模板数据<code>{{n}}</code></li>
 <li>注意<code>MVC</code>的视图没有写在<code>JS</code>文件中，而是直接写在页面里<code>index.html</code></li>
 <li>这就是完整版的功能：直接在页面中渲染数据</li>
 </ul>
+
 <blockquote>
 <p>改为使用<code>template</code>，放页面内容</p>
 </blockquote>
+
 <ul>
 <li>页面元素可以放在<code>html</code>中，或放在<code>template</code>模板字符串中</li>
 <li>在客户端编译模板 (比如传入一个字符串给 <code>template</code> 选项，或挂载到一个元素上并以其 <code>DOM</code> 内部的 <code>HTML</code> 作为模板)，就将需要加上编译器，即完整版</li>
 </ul>
+
 <blockquote>
 <p><code>./public/index.html</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-HTML" data-lang="HTML"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-HTML" data-lang="HTML"><span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-HTML" data-lang="HTML"><span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;app&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;https://cdn.bootcdn.net/ajax/libs/vue/2.6.11/vue.min.js&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
-</code></pre></td></tr></table>
+<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p><code>main.js</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1216,7 +1303,7 @@ Done in 21.23s.
 </span><span class="lnt">18
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="c1">// 需要编译器（完整版） main.js
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="c1">// 需要编译器（完整版） main.js
 </span><span class="c1"></span><span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
   <span class="nx">el</span><span class="o">:</span> <span class="s1">&#39;#app&#39;</span><span class="p">,</span>
   <span class="nx">data</span><span class="o">:</span> <span class="p">{</span>
@@ -1236,45 +1323,51 @@ Done in 21.23s.
 <span class="nx">console</span><span class="p">.</span><span class="nx">dir</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">Vue</span><span class="p">);</span>
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p><code>./public/index.html</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-HTML" data-lang="HTML"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-HTML" data-lang="HTML"><span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-HTML" data-lang="HTML"><span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;app&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;https://cdn.bootcdn.net/ajax/libs/vue/2.6.11/vue.min.js&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
-</code></pre></td></tr></table>
+<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><ul>
+</div>
+<ul>
 <li>不直接写到<code>HTML</code>里面，而在<code>JS</code>写到<code>template</code></li>
 <li>完整版可以直接在页面里写模板字符串</li>
 <li>在客户端编译模板 (比如传入一个字符串给 <code>template</code> 选项，或挂载到一个元素上并以其 <code>DOM</code> 内部的 <code>HTML</code> 作为模板)， 只包含运行时版（非完整版）不支持，而 完整版 支持</li>
 </ul>
-<hr>
+
+<hr />
+
 <blockquote>
 <p>「非完整版」没有编译器，使用以上方法，页面中无渲染效果</p>
+
 <p>不支持从<code>HTML</code>里获取视图，也不支持直接从<code>template</code>获取视图（不使用<code>vue-loader</code>）</p>
 </blockquote>
-<h4 id="方法二用js构建视图a-hrefcatalogue--a">方法二：用<code>JS</code>构建视图<!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h4>
+
+<h4 id="方法二-用-js-构建视图-a-href-catalogue-a">方法二：用<code>JS</code>构建视图<a href="#catalogue"> ⇧ </a></h4>
+
 <ul>
 <li>使用「非完整版」，即<code>vue.runtime.js</code>，「运行时版」</li>
 <li>使用「运行时版生产版」，即<code>vue.runtime.min.js</code></li>
 <li>引入运行时版<code>&lt;script src=&quot;https://cdn.bootcdn.net/ajax/libs/vue/2.6.11/vue.runtime.min.js&quot;&gt;&lt;/script&gt;</code></li>
 <li>不支持从<code>html</code>获取视图，使用<code>template</code>也不行</li>
 <li>通过 <code>h()</code> 即 <code>createElement</code> 来创建 <code>DOM</code></li>
-<li>不是给人（开发者）看的</li>
-</ul>
+
+<li><p>不是给人（开发者）看的</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1287,30 +1380,34 @@ Done in 21.23s.
 </span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="c1">// 「完整版」需要编译器
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="c1">// 「完整版」需要编译器
 </span><span class="c1"></span><span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
-  <span class="nx">template</span><span class="o">:</span> <span class="s1">&#39;&lt;div&gt;{{ hi }}&lt;/div&gt;&#39;</span>
+<span class="nx">template</span><span class="o">:</span> <span class="s1">&#39;&lt;div&gt;{{ hi }}&lt;/div&gt;&#39;</span>
 <span class="p">})</span>
 
 <span class="c1">// 「非完整版」不需要编译器
 </span><span class="c1"></span><span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
-  <span class="nx">render</span> <span class="p">(</span><span class="nx">h</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="nx">h</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">hi</span><span class="p">)</span>
-  <span class="p">}</span>
+<span class="nx">render</span> <span class="p">(</span><span class="nx">h</span><span class="p">)</span> <span class="p">{</span>
+<span class="k">return</span> <span class="nx">h</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">hi</span><span class="p">)</span>
+<span class="p">}</span>
 <span class="p">})</span>
 </code></pre></td></tr></table>
 </div>
-</div><ul>
-<li>用函数<code>render(h){return h('xxx', this.xxxData)}</code></li>
-<li><code>h</code>就是对<code>createElement</code>的别名封装 <code>alias</code></li>
-<li>运行时版存在的意义是，更加地独立，功能单一</li>
+</div></li>
+
+<li><p>用函数<code>render(h){return h('xxx', this.xxxData)}</code></p></li>
+
+<li><p><code>h</code>就是对<code>createElement</code>的别名封装 <code>alias</code></p></li>
+
+<li><p>运行时版存在的意义是，更加地独立，功能单一</p></li>
 </ul>
+
 <blockquote>
 <p><code>main.js</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1336,7 +1433,7 @@ Done in 21.23s.
 </span><span class="lnt">24
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="c1">// eslint-disable-next-line no-undef
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="c1">// eslint-disable-next-line no-undef
 </span><span class="c1"></span><span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
   <span class="nx">el</span><span class="o">:</span> <span class="s1">&#39;#app&#39;</span><span class="p">,</span>
   <span class="nx">data</span><span class="o">:</span> <span class="p">{</span>
@@ -1362,33 +1459,37 @@ Done in 21.23s.
 <span class="p">})</span>
 </code></pre></td></tr></table>
 </div>
-</div><ul>
+</div>
+<ul>
 <li>不适合开发（实际是打包自动生成），代码不清晰</li>
 <li>体积小，适合生产环境</li>
 </ul>
+
 <blockquote>
 <p><code>./public/index.html</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-HTML" data-lang="HTML"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-HTML" data-lang="HTML"><span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-HTML" data-lang="HTML"><span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;app&#34;</span><span class="p">&gt;</span>
   <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;https://cdn.bootcdn.net/ajax/libs/vue/2.6.11/vue.runtime.min.js&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
-</code></pre></td></tr></table>
+<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><hr>
+</div>
+<hr />
+
 <blockquote>
 <p>「完整版」思路</p>
 </blockquote>
+
 <ul>
 <li>视图是写在<code>HTML</code>里或<code>template</code>选项的，由于有 <code>compiler</code>(编译器)的存在</li>
 <li><code>vue</code>用编译器<code>compiler</code>将<code>html</code>字符串模板中的<code>${{n}}</code>，转化为实际数据<code>html</code>的<code>DOM</code>（复杂的编译<code>v-if</code>，<code>v-for</code>、<code>@click</code>），数据改变<code>this.n += 1</code>时，渲染<code>DOM</code>节点</li>
@@ -1396,9 +1497,11 @@ Done in 21.23s.
 <li>优点：编译器可以将含有占位符<code>${{}}</code>或者条件语句变成真实的<code>DOM</code>节点，可以从<code>HTML</code>得到视图</li>
 <li>不适用于生产环境</li>
 </ul>
+
 <blockquote>
 <p>「非完整版」思路</p>
 </blockquote>
+
 <ul>
 <li>没有<code>compiler</code>，不直接编译<code>${{n}}</code></li>
 <li>在JS中通过<code>render()</code>的<code>h()</code>创建节点</li>
@@ -1406,26 +1509,34 @@ Done in 21.23s.
 <li>缺点2：没有<code>compiler</code>，不能将<code>HTML</code>变成节点，需要用<code>JS</code>构建视图</li>
 <li>缺点1：<code>HTML</code>就只有一个<code>div#app</code>，<code>SEO</code>不友好</li>
 </ul>
-<hr>
+
+<hr />
+
 <blockquote>
 <p><code>index.html</code>中的<code>&lt;div id=&quot;app&quot;&gt;&lt;/div&gt;</code>里面会被替换为<code>Demo</code>变异后的内容，但替换前是空的，这样<code>SEO</code>不友好</p>
 </blockquote>
-<h4 id="seo友好a-hrefcatalogue--a"><code>SEO</code>友好<!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h4>
+
+<h4 id="seo-友好-a-href-catalogue-a"><code>SEO</code>友好<a href="#catalogue"> ⇧ </a></h4>
+
 <ul>
 <li><code>SEO（Search Engine Optimization）</code>，即搜索引擎优化</li>
 <li>可以将搜索引擎<code>SEO</code>理解为不停地<code>curl</code>网站源代码</li>
 <li>根据<code>curl</code>结果猜测页面内容，命令行中输入<code>curl https://xiedaimala.com</code></li>
 <li>可以看到网址传回的结果</li>
 </ul>
+
 <blockquote>
 <p><code>SEO</code>不友好</p>
 </blockquote>
+
 <ul>
 <li>如果页面都是用<code>JS</code>创建的，搜索引擎<code>curl</code>无效（<code>google</code>除外），无法抓取信息</li>
 </ul>
+
 <blockquote>
 <p>过时的解决方案</p>
 </blockquote>
+
 <ul>
 <li>给<code>curl</code>一点内容</li>
 <li>把<code>title</code>、<code>description</code>、<code>&lt;meta name=&quot;keyword&quot; content=&quot;xxx&quot; &gt;</code>、<code>&lt;meta name=&quot;description&quot; content=&quot;xxx&quot; &gt;</code>、<code>h1</code>、<code>a</code>写好描述内容</li>
@@ -1437,14 +1548,17 @@ Done in 21.23s.
 <li><a href="https://developer.mozilla.org/zh-CN/docs/learn/HTML/Introduction_to_HTML/The_head_metadata_in_HTML"><code>&lt;head&gt;标签里有什么? Metadata-HTML中的元数据</code></a></li>
 <li><a href="https://segmentfault.com/a/1190000002407912">常用meta整理</a></li>
 </ul>
-<hr>
-<h4 id="方法三非完整版-vue的单文件组件vue-a-hrefcatalogue--a">方法三：「非完整版」+ <code>Vue</code>的单文件组件<code>*.vue</code> <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h4>
+
+<hr />
+
+<h4 id="方法三-非完整版-vue-的单文件组件-vue-a-href-catalogue-a">方法三：「非完整版」+ <code>Vue</code>的单文件组件<code>*.vue</code> <a href="#catalogue"> ⇧ </a></h4>
+
 <blockquote>
 <p><code>*.vue</code>包含三个基本的标签，设置为<code>snippets</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-HTML" data-lang="HTML"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1467,7 +1581,7 @@ Done in 21.23s.
 </span><span class="lnt">21
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-HTML" data-lang="HTML"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-HTML" data-lang="HTML"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
     $1
   <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
@@ -1487,19 +1601,20 @@ Done in 21.23s.
 <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 
 <span class="p">&lt;</span><span class="nt">style</span> <span class="na">scoped</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
-</code></pre></td></tr></table>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><ul>
+</div>
+<ul>
 <li>使用<code>vue-loader</code>时，<code>export default</code>的<code>data</code>必须使用函数的形式，必须有返回值</li>
 <li>创建一个<code>vue</code>文件</li>
 </ul>
+
 <blockquote>
 <p><code>demo.vue</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-HTML" data-lang="HTML"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1533,7 +1648,7 @@ Done in 21.23s.
 </span><span class="lnt">32
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-HTML" data-lang="HTML"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-HTML" data-lang="HTML"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;red&#34;</span><span class="p">&gt;</span>
     {{n}}
     <span class="p">&lt;</span><span class="nt">button</span> <span class="err">@</span><span class="na">click</span><span class="o">=</span><span class="s">&#34;add&#34;</span><span class="p">&gt;</span>+1s<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
@@ -1564,15 +1679,15 @@ Done in 21.23s.
 <span class="p">.</span><span class="nc">red</span> <span class="p">{</span>
   <span class="k">color</span><span class="p">:</span> <span class="kc">red</span><span class="p">;</span>
 <span class="p">}</span>
-<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
-</code></pre></td></tr></table>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p><code>main.js</code>导入单文件组件，实例中<code>render(h) {return h(xxx)}</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1594,7 +1709,7 @@ Done in 21.23s.
 </span><span class="lnt">20
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kr">import</span> <span class="nx">Demo</span> <span class="nx">from</span> <span class="s2">&#34;./Demo.vue&#34;</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kr">import</span> <span class="nx">Demo</span> <span class="nx">from</span> <span class="s2">&#34;./Demo.vue&#34;</span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">Demo</span><span class="p">)</span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">Demo</span><span class="p">.</span><span class="nx">render</span><span class="p">.</span><span class="nx">toString</span><span class="p">())</span>
 <span class="cm">/*
@@ -1616,10 +1731,13 @@ Done in 21.23s.
 <span class="p">}).</span><span class="nx">$mount</span><span class="p">(</span><span class="s1">&#39;#app&#39;</span><span class="p">)</span> <span class="c1">// 挂载到#app上 代替 el: &#34;#app&#34;
 </span></code></pre></td></tr></table>
 </div>
-</div><hr>
+</div>
+<hr />
+
 <blockquote>
 <p><code>vue-loader</code>做了什么</p>
 </blockquote>
+
 <ul>
 <li>使用 <code>vue-cli</code> 时，已经配置好 <code>webpack</code> 的 <code>vue-loader</code></li>
 <li>使用<code>webpack</code>的<code>vue-loader</code>，可以将<code>.vue</code>文件编译成<code>h</code>构建方法</li>
@@ -1633,93 +1751,117 @@ Done in 21.23s.
 <li>用户下载产品时只需要下载体积小的非完整版</li>
 <li>开发人员编写代码时，也不需要使用 <code>render</code> 方法去构造元素</li>
 </ul>
+
 <blockquote>
 <p>使用单文件组件<code>*.vue</code></p>
 </blockquote>
+
 <ul>
 <li>单文件组件<code>*.vue</code>清晰地分为视图<code>template</code>、逻辑<code>script</code>、样式<code>style</code></li>
 <li><code>vue-loader</code>将以上的三个部分编译成一个对象</li>
 <li>在<code>Vue</code>实例对象中声明属性<code>el</code>的节点目标、<code>render(h) {return h(xxx)}</code>，<code>xxx</code>为导入的单文件组件</li>
 </ul>
-<hr>
-<h4 id="小结vue实例作用a-hrefcatalogue--a">小结<code>Vue</code>实例作用<!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h4>
+
+<hr />
+
+<h4 id="小结-vue-实例作用-a-href-catalogue-a">小结<code>Vue</code>实例作用<a href="#catalogue"> ⇧ </a></h4>
+
 <blockquote>
 <p><code>Vue</code>实例如同<code>jQuery</code>实例</p>
 </blockquote>
+
 <ul>
 <li>封装对<code>DOM</code>的所有操作</li>
 <li>封装对<code>data</code>的所有操作</li>
 </ul>
+
 <blockquote>
 <p><code>Vue</code>操作<code>DOM</code></p>
 </blockquote>
+
 <ul>
 <li>监听事件</li>
 <li>改变<code>DOM</code></li>
 </ul>
+
 <blockquote>
 <p><code>Vue</code>操作<code>data</code></p>
 </blockquote>
+
 <ul>
 <li>增删改查</li>
 <li><code>Vue2</code>的bug <code>响应式原理</code></li>
 <li><code>Vue3</code>的改进</li>
 </ul>
+
 <blockquote>
 <p><code>Vue</code>未封装<code>ajax</code></p>
 </blockquote>
+
 <ul>
 <li>用<code>axios</code>的<code>ajax</code>功能</li>
 </ul>
+
 <blockquote>
 <p>vue内部过程</p>
 </blockquote>
+
 <ol>
 <li>首先将<code>vue</code>中的模板进行解析解析成<code>abstract syntax tree （AST）</code>抽象语法树</li>
 <li>将抽象语法树编译成<code>render</code>函数</li>
 <li>将<code>render</code>函数再翻译成<code>virtual DOM</code> 虚拟<code>DOM</code></li>
 <li>将虚拟<code>DOM</code>显示在浏览器上</li>
 </ol>
-<h4 id="runtime-only和runtime-compiler的区别a-hrefcatalogue--a"><code>runtime-only</code>和<code>runtime-compiler</code>的区别<!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h4>
+
+<h4 id="runtime-only-和-runtime-compiler-的区别-a-href-catalogue-a"><code>runtime-only</code>和<code>runtime-compiler</code>的区别<a href="#catalogue"> ⇧ </a></h4>
+
 <ul>
 <li><code>runtime-only</code>比<code>runtime-compiler</code>更快
+
 <ul>
 <li>因为它省略了将<code>vue</code>中的模板进行解析解析成<code>abstract syntax tree （ast）</code>抽象语法树</li>
 <li>跳过将抽象语法树编译成<code>render</code>函数</li>
 <li>直接用<code>render</code>函数</li>
-</ul>
-</li>
+</ul></li>
 <li>如果是<code>runtime-compiler</code>，那么<code>main.js</code>中就会出现<code>template</code>从而需要过程一导致增加了一个过程，同时增加了大小</li>
 <li><code>runtime-only</code>只能识别<code>render</code>函数，不能识别<code>template</code></li>
 <li><code>*.vue</code>文件中的也是被 <code>vue-template-compiler</code> 编译成了 <code>render</code>函数，所以只能在<code>*.vue</code>里写 <code>template</code></li>
 <li><code>runtime-only</code> 模式中把 <code>template</code> 放在了<code>*.vue</code> 的文件中， <code>vue-template-compiler</code>的在开发依赖时将<code>*.vue</code>文件中的 <code>template</code> 解析成 <code>render</code> 函数，因为是开发依赖，不在最后生产中，所以最后生产出来的运行的代码没有<code>template</code></li>
 </ul>
+
 <blockquote>
 <p>过程图解</p>
 </blockquote>
+
 <ul>
 <li><code>template</code> -&gt; <code>AST</code> -&gt; <code>render</code> -&gt; <code>vDOM</code> -&gt; <code>UI</code>
+
 <ul>
 <li><code>template</code> 代码首先会解析成 <code>AST</code>（抽象语法树，<code>abstract syntax tree</code>）</li>
 <li><code>AST</code> 编译成 <code>render</code> 函数</li>
 <li><code>render</code> 函数变化成 <code>vDOM</code>（虚拟<code>DOM</code>，<code>virtual DOM</code>）</li>
 <li>最终 <code>vDOM</code> 的内容更新渲染到 <code>UI</code> 上。</li>
+</ul></li>
 </ul>
-</li>
-</ul>
+
 <blockquote>
 <p>所以</p>
 </blockquote>
+
 <ul>
 <li><code>runtime-compiler</code> 经历的是一个 <code>template -&gt; AST -&gt; render -&gt; vDOM -&gt; 真实的DOM -&gt; 页面</code> 的过程</li>
 <li><code>runtime-only</code>直接使用了<code>render</code>函数，所以经历的是一个 <code>render -&gt; vDOM -&gt; UI</code> 的过程。</li>
 <li><code>runtime-only</code> 会省去一个 <code>template -&gt; AST -&gt; render</code> 的过程，也不再需要相关的<code>compiler</code>或<code>loader</code>，从而这种方法搭建的项目性能更高，代码也更少，项目大小也更小。</li>
 </ul>
-<hr>
+
+<hr />
+
 <blockquote>
 <p>目标三：深入理解 <strong>完整版 / 运行时版</strong> 区别</p>
 </blockquote>
-<h2 id="5-理解vuejs-和-vueruntimejs-的区别和使用方法-最佳实践a-id区别-href区别--aa-hrefcatalogue--a">5. 理解<code>vue.js</code> 和 <code>vue.runtime.js</code> 的区别和使用方法 最佳实践<!-- raw HTML omitted --> § <!-- raw HTML omitted --><!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+
+<h2 id="5-理解-vue-js-和-vue-runtime-js-的区别和使用方法-最佳实践-a-id-区别-href-区别-a-a-href-catalogue-a">5. 理解<code>vue.js</code> 和 <code>vue.runtime.js</code> 的区别和使用方法 最佳实践<a id="区别" href="#区别"> § </a><a href="#catalogue"> ⇧ </a></h2>
+
 <table>
 <thead>
 <tr>
@@ -1729,6 +1871,7 @@ Done in 21.23s.
 <th>评价</th>
 </tr>
 </thead>
+
 <tbody>
 <tr>
 <td>特点</td>
@@ -1736,24 +1879,28 @@ Done in 21.23s.
 <td>无<code>compiler</code></td>
 <td><code>compiler</code>多占约<code>30%</code>体积</td>
 </tr>
+
 <tr>
 <td>视图</td>
 <td>写在<code>HTML</code>/<code>template</code>选项</td>
 <td>写在<code>render</code>函数里用<code>h</code>创建标签</td>
 <td><code>h</code>默认，是作者写好传给<code>render</code>的，可改为任意名字</td>
 </tr>
+
 <tr>
 <td><code>cdn</code>引入</td>
 <td><code>vue.js</code></td>
 <td><code>vue.runtime.js</code></td>
 <td>文件名不同，生成环境后缀为<code>.min.js</code></td>
 </tr>
+
 <tr>
 <td><code>webpack</code>引入</td>
 <td>需配置<code>alias</code></td>
 <td>默认使用此版</td>
 <td>维护者配置好了，满足大多数开发需求特殊需求除外</td>
 </tr>
+
 <tr>
 <td><code>@vue/cli</code>引入</td>
 <td>需额外配置</td>
@@ -1762,57 +1909,73 @@ Done in 21.23s.
 </tr>
 </tbody>
 </table>
+
 <blockquote>
 <p>完整版</p>
 </blockquote>
+
 <ul>
 <li>对应的文件名：<code>vue.js</code> ，<code>vue.min.js</code>后者是压缩版，取消了注释和警告</li>
 <li>支持从<code>html</code>获取视图（<code>DOM</code>节点）</li>
 <li>支持<code>template</code></li>
 <li>有<code>compiler</code>编译器</li>
 </ul>
+
 <blockquote>
 <p>非完整版</p>
 </blockquote>
+
 <ul>
 <li>对应的文件名：<code>vue.runtime.js</code> ，<code>vue.runtime.min.js</code>同上</li>
 <li>不支持从<code>html</code>获取视图</li>
 <li>不支持<code>template</code>，需要通过<code>vue-loader</code> 将组件中的<code>template</code>模板编译为<code>render</code>函数</li>
 <li>没有<code>compiler</code>编译器，体积会比完整版小<code>30%</code></li>
 </ul>
-<hr>
-<h3 id="最佳实践a-hrefcatalogue--a">最佳实践<!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+
+<hr />
+
+<h3 id="最佳实践-a-href-catalogue-a">最佳实践<a href="#catalogue"> ⇧ </a></h3>
+
 <blockquote>
 <p>总是使用<strong>运行时版</strong>，配合<code>vue-loader</code>和<code>vue</code>单文件组件，目的是让用户端空间占用空间最小，思路如下</p>
 </blockquote>
+
 <ul>
 <li>保证用户体验，用户对<code>VUe</code>的依赖使用，下载的<code>JS</code>文件体积更小（去掉开发环境的编译器、注释、压缩代码），但<strong>只支持<code>h</code>函数</strong>（<code>main.js</code>里不支持<code>template</code>）</li>
 <li>保证开发体验，使用<code>webpack</code>的<code>vue-loader</code>，开发者可直接在<code>vue</code>单文件组件中写<code>HTML</code>标签，<strong>也支持<code>h</code>函数</strong>，打包时，自动转译</li>
 <li>编译工作让<code>loader</code>自动完成，<code>vue-loader</code>把<code>vue</code>文件里的<code>HTML</code>标签<strong>转为<code>h</code>函数</strong></li>
 </ul>
+
 <blockquote>
 <p>引用错了会怎样</p>
 </blockquote>
+
 <ul>
 <li><code>vue.js</code>错用成了<code>vue.runtime.js</code>，无法将<code>HTML</code>编译成视图，后台会报错<code>compiler</code>（要么使用<code>loader</code>预编译，要么使用完整版）</li>
 <li><code>vue.runtime.js</code>错用成了<code>vue.js</code>，代码体积变大，<code>vue.js</code>有编译<code>HTML</code>功能，并不报错</li>
 </ul>
-<hr>
-<h3 id="template-vs-rendera-hrefcatalogue--a"><code>template</code> V.S. <code>render</code><!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+
+<hr />
+
+<h3 id="template-v-s-render-a-href-catalogue-a"><code>template</code> V.S. <code>render</code><a href="#catalogue"> ⇧ </a></h3>
+
 <blockquote>
 <p><code>template</code>: <code>HTML</code> 内容模板（<code>&lt;template&gt;</code>）元素是一种用于保存客户端内容机制，该内容在加载页面时不会呈现，但随后可在运行时使用 <code>JavaScript</code> 实例化，即提供模板占位符</p>
+
 <p>可以包裹元素，这个<code>template</code>不会被渲染到页面上，因为它天生带有<code>display: none;</code>属性</p>
 </blockquote>
+
 <ul>
 <li><code>Vue</code> 中将一个字符串模板作为 <code>Vue</code> 实例的标识使用，模板将会替换挂载的元素，挂载元素的内容都将被忽略，除非模板的内容有分发插槽（<code>v-slot</code>）</li>
 </ul>
-<h4 id="template在完整版a-hrefcatalogue--a"><code>template</code>在完整版<!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h4>
+
+<h4 id="template-在完整版-a-href-catalogue-a"><code>template</code>在完整版<a href="#catalogue"> ⇧ </a></h4>
+
 <ul>
-<li>在JS里面创建<code>Vue</code>实例，<code>template</code>属性里写模板字符</li>
-</ul>
+<li><p>在JS里面创建<code>Vue</code>实例，<code>template</code>属性里写模板字符</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -1820,33 +1983,37 @@ Done in 21.23s.
 </span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="c1">// 需要编译器（完整版） main.js
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="c1">// 需要编译器（完整版） main.js
 </span><span class="c1"></span><span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
-  <span class="nx">template</span><span class="o">:</span> <span class="s1">&#39;
-</span><span class="s1">  &lt;div&gt;${{n}}&lt;/div&gt;
-</span><span class="s1">  &#39;</span>
+<span class="nx">template</span><span class="o">:</span> <span class="s1">&#39;
+</span><span class="s1">&lt;div&gt;${{n}}&lt;/div&gt;
+</span><span class="s1">&#39;</span>
 <span class="p">})</span>
 </code></pre></td></tr></table>
 </div>
-</div><ul>
-<li>完整版支持直接在<code>index.html</code>文件里写视图，支持模板字符</li>
-<li>也支持在<code>main.js</code>里写，需要写到实例的<code>template</code>属性中</li>
+</div></li>
+
+<li><p>完整版支持直接在<code>index.html</code>文件里写视图，支持模板字符</p></li>
+
+<li><p>也支持在<code>main.js</code>里写，需要写到实例的<code>template</code>属性中</p></li>
 </ul>
+
 <blockquote>
 <p>例如</p>
 </blockquote>
+
 <ul>
 <li>在<code>index.html</code>中添加一个<code>id</code>为<code>app</code>的标签<code>&lt;div id=&quot;app&quot;&gt;&lt;/div&gt;</code></li>
 <li>接着添加script标签，引入完整版的js文件
+
 <ul>
 <li><code>&lt;script src=&quot;https://cdn.bootcss.com/vue/2.6.11/vue.min.js&quot;&gt;&lt;/script&gt;</code></li>
-</ul>
-</li>
-<li>然后在<code>main.js</code>里，直接把<code>html</code>代码写入<code>template</code>选项中</li>
-</ul>
+</ul></li>
+
+<li><p>然后在<code>main.js</code>里，直接把<code>html</code>代码写入<code>template</code>选项中</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -1857,40 +2024,48 @@ Done in 21.23s.
 </span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"> <span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
-     <span class="nx">el</span><span class="o">:</span> <span class="s1">&#39;#app&#39;</span><span class="p">,</span>
-     <span class="nx">template</span><span class="o">:</span> <span class="sb">`
-</span><span class="sb">        &lt;div&gt;{{n}}&lt;/div&gt;
-</span><span class="sb">    `</span><span class="p">,</span>
-     <span class="nx">data</span><span class="o">:</span> <span class="p">{</span>
-         <span class="nx">n</span><span class="o">:</span> <span class="mi">0</span>
-     <span class="p">}</span>
- <span class="p">})</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
+ <span class="nx">el</span><span class="o">:</span> <span class="s1">&#39;#app&#39;</span><span class="p">,</span>
+ <span class="nx">template</span><span class="o">:</span> <span class="sb">`
+</span><span class="sb">    &lt;div&gt;{{n}}&lt;/div&gt;
+</span><span class="sb">`</span><span class="p">,</span>
+ <span class="nx">data</span><span class="o">:</span> <span class="p">{</span>
+     <span class="nx">n</span><span class="o">:</span> <span class="mi">0</span>
+ <span class="p">}</span>
+<span class="p">})</span>
 </code></pre></td></tr></table>
 </div>
-</div><ul>
-<li>运行<code>Vue</code>后，它会直接把<code>n</code>为<code>0</code>写入到<code>app</code>标签中</li>
-<li>需注意的是，<code>template</code>中至少要有一个根元素，不能是纯文本，否则会报错</li>
-<li>如果存在多个同级元素，没有根元素时，只会显示第一个元素</li>
+</div></li>
+
+<li><p>运行<code>Vue</code>后，它会直接把<code>n</code>为<code>0</code>写入到<code>app</code>标签中</p></li>
+
+<li><p>需注意的是，<code>template</code>中至少要有一个根元素，不能是纯文本，否则会报错</p></li>
+
+<li><p>如果存在多个同级元素，没有根元素时，只会显示第一个元素</p></li>
 </ul>
-<h4 id="template在运行时版a-hrefcatalogue--a"><code>template</code>在运行时版<!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h4>
+
+<h4 id="template-在运行时版-a-href-catalogue-a"><code>template</code>在运行时版<a href="#catalogue"> ⇧ </a></h4>
+
 <ul>
 <li>只在单文件组件<code>*.vue</code>里写 <code>template</code></li>
 <li>在 <code>*.vue</code> 文件中提供模版、方法和样式，在 <code>main.js</code> 用 <code>new Vue</code> 实例化<code>render(h) {return h(xxx)}</code>，<code>xxx</code>
 为导入的单文件组件</li>
 </ul>
-<hr>
+
+<hr />
+
 <blockquote>
 <p><code>render</code>是渲染函数，它可以代替<code>template</code>创建<code>HTML</code>元素</p>
 </blockquote>
+
 <ul>
 <li><code>render</code>函数的参数也是一个函数，一般名为<code>h</code>，实际可以是任意（类似的有<code>event</code>的<code>e</code>）</li>
 <li>这个<code>h</code>就是封装过的<code>createElement</code></li>
-<li><code>render</code>函数将<code>createElement</code>的返回值放到了<code>HTML</code>中</li>
-</ul>
+
+<li><p><code>render</code>函数将<code>createElement</code>的返回值放到了<code>HTML</code>中</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1910,40 +2085,42 @@ Done in 21.23s.
 </span><span class="lnt">18
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
-  <span class="nx">el</span><span class="o">:</span> <span class="s2">&#34;#app&#34;</span><span class="p">,</span>
-  <span class="nx">render</span><span class="p">(</span><span class="nx">h</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="nx">h</span><span class="p">(</span>
-      <span class="s1">&#39;div&#39;</span><span class="p">,</span>
-      <span class="p">{</span>
-        <span class="kr">class</span><span class="o">:</span> <span class="p">{</span> <span class="s1">&#39;style1&#39;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span> <span class="s1">&#39;style2&#39;</span><span class="o">:</span> <span class="kc">true</span> <span class="p">},</span>
-        <span class="nx">style</span><span class="o">:</span> <span class="p">{</span> <span class="nx">color</span><span class="o">:</span> <span class="s1">&#39;#fff&#39;</span><span class="p">,</span> <span class="nx">background</span><span class="o">:</span> <span class="s1">&#39;red&#39;</span> <span class="p">},</span>
-        <span class="nx">on</span><span class="o">:</span> <span class="p">{</span>
-          <span class="nx">click</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;render函数&#39;</span><span class="p">)</span>
-          <span class="p">}</span>
-        <span class="p">}</span>
-      <span class="p">},</span>
-      <span class="p">[</span><span class="s1">&#39;元素文本&#39;</span><span class="p">,</span> <span class="nx">h</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">,</span> <span class="s1">&#39;子元素文本&#39;</span><span class="p">)]</span>
-    <span class="p">)</span>
-  <span class="p">}</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
+<span class="nx">el</span><span class="o">:</span> <span class="s2">&#34;#app&#34;</span><span class="p">,</span>
+<span class="nx">render</span><span class="p">(</span><span class="nx">h</span><span class="p">)</span> <span class="p">{</span>
+<span class="k">return</span> <span class="nx">h</span><span class="p">(</span>
+  <span class="s1">&#39;div&#39;</span><span class="p">,</span>
+  <span class="p">{</span>
+    <span class="kr">class</span><span class="o">:</span> <span class="p">{</span> <span class="s1">&#39;style1&#39;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span> <span class="s1">&#39;style2&#39;</span><span class="o">:</span> <span class="kc">true</span> <span class="p">},</span>
+    <span class="nx">style</span><span class="o">:</span> <span class="p">{</span> <span class="nx">color</span><span class="o">:</span> <span class="s1">&#39;#fff&#39;</span><span class="p">,</span> <span class="nx">background</span><span class="o">:</span> <span class="s1">&#39;red&#39;</span> <span class="p">},</span>
+    <span class="nx">on</span><span class="o">:</span> <span class="p">{</span>
+      <span class="nx">click</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;render函数&#39;</span><span class="p">)</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="p">[</span><span class="s1">&#39;元素文本&#39;</span><span class="p">,</span> <span class="nx">h</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">,</span> <span class="s1">&#39;子元素文本&#39;</span><span class="p">)]</span>
+<span class="p">)</span>
+<span class="p">}</span>
 <span class="p">})</span>
 </code></pre></td></tr></table>
 </div>
-</div><ul>
-<li><code>createElement</code>这个函数中有3个参数
+</div></li>
+
+<li><p><code>createElement</code>这个函数中有3个参数</p>
+
 <ul>
 <li>第一个参数（必要参数）：主要用于提供<code>DOM</code>的<code>HTML</code>内容，类型可以是字符串、对象或函数（可以是一个 <code>HTML</code> 标签字符串，组件选项对象，或者解析上述任何一种的一个 <code>async</code> 异步函数，必填，类型：<code>{String | Object | Function}</code>）</li>
 <li>第二个参数（类型是对象，可选）：用于设置这个<code>DOM</code>的一些样式、属性、传的组件的参数、绑定事件之类（包含模板相关属性，用于设置模板元素的属性或者事件，可选，类型：<code>{Object}</code>）</li>
 <li>第三个参数（类型是数组，数组元素类型是<code>VNode</code>，可选）：主要是指该结点下还有其他结点，用于设置分发的内容，包括新增的其他组件。注意，组件树中的所有<code>VNode</code>必须是唯一的（设置模板元素文本，或者创建子节点 类型：<code>{String | Array}</code>）</li>
-</ul>
-</li>
-<li><code>h</code> 函数的本质是<code>createElement</code> 函数，这个函数的作用就是生成一个 <code>VNode</code>节点，<code>render</code> 函数得到这个 <code>VNode</code> 节点之后，返回给 <code>Vue.js</code> 的 <code>mount</code> 函数，渲染成真实 <code>DOM</code> 节点，并挂载到根节点上</li>
-<li>而之所以要 叫 h，根据作者解释是，来源于 hyper script</li>
-</ul>
+</ul></li>
+
+<li><p><code>h</code> 函数的本质是<code>createElement</code> 函数，这个函数的作用就是生成一个 <code>VNode</code>节点，<code>render</code> 函数得到这个 <code>VNode</code> 节点之后，返回给 <code>Vue.js</code> 的 <code>mount</code> 函数，渲染成真实 <code>DOM</code> 节点，并挂载到根节点上</p></li>
+
+<li><p>而之所以要 叫 h，根据作者解释是，来源于 hyper script</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1960,32 +2137,37 @@ Done in 21.23s.
 </span><span class="lnt">15
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nx">render</span> <span class="p">(</span><span class="nx">createElement</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="nx">createElement</span><span class="p">(</span>
-      <span class="s1">&#39;comp-one&#39;</span><span class="p">,</span>
-      <span class="p">{</span>
-        <span class="nx">ref</span><span class="o">:</span> <span class="s1">&#39;comp&#39;</span><span class="p">,</span>
-        <span class="nx">on</span><span class="o">:</span> <span class="p">{</span> <span class="c1">// 事件监听(一)，这里是组件上监听，需要 $emit
-</span><span class="c1"></span>          <span class="nx">click</span><span class="o">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">handleClick</span>
-        <span class="p">},</span>
-      <span class="p">},</span>
-      <span class="p">[</span>
-        <span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;span&#39;</span><span class="p">,</span> <span class="p">{</span>
-          <span class="nx">ref</span><span class="o">:</span> <span class="s1">&#39;span&#39;</span>
-        <span class="p">},</span> <span class="k">this</span><span class="p">.</span><span class="nx">value</span><span class="p">)</span>
-      <span class="p">])</span>
-  <span class="p">}</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nx">render</span> <span class="p">(</span><span class="nx">createElement</span><span class="p">)</span> <span class="p">{</span>
+<span class="k">return</span> <span class="nx">createElement</span><span class="p">(</span>
+  <span class="s1">&#39;comp-one&#39;</span><span class="p">,</span>
+  <span class="p">{</span>
+    <span class="nx">ref</span><span class="o">:</span> <span class="s1">&#39;comp&#39;</span><span class="p">,</span>
+    <span class="nx">on</span><span class="o">:</span> <span class="p">{</span> <span class="c1">// 事件监听(一)，这里是组件上监听，需要 $emit
+</span><span class="c1"></span>      <span class="nx">click</span><span class="o">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">handleClick</span>
+    <span class="p">},</span>
+  <span class="p">},</span>
+  <span class="p">[</span>
+    <span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;span&#39;</span><span class="p">,</span> <span class="p">{</span>
+      <span class="nx">ref</span><span class="o">:</span> <span class="s1">&#39;span&#39;</span>
+    <span class="p">},</span> <span class="k">this</span><span class="p">.</span><span class="nx">value</span><span class="p">)</span>
+  <span class="p">])</span>
+<span class="p">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><h4 id="render在完整版a-hrefcatalogue--a"><code>render</code>在完整版<!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h4>
+</div></li>
+</ul>
+
+<h4 id="render-在完整版-a-href-catalogue-a"><code>render</code>在完整版<a href="#catalogue"> ⇧ </a></h4>
+
 <ul>
 <li>可用但不使用</li>
 <li>在实际开发中，由于 h 函数的参数比较复杂，通过使用 <code>webpack</code> 的 <code>vue-loader</code> 能将单文件组件（以<code>.vue</code> 结尾的文件）转换为 <code>h</code> 函数所需要的参数</li>
 </ul>
-<h4 id="render在运行时版a-hrefcatalogue--a"><code>render</code>在运行时版<!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h4>
+
+<h4 id="render-在运行时版-a-href-catalogue-a"><code>render</code>在运行时版<a href="#catalogue"> ⇧ </a></h4>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -1993,7 +2175,7 @@ Done in 21.23s.
 </span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="c1">// 不需要编译器（非完整版） main.js
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="c1">// 不需要编译器（非完整版） main.js
 </span><span class="c1"></span><span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
   <span class="nx">render</span> <span class="p">(</span><span class="nx">h</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">return</span> <span class="nx">h</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">n</span><span class="p">)</span>
@@ -2001,26 +2183,29 @@ Done in 21.23s.
 <span class="p">})</span>
 </code></pre></td></tr></table>
 </div>
-</div><ul>
+</div>
+<ul>
 <li>渲染函数接收一个 <code>createElement</code> 方法作为第一个参数用来创建 <code>VNode</code></li>
 <li>如果组件是一个函数组件，渲染函数还会接收一个额外的 <code>context</code>参数，为没有实例的函数组件提供上下文信息</li>
 <li>在<code>js</code>里使用<code>render</code>写视图，结构和逻辑越多，代码越不清晰，不适合直接开发，而是被动生成的代码</li>
 </ul>
+
 <blockquote>
 <p>例如</p>
 </blockquote>
+
 <ul>
 <li>在<code>index.html</code>中添加一个<code>id</code>为<code>app</code>的标签<code>&lt;div id=&quot;app&quot;&gt;&lt;/div&gt;</code></li>
 <li>接着添加<code>script</code>标签，引入运行版的<code>js</code>文件
+
 <ul>
 <li><code>&lt;script scr=&quot;https://cdn.bootcss.com/vue/2.6.11/vue.runtime.min.js&quot;&gt;&lt;script&gt;</code></li>
-</ul>
-</li>
-<li>然后在<code>main.js</code>里，用<code>render</code>函数来创建标签</li>
-</ul>
+</ul></li>
+
+<li><p>然后在<code>main.js</code>里，用<code>render</code>函数来创建标签</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -2031,26 +2216,29 @@ Done in 21.23s.
 </span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
-  <span class="nx">el</span><span class="o">:</span> <span class="s1">&#39;#app&#39;</span><span class="p">,</span>
-  <span class="nx">render</span><span class="p">(</span><span class="nx">h</span><span class="p">){</span>
-    <span class="k">return</span> <span class="nx">h</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">n</span><span class="p">)</span>
-  <span class="p">},</span>
-  <span class="nx">data</span><span class="o">:</span> <span class="p">{</span>
-    <span class="nx">n</span><span class="o">:</span> <span class="mi">0</span>
-  <span class="p">}</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
+<span class="nx">el</span><span class="o">:</span> <span class="s1">&#39;#app&#39;</span><span class="p">,</span>
+<span class="nx">render</span><span class="p">(</span><span class="nx">h</span><span class="p">){</span>
+<span class="k">return</span> <span class="nx">h</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">n</span><span class="p">)</span>
+<span class="p">},</span>
+<span class="nx">data</span><span class="o">:</span> <span class="p">{</span>
+<span class="nx">n</span><span class="o">:</span> <span class="mi">0</span>
+<span class="p">}</span>
 <span class="p">})</span>
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div></li>
+</ul>
+
+<blockquote>
 <p>单文件组件<code>*.vue</code></p>
 </blockquote>
+
 <ul>
-<li>另一个方法是在<code>js</code>里引入单文件组件<code>xxx</code>后，<code>render(h) {return h(xxx)}</code>，通过<code>vue-loader</code>编译</li>
-</ul>
+<li><p>另一个方法是在<code>js</code>里引入单文件组件<code>xxx</code>后，<code>render(h) {return h(xxx)}</code>，通过<code>vue-loader</code>编译</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -2059,30 +2247,41 @@ Done in 21.23s.
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="c1">// 非完整版在webpack的Vue Loader (main.js)
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="c1">// 非完整版在webpack的Vue Loader (main.js)
 </span><span class="c1"></span><span class="kr">import</span> <span class="nx">Demo</span> <span class="nx">from</span> <span class="s1">&#39;./Demo.vue&#39;</span>
 <span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
-  <span class="nx">render</span><span class="p">(</span><span class="nx">h</span><span class="p">){</span>
-    <span class="k">return</span> <span class="nx">h</span><span class="p">(</span><span class="nx">Demo</span><span class="p">)</span>
-  <span class="p">}</span>
+<span class="nx">render</span><span class="p">(</span><span class="nx">h</span><span class="p">){</span>
+<span class="k">return</span> <span class="nx">h</span><span class="p">(</span><span class="nx">Demo</span><span class="p">)</span>
+<span class="p">}</span>
 <span class="p">})</span>
 </code></pre></td></tr></table>
 </div>
-</div><hr>
-<h2 id="6-vue实例2-井字游戏a-id实例2-href实例2--aa-hrefcatalogue--a">6. <code>Vue</code>实例2 井字游戏<!-- raw HTML omitted --> § <!-- raw HTML omitted --><!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
-<hr>
-<h2 id="7-用-codesandboxio-写-vue-代码a-idcodesandbox-hrefcodesandbox--aa-hrefcatalogue--a">7. 用 <code>codesandbox.io</code> 写 <code>Vue</code> 代码<!-- raw HTML omitted --> § <!-- raw HTML omitted --><!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+</div></li>
+</ul>
+
+<hr />
+
+<h2 id="6-vue-实例2-井字游戏-a-id-实例2-href-实例2-a-a-href-catalogue-a">6. <code>Vue</code>实例2 井字游戏<a id="实例2" href="#实例2"> § </a><a href="#catalogue"> ⇧ </a></h2>
+
+<hr />
+
+<h2 id="7-用-codesandbox-io-写-vue-代码-a-id-codesandbox-href-codesandbox-a-a-href-catalogue-a">7. 用 <code>codesandbox.io</code> 写 <code>Vue</code> 代码<a id="codesandbox" href="#codesandbox"> § </a><a href="#catalogue"> ⇧ </a></h2>
+
 <blockquote>
 <p>用<code>CodeSandbox</code> V.S. <code>CodePen</code> 生成一个可以在线编辑实时预览的 vue 项目</p>
 </blockquote>
+
 <ul>
 <li>不适合IDE的各种快捷操作</li>
 <li>无代码提示</li>
 </ul>
+
 <h3 id="特点">特点</h3>
+
 <blockquote>
 <p><code>CodeSandbox</code></p>
 </blockquote>
+
 <ul>
 <li>支持导出项目打包下载<code>Export to ZIP</code>-解压免配置使用</li>
 <li>支持配置各种资源</li>
@@ -2090,32 +2289,47 @@ Done in 21.23s.
 <li><code>Sandbox</code> 使用的是运行时版</li>
 <li>支持用提供的构建工具生成生产版代码</li>
 </ul>
+
 <blockquote>
 <p><code>CodePen</code></p>
 </blockquote>
+
 <ul>
 <li>只支持一个单文件组件<code>*.vue</code></li>
 <li>无文件目录</li>
 <li>支持配置简单的资源</li>
 <li>可将编辑和预览视图以代码链接的形式插入博客</li>
 </ul>
-<h2 id="8-用-vuepress-写-文档a-idvuepress-hrefvuepress--aa-hrefcatalogue--a">8. 用 <code>VuePress</code> 写 文档<!-- raw HTML omitted --> § <!-- raw HTML omitted --><!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
-<hr>
-<h2 id="9-总结a-id总结-href总结--aa-hrefcatalogue--a">9. 总结<!-- raw HTML omitted --> § <!-- raw HTML omitted --><!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+
+<h2 id="8-用-vuepress-写-文档-a-id-vuepress-href-vuepress-a-a-href-catalogue-a">8. 用 <code>VuePress</code> 写 文档<a id="VuePress" href="#VuePress"> § </a><a href="#catalogue"> ⇧ </a></h2>
+
+<hr />
+
+<h2 id="9-总结-a-id-总结-href-总结-a-a-href-catalogue-a">9. 总结<a id="总结" href="#总结"> § </a><a href="#catalogue"> ⇧ </a></h2>
+
 <ul>
 <li>先做，然后才能知道达到什么水平</li>
 <li>看文档时，多看一眼其他章节，用到时再回来细看</li>
 <li>迭代</li>
 <li>封装比使用更值钱</li>
 </ul>
-<hr>
-<!-- raw HTML omitted -->
-<hr>
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<hr>
+
+<hr />
+
+<!-- Article End -->
+
+<hr />
+
+<!-- test -->
+
+<div style="text-align:center;">·未完待续·</div>
+
+<!-- ok -->
+
+<hr />
+
 <h3 id="参考文章">参考文章</h3>
+
 <ul>
 <li><a href="https://vuejs.org/">Vue 英文文档</a></li>
 <li><a href="https://cn.vuejs.org/index.html">Vue 中文文档</a></li>
@@ -2125,23 +2339,28 @@ Done in 21.23s.
 <li><a href="https://xiedaimala.com/tasks/74fb320c-9a2a-4b27-84e2-068c67dcdbc7">Vue 起手式.pdf</a></li>
 <li><a href="https://zhuanlan.zhihu.com/p/26567790">ESM, CJS, UMD, AMD到底应该选择哪一个</a></li>
 </ul>
+
 <h3 id="相关文章">相关文章</h3>
+
 <ul>
 <li>无</li>
 </ul>
-<hr>
+
+<hr />
+
 <ul>
 <li>作者： Joel</li>
 <li>文章链接：</li>
-<li><a href="http://xmasuhai.xyz/posts/%E7%89%88%E6%9D%83%E5%A3%B0%E6%98%8E%E9%93%BE%E6%8E%A5/">版权声明</a></li>
+<li><a href="http://xmasuhai.xyz/posts/版权声明链接/">版权声明</a></li>
 <li>非自由转载-非商用-非衍生-保持署名</li>
-<li><!-- raw HTML omitted -->河<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->掘<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->思<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->知<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->简<!-- raw HTML omitted --></li>
+<li><a style='color:#DB2D5D;' href='https://xiedaimala.com/bbs/users/8c266e6f-55a2-4348-a180-17cb8cdb2c46#/?page=1' target='_blank' rel='noreferrer noopener'>河</a>
+<a style='color:#006CFF;' href='https://juejin.im/user/59abfad26fb9a0248f4aa221' target='_blank' rel='noreferrer noopener'>掘</a>
+<a style='color:#009A61;' href='https://segmentfault.com/u/joel_59b17eb9d2155' target='_blank' rel='noreferrer noopener'>思</a>
+<a style='color:#0084FF;' href='https://www.zhihu.com/people/xue-shou-41/posts' target='_blank' rel='noreferrer noopener'>知</a>
+<a style='color:#EA6F5A;' href='https://www.jianshu.com/u/079916729823' target='_blank' rel='noreferrer noopener'>简</a></li>
 </ul>
-<hr>
+
+<hr />
 
     </div>
 
@@ -2307,7 +2526,7 @@ Done in 21.23s.
     &copy;
     
       2019 -
-    2022
+    2026
     <span class="heart">
       
       <i class="iconfont">

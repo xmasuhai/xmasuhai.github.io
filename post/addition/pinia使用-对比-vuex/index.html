@@ -7,7 +7,7 @@
   
 
 <meta name="renderer" content="webkit" />
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
 <meta name="MobileOptimized" content="width"/>
 <meta name="HandheldFriendly" content="true"/>
@@ -32,7 +32,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.91.2" />
+<meta name="generator" content="Hugo 0.59.1" />
 
 
 <link rel="canonical" href="http://xmasuhai.xyz/post/addition/pinia%E4%BD%BF%E7%94%A8-%E5%AF%B9%E6%AF%94-vuex/" />
@@ -62,15 +62,21 @@
 <meta property="og:title" content="Pinia使用 对比 Vuex" />
 <meta property="og:description" content="Pinia 使用 对比 Vuex 大纲链接§ [toc] 1. 理解和使用Vuex 用过吗 ⇧ 1.专为Vue开发的 状态管理工具（库） 2.有六个核心概念（分别有以下作用） store 是 整个容器，" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://xmasuhai.xyz/post/addition/pinia%E4%BD%BF%E7%94%A8-%E5%AF%B9%E6%AF%94-vuex/" /><meta property="article:section" content="post" />
+<meta property="og:url" content="http://xmasuhai.xyz/post/addition/pinia%E4%BD%BF%E7%94%A8-%E5%AF%B9%E6%AF%94-vuex/" />
 <meta property="article:published_time" content="2022-08-30T09:33:33+08:00" />
 <meta property="article:modified_time" content="2022-09-19T10:03:55+08:00" />
-
 <meta itemprop="name" content="Pinia使用 对比 Vuex">
-<meta itemprop="description" content="Pinia 使用 对比 Vuex 大纲链接§ [toc] 1. 理解和使用Vuex 用过吗 ⇧ 1.专为Vue开发的 状态管理工具（库） 2.有六个核心概念（分别有以下作用） store 是 整个容器，"><meta itemprop="datePublished" content="2022-08-30T09:33:33+08:00" />
-<meta itemprop="dateModified" content="2022-09-19T10:03:55+08:00" />
-<meta itemprop="wordCount" content="1874">
-<meta itemprop="keywords" content="FrontEnd," /><meta name="twitter:card" content="summary"/>
+<meta itemprop="description" content="Pinia 使用 对比 Vuex 大纲链接§ [toc] 1. 理解和使用Vuex 用过吗 ⇧ 1.专为Vue开发的 状态管理工具（库） 2.有六个核心概念（分别有以下作用） store 是 整个容器，">
+
+
+<meta itemprop="datePublished" content="2022-08-30T09:33:33&#43;08:00" />
+<meta itemprop="dateModified" content="2022-09-19T10:03:55&#43;08:00" />
+<meta itemprop="wordCount" content="1884">
+
+
+
+<meta itemprop="keywords" content="FrontEnd," />
+<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Pinia使用 对比 Vuex"/>
 <meta name="twitter:description" content="Pinia 使用 对比 Vuex 大纲链接§ [toc] 1. 理解和使用Vuex 用过吗 ⇧ 1.专为Vue开发的 状态管理工具（库） 2.有六个核心概念（分别有以下作用） store 是 整个容器，"/>
 
@@ -302,7 +308,7 @@
             <a href="http://xmasuhai.xyz/categories/blog/"> Blog </a>
             
           </div>
-        <span class="more-meta"> 约 1874 字 </span>
+        <span class="more-meta"> 约 1884 字 </span>
           <span class="more-meta"> 预计阅读 4 分钟 </span>
 
         
@@ -319,90 +325,97 @@
   <h2 class="post-toc-title">文章目录</h2>
   <div class="post-toc-content">
     <nav id="TableOfContents">
-  <ul>
-    <li><a href="#1-理解和使用vuex-用过吗-a-hrefcatalogue--a">1. 理解和使用<code>Vuex</code> 用过吗 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a>
-      <ul>
-        <li><a href="#简单说一说你对vuex理解-a-hrefcatalogue--a">简单说一说你对<code>Vuex</code>理解？ <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-        <li><a href="#vuex的module-使用场景-a-hrefcatalogue--a"><code>vuex</code>的<code>module</code> 使用场景 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-        <li><a href="#安装pinia-a-hrefcatalogue--a">安装<code>pinia</code> <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-      </ul>
-    </li>
-    <li><a href="#参考文章-a-hrefcatalogue--a">参考文章 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-    <li><a href="#相关文章-a-hrefcatalogue--a">相关文章 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-  </ul>
+<ul>
+<li><a href="#pinia-使用-对比-vuex"><code>Pinia</code> 使用 对比 <code>Vuex</code></a>
+<ul>
+<li><a href="#1-理解和使用-vuex-用过吗-a-href-catalogue-a">1. 理解和使用<code>Vuex</code> 用过吗 <a href="#catalogue"> ⇧ </a></a>
+<ul>
+<li><a href="#简单说一说你对-vuex-理解-a-href-catalogue-a">简单说一说你对<code>Vuex</code>理解？ <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#vuex-的-module-使用场景-a-href-catalogue-a"><code>vuex</code>的<code>module</code> 使用场景 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#安装-pinia-a-href-catalogue-a">安装<code>pinia</code> <a href="#catalogue"> ⇧ </a></a>
+<ul>
+<li><a href="#代替安装-vuex-a-href-catalogue-a">代替安装<code>vuex</code> <a href="#catalogue"> ⇧ </a></a></li>
+</ul></li>
+</ul></li>
+<li><a href="#参考文章-a-href-catalogue-a">参考文章 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#相关文章-a-href-catalogue-a">相关文章 <a href="#catalogue"> ⇧ </a></a></li>
+</ul></li>
+</ul>
 </nav>
   </div>
 </div>
 
     
     <div class="post-content">
-      <h1 id="pinia-使用-对比-vuex"><code>Pinia</code> 使用 对比 <code>Vuex</code></h1>
+      
+
+<h1 id="pinia-使用-对比-vuex"><code>Pinia</code> 使用 对比 <code>Vuex</code></h1>
+
 <blockquote>
-<p>大纲链接<!-- raw HTML omitted --> § <!-- raw HTML omitted --></p>
+<p>大纲链接<a id="catalogue" href="#catalogue" > § </a></p>
 </blockquote>
+
 <p>[toc]</p>
-<hr>
-<h2 id="1-理解和使用vuex-用过吗-a-hrefcatalogue--a">1. 理解和使用<code>Vuex</code> 用过吗 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+
+<hr />
+
+<h2 id="1-理解和使用-vuex-用过吗-a-href-catalogue-a">1. 理解和使用<code>Vuex</code> 用过吗 <a href="#catalogue"> ⇧ </a></h2>
+
 <ul>
 <li>1.专为<code>Vue</code>开发的 <strong>状态管理工具（库）</strong></li>
 <li>2.有六个核心概念（分别有以下作用）
+
 <ul>
 <li><code>store</code> 是 整个容器，包含以下所有内容</li>
-<li><code>State</code> 用来 <strong>读取状态</strong>
-<ul>
+<li><code>State</code> 用来 <strong>读取状态</strong></li>
 <li>附有一个<a href="https://vuex.vuejs.org/zh/guide/state.html#mapstate-%E8%BE%85%E5%8A%A9%E5%87%BD%E6%95%B0/"><code>mapState</code>辅助函数</a>，在<code>options</code>选项中使用</li>
-</ul>
-</li>
-<li><code>Getter</code> 用来读取 <strong>派生状态（计算状态）</strong>
-<ul>
+<li><code>Getter</code> 用来读取 <strong>派生状态（计算状态）</strong></li>
 <li>附有一个<a href="https://vuex.vuejs.org/zh/guide/getters.html#mapgetters-%E8%BE%85%E5%8A%A9%E5%87%BD%E6%95%B0"><code>mapGetters</code>辅助函数</a>，在<code>options</code>选项中使用</li>
-</ul>
-</li>
-<li><code>Mutation</code> 用来 <strong>同步提交</strong> 状态变更（写）
-<ul>
+<li><code>Mutation</code> 用来 <strong>同步提交</strong> 状态变更（写）</li>
 <li>附有一个<a href="https://vuex.vuejs.org/zh/api/#mapmutations"><code>mapMutations</code>辅助函数</a>，在<code>options</code>选项中使用</li>
-</ul>
-</li>
-<li><code>Action</code> 用于 <strong>异步</strong> 变更状态，但它提交的是<code>mutation</code>，而不是直接变更状态
-<ul>
+<li><code>Action</code> 用于 <strong>异步</strong> 变更状态，但它提交的是<code>mutation</code>，而不是直接变更状态</li>
 <li>附有一个<a href="https://vuex.vuejs.org/zh/api/#mapactions"><code>mapActions</code>辅助函数</a>，在<code>options</code>选项中使用</li>
-</ul>
-</li>
 <li><code>Module</code> 用来给<code>store</code>划分模块，方便维护</li>
+</ul></li>
 </ul>
-</li>
-</ul>
+
 <blockquote>
 <p>追问：<code>Mutation</code>和<code>Action</code>都是提交变更，为什么要分开，有什么区别？</p>
 </blockquote>
+
 <ul>
 <li>同步 异步</li>
 <li>为了让代码更易于维护</li>
 <li>Pinia 为了让代码更简洁，减少一个概念，容易理解</li>
 </ul>
-<hr>
-<h3 id="简单说一说你对vuex理解-a-hrefcatalogue--a">简单说一说你对<code>Vuex</code>理解？ <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+
+<hr />
+
+<h3 id="简单说一说你对-vuex-理解-a-href-catalogue-a">简单说一说你对<code>Vuex</code>理解？ <a href="#catalogue"> ⇧ </a></h3>
+
 <blockquote>
 <p>思路分析</p>
 </blockquote>
+
 <ol>
 <li>给定义</li>
 <li>必要性阐述</li>
 <li>使用场景</li>
 <li>拓展:实践项目</li>
 </ol>
+
 <blockquote>
 <p>回答</p>
 </blockquote>
+
 <ol>
-<li><code>Vuex</code>专为<code>Vue.js</code>应用开发的 <strong>状态管理模式 + 库</strong></li>
-</ol>
+<li><code>Vuex</code>专为<code>Vue.js</code>应用开发的 <strong>状态管理模式 + 库</strong>
+
 <ul>
 <li>使用 <strong>集中式全局 存储</strong>，管理应用的所有组件的状态，保证状态已一种可预测的状态来变更</li>
-</ul>
-<ol start="2">
-<li>维护的应用状态较简单时，可用 <strong>单向数据流</strong> 来管理</li>
-</ol>
+</ul></li>
+<li>维护的应用状态较简单时，可用 <strong>单向数据流</strong> 来管理
+
 <ul>
 <li>即 <strong>状态 -&gt; 视图 -&gt; 操作</strong> 的单向循环方式，来实现组件间的状态管理</li>
 <li>应用遇到多个组件 共享状态时，无法维持 定向数据流的简洁</li>
@@ -410,166 +423,199 @@
 <li>有必要把组件共享的状态 抽取出来，以一个 全局单例模式 管理</li>
 <li>通过定义和隔离状态管理中的各种概念，维持视图和状态间的独立性</li>
 <li>使得代码更加 结构化，更易维护</li>
-</ul>
-<ol start="3">
+</ul></li>
 <li><code>Vuex</code>应用于大型单页应用，简单应用反而是繁琐的，一个简单的 <a href="https://note.youdao.com/">store 模式</a> 或者<code>Vue3</code>中的<code>reactive</code>即可</li>
-<li><code>Vuex</code>的引入概念：<code>state</code>、<code>mutation</code>、<code>action</code>等</li>
-</ol>
+<li><code>Vuex</code>的引入概念：<code>state</code>、<code>mutation</code>、<code>action</code>等
+
 <ul>
-<li><code>Modules</code> 子模块 非常难用
-<ul>
+<li><code>Modules</code> 子模块 非常难用</li>
 <li>子模块的命名空间的使用方式不一致，有些需要<code>.</code>出子模块，有些不需要（全局）</li>
 <li>对<code>TS</code>支持不好，需要自己写复杂的初始类型</li>
-</ul>
-</li>
-</ul>
+</ul></li>
+</ol>
+
 <blockquote>
 <p>追问1：<code>Vuex</code>缺点，开发过程中遇到的问题</p>
 </blockquote>
+
 <ul>
 <li><code>Modules</code> 子模块</li>
 </ul>
+
 <blockquote>
 <p>追问2：<code>action</code>和<code>mutation</code>的区别？问什么要区分？</p>
 </blockquote>
+
 <ul>
 <li><code>Pinia</code>中就合并了这两个概念</li>
 </ul>
+
 <blockquote>
 <p>参考</p>
 </blockquote>
+
 <ul>
 <li><a href="https://www.bilibili.com/video/BV14B4y197iL">【Vue面试专题】前端杨村长 21-对Vuex的理解</a></li>
 </ul>
-<hr>
-<h3 id="vuex的module-使用场景-a-hrefcatalogue--a"><code>vuex</code>的<code>module</code> 使用场景 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+
+<hr />
+
+<h3 id="vuex-的-module-使用场景-a-href-catalogue-a"><code>vuex</code>的<code>module</code> 使用场景 <a href="#catalogue"> ⇧ </a></h3>
+
 <ul>
 <li>上规模的项目都需要拆分<code>Vuex</code>模块便于维护</li>
 <li>避免状态<code>store</code>对象过于臃肿，可以将<code>store</code>分割成模块<code>module</code></li>
 <li>每个模块<code>module</code>拥有自己的<code>state</code>、<code>mutation</code>、<code>action</code>、<code>getter</code>、嵌套子模块<code>module</code></li>
 <li>在<code>store</code>对象中设置<code>modules</code>选项
+
 <ul>
 <li><code>module</code>的状态：<code>store.state.moduleA</code></li>
-<li>全局命名空间
-<ul>
+<li>全局命名空间</li>
 <li><code>getters</code>：<code>store.getters.yyy</code></li>
 <li>同时触发子模块中的同名<code>mutation</code>：<code>store.commit('zzz')</code></li>
 <li>同时触发子模块中的同名<code>action</code>：<code>store.dispatch('xyz')</code></li>
+</ul></li>
 </ul>
-</li>
-</ul>
-</li>
-</ul>
+
 <blockquote>
 <p>思路分析</p>
 </blockquote>
+
 <ol>
 <li>概念和必要性</li>
 <li>如何拆分</li>
 <li>使用细节</li>
 <li>优缺点</li>
 </ol>
+
 <blockquote>
 <p>回答</p>
 </blockquote>
+
 <ol>
 <li>使用模块<code>Module</code>方式可以将<code>state</code>状态拆分，便于维护规模较大的项目</li>
 <li>可以按<code>store</code>的规则单独编写子模块代码各个选项，然后在主文件中通过<code>modules</code>选项组织起来</li>
-<li>在使用时，需要注意</li>
-</ol>
+<li>在使用时，需要注意
+
 <ul>
 <li>访问子模块状态时需要加上注册时的模块名：<code>store.state.a.xxx</code></li>
 <li>子模块未设置<code>namespace</code>选项时，子模块中的<code>getters</code>、<code>mutations</code>和<code>actions</code>在全局空间中直接访问</li>
 <li>子模块设置<code>namespace</code>选项，访问子模块中的各选项时，就需要加上命名空间的前缀，子模块的选项就被隔离在自己单独的命名空间中</li>
-</ul>
-<ol start="4">
+</ul></li>
 <li>优点：模块的方式可以拆分代码</li>
-<li>缺点：</li>
-</ol>
+<li>缺点：
+
 <ul>
 <li>额外添加了<code>module</code>选项，较<code>Composition API</code>使用更繁琐，命名长</li>
 <li><code>TS</code>类型系统支持差，需要自己实现<code>modules</code>的类型</li>
-</ul>
-<ol start="6">
+</ul></li>
 <li>解决方案：使用<code>pinia</code>，对<code>TS</code>支持好，使用组合的方式，代替模块<code>modules</code>实现代码逻辑的拆分</li>
 </ol>
+
 <blockquote>
 <p>参考</p>
 </blockquote>
+
 <ul>
 <li><a href="https://www.bilibili.com/video/BV1RY411T7Yb">【Vue面试专题】前端杨村长 27-使用Vuex模块</a></li>
 <li><a href="https://juejin.cn/post/7104906586589511693">【Vue面试专题】前端杨村长 27-使过vuex 的module</a></li>
 <li><a href="https://vuex.vuejs.org/zh/guide/modules.html">Vuex Module</a></li>
 </ul>
-<hr>
-<h3 id="安装pinia-a-hrefcatalogue--a">安装<code>pinia</code> <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+
+<hr />
+
+<h3 id="安装-pinia-a-href-catalogue-a">安装<code>pinia</code> <a href="#catalogue"> ⇧ </a></h3>
+
 <blockquote>
 <p>安装</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code></code></pre></td>
+<pre class="chroma"><code class="language-sh" data-lang="sh"></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-sh" data-lang="sh"></code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p>导入</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code></code></pre></td>
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="lnt">1
+</span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-ts" data-lang="ts">
+</code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p>使用</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code></code></pre></td>
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="lnt">1
+</span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-ts" data-lang="ts">
+</code></pre></td></tr></table>
 </div>
-</div><h4 id="代替安装vuex-a-hrefcatalogue--a">代替安装<code>vuex</code> <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h4>
+</div>
+<h4 id="代替安装-vuex-a-href-catalogue-a">代替安装<code>vuex</code> <a href="#catalogue"> ⇧ </a></h4>
+
 <blockquote>
 <p>安装</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code></code></pre></td>
+<pre class="chroma"><code class="language-sh" data-lang="sh"></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-sh" data-lang="sh"></code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p>导入</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code></code></pre></td>
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="lnt">1
+</span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-ts" data-lang="ts">
+</code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p>使用</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code></code></pre></td>
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="lnt">1
+</span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-ts" data-lang="ts">
+</code></pre></td></tr></table>
 </div>
-</div><hr>
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<hr>
-<h2 id="参考文章-a-hrefcatalogue--a">参考文章 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+</div>
+<hr />
+
+<!-- Article End -->
+
+<div style="text-align:center;">·未完待续·</div>
+
+<hr />
+
+<h2 id="参考文章-a-href-catalogue-a">参考文章 <a href="#catalogue"> ⇧ </a></h2>
+
 <ul>
 <li>无</li>
 </ul>
-<h2 id="相关文章-a-hrefcatalogue--a">相关文章 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+
+<h2 id="相关文章-a-href-catalogue-a">相关文章 <a href="#catalogue"> ⇧ </a></h2>
+
 <blockquote>
 <p>状态管理工具 Pinia V.S. Vuex</p>
 </blockquote>
+
 <ul>
 <li><a href="https://juejin.cn/post/7083103819285921799">Pinia 作弊表（Vue 3 版）</a></li>
 <li><a href="https://juejin.cn/post/7057950109832577054?utm_source=gold_browser_extension">Pinia初体验</a></li>
@@ -581,15 +627,19 @@
 <li><a href="https://juejin.cn/post/7057439040911441957">Pinia进阶：优雅的setup（函数式）写法+封装到你的企业项目</a></li>
 <li><a href="https://note.youdao.com/">Vite2 + Vue3 + TypeScript + Pinia 搭建一套企业级的开发脚手架【值得收藏】</a></li>
 </ul>
-<hr>
+
+<hr />
+
 <ul>
 <li>作者： Joel</li>
 <li>文章链接：</li>
-<li><a href="http://xmasuhai.xyz/posts/%E7%89%88%E6%9D%83%E5%A3%B0%E6%98%8E%E9%93%BE%E6%8E%A5/">版权声明</a></li>
+<li><a href="http://xmasuhai.xyz/posts/版权声明链接/">版权声明</a></li>
 <li>非自由转载-非商用-非衍生-保持署名</li>
 </ul>
-<hr>
-<hr>
+
+<hr />
+
+<hr />
 
     </div>
 
@@ -751,7 +801,7 @@
     &copy;
     
       2019 -
-    2022
+    2026
     <span class="heart">
       
       <i class="iconfont">

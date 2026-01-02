@@ -7,7 +7,7 @@
   
 
 <meta name="renderer" content="webkit" />
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
 <meta name="MobileOptimized" content="width"/>
 <meta name="HandheldFriendly" content="true"/>
@@ -32,7 +32,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.91.2" />
+<meta name="generator" content="Hugo 0.59.1" />
 
 
 <link rel="canonical" href="http://xmasuhai.xyz/post/project/vueel3/%E9%A1%B9%E7%9B%AE-vue3-%E8%BD%AE%E5%AD%901.8-%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE%E5%B9%B6%E4%B8%94%E5%8F%91%E5%B8%83%E6%BA%90%E4%BB%A3%E7%A0%81%E8%87%B3-npm/" />
@@ -62,15 +62,21 @@
 <meta property="og:title" content="【项目 Vue3 轮子】1.8 部署项目并且发布源代码至 Npm" />
 <meta property="og:description" content="部署项目并且发布源代码至 npm [toc] 部署官网到 GitHub 需要大致完成两件事 部署官网 让官网上线，有文档层能直观地被看到，才会有人去使用 发布 Vueel UI 让其他开发者可以" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://xmasuhai.xyz/post/project/vueel3/%E9%A1%B9%E7%9B%AE-vue3-%E8%BD%AE%E5%AD%901.8-%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE%E5%B9%B6%E4%B8%94%E5%8F%91%E5%B8%83%E6%BA%90%E4%BB%A3%E7%A0%81%E8%87%B3-npm/" /><meta property="article:section" content="post" />
+<meta property="og:url" content="http://xmasuhai.xyz/post/project/vueel3/%E9%A1%B9%E7%9B%AE-vue3-%E8%BD%AE%E5%AD%901.8-%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE%E5%B9%B6%E4%B8%94%E5%8F%91%E5%B8%83%E6%BA%90%E4%BB%A3%E7%A0%81%E8%87%B3-npm/" />
 <meta property="article:published_time" content="2022-02-02T14:24:49+08:00" />
 <meta property="article:modified_time" content="2022-06-28T08:41:45+08:00" />
-
 <meta itemprop="name" content="【项目 Vue3 轮子】1.8 部署项目并且发布源代码至 Npm">
-<meta itemprop="description" content="部署项目并且发布源代码至 npm [toc] 部署官网到 GitHub 需要大致完成两件事 部署官网 让官网上线，有文档层能直观地被看到，才会有人去使用 发布 Vueel UI 让其他开发者可以"><meta itemprop="datePublished" content="2022-02-02T14:24:49+08:00" />
-<meta itemprop="dateModified" content="2022-06-28T08:41:45+08:00" />
-<meta itemprop="wordCount" content="5600">
-<meta itemprop="keywords" content="FrontEnd,Project,vueel," /><meta name="twitter:card" content="summary"/>
+<meta itemprop="description" content="部署项目并且发布源代码至 npm [toc] 部署官网到 GitHub 需要大致完成两件事 部署官网 让官网上线，有文档层能直观地被看到，才会有人去使用 发布 Vueel UI 让其他开发者可以">
+
+
+<meta itemprop="datePublished" content="2022-02-02T14:24:49&#43;08:00" />
+<meta itemprop="dateModified" content="2022-06-28T08:41:45&#43;08:00" />
+<meta itemprop="wordCount" content="5588">
+
+
+
+<meta itemprop="keywords" content="FrontEnd,Project,vueel," />
+<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="【项目 Vue3 轮子】1.8 部署项目并且发布源代码至 Npm"/>
 <meta name="twitter:description" content="部署项目并且发布源代码至 npm [toc] 部署官网到 GitHub 需要大致完成两件事 部署官网 让官网上线，有文档层能直观地被看到，才会有人去使用 发布 Vueel UI 让其他开发者可以"/>
 
@@ -301,7 +307,7 @@
         <div class="post-category">
             
           </div>
-        <span class="more-meta"> 约 5600 字 </span>
+        <span class="more-meta"> 约 5588 字 </span>
           <span class="more-meta"> 预计阅读 12 分钟 </span>
 
         
@@ -318,98 +324,114 @@
   <h2 class="post-toc-title">文章目录</h2>
   <div class="post-toc-content">
     <nav id="TableOfContents">
-  <ul>
-    <li><a href="#部署官网到-github">部署官网到 GitHub</a>
-      <ul>
-        <li><a href="#发布官网">发布官网</a></li>
-        <li><a href="#发布官网的步骤">发布官网的步骤</a></li>
-        <li><a href="#设置build-path">设置<code>build path</code></a></li>
-        <li><a href="#部署到码云">部署到码云</a></li>
-        <li><a href="#脚本化半自动部署">脚本化半自动部署</a></li>
-        <li><a href="#使用github-actions持续集成">使用<code>GitHub Actions</code>持续集成</a></li>
-      </ul>
-    </li>
-    <li><a href="#发布-vueel-ui-至-npm">发布 Vueel UI 至 npm</a>
-      <ul>
-        <li><a href="#打包库文件">打包库文件</a></li>
-        <li><a href="#rollup--c--编译库文件"><code>rollup -c</code>  编译库文件</a></li>
-        <li><a href="#解释-rollupconfigjs">解释 rollup.config.js</a></li>
-        <li><a href="#发布-distlib-目录上传到npm服务器">发布 <code>dist/lib</code> 目录，上传到npm服务器</a></li>
-      </ul>
-    </li>
-    <li><a href="#模拟别人使用自己的组件">模拟别人使用自己的组件</a>
-      <ul>
-        <li><a href="#重构组件名">重构组件名</a></li>
-        <li><a href="#修复-tabs-组件的-bug">修复 Tabs 组件的 bug</a></li>
-        <li><a href="#显示或隐藏代码">显示或隐藏代码</a></li>
-        <li><a href="#修复-watcheffect">修复 <code>watchEffect</code></a></li>
-        <li><a href="#再次完善官网">再次完善官网</a></li>
-      </ul>
-    </li>
-    <li><a href="#总结">总结</a></li>
-    <li><a href="#把项目加到简历vue-2-如何升级到-vue-3">把项目加到简历，Vue 2 如何升级到 Vue 3</a></li>
-    <li><a href="#更多">更多</a></li>
-  </ul>
+<ul>
+<li><a href="#部署项目并且发布源代码至-npm">部署项目并且发布源代码至 npm</a>
+<ul>
+<li><a href="#部署官网到-github">部署官网到 GitHub</a>
+<ul>
+<li><a href="#发布官网">发布官网</a></li>
+<li><a href="#发布官网的步骤">发布官网的步骤</a></li>
+<li><a href="#设置-build-path">设置<code>build path</code></a></li>
+<li><a href="#部署到码云">部署到码云</a></li>
+<li><a href="#脚本化半自动部署">脚本化半自动部署</a></li>
+<li><a href="#使用-github-actions-持续集成">使用<code>GitHub Actions</code>持续集成</a></li>
+</ul></li>
+<li><a href="#发布-vueel-ui-至-npm">发布 Vueel UI 至 npm</a>
+<ul>
+<li><a href="#打包库文件">打包库文件</a></li>
+<li><a href="#rollup-c-编译库文件"><code>rollup -c</code>  编译库文件</a></li>
+<li><a href="#解释-rollup-config-js">解释 rollup.config.js</a></li>
+<li><a href="#发布-dist-lib-目录-上传到npm服务器">发布 <code>dist/lib</code> 目录，上传到npm服务器</a>
+<ul>
+<li><a href="#在-package-json-中添加-files-和-main">在<code>package.json</code>中添加<code>files</code>和<code>main</code></a></li>
+<li><a href="#npm-login"><code>npm login</code></a></li>
+<li><a href="#npm-publish"><code>npm publish</code></a></li>
+<li><a href="#一些细节">一些细节</a></li>
+<li><a href="#小技巧">小技巧</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#模拟别人使用自己的组件">模拟别人使用自己的组件</a>
+<ul>
+<li><a href="#重构组件名">重构组件名</a></li>
+<li><a href="#修复-tabs-组件的-bug">修复 Tabs 组件的 bug</a></li>
+<li><a href="#显示或隐藏代码">显示或隐藏代码</a></li>
+<li><a href="#修复-watcheffect">修复 <code>watchEffect</code></a></li>
+<li><a href="#再次完善官网">再次完善官网</a></li>
+</ul></li>
+<li><a href="#总结">总结</a></li>
+<li><a href="#把项目加到简历-vue-2-如何升级到-vue-3">把项目加到简历，Vue 2 如何升级到 Vue 3</a></li>
+<li><a href="#更多">更多</a></li>
+</ul></li>
+</ul>
 </nav>
   </div>
 </div>
 
     
     <div class="post-content">
-      <h1 id="部署项目并且发布源代码至-npm">部署项目并且发布源代码至 npm</h1>
+      
+
+<h1 id="部署项目并且发布源代码至-npm">部署项目并且发布源代码至 npm</h1>
+
 <p>[toc]</p>
-<hr>
+
+<hr />
+
 <h2 id="部署官网到-github">部署官网到 GitHub</h2>
+
 <blockquote>
 <p>需要大致完成两件事</p>
 </blockquote>
+
 <ul>
 <li>部署官网
+
 <ul>
 <li>让官网上线，有文档层能直观地被看到，才会有人去使用</li>
-</ul>
-</li>
+</ul></li>
 <li>发布 Vueel UI
+
 <ul>
 <li>让其他开发者可以使用 <code>npm install vueel3-ui</code>安装源码</li>
+</ul></li>
 </ul>
-</li>
-</ul>
+
 <h3 id="发布官网">发布官网</h3>
+
 <blockquote>
 <p>就是把 dist 目录上传到网上</p>
 </blockquote>
+
 <ul>
 <li><code>yarn buil</code>时要注意设置<code>build path</code></li>
 </ul>
+
 <h3 id="发布官网的步骤">发布官网的步骤</h3>
+
 <blockquote>
 <p>注意要关闭网站的自动翻译功能，会打乱代码</p>
 </blockquote>
+
 <ul>
 <li>1.如果有 dist 目录，则删除 dist 目录</li>
 <li>2.在 <code>.gitignore</code>添加一行 <code>/dist/</code>然后提交代码</li>
 <li>3.运行<code>yarn build</code>/<code>vite build</code>创建出最新的<code>dist</code></li>
 <li>4.运行<code>hs dist -c-1</code>在本地测试网站是否成功运行</li>
-<li>5.在部署到GitHub
+
+<li><p>5.在部署到GitHub</p>
+
 <ul>
 <li>1.运行 <code>cd dist</code> 到 dist 目录下</li>
 <li>2.运行<code>git init;git add .;git commit -m 'init';</code></li>
 <li>3.注意现在 dist 是一个套娃的git仓库</li>
 <li>4.新建远程仓库<code>vueel-website</code>，并关联到 dist 目录</li>
 <li>5.注意不是关联到上层仓库的目录</li>
-<li>
-<ol start="6">
-<li>使用<code>git</code>协议的 点击SHH按钮，不要使用https</li>
-</ol>
-</li>
-<li>2.开启项目的<code>Pages</code>功能</li>
-</ul>
-</li>
-</ul>
+<li>6. 使用<code>git</code>协议的 点击SHH按钮，不要使用https</li>
+
+<li><p>2.开启项目的<code>Pages</code>功能</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-sh" data-lang="sh"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -419,22 +441,25 @@
 </span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="nb">cd</span> dist
+<pre class="chroma"><code class="language-sh" data-lang="sh"><span class="nb">cd</span> dist
 git init
 git add .
 git commit -m <span class="s2">&#34;first commit&#34;</span>
 git branch -M main
 git remote add origin git@github.com:xmasuhai/vueel3-demo-website.git
 git push -f -u origin main
-<span class="nb">cd</span> ..
-</code></pre></td></tr></table>
+<span class="nb">cd</span> ..</code></pre></td></tr></table>
 </div>
-</div><ul>
-<li>注意强制覆盖 <code>git push -f -u origin main</code></li>
+</div></li>
+</ul></li>
+
+<li><p>注意强制覆盖 <code>git push -f -u origin main</code></p></li>
 </ul>
+
 <blockquote>
 <p>部署 GitHub Pages 发现 404</p>
 </blockquote>
+
 <ul>
 <li>安装<code>yarn global add http-server</code></li>
 <li>运行<code>hs dist -c-1</code>在本地测试网站是否成功运行</li>
@@ -445,59 +470,72 @@ git push -f -u origin main
 <li>请求路径错误导致的404</li>
 <li>需要重新设置<code>vite.config.ts</code>中的正确的路径<code>build path</code></li>
 </ul>
-<h3 id="设置build-path">设置<code>build path</code></h3>
+
+<h3 id="设置-build-path">设置<code>build path</code></h3>
+
 <blockquote>
 <p>对比html文件和其他文件的请求路径</p>
 </blockquote>
+
 <ul>
 <li>html 请求成功
+
 <ul>
 <li><code>Request URL: https://xmasuhai.xyz/vueel3-demo-website/index.html</code></li>
-</ul>
-</li>
+</ul></li>
 <li>js 请求失败
+
 <ul>
 <li><code>Request URL: https://xmasuhai.xyz/assets/index.96031f0b.js</code></li>
-</ul>
-</li>
+</ul></li>
 <li>css 请求失败
+
 <ul>
 <li><code>Request URL: https://xmasuhai.xyz/assets/index.98fa0c4b.css</code></li>
-</ul>
-</li>
+</ul></li>
 <li>发现路径中仓库名不同</li>
 </ul>
+
 <blockquote>
 <p>GitHub 会删掉以下划线开头的目录，例如<code>_assets/</code></p>
 </blockquote>
+
 <ul>
 <li>参考查看官方的配置<a href="https://cn.vitejs.dev/config/"><code>vite.config.js</code></a></li>
 <li>目前vite版本已经去默认掉<code>assetsDir</code>下划线</li>
 </ul>
+
 <blockquote>
 <p>仓库名不同</p>
 </blockquote>
+
 <ul>
 <li>需要在<code>vite.config.ts</code>中设置<code>base: './', ...</code>，以<code>./</code>开头而不是以<code>/</code>开头</li>
 <li>重新部署即可正确显示页面</li>
 </ul>
-<hr>
+
+<hr />
+
 <h3 id="部署到码云">部署到码云</h3>
+
 <blockquote>
 <p>提升访问速度</p>
 </blockquote>
+
 <ul>
 <li>直接使用 github 账号登录码云</li>
 <li>拉取 github 对应仓库</li>
 <li>打开服务 -&gt; 部署 Gitee Pages</li>
 </ul>
+
 <h3 id="脚本化半自动部署">脚本化半自动部署</h3>
+
 <blockquote>
 <p>根目录下创建<code>deploy.sh</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-sh" data-lang="sh"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -509,7 +547,7 @@ git push -f -u origin main
 </span><span class="lnt">10
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">rm -rf dist <span class="o">&amp;&amp;</span>
+<pre class="chroma"><code class="language-sh" data-lang="sh">rm -rf dist <span class="o">&amp;&amp;</span>
 vite build <span class="o">&amp;&amp;</span>
 <span class="nb">cd</span> dist <span class="o">&amp;&amp;</span>
 git init <span class="o">&amp;&amp;</span>
@@ -518,20 +556,22 @@ git commit -m <span class="s2">&#34;update&#34;</span> <span class="o">&amp;&amp
 git branch -M main <span class="o">&amp;&amp;</span>
 git remote add origin git@github.com:xmasuhai/vueel3-demo-website.git <span class="o">&amp;&amp;</span>
 git push -f -u origin main <span class="o">&amp;&amp;</span>
-<span class="nb">cd</span> -
-</code></pre></td></tr></table>
+<span class="nb">cd</span> -</code></pre></td></tr></table>
 </div>
-</div><ul>
+</div>
+<ul>
 <li>运行<code>sh deploy.sh</code>即可实现半自动部署</li>
 <li>有时github部署会延迟，需要在浏览器network中开启禁用缓存，勾上 <code>Disable cache</code>，刷新网页几次即可</li>
 </ul>
-<h3 id="使用github-actions持续集成">使用<code>GitHub Actions</code>持续集成</h3>
+
+<h3 id="使用-github-actions-持续集成">使用<code>GitHub Actions</code>持续集成</h3>
+
 <blockquote>
 <p>根目录下创建<code>.github/workflows/deploy-website.yml</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-sh" data-lang="sh"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -564,10 +604,9 @@ git push -f -u origin main <span class="o">&amp;&amp;</span>
 </span><span class="lnt">31
 </span><span class="lnt">32
 </span><span class="lnt">33
-</span><span class="lnt">34
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">name: Deploy GitHub Pages
+<pre class="chroma"><code class="language-sh" data-lang="sh">name: Deploy GitHub Pages
 
 on:
   <span class="c1"># 每当 push 到 main 分支时触发部署</span>
@@ -599,33 +638,37 @@ jobs:
           ACCESS_TOKEN: <span class="si">${</span><span class="p">{ secrets.ACCESS_TOKEN </span><span class="si">}</span><span class="o">}</span>
           REPOSITORY_NAME: xmasuhai/vueel3-demo-website
           BRANCH: gh-pages
-          FOLDER: dist
-
-</code></pre></td></tr></table>
+          FOLDER: dist</code></pre></td></tr></table>
 </div>
-</div><hr>
+</div>
+<hr />
+
 <h2 id="发布-vueel-ui-至-npm">发布 Vueel UI 至 npm</h2>
+
 <h3 id="打包库文件">打包库文件</h3>
+
 <blockquote>
 <p>vite不支持打包，需要自行配置rollup</p>
 </blockquote>
+
 <ul>
 <li>创建 <code>lin/index.ts</code>，将所有需要导出的东西导出</li>
 <li>创建 <code>rollup.config.js</code>，放在根目录下，告诉rollup怎么打包</li>
 <li>安装<code>rollup</code>相关依赖
+
 <ul>
 <li><code>yarn global add rollup</code></li>
 <li><code>yarn add -D rollup-plugin-esbuild rollup-plugin-vue rollup-plugin-scss sass rollup-plugin-terser @vue/compiler-sfc</code></li>
-</ul>
-</li>
+</ul></li>
 <li>运行<code>rollup -c</code> 编译库文件</li>
 </ul>
+
 <blockquote>
 <p><code>lin/index.ts</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -638,7 +681,7 @@ jobs:
 </span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="c1">// import Switch from &#39;./Switch&#39;;
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="c1">// import Switch from &#39;./Switch&#39;;
 </span><span class="c1">// export {Switch};
 </span><span class="c1">// 可以合并成依据
 </span><span class="c1"></span><span class="kr">export</span> <span class="p">{</span><span class="k">default</span> <span class="nx">as</span> <span class="nx">Switch</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;Switch.vue&#39;</span><span class="p">;</span>
@@ -651,12 +694,13 @@ jobs:
 <span class="kr">export</span> <span class="p">{</span><span class="nx">useGetSlots</span> <span class="nx">as</span> <span class="nx">useGetSlots</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;./hooks/useGetSlots&#39;</span><span class="p">;</span>
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p><code>rollup.config.js</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -694,10 +738,9 @@ jobs:
 </span><span class="lnt">36
 </span><span class="lnt">37
 </span><span class="lnt">38
-</span><span class="lnt">39
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="c1">// 请先安装 rollup-plugin-esbuild rollup-plugin-vue rollup-plugin-scss sass rollup-plugin-terser
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="c1">// 请先安装 rollup-plugin-esbuild rollup-plugin-vue rollup-plugin-scss sass rollup-plugin-terser
 </span><span class="c1"></span><span class="kr">import</span> <span class="nx">esbuild</span> <span class="nx">from</span> <span class="s1">&#39;rollup-plugin-esbuild&#39;</span>
 <span class="kr">import</span> <span class="nx">vue</span> <span class="nx">from</span> <span class="s1">&#39;rollup-plugin-vue&#39;</span>
 <span class="kr">import</span> <span class="nx">scss</span> <span class="nx">from</span> <span class="s1">&#39;rollup-plugin-scss&#39;</span>
@@ -735,23 +778,26 @@ jobs:
     <span class="p">})</span>
   <span class="p">]</span>
 <span class="p">}</span>
-
 </code></pre></td></tr></table>
 </div>
-</div><h3 id="rollup--c--编译库文件"><code>rollup -c</code>  编译库文件</h3>
+</div>
+<h3 id="rollup-c-编译库文件"><code>rollup -c</code>  编译库文件</h3>
+
 <blockquote>
 <p>运行<code>rollup -c</code>发现报错</p>
 </blockquote>
+
 <ul>
 <li>逐个删除插件尝试</li>
 <li>改变插件顺序</li>
 </ul>
+
 <blockquote>
 <p><code>rollup.config.js</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -795,10 +841,9 @@ jobs:
 </span><span class="lnt">42
 </span><span class="lnt">43
 </span><span class="lnt">44
-</span><span class="lnt">45
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="c1">// 请先安装 rollup-plugin-esbuild rollup-plugin-vue rollup-plugin-scss sass rollup-plugin-terser
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="c1">// 请先安装 rollup-plugin-esbuild rollup-plugin-vue rollup-plugin-scss sass rollup-plugin-terser
 </span><span class="c1">// rollup-plugin-esbuild
 </span><span class="c1">// rollup-plugin-vue
 </span><span class="c1">// rollup-plugin-scss
@@ -842,29 +887,34 @@ jobs:
 </span><span class="c1"></span>    <span class="nx">scssPlugin</span><span class="p">({</span><span class="nx">include</span><span class="o">:</span> <span class="sr">/\.scss$/</span><span class="p">,</span> <span class="nx">sass</span><span class="o">:</span> <span class="nx">dartSass</span><span class="p">})</span>
   <span class="p">]</span>
 <span class="p">}</span>
-
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p>忽略警告</p>
 </blockquote>
+
 <ul>
 <li><code>(!) Unresolved dependencies...</code></li>
 <li><code>(!) Missing global variable names...</code></li>
 </ul>
+
 <blockquote>
 <p>编译<code>src/lib/index.ts → dist/lib/vueel3.js...</code></p>
 </blockquote>
+
 <ul>
 <li>生成<code>dist/lib/vueel3.css</code>和<code>dist/lib/vueel3.js</code></li>
 </ul>
-<h3 id="解释-rollupconfigjs">解释 rollup.config.js</h3>
+
+<h3 id="解释-rollup-config-js">解释 rollup.config.js</h3>
+
 <blockquote>
 <p>新增几个插件</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -924,10 +974,9 @@ jobs:
 </span><span class="lnt">58
 </span><span class="lnt">59
 </span><span class="lnt">60
-</span><span class="lnt">61
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="c1">// 请先安装 
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="c1">// 请先安装 
 </span><span class="c1">// rollup-plugin-esbuild
 </span><span class="c1">// rollup-plugin-vue
 </span><span class="c1">// sass
@@ -987,17 +1036,19 @@ jobs:
     <span class="nx">bundleSize</span><span class="p">(),</span>
   <span class="p">]</span>
 <span class="p">}</span>
-
 </code></pre></td></tr></table>
 </div>
-</div><h3 id="发布-distlib-目录上传到npm服务器">发布 <code>dist/lib</code> 目录，上传到npm服务器</h3>
-<h4 id="在packagejson中添加files和main">在<code>package.json</code>中添加<code>files</code>和<code>main</code></h4>
+</div>
+<h3 id="发布-dist-lib-目录-上传到npm服务器">发布 <code>dist/lib</code> 目录，上传到npm服务器</h3>
+
+<h4 id="在-package-json-中添加-files-和-main">在<code>package.json</code>中添加<code>files</code>和<code>main</code></h4>
+
 <blockquote>
 <p><code>package.json</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-json" data-lang="json"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1051,10 +1102,9 @@ jobs:
 </span><span class="lnt">52
 </span><span class="lnt">53
 </span><span class="lnt">54
-</span><span class="lnt">55
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="p">{</span>
+<pre class="chroma"><code class="language-json" data-lang="json"><span class="p">{</span>
   <span class="nt">&#34;name&#34;</span><span class="p">:</span> <span class="s2">&#34;vue3-demo-ui-1&#34;</span><span class="p">,</span>
   <span class="nt">&#34;version&#34;</span><span class="p">:</span> <span class="s2">&#34;0.0.0&#34;</span><span class="p">,</span>
   <span class="nt">&#34;author&#34;</span><span class="p">:</span> <span class="s2">&#34;Xu Shuai&#34;</span><span class="p">,</span>
@@ -1107,35 +1157,40 @@ jobs:
   <span class="nt">&#34;peerDependencies&#34;</span><span class="p">:</span> <span class="p">{</span>
     <span class="nt">&#34;vue&#34;</span><span class="p">:</span> <span class="s2">&#34;^3.2.6&#34;</span>
   <span class="p">}</span>
-<span class="p">}</span>
-
-</code></pre></td></tr></table>
+<span class="p">}</span></code></pre></td></tr></table>
 </div>
-</div><ul>
+</div>
+<ul>
 <li><code>&quot;files&quot;: [ &quot;dist/lib/*&quot; ]</code> 写上所有需要上传的文件</li>
 <li><code>&quot;main&quot;: &quot;dist/lib/vueel3.js&quot;,</code> 说明主文件</li>
 </ul>
+
 <h4 id="npm-login"><code>npm login</code></h4>
+
 <blockquote>
 <p>确保已切换至npm官方源，而没有使用淘宝源</p>
 </blockquote>
+
 <ul>
 <li>查看npm源<code>npm config get registry</code></li>
 <li>切换至npm官方源<code>npm config set registry https://registry.npmjs.org</code></li>
 <li>切换回npm淘宝源<code>npm config set registry https://registry.npm.taobao.org/</code></li>
 </ul>
+
 <blockquote>
 <p>注册npm，之后在命令行中使用<code>npm login</code>登录</p>
 </blockquote>
+
 <ul>
 <li><code>npm login</code></li>
 <li>按提示输入<code>Username</code>、<code>Email</code>和<code>Password</code></li>
 <li>注意只有使用了官方源，才能正确登录</li>
 </ul>
+
 <h4 id="npm-publish"><code>npm publish</code></h4>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-sh" data-lang="sh"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1155,94 +1210,101 @@ jobs:
 </span><span class="lnt">18
 </span><span class="lnt">19
 </span><span class="lnt">20
-</span><span class="lnt">21
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">卐 npm publish
+<pre class="chroma"><code class="language-sh" data-lang="sh">卐 npm publish
 npm notice
 npm notice package: vue3-demo-ui-1@0.0.0
 npm <span class="nv">notice</span> <span class="o">===</span> Tarball <span class="nv">Contents</span> <span class="o">===</span>
-npm notice 1.1kB LICENSE
-npm notice 2.4kB README.md
-npm notice 2.2kB dist/lib/vueel3.css
-npm notice 1.6kB dist/lib/vueel3.js
-npm notice 1.3kB package.json
+npm notice <span class="m">1</span>.1kB LICENSE
+npm notice <span class="m">2</span>.4kB README.md
+npm notice <span class="m">2</span>.2kB dist/lib/vueel3.css
+npm notice <span class="m">1</span>.6kB dist/lib/vueel3.js
+npm notice <span class="m">1</span>.3kB package.json
 npm <span class="nv">notice</span> <span class="o">===</span> Tarball <span class="nv">Details</span> <span class="o">===</span>
 npm notice name:          vue3-demo-ui-1
-npm notice version:       0.0.0
+npm notice version:       <span class="m">0</span>.0.0
 npm notice filename:      vue3-demo-ui-1-0.0.0.tgz
-npm notice package size:  4.4 kB
-npm notice unpacked size: 8.6 kB
+npm notice package size:  <span class="m">4</span>.4 kB
+npm notice unpacked size: <span class="m">8</span>.6 kB
 npm notice shasum:        bfdc2825cf74db0e25f89c8f0fc2d925c5279d3b
 npm notice integrity:     sha512-KIJx0x4g0Eu9t<span class="o">[</span>...<span class="o">]</span><span class="nv">Htcv7IaAHffdw</span><span class="o">==</span>
 npm notice total files:   <span class="m">5</span>
 npm notice
-+ vue3-demo-ui-1@0.0.0
-
-</code></pre></td></tr></table>
++ vue3-demo-ui-1@0.0.0</code></pre></td></tr></table>
 </div>
-</div><ul>
+</div>
+<ul>
 <li>完成发布后，就可以通过 <code>yarn add vue3-demo-ui-1</code>来使用了</li>
 </ul>
+
 <h4 id="一些细节">一些细节</h4>
+
 <ul>
 <li><code>name</code>
+
 <ul>
 <li><code>package</code>的<code>name</code>必须是小写字母，可用<code>-</code>或<code>_</code>连接</li>
 <li><code>package</code>的<code>name</code>不能和npm上现有的name重名</li>
-</ul>
-</li>
+</ul></li>
 <li><code>version</code>
+
 <ul>
 <li>每次 publish 的版本不能和之前任何一次的相同</li>
 <li>之后的更改中，必须先改 <code>version</code> 再 <code>npm publish</code></li>
-</ul>
-</li>
+</ul></li>
 <li>注册 <code>npmjs.com</code> 账号
+
 <ul>
 <li>使用网页注册，然后再命令行使用<code>npm login</code>登录</li>
 <li>登陆之后才能<code>npm publish</code></li>
 <li>使用 <code>npm logout</code>可以退出登录</li>
+</ul></li>
 </ul>
-</li>
-</ul>
+
 <h4 id="小技巧">小技巧</h4>
+
 <blockquote>
 <p>使用 nrm 快速切换源</p>
 </blockquote>
+
 <ul>
 <li>安装<code>npm i -g nrm --registry https://registry/npm.taobao.org</code></li>
 <li><code>nrm ls</code>可以查看所有源</li>
 <li><code>nrm use taobao</code>可以切换到淘宝源</li>
 <li><code>nrm use npm</code>可以切换回npm官方源</li>
 </ul>
-<hr>
+
+<hr />
+
 <blockquote>
 <p>修复本地运行不出现而部署dist后出现的 bug，完善功能</p>
 </blockquote>
+
 <h2 id="模拟别人使用自己的组件">模拟别人使用自己的组件</h2>
+
 <blockquote>
 <p>测试自己的 package</p>
 </blockquote>
+
 <ul>
 <li>在空白目录中使用<code>@vue/cli</code>新建一个<code>vue3</code>项目</li>
-<li>安装自己的包<code>yarn add vue3-demo-ui-1</code></li>
-</ul>
+
+<li><p>安装自己的包<code>yarn add vue3-demo-ui-1</code></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
+<pre class="chroma"><code class="language-sh" data-lang="sh"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">info Direct dependencies
+<pre class="chroma"><code class="language-sh" data-lang="sh">info Direct dependencies
 └─ vue3-demo-ui-1@0.0.12
 info All dependencies
 ├─ @vue/devtools-api@6.0.0-beta.20
@@ -1250,25 +1312,30 @@ info All dependencies
 ├─ mitt@3.0.0
 ├─ prismjs@1.25.0
 ├─ vue-router@4.0.11
-└─ vue3-demo-ui-1@0.0.12
-
-</code></pre></td></tr></table>
+└─ vue3-demo-ui-1@0.0.12</code></pre></td></tr></table>
 </div>
-</div><hr>
+</div></li>
+</ul>
+
+<hr />
+
 <h3 id="重构组件名">重构组件名</h3>
+
 <ul>
 <li>统一改为以<code>Vl</code>开头的驼峰模式</li>
 </ul>
+
 <h3 id="修复-tabs-组件的-bug">修复 Tabs 组件的 bug</h3>
+
 <blockquote>
 <p>使用<code>hs dist -c-1</code>运行打包后的项目时，tab组件报错<code>VlTabs 子标签必须是 VlTabItem</code></p>
 </blockquote>
+
 <ul>
-<li>分别打出本地服务运行和打包后运行信息</li>
-</ul>
+<li><p>分别打出本地服务运行和打包后运行信息</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1283,31 +1350,34 @@ info All dependencies
 </span><span class="lnt">13
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="p">...</span>
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="p">...</span>
 <span class="kr">const</span> <span class="p">{</span><span class="nx">defaults</span><span class="p">}</span> <span class="o">=</span> <span class="nx">useGetSlots</span><span class="p">();</span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;-&gt; defaults&#34;</span><span class="p">,</span> <span class="nx">defaults</span><span class="p">);</span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;-&gt; TabItem&#34;</span><span class="p">,</span> <span class="nx">TabItem</span><span class="p">);</span>
 <span class="kr">const</span> <span class="nx">checkTabItem</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
-  <span class="nx">defaults</span><span class="p">.</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">tab</span><span class="o">:</span> <span class="nx">VNode</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
-  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;-&gt; tab.type&#34;</span><span class="p">,</span> <span class="nx">tab</span><span class="p">.</span><span class="nx">type</span><span class="p">);</span>
-    <span class="k">if</span> <span class="p">(</span><span class="nx">tab</span><span class="p">.</span><span class="nx">type</span> <span class="o">!==</span> <span class="nx">TabItem</span><span class="p">)</span> <span class="p">{</span>
-      <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s1">&#39;VlTabs 子标签必须是 VlTabItem&#39;</span><span class="p">));</span>
-    <span class="p">}</span>
-  <span class="p">});</span>
+<span class="nx">defaults</span><span class="p">.</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">tab</span><span class="o">:</span> <span class="nx">VNode</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;-&gt; tab.type&#34;</span><span class="p">,</span> <span class="nx">tab</span><span class="p">.</span><span class="nx">type</span><span class="p">);</span>
+<span class="k">if</span> <span class="p">(</span><span class="nx">tab</span><span class="p">.</span><span class="nx">type</span> <span class="o">!==</span> <span class="nx">TabItem</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s1">&#39;VlTabs 子标签必须是 VlTabItem&#39;</span><span class="p">));</span>
+<span class="p">}</span>
+<span class="p">});</span>
 <span class="p">};</span>
 <span class="p">...</span>
 </code></pre></td></tr></table>
 </div>
-</div><ul>
-<li>在生产环境下，原始组件和<code>tab.type</code>是不严格相等的</li>
-<li>改为判断组件的<code>name</code>属性，需设置属性</li>
+</div></li>
+
+<li><p>在生产环境下，原始组件和<code>tab.type</code>是不严格相等的</p></li>
+
+<li><p>改为判断组件的<code>name</code>属性，需设置属性</p></li>
 </ul>
+
 <blockquote>
 <p><code>VlTabItem.vue</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1320,10 +1390,9 @@ info All dependencies
 </span><span class="lnt">11
 </span><span class="lnt">12
 </span><span class="lnt">13
-</span><span class="lnt">14
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
     <span class="p">&lt;</span><span class="nt">slot</span><span class="p">&gt;</span>
       Tab内容
@@ -1335,28 +1404,26 @@ info All dependencies
 <span class="kr">export</span> <span class="k">default</span> <span class="p">{</span>
   <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;VlTabItem&#39;</span>
 <span class="p">};</span>
-<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-
-</code></pre></td></tr></table>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p>抽出判断组件名的逻辑<code>useCheckSlots.ts</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="kr">import</span> <span class="p">{</span><span class="nx">Component</span><span class="p">,</span> <span class="nx">VNode</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue&#39;</span><span class="p">;</span>
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="kr">import</span> <span class="p">{</span><span class="nx">Component</span><span class="p">,</span> <span class="nx">VNode</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue&#39;</span><span class="p">;</span>
 
 <span class="kr">export</span> <span class="kr">const</span> <span class="nx">useCheckSlots</span> <span class="o">=</span> <span class="p">(</span><span class="nx">defaults</span><span class="o">:</span> <span class="nx">VNode</span><span class="p">[],</span> <span class="nx">component</span><span class="o">:</span> <span class="nx">Component</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="nx">defaults</span><span class="p">.</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">tab</span><span class="o">:</span> <span class="nx">VNode</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
@@ -1365,15 +1432,15 @@ info All dependencies
     <span class="p">}</span>
   <span class="p">});</span>
 <span class="p">};</span>
-
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p><code>VlTabs.vue</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="lnt">  1
 </span><span class="lnt">  2
 </span><span class="lnt">  3
 </span><span class="lnt">  4
@@ -1538,10 +1605,9 @@ info All dependencies
 </span><span class="lnt">163
 </span><span class="lnt">164
 </span><span class="lnt">165
-</span><span class="lnt">166
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
 <span class="kr">import</span> <span class="nx">VlTabItem</span> <span class="nx">from</span> <span class="s1">&#39;./VlTabItem.vue&#39;</span><span class="p">;</span>
 <span class="kr">import</span> <span class="p">{</span><span class="nx">useGetSlots</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;./hooks/useGetSlots&#39;</span><span class="p">;</span>
 <span class="kr">import</span> <span class="p">{</span><span class="nx">useCheckSlots</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;./hooks/useCheckSlots&#39;</span><span class="p">;</span>
@@ -1673,7 +1739,7 @@ info All dependencies
   <span class="err">&amp;-nav</span> <span class="err">{</span>
     <span class="k">display</span><span class="p">:</span> <span class="kc">flex</span><span class="p">;</span>
     <span class="k">color</span><span class="p">:</span> <span class="err">$</span><span class="n">tab-color</span><span class="p">;</span>
-    <span class="k">border-bottom</span><span class="p">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="kc">solid</span> <span class="err">$</span><span class="k">border-color</span><span class="p">;</span>
+    <span class="k">border-bottom</span><span class="p">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="kc">solid</span> <span class="err">$</span><span class="k">border</span><span class="o">-</span><span class="kc">color</span><span class="p">;</span>
     <span class="k">position</span><span class="p">:</span> <span class="kc">relative</span><span class="p">;</span>
 
     <span class="err">&amp;-item</span> <span class="err">{</span>
@@ -1705,17 +1771,17 @@ info All dependencies
     <span class="k">padding</span><span class="p">:</span> <span class="mi">8</span><span class="kt">px</span> <span class="mi">0</span><span class="p">;</span>
   <span class="p">}</span>
 <span class="err">}</span>
-<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
-
-</code></pre></td></tr></table>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><h3 id="显示或隐藏代码">显示或隐藏代码</h3>
+</div>
+<h3 id="显示或隐藏代码">显示或隐藏代码</h3>
+
 <blockquote>
 <p><code>Demo.vue</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1806,10 +1872,9 @@ info All dependencies
 </span><span class="lnt">89
 </span><span class="lnt">90
 </span><span class="lnt">91
-</span><span class="lnt">92
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
 <span class="kr">import</span> <span class="nx">Prism</span> <span class="nx">from</span> <span class="s1">&#39;prismjs&#39;</span><span class="p">;</span>
 <span class="kr">import</span> <span class="s1">&#39;prismjs/themes/prism-okaidia.css&#39;</span><span class="p">;</span>
 <span class="kr">import</span> <span class="s1">&#39;prismjs/plugins/line-numbers/prism-line-numbers.css&#39;</span><span class="p">;</span>
@@ -1859,13 +1924,13 @@ info All dependencies
 <span class="o">$</span><span class="nt">border-color</span><span class="o">:</span> <span class="p">#</span><span class="nn">d9d9d9</span><span class="o">;</span>
 
 <span class="p">.</span><span class="nc">vue-demo</span> <span class="p">{</span>
-  <span class="k">border</span><span class="p">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="kc">solid</span> <span class="err">$</span><span class="k">border-color</span><span class="p">;</span>
+  <span class="k">border</span><span class="p">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="kc">solid</span> <span class="err">$</span><span class="k">border</span><span class="o">-</span><span class="kc">color</span><span class="p">;</span>
   <span class="k">margin</span><span class="p">:</span> <span class="mi">16</span><span class="kt">px</span> <span class="mi">0</span> <span class="mi">32</span><span class="kt">px</span><span class="p">;</span>
 
   <span class="err">&gt;</span> <span class="err">h2</span> <span class="err">{</span>
     <span class="k">font-size</span><span class="p">:</span> <span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
     <span class="k">padding</span><span class="p">:</span> <span class="mi">8</span><span class="kt">px</span> <span class="mi">16</span><span class="kt">px</span><span class="p">;</span>
-    <span class="k">border-bottom</span><span class="p">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="kc">solid</span> <span class="err">$</span><span class="k">border-color</span><span class="p">;</span>
+    <span class="k">border-bottom</span><span class="p">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="kc">solid</span> <span class="err">$</span><span class="k">border</span><span class="o">-</span><span class="kc">color</span><span class="p">;</span>
   <span class="p">}</span>
 
   <span class="o">&amp;</span><span class="nt">-component</span> <span class="p">{</span>
@@ -1874,12 +1939,12 @@ info All dependencies
 
   <span class="o">&amp;</span><span class="nt">-actions</span> <span class="p">{</span>
     <span class="k">padding</span><span class="p">:</span> <span class="mi">8</span><span class="kt">px</span> <span class="mi">16</span><span class="kt">px</span><span class="p">;</span>
-    <span class="k">border-top</span><span class="p">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="kc">dashed</span> <span class="err">$</span><span class="k">border-color</span><span class="p">;</span>
+    <span class="k">border-top</span><span class="p">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="kc">dashed</span> <span class="err">$</span><span class="k">border</span><span class="o">-</span><span class="kc">color</span><span class="p">;</span>
   <span class="p">}</span>
 
   <span class="o">&amp;</span><span class="nt">-code</span> <span class="p">{</span>
     <span class="k">padding</span><span class="p">:</span> <span class="mi">8</span><span class="kt">px</span> <span class="mi">16</span><span class="kt">px</span><span class="p">;</span>
-    <span class="k">border-top</span><span class="p">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="kc">dashed</span> <span class="err">$</span><span class="k">border-color</span><span class="p">;</span>
+    <span class="k">border-top</span><span class="p">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="kc">dashed</span> <span class="err">$</span><span class="k">border</span><span class="o">-</span><span class="kc">color</span><span class="p">;</span>
 
     <span class="err">&gt;</span> <span class="err">pre</span> <span class="err">{</span>
       <span class="k">line-height</span><span class="p">:</span> <span class="mf">1.1</span><span class="p">;</span>
@@ -1888,7 +1953,7 @@ info All dependencies
       <span class="k">padding-left</span><span class="p">:</span> <span class="mi">70</span><span class="kt">px</span><span class="p">;</span>
 
       <span class="err">@media(</span><span class="k">max-width</span><span class="p">:</span> <span class="mi">500</span><span class="kt">px</span><span class="p">)</span> <span class="err">{</span>
-        <span class="k">padding-left</span><span class="o">:</span> <span class="mi">5</span><span class="kt">px</span><span class="p">;</span>
+        <span class="k">padding</span><span class="o">-</span><span class="kc">left</span><span class="o">:</span> <span class="mi">5</span><span class="kt">px</span><span class="p">;</span>
       <span class="p">}</span>
 
       <span class="o">&gt;</span> <span class="nt">code</span> <span class="p">{</span>
@@ -1899,59 +1964,63 @@ info All dependencies
     <span class="err">}</span>
   <span class="err">}</span>
 <span class="err">}</span>
-<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
-
-</code></pre></td></tr></table>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><ul>
+</div>
+<ul>
 <li><code>&lt;VlButton @click=&quot;toggle&quot;&gt;{{ codeVisible ? '隐藏代码' : '查看代码' }}&lt;/VlButton&gt;</code></li>
 </ul>
+
 <h3 id="修复-watcheffect">修复 <code>watchEffect</code></h3>
+
 <blockquote>
 <p>排除所有可能性，剩下的就是真相</p>
 </blockquote>
+
 <ul>
 <li>不同版本之间的差异
+
 <ul>
 <li><code>RC</code>版和正式版</li>
-</ul>
-</li>
+</ul></li>
 <li>查看 <a href="https://github.com/vuejs/vue-next/blob/master/CHANGELOG.md"><code>vuejs/vue-next CHANGELOG.md</code></a>，搜索<code>watchEffect</code>
+
 <ul>
 <li>找到 <a href="https://github.com/vuejs/vue-next/blob/master/CHANGELOG.md#breaking-changes-2"><code>3.0.0-rc.13 BREAKING CHANGES</code></a></li>
-<li><em><strong><code>watch APIs now default to use flush: 'pre' instead of flush: 'post'. This change affects watch, watchEffect, the watch component option, and this.$watch...</code></strong></em></li>
-</ul>
-</li>
+<li><strong><em><code>watch APIs now default to use flush: 'pre' instead of flush: 'post'. This change affects watch, watchEffect, the watch component option, and this.$watch...</code></em></strong></li>
+</ul></li>
 <li><a href="https://v3.cn.vuejs.org/guide/reactivity-computed-watchers.html#%E5%89%AF%E4%BD%9C%E7%94%A8%E5%88%B7%E6%96%B0%E6%97%B6%E6%9C%BA"><code>watchEffect 副作用刷新时机</code>文档</a></li>
 </ul>
+
 <blockquote>
 <p><code>VlTabs.vue</code>的实现思路</p>
 </blockquote>
+
 <ul>
 <li>当用户点击<code>vue-tabs-nav-item</code>时，执行<code>select(title)</code></li>
 <li><code>select(title)</code>会向外发布自定义事件<code>emits('update:selected', title);</code>
+
 <ul>
 <li>将<code>title</code>传到外部，让外部组件更新自己的外部属性<code>selected</code></li>
-</ul>
-</li>
+</ul></li>
 <li>当<code>selected</code>更新了，<code>selectedItem</code>也更新
+
 <ul>
 <li><code>selectedItem = ref&lt;HTMLDivElement&gt;(div)</code></li>
 <li><code>&lt;div v-for=&quot;(title, index) in titleListOfDefaultSlots&quot; ... :ref=&quot;(el) =&gt; { if (el &amp;&amp; (title === selected)) selectedItem = el }&quot; @click=&quot;select(title)&quot;&gt;...&lt;/div&gt;</code></li>
-</ul>
-</li>
-<li>如果当<code>selected</code>更新了，<code>selectedItem</code>未更新，就会出现bug
+</ul></li>
+
+<li><p>如果当<code>selected</code>更新了，<code>selectedItem</code>未更新，就会出现bug</p>
+
 <ul>
 <li><code>watchEffect</code>追踪的依赖是<code>selectedItem</code></li>
 <li><code>selected</code>变了，去渲染DOM</li>
 <li>RC <code>watchEffect post</code> 在渲染DOM后，<code>selectedItem</code>变了</li>
-<li>正式版 <code>watchEffect pre</code> 在渲染DOM前，<code>selectedItem</code>没变</li>
-</ul>
-</li>
-</ul>
+
+<li><p>正式版 <code>watchEffect pre</code> 在渲染DOM前，<code>selectedItem</code>没变</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1969,36 +2038,43 @@ info All dependencies
 </span><span class="lnt">16
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="p">...</span>
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="p">...</span>
 <span class="c1">// Tab指示下划线跟踪TabItem位置
 </span><span class="c1"></span><span class="kr">const</span> <span class="nx">indicatorTraceTab</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
-  <span class="kr">const</span> <span class="p">{</span><span class="nx">width</span><span class="p">,</span> <span class="nx">left</span><span class="p">}</span> <span class="o">=</span> <span class="nx">selectedItem</span><span class="p">.</span><span class="nx">value</span><span class="o">!</span><span class="p">.</span><span class="nx">getBoundingClientRect</span><span class="p">();</span>
-  <span class="kr">const</span> <span class="p">{</span><span class="nx">left</span><span class="o">:</span> <span class="nx">containerLeft</span><span class="p">}</span> <span class="o">=</span> <span class="nx">container</span><span class="p">.</span><span class="nx">value</span><span class="o">!</span><span class="p">.</span><span class="nx">getBoundingClientRect</span><span class="p">();</span>
-  <span class="kr">const</span> <span class="nx">leftPos</span> <span class="o">=</span> <span class="nx">left</span> <span class="o">-</span> <span class="nx">containerLeft</span><span class="p">;</span>
-  <span class="nx">indicator</span><span class="p">.</span><span class="nx">value</span><span class="o">!</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">width</span> <span class="o">=</span> <span class="sb">`</span><span class="si">${</span><span class="nx">width</span><span class="si">}</span><span class="sb">px`</span><span class="p">;</span>
-  <span class="nx">indicator</span><span class="p">.</span><span class="nx">value</span><span class="o">!</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">transform</span> <span class="o">=</span> <span class="sb">`translate3D(</span><span class="si">${</span><span class="nx">leftPos</span><span class="si">}</span><span class="sb">px, 0, 0)`</span><span class="p">;</span>
+<span class="kr">const</span> <span class="p">{</span><span class="nx">width</span><span class="p">,</span> <span class="nx">left</span><span class="p">}</span> <span class="o">=</span> <span class="nx">selectedItem</span><span class="p">.</span><span class="nx">value</span><span class="o">!</span><span class="p">.</span><span class="nx">getBoundingClientRect</span><span class="p">();</span>
+<span class="kr">const</span> <span class="p">{</span><span class="nx">left</span><span class="o">:</span> <span class="nx">containerLeft</span><span class="p">}</span> <span class="o">=</span> <span class="nx">container</span><span class="p">.</span><span class="nx">value</span><span class="o">!</span><span class="p">.</span><span class="nx">getBoundingClientRect</span><span class="p">();</span>
+<span class="kr">const</span> <span class="nx">leftPos</span> <span class="o">=</span> <span class="nx">left</span> <span class="o">-</span> <span class="nx">containerLeft</span><span class="p">;</span>
+<span class="nx">indicator</span><span class="p">.</span><span class="nx">value</span><span class="o">!</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">width</span> <span class="o">=</span> <span class="sb">`</span><span class="si">${</span><span class="nx">width</span><span class="si">}</span><span class="sb">px`</span><span class="p">;</span>
+<span class="nx">indicator</span><span class="p">.</span><span class="nx">value</span><span class="o">!</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">transform</span> <span class="o">=</span> <span class="sb">`translate3D(</span><span class="si">${</span><span class="nx">leftPos</span><span class="si">}</span><span class="sb">px, 0, 0)`</span><span class="p">;</span>
 <span class="p">};</span>
 
 <span class="c1">// 追踪 变更，执行回调
 </span><span class="c1"></span><span class="nx">watchEffect</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
-  <span class="nx">indicatorTraceTab</span><span class="p">();</span>
+<span class="nx">indicatorTraceTab</span><span class="p">();</span>
 <span class="p">});</span>
 
 <span class="p">...</span>
 </code></pre></td></tr></table>
 </div>
-</div><p><img src="https://note.youdao.com/yws/api/personal/file/B33078098489460093C1D5375FA1D58D?method=download&amp;shareKey=f09ccc13de2f76a72f740dfddfcf7e1a" alt="watchEffect"></p>
+</div></li>
+</ul></li>
+</ul>
+
+<p><img src="https://note.youdao.com/yws/api/personal/file/B33078098489460093C1D5375FA1D58D?method=download&amp;shareKey=f09ccc13de2f76a72f740dfddfcf7e1a" alt="watchEffect" /></p>
+
 <ul>
 <li><code>watchEffect</code>依赖的<code>selectedItem</code>、<code>container</code>、<code>indicator</code>都不变的话，就不会执行<code>watchEffect</code>回调逻辑</li>
 <li>需配置第二个参数<code>, {flush: post}</code>表示等到渲染DOM后再执行</li>
 </ul>
+
 <h3 id="再次完善官网">再次完善官网</h3>
+
 <blockquote>
 <p><code>install.md</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-md" data-lang="md"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -2013,10 +2089,9 @@ info All dependencies
 </span><span class="lnt">13
 </span><span class="lnt">14
 </span><span class="lnt">15
-</span><span class="lnt">16
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-md" data-lang="md"><span class="gh"># 安装
+<pre class="chroma"><code class="language-md" data-lang="md"><span class="gh"># 安装
 </span><span class="gh"></span>
 打开终端运行下列命令：
 
@@ -2030,16 +2105,15 @@ npm install vue3-demo-ui-1
 yarn add vue3-demo-ui-1
 \\```
 
-下一节：[开始使用](#/docs/get-started)
-
-</code></pre></td></tr></table>
+下一节：[开始使用](#/docs/get-started)</code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p><code>getStarted.md</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-md" data-lang="md"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -2074,93 +2148,103 @@ yarn add vue3-demo-ui-1
 </span><span class="lnt">33
 </span><span class="lnt">34
 </span><span class="lnt">35
-</span><span class="lnt">36
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-md" data-lang="md"><span class="gh"># 开始使用
+<pre class="chroma"><code class="language-md" data-lang="md"><span class="gh"># 开始使用
 </span><span class="gh"></span>
 请先[安装](#/docs/install)本组件库。
 
 然后在你的代码中写入下面的代码：
 
 !```
-import * as vueel3 from &#39;vue3-demo-ui-1&#39;
+import <span class="ge">* as vueel3 from &#39;vue3-demo-ui-1&#39;
+</span><span class="ge">import &#39;vue3-demo-ui-1/dist/lib/style.css&#39;
+</span><span class="ge">const {VlButton, VlTabs, VlSwitch, VlDialog, useDialog} = vueel3
+</span><span class="ge">!```
+</span><span class="ge">
+</span><span class="ge">就可以使用我提供的组件了。
+</span><span class="ge">
+</span><span class="ge">## Vue 单文件组件 使用时不必使用 ts 语法
+</span><span class="ge">
+</span><span class="ge">代码示例：
+</span><span class="ge">
+</span><span class="ge">!```
+</span><span class="ge">&lt;template&gt;
+</span><span class="ge">  &lt;div&gt;
+</span><span class="ge">    &lt;VlButton&gt;按钮&lt;/VlButton&gt;
+</span><span class="ge">  &lt;/div&gt;
+</span><span class="ge">&lt;/template&gt;
+</span><span class="ge">
+</span><span class="ge">&lt;script&gt;
+</span><span class="ge">import *</span> as vueel3 from &#39;vue3-demo-ui-1&#39;
 import &#39;vue3-demo-ui-1/dist/lib/style.css&#39;
 const {VlButton, VlTabs, VlSwitch, VlDialog, useDialog} = vueel3
-!```
 
-就可以使用我提供的组件了。
-
-<span class="gu">## Vue 单文件组件 使用时不必使用 ts 语法
-</span><span class="gu"></span>
-代码示例：
-
-!```
-<span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">VlButton</span><span class="p">&gt;</span>按钮<span class="p">&lt;/</span><span class="nt">VlButton</span><span class="p">&gt;</span>
-  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
-
-<span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
-<span class="kr">import</span> <span class="o">*</span> <span class="nx">as</span> <span class="nx">vueel3</span> <span class="nx">from</span> <span class="s1">&#39;vue3-demo-ui-1&#39;</span>
-<span class="kr">import</span> <span class="s1">&#39;vue3-demo-ui-1/dist/lib/style.css&#39;</span>
-<span class="kr">const</span> <span class="p">{</span><span class="nx">VlButton</span><span class="p">,</span> <span class="nx">VlTabs</span><span class="p">,</span> <span class="nx">VlSwitch</span><span class="p">,</span> <span class="nx">VlDialog</span><span class="p">,</span> <span class="nx">useDialog</span><span class="p">}</span> <span class="o">=</span> <span class="nx">vueel3</span>
-
-<span class="kr">export</span> <span class="k">default</span> <span class="p">{</span>
-  <span class="nx">components</span><span class="o">:</span> <span class="p">{</span><span class="nx">VlButton</span><span class="p">,</span> <span class="nx">VlTabs</span><span class="p">,</span> <span class="nx">VlSwitch</span><span class="p">,</span> <span class="nx">VlDialog</span><span class="p">,</span> <span class="nx">useDialog</span><span class="p">}</span>
-<span class="p">}</span>
-<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-!```
-
-</code></pre></td></tr></table>
+export default {
+  components: {VlButton, VlTabs, VlSwitch, VlDialog, useDialog}
+}
+&lt;/script&gt;
+!```</code></pre></td></tr></table>
 </div>
-</div><hr>
+</div>
+<hr />
+
 <h2 id="总结">总结</h2>
+
 <blockquote>
 <p>这样就完成了</p>
 </blockquote>
-<ul>
-<li><input checked="" disabled="" type="checkbox"> 部署官网到 GitHub</li>
-<li><input checked="" disabled="" type="checkbox"> 发布官网页面</li>
-<li><input checked="" disabled="" type="checkbox"> 部署到码云</li>
-<li><input checked="" disabled="" type="checkbox"> 脚本化部署</li>
-<li><input checked="" disabled="" type="checkbox"> 使用 GitHub Actions 持续集成</li>
-<li><input checked="" disabled="" type="checkbox"> 发布组件库至 npm</li>
+
+<ul class="task-list">
+<li><label><input type="checkbox" checked disabled class="task-list-item"> 部署官网到 GitHub</label></li>
+<li><label><input type="checkbox" checked disabled class="task-list-item"> 发布官网页面</label></li>
+<li><label><input type="checkbox" checked disabled class="task-list-item"> 部署到码云</label></li>
+<li><label><input type="checkbox" checked disabled class="task-list-item"> 脚本化部署</label></li>
+<li><label><input type="checkbox" checked disabled class="task-list-item"> 使用 GitHub Actions 持续集成</label></li>
+<li><label><input type="checkbox" checked disabled class="task-list-item"> 发布组件库至 npm</label></li>
 </ul>
-<hr>
+
+<hr />
+
 <p>初步完成的轮子</p>
+
 <ul>
 <li>基于Vue 3.2、TS，使用vite2.0构建打包</li>
-<li>使用composition API和<!-- raw HTML omitted -->语法糖</li>
+<li>使用composition API和<script setup>语法糖</li>
 <li><a href="https://gitee.com/xmasuhai/vueel3-demo-1">码云仓库地址</a></li>
 <li><a href="https://xmasuhai.gitee.io/vueel3-demo-website/#/">码云在线预览</a></li>
 </ul>
-<h2 id="把项目加到简历vue-2-如何升级到-vue-3">把项目加到简历，Vue 2 如何升级到 Vue 3</h2>
+
+<h2 id="把项目加到简历-vue-2-如何升级到-vue-3">把项目加到简历，Vue 2 如何升级到 Vue 3</h2>
+
 <ul>
 <li>查看 <a href="https://v3.cn.vuejs.org/guide/migration/introduction.html">Vue 官方迁移指南文档</a></li>
 <li>使用官方提供的<a href="https://github.com/vuejs/vue-codemod">工具和教程 vue-codemod</a></li>
 <li>使用<a href="https://github.com/thx/gogocode">GoGoCode</a></li>
 </ul>
+
 <h2 id="更多">更多</h2>
+
 <ul>
 <li>添加其他组件
+
 <ul>
 <li><code>Popover</code></li>
 <li><code>Datepicker</code></li>
 <li><code>Tooltip</code></li>
-</ul>
-</li>
+</ul></li>
 <li>使用 <code>JSX</code>、<code>TSX</code></li>
 <li>使用 <a href="https://v3.cn.vuejs.org/api/global-api.html#definecomponent"><code>defineComponent</code></a>
+
 <ul>
 <li>支持泛型，能更好地与 <code>TypeScript</code> 配合使用</li>
-</ul>
-</li>
+</ul></li>
 <li>通读<a href="https://v3.cn.vuejs.org/guide/introduction.html">Vue3 中文文档</a></li>
 </ul>
-<hr>
-<hr>
+
+<hr />
+
+<hr />
 
     </div>
 
@@ -2324,7 +2408,7 @@ const {VlButton, VlTabs, VlSwitch, VlDialog, useDialog} = vueel3
     &copy;
     
       2019 -
-    2022
+    2026
     <span class="heart">
       
       <i class="iconfont">

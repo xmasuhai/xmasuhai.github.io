@@ -7,7 +7,7 @@
   
 
 <meta name="renderer" content="webkit" />
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
 <meta name="MobileOptimized" content="width"/>
 <meta name="HandheldFriendly" content="true"/>
@@ -32,7 +32,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.91.2" />
+<meta name="generator" content="Hugo 0.59.1" />
 
 
 <link rel="canonical" href="http://xmasuhai.xyz/post/css/css%E9%9D%9E%E5%85%A8%E8%A7%A307css%E5%AE%9A%E4%BD%8D/" />
@@ -62,15 +62,21 @@
 <meta property="og:title" content="【CSS非全解07】CSS定位" />
 <meta property="og:description" content="布局和定位的区别 布局是屏幕平面上的 定位是垂直于屏幕的 完全不同的概念 一个 div 的分层 从文档流和盒模型说起 背景的范围是从哪到哪？ border内侧围住" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://xmasuhai.xyz/post/css/css%E9%9D%9E%E5%85%A8%E8%A7%A307css%E5%AE%9A%E4%BD%8D/" /><meta property="article:section" content="post" />
+<meta property="og:url" content="http://xmasuhai.xyz/post/css/css%E9%9D%9E%E5%85%A8%E8%A7%A307css%E5%AE%9A%E4%BD%8D/" />
 <meta property="article:published_time" content="2020-02-01T00:40:41+08:00" />
 <meta property="article:modified_time" content="2022-09-03T10:26:25+08:00" />
-
 <meta itemprop="name" content="【CSS非全解07】CSS定位">
-<meta itemprop="description" content="布局和定位的区别 布局是屏幕平面上的 定位是垂直于屏幕的 完全不同的概念 一个 div 的分层 从文档流和盒模型说起 背景的范围是从哪到哪？ border内侧围住"><meta itemprop="datePublished" content="2020-02-01T00:40:41+08:00" />
-<meta itemprop="dateModified" content="2022-09-03T10:26:25+08:00" />
-<meta itemprop="wordCount" content="2696">
-<meta itemprop="keywords" content="CSS,CSS-Position," /><meta name="twitter:card" content="summary"/>
+<meta itemprop="description" content="布局和定位的区别 布局是屏幕平面上的 定位是垂直于屏幕的 完全不同的概念 一个 div 的分层 从文档流和盒模型说起 背景的范围是从哪到哪？ border内侧围住">
+
+
+<meta itemprop="datePublished" content="2020-02-01T00:40:41&#43;08:00" />
+<meta itemprop="dateModified" content="2022-09-03T10:26:25&#43;08:00" />
+<meta itemprop="wordCount" content="2702">
+
+
+
+<meta itemprop="keywords" content="CSS,CSS-Position," />
+<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="【CSS非全解07】CSS定位"/>
 <meta name="twitter:description" content="布局和定位的区别 布局是屏幕平面上的 定位是垂直于屏幕的 完全不同的概念 一个 div 的分层 从文档流和盒模型说起 背景的范围是从哪到哪？ border内侧围住"/>
 
@@ -302,7 +308,7 @@
             <a href="http://xmasuhai.xyz/categories/css/"> CSS </a>
             
           </div>
-        <span class="more-meta"> 约 2696 字 </span>
+        <span class="more-meta"> 约 2702 字 </span>
           <span class="more-meta"> 预计阅读 6 分钟 </span>
 
         
@@ -319,50 +325,100 @@
   <h2 class="post-toc-title">文章目录</h2>
   <div class="post-toc-content">
     <nav id="TableOfContents">
-  <ul>
-    <li><a href="#布局和定位的区别">布局和定位的区别</a>
-      <ul>
-        <li><a href="#一个-div-的分层">一个 div 的分层</a></li>
-        <li><a href="#position的五个取值"><code>position</code>的五个取值</a></li>
-        <li><a href="#z-index怎么用"><code>z-index</code>怎么用</a></li>
-      </ul>
-    </li>
-    <li><a href="#层叠上下文">层叠上下文</a>
-      <ul>
-        <li><a href="#定位与层叠上下文">定位与层叠上下文</a></li>
-        <li><a href="#负z-index与层叠上下文">负<code>z-index</code>与层叠上下文</a></li>
-        <li><a href="#优先级-样式继承选择器权重">优先级 样式继承、选择器权重</a></li>
-      </ul>
-    </li>
-  </ul>
+<ul>
+<li>
+<ul>
+<li><a href="#布局和定位的区别">布局和定位的区别</a>
+<ul>
+<li><a href="#一个-div-的分层">一个 div 的分层</a>
+<ul>
+<li><a href="#从-屏幕侧面-看一个div-是什么样子">从<strong>屏幕侧面</strong>看一个div，是什么样子</a></li>
+</ul></li>
+<li><a href="#position-的五个取值"><code>position</code>的五个取值</a>
+<ul>
+<li><a href="#经验">经验</a></li>
+<li><a href="#position-relative"><code>position:relative</code></a>
+<ul>
+<li><a href="#position-relative-使用场景"><code>position:relative</code>使用场景</a></li>
+<li><a href="#position-relative-配合-z-index"><code>position:relative</code>配合<code>z-index</code></a></li>
+<li><a href="#position-relative-经验"><code>position:relative</code>经验</a></li>
+</ul></li>
+<li><a href="#position-absolute"><code>position:absolute</code></a>
+<ul>
+<li><a href="#position-absolute-使用场景"><code>position:absolute</code>使用场景</a></li>
+<li><a href="#position-absolute-配合-z-index"><code>position:absolute</code>配合<code>z-index</code></a></li>
+<li><a href="#position-absolute-经验"><code>position:absolute</code>经验</a></li>
+</ul></li>
+<li><a href="#position-fixed"><code>position:fixed</code></a>
+<ul>
+<li><a href="#position-fixed-使用场景"><code>position:fixed</code>使用场景</a></li>
+<li><a href="#position-fixed-配合-z-index"><code>position:fixed</code>配合<code>z-index</code></a></li>
+<li><a href="#position-fixed-经验"><code>position:fixed</code>经验</a></li>
+</ul></li>
+<li><a href="#position-sticky"><code>position:sticky</code></a>
+<ul>
+<li><a href="#position-sticky-使用场景"><code>position:sticky</code>使用场景</a></li>
+<li><a href="#position-sticky-配合-z-index"><code>position:sticky</code>配合<code>z-index</code></a></li>
+<li><a href="#position-sticky-经验"><code>position:sticky</code>经验</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#z-index-怎么用"><code>z-index</code>怎么用</a></li>
+</ul></li>
+<li><a href="#层叠上下文">层叠上下文</a>
+<ul>
+<li><a href="#定位与层叠上下文">定位与层叠上下文</a>
+<ul>
+<li><a href="#比喻">比喻</a></li>
+<li><a href="#哪些不正交的属性可以创建它">哪些不正交的属性可以创建它</a></li>
+</ul></li>
+<li><a href="#负-z-index-与层叠上下文">负<code>z-index</code>与层叠上下文</a></li>
+<li><a href="#优先级-样式继承-选择器权重">优先级 样式继承、选择器权重</a>
+<ul>
+<li><a href="#参考文章">参考文章</a></li>
+<li><a href="#相关文章">相关文章</a></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
 </nav>
   </div>
 </div>
 
     
     <div class="post-content">
-      <h2 id="布局和定位的区别">布局和定位的区别</h2>
+      
+
+<h2 id="布局和定位的区别">布局和定位的区别</h2>
+
 <blockquote>
 <p>布局是屏幕平面上的</p>
+
 <p>定位是垂直于屏幕的</p>
+
 <p>完全不同的概念</p>
 </blockquote>
+
 <h3 id="一个-div-的分层">一个 div 的分层</h3>
+
 <blockquote>
 <p>从文档流和盒模型说起</p>
+
 <p>背景的范围是从哪到哪？</p>
 </blockquote>
-<ul>
-<li><input disabled="" type="checkbox"> border内侧围住的区域</li>
-<li><input checked="" disabled="" type="checkbox"> border外侧围住的区域</li>
+
+<ul class="task-list">
+<li><label><input type="checkbox" disabled class="task-list-item"> border内侧围住的区域</label></li>
+<li><label><input type="checkbox" checked disabled class="task-list-item"> border外侧围住的区域</label></li>
 </ul>
+
 <blockquote>
 <p>如何验证？border半透明</p>
 </blockquote>
+
 <p>代码验证：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-CSS" data-lang="CSS"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -375,7 +431,7 @@
 </span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-CSS" data-lang="CSS"><span class="c">/* 点rgba 按住Alt 上下键 0.1 幅度 Chrome开发者调试 */</span>
+<pre class="chroma"><code class="language-CSS" data-lang="CSS"><span class="c">/* 点rgba 按住Alt 上下键 0.1 幅度 Chrome开发者调试 */</span>
 <span class="p">.</span><span class="nc">demo</span> <span class="p">{</span>
     <span class="k">box-sizing</span><span class="p">:</span> <span class="kc">border-box</span><span class="p">;</span>
     <span class="k">margin</span><span class="p">:</span> <span class="mi">12</span><span class="kt">px</span><span class="p">;</span>
@@ -385,26 +441,35 @@
     <span class="k">height</span><span class="p">:</span> <span class="mi">300</span><span class="kt">px</span><span class="p">;</span>
     <span class="k">background</span><span class="p">:</span> <span class="kc">lightblue</span><span class="p">;</span>
     <span class="k">color</span><span class="p">:</span> <span class="kc">darkorange</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<span class="p">}</span></code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p>做demo验证CSS特性</p>
 </blockquote>
+
 <p><a href="http://xmasuhai.xyz/demo-test/css-demo-4/css-demo_position_divTest.html">demo_position_divTest</a></p>
-<h4 id="从屏幕侧面看一个div是什么样子">从<strong>屏幕侧面</strong>看一个div，是什么样子</h4>
+
+<h4 id="从-屏幕侧面-看一个div-是什么样子">从<strong>屏幕侧面</strong>看一个div，是什么样子</h4>
+
 <blockquote>
 <p>内容区里的文字会遮住<code>background</code>；</p>
+
 <p><code>border</code>会遮住<code>background</code></p>
+
 <p>内容区里的文字会遮住<code>border</code>吗？</p>
+
 <p>会</p>
+
 <p>脱离文档流的子元素 比之前高一点（离屏幕近一些）跳出并不再影响原普通文档流</p>
+
 <p>其实就是浮起来了一点点</p>
 </blockquote>
+
 <p>代码验证：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-CSS" data-lang="CSS"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -416,7 +481,7 @@
 </span><span class="lnt">10
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-CSS" data-lang="CSS"><span class="c">/* 字体变大 直至覆盖到border */</span>
+<pre class="chroma"><code class="language-CSS" data-lang="CSS"><span class="c">/* 字体变大 直至覆盖到border */</span>
 <span class="p">.</span><span class="nc">demo</span> <span class="p">{</span>
     <span class="k">box-sizing</span><span class="p">:</span> <span class="kc">border-box</span><span class="p">;</span>
     <span class="k">border</span><span class="p">:</span> <span class="mi">15</span><span class="kt">px</span> <span class="kc">solid</span> <span class="kc">red</span><span class="p">;</span>
@@ -425,22 +490,33 @@
     <span class="k">background</span><span class="p">:</span> <span class="kc">lightblue</span><span class="p">;</span>
     <span class="k">color</span><span class="p">:</span> <span class="kc">darkorange</span><span class="p">;</span>
     <span class="k">font-size</span><span class="p">:</span><span class="mi">120</span><span class="kt">px</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<span class="p">}</span></code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p>上帝视角看div三维立体结构 <a href="https://docs.microsoft.com/zh-cn/microsoft-edge/devtools-guide-chromium/whats-new/2019/12/devtools#3d-view">IE Edge 3D view</a></p>
+
 <p>分层：内容文字 &gt; border &gt; background</p>
+
 <p>较后的子元素里的文字会覆盖较前的</p>
 </blockquote>
-<hr>
+
+<hr />
+
 <p><del><a href="https://www.google.com.hk/search?q=+%E8%AE%A9%E6%B5%8F%E8%A7%88%E7%9A%84%E7%BD%91%E9%A1%B5%E5%B8%A6%E6%9C%893D%E6%95%88%E6%9E%9C++%E5%AE%9E%E7%8E%B03D%E8%A7%86%E5%9B%BE%E6%9F%A5%E7%9C%8B%E7%BD%91%E9%A1%B5+++%E6%9F%A5%E7%9C%8B3D%E4%B8%AD%E7%9A%84%E7%BD%91%E7%AB%99%E7%BB%93%E6%9E%84">让浏览的网页带有3D效果 实现3D视图查看网页 查看3D中的网站结构</a></del></p>
+
 <p><del><a href="https://blog.csdn.net/weixin_42551465/article/details/96868212">火狐（firefox）使用Tilt插件实现3D视图查看网页</a></del></p>
+
 <p><del><a href="http://www.lingchenliang.com/post/58025.html">firefox扩展Tilt-让浏览的网页带有3D效果</a></del></p>
+
 <p><del>* 新版火狐本不支持</del></p>
+
 <p><a href="https://www.31du.cn/blog/3d-chromium.html">Firefox 不要的 3D 视图功能，微软将它引入 Chromium</a></p>
-<hr>
-<h3 id="position的五个取值"><code>position</code>的五个取值</h3>
+
+<hr />
+
+<h3 id="position-的五个取值"><code>position</code>的五个取值</h3>
+
 <ul>
 <li><code>position:static</code>：默认值，待在文档流里，每个块级元素占据自己的区块（block），元素与元素之间不产生重叠</li>
 <li><code>position:relative</code>：相对定位，升起来，但不脱离文档流（所占据的位置不变，仍在默认位置处占据空间）</li>
@@ -448,51 +524,74 @@
 <li><code>position:fixed</code>：固定定位，定位基准是viewport（有诈）</li>
 <li><code>position:sticky</code>：粘滞定位，直接举例</li>
 </ul>
+
 <blockquote>
 <p>注意，<code>position:static</code>定位所导致的元素位置，是浏览器自主决定的，所以这时<code>top</code>、<code>bottom</code>、<code>left</code>、<code>right</code>这四个属性无效。</p>
 </blockquote>
+
 <h4 id="经验">经验</h4>
+
 <ul>
 <li>如果在元素上写了<code>position:absolute</code>，一定在父级以上元素补一个<code>position:relative</code></li>
 <li>如果写了<code>position:absolute</code>或<code>position:fixed</code>，一定得补<code>top</code>和<code>left</code></li>
 <li><code>position:sticky</code>兼容性差，主要用于面试</li>
 </ul>
+
 <p>网站实例：</p>
-<p><a href="https://www.juliusbaer.com/asia/cn/%E6%82%A8%E7%9A%84%E7%A7%81%E4%BA%BA%E9%93%B6%E8%A1%8C/">Julius Bär 宝盛</a></p>
-<h4 id="positionrelative"><code>position:relative</code></h4>
+
+<p><a href="https://www.juliusbaer.com/asia/cn/您的私人银行/">Julius Bär 宝盛</a></p>
+
+<h4 id="position-relative"><code>position:relative</code></h4>
+
 <blockquote>
 <p>相对于默认位置（即<code>position:static</code>时的位置）进行偏移，即定位基点是元素的默认位置</p>
+
 <p>所占据的位置不变，仍在默认位置占据空间，只是显示的位置和默认位置间有一个偏移</p>
+
 <p>必须搭配<code>top</code>、<code>bottom</code>、<code>left</code>、<code>right</code>这四个属性一起使用，用来指定偏移的方向和距离</p>
 </blockquote>
-<h5 id="positionrelative使用场景"><code>position:relative</code>使用场景</h5>
+
+<h5 id="position-relative-使用场景"><code>position:relative</code>使用场景</h5>
+
 <ul>
 <li>用于做位移（很少）对齐</li>
 <li>用于给<code>position:absolute</code>元素做父级定位基点</li>
 </ul>
-<h5 id="positionrelative配合z-index"><code>position:relative</code>配合<code>z-index</code></h5>
+
+<h5 id="position-relative-配合-z-index"><code>position:relative</code>配合<code>z-index</code></h5>
+
 <ul>
 <li><code>z-index:auto</code>默认值，计算出的值是<code>0</code>，但不创建新的层叠上下文</li>
 <li><code>z-index:0/1/2</code>创建新的层叠上下文</li>
 <li><code>z-index:-1/-2</code>创建新的层叠上下文</li>
 </ul>
+
 <blockquote>
 <p><code>z-index:auto</code>和<code>z-index:0</code>是不同的</p>
 </blockquote>
-<h5 id="positionrelative经验"><code>position:relative</code>经验</h5>
+
+<h5 id="position-relative-经验"><code>position:relative</code>经验</h5>
+
 <ul>
 <li>写<code>z-index:9999</code>菜</li>
 <li>学会管理<code>z-index</code></li>
 </ul>
-<h4 id="positionabsolute"><code>position:absolute</code></h4>
-<h5 id="positionabsolute使用场景"><code>position:absolute</code>使用场景</h5>
+
+<h4 id="position-absolute"><code>position:absolute</code></h4>
+
+<h5 id="position-absolute-使用场景"><code>position:absolute</code>使用场景</h5>
+
 <ul>
 <li>脱离原来的位置，另起一层（比如对话框的关闭按钮）</li>
 <li>鼠标提示信息（开发者工具设置展示hover：点击Styles :hov 勾选:hover）</li>
 </ul>
-<h5 id="positionabsolute配合z-index"><code>position:absolute</code>配合<code>z-index</code></h5>
+
+<h5 id="position-absolute-配合-z-index"><code>position:absolute</code>配合<code>z-index</code></h5>
+
 <p>同之前</p>
-<h5 id="positionabsolute经验"><code>position:absolute</code>经验</h5>
+
+<h5 id="position-absolute-经验"><code>position:absolute</code>经验</h5>
+
 <ul>
 <li>必须有参考点</li>
 <li><code>position:absolute</code>并不一定是相对于<code>position:relative</code>定位的</li>
@@ -504,7 +603,9 @@
 <li>善用：<code>left:50%;</code>加负<code>margin</code>（需计算）</li>
 <li>或者<code>transform: translateX(-50%);</code></li>
 </ul>
-<hr>
+
+<hr />
+
 <ul>
 <li>完全脱离普通文档流</li>
 <li>位置无法被其他任何元素改变 但会互相覆盖</li>
@@ -513,32 +614,50 @@
 <li>行内元素设置绝对定位后 有 块级特性 可设宽高 但不为 块级元素</li>
 <li>适用 元素重叠 任意放置</li>
 </ul>
-<h4 id="positionfixed"><code>position:fixed</code></h4>
+
+<h4 id="position-fixed"><code>position:fixed</code></h4>
+
 <blockquote>
 <p>定位基准是viewport（有诈）</p>
+
 <p>所在的父元素如果有<code>transform:scale(0.9);</code>之类的属性，那就不一定了</p>
 </blockquote>
-<h5 id="positionfixed使用场景"><code>position:fixed</code>使用场景</h5>
+
+<h5 id="position-fixed-使用场景"><code>position:fixed</code>使用场景</h5>
+
 <ul>
 <li>广告</li>
 <li>回到顶部</li>
 </ul>
-<h5 id="positionfixed配合z-index"><code>position:fixed</code>配合<code>z-index</code></h5>
+
+<h5 id="position-fixed-配合-z-index"><code>position:fixed</code>配合<code>z-index</code></h5>
+
 <p>同之前</p>
-<h5 id="positionfixed经验"><code>position:fixed</code>经验</h5>
+
+<h5 id="position-fixed-经验"><code>position:fixed</code>经验</h5>
+
 <ul>
 <li>视口不包括滚动条（iframe里的也是不包括）</li>
 <li>手机上尽量不要用这个属性，坑多</li>
 <li>搜索「移动端fixed」</li>
 </ul>
-<h4 id="positionsticky"><code>position:sticky</code></h4>
-<h5 id="positionsticky使用场景"><code>position:sticky</code>使用场景</h5>
-<h5 id="positionsticky配合z-index"><code>position:sticky</code>配合<code>z-index</code></h5>
-<h5 id="positionsticky经验"><code>position:sticky</code>经验</h5>
+
+<h4 id="position-sticky"><code>position:sticky</code></h4>
+
+<h5 id="position-sticky-使用场景"><code>position:sticky</code>使用场景</h5>
+
+<h5 id="position-sticky-配合-z-index"><code>position:sticky</code>配合<code>z-index</code></h5>
+
+<h5 id="position-sticky-经验"><code>position:sticky</code>经验</h5>
+
 <p><a href="http://js.jirengu.com/coguv/2/edit?html,css,output">position:sticky</a></p>
+
 <p><a href="http://js.jirengu.com/wobav/2/edit?html,css,output">推走标题</a></p>
-<hr>
-<h3 id="z-index怎么用"><code>z-index</code>怎么用</h3>
+
+<hr />
+
+<h3 id="z-index-怎么用"><code>z-index</code>怎么用</h3>
+
 <ul>
 <li>只要是给元素定了位（非static），变成定位元素（<code>position:relative | absolute | fixed</code>），自然超越了当前父元素的内容文字之上</li>
 <li>默认<code>z-index:0;</code></li>
@@ -546,16 +665,25 @@
 <li><code>z-index</code>为负的话，处于父元素的<code>background</code>之后</li>
 <li>定位元素底是当前的层叠上下文，即默认的<code>&lt;html&gt;&lt;/html&gt;</code></li>
 </ul>
+
 <p><a href="http://xmasuhai.xyz/demo-test/css-demo-4/css-demo_position_divTest.html">demo_position_divTest</a></p>
+
 <h2 id="层叠上下文">层叠上下文</h2>
+
 <blockquote>
 <p>也叫堆叠上下文</p>
+
 <p><code>z-index:10</code>和<code>z-index:5</code>哪个高？</p>
+
 <p>不一定，要看所处的父元素是否有（形成）自己的层叠上下文</p>
 </blockquote>
+
 <p><a href="http://xmasuhai.xyz/demo-test/css-demo-4/css-demo_stackingContext.html">demo_stackingContext</a></p>
+
 <h3 id="定位与层叠上下文">定位与层叠上下文</h3>
+
 <h4 id="比喻">比喻</h4>
+
 <ul>
 <li>每个层叠上下文就是一个新的小世界（作用域）</li>
 <li>这个作用域里的<code>z-index</code>和外界无关</li>
@@ -563,49 +691,71 @@
 <li>默认层叠上下文是根元素<code>&lt;html&gt;&lt;/html&gt;</code></li>
 <li>相当于<code>z-index</code>的作用域</li>
 </ul>
+
 <p><a href="http://xmasuhai.xyz/demo-test/css-demo-4/css-demo_stackingContext.html">demo</a></p>
+
 <h4 id="哪些不正交的属性可以创建它">哪些不正交的属性可以创建它</h4>
+
 <ul>
 <li><a href="https://developer.mozilla.org/zh-CN/docs/Web/Guide/CSS/Understanding_z_index/The_stacking_context">MDN文档</a></li>
 <li>需要记住的：<code>z-index/flex/opacity/transform</code></li>
 <li>只要满足一个条件，就自动创建一个层叠上下文</li>
 <li>其他随时搜索查看即可</li>
 </ul>
+
 <blockquote>
 <p><code>opacity:0.5;</code>和<code>background:rgba(0,0,0,0.5)</code>的区别</p>
+
 <p><code>opacity</code>影响整个元素</p>
 </blockquote>
-<h3 id="负z-index与层叠上下文">负<code>z-index</code>与层叠上下文</h3>
+
+<h3 id="负-z-index-与层叠上下文">负<code>z-index</code>与层叠上下文</h3>
+
 <blockquote>
 <p>也只在其属于的作用域里可比较</p>
+
 <p>负<code>z-index</code>逃不出所属层叠上下文</p>
 </blockquote>
-<h3 id="优先级-样式继承选择器权重">优先级 样式继承、选择器权重</h3>
-<!-- raw HTML omitted -->
-<hr>
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<hr>
+
+<h3 id="优先级-样式继承-选择器权重">优先级 样式继承、选择器权重</h3>
+
+<!-- Article End -->
+
+<hr />
+
+<!-- test -->
+
+<div style="text-align:center;">·未完待续·</div>
+
+<!-- ok -->
+
+<hr />
+
 <h4 id="参考文章">参考文章</h4>
+
 <p><a href="https://static.xiedaimala.com/xdml/file/3ac7c224-c23d-491f-84b5-4fabfbeab9b8/2019-8-30-0-56-25.pdf">CSS 布局.pdf</a></p>
+
 <h4 id="相关文章">相关文章</h4>
+
 <ul>
 <li>无</li>
 </ul>
-<hr>
+
+<hr />
+
 <ul>
 <li>作者： Joel</li>
 <li>文章链接：</li>
-<li><a href="http://xmasuhai.xyz/posts/%E7%89%88%E6%9D%83%E5%A3%B0%E6%98%8E%E9%93%BE%E6%8E%A5/">版权声明</a></li>
+<li><a href="http://xmasuhai.xyz/posts/版权声明链接/">版权声明</a></li>
 <li>非自由转载-非商用-非衍生-保持署名</li>
-<li><!-- raw HTML omitted -->河<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->掘<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->思<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->知<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->简<!-- raw HTML omitted --></li>
+<li><a style='color:#DB2D5D;' href='https://xiedaimala.com/bbs/users/8c266e6f-55a2-4348-a180-17cb8cdb2c46#/?page=1' target='_blank' rel='noreferrer noopener'>河</a>
+<a style='color:#006CFF;' href='https://juejin.im/user/59abfad26fb9a0248f4aa221' target='_blank' rel='noreferrer noopener'>掘</a>
+<a style='color:#009A61;' href='https://segmentfault.com/u/joel_59b17eb9d2155' target='_blank' rel='noreferrer noopener'>思</a>
+<a style='color:#0084FF;' href='https://www.zhihu.com/people/xue-shou-41/posts' target='_blank' rel='noreferrer noopener'>知</a>
+<a style='color:#EA6F5A;' href='https://www.jianshu.com/u/079916729823' target='_blank' rel='noreferrer noopener'>简</a></li>
 </ul>
-<hr>
+
+<hr />
 
     </div>
 
@@ -768,7 +918,7 @@
     &copy;
     
       2019 -
-    2022
+    2026
     <span class="heart">
       
       <i class="iconfont">

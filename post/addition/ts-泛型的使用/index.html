@@ -7,7 +7,7 @@
   
 
 <meta name="renderer" content="webkit" />
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
 <meta name="MobileOptimized" content="width"/>
 <meta name="HandheldFriendly" content="true"/>
@@ -32,7 +32,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.91.2" />
+<meta name="generator" content="Hugo 0.59.1" />
 
 
 <link rel="canonical" href="http://xmasuhai.xyz/post/addition/ts-%E6%B3%9B%E5%9E%8B%E7%9A%84%E4%BD%BF%E7%94%A8/" />
@@ -62,15 +62,21 @@
 <meta property="og:title" content="TS 泛型的使用" />
 <meta property="og:description" content="TS 泛型的使用 大纲链接§ [toc] 简单的泛型 Generic Types ⇧ 一般类型（非泛型）的局限 V.S. 泛型的作用 ⇧ 有一个直接返回参数的函数 1 2 3 function returnIt(sth: unknown): unknown { return sth } 以上的函数不能表" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://xmasuhai.xyz/post/addition/ts-%E6%B3%9B%E5%9E%8B%E7%9A%84%E4%BD%BF%E7%94%A8/" /><meta property="article:section" content="post" />
+<meta property="og:url" content="http://xmasuhai.xyz/post/addition/ts-%E6%B3%9B%E5%9E%8B%E7%9A%84%E4%BD%BF%E7%94%A8/" />
 <meta property="article:published_time" content="2022-08-28T09:35:44+08:00" />
 <meta property="article:modified_time" content="2022-09-11T09:55:03+08:00" />
-
 <meta itemprop="name" content="TS 泛型的使用">
-<meta itemprop="description" content="TS 泛型的使用 大纲链接§ [toc] 简单的泛型 Generic Types ⇧ 一般类型（非泛型）的局限 V.S. 泛型的作用 ⇧ 有一个直接返回参数的函数 1 2 3 function returnIt(sth: unknown): unknown { return sth } 以上的函数不能表"><meta itemprop="datePublished" content="2022-08-28T09:35:44+08:00" />
-<meta itemprop="dateModified" content="2022-09-11T09:55:03+08:00" />
-<meta itemprop="wordCount" content="3046">
-<meta itemprop="keywords" content="FrontEnd,TypeScript,Generic Type," /><meta name="twitter:card" content="summary"/>
+<meta itemprop="description" content="TS 泛型的使用 大纲链接§ [toc] 简单的泛型 Generic Types ⇧ 一般类型（非泛型）的局限 V.S. 泛型的作用 ⇧ 有一个直接返回参数的函数 1 2 3 function returnIt(sth: unknown): unknown { return sth } 以上的函数不能表">
+
+
+<meta itemprop="datePublished" content="2022-08-28T09:35:44&#43;08:00" />
+<meta itemprop="dateModified" content="2022-09-11T09:55:03&#43;08:00" />
+<meta itemprop="wordCount" content="3052">
+
+
+
+<meta itemprop="keywords" content="FrontEnd,TypeScript,Generic Type," />
+<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="TS 泛型的使用"/>
 <meta name="twitter:description" content="TS 泛型的使用 大纲链接§ [toc] 简单的泛型 Generic Types ⇧ 一般类型（非泛型）的局限 V.S. 泛型的作用 ⇧ 有一个直接返回参数的函数 1 2 3 function returnIt(sth: unknown): unknown { return sth } 以上的函数不能表"/>
 
@@ -302,7 +308,7 @@
             <a href="http://xmasuhai.xyz/categories/blog/"> Blog </a>
             
           </div>
-        <span class="more-meta"> 约 3046 字 </span>
+        <span class="more-meta"> 约 3052 字 </span>
           <span class="more-meta"> 预计阅读 7 分钟 </span>
 
         
@@ -319,74 +325,85 @@
   <h2 class="post-toc-title">文章目录</h2>
   <div class="post-toc-content">
     <nav id="TableOfContents">
-  <ul>
-    <li><a href="#简单的泛型-generic-types-a-hrefcatalogue--a">简单的泛型 <code>Generic Types</code> <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a>
-      <ul>
-        <li><a href="#一般类型非泛型的局限-vs-泛型的作用-a-hrefcatalogue--a">一般类型（非泛型）的局限 V.S. 泛型的作用 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-        <li><a href="#不推荐的写法-a-hrefcatalogue--a">不推荐的写法 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-        <li><a href="#区别于类型断言-a-hrefcatalogue--a">区别于类型断言 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-        <li><a href="#泛型常用组合形式-a-hrefcatalogue--a">泛型常用组合形式 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-      </ul>
-    </li>
-    <li><a href="#泛型就像函数-a-hrefcatalogue--a">泛型就像函数 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-    <li><a href="#一星难度的-ts-体操代入法-a-hrefcatalogue--a">一星难度的 <code>TS</code> 体操：代入法 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-    <li><a href="#二星难度的-ts-体操条件类型-a-hrefcatalogue--a">二星难度的 <code>TS</code> 体操：条件类型 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a>
-      <ul>
-        <li><a href="#条件类型的特殊情况-never-a-hrefcatalogue--a">条件类型的特殊情况 <code>never</code> <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-      </ul>
-    </li>
-    <li><a href="#在泛型中使用-extends-泛型约束-a-hrefcatalogue--a">在泛型中使用 <code>extends</code> 泛型约束 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-    <li><a href="#在泛型中使用-keyof-a-hrefcatalogue--a">在泛型中使用 <code>keyof</code> <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-    <li><a href="#在泛型中使用-extends-keyof--a-hrefcatalogue--a">在泛型中使用 <code>extends keyof</code>  <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-    <li><a href="#泛型的实际使用在react中使用泛型-a-hrefcatalogue--a">泛型的实际使用：在<code>React</code>中使用泛型 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-    <li><a href="#泛型-区别于-函数重载-a-hrefcatalogue--a">泛型 区别于 函数重载 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-    <li><a href="#如何用泛型封装网络请求库-a-hrefcatalogue--a">如何用泛型封装网络请求库 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-    <li><a href="#使用映射类型-in-a-hrefcatalogue--a">使用映射类型 <code>in</code> <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-    <li><a href="#难度为三星的泛型类型体操-a-hrefcatalogue--a">难度为三星的泛型类型体操 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-    <li><a href="#如何使用--readonly-a-hrefcatalogue--a">如何使用 <code>-readonly</code> <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-    <li><a href="#类型体操有多难-a-hrefcatalogue--a">类型体操有多难 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-    <li><a href="#如何提问-a-hrefcatalogue--a">如何提问 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-    <li><a href="#参考文章-a-hrefcatalogue--a">参考文章 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-    <li><a href="#相关文章-a-hrefcatalogue--a">相关文章 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-  </ul>
+<ul>
+<li><a href="#ts-泛型的使用">TS 泛型的使用</a>
+<ul>
+<li><a href="#简单的泛型-generic-types-a-href-catalogue-a">简单的泛型 <code>Generic Types</code> <a href="#catalogue"> ⇧ </a></a>
+<ul>
+<li><a href="#一般类型-非泛型-的局限-v-s-泛型的作用-a-href-catalogue-a">一般类型（非泛型）的局限 V.S. 泛型的作用 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#不推荐的写法-a-href-catalogue-a">不推荐的写法 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#区别于类型断言-a-href-catalogue-a">区别于类型断言 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#泛型常用组合形式-a-href-catalogue-a">泛型常用组合形式 <a href="#catalogue"> ⇧ </a></a></li>
+</ul></li>
+<li><a href="#泛型就像函数-a-href-catalogue-a">泛型就像函数 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#一星难度的-ts-体操-代入法-a-href-catalogue-a">一星难度的 <code>TS</code> 体操：代入法 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#二星难度的-ts-体操-条件类型-a-href-catalogue-a">二星难度的 <code>TS</code> 体操：条件类型 <a href="#catalogue"> ⇧ </a></a>
+<ul>
+<li><a href="#条件类型的特殊情况-never-a-href-catalogue-a">条件类型的特殊情况 <code>never</code> <a href="#catalogue"> ⇧ </a></a></li>
+</ul></li>
+<li><a href="#在泛型中使用-extends-泛型约束-a-href-catalogue-a">在泛型中使用 <code>extends</code> 泛型约束 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#在泛型中使用-keyof-a-href-catalogue-a">在泛型中使用 <code>keyof</code> <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#在泛型中使用-extends-keyof-a-href-catalogue-a">在泛型中使用 <code>extends keyof</code>  <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#泛型的实际使用-在-react-中使用泛型-a-href-catalogue-a">泛型的实际使用：在<code>React</code>中使用泛型 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#泛型-区别于-函数重载-a-href-catalogue-a">泛型 区别于 函数重载 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#如何用泛型封装网络请求库-a-href-catalogue-a">如何用泛型封装网络请求库 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#使用映射类型-in-a-href-catalogue-a">使用映射类型 <code>in</code> <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#难度为三星的泛型类型体操-a-href-catalogue-a">难度为三星的泛型类型体操 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#如何使用-readonly-a-href-catalogue-a">如何使用 <code>-readonly</code> <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#类型体操有多难-a-href-catalogue-a">类型体操有多难 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#如何提问-a-href-catalogue-a">如何提问 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#参考文章-a-href-catalogue-a">参考文章 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#相关文章-a-href-catalogue-a">相关文章 <a href="#catalogue"> ⇧ </a></a></li>
+</ul></li>
+</ul>
 </nav>
   </div>
 </div>
 
     
     <div class="post-content">
-      <h1 id="ts-泛型的使用">TS 泛型的使用</h1>
+      
+
+<h1 id="ts-泛型的使用">TS 泛型的使用</h1>
+
 <blockquote>
-<p>大纲链接<!-- raw HTML omitted --> § <!-- raw HTML omitted --></p>
+<p>大纲链接<a id="catalogue" href="#catalogue" > § </a></p>
 </blockquote>
+
 <p>[toc]</p>
-<hr>
-<h2 id="简单的泛型-generic-types-a-hrefcatalogue--a">简单的泛型 <code>Generic Types</code> <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
-<h3 id="一般类型非泛型的局限-vs-泛型的作用-a-hrefcatalogue--a">一般类型（非泛型）的局限 V.S. 泛型的作用 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+
+<hr />
+
+<h2 id="简单的泛型-generic-types-a-href-catalogue-a">简单的泛型 <code>Generic Types</code> <a href="#catalogue"> ⇧ </a></h2>
+
+<h3 id="一般类型-非泛型-的局限-v-s-泛型的作用-a-href-catalogue-a">一般类型（非泛型）的局限 V.S. 泛型的作用 <a href="#catalogue"> ⇧ </a></h3>
+
 <blockquote>
 <p>有一个直接返回参数的函数</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="kd">function</span> <span class="nx">returnIt</span><span class="p">(</span><span class="nx">sth</span>: <span class="kt">unknown</span><span class="p">)</span><span class="o">:</span> <span class="kt">unknown</span> <span class="p">{</span>
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="kd">function</span> <span class="nx">returnIt</span><span class="p">(</span><span class="nx">sth</span>: <span class="kt">unknown</span><span class="p">)</span><span class="o">:</span> <span class="nx">unknown</span> <span class="p">{</span>
   <span class="k">return</span> <span class="nx">sth</span>
 <span class="p">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><ul>
+</div>
+<ul>
 <li>以上的函数不能表示 参数类型需要与返回值类型相同的情况</li>
 </ul>
+
 <blockquote>
 <p>使用泛型</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -395,27 +412,29 @@
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="kd">function</span> <span class="nx">returnIt</span><span class="p">&lt;</span><span class="nt">T</span><span class="p">&gt;(</span><span class="nx">sth</span>: <span class="kt">T</span><span class="p">)</span><span class="o">:</span> <span class="nx">T</span> <span class="p">{</span>
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="kd">function</span> <span class="nx">returnIt</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">sth</span>: <span class="kt">T</span><span class="p">)</span><span class="o">:</span> <span class="nx">T</span> <span class="p">{</span>
   <span class="k">return</span> <span class="nx">sth</span>
 <span class="p">}</span>
 
-<span class="kd">let</span> <span class="nx">s</span> <span class="o">=</span> <span class="nx">returnIt</span><span class="p">&lt;</span><span class="nt">string</span><span class="p">&gt;(</span><span class="s1">&#39;hi&#39;</span><span class="p">)</span>
+<span class="kd">let</span> <span class="nx">s</span> <span class="o">=</span> <span class="nx">returnIt</span><span class="o">&lt;</span><span class="kt">string</span><span class="o">&gt;</span><span class="p">(</span><span class="s1">&#39;hi&#39;</span><span class="p">)</span>
 <span class="c1">// s = returnIt&lt;number&gt;(1)
 </span><span class="c1">// s = returnIt&lt;boolean&gt;(true)
 </span></code></pre></td></tr></table>
 </div>
-</div><ul>
+</div>
+<ul>
 <li>泛型 可以理解为 不定类型，用来表示多种类型</li>
 <li>将泛型的类型 <code>string</code> 代入就可得到 <code>s</code> 的类型</li>
 <li>一旦确定类型，将不同类型重复赋值相同变量名，也会类型报错</li>
 <li>可以使用任意大写字母表示，一般使用尖括号来声明 <code>&lt;T&gt;</code>，在冒号后像类型一样使用</li>
 </ul>
+
 <blockquote>
-<p>返回数组类型的例子 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></p>
+<p>返回数组类型的例子 <a href="#catalogue"> ⇧ </a></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -426,22 +445,24 @@
 </span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="kd">function</span> <span class="nx">returnArray</span><span class="p">&lt;</span><span class="nt">T</span><span class="p">&gt;(</span><span class="nx">array</span>: <span class="kt">T</span><span class="p">[])</span><span class="o">:</span> <span class="nx">T</span><span class="p">[]</span> <span class="p">{</span>
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="kd">function</span> <span class="nx">returnArray</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">array</span>: <span class="kt">T</span><span class="p">[])</span><span class="o">:</span> <span class="nx">T</span><span class="p">[]</span> <span class="p">{</span>
   <span class="k">return</span> <span class="nx">array</span>
 <span class="p">}</span>
 <span class="kd">let</span> <span class="nx">a</span> <span class="o">=</span> <span class="nx">returnArray</span><span class="p">([])</span>
 
-<span class="kd">let</span> <span class="nx">ss</span>: <span class="kt">Array</span><span class="p">&lt;</span><span class="nt">string</span><span class="p">&gt;</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">]</span>
+<span class="kd">let</span> <span class="nx">ss</span>: <span class="kt">Array</span><span class="o">&lt;</span><span class="kt">string</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">]</span>
 
-<span class="kr">type</span> <span class="nx">H</span> <span class="o">=</span> <span class="p">{</span><span class="nx">name</span>: <span class="kt">string</span><span class="p">}</span>
-<span class="kd">let</span> <span class="nx">aa</span>: <span class="kt">Array</span><span class="p">&lt;</span><span class="nt">H</span><span class="p">&gt;</span> <span class="o">=</span> <span class="nx">returnArray</span><span class="p">&lt;</span><span class="nt">H</span><span class="p">&gt;([{</span> <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;a&#39;</span> <span class="p">},</span> <span class="p">{</span> <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;b&#39;</span> <span class="p">}])</span>
+<span class="nx">type</span> <span class="nx">H</span> <span class="o">=</span> <span class="p">{</span><span class="nx">name</span>: <span class="kt">string</span><span class="p">}</span>
+<span class="kd">let</span> <span class="nx">aa</span>: <span class="kt">Array</span><span class="o">&lt;</span><span class="nx">H</span><span class="o">&gt;</span> <span class="o">=</span> <span class="nx">returnArray</span><span class="o">&lt;</span><span class="nx">H</span><span class="o">&gt;</span><span class="p">([{</span> <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;a&#39;</span> <span class="p">},</span> <span class="p">{</span> <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;b&#39;</span> <span class="p">}])</span>
 </code></pre></td></tr></table>
 </div>
-</div><hr>
-<h3 id="不推荐的写法-a-hrefcatalogue--a">不推荐的写法 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+</div>
+<hr />
+
+<h3 id="不推荐的写法-a-href-catalogue-a">不推荐的写法 <a href="#catalogue"> ⇧ </a></h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -449,81 +470,90 @@
 </span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="kd">function</span> <span class="nx">identity</span><span class="p">&lt;</span><span class="nt">T</span><span class="p">&gt;(</span><span class="nx">arg</span>: <span class="kt">T</span><span class="p">)</span><span class="o">:</span> <span class="nx">T</span> <span class="p">{</span>
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="kd">function</span> <span class="nx">identity</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">arg</span>: <span class="kt">T</span><span class="p">)</span><span class="o">:</span> <span class="nx">T</span> <span class="p">{</span>
   <span class="k">return</span> <span class="nx">arg</span><span class="p">;</span>
 <span class="p">}</span>
-<span class="kd">let</span> <span class="nx">myIdentity</span><span class="o">:</span> <span class="p">&lt;</span><span class="nt">T</span><span class="p">&gt;(</span><span class="nx">arg</span>: <span class="kt">T</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">T</span> <span class="o">=</span> <span class="nx">identity</span><span class="p">;</span>
-<span class="kd">let</span> <span class="nx">myIdentity2</span><span class="o">:</span> <span class="p">{&lt;</span><span class="nt">T</span><span class="p">&gt;(</span><span class="nx">arg</span>: <span class="kt">T</span><span class="p">)</span><span class="o">:</span> <span class="nx">T</span><span class="p">}</span> <span class="o">=</span> <span class="nx">identity</span><span class="p">;</span>
+<span class="kd">let</span> <span class="nx">myIdentity</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">arg</span>: <span class="kt">T</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">T</span> <span class="o">=</span> <span class="nx">identity</span><span class="p">;</span>
+<span class="kd">let</span> <span class="nx">myIdentity2</span><span class="o">:</span> <span class="p">{</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">arg</span>: <span class="kt">T</span><span class="p">)</span><span class="o">:</span> <span class="nx">T</span><span class="p">}</span> <span class="o">=</span> <span class="nx">identity</span><span class="p">;</span>
 <span class="c1">// error // let myIdentity2: &lt;T&gt;(arg: T): T = identity;
 </span></code></pre></td></tr></table>
 </div>
-</div><ul>
+</div>
+<ul>
 <li><code>&lt;T&gt;(arg: T) =&gt; T</code> 和 函数中的类型声明 <code>&lt;T&gt;(arg: T): T</code> 等价</li>
 </ul>
-<hr>
-<h3 id="区别于类型断言-a-hrefcatalogue--a">区别于类型断言 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+
+<hr />
+
+<h3 id="区别于类型断言-a-href-catalogue-a">区别于类型断言 <a href="#catalogue"> ⇧ </a></h3>
+
 <blockquote>
 <p>类型断言，在编译时起作用</p>
 </blockquote>
+
 <ul>
-<li>“尖括号” 用法</li>
-</ul>
+<li><p>“尖括号” 用法</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="kd">let</span> <span class="nx">someValue</span>: <span class="kt">unknown</span> <span class="o">=</span>  <span class="s1">&#39;&#39;</span>
-<span class="kd">let</span> <span class="nx">strLength</span>: <span class="kt">number</span> <span class="o">=</span> <span class="p">(&lt;</span><span class="nt">string</span><span class="p">&gt;</span><span class="nx">someValue</span><span class="p">).</span><span class="nx">length</span>
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="kd">let</span> <span class="nx">someValue</span>: <span class="kt">unknown</span> <span class="o">=</span>  <span class="s1">&#39;&#39;</span>
+<span class="kd">let</span> <span class="nx">strLength</span>: <span class="kt">number</span> <span class="o">=</span> <span class="p">(</span><span class="o">&lt;</span><span class="kt">string</span><span class="o">&gt;</span><span class="nx">someValue</span><span class="p">).</span><span class="nx">length</span>
 </code></pre></td></tr></table>
 </div>
-</div><ul>
-<li><code>as</code> 语法</li>
-</ul>
+</div></li>
+
+<li><p><code>as</code> 语法</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="kd">let</span> <span class="nx">someValue</span>: <span class="kt">unknown</span> <span class="o">=</span>  <span class="s1">&#39;&#39;</span>
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="kd">let</span> <span class="nx">someValue</span>: <span class="kt">unknown</span> <span class="o">=</span>  <span class="s1">&#39;&#39;</span>
 <span class="kd">let</span> <span class="nx">strLength</span>: <span class="kt">number</span> <span class="o">=</span> <span class="p">(</span><span class="nx">someValue</span> <span class="kr">as</span> <span class="kt">string</span><span class="p">).</span><span class="nx">length</span>
 </code></pre></td></tr></table>
 </div>
-</div><hr>
-<h3 id="泛型常用组合形式-a-hrefcatalogue--a">泛型常用组合形式 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+</div></li>
+</ul>
+
+<hr />
+
+<h3 id="泛型常用组合形式-a-href-catalogue-a">泛型常用组合形式 <a href="#catalogue"> ⇧ </a></h3>
+
 <ul>
 <li>泛型 + 接口
+
 <ul>
 <li><code>interface x&lt;T&gt; {(a: T): T;}</code></li>
 <li>使用 <code>let xxx: x&lt;string&gt; = (a) =&gt; a;</code></li>
-</ul>
-</li>
+</ul></li>
 <li>泛型 + 类型别名 <code>type t&lt;T&gt; = {a: T;}</code></li>
 <li>多个泛型 <code>type t&lt;T, P&gt; = {a: T; b: P}</code></li>
 <li>泛型 + 函数
+
 <ul>
 <li><code>function fn&lt;T&gt;(arg: T): T {}</code></li>
-</ul>
-</li>
+</ul></li>
 <li>泛型 + 类
+
 <ul>
 <li><code>class C&lt;T&gt; {attr: T; fn: (a: T) =&gt; T }</code></li>
 <li>使用 <code>let cc = new C&lt;string&gt;()</code></li>
-</ul>
-</li>
-<li>约束 构造函数/类 <code>new(): T</code>
+</ul></li>
+
+<li><p>约束 构造函数/类 <code>new(): T</code></p>
+
 <ul>
 <li><code>JS</code> 工厂函数 <code>function create(C) {return new C()}</code></li>
 <li>使用泛型 <code>function create&lt;T&gt;(C: {new (): T): T { return new C()}</code></li>
-<li>表示 实例对象的类型 为 <code>T</code>；传递的参数为一个 类 <code>C</code></li>
-</ul>
-</li>
-</ul>
+
+<li><p>表示 实例对象的类型 为 <code>T</code>；传递的参数为一个 类 <code>C</code></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -533,21 +563,26 @@
 </span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="kd">function</span> <span class="nx">create</span><span class="p">&lt;</span><span class="nt">T</span><span class="p">&gt;(</span><span class="nx">C</span><span class="o">:</span> <span class="p">{</span><span class="k">new</span><span class="p">()</span><span class="o">:</span> <span class="nx">T</span><span class="p">})</span> <span class="p">{</span>
-  <span class="k">return</span> <span class="k">new</span> <span class="nx">C</span><span class="p">()</span>
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="kd">function</span> <span class="nx">create</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">C</span><span class="o">:</span> <span class="p">{</span><span class="k">new</span><span class="p">()</span><span class="o">:</span> <span class="nx">T</span><span class="p">})</span> <span class="p">{</span>
+<span class="k">return</span> <span class="k">new</span> <span class="nx">C</span><span class="p">()</span>
 <span class="p">}</span>
 <span class="kr">class</span> <span class="nx">Human</span> <span class="p">{}</span>
 <span class="kr">class</span> <span class="nx">Animal</span> <span class="p">{}</span>
-<span class="kd">let</span> <span class="nx">P</span> <span class="o">=</span> <span class="nx">create</span><span class="p">&lt;</span><span class="nt">Human</span><span class="p">&gt;(</span><span class="nx">Human</span><span class="p">)</span>
-<span class="kd">let</span> <span class="nx">P1</span> <span class="o">=</span> <span class="nx">create</span><span class="p">&lt;</span><span class="nt">Human</span><span class="p">&gt;(</span><span class="nx">Animal</span><span class="p">)</span> <span class="c1">// 报错
-</span><span class="c1"></span><span class="kd">let</span> <span class="nx">S</span> <span class="o">=</span> <span class="nx">create</span><span class="p">&lt;</span><span class="nt">String</span><span class="p">&gt;(</span><span class="nb">String</span><span class="p">)</span>
+<span class="kd">let</span> <span class="nx">P</span> <span class="o">=</span> <span class="nx">create</span><span class="o">&lt;</span><span class="nx">Human</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">Human</span><span class="p">)</span>
+<span class="kd">let</span> <span class="nx">P1</span> <span class="o">=</span> <span class="nx">create</span><span class="o">&lt;</span><span class="nx">Human</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">Animal</span><span class="p">)</span> <span class="c1">// 报错
+</span><span class="c1"></span><span class="kd">let</span> <span class="nx">S</span> <span class="o">=</span> <span class="nx">create</span><span class="o">&lt;</span><span class="nb">String</span><span class="o">&gt;</span><span class="p">(</span><span class="nb">String</span><span class="p">)</span>
 </code></pre></td></tr></table>
 </div>
-</div><hr>
-<h2 id="泛型就像函数-a-hrefcatalogue--a">泛型就像函数 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+</div></li>
+</ul></li>
+</ul>
+
+<hr />
+
+<h2 id="泛型就像函数-a-href-catalogue-a">泛型就像函数 <a href="#catalogue"> ⇧ </a></h2>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -555,59 +590,66 @@
 </span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="kr">const</span> <span class="nx">f</span> <span class="o">=</span> <span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span>
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="kr">const</span> <span class="nx">f</span> <span class="o">=</span> <span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span>
 <span class="kr">const</span> <span class="nx">result</span> <span class="o">=</span> <span class="nx">f</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
 
-<span class="kr">type</span> <span class="nx">F</span><span class="p">&lt;</span><span class="nt">A</span><span class="err">,</span> <span class="na">B</span><span class="p">&gt;</span> <span class="o">=</span> <span class="nx">A</span> <span class="o">|</span> <span class="nx">B</span>
+<span class="nx">type</span> <span class="nx">F</span><span class="o">&lt;</span><span class="nx">A</span><span class="p">,</span> <span class="nx">B</span><span class="o">&gt;</span> <span class="o">=</span> <span class="nx">A</span> <span class="o">|</span> <span class="nx">B</span>
 <span class="c1">// 使用泛型得到一个新的更具体的类型
-</span><span class="c1"></span><span class="kr">type</span> <span class="nx">Result</span> <span class="o">=</span> <span class="nx">F</span><span class="p">&lt;</span><span class="nt">string</span><span class="err">,</span> <span class="na">number</span><span class="p">&gt;</span>
+</span><span class="c1"></span><span class="nx">type</span> <span class="nx">Result</span> <span class="o">=</span> <span class="nx">F</span><span class="o">&lt;</span><span class="kt">string</span><span class="p">,</span> <span class="kt">number</span><span class="o">&gt;</span>
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
-<p>语法 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></p>
+</div>
+<blockquote>
+<p>语法 <a href="#catalogue"> ⇧ </a></p>
 </blockquote>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEBd8048c0e1297ee1cdc963950c7b5ce38?method=download&amp;shareKey=b376fe98ecc8f18e15d496344ae93b75" alt="类比函数"></p>
+
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBd8048c0e1297ee1cdc963950c7b5ce38?method=download&amp;shareKey=b376fe98ecc8f18e15d496344ae93b75" alt="类比函数" /></p>
+
 <table>
 <thead>
 <tr>
 <th>区别项 \ 类比项</th>
-<th style="text-align:center">名称</th>
-<th style="text-align:center">参数列表 <!-- raw HTML omitted --> 可传默认项</th>
-<th style="text-align:center">主体</th>
-<th style="text-align:center">调用</th>
-<th style="text-align:center">返回项</th>
+<th align="center">名称</th>
+<th align="center">参数列表 <br/> 可传默认项</th>
+<th align="center">主体</th>
+<th align="center">调用</th>
+<th align="center">返回项</th>
 </tr>
 </thead>
+
 <tbody>
 <tr>
 <td>函数</td>
-<td style="text-align:center">函数名</td>
-<td style="text-align:center">形参/实参 <!-- raw HTML omitted --> （默认值）</td>
-<td style="text-align:center">函数体</td>
-<td style="text-align:center">函数调用</td>
-<td style="text-align:center">返回值</td>
+<td align="center">函数名</td>
+<td align="center">形参/实参 <br/> （默认值）</td>
+<td align="center">函数体</td>
+<td align="center">函数调用</td>
+<td align="center">返回值</td>
 </tr>
+
 <tr>
 <td>泛型</td>
-<td style="text-align:center">具名：类型别名/接口等 <!-- raw HTML omitted --> 匿名：函数/类等</td>
-<td style="text-align:center">泛型参数 / 代入具体类型 <!-- raw HTML omitted --> （默认类型）</td>
-<td style="text-align:center">类型主体（包含属性类型声明、类型集合、集合运算等逻辑）</td>
-<td style="text-align:center">类型调用</td>
-<td style="text-align:center">返回新的类型</td>
+<td align="center">具名：类型别名/接口等 <br/> 匿名：函数/类等</td>
+<td align="center">泛型参数 / 代入具体类型 <br/> （默认类型）</td>
+<td align="center">类型主体（包含属性类型声明、类型集合、集合运算等逻辑）</td>
+<td align="center">类型调用</td>
+<td align="center">返回新的类型</td>
 </tr>
 </tbody>
 </table>
+
 <blockquote>
-<p>泛型是面向对象的经典概念之一 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></p>
+<p>泛型是面向对象的经典概念之一 <a href="#catalogue"> ⇧ </a></p>
 </blockquote>
+
 <ul>
 <li>泛型，即“参数化类型”，也是一种类型</li>
 <li>泛型是一种接受其他类型的类型</li>
-<li>也称为泛型函数</li>
-</ul>
+
+<li><p>也称为泛型函数</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -616,34 +658,37 @@
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="kr">type</span> <span class="nx">A</span> <span class="o">=</span> <span class="s1">&#39;hi&#39;</span> <span class="o">|</span> <span class="mi">123</span> <span class="c1">// TS
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="nx">type</span> <span class="nx">A</span> <span class="o">=</span> <span class="s1">&#39;hi&#39;</span> <span class="o">|</span> <span class="mi">123</span> <span class="c1">// TS
 </span><span class="c1"></span><span class="kd">let</span> <span class="nx">a</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;hi&#39;</span><span class="p">,</span> <span class="mi">123</span><span class="p">]</span>
 
-<span class="kr">type</span> <span class="nx">F</span><span class="p">&lt;</span><span class="nt">T</span><span class="p">&gt;</span> <span class="o">=</span> <span class="nx">T</span> <span class="o">|</span> <span class="nx">T</span><span class="p">[]</span>
+<span class="nx">type</span> <span class="nx">F</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span> <span class="o">=</span> <span class="nx">T</span> <span class="o">|</span> <span class="nx">T</span><span class="p">[]</span>
 <span class="c1">// type F_number = F&lt;number&gt;
 </span><span class="c1">// type F_string = F&lt;string&gt;
 </span><span class="c1"></span><span class="kr">const</span> <span class="nx">fn</span> <span class="o">=</span> <span class="p">(</span><span class="nx">x</span>: <span class="kt">number</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">x</span> <span class="o">+</span> <span class="mi">1</span>
 </code></pre></td></tr></table>
 </div>
-</div><ul>
-<li>泛型：未被声明具体类型的类型（类似 <code>unknown</code>），<code>type X&lt;T&gt; = T extends unknown ? T : never</code></li>
-<li>可以理解为类型的占位符</li>
-<li>函数的本质是：
+</div></li>
+
+<li><p>泛型：未被声明具体类型的类型（类似 <code>unknown</code>），<code>type X&lt;T&gt; = T extends unknown ? T : never</code></p></li>
+
+<li><p>可以理解为类型的占位符</p></li>
+
+<li><p>函数的本质是：</p>
+
 <ul>
 <li><strong>延后执行</strong> 一段逻辑，之前学过函数调用的时机，声明和执行分离</li>
 <li>部分待定的代码作为参数，调用时才填入具体值</li>
-</ul>
-</li>
-<li>类比泛型
+</ul></li>
+
+<li><p>类比泛型</p>
+
 <ul>
 <li><strong>延后声明</strong> 具体类型，先用占位符表示，之后使用到时再替换为具体类型</li>
-<li>部分待定的类型作为参数，调用时才填入具体类型</li>
-</ul>
-</li>
-</ul>
+
+<li><p>部分待定的类型作为参数，调用时才填入具体类型</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -660,52 +705,57 @@
 </span><span class="lnt">15
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="kr">const</span> <span class="nx">add</span> <span class="o">=</span> <span class="p">(</span><span class="nx">a</span>: <span class="kt">number</span><span class="p">,</span> <span class="nx">b</span>: <span class="kt">number</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span>
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="kr">const</span> <span class="nx">add</span> <span class="o">=</span> <span class="p">(</span><span class="nx">a</span>: <span class="kt">number</span><span class="p">,</span> <span class="nx">b</span>: <span class="kt">number</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span>
 <span class="c1">// const add = (a: string, b: string) =&gt; a + b
 </span><span class="c1"></span>
-<span class="kr">type</span> <span class="nx">Add</span><span class="p">&lt;</span><span class="nt">T</span><span class="p">&gt;</span> <span class="o">=</span> <span class="p">(</span><span class="nx">a</span>: <span class="kt">T</span><span class="p">,</span> <span class="nx">b</span>: <span class="kt">T</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">T</span>
+<span class="nx">type</span> <span class="nx">Add</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">(</span><span class="nx">a</span>: <span class="kt">T</span><span class="p">,</span> <span class="nx">b</span>: <span class="kt">T</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">T</span>
 <span class="c1">// type AddNumber = Add&lt;number&gt;
 </span><span class="c1">// type AddString = Add&lt;string&gt;
 </span><span class="c1"></span>
-<span class="kr">const</span> <span class="nx">addN</span>: <span class="kt">Add</span><span class="p">&lt;</span><span class="nt">number</span><span class="p">&gt;</span> <span class="o">=</span> <span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span>
-<span class="kr">const</span> <span class="nx">addS</span>: <span class="kt">Add</span><span class="p">&lt;</span><span class="nt">string</span><span class="p">&gt;</span> <span class="o">=</span> <span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="sb">`</span><span class="si">${</span><span class="nx">a</span><span class="si">}</span><span class="sb"> </span><span class="si">${</span><span class="nx">b</span><span class="si">}</span><span class="sb">`</span>
+<span class="kr">const</span> <span class="nx">addN</span>: <span class="kt">Add</span><span class="o">&lt;</span><span class="kt">number</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span>
+<span class="kr">const</span> <span class="nx">addS</span>: <span class="kt">Add</span><span class="o">&lt;</span><span class="kt">string</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="sb">`</span><span class="si">${</span><span class="nx">a</span><span class="si">}</span><span class="sb"> </span><span class="si">${</span><span class="nx">b</span><span class="si">}</span><span class="sb">`</span>
 
-<span class="kd">function</span> <span class="nx">returnIt</span><span class="p">&lt;</span><span class="nt">T</span><span class="p">&gt;(</span><span class="nx">arg</span>: <span class="kt">T</span><span class="p">)</span><span class="o">:</span> <span class="nx">T</span><span class="p">{</span>
-  <span class="k">return</span> <span class="nx">arg</span><span class="p">;</span>
+<span class="kd">function</span> <span class="nx">returnIt</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">arg</span>: <span class="kt">T</span><span class="p">)</span><span class="o">:</span> <span class="nx">T</span><span class="p">{</span>
+<span class="k">return</span> <span class="nx">arg</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="kd">let</span> <span class="nx">s</span> <span class="o">=</span> <span class="nx">returnIt</span><span class="p">&lt;</span><span class="nt">string</span><span class="p">&gt;(</span><span class="s1">&#39;hi&#39;</span><span class="p">)</span>
+<span class="kd">let</span> <span class="nx">s</span> <span class="o">=</span> <span class="nx">returnIt</span><span class="o">&lt;</span><span class="kt">string</span><span class="o">&gt;</span><span class="p">(</span><span class="s1">&#39;hi&#39;</span><span class="p">)</span>
 </code></pre></td></tr></table>
 </div>
-</div><ul>
-<li>具体代码：<a href="https://code.juejin.cn/pen/7141362486930276392">码上掘金</a>，鼠标滑过类型查看类型提示</li>
-<li>以函数形参来类比泛型，实参就可以理解为：为泛型明确声明具体类型，可称为泛型的类型收窄</li>
+</div></li>
+</ul></li>
+
+<li><p>具体代码：<a href="https://code.juejin.cn/pen/7141362486930276392">码上掘金</a>，鼠标滑过类型查看类型提示</p></li>
+
+<li><p>以函数形参来类比泛型，实参就可以理解为：为泛型明确声明具体类型，可称为泛型的类型收窄</p></li>
 </ul>
+
 <blockquote>
-<p>为什么会有泛型 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></p>
+<p>为什么会有泛型 <a href="#catalogue"> ⇧ </a></p>
 </blockquote>
+
 <ul>
 <li>弱类型语言不需要泛型，比如<code>JS</code></li>
-<li>具有复杂的类型系统的计算机语言需要泛型，比如<code>JAVA</code></li>
-</ul>
+
+<li><p>具有复杂的类型系统的计算机语言需要泛型，比如<code>JAVA</code></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="kd">function</span> <span class="nx">echo</span><span class="p">(</span><span class="nx">whatever</span>: <span class="kt">string</span> <span class="o">|</span> <span class="kt">number</span> <span class="o">|</span> <span class="kr">boolean</span><span class="p">)</span> <span class="p">{</span>
-  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">typeof</span> <span class="nx">whatever</span><span class="p">)</span>
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="kd">function</span> <span class="nx">echo</span><span class="p">(</span><span class="nx">whatever</span>: <span class="kt">string</span> <span class="o">|</span> <span class="kt">number</span> <span class="o">|</span> <span class="kr">boolean</span><span class="p">)</span> <span class="p">{</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">typeof</span> <span class="nx">whatever</span><span class="p">)</span>
 <span class="p">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><ul>
-<li>判断分支代码无法实现以一对应，存在类型不精确或错乱的情况</li>
-</ul>
+</div></li>
+
+<li><p>判断分支代码无法实现以一对应，存在类型不精确或错乱的情况</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -716,28 +766,34 @@
 </span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="c1">// bad
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="c1">// bad
 </span><span class="c1"></span><span class="kd">function</span> <span class="nx">echo</span><span class="p">(</span><span class="nx">whatever</span>: <span class="kt">string</span> <span class="o">|</span> <span class="kt">number</span> <span class="o">|</span> <span class="kr">boolean</span><span class="p">)</span> <span class="p">{</span>
-  <span class="k">switch</span><span class="p">(</span><span class="k">typeof</span> <span class="nx">whatever</span><span class="p">)</span>
-    <span class="k">case</span><span class="p">(</span><span class="s1">&#39;string&#39;</span><span class="p">)</span>
-    <span class="k">case</span><span class="p">(</span><span class="s1">&#39;number&#39;</span><span class="p">)</span>
-    <span class="k">case</span><span class="p">(</span><span class="s1">&#39;boolean&#39;</span><span class="p">)</span>
-    <span class="k">default</span> <span class="k">return</span> <span class="nx">whatever</span>
-    <span class="c1">// ...
+<span class="k">switch</span><span class="p">(</span><span class="k">typeof</span> <span class="nx">whatever</span><span class="p">)</span>
+<span class="k">case</span><span class="p">(</span><span class="s1">&#39;string&#39;</span><span class="p">)</span>
+<span class="k">case</span><span class="p">(</span><span class="s1">&#39;number&#39;</span><span class="p">)</span>
+<span class="k">case</span><span class="p">(</span><span class="s1">&#39;boolean&#39;</span><span class="p">)</span>
+<span class="k">default</span> <span class="k">return</span> <span class="nx">whatever</span>
+<span class="c1">// ...
 </span><span class="c1"></span><span class="p">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><ul>
-<li>如果参数的类型和返回的类型有特殊的要求，比如一一对应，就需要泛型</li>
-<li>判断分支代码无法实现以一一对应，存在类型不精确或错乱的情况</li>
-<li>没有泛型，就无法实现复杂的逻辑需求</li>
-<li>没有泛型的类型系统，就如同没有函数的编程语言</li>
+</div></li>
+
+<li><p>如果参数的类型和返回的类型有特殊的要求，比如一一对应，就需要泛型</p></li>
+
+<li><p>判断分支代码无法实现以一一对应，存在类型不精确或错乱的情况</p></li>
+
+<li><p>没有泛型，就无法实现复杂的逻辑需求</p></li>
+
+<li><p>没有泛型的类型系统，就如同没有函数的编程语言</p></li>
 </ul>
-<hr>
-<h2 id="一星难度的-ts-体操代入法-a-hrefcatalogue--a">一星难度的 <code>TS</code> 体操：代入法 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+
+<hr />
+
+<h2 id="一星难度的-ts-体操-代入法-a-href-catalogue-a">一星难度的 <code>TS</code> 体操：代入法 <a href="#catalogue"> ⇧ </a></h2>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -771,19 +827,19 @@
 </span><span class="lnt">32
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="kr">type</span> <span class="nx">Union</span><span class="p">&lt;</span><span class="nt">A</span><span class="err">,</span> <span class="na">B</span><span class="p">&gt;</span><span class="o">=</span> <span class="nx">A</span> <span class="o">|</span> <span class="nx">B</span>
-<span class="kr">type</span> <span class="nx">Union3</span><span class="p">&lt;</span><span class="nt">A</span><span class="err">,</span> <span class="na">B</span><span class="err">,</span> <span class="na">C</span><span class="p">&gt;</span><span class="o">=</span> <span class="nx">A</span> <span class="o">|</span> <span class="nx">B</span> <span class="o">|</span> <span class="nx">C</span>
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="nx">type</span> <span class="nx">Union</span><span class="o">&lt;</span><span class="nx">A</span><span class="p">,</span> <span class="nx">B</span><span class="o">&gt;=</span> <span class="nx">A</span> <span class="o">|</span> <span class="nx">B</span>
+<span class="nx">type</span> <span class="nx">Union3</span><span class="o">&lt;</span><span class="nx">A</span><span class="p">,</span> <span class="nx">B</span><span class="p">,</span> <span class="nx">C</span><span class="o">&gt;=</span> <span class="nx">A</span> <span class="o">|</span> <span class="nx">B</span> <span class="o">|</span> <span class="nx">C</span>
 
-<span class="kr">type</span> <span class="nx">Intersect</span><span class="p">&lt;</span><span class="nt">A</span><span class="err">,</span> <span class="na">B</span><span class="p">&gt;</span> <span class="o">=</span> <span class="nx">A</span> <span class="o">&amp;</span> <span class="nx">B</span>
-<span class="kr">type</span> <span class="nx">Intersect3</span><span class="p">&lt;</span><span class="nt">A</span><span class="err">,</span> <span class="na">B</span><span class="err">,</span> <span class="na">C</span><span class="p">&gt;</span> <span class="o">=</span> <span class="nx">A</span> <span class="o">&amp;</span> <span class="nx">B</span> <span class="o">&amp;</span> <span class="nx">C</span>
+<span class="nx">type</span> <span class="nx">Intersect</span><span class="o">&lt;</span><span class="nx">A</span><span class="p">,</span> <span class="nx">B</span><span class="o">&gt;</span> <span class="o">=</span> <span class="nx">A</span> <span class="o">&amp;</span> <span class="nx">B</span>
+<span class="nx">type</span> <span class="nx">Intersect3</span><span class="o">&lt;</span><span class="nx">A</span><span class="p">,</span> <span class="nx">B</span><span class="p">,</span> <span class="nx">C</span><span class="o">&gt;</span> <span class="o">=</span> <span class="nx">A</span> <span class="o">&amp;</span> <span class="nx">B</span> <span class="o">&amp;</span> <span class="nx">C</span>
 
 <span class="c1">// 列表值类型
-</span><span class="c1"></span><span class="kr">interface</span> <span class="nx">List</span><span class="p">&lt;</span><span class="nt">A</span><span class="p">&gt;</span> <span class="p">{</span>
+</span><span class="c1"></span><span class="kr">interface</span> <span class="nx">List</span><span class="o">&lt;</span><span class="nx">A</span><span class="o">&gt;</span> <span class="p">{</span>
   <span class="p">[</span><span class="nx">index</span>: <span class="kt">number</span><span class="p">]</span><span class="o">:</span> <span class="nx">A</span>
 <span class="p">}</span>
 
-<span class="kr">type</span> <span class="nx">L</span> <span class="o">=</span> <span class="nx">List</span><span class="p">&lt;</span><span class="nt">string</span><span class="p">&gt;</span>
-<span class="kr">type</span> <span class="nx">Y</span> <span class="o">=</span> <span class="nx">List</span><span class="p">&lt;</span><span class="nt">string</span> <span class="err">|</span> <span class="na">number</span><span class="p">&gt;</span>
+<span class="nx">type</span> <span class="nx">L</span> <span class="o">=</span> <span class="nx">List</span><span class="o">&lt;</span><span class="kt">string</span><span class="o">&gt;</span>
+<span class="nx">type</span> <span class="nx">Y</span> <span class="o">=</span> <span class="nx">List</span><span class="o">&lt;</span><span class="kt">string</span> <span class="o">|</span> <span class="kt">number</span><span class="o">&gt;</span>
 
 <span class="c1">// 代入法
 </span><span class="c1"></span><span class="cm">/*
@@ -796,47 +852,53 @@
 </span><span class="cm">*/</span>
 
 <span class="c1">// 哈希值类型
-</span><span class="c1"></span><span class="kr">interface</span> <span class="nx">Hash</span><span class="p">&lt;</span><span class="nt">V</span><span class="p">&gt;</span> <span class="p">{</span>
+</span><span class="c1"></span><span class="kr">interface</span> <span class="nx">Hash</span><span class="o">&lt;</span><span class="nx">V</span><span class="o">&gt;</span> <span class="p">{</span>
   <span class="p">[</span><span class="nx">key</span>: <span class="kt">string</span><span class="p">]</span><span class="o">:</span> <span class="nx">V</span>
 <span class="p">}</span>
-<span class="kr">type</span> <span class="nx">S</span> <span class="o">=</span> <span class="nx">Hash</span><span class="p">&lt;</span><span class="nt">string</span><span class="p">&gt;</span>
-<span class="kr">type</span> <span class="nx">N</span> <span class="o">=</span> <span class="nx">Hash</span><span class="p">&lt;</span><span class="nt">number</span><span class="p">&gt;</span>
+<span class="nx">type</span> <span class="nx">S</span> <span class="o">=</span> <span class="nx">Hash</span><span class="o">&lt;</span><span class="kt">string</span><span class="o">&gt;</span>
+<span class="nx">type</span> <span class="nx">N</span> <span class="o">=</span> <span class="nx">Hash</span><span class="o">&lt;</span><span class="kt">number</span><span class="o">&gt;</span>
 <span class="c1">// 泛型可传入复杂类型 如接口
-</span><span class="c1"></span><span class="kr">type</span> <span class="nx">F</span> <span class="o">=</span> <span class="nx">Hash</span><span class="p">&lt;</span><span class="nt">List</span><span class="p">&gt;</span>
+</span><span class="c1"></span><span class="nx">type</span> <span class="nx">F</span> <span class="o">=</span> <span class="nx">Hash</span><span class="o">&lt;</span><span class="nx">List</span><span class="o">&gt;</span>
 </code></pre></td></tr></table>
 </div>
-</div><ul>
+</div>
+<ul>
 <li>鼠标悬浮的提示无法知道详细类型</li>
 <li>可使用代入法理解</li>
 <li>无需逻辑操作</li>
 </ul>
+
 <blockquote>
 <p>可传类型默认值</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="kr">interface</span> <span class="nx">Hash</span><span class="p">&lt;</span><span class="nt">V</span> <span class="err">=</span> <span class="na">string</span><span class="p">&gt;</span> <span class="p">{</span>
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="kr">interface</span> <span class="nx">Hash</span><span class="o">&lt;</span><span class="nx">V</span> <span class="o">=</span> <span class="kt">string</span><span class="o">&gt;</span> <span class="p">{</span>
   <span class="p">[</span><span class="nx">key</span>: <span class="kt">string</span><span class="p">]</span><span class="o">:</span> <span class="nx">V</span>
 <span class="p">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><hr>
-<h2 id="二星难度的-ts-体操条件类型-a-hrefcatalogue--a">二星难度的 <code>TS</code> 体操：条件类型 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+</div>
+<hr />
+
+<h2 id="二星难度的-ts-体操-条件类型-a-href-catalogue-a">二星难度的 <code>TS</code> 体操：条件类型 <a href="#catalogue"> ⇧ </a></h2>
+
 <blockquote>
 <p>补全类型</p>
 </blockquote>
+
 <ol>
 <li>提示：使用条件类型 <code>Conditional Types</code>，即三元表达式</li>
-<li>提示：类型的 关系运算符 只有一种： <code>extends</code> 意为包含于，表示类型集合的从属关系</li>
-</ol>
+
+<li><p>提示：类型的 关系运算符 只有一种： <code>extends</code> 意为包含于，表示类型集合的从属关系</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -853,7 +915,7 @@
 </span><span class="lnt">15
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="kr">type</span> <span class="nx">Person</span> <span class="o">=</span> <span class="p">{</span><span class="nx">name</span>: <span class="kt">string</span><span class="p">}</span>
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="nx">type</span> <span class="nx">Person</span> <span class="o">=</span> <span class="p">{</span><span class="nx">name</span>: <span class="kt">string</span><span class="p">}</span>
 
 <span class="cm">/*
 </span><span class="cm">type LikeString&lt;T&gt; = ???
@@ -862,56 +924,67 @@
 </span><span class="cm">*/</span>
 
 <span class="c1">// 补全上分代码，可实现
-</span><span class="c1"></span><span class="kr">type</span> <span class="nx">S1</span> <span class="o">=</span> <span class="nx">LikeString</span><span class="o">&lt;</span><span class="s1">&#39;hi&#39;</span><span class="o">&gt;</span> <span class="c1">// true
-</span><span class="c1"></span><span class="kr">type</span> <span class="nx">S2</span> <span class="o">=</span> <span class="nx">LikeString</span><span class="p">&lt;</span><span class="nt">true</span><span class="p">&gt;</span> <span class="c1">// false
-</span><span class="c1"></span><span class="kr">type</span> <span class="nx">N1</span> <span class="o">=</span> <span class="nx">LikeNumber</span><span class="p">&lt;</span><span class="nt">8</span><span class="p">&gt;</span> <span class="c1">// 1
-</span><span class="c1"></span><span class="kr">type</span> <span class="nx">N2</span> <span class="o">=</span> <span class="nx">LikeNumber</span><span class="p">&lt;</span><span class="nt">false</span><span class="p">&gt;</span> <span class="c1">// 2
-</span><span class="c1"></span><span class="kr">type</span> <span class="nx">P1</span> <span class="o">=</span> <span class="nx">LikePerson</span><span class="o">&lt;</span><span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;frank&#39;</span><span class="p">,</span> <span class="nx">xxx</span>: <span class="kt">1</span><span class="p">}</span><span class="o">&gt;</span> <span class="c1">// yes
-</span><span class="c1"></span><span class="kr">type</span> <span class="nx">P1</span> <span class="o">=</span> <span class="nx">LikePerson</span><span class="o">&lt;</span><span class="p">{</span><span class="nx">xxx</span>: <span class="kt">1</span><span class="p">}</span><span class="o">&gt;</span> <span class="c1">// no
+</span><span class="c1"></span><span class="nx">type</span> <span class="nx">S1</span> <span class="o">=</span> <span class="nx">LikeString</span><span class="o">&lt;</span><span class="s1">&#39;hi&#39;</span><span class="o">&gt;</span> <span class="c1">// true
+</span><span class="c1"></span><span class="nx">type</span> <span class="nx">S2</span> <span class="o">=</span> <span class="nx">LikeString</span><span class="o">&lt;</span><span class="kc">true</span><span class="o">&gt;</span> <span class="c1">// false
+</span><span class="c1"></span><span class="nx">type</span> <span class="nx">N1</span> <span class="o">=</span> <span class="nx">LikeNumber</span><span class="o">&lt;</span><span class="mi">8</span><span class="o">&gt;</span> <span class="c1">// 1
+</span><span class="c1"></span><span class="nx">type</span> <span class="nx">N2</span> <span class="o">=</span> <span class="nx">LikeNumber</span><span class="o">&lt;</span><span class="kc">false</span><span class="o">&gt;</span> <span class="c1">// 2
+</span><span class="c1"></span><span class="nx">type</span> <span class="nx">P1</span> <span class="o">=</span> <span class="nx">LikePerson</span><span class="o">&lt;</span><span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;frank&#39;</span><span class="p">,</span> <span class="nx">xxx</span>: <span class="kt">1</span><span class="p">}</span><span class="o">&gt;</span> <span class="c1">// yes
+</span><span class="c1"></span><span class="nx">type</span> <span class="nx">P1</span> <span class="o">=</span> <span class="nx">LikePerson</span><span class="o">&lt;</span><span class="p">{</span><span class="nx">xxx</span>: <span class="kt">1</span><span class="p">}</span><span class="o">&gt;</span> <span class="c1">// no
 </span></code></pre></td></tr></table>
 </div>
-</div><ul>
+</div></li>
+</ol>
+
+<ul>
 <li>集合的关系判断无法像值那样，有大于小于或相等的判断，只有从属关系的判断</li>
 <li>集合范围决定了是否为从属包含关系，范围完全一样的是一种特殊的情况</li>
-<li><code>extends</code> 读作 <strong>“包含于”</strong>，而不是面向对象中的继承</li>
-</ul>
+
+<li><p><code>extends</code> 读作 <strong>“包含于”</strong>，而不是面向对象中的继承</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="kr">type</span> <span class="nx">LikeString</span><span class="p">&lt;</span><span class="nt">T</span><span class="p">&gt;</span> <span class="o">=</span> <span class="nx">T</span> <span class="kr">extends</span> <span class="kt">string</span> <span class="o">?</span> <span class="kc">true</span> <span class="o">:</span> <span class="kc">false</span>
-<span class="kr">type</span> <span class="nx">LikeNumber</span><span class="p">&lt;</span><span class="nt">T</span><span class="p">&gt;</span> <span class="o">=</span> <span class="nx">T</span> <span class="kr">extends</span> <span class="kt">number</span> <span class="o">?</span> <span class="nx">1</span> : <span class="kt">2</span>
-<span class="kr">type</span> <span class="nx">LikePerson</span><span class="p">&lt;</span><span class="nt">T</span><span class="p">&gt;</span> <span class="o">=</span> <span class="nx">T</span> <span class="kr">extends</span> <span class="nx">Person</span> <span class="o">?</span> <span class="s1">&#39;yse&#39;</span> <span class="o">:</span> <span class="s1">&#39;no&#39;</span>
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="nx">type</span> <span class="nx">LikeString</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span> <span class="o">=</span> <span class="nx">T</span> <span class="kr">extends</span> <span class="kt">string</span> <span class="o">?</span> <span class="kc">true</span> <span class="o">:</span> <span class="kc">false</span>
+<span class="nx">type</span> <span class="nx">LikeNumber</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span> <span class="o">=</span> <span class="nx">T</span> <span class="kr">extends</span> <span class="kt">number</span> <span class="o">?</span> <span class="nx">1</span> : <span class="kt">2</span>
+<span class="nx">type</span> <span class="nx">LikePerson</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span> <span class="o">=</span> <span class="nx">T</span> <span class="kr">extends</span> <span class="nx">Person</span> <span class="o">?</span> <span class="s1">&#39;yse&#39;</span> <span class="o">:</span> <span class="s1">&#39;no&#39;</span>
 </code></pre></td></tr></table>
 </div>
-</div><hr>
-<h3 id="条件类型的特殊情况-never-a-hrefcatalogue--a">条件类型的特殊情况 <code>never</code> <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
-<ul>
-<li><code>never</code> 可理解为空集，但在类型判断中，存在特殊情况</li>
+</div></li>
 </ul>
+
+<hr />
+
+<h3 id="条件类型的特殊情况-never-a-href-catalogue-a">条件类型的特殊情况 <code>never</code> <a href="#catalogue"> ⇧ </a></h3>
+
+<ul>
+<li><p><code>never</code> 可理解为空集，但在类型判断中，存在特殊情况</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="kr">type</span> <span class="nx">LikeString</span><span class="p">&lt;</span><span class="nt">T</span><span class="p">&gt;</span> <span class="o">=</span> <span class="nx">T</span> <span class="kr">extends</span> <span class="kt">string</span> <span class="o">?</span> <span class="kc">true</span> <span class="o">:</span> <span class="kc">false</span>
-<span class="kr">type</span> <span class="nx">X1</span> <span class="o">=</span> <span class="nx">LikeString</span><span class="p">&lt;</span><span class="nt">never</span><span class="p">&gt;</span> <span class="c1">// X1: never 而不是 true
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="nx">type</span> <span class="nx">LikeString</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span> <span class="o">=</span> <span class="nx">T</span> <span class="kr">extends</span> <span class="kt">string</span> <span class="o">?</span> <span class="kc">true</span> <span class="o">:</span> <span class="kc">false</span>
+<span class="nx">type</span> <span class="nx">X1</span> <span class="o">=</span> <span class="nx">LikeString</span><span class="o">&lt;</span><span class="nx">never</span><span class="o">&gt;</span> <span class="c1">// X1: never 而不是 true
 </span></code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div></li>
+</ul>
+
+<blockquote>
 <p>规则</p>
 </blockquote>
+
 <ol>
 <li>若 <code>&lt;T&gt;</code> 为联合类型，则各个类型，<strong>分开计算</strong></li>
-<li>若 <code>&lt;T&gt;</code> 代入 <code>never</code>，则表达式的值为 <code>never</code></li>
-</ol>
+
+<li><p>若 <code>&lt;T&gt;</code> 代入 <code>never</code>，则表达式的值为 <code>never</code></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -925,8 +998,8 @@
 </span><span class="lnt">12
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="kr">type</span> <span class="nx">ToArray</span><span class="p">&lt;</span><span class="nt">T</span><span class="p">&gt;</span> <span class="o">=</span> <span class="nx">T</span> <span class="kr">extends</span> <span class="kt">unknown</span> <span class="o">?</span> <span class="nx">T</span><span class="p">[]</span> <span class="o">:</span> <span class="kt">never</span>
-<span class="kr">type</span> <span class="nx">res</span> <span class="o">=</span> <span class="nx">ToArray</span><span class="p">&lt;</span><span class="nt">string</span> <span class="err">|</span> <span class="na">number</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="nx">type</span> <span class="nx">ToArray</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span> <span class="o">=</span> <span class="nx">T</span> <span class="kr">extends</span> <span class="nx">unknown</span> <span class="o">?</span> <span class="nx">T</span><span class="p">[]</span> <span class="o">:</span> <span class="nx">never</span>
+<span class="nx">type</span> <span class="nx">res</span> <span class="o">=</span> <span class="nx">ToArray</span><span class="o">&lt;</span><span class="kt">string</span> <span class="o">|</span> <span class="kt">number</span><span class="o">&gt;</span>
 <span class="c1">// res 结果为
 </span><span class="c1">// (string | number)[] 类型
 </span><span class="c1">// string[] | number[] 类型 √
@@ -939,12 +1012,14 @@
 </span><span class="cm">*/</span>
 </code></pre></td></tr></table>
 </div>
-</div><ul>
-<li>联合类型的条件判断，分开计算可以理解为 进行类型收窄时的处理过程</li>
-</ul>
+</div></li>
+</ol>
+
+<ul>
+<li><p>联合类型的条件判断，分开计算可以理解为 进行类型收窄时的处理过程</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -953,8 +1028,8 @@
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="kr">type</span> <span class="nx">ToArray</span><span class="p">&lt;</span><span class="nt">T</span><span class="p">&gt;</span> <span class="o">=</span> <span class="nx">T</span> <span class="kr">extends</span> <span class="kt">unknown</span> <span class="o">?</span> <span class="nx">T</span><span class="p">[]</span> <span class="o">:</span> <span class="kt">never</span>
-<span class="kr">type</span> <span class="nx">res</span> <span class="o">=</span> <span class="nx">ToArray</span><span class="p">&lt;</span><span class="nt">never</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="nx">type</span> <span class="nx">ToArray</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span> <span class="o">=</span> <span class="nx">T</span> <span class="kr">extends</span> <span class="nx">unknown</span> <span class="o">?</span> <span class="nx">T</span><span class="p">[]</span> <span class="o">:</span> <span class="nx">never</span>
+<span class="nx">type</span> <span class="nx">res</span> <span class="o">=</span> <span class="nx">ToArray</span><span class="o">&lt;</span><span class="nx">never</span><span class="o">&gt;</span>
 <span class="cm">/**
 </span><span class="cm">* res 的类型为
 </span><span class="cm">* never[]
@@ -962,26 +1037,32 @@
 </span><span class="cm">*/</span>
 </code></pre></td></tr></table>
 </div>
-</div><ul>
-<li>空集没有元素，直接返回 <code>never</code></li>
+</div></li>
+
+<li><p>空集没有元素，直接返回 <code>never</code></p></li>
 </ul>
+
 <blockquote>
 <p>使用类比来理解</p>
 </blockquote>
+
 <ul>
 <li>泛型 + 联合类型，比作乘法的 分配律 <code>(A | B) extends X -&gt; A extends X | B extends X</code></li>
 <li><code>never</code> 比作乘法中的 <code>0</code></li>
 <li>只对泛型有效</li>
 </ul>
-<hr>
-<h2 id="在泛型中使用-extends-泛型约束-a-hrefcatalogue--a">在泛型中使用 <code>extends</code> 泛型约束 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+
+<hr />
+
+<h2 id="在泛型中使用-extends-泛型约束-a-href-catalogue-a">在泛型中使用 <code>extends</code> 泛型约束 <a href="#catalogue"> ⇧ </a></h2>
+
 <ul>
 <li>给泛型添加类型约束，缩小泛型的范围</li>
-<li>关键字 <code>extends</code>，翻译为包含于（集合范围小于或等于），区别于类<code>class</code>的继承关键字</li>
-</ul>
+
+<li><p>关键字 <code>extends</code>，翻译为包含于（集合范围小于或等于），区别于类<code>class</code>的继承关键字</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -998,40 +1079,48 @@
 </span><span class="lnt">15
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="c1">// 添加约束之前
-</span><span class="c1"></span><span class="kd">function</span> <span class="nx">returnIt</span><span class="p">&lt;</span><span class="nt">T</span><span class="p">&gt;(</span><span class="nx">arg</span>: <span class="kt">T</span><span class="p">)</span><span class="o">:</span> <span class="nx">T</span> <span class="p">{</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">arg</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span> <span class="c1">// error
-</span><span class="c1"></span>    <span class="k">return</span> <span class="nx">arg</span><span class="p">;</span>
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="c1">// 添加约束之前
+</span><span class="c1"></span><span class="kd">function</span> <span class="nx">returnIt</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">arg</span>: <span class="kt">T</span><span class="p">)</span><span class="o">:</span> <span class="nx">T</span> <span class="p">{</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">arg</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span> <span class="c1">// error
+</span><span class="c1"></span><span class="k">return</span> <span class="nx">arg</span><span class="p">;</span>
 <span class="p">}</span>
 
 <span class="c1">// 添加约束之后
 </span><span class="c1"></span><span class="kr">interface</span> <span class="nx">HasLength</span><span class="p">{</span>
-    <span class="nx">length</span>: <span class="kt">number</span>
+<span class="nx">length</span>: <span class="kt">number</span>
 <span class="p">}</span>
 
-<span class="kd">function</span> <span class="nx">returnIt</span><span class="p">&lt;</span><span class="nt">T</span> <span class="na">extends</span> <span class="na">HasLength</span><span class="p">&gt;(</span><span class="nx">arg</span>: <span class="kt">T</span><span class="p">)</span><span class="o">:</span> <span class="nx">T</span> <span class="p">{</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">arg</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span> <span class="c1">// no error
-</span><span class="c1"></span>    <span class="k">return</span> <span class="nx">arg</span><span class="p">;</span>
+<span class="kd">function</span> <span class="nx">returnIt</span><span class="o">&lt;</span><span class="nx">T</span> <span class="kr">extends</span> <span class="nx">HasLength</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">arg</span>: <span class="kt">T</span><span class="p">)</span><span class="o">:</span> <span class="nx">T</span> <span class="p">{</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">arg</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span> <span class="c1">// no error
+</span><span class="c1"></span><span class="k">return</span> <span class="nx">arg</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><ul>
-<li>声明的泛型 <code>&lt;T&gt;</code> 必须满足 包含于 <code>HasLength</code> 接口</li>
+</div></li>
+
+<li><p>声明的泛型 <code>&lt;T&gt;</code> 必须满足 包含于 <code>HasLength</code> 接口</p></li>
 </ul>
-<hr>
-<h2 id="在泛型中使用-keyof-a-hrefcatalogue--a">在泛型中使用 <code>keyof</code> <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
-<hr>
-<h2 id="在泛型中使用-extends-keyof--a-hrefcatalogue--a">在泛型中使用 <code>extends keyof</code>  <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
-<hr>
-<h2 id="泛型的实际使用在react中使用泛型-a-hrefcatalogue--a">泛型的实际使用：在<code>React</code>中使用泛型 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+
+<hr />
+
+<h2 id="在泛型中使用-keyof-a-href-catalogue-a">在泛型中使用 <code>keyof</code> <a href="#catalogue"> ⇧ </a></h2>
+
+<hr />
+
+<h2 id="在泛型中使用-extends-keyof-a-href-catalogue-a">在泛型中使用 <code>extends keyof</code>  <a href="#catalogue"> ⇧ </a></h2>
+
+<hr />
+
+<h2 id="泛型的实际使用-在-react-中使用泛型-a-href-catalogue-a">泛型的实际使用：在<code>React</code>中使用泛型 <a href="#catalogue"> ⇧ </a></h2>
+
 <ul>
 <li>安装 <code>react</code> 和 <code>react-dom</code></li>
 <li>安装 <code>@types/react</code> 和 <code>@types/react-dom</code></li>
-<li><code>Ctrl + 点击</code> 查看泛型是什么，使用代入法</li>
-</ul>
+
+<li><p><code>Ctrl + 点击</code> 查看泛型是什么，使用代入法</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-tsx" data-lang="tsx"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1051,43 +1140,47 @@
 </span><span class="lnt">18
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-tsx" data-lang="tsx"><span class="kr">import</span> <span class="nx">React</span><span class="p">,</span> <span class="p">{</span> <span class="nx">FunctionComponent</span><span class="p">,</span> <span class="nx">FC</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;react&#39;</span>
+<pre class="chroma"><code class="language-tsx" data-lang="tsx"><span class="kr">import</span> <span class="nx">React</span><span class="p">,</span> <span class="p">{</span> <span class="nx">FunctionComponent</span><span class="p">,</span> <span class="nx">FC</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;react&#39;</span>
 
-<span class="kr">type</span> <span class="nx">P</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">name</span>: <span class="kt">string</span> <span class="p">}</span>
+<span class="nx">type</span> <span class="nx">P</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">name</span>: <span class="kt">string</span> <span class="p">}</span>
 
 <span class="c1">// 代入法
 </span><span class="c1"></span><span class="cm">/*
 </span><span class="cm">interface FunctionComponent&lt;P = {}&gt; = {
-</span><span class="cm">  (props: P, context?: any): ReactElement&lt;any, any&gt; | null;
-</span><span class="cm">  // ...
+</span><span class="cm">(props: P, context?: any): ReactElement&lt;any, any&gt; | null;
+</span><span class="cm">// ...
 </span><span class="cm">}
 </span><span class="cm">*/</span>
-<span class="kr">const</span> <span class="nx">App</span>: <span class="kt">FunctionComponent</span><span class="p">&lt;</span><span class="nt">P</span><span class="p">&gt;</span> <span class="o">=</span> <span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">props</span><span class="p">.</span><span class="nx">name</span><span class="p">)</span>
-  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">props</span><span class="p">.</span><span class="nx">children</span><span class="p">)</span>
-  <span class="k">return</span> <span class="p">(</span>
-    <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span><span class="nx">hi</span><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-  <span class="p">)</span>
+<span class="kr">const</span> <span class="nx">App</span>: <span class="kt">FunctionComponent</span><span class="o">&lt;</span><span class="nx">P</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">props</span><span class="p">.</span><span class="nx">name</span><span class="p">)</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">props</span><span class="p">.</span><span class="nx">children</span><span class="p">)</span>
+<span class="k">return</span> <span class="p">(</span>
+<span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span><span class="nx">hi</span><span class="o">&lt;</span><span class="err">/div&gt;</span>
+<span class="p">)</span>
 <span class="p">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><hr>
-<h2 id="泛型-区别于-函数重载-a-hrefcatalogue--a">泛型 区别于 函数重载 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+</div></li>
+</ul>
+
+<hr />
+
+<h2 id="泛型-区别于-函数重载-a-href-catalogue-a">泛型 区别于 函数重载 <a href="#catalogue"> ⇧ </a></h2>
+
 <ul>
 <li>泛型：使用时声明具体类型类型
+
 <ul>
 <li>难以根据不同条件，约束所有参数的类型</li>
-</ul>
-</li>
-<li>函数重载：根据参数类型条件判断
+</ul></li>
+
+<li><p>函数重载：根据参数类型条件判断</p>
+
 <ul>
-<li>支持多种属性签名</li>
-</ul>
-</li>
-</ul>
+<li><p>支持多种属性签名</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-tsx" data-lang="tsx"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1106,18 +1199,18 @@
 </span><span class="lnt">17
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-tsx" data-lang="tsx"><span class="c1">// 泛型
-</span><span class="c1"></span><span class="kr">type</span> <span class="nx">Add</span><span class="p">&lt;</span><span class="nt">T</span><span class="p">&gt;</span> <span class="o">=</span> <span class="p">(</span><span class="nx">a</span>: <span class="kt">T</span><span class="p">,</span> <span class="nx">b</span>: <span class="kt">T</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">T</span>
-<span class="kr">const</span> <span class="nx">add</span>: <span class="kt">Add</span><span class="p">&lt;</span><span class="nt">string</span> <span class="err">|</span> <span class="na">number</span><span class="p">&gt;</span> <span class="o">=</span> <span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="c1">// 防止出现 a: string, b: number 的情况，必须使用 函数重载
-</span><span class="c1"></span>  <span class="k">return</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span>
+<pre class="chroma"><code class="language-tsx" data-lang="tsx"><span class="c1">// 泛型
+</span><span class="c1"></span><span class="nx">type</span> <span class="nx">Add</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">(</span><span class="nx">a</span>: <span class="kt">T</span><span class="p">,</span> <span class="nx">b</span>: <span class="kt">T</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">T</span>
+<span class="kr">const</span> <span class="nx">add</span>: <span class="kt">Add</span><span class="o">&lt;</span><span class="kt">string</span> <span class="o">|</span> <span class="kt">number</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="c1">// 防止出现 a: string, b: number 的情况，必须使用 函数重载
+</span><span class="c1"></span><span class="k">return</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span>
 <span class="p">}</span>
 
 <span class="c1">// 函数重载
 </span><span class="c1"></span><span class="kd">function</span> <span class="nx">add2</span> <span class="p">(</span><span class="nx">a</span>: <span class="kt">string</span><span class="p">,</span> <span class="nx">b</span>: <span class="kt">string</span><span class="p">)</span><span class="o">:</span> <span class="kt">string</span><span class="p">;</span> <span class="c1">// 重载1
 </span><span class="c1"></span><span class="kd">function</span> <span class="nx">add2</span> <span class="p">(</span><span class="nx">a</span>: <span class="kt">number</span><span class="p">,</span> <span class="nx">b</span>: <span class="kt">number</span><span class="p">)</span><span class="o">:</span> <span class="kt">number</span><span class="p">;</span> <span class="c1">// 重载2
-</span><span class="c1"></span><span class="kd">function</span> <span class="nx">add2</span> <span class="p">(</span><span class="nx">a</span>: <span class="kt">unknown</span><span class="p">,</span> <span class="nx">b</span>: <span class="kt">unknown</span><span class="p">)</span><span class="o">:</span> <span class="kt">unknown</span> <span class="p">{</span> <span class="c1">// 具体实现
-</span><span class="c1"></span>  <span class="k">if</span><span class="p">(</span><span class="k">typeof</span> <span class="nx">a</span> <span class="o">===</span> <span class="s1">&#39;string&#39;</span> <span class="o">&amp;&amp;</span> <span class="nx">b</span> <span class="o">===</span> <span class="s1">&#39;string&#39;</span> <span class="p">)</span> <span class="k">return</span> <span class="sb">`</span><span class="si">${</span><span class="nx">a</span><span class="si">}</span><span class="sb"> </span><span class="si">${</span><span class="nx">b</span><span class="si">}</span><span class="sb">`</span>
-  <span class="k">if</span><span class="p">(</span><span class="k">typeof</span> <span class="nx">a</span> <span class="o">===</span> <span class="s1">&#39;number&#39;</span> <span class="o">&amp;&amp;</span> <span class="nx">b</span> <span class="o">===</span> <span class="s1">&#39;number&#39;</span> <span class="p">)</span> <span class="k">return</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span>
+</span><span class="c1"></span><span class="kd">function</span> <span class="nx">add2</span> <span class="p">(</span><span class="nx">a</span>: <span class="kt">unknown</span><span class="p">,</span> <span class="nx">b</span>: <span class="kt">unknown</span><span class="p">)</span><span class="o">:</span> <span class="nx">unknown</span> <span class="p">{</span> <span class="c1">// 具体实现
+</span><span class="c1"></span><span class="k">if</span><span class="p">(</span><span class="k">typeof</span> <span class="nx">a</span> <span class="o">===</span> <span class="s1">&#39;string&#39;</span> <span class="o">&amp;&amp;</span> <span class="nx">b</span> <span class="o">===</span> <span class="s1">&#39;string&#39;</span> <span class="p">)</span> <span class="k">return</span> <span class="sb">`</span><span class="si">${</span><span class="nx">a</span><span class="si">}</span><span class="sb"> </span><span class="si">${</span><span class="nx">b</span><span class="si">}</span><span class="sb">`</span>
+<span class="k">if</span><span class="p">(</span><span class="k">typeof</span> <span class="nx">a</span> <span class="o">===</span> <span class="s1">&#39;number&#39;</span> <span class="o">&amp;&amp;</span> <span class="nx">b</span> <span class="o">===</span> <span class="s1">&#39;number&#39;</span> <span class="p">)</span> <span class="k">return</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span>
 <span class="p">}</span>
 
 <span class="nx">add2</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
@@ -1125,28 +1218,32 @@
 <span class="c1">// add2(&#39;1&#39;, 2) // error
 </span></code></pre></td></tr></table>
 </div>
-</div><ul>
-<li>让函数满足多种的参数条件就是函数重载</li>
+</div></li>
+</ul></li>
+
+<li><p>让函数满足多种的参数条件就是函数重载</p></li>
 </ul>
-<hr>
-<h2 id="如何用泛型封装网络请求库-a-hrefcatalogue--a">如何用泛型封装网络请求库 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+
+<hr />
+
+<h2 id="如何用泛型封装网络请求库-a-href-catalogue-a">如何用泛型封装网络请求库 <a href="#catalogue"> ⇧ </a></h2>
+
 <ul>
 <li>使用 <code>axios</code> 时 可以根据参数的类型，来自动判断执行的逻辑分支
+
 <ul>
 <li><code>axios.get('/url', {})</code></li>
 <li><code>axios.get({url: '/xxx', header: ''})</code></li>
 <li><code>axios.get(url?: string, options?: {url: string, header: unknown}): void</code></li>
-</ul>
-</li>
-<li>拿获取用户来举例
+</ul></li>
+
+<li><p>拿获取用户来举例</p>
+
 <ul>
-<li><code>const user = createResource('/api/v1/user')</code></li>
-</ul>
-</li>
-</ul>
+<li><p><code>const user = createResource('/api/v1/user')</code></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1181,88 +1278,111 @@
 </span><span class="lnt">33
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="kr">import</span> <span class="nx">axios</span> <span class="kr">from</span> <span class="s1">&#39;axios&#39;</span>
-<span class="kr">type</span> <span class="nx">User</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="nx">id</span>: <span class="kt">string</span> <span class="o">|</span> <span class="kt">number</span><span class="p">;</span>
-  <span class="nx">name</span>: <span class="kt">string</span><span class="p">;</span>
-  <span class="nx">age</span>: <span class="kt">number</span>
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="kr">import</span> <span class="nx">axios</span> <span class="nx">from</span> <span class="s1">&#39;axios&#39;</span>
+<span class="nx">type</span> <span class="nx">User</span> <span class="o">=</span> <span class="p">{</span>
+<span class="nx">id</span>: <span class="kt">string</span> <span class="o">|</span> <span class="kt">number</span><span class="p">;</span>
+<span class="nx">name</span>: <span class="kt">string</span><span class="p">;</span>
+<span class="nx">age</span>: <span class="kt">number</span>
 <span class="p">}</span>
 
-<span class="kr">type</span> <span class="nx">Resonse</span><span class="p">&lt;</span><span class="nt">T</span><span class="p">&gt;</span> <span class="o">=</span> <span class="p">{</span><span class="nx">data</span>: <span class="kt">T</span><span class="p">}</span>
-<span class="kr">type</span> <span class="nx">O</span> <span class="o">=</span> <span class="nx">Omit</span><span class="p">&lt;</span><span class="nt">Partial</span><span class="err">&lt;</span><span class="na">User</span><span class="p">&gt;,</span> <span class="s1">&#39;id&#39;</span><span class="o">&gt;</span>
+<span class="nx">type</span> <span class="nx">Resonse</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">{</span><span class="nx">data</span>: <span class="kt">T</span><span class="p">}</span>
+<span class="nx">type</span> <span class="nx">O</span> <span class="o">=</span> <span class="nx">Omit</span><span class="o">&lt;</span><span class="nx">Partial</span><span class="o">&lt;</span><span class="nx">User</span><span class="o">&gt;</span><span class="p">,</span> <span class="s1">&#39;id&#39;</span><span class="o">&gt;</span>
 <span class="c1">// type O2 = Partial&lt;Omit&lt;User, &#39;id&#39;&gt;&gt;
 </span><span class="c1"></span>
-<span class="kr">type</span> <span class="nx">CreateResource</span> <span class="o">=</span> <span class="p">(</span><span class="nx">path</span>: <span class="kt">string</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-  <span class="nx">create</span><span class="o">:</span> <span class="p">(</span><span class="nx">arrts</span>: <span class="kt">O</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">Promise</span><span class="p">&lt;</span><span class="nt">Resonse</span><span class="err">&lt;</span><span class="na">User</span><span class="p">&gt;</span><span class="o">&gt;</span><span class="p">;</span>
-  <span class="k">delete</span><span class="o">:</span> <span class="p">(</span><span class="nx">id</span>: <span class="kt">User</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">])</span> <span class="o">=&gt;</span> <span class="nx">Promise</span><span class="p">&lt;</span><span class="nt">Resonse</span><span class="err">&lt;</span><span class="na">never</span><span class="p">&gt;</span><span class="o">&gt;</span><span class="p">;</span>
-  <span class="nx">update</span><span class="o">:</span> <span class="p">(</span><span class="nx">id</span>: <span class="kt">User</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">],</span> <span class="nx">attrs</span>: <span class="kt">O</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">Promise</span><span class="p">&lt;</span><span class="nt">Resonse</span><span class="err">&lt;</span><span class="na">User</span><span class="p">&gt;</span><span class="o">&gt;</span><span class="p">;</span>
-  <span class="kr">get</span><span class="o">:</span> <span class="p">(</span><span class="nx">id</span>: <span class="kt">User</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">])</span> <span class="o">=&gt;</span> <span class="nx">Promise</span><span class="p">&lt;</span><span class="nt">Resonse</span><span class="err">&lt;</span><span class="na">User</span><span class="p">&gt;</span><span class="o">&gt;</span><span class="p">;</span>
-  <span class="nx">getPage</span><span class="o">:</span> <span class="p">(</span><span class="nx">page</span>: <span class="kt">number</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">Promise</span><span class="p">&lt;</span><span class="nt">Resonse</span><span class="err">&lt;</span><span class="na">User</span><span class="err">[]</span><span class="p">&gt;</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="nx">type</span> <span class="nx">CreateResource</span> <span class="o">=</span> <span class="p">(</span><span class="nx">path</span>: <span class="kt">string</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+<span class="nx">create</span><span class="o">:</span> <span class="p">(</span><span class="nx">arrts</span>: <span class="kt">O</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">Promise</span><span class="o">&lt;</span><span class="nx">Resonse</span><span class="o">&lt;</span><span class="nx">User</span><span class="o">&gt;&gt;</span><span class="p">;</span>
+<span class="k">delete</span><span class="o">:</span> <span class="p">(</span><span class="nx">id</span>: <span class="kt">User</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">])</span> <span class="o">=&gt;</span> <span class="nx">Promise</span><span class="o">&lt;</span><span class="nx">Resonse</span><span class="o">&lt;</span><span class="nx">never</span><span class="o">&gt;&gt;</span><span class="p">;</span>
+<span class="nx">update</span><span class="o">:</span> <span class="p">(</span><span class="nx">id</span>: <span class="kt">User</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">],</span> <span class="nx">attrs</span>: <span class="kt">O</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">Promise</span><span class="o">&lt;</span><span class="nx">Resonse</span><span class="o">&lt;</span><span class="nx">User</span><span class="o">&gt;&gt;</span><span class="p">;</span>
+<span class="nx">get</span><span class="o">:</span> <span class="p">(</span><span class="nx">id</span>: <span class="kt">User</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">])</span> <span class="o">=&gt;</span> <span class="nx">Promise</span><span class="o">&lt;</span><span class="nx">Resonse</span><span class="o">&lt;</span><span class="nx">User</span><span class="o">&gt;&gt;</span><span class="p">;</span>
+<span class="nx">getPage</span><span class="o">:</span> <span class="p">(</span><span class="nx">page</span>: <span class="kt">number</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">Promise</span><span class="o">&lt;</span><span class="nx">Resonse</span><span class="o">&lt;</span><span class="nx">User</span><span class="p">[]</span><span class="o">&gt;&gt;</span><span class="p">;</span>
 <span class="p">}</span>
 
 <span class="kr">const</span> <span class="nx">createResource</span>: <span class="kt">CreateResource</span> <span class="o">=</span> <span class="p">(</span><span class="nx">path</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-  <span class="k">return</span> <span class="p">{</span>
-    <span class="nx">create</span><span class="p">(</span><span class="nx">attrs</span><span class="p">)</span> <span class="p">{</span>
-      <span class="kr">const</span> <span class="nx">url</span> <span class="o">=</span> <span class="sb">`</span><span class="si">${</span><span class="nx">path</span><span class="si">}</span><span class="sb">s`</span>
-      <span class="k">return</span> <span class="nx">axios</span><span class="p">.</span><span class="nx">post</span><span class="p">&lt;</span><span class="nt">User</span><span class="p">&gt;(</span><span class="nx">url</span><span class="p">,</span> <span class="p">{</span><span class="nx">data</span>: <span class="kt">attrs</span><span class="p">})</span>
-    <span class="p">},</span>
-    <span class="nx">delte</span><span class="p">(</span><span class="nx">attrs</span><span class="p">)</span> <span class="p">{},</span>
-    <span class="nx">update</span><span class="p">(</span><span class="nx">attrs</span><span class="p">)</span> <span class="p">{},</span>
-    <span class="kr">get</span><span class="p">(</span><span class="nx">attrs</span><span class="p">)</span> <span class="p">{},</span>
-    <span class="nx">getPage</span><span class="p">(</span><span class="nx">attrs</span><span class="p">)</span> <span class="p">{},</span>
-  <span class="p">}</span>
+<span class="k">return</span> <span class="p">{</span>
+<span class="nx">create</span><span class="p">(</span><span class="nx">attrs</span><span class="p">)</span> <span class="p">{</span>
+<span class="kr">const</span> <span class="nx">url</span> <span class="o">=</span> <span class="sb">`</span><span class="si">${</span><span class="nx">path</span><span class="si">}</span><span class="sb">s`</span>
+<span class="k">return</span> <span class="nx">axios</span><span class="p">.</span><span class="nx">post</span><span class="o">&lt;</span><span class="nx">User</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="p">{</span><span class="nx">data</span>: <span class="kt">attrs</span><span class="p">})</span>
+<span class="p">},</span>
+<span class="nx">delte</span><span class="p">(</span><span class="nx">attrs</span><span class="p">)</span> <span class="p">{},</span>
+<span class="nx">update</span><span class="p">(</span><span class="nx">attrs</span><span class="p">)</span> <span class="p">{},</span>
+<span class="nx">get</span><span class="p">(</span><span class="nx">attrs</span><span class="p">)</span> <span class="p">{},</span>
+<span class="nx">getPage</span><span class="p">(</span><span class="nx">attrs</span><span class="p">)</span> <span class="p">{},</span>
+<span class="p">}</span>
 <span class="p">}</span>
 
 <span class="kr">const</span> <span class="nx">user</span> <span class="o">=</span> <span class="nx">createResource</span><span class="p">(</span><span class="s1">&#39;/api/v1/user&#39;</span><span class="p">)</span>
 </code></pre></td></tr></table>
 </div>
-</div><hr>
-<h2 id="使用映射类型-in-a-hrefcatalogue--a">使用映射类型 <code>in</code> <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
-<hr>
-<h2 id="难度为三星的泛型类型体操-a-hrefcatalogue--a">难度为三星的泛型类型体操 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
-<hr>
-<h2 id="如何使用--readonly-a-hrefcatalogue--a">如何使用 <code>-readonly</code> <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
-<hr>
-<h2 id="类型体操有多难-a-hrefcatalogue--a">类型体操有多难 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
-<hr>
-<h2 id="如何提问-a-hrefcatalogue--a">如何提问 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+</div></li>
+</ul></li>
+</ul>
+
+<hr />
+
+<h2 id="使用映射类型-in-a-href-catalogue-a">使用映射类型 <code>in</code> <a href="#catalogue"> ⇧ </a></h2>
+
+<hr />
+
+<h2 id="难度为三星的泛型类型体操-a-href-catalogue-a">难度为三星的泛型类型体操 <a href="#catalogue"> ⇧ </a></h2>
+
+<hr />
+
+<h2 id="如何使用-readonly-a-href-catalogue-a">如何使用 <code>-readonly</code> <a href="#catalogue"> ⇧ </a></h2>
+
+<hr />
+
+<h2 id="类型体操有多难-a-href-catalogue-a">类型体操有多难 <a href="#catalogue"> ⇧ </a></h2>
+
+<hr />
+
+<h2 id="如何提问-a-href-catalogue-a">如何提问 <a href="#catalogue"> ⇧ </a></h2>
+
 <ul>
 <li><a href="https://stackblitz.com/"><code>stackblitz.com</code></a>
+
 <ul>
-<li><code>vanilla TS</code>
-<ul>
+<li><code>vanilla TS</code></li>
 <li>需要默认导出任意 <code>export {}</code> 来消除报错</li>
-</ul>
-</li>
-</ul>
-</li>
+</ul></li>
 <li><a href="https://code.juejin.cn/">码上掘金</a></li>
 <li>将有疑问的代码在平台上运行，保存后分享路径 <code>url</code></li>
 <li>描述问题</li>
 </ul>
-<hr>
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<hr>
-<h2 id="参考文章-a-hrefcatalogue--a">参考文章 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+
+<hr />
+
+<!-- Article End -->
+
+<div style="text-align:center;">·未完待续·</div>
+
+<hr />
+
+<h2 id="参考文章-a-href-catalogue-a">参考文章 <a href="#catalogue"> ⇧ </a></h2>
+
 <ul>
 <li><a href="https://static.xiedaimala.com/xdml/file/3ac7c224-c23d-491f-84b5-4fabfbeab9b8/MjAyMi04LTI3LTItMzgtNS02ODk=.pdf">TypeScript 全解7 PDF</a></li>
 </ul>
-<h2 id="相关文章-a-hrefcatalogue--a">相关文章 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+
+<h2 id="相关文章-a-href-catalogue-a">相关文章 <a href="#catalogue"> ⇧ </a></h2>
+
 <ul>
 <li><a href="https://www.51cto.com/article/625649.html?pc">细数 TS 中那些奇怪的符号</a></li>
 <li><a href="https://juejin.cn/post/7141281196813582367#heading-8">ts 进阶版实战教程</a></li>
 <li><a href="https://www.jianshu.com/p/9f47569b24a3">泛型函数</a></li>
 </ul>
-<hr>
+
+<hr />
+
 <ul>
 <li>作者： Joel</li>
 <li>文章链接：</li>
-<li><a href="http://xmasuhai.xyz/posts/%E7%89%88%E6%9D%83%E5%A3%B0%E6%98%8E%E9%93%BE%E6%8E%A5/">版权声明</a></li>
+<li><a href="http://xmasuhai.xyz/posts/版权声明链接/">版权声明</a></li>
 <li>非自由转载-非商用-非衍生-保持署名</li>
 </ul>
-<hr>
-<hr>
+
+<hr />
+
+<hr />
 
     </div>
 
@@ -1426,7 +1546,7 @@
     &copy;
     
       2019 -
-    2022
+    2026
     <span class="heart">
       
       <i class="iconfont">

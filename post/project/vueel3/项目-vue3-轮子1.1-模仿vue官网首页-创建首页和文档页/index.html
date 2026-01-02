@@ -7,7 +7,7 @@
   
 
 <meta name="renderer" content="webkit" />
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
 <meta name="MobileOptimized" content="width"/>
 <meta name="HandheldFriendly" content="true"/>
@@ -32,7 +32,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.91.2" />
+<meta name="generator" content="Hugo 0.59.1" />
 
 
 <link rel="canonical" href="http://xmasuhai.xyz/post/project/vueel3/%E9%A1%B9%E7%9B%AE-vue3-%E8%BD%AE%E5%AD%901.1-%E6%A8%A1%E4%BB%BFvue%E5%AE%98%E7%BD%91%E9%A6%96%E9%A1%B5-%E5%88%9B%E5%BB%BA%E9%A6%96%E9%A1%B5%E5%92%8C%E6%96%87%E6%A1%A3%E9%A1%B5/" />
@@ -62,15 +62,21 @@
 <meta property="og:title" content="【项目 Vue3 轮子】1.1 使用Vite创建Vue3项目" />
 <meta property="og:description" content="1.1 模仿Vue官网首页 创建首页和文档页 [toc] 创建首页和文档页 Vue官网首页 创建src/view目录以及文件Docs.vue Home.vue 开始创建官网 Home.vue TopNav: 左边是" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://xmasuhai.xyz/post/project/vueel3/%E9%A1%B9%E7%9B%AE-vue3-%E8%BD%AE%E5%AD%901.1-%E6%A8%A1%E4%BB%BFvue%E5%AE%98%E7%BD%91%E9%A6%96%E9%A1%B5-%E5%88%9B%E5%BB%BA%E9%A6%96%E9%A1%B5%E5%92%8C%E6%96%87%E6%A1%A3%E9%A1%B5/" /><meta property="article:section" content="post" />
+<meta property="og:url" content="http://xmasuhai.xyz/post/project/vueel3/%E9%A1%B9%E7%9B%AE-vue3-%E8%BD%AE%E5%AD%901.1-%E6%A8%A1%E4%BB%BFvue%E5%AE%98%E7%BD%91%E9%A6%96%E9%A1%B5-%E5%88%9B%E5%BB%BA%E9%A6%96%E9%A1%B5%E5%92%8C%E6%96%87%E6%A1%A3%E9%A1%B5/" />
 <meta property="article:published_time" content="2022-01-29T14:18:34+08:00" />
 <meta property="article:modified_time" content="2022-09-21T17:17:03+08:00" />
-
 <meta itemprop="name" content="【项目 Vue3 轮子】1.1 使用Vite创建Vue3项目">
-<meta itemprop="description" content="1.1 模仿Vue官网首页 创建首页和文档页 [toc] 创建首页和文档页 Vue官网首页 创建src/view目录以及文件Docs.vue Home.vue 开始创建官网 Home.vue TopNav: 左边是"><meta itemprop="datePublished" content="2022-01-29T14:18:34+08:00" />
-<meta itemprop="dateModified" content="2022-09-21T17:17:03+08:00" />
-<meta itemprop="wordCount" content="2995">
-<meta itemprop="keywords" content="FrontEnd,Project,vueel," /><meta name="twitter:card" content="summary"/>
+<meta itemprop="description" content="1.1 模仿Vue官网首页 创建首页和文档页 [toc] 创建首页和文档页 Vue官网首页 创建src/view目录以及文件Docs.vue Home.vue 开始创建官网 Home.vue TopNav: 左边是">
+
+
+<meta itemprop="datePublished" content="2022-01-29T14:18:34&#43;08:00" />
+<meta itemprop="dateModified" content="2022-09-21T17:17:03&#43;08:00" />
+<meta itemprop="wordCount" content="3055">
+
+
+
+<meta itemprop="keywords" content="FrontEnd,Project,vueel," />
+<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="【项目 Vue3 轮子】1.1 使用Vite创建Vue3项目"/>
 <meta name="twitter:description" content="1.1 模仿Vue官网首页 创建首页和文档页 [toc] 创建首页和文档页 Vue官网首页 创建src/view目录以及文件Docs.vue Home.vue 开始创建官网 Home.vue TopNav: 左边是"/>
 
@@ -301,8 +307,8 @@
         <div class="post-category">
             
           </div>
-        <span class="more-meta"> 约 2995 字 </span>
-          <span class="more-meta"> 预计阅读 6 分钟 </span>
+        <span class="more-meta"> 约 3055 字 </span>
+          <span class="more-meta"> 预计阅读 7 分钟 </span>
 
         
         
@@ -318,73 +324,80 @@
   <h2 class="post-toc-title">文章目录</h2>
   <div class="post-toc-content">
     <nav id="TableOfContents">
-  <ul>
-    <li><a href="#创建首页和文档页">创建首页和文档页</a>
-      <ul>
-        <li><a href="#开始创建官网">开始创建官网</a></li>
-      </ul>
-    </li>
-    <li><a href="#封装-topnav">封装 Topnav</a></li>
-    <li><a href="#完善样式">完善样式</a>
-      <ul>
-        <li><a href="#完善-homevue-样式">完善 Home.vue 样式</a></li>
-        <li><a href="#完善-docsvue-样式">完善 Docs.vue 样式</a></li>
-      </ul>
-    </li>
-    <li><a href="#点击切换-aside-边栏">点击切换 aside 边栏</a>
-      <ul>
-        <li><a href="#在appvue中提供控制变量">在<code>App.vue</code>中提供控制变量</a></li>
-        <li><a href="#在子孙组件中插入使用">在子孙组件中插入使用</a></li>
-        <li><a href="#添加点击切换事件">添加点击切换事件</a></li>
-        <li><a href="#改造topnavvue-添加切换按钮">改造TopNav.vue 添加切换按钮</a></li>
-        <li><a href="#初始时判断页面宽度">初始时判断页面宽度</a></li>
-      </ul>
-    </li>
-    <li><a href="#路由间切换">路由间切换</a>
-      <ul>
-        <li><a href="#点击组件点击组件显示相应的文档">点击组件，点击组件显示相应的文档</a></li>
-      </ul>
-    </li>
-    <li><a href="#基本完成官网">基本完成官网</a>
-      <ul>
-        <li><a href="#补全其他组件路由">补全其他组件路由</a></li>
-      </ul>
-    </li>
-  </ul>
+<ul>
+<li><a href="#1-1-模仿vue官网首页-创建首页和文档页">1.1 模仿Vue官网首页 创建首页和文档页</a>
+<ul>
+<li><a href="#创建首页和文档页">创建首页和文档页</a>
+<ul>
+<li><a href="#开始创建官网">开始创建官网</a></li>
+</ul></li>
+<li><a href="#封装-topnav">封装 Topnav</a></li>
+<li><a href="#完善样式">完善样式</a>
+<ul>
+<li><a href="#完善-home-vue-样式">完善 Home.vue 样式</a></li>
+<li><a href="#完善-docs-vue-样式">完善 Docs.vue 样式</a></li>
+</ul></li>
+<li><a href="#点击切换-aside-边栏">点击切换 aside 边栏</a>
+<ul>
+<li><a href="#在-app-vue-中提供控制变量">在<code>App.vue</code>中提供控制变量</a></li>
+<li><a href="#在子孙组件中插入使用">在子孙组件中插入使用</a></li>
+<li><a href="#添加点击切换事件">添加点击切换事件</a></li>
+<li><a href="#改造topnav-vue-添加切换按钮">改造TopNav.vue 添加切换按钮</a></li>
+<li><a href="#初始时判断页面宽度">初始时判断页面宽度</a></li>
+</ul></li>
+<li><a href="#路由间切换">路由间切换</a>
+<ul>
+<li><a href="#点击组件-点击组件显示相应的文档">点击组件，点击组件显示相应的文档</a></li>
+</ul></li>
+<li><a href="#基本完成官网">基本完成官网</a>
+<ul>
+<li><a href="#补全其他组件路由">补全其他组件路由</a></li>
+</ul></li>
+</ul></li>
+</ul>
 </nav>
   </div>
 </div>
 
     
     <div class="post-content">
-      <h1 id="11-模仿vue官网首页-创建首页和文档页">1.1 模仿Vue官网首页 创建首页和文档页</h1>
+      
+
+<h1 id="1-1-模仿vue官网首页-创建首页和文档页">1.1 模仿Vue官网首页 创建首页和文档页</h1>
+
 <p>[toc]</p>
-<hr>
+
+<hr />
+
 <h2 id="创建首页和文档页">创建首页和文档页</h2>
+
 <ul>
 <li><a href="https://vue3js.cn/docs/zh/guide/introduction.html">Vue官网首页</a></li>
 </ul>
+
 <blockquote>
 <p>创建<code>src/view</code>目录以及文件<code>Docs.vue</code> <code>Home.vue</code></p>
 </blockquote>
+
 <h3 id="开始创建官网">开始创建官网</h3>
+
 <ul>
 <li><code>Home.vue</code>
+
 <ul>
 <li><code>TopNav</code>: 左边是 logo，右边是 menu</li>
 <li><code>Banner</code>: 文件介绍 + 开始按钮</li>
-</ul>
-</li>
-<li><code>Docs.vue</code>
+</ul></li>
+
+<li><p><code>Docs.vue</code></p>
+
 <ul>
 <li><code>TopNav</code>: 复用</li>
-<li><code>Content</code>: 左边是 aside，右边是 main</li>
-</ul>
-</li>
-</ul>
+
+<li><p><code>Content</code>: 左边是 aside，右边是 main</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-sh" data-lang="sh"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -399,33 +412,42 @@
 </span><span class="lnt">13
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">src
- ┣ assets
- ┃ ┗ logo.png
- ┣ components
- ┃ ┗ TopNav.vue
- ┣ styles
- ┃ ┗ index.scss
- ┣ views
- ┃ ┣ Docs.vue
- ┃ ┗ Home.vue
- ┣ App.vue
- ┣ env.d.ts
- ┗ main.ts
-</code></pre></td></tr></table>
+<pre class="chroma"><code class="language-sh" data-lang="sh">src
+┣ assets
+┃ ┗ logo.png
+┣ components
+┃ ┗ TopNav.vue
+┣ styles
+┃ ┗ index.scss
+┣ views
+┃ ┣ Docs.vue
+┃ ┗ Home.vue
+┣ App.vue
+┣ env.d.ts
+┗ main.ts</code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div></li>
+</ul></li>
+</ul>
+
+<blockquote>
 <p>确保所有组件都有<code>&lt;script&gt;</code>标签，否则在<code>VSCode</code>中可能不能识别引入路径</p>
 </blockquote>
-<hr>
+
+<hr />
+
 <h2 id="封装-topnav">封装 Topnav</h2>
-<hr>
+
+<hr />
+
 <h2 id="完善样式">完善样式</h2>
-<h3 id="完善-homevue-样式">完善 Home.vue 样式</h3>
+
+<h3 id="完善-home-vue-样式">完善 Home.vue 样式</h3>
+
 <p>H1 + H2 + 两个链接</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -474,10 +496,9 @@
 </span><span class="lnt">47
 </span><span class="lnt">48
 </span><span class="lnt">49
-</span><span class="lnt">50
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;banner&#34;</span><span class="p">&gt;</span>
     <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>Vueel 3 demo<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
     <span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;</span>一个基于 Vue 3 的UI组件库<span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
@@ -517,7 +538,7 @@
     <span class="err">a</span> <span class="err">{</span>
       <span class="k">margin</span><span class="p">:</span> <span class="mi">0</span> <span class="mi">8</span><span class="kt">px</span><span class="p">;</span>
       <span class="k">background</span><span class="p">:</span> <span class="mh">#fff</span><span class="p">;</span>
-      <span class="k">display</span><span class="p">:</span> <span class="kc">inline-block</span><span class="p">;</span>
+      <span class="k">display</span><span class="p">:</span> <span class="kc">inline</span><span class="o">-</span><span class="kc">block</span><span class="p">;</span>
       <span class="k">height</span><span class="p">:</span> <span class="err">$</span><span class="n">one-line-height</span><span class="p">;</span>
       <span class="k">line-height</span><span class="p">:</span> <span class="err">$</span><span class="n">one-line-height</span><span class="p">;</span>
       <span class="k">border-radius</span><span class="p">:</span> <span class="n">math</span><span class="o">.</span><span class="nf">div</span><span class="p">(</span><span class="err">$</span><span class="n">one</span><span class="o">-</span><span class="n">line</span><span class="o">-</span><span class="n">height</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
@@ -525,18 +546,19 @@
     <span class="p">}</span>
   <span class="err">}</span>
 <span class="err">}</span>
-<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
-
-</code></pre></td></tr></table>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><h3 id="完善-docsvue-样式">完善 Docs.vue 样式</h3>
+</div>
+<h3 id="完善-docs-vue-样式">完善 Docs.vue 样式</h3>
+
 <p>边栏 + 主内容</p>
+
 <blockquote>
 <p>主做手机，兼容PC</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -597,10 +619,9 @@
 </span><span class="lnt">59
 </span><span class="lnt">60
 </span><span class="lnt">61
-</span><span class="lnt">62
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;layout&#34;</span><span class="p">&gt;</span>
     <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;content&#34;</span><span class="p">&gt;</span>
       <span class="p">&lt;</span><span class="nt">aside</span><span class="p">&gt;&lt;/</span><span class="nt">aside</span><span class="p">&gt;</span>
@@ -636,7 +657,7 @@
     <span class="k">padding-top</span><span class="p">:</span> <span class="mi">60</span><span class="kt">px</span><span class="p">;</span>
     <span class="k">padding-left</span><span class="p">:</span> <span class="mi">156</span><span class="kt">px</span><span class="p">;</span>
     <span class="err">@media</span> <span class="err">(</span><span class="k">max-width</span><span class="p">:</span> <span class="mi">500</span><span class="kt">px</span><span class="p">)</span> <span class="err">{</span>
-      <span class="k">padding-left</span><span class="o">:</span> <span class="mi">0</span><span class="p">;</span>
+      <span class="k">padding</span><span class="o">-</span><span class="kc">left</span><span class="o">:</span> <span class="mi">0</span><span class="p">;</span>
     <span class="p">}</span>
 
     <span class="o">&gt;</span> <span class="nt">aside</span> <span class="p">{</span>
@@ -660,35 +681,41 @@
 
 <span class="err">}</span>
 
-<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
-
-</code></pre></td></tr></table>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><hr>
+</div>
+<hr />
+
 <h2 id="点击切换-aside-边栏">点击切换 aside 边栏</h2>
+
 <blockquote>
 <p>点击一次显示，再点击一次隐藏，使用 provide 和 inject 实现切换功能</p>
 </blockquote>
+
 <ul>
 <li><code>menuVisible</code>重命名为<code>asideVisible</code></li>
 <li>使用一个变量<code>asideVisible</code>，表示边栏是否被显示</li>
 <li>变量<code>asideVisible</code>不可放在<code>Topnav.vue</code>组件中，因为<code>Docs.vue</code>不能访问变量</li>
 <li>变量<code>asideVisible</code>不可放在<code>Docs.vue</code>组件中，因为<code>Docs.vue</code>隐藏时不能访问变量</li>
 <li>变量<code>asideVisible</code>必须放在<code>App.vue</code>组件中
+
 <ul>
 <li>并且通过<code>provide/inject</code>标记下变量<code>asideVisible</code>是可以被子组件访问的</li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<p><img src="https://note.youdao.com/yws/api/personal/file/0418C5F2DEB1441F94A65B0324125971?method=download&amp;shareKey=a330fc21cfa79a94369c1838d2bfd1cb" alt="点击切换 aside 边栏"></p>
-<hr>
-<h3 id="在appvue中提供控制变量">在<code>App.vue</code>中提供控制变量</h3>
+
+<p><img src="https://note.youdao.com/yws/api/personal/file/0418C5F2DEB1441F94A65B0324125971?method=download&amp;shareKey=a330fc21cfa79a94369c1838d2bfd1cb" alt="点击切换 aside 边栏" /></p>
+
+<hr />
+
+<h3 id="在-app-vue-中提供控制变量">在<code>App.vue</code>中提供控制变量</h3>
+
 <blockquote>
-<p>使用 <em><strong><a href="https://v3.cn.vuejs.org/api/sfc-script-setup.html#%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95">单文件组件<code>&lt;script setup&gt;</code></a></strong></em></p>
+<p>使用 <strong><em><a href="https://v3.cn.vuejs.org/api/sfc-script-setup.html#%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95">单文件组件<code>&lt;script setup&gt;</code></a></em></strong></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -704,10 +731,9 @@
 </span><span class="lnt">14
 </span><span class="lnt">15
 </span><span class="lnt">16
-</span><span class="lnt">17
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
 <span class="kr">import</span> <span class="p">{</span><span class="nx">provide</span><span class="p">,</span> <span class="nx">ref</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue&#39;</span><span class="p">;</span>
 
 <span class="kr">const</span> <span class="nx">asideVisible</span> <span class="o">=</span> <span class="nx">ref</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
@@ -722,29 +748,26 @@
 
 <span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">router-view</span><span class="p">&gt;&lt;/</span><span class="nt">router-view</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
-
-</code></pre></td></tr></table>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><ul>
+</div>
+<ul>
 <li><code>&lt;script setup&gt;</code>是在单文件组件 (SFC) 中使用组合式 API 的编译时语法糖</li>
 <li>里面的代码会被编译成组件 setup() 函数的内容</li>
-<li>
-<!-- raw HTML omitted -->
-</li>
-<li>
-<!-- raw HTML omitted -->
-</li>
+<li><script setup> 中的代码会在每次组件实例被创建的时候执行</li>
+<li><script setup> 声明的顶层的绑定 (包括变量，函数声明，以及 import 引入的内容) 都能在模板中直接使用，而不用再<code>return {...}</code></li>
 <li>ref 值在模板中使用的时候会自动解包处值 value</li>
 <li>ref 值在其他处中使用的时候需要手动解包<code>refValueXXX.value</code></li>
 </ul>
+
 <h3 id="在子孙组件中插入使用">在子孙组件中插入使用</h3>
+
 <blockquote>
 <p><code>TopNav.vue</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -791,10 +814,9 @@
 </span><span class="lnt">45
 </span><span class="lnt">46
 </span><span class="lnt">47
-</span><span class="lnt">48
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;top-nav&#34;</span><span class="p">&gt;</span>
     <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;logo&#34;</span><span class="p">&gt;</span>LOGO<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
     <span class="p">&lt;</span><span class="nt">ul</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;menu&#34;</span><span class="p">&gt;</span>
@@ -840,23 +862,23 @@
     <span class="p">}</span>
   <span class="err">}</span>
 <span class="err">}</span>
-<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
-
-</code></pre></td></tr></table>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><ul>
+</div>
+<ul>
 <li>注意：需要提供接收的类型<code>const asideVisible = inject&lt;Ref&lt;boolean&gt;&gt;('xxx');</code>
+
 <ul>
 <li><code>Ref&lt;boolean&gt;</code> 内部类型也需要</li>
+</ul></li>
 </ul>
-</li>
-</ul>
+
 <blockquote>
 <p><code>Docs.vue</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -916,10 +938,9 @@
 </span><span class="lnt">58
 </span><span class="lnt">59
 </span><span class="lnt">60
-</span><span class="lnt">61
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">top-nav</span><span class="p">&gt;&lt;/</span><span class="nt">top-nav</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;content&#34;</span><span class="p">&gt;</span>
     <span class="p">&lt;</span><span class="nt">aside</span><span class="p">&gt;</span>
@@ -978,27 +999,28 @@
     <span class="p">}</span>
   <span class="err">}</span>
 <span class="err">}</span>
-<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
-
-</code></pre></td></tr></table>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><ul>
+</div>
+<ul>
 <li>分别在控制台打印出
+
 <ul>
 <li><code>console.log('topNav 获取的 asideVisible 为：', asideVisible?.value);</code></li>
 <li><code>console.log('docs 获取的 asideVisible 为：', asideVisible?.value);</code></li>
-</ul>
-</li>
+</ul></li>
 <li>查看在子组件中是否获取到 <code>asideVisible</code></li>
 <li>注意：获取的是<code>asideVisible?.value</code>，解包<code>RefImpl</code>后的值</li>
 </ul>
+
 <h3 id="添加点击切换事件">添加点击切换事件</h3>
+
 <blockquote>
 <p><code>TopNav.vue</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1019,7 +1041,7 @@
 </span><span class="lnt">19
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;top-nav&#34;</span><span class="p">&gt;</span>
     <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;logo&#34;</span> <span class="err">@</span><span class="na">click</span><span class="o">=</span><span class="s">&#34;toggleMenu&#34;</span><span class="p">&gt;</span>LOGO<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
     <span class="p">&lt;</span><span class="nt">ul</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;menu&#34;</span><span class="p">&gt;</span>
@@ -1037,18 +1059,18 @@
   <span class="nx">asideVisible</span><span class="o">!</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="o">!</span><span class="nx">asideVisible</span><span class="o">?</span><span class="p">.</span><span class="nx">value</span><span class="p">;</span>
 <span class="p">};</span>
 <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-...
-</code></pre></td></tr></table>
+...</code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p><code>Docs.vue</code></p>
 </blockquote>
+
 <ul>
-<li>添加条件渲染<code>&lt;aside v-if=&quot;asideVisible&quot;&gt;...</code></li>
-</ul>
+<li><p>添加条件渲染<code>&lt;aside v-if=&quot;asideVisible&quot;&gt;...</code></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1089,28 +1111,28 @@
 </span><span class="lnt">39
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">top-nav</span><span class="p">&gt;&lt;/</span><span class="nt">top-nav</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;content&#34;</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">aside</span> <span class="na">v-if</span><span class="o">=</span><span class="s">&#34;asideVisible&#34;</span><span class="p">&gt;</span>
-      <span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;</span>组件列表<span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
-      <span class="p">&lt;</span><span class="nt">ol</span><span class="p">&gt;</span>
-        <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>
-          <span class="p">&lt;</span><span class="nt">router-link</span> <span class="na">to</span><span class="o">=</span><span class="s">&#34;/doc/swich&#34;</span><span class="p">&gt;</span>Switch 组件<span class="p">&lt;/</span><span class="nt">router-link</span><span class="p">&gt;</span>
-        <span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
-        <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>
-          <span class="p">&lt;</span><span class="nt">router-link</span> <span class="na">to</span><span class="o">=</span><span class="s">&#34;/doc/button&#34;</span><span class="p">&gt;</span>Button 组件<span class="p">&lt;/</span><span class="nt">router-link</span><span class="p">&gt;</span>
-        <span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
-        <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>
-          <span class="p">&lt;</span><span class="nt">router-link</span> <span class="na">to</span><span class="o">=</span><span class="s">&#34;/doc/dialog&#34;</span><span class="p">&gt;</span>Dialog 组件<span class="p">&lt;/</span><span class="nt">router-link</span><span class="p">&gt;</span>
-        <span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
-        <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>
-          <span class="p">&lt;</span><span class="nt">router-link</span> <span class="na">to</span><span class="o">=</span><span class="s">&#34;/doc/tabs&#34;</span><span class="p">&gt;</span>Tabs 组件<span class="p">&lt;/</span><span class="nt">router-link</span><span class="p">&gt;</span>
-        <span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
-      <span class="p">&lt;/</span><span class="nt">ol</span><span class="p">&gt;</span>
-    <span class="p">&lt;/</span><span class="nt">aside</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">main</span><span class="p">&gt;</span>内容<span class="p">&lt;/</span><span class="nt">main</span><span class="p">&gt;</span>
-  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">top-nav</span><span class="p">&gt;&lt;/</span><span class="nt">top-nav</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;content&#34;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">aside</span> <span class="na">v-if</span><span class="o">=</span><span class="s">&#34;asideVisible&#34;</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;</span>组件列表<span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">ol</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">router-link</span> <span class="na">to</span><span class="o">=</span><span class="s">&#34;/doc/swich&#34;</span><span class="p">&gt;</span>Switch 组件<span class="p">&lt;/</span><span class="nt">router-link</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">router-link</span> <span class="na">to</span><span class="o">=</span><span class="s">&#34;/doc/button&#34;</span><span class="p">&gt;</span>Button 组件<span class="p">&lt;/</span><span class="nt">router-link</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">router-link</span> <span class="na">to</span><span class="o">=</span><span class="s">&#34;/doc/dialog&#34;</span><span class="p">&gt;</span>Dialog 组件<span class="p">&lt;/</span><span class="nt">router-link</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">router-link</span> <span class="na">to</span><span class="o">=</span><span class="s">&#34;/doc/tabs&#34;</span><span class="p">&gt;</span>Tabs 组件<span class="p">&lt;/</span><span class="nt">router-link</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">ol</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">aside</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">main</span><span class="p">&gt;</span>内容<span class="p">&lt;/</span><span class="nt">main</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
 <span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
 
 <span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
@@ -1123,58 +1145,65 @@
 <span class="kr">import</span> <span class="nx">TopNav</span> <span class="nx">from</span> <span class="s1">&#39;@/components/TopNav.vue&#39;</span><span class="p">;</span>
 
 <span class="kr">export</span> <span class="k">default</span> <span class="p">{</span>
-  <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Docs&#39;</span><span class="p">,</span>
-  <span class="nx">components</span><span class="o">:</span> <span class="p">{</span><span class="nx">TopNav</span><span class="p">}</span>
+<span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Docs&#39;</span><span class="p">,</span>
+<span class="nx">components</span><span class="o">:</span> <span class="p">{</span><span class="nx">TopNav</span><span class="p">}</span>
 <span class="p">};</span>
 <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-...
-</code></pre></td></tr></table>
+...</code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div></li>
+</ul>
+
+<blockquote>
 <p>小结</p>
 </blockquote>
+
 <ul>
 <li>父组件提供变量<code>provide('xxx', asideVisible);</code></li>
 <li>子孙组件获取变量<code>const asideVisible = inject&lt;Ref&lt;boolean&gt;&gt;('xxx');</code></li>
 <li>切换逻辑
+
 <ul>
-<li>一个子组件中添加切换事件
-<ul>
+<li>一个子组件中添加切换事件</li>
 <li><code>&lt;div class=&quot;logo&quot; @click=&quot;toggleMenu&quot;&gt;LOGO&lt;/div&gt;</code></li>
 <li><code>const toggleMenu = () =&gt; {asideVisible!.value = !asideVisible?.value;};</code></li>
-</ul>
-</li>
-<li>另一个子组件中按变量进行 条件渲染
-<ul>
+<li>另一个子组件中按变量进行 条件渲染</li>
 <li><code>&lt;aside v-if=&quot;asideVisible&quot;&gt;</code></li>
+</ul></li>
 </ul>
-</li>
-</ul>
-</li>
-</ul>
-<hr>
-<h3 id="改造topnavvue-添加切换按钮">改造TopNav.vue 添加切换按钮</h3>
+
+<hr />
+
+<h3 id="改造topnav-vue-添加切换按钮">改造TopNav.vue 添加切换按钮</h3>
+
 <blockquote>
 <p>手机页面上的切换按钮 汉堡按钮</p>
 </blockquote>
+
 <ul>
 <li>当页面窄到 500px 时，隐藏侧边栏，显示菜单按钮</li>
 <li>使用 <code>@media (max-width: 500px) {...}</code></li>
 </ul>
+
 <h3 id="初始时判断页面宽度">初始时判断页面宽度</h3>
-<hr>
+
+<hr />
+
 <h2 id="路由间切换">路由间切换</h2>
-<h3 id="点击组件点击组件显示相应的文档">点击组件，点击组件显示相应的文档</h3>
+
+<h3 id="点击组件-点击组件显示相应的文档">点击组件，点击组件显示相应的文档</h3>
+
 <blockquote>
 <p>使用嵌套路由<code>main.ts</code></p>
+
 <p>每次切换路由时，都将组件列表菜单关闭(PC端不需要关闭)</p>
 </blockquote>
+
 <ul>
-<li>在<code>main.ts</code>中使用路由钩子<code>router.afterEach(() =&gt; {})</code></li>
-</ul>
+<li><p>在<code>main.ts</code>中使用路由钩子<code>router.afterEach(() =&gt; {})</code></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1203,10 +1232,9 @@
 </span><span class="lnt">27
 </span><span class="lnt">28
 </span><span class="lnt">29
-</span><span class="lnt">30
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="kr">import</span> <span class="p">{</span><span class="nx">createApp</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue&#39;</span><span class="p">;</span>
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="kr">import</span> <span class="p">{</span><span class="nx">createApp</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue&#39;</span><span class="p">;</span>
 <span class="kr">import</span> <span class="nx">App</span> <span class="nx">from</span> <span class="s1">&#39;@/App.vue&#39;</span><span class="p">;</span>
 <span class="kr">import</span> <span class="s1">&#39;@/styles/index.scss&#39;</span><span class="p">;</span>
 <span class="kr">import</span> <span class="p">{</span><span class="nx">createWebHashHistory</span><span class="p">,</span> <span class="nx">createRouter</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue-router&#39;</span><span class="p">;</span>
@@ -1216,38 +1244,40 @@
 
 <span class="kr">const</span> <span class="nx">history</span> <span class="o">=</span> <span class="nx">createWebHashHistory</span><span class="p">();</span>
 <span class="kr">const</span> <span class="nx">router</span> <span class="o">=</span> <span class="nx">createRouter</span><span class="p">({</span>
-  <span class="nx">history</span><span class="p">,</span>
-  <span class="nx">routes</span><span class="o">:</span> <span class="p">[</span>
-    <span class="p">{</span><span class="nx">path</span><span class="o">:</span> <span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="nx">component</span><span class="o">:</span> <span class="nx">Home</span><span class="p">},</span>
-    <span class="p">{</span>
-      <span class="nx">path</span><span class="o">:</span> <span class="s1">&#39;/docs&#39;</span><span class="p">,</span> <span class="nx">component</span><span class="o">:</span> <span class="nx">Docs</span><span class="p">,</span>
-      <span class="nx">children</span><span class="o">:</span> <span class="p">[</span>
-        <span class="p">{</span><span class="nx">path</span><span class="o">:</span> <span class="s1">&#39;switch&#39;</span><span class="p">,</span> <span class="nx">component</span><span class="o">:</span> <span class="nx">SwitchDemo</span><span class="p">}</span>
-      <span class="p">]</span>
-    <span class="p">},</span>
+<span class="nx">history</span><span class="p">,</span>
+<span class="nx">routes</span><span class="o">:</span> <span class="p">[</span>
+<span class="p">{</span><span class="nx">path</span><span class="o">:</span> <span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="nx">component</span><span class="o">:</span> <span class="nx">Home</span><span class="p">},</span>
+<span class="p">{</span>
+  <span class="nx">path</span><span class="o">:</span> <span class="s1">&#39;/docs&#39;</span><span class="p">,</span> <span class="nx">component</span><span class="o">:</span> <span class="nx">Docs</span><span class="p">,</span>
+  <span class="nx">children</span><span class="o">:</span> <span class="p">[</span>
+    <span class="p">{</span><span class="nx">path</span><span class="o">:</span> <span class="s1">&#39;switch&#39;</span><span class="p">,</span> <span class="nx">component</span><span class="o">:</span> <span class="nx">SwitchDemo</span><span class="p">}</span>
   <span class="p">]</span>
+<span class="p">},</span>
+<span class="p">]</span>
 <span class="p">});</span>
 
 <span class="nx">router</span><span class="p">.</span><span class="nx">afterEach</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
-  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;路由切换了&#39;</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;路由切换了&#39;</span><span class="p">);</span>
 <span class="p">});</span>
 
 <span class="kr">const</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">createApp</span><span class="p">(</span><span class="nx">App</span><span class="p">);</span>
 <span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">router</span><span class="p">);</span>
 <span class="nx">app</span><span class="p">.</span><span class="nx">mount</span><span class="p">(</span><span class="s1">&#39;#app&#39;</span><span class="p">);</span>
-
 </code></pre></td></tr></table>
 </div>
-</div><ul>
-<li>问题是现在需要访问的变量<code>asideVisible</code>在<code>App.vue</code>中</li>
-<li>如果将钩子放到<code>App.vue</code>中，就无法访问<code>router</code></li>
+</div></li>
+
+<li><p>问题是现在需要访问的变量<code>asideVisible</code>在<code>App.vue</code>中</p></li>
+
+<li><p>如果将钩子放到<code>App.vue</code>中，就无法访问<code>router</code></p></li>
 </ul>
+
 <blockquote>
 <p>单独封装一个路由文件<code>router.ts</code>， 导出<code>router</code>接口</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1265,10 +1295,9 @@
 </span><span class="lnt">16
 </span><span class="lnt">17
 </span><span class="lnt">18
-</span><span class="lnt">19
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="kr">import</span> <span class="p">{</span><span class="nx">createWebHashHistory</span><span class="p">,</span> <span class="nx">createRouter</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue-router&#39;</span><span class="p">;</span>
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="kr">import</span> <span class="p">{</span><span class="nx">createWebHashHistory</span><span class="p">,</span> <span class="nx">createRouter</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue-router&#39;</span><span class="p">;</span>
 <span class="kr">import</span> <span class="nx">Home</span> <span class="nx">from</span> <span class="s1">&#39;@/views/Home.vue&#39;</span><span class="p">;</span>
 <span class="kr">import</span> <span class="nx">Docs</span> <span class="nx">from</span> <span class="s1">&#39;@/views/Docs.vue&#39;</span><span class="p">;</span>
 <span class="kr">import</span> <span class="nx">SwitchDemo</span> <span class="nx">from</span> <span class="s1">&#39;@/components/SwitchDemo.vue&#39;</span><span class="p">;</span>
@@ -1286,15 +1315,15 @@
     <span class="p">},</span>
   <span class="p">]</span>
 <span class="p">});</span>
-
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p>在<code>main.ts</code>中引入<code>router</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -1302,10 +1331,9 @@
 </span><span class="lnt">6
 </span><span class="lnt">7
 </span><span class="lnt">8
-</span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="kr">import</span> <span class="p">{</span><span class="nx">createApp</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue&#39;</span><span class="p">;</span>
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="kr">import</span> <span class="p">{</span><span class="nx">createApp</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue&#39;</span><span class="p">;</span>
 <span class="kr">import</span> <span class="nx">App</span> <span class="nx">from</span> <span class="s1">&#39;@/App.vue&#39;</span><span class="p">;</span>
 <span class="kr">import</span> <span class="s1">&#39;@/styles/index.scss&#39;</span><span class="p">;</span>
 <span class="kr">import</span> <span class="p">{</span><span class="nx">router</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;@/router&#39;</span><span class="p">;</span>
@@ -1313,15 +1341,15 @@
 <span class="kr">const</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">createApp</span><span class="p">(</span><span class="nx">App</span><span class="p">);</span>
 <span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">router</span><span class="p">);</span>
 <span class="nx">app</span><span class="p">.</span><span class="nx">mount</span><span class="p">(</span><span class="s1">&#39;#app&#39;</span><span class="p">);</span>
-
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p>在<code>App.vue</code>中使用<code>router</code>钩子<code>afterEach</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1344,10 +1372,9 @@
 </span><span class="lnt">21
 </span><span class="lnt">22
 </span><span class="lnt">23
-</span><span class="lnt">24
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
 <span class="kr">import</span> <span class="p">{</span><span class="nx">provide</span><span class="p">,</span> <span class="nx">ref</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue&#39;</span><span class="p">;</span>
 <span class="kr">import</span> <span class="p">{</span><span class="nx">router</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;@/router&#39;</span><span class="p">;</span>
 
@@ -1369,31 +1396,36 @@
 
 <span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">router-view</span><span class="p">&gt;&lt;/</span><span class="nt">router-view</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
-
-</code></pre></td></tr></table>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><ul>
+</div>
+<ul>
 <li>注意在模板<code>&lt;template&gt;</code>外使用数据需要<code>.value</code>：<code>asideVisible.value = false;</code></li>
 </ul>
+
 <blockquote>
 <p>小结</p>
 </blockquote>
+
 <ul>
 <li>封装路由<code>router.ts</code></li>
 <li><code>main.ts</code>中引入<code>router</code></li>
 <li>在<code>App.vue</code>中引入<code>router</code>，使用钩子<code>router.afterEach(()=&gt;{})</code>去实现逻辑</li>
 <li>完善PC逻辑，PC不许要隐藏逻辑，加上视口宽度判断</li>
 </ul>
-<hr>
+
+<hr />
+
 <h2 id="基本完成官网">基本完成官网</h2>
+
 <h3 id="补全其他组件路由">补全其他组件路由</h3>
+
 <blockquote>
 <p><code>router.ts</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1418,10 +1450,9 @@
 </span><span class="lnt">23
 </span><span class="lnt">24
 </span><span class="lnt">25
-</span><span class="lnt">26
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="kr">import</span> <span class="p">{</span><span class="nx">createWebHashHistory</span><span class="p">,</span> <span class="nx">createRouter</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue-router&#39;</span><span class="p">;</span>
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="kr">import</span> <span class="p">{</span><span class="nx">createWebHashHistory</span><span class="p">,</span> <span class="nx">createRouter</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue-router&#39;</span><span class="p">;</span>
 <span class="kr">import</span> <span class="nx">Home</span> <span class="nx">from</span> <span class="s1">&#39;@/views/Home.vue&#39;</span><span class="p">;</span>
 <span class="kr">import</span> <span class="nx">Docs</span> <span class="nx">from</span> <span class="s1">&#39;@/views/Docs.vue&#39;</span><span class="p">;</span>
 <span class="kr">import</span> <span class="nx">SwitchDemo</span> <span class="nx">from</span> <span class="s1">&#39;@/components/SwitchDemo.vue&#39;</span><span class="p">;</span>
@@ -1446,19 +1477,24 @@
     <span class="p">},</span>
   <span class="p">]</span>
 <span class="p">});</span>
-
 </code></pre></td></tr></table>
 </div>
-</div><hr>
-<hr>
+</div>
+<hr />
+
+<hr />
+
 <blockquote>
 <p>参考</p>
 </blockquote>
+
 <ul>
 <li><a href="https://github.com/xmasuhai/vueel3-demo-1">我的项目Vueel UI源码</a></li>
 </ul>
-<hr>
-<hr>
+
+<hr />
+
+<hr />
 
     </div>
 
@@ -1622,7 +1658,7 @@
     &copy;
     
       2019 -
-    2022
+    2026
     <span class="heart">
       
       <i class="iconfont">

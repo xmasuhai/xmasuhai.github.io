@@ -7,7 +7,7 @@
   
 
 <meta name="renderer" content="webkit" />
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
 <meta name="MobileOptimized" content="width"/>
 <meta name="HandheldFriendly" content="true"/>
@@ -32,7 +32,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.91.2" />
+<meta name="generator" content="Hugo 0.59.1" />
 
 
 <link rel="canonical" href="http://xmasuhai.xyz/post/github/git%E5%85%A5%E9%97%A85git%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93-github%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C%E6%B5%81%E7%A8%8B1_%E9%85%8D%E7%BD%AE/" />
@@ -62,15 +62,21 @@
 <meta property="og:title" content="【Git入门5】Git远程仓库   GitHub常用操作流程1_配置" />
 <meta property="og:description" content="本地仓库和远程仓库是完全隔开的 代码存储在云端GitHub SSH key验证身份 使用场景:可以避免我们重复的输入密码，提高开发效率；访问远程服务 如果" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://xmasuhai.xyz/post/github/git%E5%85%A5%E9%97%A85git%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93-github%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C%E6%B5%81%E7%A8%8B1_%E9%85%8D%E7%BD%AE/" /><meta property="article:section" content="post" />
+<meta property="og:url" content="http://xmasuhai.xyz/post/github/git%E5%85%A5%E9%97%A85git%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93-github%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C%E6%B5%81%E7%A8%8B1_%E9%85%8D%E7%BD%AE/" />
 <meta property="article:published_time" content="2020-01-04T21:44:38+08:00" />
 <meta property="article:modified_time" content="2022-09-03T10:26:25+08:00" />
-
 <meta itemprop="name" content="【Git入门5】Git远程仓库   GitHub常用操作流程1_配置">
-<meta itemprop="description" content="本地仓库和远程仓库是完全隔开的 代码存储在云端GitHub SSH key验证身份 使用场景:可以避免我们重复的输入密码，提高开发效率；访问远程服务 如果"><meta itemprop="datePublished" content="2020-01-04T21:44:38+08:00" />
-<meta itemprop="dateModified" content="2022-09-03T10:26:25+08:00" />
-<meta itemprop="wordCount" content="1037">
-<meta itemprop="keywords" content="github,git," /><meta name="twitter:card" content="summary"/>
+<meta itemprop="description" content="本地仓库和远程仓库是完全隔开的 代码存储在云端GitHub SSH key验证身份 使用场景:可以避免我们重复的输入密码，提高开发效率；访问远程服务 如果">
+
+
+<meta itemprop="datePublished" content="2020-01-04T21:44:38&#43;08:00" />
+<meta itemprop="dateModified" content="2022-09-03T10:26:25&#43;08:00" />
+<meta itemprop="wordCount" content="1044">
+
+
+
+<meta itemprop="keywords" content="github,git," />
+<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="【Git入门5】Git远程仓库   GitHub常用操作流程1_配置"/>
 <meta name="twitter:description" content="本地仓库和远程仓库是完全隔开的 代码存储在云端GitHub SSH key验证身份 使用场景:可以避免我们重复的输入密码，提高开发效率；访问远程服务 如果"/>
 
@@ -302,7 +308,7 @@
             <a href="http://xmasuhai.xyz/categories/git-github/"> Git &amp; GitHub </a>
             
           </div>
-        <span class="more-meta"> 约 1037 字 </span>
+        <span class="more-meta"> 约 1044 字 </span>
           <span class="more-meta"> 预计阅读 3 分钟 </span>
 
         
@@ -319,27 +325,50 @@
   <h2 class="post-toc-title">文章目录</h2>
   <div class="post-toc-content">
     <nav id="TableOfContents">
-  <ul>
-    <li><a href="#git远程仓库github-常用操作流程">git远程仓库GitHub 常用操作流程</a>
-      <ul>
-        <li><a href="#0-前提">0. 前提</a></li>
-        <li><a href="#1-生成ssh-key">1. 生成ssh key</a></li>
-        <li><a href="#2-测试是否配置成功">2. 测试是否配置成功</a></li>
-        <li><a href="#3注意">3.注意</a></li>
-        <li><a href="#4-查看生成的ssh-key密钥文件目录备份">4. 查看生成的SSH key密钥文件目录，备份</a></li>
-        <li><a href="#总结">总结</a></li>
-        <li><a href="#提问">提问</a></li>
-        <li><a href="#一些链接">一些链接</a></li>
-      </ul>
-    </li>
-  </ul>
+<ul>
+<li>
+<ul>
+<li><a href="#git远程仓库github-常用操作流程">git远程仓库GitHub 常用操作流程</a>
+<ul>
+<li><a href="#0-前提">0. 前提</a></li>
+<li><a href="#1-生成ssh-key">1. 生成ssh key</a>
+<ul>
+<li><a href="#第1步-运行命令">第1步 运行命令</a></li>
+<li><a href="#第2步-三次回车-直到没有提示-然后">第2步 三次回车，直到没有提示；然后</a></li>
+<li><a href="#第3步-复制内容-去你github主页-设置页面-ssh-key-标题填能表示清哪台电脑就行-填入公钥">第3步 复制内容，去你GitHub主页&gt;设置页面&gt;SSH key&hellip;，标题填能表示清哪台电脑就行，填入公钥</a></li>
+</ul></li>
+<li><a href="#2-测试是否配置成功">2. 测试是否配置成功</a>
+<ul>
+<li><a href="#第1步-运行-命令">第1步 运行 命令</a></li>
+<li><a href="#第2步-确认github给的公钥">第2步 确认GitHub给的公钥</a></li>
+<li><a href="#第3步">第3步</a></li>
+</ul></li>
+<li><a href="#3-注意">3.注意</a></li>
+<li><a href="#4-查看生成的ssh-key密钥文件目录-备份">4. 查看生成的SSH key密钥文件目录，备份</a></li>
+<li><a href="#总结">总结</a>
+<ul>
+<li><a href="#1-需要你复制的代码">1. 需要你复制的代码</a></li>
+<li><a href="#2-高级操作">2. 高级操作</a></li>
+<li><a href="#3-最后-code-bashrc-在文件最后加上">3. 最后 code ~/.bashrc 在文件最后加上</a></li>
+</ul></li>
+<li><a href="#提问">提问</a></li>
+<li><a href="#一些链接">一些链接</a>
+<ul>
+<li><a href="#参考文章">参考文章</a></li>
+<li><a href="#相关文章">相关文章</a></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
 </nav>
   </div>
 </div>
 
     
     <div class="post-content">
-      <blockquote>
+      
+
+<blockquote>
 <ul>
 <li>本地仓库和远程仓库是完全隔开的</li>
 <li>代码存储在云端GitHub</li>
@@ -347,61 +376,76 @@
 <li>如果SSH key私钥(即.ssh文件夹中的id_rsa文件)被第三方获取，那么他将可以您的身份来操作 Git 仓库，这跟密码被盗一样严重</li>
 </ul>
 </blockquote>
+
 <h2 id="git远程仓库github-常用操作流程">git远程仓库GitHub 常用操作流程</h2>
+
 <h3 id="0-前提">0. 前提</h3>
+
 <ol>
 <li>在GitHub上有一个账号</li>
 <li>git仓库在电脑上</li>
 </ol>
+
 <blockquote>
 <ul>
 <li>上传代码：私钥加密</li>
 <li>GitHub用账号留下的公钥解密</li>
 </ul>
 </blockquote>
+
 <h3 id="1-生成ssh-key">1. 生成ssh key</h3>
+
 <h4 id="第1步-运行命令">第1步 运行命令</h4>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">ssh-keygen -t rsa -b <span class="m">4096</span> -C <span class="s2">&#34;your_email@example.com&#34;</span>
-</code></pre></td></tr></table>
+<pre class="chroma"><code class="language-bash" data-lang="bash">ssh-keygen -t rsa -b <span class="m">4096</span> -C <span class="s2">&#34;your_email@example.com&#34;</span></code></pre></td></tr></table>
 </div>
-</div><h4 id="第2步-三次回车直到没有提示然后">第2步 三次回车，直到没有提示；然后</h4>
+</div>
+<h4 id="第2步-三次回车-直到没有提示-然后">第2步 三次回车，直到没有提示；然后</h4>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">cat ~/.ssh/id_rsa_pub
-</code></pre></td></tr></table>
+<pre class="chroma"><code class="language-bash" data-lang="bash">cat ~/.ssh/id_rsa_pub</code></pre></td></tr></table>
 </div>
-</div><h4 id="第3步-复制内容去你github主页设置页面ssh-key标题填能表示清哪台电脑就行填入公钥">第3步 复制内容，去你GitHub主页&gt;设置页面&gt;SSH key&hellip;，标题填能表示清哪台电脑就行，填入公钥</h4>
+</div>
+<h4 id="第3步-复制内容-去你github主页-设置页面-ssh-key-标题填能表示清哪台电脑就行-填入公钥">第3步 复制内容，去你GitHub主页&gt;设置页面&gt;SSH key&hellip;，标题填能表示清哪台电脑就行，填入公钥</h4>
+
 <p>ok</p>
+
 <blockquote>
 <p><a href="https://help.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent">GitHub_SSH key帮助文档</a></p>
 </blockquote>
+
 <h3 id="2-测试是否配置成功">2. 测试是否配置成功</h3>
+
 <h4 id="第1步-运行-命令">第1步 运行 命令</h4>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">ssh -T git@github.com
-</code></pre></td></tr></table>
+<pre class="chroma"><code class="language-bash" data-lang="bash">ssh -T git@github.com</code></pre></td></tr></table>
 </div>
-</div><h4 id="第2步-确认github给的公钥">第2步 确认GitHub给的公钥</h4>
+</div>
+<h4 id="第2步-确认github给的公钥">第2步 确认GitHub给的公钥</h4>
+
 <blockquote>
 <p>不可敲回车，输入yes即可</p>
 </blockquote>
+
 <h4 id="第3步">第3步</h4>
+
 <blockquote>
 <p>看到Hi xxx! You&rsquo;ve successfully authenticated&hellip;说明添加成功</p>
 </blockquote>
-<h3 id="3注意">3.注意</h3>
+
+<h3 id="3-注意">3.注意</h3>
+
 <blockquote>
 <ul>
 <li>GitHub，别用HTTPS协议，每次要输密码不方便</li>
@@ -410,74 +454,76 @@
 <li>上传代码用私钥加密，github用公钥解密</li>
 </ul>
 </blockquote>
+
 <ul>
 <li>如果手贱已经生成HTTPS链接了，不方便用<code>git remote add ...</code>了</li>
 </ul>
+
 <p>可以设置：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">git remote set-url origin git@github.com:yourName/***.git
-</code></pre></td></tr></table>
+<pre class="chroma"><code class="language-bash" data-lang="bash">git remote set-url origin git@github.com:yourName/***.git</code></pre></td></tr></table>
 </div>
-</div><p>来修改之前的origin URL，是不是很鸡贼</p>
-<h3 id="4-查看生成的ssh-key密钥文件目录备份">4. 查看生成的SSH key密钥文件目录，备份</h3>
+</div>
+<p>来修改之前的origin URL，是不是很鸡贼</p>
+
+<h3 id="4-查看生成的ssh-key密钥文件目录-备份">4. 查看生成的SSH key密钥文件目录，备份</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">cd</span> ~/.ssh
-ll
-</code></pre></td></tr></table>
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">cd</span> ~/.ssh
+ll</code></pre></td></tr></table>
 </div>
 </div><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ ls -al ~/.ssh
-<span class="c1"># Lists the files in your .ssh directory, if they exist</span>
-</code></pre></td></tr></table>
+<pre class="chroma"><code class="language-bash" data-lang="bash">$ ls -al ~/.ssh
+<span class="c1"># Lists the files in your .ssh directory, if they exist</span></code></pre></td></tr></table>
 </div>
 </div><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">cp id_rsa id_rsa_bk
+<pre class="chroma"><code class="language-bash" data-lang="bash">cp id_rsa id_rsa_bk
 cp id_rsa.pub id_rsa_bk.pub
-ll
-</code></pre></td></tr></table>
+ll</code></pre></td></tr></table>
 </div>
-</div><h3 id="总结">总结</h3>
+</div>
+<h3 id="总结">总结</h3>
+
 <h4 id="1-需要你复制的代码">1. 需要你复制的代码</h4>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">ssh-keygen -t rsa -b <span class="m">4096</span> -C 你的邮箱
+<pre class="chroma"><code class="language-bash" data-lang="bash">ssh-keygen -t rsa -b <span class="m">4096</span> -C 你的邮箱
 cat ~/.ssh/id_rsa.pub <span class="c1"># 得到公钥内容</span>
 ssh -T git@github.com
 git remote add origin git@xxxxxxx
-git push -u origin master
-</code></pre></td></tr></table>
+git push -u origin master</code></pre></td></tr></table>
 </div>
-</div><h4 id="2-高级操作">2. 高级操作</h4>
+</div>
+<h4 id="2-高级操作">2. 高级操作</h4>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -486,75 +532,98 @@ git push -u origin master
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">touch ~/.bashrc
+<pre class="chroma"><code class="language-bash" data-lang="bash">touch ~/.bashrc
 <span class="nb">echo</span> <span class="s1">&#39;alias ga=&#34;git add&#34;&#39;</span>&gt;&gt; ~/.bashrc
 <span class="nb">echo</span> <span class="s1">&#39;alias gc=&#34;git commit -v&#34;&#39;</span>&gt;&gt; ~/.bashrc
 <span class="nb">echo</span> <span class="s1">&#39;alias gl=&#34;git pull&#34;&#39;</span>&gt;&gt; ~/.bashrc
 <span class="nb">echo</span> <span class="s1">&#39;alias gp=&#34;git push&#34;&#39;</span>&gt;&gt; ~/.bashrc
 <span class="nb">echo</span> <span class="s1">&#39;alias gco=&#34;git checkout&#34;&#39;</span>&gt;&gt; ~/.bashrc
-<span class="nb">echo</span> <span class="s1">&#39;alias gst=&#34;git status -sb&#34;&#39;</span>&gt;&gt; ~/.bashrc
-</code></pre></td></tr></table>
+<span class="nb">echo</span> <span class="s1">&#39;alias gst=&#34;git status -sb&#34;&#39;</span>&gt;&gt; ~/.bashrc</code></pre></td></tr></table>
 </div>
-</div><h4 id="3-最后-code-bashrc-在文件最后加上">3. 最后 code ~/.bashrc 在文件最后加上</h4>
+</div>
+<h4 id="3-最后-code-bashrc-在文件最后加上">3. 最后 code ~/.bashrc 在文件最后加上</h4>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">alias</span> <span class="nv">glog</span><span class="o">=</span><span class="s2">&#34;git log --graph --pretty=format:&#39;%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)&lt;%an&gt;%Creset&#39; --abbrev-commit -- | less&#34;</span>
-</code></pre></td></tr></table>
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">alias</span> <span class="nv">glog</span><span class="o">=</span><span class="s2">&#34;git log --graph --pretty=format:&#39;%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)&lt;%an&gt;%Creset&#39; --abbrev-commit -- | less&#34;</span></code></pre></td></tr></table>
 </div>
-</div><p>我的配置：</p>
+</div>
+<p>我的配置：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">alias</span> <span class="nv">Glg</span><span class="o">=</span><span class="s2">&#34;git log --color --graph --date=relative --pretty=format:&#39;%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)&lt;%an&gt;%Creset&#39; --abbrev-commit&#34;</span>
-</code></pre></td></tr></table>
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">alias</span> <span class="nv">Glg</span><span class="o">=</span><span class="s2">&#34;git log --color --graph --date=relative --pretty=format:&#39;%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)&lt;%an&gt;%Creset&#39; --abbrev-commit&#34;</span></code></pre></td></tr></table>
 </div>
-</div><h3 id="提问">提问</h3>
+</div>
+<h3 id="提问">提问</h3>
+
 <p>有没有一种可以实现一键ga+gv &ldquo;xxx&rdquo;+gl+gp+gst的Combo技？</p>
-<p>重复添加SSH key会如何？</p>
-<blockquote>
-<p>会使你之前添加的key失效</p>
-</blockquote>
+
+<p>重复添加SSH key会如何？
+&gt; 会使你之前添加的key失效</p>
+
 <h3 id="一些链接">一些链接</h3>
+
 <p><a href="https://juejin.im/post/5de8d849e51d455808332166">高频使用的 Git 命令</a>：
 不是入门文档，官方文档肯定比我全面，这里是结合实际业务场景输出。</p>
+
 <p><a href="http://www.jeepxie.net/article/781036.html">如果你看到 “access denied”</a>：表示拒绝访问，那么你就需要使用 https 去访问，而不是 SSH 。</p>
+
 <p><a href="https://blog.csdn.net/kongkongkkk/article/details/78662715">GitHub添加SSH key时的问题</a></p>
+
 <p><a href="https://juejin.im/post/5c063c4ee51d451ded182458">告诉你 ssh 的常见使用场景和配置</a></p>
+
 <p><a href="https://segmentfault.com/a/1190000005607713">git:如何管理本机的多个ssh密钥</a></p>
+
 <p><a href="https://www.cnblogs.com/iforever/p/7513172.html">ssh keys自动化管理工具</a></p>
+
 <p><a href="https://github.com/Coding/coding-docs/blob/master/doc/git/ssh-key.markdown">在 Coding.net 添加公钥</a></p>
+
 <p><a href="https://help.github.com/en/github/authenticating-to-github/checking-for-existing-ssh-keys">Checking for existing SSH keys</a></p>
+
 <p><a href="https://help.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent">Generating a new SSH key and adding it to the ssh-agent</a></p>
-<!-- raw HTML omitted -->
-<hr>
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<hr>
+
+<!-- Article End -->
+
+<hr />
+
+<!-- test -->
+
+<div style="text-align:center;">·未完待续·</div>
+
+<!-- ok -->
+
+<hr />
+
 <h4 id="参考文章">参考文章</h4>
+
 <p><a href="https://static.xiedaimala.com/xdml/file/3ac7c224-c23d-491f-84b5-4fabfbeab9b8/2019-8-10-15-17-35.pdf">git 远程仓库.pdf</a></p>
+
 <h4 id="相关文章">相关文章</h4>
+
 <ul>
 <li>无</li>
 </ul>
-<hr>
+
+<hr />
+
 <ul>
 <li>作者： Joel</li>
 <li>文章链接：</li>
-<li><a href="http://xmasuhai.xyz/posts/%E7%89%88%E6%9D%83%E5%A3%B0%E6%98%8E%E9%93%BE%E6%8E%A5/">版权声明</a></li>
+<li><a href="http://xmasuhai.xyz/posts/版权声明链接/">版权声明</a></li>
 <li>非自由转载-非商用-非衍生-保持署名</li>
-<li><!-- raw HTML omitted -->河<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->掘<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->思<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->知<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->简<!-- raw HTML omitted --></li>
+<li><a style='color:#DB2D5D;' href='https://xiedaimala.com/bbs/users/8c266e6f-55a2-4348-a180-17cb8cdb2c46#/?page=1' target='_blank' rel='noreferrer noopener'>河</a>
+<a style='color:#006CFF;' href='https://juejin.im/user/59abfad26fb9a0248f4aa221' target='_blank' rel='noreferrer noopener'>掘</a>
+<a style='color:#009A61;' href='https://segmentfault.com/u/joel_59b17eb9d2155' target='_blank' rel='noreferrer noopener'>思</a>
+<a style='color:#0084FF;' href='https://www.zhihu.com/people/xue-shou-41/posts' target='_blank' rel='noreferrer noopener'>知</a>
+<a style='color:#EA6F5A;' href='https://www.jianshu.com/u/079916729823' target='_blank' rel='noreferrer noopener'>简</a></li>
 </ul>
-<hr>
+
+<hr />
 
     </div>
 
@@ -606,7 +675,7 @@ git push -u origin master
 </svg>
 
             </i>
-            <span class="prev-text nav-default">【CSS非全解01】CSS基础-体系化学CSS？</span>
+            <span class="prev-text nav-default">【CSS非全解00】CSS基础-体系化学CSS？</span>
             <span class="prev-text nav-mobile">上一篇</span>
           </a>
         
@@ -717,7 +786,7 @@ git push -u origin master
     &copy;
     
       2019 -
-    2022
+    2026
     <span class="heart">
       
       <i class="iconfont">

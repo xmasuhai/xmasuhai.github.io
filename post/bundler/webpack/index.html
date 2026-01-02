@@ -7,7 +7,7 @@
   
 
 <meta name="renderer" content="webkit" />
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
 <meta name="MobileOptimized" content="width"/>
 <meta name="HandheldFriendly" content="true"/>
@@ -32,7 +32,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.91.2" />
+<meta name="generator" content="Hugo 0.59.1" />
 
 
 <link rel="canonical" href="http://xmasuhai.xyz/post/bundler/webpack/" />
@@ -62,15 +62,21 @@
 <meta property="og:title" content="Webpack" />
 <meta property="og:description" content="目录§ ⇧ 1. 前置知识 § 2. 用到的工具 § 3. webpack功能 § 4. CRM学webpack § 4.1. 目标一：用webpack转译JS § 4.2 目标二理解文件名中h" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://xmasuhai.xyz/post/bundler/webpack/" /><meta property="article:section" content="post" />
+<meta property="og:url" content="http://xmasuhai.xyz/post/bundler/webpack/" />
 <meta property="article:published_time" content="2020-07-21T21:52:30+08:00" />
 <meta property="article:modified_time" content="2022-09-03T10:26:25+08:00" />
-
 <meta itemprop="name" content="Webpack">
-<meta itemprop="description" content="目录§ ⇧ 1. 前置知识 § 2. 用到的工具 § 3. webpack功能 § 4. CRM学webpack § 4.1. 目标一：用webpack转译JS § 4.2 目标二理解文件名中h"><meta itemprop="datePublished" content="2020-07-21T21:52:30+08:00" />
-<meta itemprop="dateModified" content="2022-09-03T10:26:25+08:00" />
-<meta itemprop="wordCount" content="9655">
-<meta itemprop="keywords" content="webpack,CRM,Yarn,Parcel,Snowpack,JavaScript,FrontEnd,bundler," /><meta name="twitter:card" content="summary"/>
+<meta itemprop="description" content="目录§ ⇧ 1. 前置知识 § 2. 用到的工具 § 3. webpack功能 § 4. CRM学webpack § 4.1. 目标一：用webpack转译JS § 4.2 目标二理解文件名中h">
+
+
+<meta itemprop="datePublished" content="2020-07-21T21:52:30&#43;08:00" />
+<meta itemprop="dateModified" content="2022-09-03T10:26:25&#43;08:00" />
+<meta itemprop="wordCount" content="9659">
+
+
+
+<meta itemprop="keywords" content="webpack,CRM,Yarn,Parcel,Snowpack,JavaScript,FrontEnd,bundler," />
+<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Webpack"/>
 <meta name="twitter:description" content="目录§ ⇧ 1. 前置知识 § 2. 用到的工具 § 3. webpack功能 § 4. CRM学webpack § 4.1. 目标一：用webpack转译JS § 4.2 目标二理解文件名中h"/>
 
@@ -302,7 +308,7 @@
             <a href="http://xmasuhai.xyz/categories/bundler/"> bundler </a>
             
           </div>
-        <span class="more-meta"> 约 9655 字 </span>
+        <span class="more-meta"> 约 9659 字 </span>
           <span class="more-meta"> 预计阅读 20 分钟 </span>
 
         
@@ -319,91 +325,109 @@
   <h2 class="post-toc-title">文章目录</h2>
   <div class="post-toc-content">
     <nav id="TableOfContents">
-  <ul>
-    <li><a href="#目录a-idcatalogue-hrefcatalogue---aa-hrefcatalogue--a">目录<!-- raw HTML omitted --> § <!-- raw HTML omitted --><!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-    <li><a href="#0安装webpack">0.安装webpack</a></li>
-    <li><a href="#a-id_1_-href_2_1-前置知识--a"><!-- raw HTML omitted -->1. 前置知识 § <!-- raw HTML omitted --></a></li>
-    <li><a href="#a-id_1_-href_2_2-用到的工具--a"><!-- raw HTML omitted -->2. 用到的工具 § <!-- raw HTML omitted --></a></li>
-    <li><a href="#a-id_1_-href_2_3-webpack功能与使用--a"><!-- raw HTML omitted -->3. webpack功能与使用 § <!-- raw HTML omitted --></a>
-      <ul>
-        <li><a href="#使用webpack运行">使用webpack运行</a></li>
-      </ul>
-    </li>
-    <li><a href="#a-id_1_-href_2_4-crm学webpack--a"><!-- raw HTML omitted -->4. CRM学webpack § <!-- raw HTML omitted --></a>
-      <ul>
-        <li><a href="#a-id_1_-href_2_41-目标一用webpack转译js--a"><!-- raw HTML omitted -->4.1. 目标一：用<code>webpack</code>转译<code>JS</code> § <!-- raw HTML omitted --></a></li>
-        <li><a href="#初始化-webpackconfigjs">初始化 <code>webpack.config.js</code></a></li>
-        <li><a href="#webpack-配置-entry-和-output"><code>webpack</code> 配置 <code>entry</code> 和 <code>output</code></a></li>
-        <li><a href="#a-id_1_-href_2_42-目标二理解文件名中hash的用途--a"><!-- raw HTML omitted -->4.2 目标二：理解文件名中<code>hash</code>的用途 § <!-- raw HTML omitted --></a></li>
-        <li><a href="#a-id_1_-href_2_43-目标三用webpack生成html--a"><!-- raw HTML omitted -->4.3 目标三：用<code>webpack</code>生成<code>HTML</code> § <!-- raw HTML omitted --></a></li>
-        <li><a href="#a-id_1_-href_2_44-目标四用webpack引入css--a"><!-- raw HTML omitted -->4.4 目标四：用<code>webpack</code>引入<code>CSS</code> § <!-- raw HTML omitted --></a></li>
-        <li><a href="#a-id_1_-href_2_45-目标五用webpack引入scss--a"><!-- raw HTML omitted -->4.5 目标五：用<code>webpack</code>引入<code>SCSS</code> § <!-- raw HTML omitted --></a></li>
-        <li><a href="#a-id_1_-href_2_46-目标六用webpack引入postcss-less-和-stylus--a"><!-- raw HTML omitted -->4.6. 目标六：用<code>webpack</code>引入<code>PostCSS</code>、 <code>LESS</code> 和 <code>Stylus</code> § <!-- raw HTML omitted --></a></li>
-        <li><a href="#a-id_1_-href_2_47-目标七用webpack引入图片--a"><!-- raw HTML omitted -->4.7. 目标七：用<code>webpack</code>引入图片 § <!-- raw HTML omitted --></a></li>
-        <li><a href="#a-id_1_-href_2_48-目标八用webpack的-import-实现懒加载-资源异步加载--a"><!-- raw HTML omitted -->4.8. 目标八：用<code>webpack</code>的 <code>import()</code> 实现懒加载 资源异步加载 § <!-- raw HTML omitted --></a></li>
-        <li><a href="#a-id_1_-href_2_49-目标九部署到github-pages--a"><!-- raw HTML omitted -->4.9. 目标九：部署到<code>GitHub Pages</code> § <!-- raw HTML omitted --></a></li>
-        <li><a href="#webpack-一键部署到-github">webpack 一键部署到 github</a></li>
-        <li><a href="#webpack-一键部署到-gitee">webpack 一键部署到 gitee</a></li>
-        <li><a href="#git-github-gitee-gitlab">git github gitee gitlab</a></li>
-        <li><a href="#a-id_1_-href_2_410-目标十自己写一个loader--a"><!-- raw HTML omitted -->4.10. 目标十：自己写一个<code>loader</code> § <!-- raw HTML omitted --></a></li>
-        <li><a href="#a-id_1_-href_2_411-目标十一自己写一个plugin--a"><!-- raw HTML omitted -->4.11. 目标十一：自己写一个<code>plugin</code> § <!-- raw HTML omitted --></a></li>
-        <li><a href="#a-id_1_-href_2_412-目标十二用webpack实现模块热替换hmr--a"><!-- raw HTML omitted -->4.12. 目标十二：用<code>webpack</code>实现模块热替换<code>HMR</code> § <!-- raw HTML omitted --></a></li>
-      </ul>
-    </li>
-    <li><a href="#a-id_1_-href_2_5-从webpack看前端工具的历史--a"><!-- raw HTML omitted -->5. 从webpack看前端工具的历史 § <!-- raw HTML omitted --></a>
-      <ul>
-        <li><a href="#a-id_1_-href_2_9-死掉的前端工具--a"><!-- raw HTML omitted -->9. 死掉的前端工具 § <!-- raw HTML omitted --></a></li>
-        <li><a href="#a-id_1_-href_2_9-和webpack竞争的工具--a"><!-- raw HTML omitted -->9. 和webpack竞争的工具 § <!-- raw HTML omitted --></a></li>
-        <li><a href="#a-id_1_-href_2_9-基于webpack的工具--a"><!-- raw HTML omitted -->9. 基于webpack的工具 § <!-- raw HTML omitted --></a></li>
-      </ul>
-    </li>
-    <li><a href="#a-id_1_-href_2_6-总结--a"><!-- raw HTML omitted -->6. 总结 § <!-- raw HTML omitted --></a></li>
-    <li><a href="#a-id_1_-href_2_7-问答--a"><!-- raw HTML omitted -->7. 问答 § <!-- raw HTML omitted --></a></li>
-    <li><a href="#a-id_1_-href_2_8-学英语--a"><!-- raw HTML omitted -->8. 学英语 § <!-- raw HTML omitted --></a>
-      <ul>
-        <li></li>
-      </ul>
-    </li>
-  </ul>
+<ul>
+<li>
+<ul>
+<li><a href="#目录-a-id-catalogue-href-catalogue-a-a-href-catalogue-a">目录<a id="catalogue" href="#catalogue" > § </a><a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#0-安装webpack">0.安装webpack</a></li>
+<li><a href="#a-id-1-href-2-1-前置知识-a"><a id="_$1_" href="#_$2_">1. 前置知识 § </a></a></li>
+<li><a href="#a-id-1-href-2-2-用到的工具-a"><a id="_$1_" href="#_$2_">2. 用到的工具 § </a></a></li>
+<li><a href="#a-id-1-href-2-3-webpack功能与使用-a"><a id="_$1_" href="#_$2_">3. webpack功能与使用 § </a></a>
+<ul>
+<li><a href="#使用webpack运行">使用webpack运行</a></li>
+</ul></li>
+<li><a href="#a-id-1-href-2-4-crm学webpack-a"><a id="_$1_" href="#_$2_">4. CRM学webpack § </a></a>
+<ul>
+<li><a href="#a-id-1-href-2-4-1-目标一-用-webpack-转译-js-a"><a id="_$1_" href="#_$2_">4.1. 目标一：用<code>webpack</code>转译<code>JS</code> § </a></a></li>
+<li><a href="#初始化-webpack-config-js">初始化 <code>webpack.config.js</code></a></li>
+<li><a href="#webpack-配置-entry-和-output"><code>webpack</code> 配置 <code>entry</code> 和 <code>output</code></a></li>
+<li><a href="#a-id-1-href-2-4-2-目标二-理解文件名中-hash-的用途-a"><a id="_$1_" href="#_$2_">4.2 目标二：理解文件名中<code>hash</code>的用途 § </a></a></li>
+<li><a href="#a-id-1-href-2-4-3-目标三-用-webpack-生成-html-a"><a id="_$1_" href="#_$2_">4.3 目标三：用<code>webpack</code>生成<code>HTML</code> § </a></a></li>
+<li><a href="#a-id-1-href-2-4-4-目标四-用-webpack-引入-css-a"><a id="_$1_" href="#_$2_">4.4 目标四：用<code>webpack</code>引入<code>CSS</code> § </a></a>
+<ul>
+<li><a href="#css-loader"><code>css-loader</code></a></li>
+<li><a href="#singletonstyletag">singletonStyleTag</a></li>
+<li><a href="#使用-minicssextractplugin-生产环境下">使用<code>MiniCssExtractPlugin</code>（生产环境下）</a></li>
+<li><a href="#使用两个-webpack-config-文件-切换开发模式">使用两个 <code>webpack config</code> 文件，切换开发模式</a></li>
+<li><a href="#用工具插件-webpack-merge-实现自动切换">用工具插件<code>webpack-merge</code>实现自动切换</a></li>
+<li><a href="#配置分离-生产环境构建">配置分离 生产环境构建</a></li>
+<li><a href="#loader-vs-plugin">loader vs plugin</a></li>
+</ul></li>
+<li><a href="#a-id-1-href-2-4-5-目标五-用-webpack-引入-scss-a"><a id="_$1_" href="#_$2_">4.5 目标五：用<code>webpack</code>引入<code>SCSS</code> § </a></a></li>
+<li><a href="#a-id-1-href-2-4-6-目标六-用-webpack-引入-postcss-less-和-stylus-a"><a id="_$1_" href="#_$2_">4.6. 目标六：用<code>webpack</code>引入<code>PostCSS</code>、 <code>LESS</code> 和 <code>Stylus</code> § </a></a></li>
+<li><a href="#a-id-1-href-2-4-7-目标七-用-webpack-引入图片-a"><a id="_$1_" href="#_$2_">4.7. 目标七：用<code>webpack</code>引入图片 § </a></a></li>
+<li><a href="#a-id-1-href-2-4-8-目标八-用-webpack-的-import-实现懒加载-资源异步加载-a"><a id="_$1_" href="#_$2_">4.8. 目标八：用<code>webpack</code>的 <code>import()</code> 实现懒加载 资源异步加载 § </a></a></li>
+<li><a href="#a-id-1-href-2-4-9-目标九-部署到-github-pages-a"><a id="_$1_" href="#_$2_">4.9. 目标九：部署到<code>GitHub Pages</code> § </a></a></li>
+<li><a href="#webpack-一键部署到-github">webpack 一键部署到 github</a></li>
+<li><a href="#webpack-一键部署到-gitee">webpack 一键部署到 gitee</a></li>
+<li><a href="#git-github-gitee-gitlab">git github gitee gitlab</a></li>
+<li><a href="#a-id-1-href-2-4-10-目标十-自己写一个-loader-a"><a id="_$1_" href="#_$2_">4.10. 目标十：自己写一个<code>loader</code> § </a></a></li>
+<li><a href="#a-id-1-href-2-4-11-目标十一-自己写一个-plugin-a"><a id="_$1_" href="#_$2_">4.11. 目标十一：自己写一个<code>plugin</code> § </a></a></li>
+<li><a href="#a-id-1-href-2-4-12-目标十二-用-webpack-实现模块热替换-hmr-a"><a id="_$1_" href="#_$2_">4.12. 目标十二：用<code>webpack</code>实现模块热替换<code>HMR</code> § </a></a></li>
+</ul></li>
+<li><a href="#a-id-1-href-2-5-从webpack看前端工具的历史-a"><a id="_$1_" href="#_$2_">5. 从webpack看前端工具的历史 § </a></a>
+<ul>
+<li><a href="#a-id-1-href-2-9-死掉的前端工具-a"><a id="_$1_" href="#_$2_">9. 死掉的前端工具 § </a></a></li>
+<li><a href="#a-id-1-href-2-9-和webpack竞争的工具-a"><a id="_$1_" href="#_$2_">9. 和webpack竞争的工具 § </a></a></li>
+<li><a href="#a-id-1-href-2-9-基于webpack的工具-a"><a id="_$1_" href="#_$2_">9. 基于webpack的工具 § </a></a></li>
+</ul></li>
+<li><a href="#a-id-1-href-2-6-总结-a"><a id="_$1_" href="#_$2_">6. 总结 § </a></a></li>
+<li><a href="#a-id-1-href-2-7-问答-a"><a id="_$1_" href="#_$2_">7. 问答 § </a></a></li>
+<li><a href="#a-id-1-href-2-8-学英语-a"><a id="_$1_" href="#_$2_">8. 学英语 § </a></a>
+<ul>
+<li>
+<ul>
+<li><a href="#参考文章">参考文章</a></li>
+<li><a href="#相关文章">相关文章</a></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
 </nav>
   </div>
 </div>
 
     
     <div class="post-content">
-      <h2 id="目录a-idcatalogue-hrefcatalogue---aa-hrefcatalogue--a">目录<!-- raw HTML omitted --> § <!-- raw HTML omitted --><!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+      
+
+<h2 id="目录-a-id-catalogue-href-catalogue-a-a-href-catalogue-a">目录<a id="catalogue" href="#catalogue" > § </a><a href="#catalogue"> ⇧ </a></h2>
+
 <ul>
-<li><!-- raw HTML omitted -->1. 前置知识 § <!-- raw HTML omitted --></li>
-<li><!-- raw HTML omitted -->2. 用到的工具 § <!-- raw HTML omitted --></li>
-<li><!-- raw HTML omitted -->3. <code>webpack</code>功能 § <!-- raw HTML omitted --></li>
-<li><!-- raw HTML omitted -->4. <code>CRM</code>学<code>webpack</code> § <!-- raw HTML omitted -->
+<li><a id="_$1_" href="#_$2_">1. 前置知识 § </a></li>
+<li><a id="_$1_" href="#_$2_">2. 用到的工具 § </a></li>
+<li><a id="_$1_" href="#_$2_">3. <code>webpack</code>功能 § </a></li>
+<li><a id="_$1_" href="#_$2_">4. <code>CRM</code>学<code>webpack</code> § </a>
+
 <ul>
-<li><!-- raw HTML omitted -->4.1. 目标一：用<code>webpack</code>转译<code>JS</code> § <!-- raw HTML omitted --></li>
-<li><!-- raw HTML omitted -->4.2 目标二理解文件名中<code>hash</code>的用途 § <!-- raw HTML omitted --></li>
-<li><!-- raw HTML omitted -->4.3 目标三：用<code>webpack</code>生成<code>HTML</code> § <!-- raw HTML omitted --></li>
-<li><!-- raw HTML omitted -->4.4 目标四：用<code>webpack</code>引入<code>CSS</code> § <!-- raw HTML omitted --></li>
-<li><!-- raw HTML omitted -->4.5 目标五：用<code>webpack</code>引入<code>SCSS</code> § <!-- raw HTML omitted --></li>
-<li><!-- raw HTML omitted -->4.6. 目标六：用<code>webpack</code>引入<code>LESS</code> 、 <code>Stylus</code>和<code>Postcss</code> § <!-- raw HTML omitted --></li>
-<li><!-- raw HTML omitted -->4.7. 目标七：用<code>webpack</code>引入图片 § <!-- raw HTML omitted --></li>
-<li><!-- raw HTML omitted -->4.8. 目标八：用<code>webpack</code>的 <code>import()</code> 实现懒加载 § <!-- raw HTML omitted --></li>
-<li><!-- raw HTML omitted -->4.9. 目标九：部署到<code>GitHub Pages</code> § <!-- raw HTML omitted --></li>
-</ul>
-</li>
-<li><!-- raw HTML omitted -->5. 从webpack看前端工具的历史 § <!-- raw HTML omitted -->
+<li><a id="_$1_" href="#_$2_">4.1. 目标一：用<code>webpack</code>转译<code>JS</code> § </a></li>
+<li><a id="_$1_" href="#_$2_">4.2 目标二理解文件名中<code>hash</code>的用途 § </a></li>
+<li><a id="_$1_" href="#_$2_">4.3 目标三：用<code>webpack</code>生成<code>HTML</code> § </a></li>
+<li><a id="_$1_" href="#_$2_">4.4 目标四：用<code>webpack</code>引入<code>CSS</code> § </a></li>
+<li><a id="_$1_" href="#_$2_">4.5 目标五：用<code>webpack</code>引入<code>SCSS</code> § </a></li>
+<li><a id="_$1_" href="#_$2_">4.6. 目标六：用<code>webpack</code>引入<code>LESS</code> 、 <code>Stylus</code>和<code>Postcss</code> § </a></li>
+<li><a id="_$1_" href="#_$2_">4.7. 目标七：用<code>webpack</code>引入图片 § </a></li>
+<li><a id="_$1_" href="#_$2_">4.8. 目标八：用<code>webpack</code>的 <code>import()</code> 实现懒加载 § </a></li>
+<li><a id="_$1_" href="#_$2_">4.9. 目标九：部署到<code>GitHub Pages</code> § </a></li>
+</ul></li>
+<li><a id="_$1_" href="#_$2_">5. 从webpack看前端工具的历史 § </a>
+
 <ul>
-<li><!-- raw HTML omitted -->9. 死掉的前端工具 § <!-- raw HTML omitted --></li>
-<li><!-- raw HTML omitted -->9. 和webpack竞争的工具 § <!-- raw HTML omitted --></li>
-<li><!-- raw HTML omitted -->9. 基于webpack的工具 § <!-- raw HTML omitted --></li>
+<li><a id="_$1_" href="#_$2_">9. 死掉的前端工具 § </a></li>
+<li><a id="_$1_" href="#_$2_">9. 和webpack竞争的工具 § </a></li>
+<li><a id="_$1_" href="#_$2_">9. 基于webpack的工具 § </a></li>
+</ul></li>
+<li><a id="_$1_" href="#_$2_">6. 总结 § </a></li>
+<li><a id="_$1_" href="#_$2_">4.10. 目标十：自己写一个<code>loader</code> § </a></li>
+<li><a id="_$1_" href="#_$2_">4.11. 目标十一：自己写一个<code>plugin</code> § </a></li>
+<li><a id="_$1_" href="#_$2_">7. 问答 § </a></li>
+<li><a id="_$1_" href="#_$2_">8. 学英语 § </a></li>
 </ul>
-</li>
-<li><!-- raw HTML omitted -->6. 总结 § <!-- raw HTML omitted --></li>
-<li><!-- raw HTML omitted -->4.10. 目标十：自己写一个<code>loader</code> § <!-- raw HTML omitted --></li>
-<li><!-- raw HTML omitted -->4.11. 目标十一：自己写一个<code>plugin</code> § <!-- raw HTML omitted --></li>
-<li><!-- raw HTML omitted -->7. 问答 § <!-- raw HTML omitted --></li>
-<li><!-- raw HTML omitted -->8. 学英语 § <!-- raw HTML omitted --></li>
-</ul>
-<hr>
-<h2 id="0安装webpack">0.安装webpack</h2>
+
+<hr />
+
+<h2 id="0-安装webpack">0.安装webpack</h2>
+
 <ul>
 <li>webpack 的运行，是需要依赖 node.js 的运行环境</li>
 <li><a href="https://webpack.js.org/">官网https://webpack.js.org/</a></li>
@@ -415,32 +439,40 @@
 <li>或者<code>npm init -y &amp;&amp; yarn add webpack@4 webpack-cli@3 webpack-dev-server@3 --dev</code></li>
 <li>不可两者都用</li>
 </ul>
-<hr>
+
+<hr />
+
 <blockquote>
 <p><a href="https://github.com/FrankFang/webpack-demo-3/package.json">实际的版本号是</a></p>
 </blockquote>
+
 <ul>
 <li><code>webpack@4.44.1</code></li>
 <li><code>webpack-cli@3.3.12</code></li>
 <li><code>webpack-dev-server@3.11.0</code></li>
 </ul>
-<hr>
+
+<hr />
+
 <blockquote>
 <p>前端工程化的理解</p>
 </blockquote>
+
 <ul>
 <li>模块化的价值 <a href="https://github.com/seajs/seajs/issues/547">sea.js前端模块化开发的价值 #547</a>
+
 <ul>
 <li>解决命名冲突</li>
 <li>依赖统一管理</li>
 <li>提高开发时代码可读性</li>
 <li>代码解耦，提高复用性</li>
+</ul></li>
 </ul>
-</li>
-</ul>
+
 <blockquote>
 <p><a href="https://webpack.docschina.org/concepts/modules/">webpack 模块</a>能以各种方式表达它们的依赖关系</p>
 </blockquote>
+
 <ul>
 <li><code>ES2015</code> <code>import</code> 语句</li>
 <li><code>CommonJS</code> <code>require()</code> 语句</li>
@@ -449,65 +481,88 @@
 <li><code>stylesheet</code> <code>url(...)</code> 或者 <code>HTML</code> <code>&lt;img src=...&gt;</code> 文件中的图片链接</li>
 <li>&hellip;</li>
 </ul>
-<hr>
-<h2 id="a-id_1_-href_2_1-前置知识--a"><!-- raw HTML omitted -->1. 前置知识 § <!-- raw HTML omitted --></h2>
+
+<hr />
+
+<h2 id="a-id-1-href-2-1-前置知识-a"><a id="_$1_" href="#_$2_">1. 前置知识 § </a></h2>
+
 <blockquote>
 <p>ES6</p>
 </blockquote>
+
 <ul>
 <li>let / const / 箭头函数 / &hellip; / class / Promise</li>
 <li>继承 / this / 原型</li>
 </ul>
+
 <blockquote>
 <p>CSS 语和布局</p>
 </blockquote>
+
 <ul>
 <li>flex</li>
 </ul>
+
 <blockquote>
 <p>MVC 概念</p>
 </blockquote>
+
 <ul>
 <li>Model / View / Controller /EventHub</li>
 </ul>
+
 <blockquote>
 <p>工具的使用</p>
 </blockquote>
+
 <ul>
 <li>VSCode / WebStorm</li>
 <li>终端命令行 npm / yarn / http-server / parcel / git</li>
 </ul>
-<h2 id="a-id_1_-href_2_2-用到的工具--a"><!-- raw HTML omitted -->2. 用到的工具 § <!-- raw HTML omitted --></h2>
+
+<h2 id="a-id-1-href-2-2-用到的工具-a"><a id="_$1_" href="#_$2_">2. 用到的工具 § </a></h2>
+
 <blockquote>
 <p><code>webpack@4</code>安装方法见<a href="https://webpack.js.org/guides/getting-started/">官网Getting Started</a></p>
 </blockquote>
+
 <ul>
 <li>在<code>webpack</code>后面加个 <code>@4</code> 即可</li>
 <li>如果<code>webpack</code>升级到了5， 思路依然有效</li>
 </ul>
+
 <blockquote>
 <p>webpack-dev-server</p>
 </blockquote>
+
 <ul>
 <li>用于本地预览</li>
 <li>parcel 不和 webpack 配套</li>
 </ul>
+
 <blockquote>
 <p>Yarn</p>
 </blockquote>
+
 <ul>
 <li>用于build发布</li>
 </ul>
-<hr>
+
+<hr />
+
 <blockquote>
 <p>正式进入框架阶段</p>
 </blockquote>
-<h2 id="a-id_1_-href_2_3-webpack功能与使用--a"><!-- raw HTML omitted -->3. webpack功能与使用 § <!-- raw HTML omitted --></h2>
+
+<h2 id="a-id-1-href-2-3-webpack功能与使用-a"><a id="_$1_" href="#_$2_">3. webpack功能与使用 § </a></h2>
+
 <blockquote>
 <p>一个包含前端的项目，里面可能有多个 .js, 多个 .css , 多个静态图片， 多个其他前端资源。
 一些 js 资源彼此之前存在依赖关系，当一个页面需要加载多个 .js 的话，也会拖累整个页面的加载速度</p>
+
 <p>为了解决这个问题，webpack 就把各种各样的静态资源，打包成了一个所谓的 assets. 加快浏览器加载</p>
 </blockquote>
+
 <ul>
 <li>转译代码（ES6转为ES5，SCSS转为CSS）</li>
 <li>构建build</li>
@@ -515,43 +570,48 @@
 <li>代码压缩</li>
 <li>代码分析</li>
 </ul>
+
 <blockquote>
 <p>Vue React Webpack 知识对基础知识的杂糅</p>
 </blockquote>
+
 <h3 id="使用webpack运行">使用webpack运行</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">mkdir ./src <span class="o">&amp;&amp;</span> touch index.html <span class="o">&amp;&amp;</span> <span class="nb">cd</span> src <span class="o">&amp;&amp;</span> touch index.js
-</code></pre></td></tr></table>
+<pre class="chroma"><code class="language-bash" data-lang="bash">mkdir ./src <span class="o">&amp;&amp;</span> touch index.html <span class="o">&amp;&amp;</span> <span class="nb">cd</span> src <span class="o">&amp;&amp;</span> touch index.js</code></pre></td></tr></table>
 </div>
-</div><p>调用本地局部安装的 webpack</p>
+</div>
+<p>调用本地局部安装的 webpack</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">./node_modules/.bin/webpack --version
-</code></pre></td></tr></table>
+<pre class="chroma"><code class="language-bash" data-lang="bash">./node_modules/.bin/webpack --version</code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p>自动寻找本地文件夹的 webpack</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">npx webpack
-</code></pre></td></tr></table>
+<pre class="chroma"><code class="language-bash" data-lang="bash">npx webpack</code></pre></td></tr></table>
 </div>
-</div><ul>
+</div>
+<ul>
 <li><code>npx</code>不能识别路径中的空格</li>
 </ul>
-<hr>
-<h2 id="a-id_1_-href_2_4-crm学webpack--a"><!-- raw HTML omitted -->4. CRM学webpack § <!-- raw HTML omitted --></h2>
+
+<hr />
+
+<h2 id="a-id-1-href-2-4-crm学webpack-a"><a id="_$1_" href="#_$2_">4. CRM学webpack § </a></h2>
+
 <ol>
 <li>目标一：用<code>webpack</code>转译<code>JS</code></li>
 <li>目标二：理解文件名中<code>hash</code>的用途</li>
@@ -569,41 +629,52 @@
 <li>目标十四：用<code>Flow</code>检查器</li>
 <li>目标十五：用<code>webpack</code>引入各大框架<code>Vuw</code> <code>React</code> <code>Electron</code></li>
 </ol>
-<hr>
-<h3 id="a-id_1_-href_2_41-目标一用webpack转译js--a"><!-- raw HTML omitted -->4.1. 目标一：用<code>webpack</code>转译<code>JS</code> § <!-- raw HTML omitted --></h3>
+
+<hr />
+
+<h3 id="a-id-1-href-2-4-1-目标一-用-webpack-转译-js-a"><a id="_$1_" href="#_$2_">4.1. 目标一：用<code>webpack</code>转译<code>JS</code> § </a></h3>
+
 <blockquote>
 <p>途径</p>
 </blockquote>
+
 <ul>
 <li>进入<a href="https://webpack.js.org/guides/getting-started/">官网Getting Started</a></li>
 <li>Copy</li>
 <li>Run</li>
 <li>Modify</li>
 </ul>
+
 <blockquote>
 <p>什么是转译<code>JS</code></p>
 </blockquote>
+
 <ul>
 <li>分析JS代码，并转译成低版本浏览器可以用的JS</li>
 <li><code>./src/x.js</code> <code>export default 'xxx'</code></li>
 <li><code>./src/index.js</code> <code>import x from './x.js'; console.log(x)</code></li>
 <li>项目路径中<code>npx webpack</code>，查看<code>dist</code>目录中<code>main.js</code></li>
 </ul>
-<hr>
-<h3 id="初始化-webpackconfigjs">初始化 <code>webpack.config.js</code></h3>
+
+<hr />
+
+<h3 id="初始化-webpack-config-js">初始化 <code>webpack.config.js</code></h3>
+
 <blockquote>
 <p>去除<code>npx webpack</code>的警告：<code>WARNING in configuration The 'mode' option has not been set...</code></p>
 </blockquote>
+
 <ul>
 <li><a href="https://webpack.js.org/concepts/configuration/">官网webpack-&gt;Configuration</a></li>
 <li>在 Configuration 去除WARNING 设置模式（mode） 生产模式（production） 开发模式（development）：</li>
 </ul>
+
 <blockquote>
 <p><code>webpack.config.js</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -615,7 +686,7 @@
 </span><span class="lnt">10
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kr">const</span> <span class="nx">path</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;path&#39;</span><span class="p">);</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kr">const</span> <span class="nx">path</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;path&#39;</span><span class="p">);</span>
 
 <span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
   <span class="nx">mode</span><span class="o">:</span> <span class="s1">&#39;development&#39;</span><span class="p">,</span>
@@ -627,24 +698,29 @@
 <span class="p">};</span>
 </code></pre></td></tr></table>
 </div>
-</div><ul>
+</div>
+<ul>
 <li>再运行<code>npx webpack</code></li>
 </ul>
+
 <blockquote>
 <p>生产模式（production） 开发模式（development）区别</p>
 </blockquote>
+
 <ul>
 <li>在<code>dist/main.js</code>中，生产模式压缩的代码体积小；开发模式，便于Debug</li>
 <li>如果暂时没有影响就不用管</li>
 <li>之后详细说明如何切换两者</li>
 </ul>
+
 <h3 id="webpack-配置-entry-和-output"><code>webpack</code> 配置 <code>entry</code> 和 <code>output</code></h3>
+
 <blockquote>
 <p>修改<code>webpack.config.js&gt; module.exports&gt; entry</code>默认入口文件<code>entry: './src/index.js'</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -654,7 +730,7 @@
 </span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
   <span class="nx">mode</span><span class="o">:</span> <span class="s1">&#39;development&#39;</span><span class="p">,</span>
   <span class="nx">entry</span><span class="o">:</span> <span class="s1">&#39;./src/index.js&#39;</span><span class="p">,</span>
   <span class="nx">output</span><span class="o">:</span> <span class="p">{</span>
@@ -664,7 +740,8 @@
 <span class="p">};</span>
 </code></pre></td></tr></table>
 </div>
-</div><ul>
+</div>
+<ul>
 <li>再运行<code>npx webpack</code></li>
 <li>查看<code>dist</code>路径后多了<code>foo.bundle.js</code></li>
 <li>修改<code>output&gt; filename</code>为<code>main.js</code></li>
@@ -674,34 +751,43 @@
 <li>默认目标路径可以不写<code>path: path.resolve(__dirname, 'dist')</code></li>
 <li>入口和出口的配置</li>
 </ul>
-<hr>
-<h3 id="a-id_1_-href_2_42-目标二理解文件名中hash的用途--a"><!-- raw HTML omitted -->4.2 目标二：理解文件名中<code>hash</code>的用途 § <!-- raw HTML omitted --></h3>
+
+<hr />
+
+<h3 id="a-id-1-href-2-4-2-目标二-理解文件名中-hash-的用途-a"><a id="_$1_" href="#_$2_">4.2 目标二：理解文件名中<code>hash</code>的用途 § </a></h3>
+
 <ul>
 <li><a href="https://webpack.js.org/guides/caching/">官网webpack-&gt;Caching</a></li>
 <li>出口的文件名改为<code>'[name].[contenthash].js'</code></li>
 <li>再运行<code>npx webpack</code>得到<code>main.xxx.js</code>文件名后多了hash值用来HTTP缓存</li>
 </ul>
+
 <blockquote>
 <p><code>HTTP</code>响应头中的 <code>Cache-Control</code></p>
 </blockquote>
+
 <ul>
 <li>设置缓存头</li>
 <li>点开响应头<code>Response Headers</code>中的<code>Cache-Control</code></li>
 <li><code>public, max-age=31536000</code>设置最大缓存一年</li>
 <li>缓存过期后，再重新请求</li>
 </ul>
+
 <blockquote>
 <p><code>HTTP</code> 缓存的意义</p>
 </blockquote>
+
 <ul>
 <li>缓存一年</li>
 <li>除了<code>index.html</code>外的资源存储在用户浏览器的缓存中</li>
 <li>减少连接数，访问时间不用重复下载资源</li>
 <li>资源的下载速度之间可差百倍</li>
 </ul>
+
 <blockquote>
 <p>怎么更新<code>JS CSS</code>之类的资源</p>
 </blockquote>
+
 <ul>
 <li>对资源文件内容做一个MD5 文件名后加hash</li>
 <li><code>'[name].[contenthash].js'</code>就是做这个的</li>
@@ -710,29 +796,35 @@
 <li>之前的缓存就没用了</li>
 <li>浏览器就会更新资源 ，删除原来的缓存</li>
 </ul>
+
 <blockquote>
 <p>为什么不缓存<code>index.html</code></p>
 </blockquote>
+
 <ul>
 <li>需要在首页中存储更改hash的文件名</li>
 <li>通知浏览器其他资源的入口</li>
 <li>首页一定不能做缓存，或者设置的最大缓存时间不能太长</li>
 <li>链接到 【HTTP非全解】</li>
 </ul>
-<hr>
+
+<hr />
+
 <blockquote>
 <p>dist文件越来越多，在 <code>yarn build</code>时设置自动删除并构建</p>
 </blockquote>
+
 <ul>
 <li>在<code>package.json&gt; script</code>中设置<code>rm -rf dist &amp;&amp; npx webpack</code></li>
 <li>可省略<code>npx</code>，自动寻找webpack，<code>rm -rf dist &amp;&amp; webpack</code></li>
 </ul>
+
 <blockquote>
 <p><code>package.json</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-json" data-lang="json"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -754,7 +846,7 @@
 </span><span class="lnt">20
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="p">{</span>
+<pre class="chroma"><code class="language-json" data-lang="json"><span class="p">{</span>
   <span class="nt">&#34;name&#34;</span><span class="p">:</span> <span class="s2">&#34;webpack-demo-1&#34;</span><span class="p">,</span>
   <span class="nt">&#34;version&#34;</span><span class="p">:</span> <span class="s2">&#34;1.0.0&#34;</span><span class="p">,</span>
   <span class="nt">&#34;description&#34;</span><span class="p">:</span> <span class="s2">&#34;&#34;</span><span class="p">,</span>
@@ -773,18 +865,19 @@
   <span class="p">},</span>
   <span class="nt">&#34;keywords&#34;</span><span class="p">:</span> <span class="p">[],</span>
   <span class="nt">&#34;author&#34;</span><span class="p">:</span> <span class="s2">&#34;&#34;</span><span class="p">,</span>
-  <span class="nt">&#34;license&#34;</span><span class="p">:</span> <span class="s2">&#34;ISC&#34;</span>
-</code></pre></td></tr></table>
+  <span class="nt">&#34;license&#34;</span><span class="p">:</span> <span class="s2">&#34;ISC&#34;</span></code></pre></td></tr></table>
 </div>
-</div><ul>
+</div>
+<ul>
 <li><code>yarn build</code>或者<code>npm run build</code></li>
 </ul>
+
 <blockquote>
 <p><code>webpack.config.js</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -796,7 +889,7 @@
 </span><span class="lnt">10
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kr">const</span> <span class="nx">path</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;path&#39;</span><span class="p">);</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kr">const</span> <span class="nx">path</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;path&#39;</span><span class="p">);</span>
 
 <span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
   <span class="nx">mode</span><span class="o">:</span> <span class="s1">&#39;development&#39;</span><span class="p">,</span>
@@ -808,34 +901,38 @@
 <span class="p">};</span>
 </code></pre></td></tr></table>
 </div>
-</div><h3 id="a-id_1_-href_2_43-目标三用webpack生成html--a"><!-- raw HTML omitted -->4.3 目标三：用<code>webpack</code>生成<code>HTML</code> § <!-- raw HTML omitted --></h3>
+</div>
+<h3 id="a-id-1-href-2-4-3-目标三-用-webpack-生成-html-a"><a id="_$1_" href="#_$2_">4.3 目标三：用<code>webpack</code>生成<code>HTML</code> § </a></h3>
+
 <blockquote>
 <p>之前先用git提交下代码备份</p>
 </blockquote>
+
 <ul>
 <li>搜索<code>webpack create html page</code></li>
 <li><a href="https://webpack.docschina.org/plugins/html-webpack-plugin/">官网webpack-&gt;HtmlWebpackPlugin</a></li>
 <li><a href="https://github.com/jantimon/html-webpack-plugin#options">github jantimon/html-webpack-plugin</a></li>
 </ul>
+
 <blockquote>
 <p>安装<code>HtmlWebpackPlugin</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># npm install --save-dev html-webpack-plugin</span>
-yarn add html-webpack-plugin --dev
-</code></pre></td></tr></table>
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># npm install --save-dev html-webpack-plugin</span>
+yarn add html-webpack-plugin --dev</code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p>配置<code>webpack.config.js</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -849,7 +946,7 @@ yarn add html-webpack-plugin --dev
 </span><span class="lnt">12
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kr">const</span> <span class="nx">HtmlWebpackPlugin</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;html-webpack-plugin&#39;</span><span class="p">);</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kr">const</span> <span class="nx">HtmlWebpackPlugin</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;html-webpack-plugin&#39;</span><span class="p">);</span>
 <span class="kr">const</span> <span class="nx">path</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;path&#39;</span><span class="p">);</span>
 
 <span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
@@ -863,21 +960,24 @@ yarn add html-webpack-plugin --dev
 <span class="p">};</span>
 </code></pre></td></tr></table>
 </div>
-</div><ul>
+</div>
+<ul>
 <li>运行<code>yarn build</code></li>
 <li>自动生成一个空的html，自动引入了<code>index.xxx.js</code></li>
 <li>dist目录下的文件都是自动生成的，不可手动修改</li>
 </ul>
+
 <blockquote>
 <p>生成一个html模板</p>
 </blockquote>
+
 <ul>
 <li>新建<code>./src/assets</code>目录 <code>index.html</code></li>
-<li>配置<code>webpack.config.js</code></li>
-</ul>
+
+<li><p>配置<code>webpack.config.js</code></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -894,30 +994,31 @@ yarn add html-webpack-plugin --dev
 </span><span class="lnt">15
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kr">const</span> <span class="nx">HtmlWebpackPlugin</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;html-webpack-plugin&#39;</span><span class="p">);</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kr">const</span> <span class="nx">HtmlWebpackPlugin</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;html-webpack-plugin&#39;</span><span class="p">);</span>
 <span class="kr">const</span> <span class="nx">path</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;path&#39;</span><span class="p">);</span>
 <span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="nx">mode</span><span class="o">:</span> <span class="s1">&#39;development&#39;</span><span class="p">,</span>
-  <span class="nx">entry</span><span class="o">:</span> <span class="s1">&#39;./src/index.js&#39;</span><span class="p">,</span>
-  <span class="nx">output</span><span class="o">:</span> <span class="p">{</span>
-    <span class="nx">path</span><span class="o">:</span> <span class="nx">path</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">,</span> <span class="s1">&#39;dist&#39;</span><span class="p">),</span>
-    <span class="nx">filename</span><span class="o">:</span> <span class="s1">&#39;index.[contenthash].js&#39;</span>
-  <span class="p">},</span>
-  <span class="nx">plugins</span><span class="o">:</span> <span class="p">[</span><span class="k">new</span> <span class="nx">HtmlWebpackPlugin</span><span class="p">({</span>
-    <span class="nx">title</span><span class="o">:</span> <span class="s1">&#39;webpack&#39;</span><span class="p">,</span>
-    <span class="c1">// filename: &#39;test.html&#39;,
-</span><span class="c1"></span>    <span class="nx">template</span><span class="o">:</span> <span class="s1">&#39;src/assets/index.html&#39;</span>
-  <span class="p">})]</span>
+<span class="nx">mode</span><span class="o">:</span> <span class="s1">&#39;development&#39;</span><span class="p">,</span>
+<span class="nx">entry</span><span class="o">:</span> <span class="s1">&#39;./src/index.js&#39;</span><span class="p">,</span>
+<span class="nx">output</span><span class="o">:</span> <span class="p">{</span>
+<span class="nx">path</span><span class="o">:</span> <span class="nx">path</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">,</span> <span class="s1">&#39;dist&#39;</span><span class="p">),</span>
+<span class="nx">filename</span><span class="o">:</span> <span class="s1">&#39;index.[contenthash].js&#39;</span>
+<span class="p">},</span>
+<span class="nx">plugins</span><span class="o">:</span> <span class="p">[</span><span class="k">new</span> <span class="nx">HtmlWebpackPlugin</span><span class="p">({</span>
+<span class="nx">title</span><span class="o">:</span> <span class="s1">&#39;webpack&#39;</span><span class="p">,</span>
+<span class="c1">// filename: &#39;test.html&#39;,
+</span><span class="c1"></span><span class="nx">template</span><span class="o">:</span> <span class="s1">&#39;src/assets/index.html&#39;</span>
+<span class="p">})]</span>
 <span class="p">};</span>
 </code></pre></td></tr></table>
 </div>
-</div><ul>
-<li>修改 <code>index.html</code> 为常用初始模板，之后配置</li>
-<li>对应的标签模板<code>&lt;title&gt;&lt;%= htmlWebpackPlugin.options.title %&gt;&lt;/title&gt;</code></li>
-</ul>
+</div></li>
+
+<li><p>修改 <code>index.html</code> 为常用初始模板，之后配置</p></li>
+
+<li><p>对应的标签模板<code>&lt;title&gt;&lt;%= htmlWebpackPlugin.options.title %&gt;&lt;/title&gt;</code></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-HTML" data-lang="HTML"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -935,127 +1036,143 @@ yarn add html-webpack-plugin --dev
 </span><span class="lnt">16
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-HTML" data-lang="HTML"><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<pre class="chroma"><code class="language-HTML" data-lang="HTML"><span class="cp">&lt;!DOCTYPE html&gt;</span>
 <span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;zh-Hans&#34;</span><span class="p">&gt;</span>
 
 <span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">&#34;UTF-8&#34;</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">http-equiv</span><span class="o">=</span><span class="s">&#34;X-UA-Compatible&#34;</span> <span class="na">content</span><span class="o">=</span><span class="s">&#34;IE=edge,chrome=1&#34;</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;viewport&#34;</span>
-    <span class="na">content</span><span class="o">=</span><span class="s">&#34;width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no,viewport-fit=cover&#34;</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span><span class="err">&lt;</span>%= htmlWebpackPlugin.options.title %&gt;<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">&#34;UTF-8&#34;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">meta</span> <span class="na">http-equiv</span><span class="o">=</span><span class="s">&#34;X-UA-Compatible&#34;</span> <span class="na">content</span><span class="o">=</span><span class="s">&#34;IE=edge,chrome=1&#34;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">meta</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;viewport&#34;</span>
+<span class="na">content</span><span class="o">=</span><span class="s">&#34;width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no,viewport-fit=cover&#34;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span><span class="err">&lt;</span>%= htmlWebpackPlugin.options.title %&gt;<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
 <span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
 
 <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
 <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
 
-<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
-</code></pre></td></tr></table>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div></li>
+</ul>
+
+<blockquote>
 <p><code>x.js</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kr">export</span> <span class="k">default</span> <span class="s1">&#39;xxx&#39;</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kr">export</span> <span class="k">default</span> <span class="s1">&#39;xxx&#39;</span>
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p><code>index.js</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kr">import</span> <span class="nx">x</span> <span class="nx">from</span> <span class="s1">&#39;./x.js&#39;</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kr">import</span> <span class="nx">x</span> <span class="nx">from</span> <span class="s1">&#39;./x.js&#39;</span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span>
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p>可以实现</p>
 </blockquote>
+
 <ul>
 <li>自动更新html文件名</li>
 <li>自动使用配置里的title标签</li>
 <li>自动把引入的js标签放到body底部</li>
 </ul>
+
 <blockquote>
 <p>要点</p>
 </blockquote>
+
 <ul>
 <li>自动更改文件名</li>
 <li>插件<code>HtmlWebpackPlugin</code> 生成 <code>HTML</code></li>
 </ul>
-<h3 id="a-id_1_-href_2_44-目标四用webpack引入css--a"><!-- raw HTML omitted -->4.4 目标四：用<code>webpack</code>引入<code>CSS</code> § <!-- raw HTML omitted --></h3>
+
+<h3 id="a-id-1-href-2-4-4-目标四-用-webpack-引入-css-a"><a id="_$1_" href="#_$2_">4.4 目标四：用<code>webpack</code>引入<code>CSS</code> § </a></h3>
+
 <p><code>webpack</code> 引入模块化 <code>CSS</code></p>
+
 <blockquote>
 <p><code>x.css</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-CSS" data-lang="CSS"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-CSS" data-lang="CSS"><span class="nt">body</span> <span class="p">{</span>
+<pre class="chroma"><code class="language-CSS" data-lang="CSS"><span class="nt">body</span> <span class="p">{</span>
   <span class="k">background</span><span class="p">:</span> <span class="kc">orange</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<span class="p">}</span></code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p><code>x.js</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kr">import</span> <span class="s1">&#39;./x.css&#39;</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kr">import</span> <span class="s1">&#39;./x.css&#39;</span>
 <span class="kr">export</span> <span class="k">default</span> <span class="s1">&#39;xxx&#39;</span>
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p><code>index.js</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kr">import</span> <span class="nx">x</span> <span class="nx">from</span> <span class="s1">&#39;./x.js&#39;</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kr">import</span> <span class="nx">x</span> <span class="nx">from</span> <span class="s1">&#39;./x.js&#39;</span>
 </code></pre></td></tr></table>
 </div>
-</div><ul>
+</div>
+<ul>
 <li>编译css时报错</li>
 <li><code>ERROR in ./src/x.css 1:5.</code></li>
 <li><code>Module parse failed: Unexpected token (1:5)</code></li>
 <li><code>You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file...</code></li>
 </ul>
+
 <blockquote>
 <p>需要<code>css-loader</code></p>
 </blockquote>
+
 <h4 id="css-loader"><code>css-loader</code></h4>
+
 <ul>
 <li>搜索<code>webpack css-loader</code></li>
 <li><a href="https://www.webpackjs.com/loaders/css-loader/">官网webpack-&gt;css-loader</a></li>
 <li>安装<code>yarn add css-loader --dev</code></li>
 </ul>
+
 <blockquote>
 <p>配置<code>webpack.config.js</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1081,7 +1198,7 @@ yarn add html-webpack-plugin --dev
 </span><span class="lnt">24
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kr">const</span> <span class="nx">HtmlWebpackPlugin</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;html-webpack-plugin&#39;</span><span class="p">);</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kr">const</span> <span class="nx">HtmlWebpackPlugin</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;html-webpack-plugin&#39;</span><span class="p">);</span>
 <span class="kr">const</span> <span class="nx">path</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;path&#39;</span><span class="p">);</span>
 
 <span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
@@ -1107,33 +1224,39 @@ yarn add html-webpack-plugin --dev
 <span class="p">};</span>
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p>按报错安装所需的工具模块<code>Module not found: Error: Can't resolve 'style-loader'</code></p>
 </blockquote>
+
 <ul>
 <li>安装<code>style-loader</code></li>
-<li><a href="https://www.webpackjs.com/loaders/style-loader/">官网 webpack -&gt; style-loader</a></li>
-</ul>
+
+<li><p><a href="https://www.webpackjs.com/loaders/style-loader/">官网 webpack -&gt; style-loader</a></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">yarn add style-loader --dev
-</code></pre></td></tr></table>
+<pre class="chroma"><code class="language-bash" data-lang="bash">yarn add style-loader --dev</code></pre></td></tr></table>
 </div>
-</div><ul>
-<li>再运行<code>yarn build</code></li>
-<li><code>style-loader</code>把<code>css-loader</code>解析的<code>CSS</code>代码放到页面的<code>head &gt; style</code>标签中</li>
-<li>开发模式下使用，无需用<code>link</code>标签引入<code>CSS</code>文件</li>
-<li>没有<code>Cache-Control</code>做缓存，未部署</li>
+</div></li>
+
+<li><p>再运行<code>yarn build</code></p></li>
+
+<li><p><code>style-loader</code>把<code>css-loader</code>解析的<code>CSS</code>代码放到页面的<code>head &gt; style</code>标签中</p></li>
+
+<li><p>开发模式下使用，无需用<code>link</code>标签引入<code>CSS</code>文件</p></li>
+
+<li><p>没有<code>Cache-Control</code>做缓存，未部署</p></li>
 </ul>
+
 <blockquote>
 <p><code>x.js</code>观察引入的<code>x.css</code>，之前暂时删掉<code>webpack.config.js</code>的<code>'style-loader',</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1145,7 +1268,7 @@ yarn add html-webpack-plugin --dev
 </span><span class="lnt">10
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kr">import</span> <span class="nx">css</span> <span class="nx">from</span> <span class="s1">&#39;./x.css&#39;</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kr">import</span> <span class="nx">css</span> <span class="nx">from</span> <span class="s1">&#39;./x.css&#39;</span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">dir</span><span class="p">(</span><span class="nx">css</span><span class="p">)</span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">css</span><span class="p">.</span><span class="nx">toString</span><span class="p">())</span>
 
@@ -1157,13 +1280,16 @@ yarn add html-webpack-plugin --dev
 <span class="kr">export</span> <span class="k">default</span> <span class="s1">&#39;xxx&#39;</span>
 </code></pre></td></tr></table>
 </div>
-</div><ul>
+</div>
+<ul>
 <li><code>cd ..</code>回到上级目录，再运行<code>yarn build</code></li>
 <li><code>cd dist</code>后，使用<code>hs -c-1</code>查看控制台</li>
 </ul>
+
 <blockquote>
 <p>使用更方便的<code>webpack-dev-server</code>自动刷新部署代替<code>hs -c-1</code></p>
 </blockquote>
+
 <ul>
 <li>搜索<code>webpack webpack-dev-server</code></li>
 <li><a href="https://www.webpackjs.com/configuration/dev-server/">官网webpack -&gt; 开发中 Server(devServer) webpack-dev-server</a></li>
@@ -1172,22 +1298,24 @@ yarn add html-webpack-plugin --dev
 <li><a href="https://webpack.docschina.org/guides/development/">官网webpack -&gt; DevServer 开发环境 zh</a></li>
 <li>先将 <code>mode</code> 设置为 <code>'development'</code></li>
 <li><a href="https://webpack.docschina.org/guides/development/#%E4%BD%BF%E7%94%A8-source-map">使用 source map</a>，配置<code>devtool: 'inline-source-map',</code>追踪error(错误) 和 warning(警告) 在源代码中的原始位置</li>
-<li><a href="https://webpack.docschina.org/guides/development/#%E4%BD%BF%E7%94%A8-webpack-dev-server">使用 webpack-dev-server</a></li>
-</ul>
+
+<li><p><a href="https://webpack.docschina.org/guides/development/#%E4%BD%BF%E7%94%A8-webpack-dev-server">使用 webpack-dev-server</a></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">yarn add webpack-dev-server --dev
-</code></pre></td></tr></table>
+<pre class="chroma"><code class="language-bash" data-lang="bash">yarn add webpack-dev-server --dev</code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div></li>
+</ul>
+
+<blockquote>
 <p>配置<code>webpack.config.js</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1217,7 +1345,7 @@ yarn add html-webpack-plugin --dev
 </span><span class="lnt">28
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kr">const</span> <span class="nx">HtmlWebpackPlugin</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;html-webpack-plugin&#39;</span><span class="p">);</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kr">const</span> <span class="nx">HtmlWebpackPlugin</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;html-webpack-plugin&#39;</span><span class="p">);</span>
 <span class="kr">const</span> <span class="nx">path</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;path&#39;</span><span class="p">);</span>
 
 <span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
@@ -1247,15 +1375,16 @@ yarn add html-webpack-plugin --dev
 <span class="p">};</span>
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p><code>package.json</code></p>
 </blockquote>
+
 <ul>
-<li><code>--open</code>表示是否打开浏览器，可删除</li>
-</ul>
+<li><p><code>--open</code>表示是否打开浏览器，可删除</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-JSON" data-lang="JSON"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -1265,28 +1394,36 @@ yarn add html-webpack-plugin --dev
 </span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JSON" data-lang="JSON"><span class="err">...</span>
-  <span class="s2">&#34;scripts&#34;</span><span class="err">:</span> <span class="p">{</span>
-    <span class="nt">&#34;build&#34;</span><span class="p">:</span> <span class="s2">&#34;rm -rf dist &amp;&amp; webpack&#34;</span><span class="p">,</span>
-    <span class="nt">&#34;test&#34;</span><span class="p">:</span> <span class="s2">&#34;echo \&#34;Error: no test specified\&#34; &amp;&amp; exit 1&#34;</span><span class="p">,</span>
-    <span class="nt">&#34;start&#34;</span><span class="p">:</span> <span class="s2">&#34;webpack-dev-server --open&#34;</span><span class="p">,</span>
-    <span class="nt">&#34;watch&#34;</span><span class="p">:</span> <span class="s2">&#34;webpack --watch&#34;</span>
-  <span class="p">}</span><span class="err">,</span>
-<span class="err">...</span>
-</code></pre></td></tr></table>
+<pre class="chroma"><code class="language-JSON" data-lang="JSON"><span class="err">...</span>
+<span class="s2">&#34;scripts&#34;</span><span class="err">:</span> <span class="p">{</span>
+<span class="nt">&#34;build&#34;</span><span class="p">:</span> <span class="s2">&#34;rm -rf dist &amp;&amp; webpack&#34;</span><span class="p">,</span>
+<span class="nt">&#34;test&#34;</span><span class="p">:</span> <span class="s2">&#34;echo \&#34;Error: no test specified\&#34; &amp;&amp; exit 1&#34;</span><span class="p">,</span>
+<span class="nt">&#34;start&#34;</span><span class="p">:</span> <span class="s2">&#34;webpack-dev-server --open&#34;</span><span class="p">,</span>
+<span class="nt">&#34;watch&#34;</span><span class="p">:</span> <span class="s2">&#34;webpack --watch&#34;</span>
+<span class="p">}</span><span class="err">,</span>
+<span class="err">...</span></code></pre></td></tr></table>
 </div>
-</div><ul>
-<li>运行<code>yarn start</code></li>
-<li>或者运行<code>npm run start</code></li>
-<li>访问端口<code>http://localhost:8080/</code></li>
-<li>测试实时更新页面<code>background: gray;</code></li>
-<li>不需要在开发时频繁<code>yarn build</code>或是手动删除dist</li>
-<li>不会创建或依赖<code>dist</code>目录，在内存中运行，自动更新</li>
+</div></li>
+
+<li><p>运行<code>yarn start</code></p></li>
+
+<li><p>或者运行<code>npm run start</code></p></li>
+
+<li><p>访问端口<code>http://localhost:8080/</code></p></li>
+
+<li><p>测试实时更新页面<code>background: gray;</code></p></li>
+
+<li><p>不需要在开发时频繁<code>yarn build</code>或是手动删除dist</p></li>
+
+<li><p>不会创建或依赖<code>dist</code>目录，在内存中运行，自动更新</p></li>
 </ul>
+
 <h4 id="singletonstyletag">singletonStyleTag</h4>
+
 <blockquote>
 <p>使用单个的 <code>&lt;style&gt;</code> 标签加载所有<code>css</code>属性，或者是每个css模块一个 <code>&lt;style&gt;</code> 标签</p>
 </blockquote>
+
 <ul>
 <li><a href="https://webpack.js.org/loaders/style-loader/#singletonstyletag">webpack style-loader singletonStyleTag</a></li>
 <li>默认值是<code>false</code>（每个<code>css</code>模块一个 <code>&lt;style&gt;</code> 标签）</li>
@@ -1296,31 +1433,37 @@ yarn add html-webpack-plugin --dev
 <li>当该值设置为<code>true</code> 时，那么，原本多个<code>&lt;style&gt;</code>标签会被合并成一个<code>&lt;style&gt;</code>标签</li>
 <li>官方文档上写的是默认开启，实际上是不开启的</li>
 </ul>
-<hr>
+
+<hr />
+
 <blockquote>
 <p>除了用<code>style-loader</code>生成<code>style</code>,也可以吧<code>CSS</code>抽成文件</p>
 </blockquote>
-<h4 id="使用minicssextractplugin生产环境下">使用<code>MiniCssExtractPlugin</code>（生产环境下）</h4>
+
+<h4 id="使用-minicssextractplugin-生产环境下">使用<code>MiniCssExtractPlugin</code>（生产环境下）</h4>
+
 <ul>
 <li>使用插件提取<code>CSS</code>文件</li>
 <li>搜索 <code>webpack css 抽成文件</code> <code>webpack css extract plugin</code></li>
 <li><a href="https://webpack.js.org/plugins/mini-css-extract-plugin/">webpack MiniCssExtractPlugin</a></li>
-<li>安装插件</li>
-</ul>
+
+<li><p>安装插件</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">yarn add mini-css-extract-plugin --dev
-</code></pre></td></tr></table>
+<pre class="chroma"><code class="language-bash" data-lang="bash">yarn add mini-css-extract-plugin --dev</code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div></li>
+</ul>
+
+<blockquote>
 <p>配置<code>webpack.config.js</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1368,7 +1511,7 @@ yarn add html-webpack-plugin --dev
 </span><span class="lnt">46
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kr">const</span> <span class="nx">HtmlWebpackPlugin</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;html-webpack-plugin&#39;</span><span class="p">);</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kr">const</span> <span class="nx">HtmlWebpackPlugin</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;html-webpack-plugin&#39;</span><span class="p">);</span>
 <span class="kr">const</span> <span class="nx">MiniCssExtractPlugin</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;mini-css-extract-plugin&#39;</span><span class="p">);</span>
 <span class="kr">const</span> <span class="nx">path</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;path&#39;</span><span class="p">);</span>
 
@@ -1416,58 +1559,68 @@ yarn add html-webpack-plugin --dev
 <span class="p">};</span>
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p>目前实现了</p>
 </blockquote>
+
 <ul>
 <li><code>MiniCssExtractPlugin</code>把<code>css-loader</code>解析的<code>CSS</code>代码放到页面的<code>head &gt; link</code>标签中</li>
 <li>实时生成带<code>hash</code>的<code>js</code>文件到<code>script</code>标签中，并放在<code>body</code>标签内的最后</li>
 <li>做<code>Cache-Control</code>适用于生产环境</li>
 </ul>
+
 <blockquote>
 <p>要点：引入 <code>css</code>的两种方式</p>
 </blockquote>
+
 <ul>
 <li>开发时可以使用<code>JS</code>生成<code>style</code>，快速，不需要在<code>dist</code>中生成<code>css</code>文件</li>
 <li>发布时可以把<code>CSS</code>抽成带<code>hash</code>文件，可以做缓存</li>
 </ul>
+
 <blockquote>
 <p>如何做到在开发时用第一种方式</p>
+
 <p>发布时，即在生产环境中，用第二种方式</p>
 </blockquote>
+
 <ul>
 <li>根据模式选择不同的途径</li>
 <li>生产环境：<code>yarn build</code>；
+
 <ul>
 <li>对应的<code>package.json</code>中：<code>&quot;build&quot;: &quot;rm -rf dist &amp;&amp; webpack&quot;</code></li>
 <li>做缓存，用<code>MiniCssExtractPlugin</code>生成<code>link</code>标签</li>
 <li>引入带<code>hash</code>的<code>CSS</code>文件</li>
 <li>插入<code>head</code>标签</li>
-</ul>
-</li>
+</ul></li>
 <li>开发环境：<code>yarn start</code>；
+
 <ul>
 <li>对应的<code>package.json</code>中：<code>&quot;start&quot;: &quot;webpack-dev-server&quot;</code></li>
 <li>不做缓存，用<code>css-loader</code>生成<code>style</code>标签</li>
 <li>插入<code>head</code>标签</li>
+</ul></li>
 </ul>
-</li>
-</ul>
+
 <blockquote>
 <p>终端命令行使用帮助文档<code>webpack --help</code></p>
 </blockquote>
+
 <ul>
 <li>未全局安装的话用<code>npx webpack --help</code></li>
 <li>设置配置文件<code>package.json</code>的路径</li>
 <li><code>&quot;build&quot;: &quot;rm -rf dist &amp;&amp; webpack --config webpack.config.prod.js&quot;</code></li>
 <li>意思是，在<code>build</code>时，不适用默认的配置，而是使用<code>webpack.config.prod.js</code>的配置</li>
 </ul>
+
 <blockquote>
 <p><code>package.json</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-JSON" data-lang="JSON"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1498,7 +1651,7 @@ yarn add html-webpack-plugin --dev
 </span><span class="lnt">29
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JSON" data-lang="JSON"><span class="p">{</span>
+<pre class="chroma"><code class="language-JSON" data-lang="JSON"><span class="p">{</span>
   <span class="nt">&#34;name&#34;</span><span class="p">:</span> <span class="s2">&#34;webpack-demo-1&#34;</span><span class="p">,</span>
   <span class="nt">&#34;version&#34;</span><span class="p">:</span> <span class="s2">&#34;1.0.0&#34;</span><span class="p">,</span>
   <span class="nt">&#34;description&#34;</span><span class="p">:</span> <span class="s2">&#34;&#34;</span><span class="p">,</span>
@@ -1526,20 +1679,21 @@ yarn add html-webpack-plugin --dev
     <span class="nt">&#34;start&#34;</span><span class="p">:</span> <span class="s2">&#34;webpack-dev-server&#34;</span><span class="p">,</span>
     <span class="nt">&#34;watch&#34;</span><span class="p">:</span> <span class="s2">&#34;webpack --watch&#34;</span>
   <span class="p">},</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<span class="p">}</span></code></pre></td></tr></table>
 </div>
-</div><ul>
+</div>
+<ul>
 <li><code>yarn start</code></li>
 <li>查看<code>dist</code>，目录中<code>index.html</code>是否引入了<code>style</code>标签</li>
 </ul>
-<h4 id="使用两个-webpack-config-文件切换开发模式">使用两个 <code>webpack config</code> 文件，切换开发模式</h4>
+
+<h4 id="使用两个-webpack-config-文件-切换开发模式">使用两个 <code>webpack config</code> 文件，切换开发模式</h4>
+
 <ul>
-<li>默认<code>webpack.config.js</code></li>
-</ul>
+<li><p>默认<code>webpack.config.js</code></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1567,40 +1721,40 @@ yarn add html-webpack-plugin --dev
 </span><span class="lnt">26
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kr">const</span> <span class="nx">HtmlWebpackPlugin</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;html-webpack-plugin&#39;</span><span class="p">);</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kr">const</span> <span class="nx">HtmlWebpackPlugin</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;html-webpack-plugin&#39;</span><span class="p">);</span>
 <span class="kr">const</span> <span class="nx">path</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;path&#39;</span><span class="p">);</span>
 
 <span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="nx">mode</span><span class="o">:</span> <span class="s1">&#39;development&#39;</span><span class="p">,</span>
-  <span class="nx">entry</span><span class="o">:</span> <span class="s1">&#39;./src/index.js&#39;</span><span class="p">,</span>
-  <span class="nx">devtool</span><span class="o">:</span> <span class="s1">&#39;inline-source-map&#39;</span><span class="p">,</span>
-  <span class="nx">devServer</span><span class="o">:</span> <span class="p">{</span>
-    <span class="nx">contentBase</span><span class="o">:</span> <span class="s1">&#39;./dist&#39;</span><span class="p">,</span>
-  <span class="p">},</span>
-  <span class="nx">output</span><span class="o">:</span> <span class="p">{...},</span>
-  <span class="nx">plugins</span><span class="o">:</span> <span class="p">[</span>
-    <span class="k">new</span> <span class="nx">HtmlWebpackPlugin</span><span class="p">({...}),</span>
-  <span class="p">],</span>
-  <span class="nx">module</span><span class="o">:</span> <span class="p">{</span>
-    <span class="nx">rules</span><span class="o">:</span> <span class="p">[</span>
-      <span class="p">{</span>
-        <span class="nx">test</span><span class="o">:</span> <span class="sr">/\.css$/</span><span class="p">,</span>
-        <span class="c1">// mode: &#39;development&#39;
-</span><span class="c1"></span>        <span class="c1">// `yarn start`
-</span><span class="c1"></span>        <span class="c1">// css-loader
-</span><span class="c1"></span>        <span class="nx">use</span><span class="o">:</span> <span class="p">[</span> <span class="s1">&#39;style-loader&#39;</span><span class="p">,</span> <span class="s1">&#39;css-loader&#39;</span> <span class="p">]</span>
-      <span class="p">}</span>
-    <span class="p">]</span>
+<span class="nx">mode</span><span class="o">:</span> <span class="s1">&#39;development&#39;</span><span class="p">,</span>
+<span class="nx">entry</span><span class="o">:</span> <span class="s1">&#39;./src/index.js&#39;</span><span class="p">,</span>
+<span class="nx">devtool</span><span class="o">:</span> <span class="s1">&#39;inline-source-map&#39;</span><span class="p">,</span>
+<span class="nx">devServer</span><span class="o">:</span> <span class="p">{</span>
+<span class="nx">contentBase</span><span class="o">:</span> <span class="s1">&#39;./dist&#39;</span><span class="p">,</span>
+<span class="p">},</span>
+<span class="nx">output</span><span class="o">:</span> <span class="p">{...},</span>
+<span class="nx">plugins</span><span class="o">:</span> <span class="p">[</span>
+<span class="k">new</span> <span class="nx">HtmlWebpackPlugin</span><span class="p">({...}),</span>
+<span class="p">],</span>
+<span class="nx">module</span><span class="o">:</span> <span class="p">{</span>
+<span class="nx">rules</span><span class="o">:</span> <span class="p">[</span>
+  <span class="p">{</span>
+    <span class="nx">test</span><span class="o">:</span> <span class="sr">/\.css$/</span><span class="p">,</span>
+    <span class="c1">// mode: &#39;development&#39;
+</span><span class="c1"></span>    <span class="c1">// `yarn start`
+</span><span class="c1"></span>    <span class="c1">// css-loader
+</span><span class="c1"></span>    <span class="nx">use</span><span class="o">:</span> <span class="p">[</span> <span class="s1">&#39;style-loader&#39;</span><span class="p">,</span> <span class="s1">&#39;css-loader&#39;</span> <span class="p">]</span>
   <span class="p">}</span>
+<span class="p">]</span>
+<span class="p">}</span>
 <span class="p">};</span>
 </code></pre></td></tr></table>
 </div>
-</div><ul>
-<li>创建生产环境的<code>webpack.config.prod.js</code></li>
-</ul>
+</div></li>
+
+<li><p>创建生产环境的<code>webpack.config.prod.js</code></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1642,57 +1796,60 @@ yarn add html-webpack-plugin --dev
 </span><span class="lnt">40
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">HtmlWebpackPlugin</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;html-webpack-plugin&#39;</span><span class="p">);</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">HtmlWebpackPlugin</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;html-webpack-plugin&#39;</span><span class="p">);</span>
 <span class="kr">const</span> <span class="nx">MiniCssExtractPlugin</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;mini-css-extract-plugin&#39;</span><span class="p">);</span>
 <span class="kr">const</span> <span class="nx">path</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;path&#39;</span><span class="p">);</span>
 
 <span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="nx">mode</span><span class="o">:</span> <span class="s1">&#39;production&#39;</span><span class="p">,</span>
-  <span class="nx">entry</span><span class="o">:</span> <span class="s1">&#39;./src/index.js&#39;</span><span class="p">,</span>
-  <span class="nx">devtool</span><span class="o">:</span> <span class="s1">&#39;inline-source-map&#39;</span><span class="p">,</span>
-  <span class="nx">devServer</span><span class="o">:</span> <span class="p">{</span>
-    <span class="nx">contentBase</span><span class="o">:</span> <span class="s1">&#39;./dist&#39;</span><span class="p">,</span>
-  <span class="p">},</span>
-  <span class="nx">output</span><span class="o">:</span> <span class="p">{...},</span>
-  <span class="nx">plugins</span><span class="o">:</span> <span class="p">[</span>
-    <span class="k">new</span> <span class="nx">HtmlWebpackPlugin</span><span class="p">({...}),</span>
-    <span class="k">new</span> <span class="nx">MiniCssExtractPlugin</span><span class="p">({</span>
-      <span class="nx">filename</span><span class="o">:</span> <span class="s1">&#39;[name].[contenthash].css&#39;</span><span class="p">,</span>
-      <span class="nx">chunkFilename</span><span class="o">:</span> <span class="s1">&#39;[id].[contenthash].css&#39;</span><span class="p">,</span>
-      <span class="nx">ignoreOrder</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
-    <span class="p">}),</span>
-  <span class="p">],</span>
-  <span class="nx">module</span><span class="o">:</span> <span class="p">{</span>
-    <span class="nx">rules</span><span class="o">:</span> <span class="p">[</span>
+<span class="nx">mode</span><span class="o">:</span> <span class="s1">&#39;production&#39;</span><span class="p">,</span>
+<span class="nx">entry</span><span class="o">:</span> <span class="s1">&#39;./src/index.js&#39;</span><span class="p">,</span>
+<span class="nx">devtool</span><span class="o">:</span> <span class="s1">&#39;inline-source-map&#39;</span><span class="p">,</span>
+<span class="nx">devServer</span><span class="o">:</span> <span class="p">{</span>
+<span class="nx">contentBase</span><span class="o">:</span> <span class="s1">&#39;./dist&#39;</span><span class="p">,</span>
+<span class="p">},</span>
+<span class="nx">output</span><span class="o">:</span> <span class="p">{...},</span>
+<span class="nx">plugins</span><span class="o">:</span> <span class="p">[</span>
+<span class="k">new</span> <span class="nx">HtmlWebpackPlugin</span><span class="p">({...}),</span>
+<span class="k">new</span> <span class="nx">MiniCssExtractPlugin</span><span class="p">({</span>
+  <span class="nx">filename</span><span class="o">:</span> <span class="s1">&#39;[name].[contenthash].css&#39;</span><span class="p">,</span>
+  <span class="nx">chunkFilename</span><span class="o">:</span> <span class="s1">&#39;[id].[contenthash].css&#39;</span><span class="p">,</span>
+  <span class="nx">ignoreOrder</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+<span class="p">}),</span>
+<span class="p">],</span>
+<span class="nx">module</span><span class="o">:</span> <span class="p">{</span>
+<span class="nx">rules</span><span class="o">:</span> <span class="p">[</span>
+  <span class="p">{</span>
+    <span class="nx">test</span><span class="o">:</span> <span class="sr">/\.css$/</span><span class="p">,</span>
+    <span class="c1">// mode: &#39;production&#39;
+</span><span class="c1"></span>    <span class="c1">// `yarn build`
+</span><span class="c1"></span>    <span class="c1">// MiniCssExtractPlugin
+</span><span class="c1"></span>    <span class="nx">use</span><span class="o">:</span> <span class="p">[</span>
       <span class="p">{</span>
-        <span class="nx">test</span><span class="o">:</span> <span class="sr">/\.css$/</span><span class="p">,</span>
-        <span class="c1">// mode: &#39;production&#39;
-</span><span class="c1"></span>        <span class="c1">// `yarn build`
-</span><span class="c1"></span>        <span class="c1">// MiniCssExtractPlugin
-</span><span class="c1"></span>        <span class="nx">use</span><span class="o">:</span> <span class="p">[</span>
-          <span class="p">{</span>
-            <span class="nx">loader</span><span class="o">:</span> <span class="nx">MiniCssExtractPlugin</span><span class="p">.</span><span class="nx">loader</span><span class="p">,</span>
-            <span class="nx">options</span><span class="o">:</span> <span class="p">{</span>
-              <span class="nx">publicPath</span><span class="o">:</span> <span class="s1">&#39;../&#39;</span><span class="p">,</span>
-            <span class="p">},</span>
-          <span class="p">},</span>
-          <span class="s1">&#39;css-loader&#39;</span>
-        <span class="p">]</span>
-      <span class="p">}</span>
+        <span class="nx">loader</span><span class="o">:</span> <span class="nx">MiniCssExtractPlugin</span><span class="p">.</span><span class="nx">loader</span><span class="p">,</span>
+        <span class="nx">options</span><span class="o">:</span> <span class="p">{</span>
+          <span class="nx">publicPath</span><span class="o">:</span> <span class="s1">&#39;../&#39;</span><span class="p">,</span>
+        <span class="p">},</span>
+      <span class="p">},</span>
+      <span class="s1">&#39;css-loader&#39;</span>
     <span class="p">]</span>
   <span class="p">}</span>
+<span class="p">]</span>
+<span class="p">}</span>
 <span class="p">};</span>
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div></li>
+</ul>
+
+<blockquote>
 <p>继承共有属性 <code>webpack.config.base.js</code></p>
 </blockquote>
+
 <ul>
-<li>配置继承<code>webpack.config.base.js</code></li>
-</ul>
+<li><p>配置继承<code>webpack.config.base.js</code></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1710,30 +1867,33 @@ yarn add html-webpack-plugin --dev
 </span><span class="lnt">16
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">HtmlWebpackPlugin</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;html-webpack-plugin&#39;</span><span class="p">);</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">HtmlWebpackPlugin</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;html-webpack-plugin&#39;</span><span class="p">);</span>
 <span class="kr">const</span> <span class="nx">path</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;path&#39;</span><span class="p">);</span>
 
 <span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="nx">entry</span><span class="o">:</span> <span class="s1">&#39;./src/index.js&#39;</span><span class="p">,</span>
-  <span class="nx">output</span><span class="o">:</span> <span class="p">{</span>
-    <span class="nx">path</span><span class="o">:</span> <span class="nx">path</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">,</span> <span class="s1">&#39;dist&#39;</span><span class="p">),</span>
-    <span class="nx">filename</span><span class="o">:</span> <span class="s1">&#39;index.[contenthash].js&#39;</span>
-  <span class="p">},</span>
-  <span class="nx">plugins</span><span class="o">:</span> <span class="p">[</span>
-    <span class="k">new</span> <span class="nx">HtmlWebpackPlugin</span><span class="p">({</span>
-    <span class="nx">title</span><span class="o">:</span> <span class="s1">&#39;webpack&#39;</span><span class="p">,</span>
-    <span class="nx">template</span><span class="o">:</span> <span class="s1">&#39;src/assets/index.html&#39;</span>
-    <span class="p">})</span>
-  <span class="p">]</span>
+<span class="nx">entry</span><span class="o">:</span> <span class="s1">&#39;./src/index.js&#39;</span><span class="p">,</span>
+<span class="nx">output</span><span class="o">:</span> <span class="p">{</span>
+<span class="nx">path</span><span class="o">:</span> <span class="nx">path</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">,</span> <span class="s1">&#39;dist&#39;</span><span class="p">),</span>
+<span class="nx">filename</span><span class="o">:</span> <span class="s1">&#39;index.[contenthash].js&#39;</span>
+<span class="p">},</span>
+<span class="nx">plugins</span><span class="o">:</span> <span class="p">[</span>
+<span class="k">new</span> <span class="nx">HtmlWebpackPlugin</span><span class="p">({</span>
+<span class="nx">title</span><span class="o">:</span> <span class="s1">&#39;webpack&#39;</span><span class="p">,</span>
+<span class="nx">template</span><span class="o">:</span> <span class="s1">&#39;src/assets/index.html&#39;</span>
+<span class="p">})</span>
+<span class="p">]</span>
 <span class="p">};</span>
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div></li>
+</ul>
+
+<blockquote>
 <p><code>webpack.config.js</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1757,7 +1917,7 @@ yarn add html-webpack-plugin --dev
 </span><span class="lnt">22
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kr">const</span> <span class="nx">path</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;path&#39;</span><span class="p">);</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kr">const</span> <span class="nx">path</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;path&#39;</span><span class="p">);</span>
 <span class="kr">const</span> <span class="nx">base</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./webpack.config.base.js&#39;</span><span class="p">)</span>
 
 <span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
@@ -1781,12 +1941,13 @@ yarn add html-webpack-plugin --dev
 <span class="p">};</span>
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p><code>webpack.config.prod.js</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1822,7 +1983,7 @@ yarn add html-webpack-plugin --dev
 </span><span class="lnt">34
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kr">const</span> <span class="nx">MiniCssExtractPlugin</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;mini-css-extract-plugin&#39;</span><span class="p">);</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kr">const</span> <span class="nx">MiniCssExtractPlugin</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;mini-css-extract-plugin&#39;</span><span class="p">);</span>
 <span class="kr">const</span> <span class="nx">base</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./webpack.config.base.js&#39;</span><span class="p">)</span>
 <span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
   <span class="p">...</span><span class="nx">base</span><span class="p">,</span>
@@ -1858,17 +2019,22 @@ yarn add html-webpack-plugin --dev
 <span class="p">};</span>
 </code></pre></td></tr></table>
 </div>
-</div><ul>
+</div>
+<ul>
 <li><code>yarn build</code> production mode</li>
 <li><code>yarn start</code> development mode</li>
 </ul>
-<h4 id="用工具插件webpack-merge实现自动切换">用工具插件<code>webpack-merge</code>实现自动切换</h4>
+
+<h4 id="用工具插件-webpack-merge-实现自动切换">用工具插件<code>webpack-merge</code>实现自动切换</h4>
+
 <ul>
 <li><a href="https://www.cnblogs.com/wangtong111/p/11197313.html">survivejs/webpack-merge</a></li>
 <li><a href="https://note.youdao.com/">webpack-merge 配置分离</a></li>
 <li><a href="https://www.npmjs.com/package/webpack-merge">npm webpack-merge</a></li>
 </ul>
+
 <h4 id="配置分离-生产环境构建">配置分离 生产环境构建</h4>
+
 <ul>
 <li><a href="https://www.webpackjs.com/guides/production/">为每个环境编写彼此独立的 webpack 配置</a></li>
 <li><a href="https://webpack.docschina.org/guides/production/">生产环境 webpack v5.0 beta</a></li>
@@ -1879,9 +2045,11 @@ yarn add html-webpack-plugin --dev
 <li><a href="https://juejin.im/post/5e6518946fb9a07c820fbaaf">带你深度解锁Webpack系列(进阶篇)</a></li>
 <li><a href="https://www.jianshu.com/p/fe06ea267d3e">webpack常用插件汇总</a></li>
 </ul>
+
 <blockquote>
 <p>环境变量</p>
 </blockquote>
+
 <ul>
 <li><a href="https://www.webpackjs.com/guides/environment-variables/">使用环境变量</a></li>
 <li><a href="https://juejin.im/post/5d6f6514f265da03da24b391">webpack4多环境变量问题</a></li>
@@ -1899,42 +2067,56 @@ yarn add html-webpack-plugin --dev
 <li><a href="https://blog.csdn.net/hong10086/article/details/85230458/">webpack开发环境和生产环境切换原理</a></li>
 <li><a href="http://www.liuchungui.com/2016/12/18/webpack%E5%BC%80%E5%8F%91%E5%92%8C%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E7%9A%84%E5%BB%BA%E7%AB%8B/">webpack开发和生产环境的建立</a></li>
 </ul>
-<hr>
+
+<hr />
+
 <blockquote>
 <p><code>webpack</code> 实现了</p>
 </blockquote>
+
 <ul>
 <li>内置<code>babel-loader</code>转译n个<code>JS</code>文件为1个<code>JS</code>文件</li>
-<li>用<code>JS``import CSS</code>，<code>style/css-loader</code>就转译为<code>style</code>标签</li>
+<li>用<code>JS</code><code>import CSS</code>，<code>style/css-loader</code>就转译为<code>style</code>标签</li>
 <li>用<code>MiniCssExtractPlugin</code>转译n个<code>CSS</code>文件为1个<code>CSS</code>文件</li>
 </ul>
-<hr>
+
+<hr />
+
 <h4 id="loader-vs-plugin">loader vs plugin</h4>
+
 <blockquote>
 <p><code>loader</code> 和 <code>plugin</code>的区别是</p>
 </blockquote>
+
 <ul>
 <li>翻译一下，<code>loader</code>是加载器，<code>plugin</code>是插件</li>
 <li><code>loader</code>作用加载文件</li>
 <li><code>plugin</code>作用扩展/加强功能</li>
 </ul>
+
 <blockquote>
 <p>举例</p>
 </blockquote>
+
 <ul>
 <li><code>babel-loader</code>用来加载JS，转移为低版本的JS</li>
 <li><code>style-loader</code>和<code>css-loader</code>用来加载CSS，变为页面中的标签</li>
 <li>new 一个 <code>HtmlWebpackPlugin</code> <code>MiniCssExtractPlugin</code></li>
 <li>plugins 需要安装后require() loader直接安装依赖使用</li>
 </ul>
+
 <blockquote>
 <p>搜英文关键词，选择性地CRM</p>
 </blockquote>
-<hr>
-<h3 id="a-id_1_-href_2_45-目标五用webpack引入scss--a"><!-- raw HTML omitted -->4.5 目标五：用<code>webpack</code>引入<code>SCSS</code> § <!-- raw HTML omitted --></h3>
+
+<hr />
+
+<h3 id="a-id-1-href-2-4-5-目标五-用-webpack-引入-scss-a"><a id="_$1_" href="#_$2_">4.5 目标五：用<code>webpack</code>引入<code>SCSS</code> § </a></h3>
+
 <blockquote>
 <p>将<code>x.css</code>改名为<code>x.scss</code>，在<code>x.js</code>里改为<code>import css from './x.scss'</code></p>
 </blockquote>
+
 <ul>
 <li><a href="http://xmasuhai.xyz/post/scss/%E6%9B%B4%E5%A5%BD%E7%9A%84css-01scss%E5%85%A5%E9%97%A8/">链接到 【SCSS非全解】</a></li>
 <li><a href="https://www.webpackjs.com/loaders/sass-loader/">sass-loader v4.44.0</a></li>
@@ -1942,18 +2124,21 @@ yarn add html-webpack-plugin --dev
 <li><a href="https://sass-lang.com/dart-sass">Dart Sass</a></li>
 <li><a href="https://github.com/sass/dart-sass">sass/dart-sass github</a></li>
 </ul>
+
 <blockquote>
 <p>注意不要覆盖配置中的<code>module</code></p>
 </blockquote>
+
 <ul>
 <li>在<code>rules: []</code>里加一句<code>...base.module.rules,</code></li>
 </ul>
+
 <blockquote>
 <p><code>webpack.config.base.js</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -2000,7 +2185,7 @@ yarn add html-webpack-plugin --dev
 </span><span class="lnt">45
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">HtmlWebpackPlugin</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;html-webpack-plugin&#39;</span><span class="p">);</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">HtmlWebpackPlugin</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;html-webpack-plugin&#39;</span><span class="p">);</span>
 <span class="kr">const</span> <span class="nx">path</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;path&#39;</span><span class="p">);</span>
 
 <span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
@@ -2047,12 +2232,13 @@ yarn add html-webpack-plugin --dev
 <span class="p">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p><code>webpack.config.js</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -2082,7 +2268,7 @@ yarn add html-webpack-plugin --dev
 </span><span class="lnt">28
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kr">const</span> <span class="nx">path</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;path&#39;</span><span class="p">)</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kr">const</span> <span class="nx">path</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;path&#39;</span><span class="p">)</span>
 <span class="kr">const</span> <span class="nx">base</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./webpack.config.base.js&#39;</span><span class="p">)</span>
 
 <span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
@@ -2112,12 +2298,13 @@ yarn add html-webpack-plugin --dev
 <span class="p">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p><code>webpack.config.prod.js</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -2169,7 +2356,7 @@ yarn add html-webpack-plugin --dev
 </span><span class="lnt">50
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kr">const</span> <span class="nx">MiniCssExtractPlugin</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;mini-css-extract-plugin&#39;</span><span class="p">);</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kr">const</span> <span class="nx">MiniCssExtractPlugin</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;mini-css-extract-plugin&#39;</span><span class="p">);</span>
 <span class="kr">const</span> <span class="nx">base</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./webpack.config.base.js&#39;</span><span class="p">)</span>
 <span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
   <span class="p">...</span><span class="nx">base</span><span class="p">,</span>
@@ -2221,12 +2408,13 @@ yarn add html-webpack-plugin --dev
 <span class="p">};</span>
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p><code>x.js</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -2240,7 +2428,7 @@ yarn add html-webpack-plugin --dev
 </span><span class="lnt">12
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kr">import</span> <span class="s1">&#39;./x.scss&#39;</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kr">import</span> <span class="s1">&#39;./x.scss&#39;</span>
 
 <span class="c1">// import css from &#39;./x.scss&#39;
 </span><span class="c1">// console.dir(css)
@@ -2254,26 +2442,32 @@ yarn add html-webpack-plugin --dev
 <span class="kr">export</span> <span class="k">default</span> <span class="s1">&#39;xxx&#39;</span>
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
-<p>要点</p>
-</blockquote>
-<ul>
-<li><a href="https://webpack.js.org/loaders/sass-loader/">webpack sass-loader</a></li>
-<li><code>node-sass</code>已经过时</li>
-<li>代替使用<code>dart-sass</code></li>
-</ul>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">yarn add sass-loader sass dart-sass --dev
-</code></pre></td></tr></table>
 </div>
-</div><h3 id="a-id_1_-href_2_46-目标六用webpack引入postcss-less-和-stylus--a"><!-- raw HTML omitted -->4.6. 目标六：用<code>webpack</code>引入<code>PostCSS</code>、 <code>LESS</code> 和 <code>Stylus</code> § <!-- raw HTML omitted --></h3>
 <blockquote>
 <p>要点</p>
 </blockquote>
+
+<ul>
+<li><a href="https://webpack.js.org/loaders/sass-loader/">webpack sass-loader</a></li>
+<li><code>node-sass</code>已经过时</li>
+
+<li><p>代替使用<code>dart-sass</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">yarn add sass-loader sass dart-sass --dev</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+
+<h3 id="a-id-1-href-2-4-6-目标六-用-webpack-引入-postcss-less-和-stylus-a"><a id="_$1_" href="#_$2_">4.6. 目标六：用<code>webpack</code>引入<code>PostCSS</code>、 <code>LESS</code> 和 <code>Stylus</code> § </a></h3>
+
+<blockquote>
+<p>要点</p>
+</blockquote>
+
 <ul>
 <li><code>SCSS</code>、 <code>LESS</code> 和 <code>Stylus</code>使用原理完全没区别</li>
 <li>改个后缀，兼容CSS语法的部分通用</li>
@@ -2283,58 +2477,62 @@ yarn add html-webpack-plugin --dev
 <li><a href="https://webpack.js.org/loaders/less-loader/">webpack less-loader v5.0 beta</a></li>
 <li><a href="https://webpack.docschina.org/loaders/less-loader/#root">webpack less-loader v5.0 beta zh</a></li>
 <li><a href="https://github.com/shama/stylus-loader">webpack stylus</a></li>
-<li><a href="https://webpack.docschina.org/loaders/postcss-loader/">webpack postcss-loader</a></li>
-</ul>
+
+<li><p><a href="https://webpack.docschina.org/loaders/postcss-loader/">webpack postcss-loader</a></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">yarn add less-loader --dev <span class="o">&amp;&amp;</span>
+<pre class="chroma"><code class="language-bash" data-lang="bash">yarn add less-loader --dev <span class="o">&amp;&amp;</span>
 yarn add stylus-loader stylus --dev <span class="o">&amp;&amp;</span>
 yarn add postcss-loader --dev <span class="o">&amp;&amp;</span>
 yarn add autoprefixer --dev <span class="o">&amp;&amp;</span>
-yarn add postcss-cssnext --dev
-</code></pre></td></tr></table>
+yarn add postcss-cssnext --dev</code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div></li>
+</ul>
+
+<blockquote>
 <p><code>x.js</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kr">import</span> <span class="s1">&#39;./x.scss&#39;</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kr">import</span> <span class="s1">&#39;./x.scss&#39;</span>
 <span class="kr">import</span> <span class="s1">&#39;./y.less&#39;</span>
 <span class="kr">import</span> <span class="s1">&#39;./z.styl&#39;</span>
 <span class="kr">export</span> <span class="k">default</span> <span class="s1">&#39;xxx&#39;</span>
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p><code>index.js</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kr">import</span> <span class="nx">x</span> <span class="nx">from</span> <span class="s1">&#39;./x.js&#39;</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kr">import</span> <span class="nx">x</span> <span class="nx">from</span> <span class="s1">&#39;./x.js&#39;</span>
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p><code>webpack.config.base.js</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -2400,7 +2598,7 @@ yarn add postcss-cssnext --dev
 </span><span class="lnt">64
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">HtmlWebpackPlugin</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;html-webpack-plugin&#39;</span><span class="p">);</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">HtmlWebpackPlugin</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;html-webpack-plugin&#39;</span><span class="p">);</span>
 <span class="kr">const</span> <span class="nx">path</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;path&#39;</span><span class="p">);</span>
 <span class="kr">const</span> <span class="nx">styleLoader</span> <span class="o">=</span> <span class="p">{</span>
   <span class="nx">loader</span><span class="o">:</span> <span class="s1">&#39;style-loader&#39;</span><span class="p">,</span>
@@ -2466,12 +2664,13 @@ yarn add postcss-cssnext --dev
 <span class="p">};</span>
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p><code>webpack.config.js</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -2488,7 +2687,7 @@ yarn add postcss-cssnext --dev
 </span><span class="lnt">15
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kr">const</span> <span class="nx">base</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./webpack.config.base.js&#39;</span><span class="p">)</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kr">const</span> <span class="nx">base</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./webpack.config.base.js&#39;</span><span class="p">)</span>
 
 <span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
   <span class="p">...</span><span class="nx">base</span><span class="p">,</span>
@@ -2505,12 +2704,13 @@ yarn add postcss-cssnext --dev
 <span class="p">};</span>
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p><code>webpack.config.prod.js</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -2570,7 +2770,7 @@ yarn add postcss-cssnext --dev
 </span><span class="lnt">58
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kr">const</span> <span class="nx">MiniCssExtractPlugin</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;mini-css-extract-plugin&#39;</span><span class="p">);</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kr">const</span> <span class="nx">MiniCssExtractPlugin</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;mini-css-extract-plugin&#39;</span><span class="p">);</span>
 <span class="kr">const</span> <span class="nx">base</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./webpack.config.base.js&#39;</span><span class="p">)</span>
 <span class="kr">const</span> <span class="nx">cssLoaderPlugin</span> <span class="o">=</span> <span class="p">{</span>
   <span class="nx">loader</span><span class="o">:</span> <span class="nx">MiniCssExtractPlugin</span><span class="p">.</span><span class="nx">loader</span><span class="p">,</span>
@@ -2630,13 +2830,15 @@ yarn add postcss-cssnext --dev
 <span class="p">};</span>
 </code></pre></td></tr></table>
 </div>
-</div><h3 id="a-id_1_-href_2_47-目标七用webpack引入图片--a"><!-- raw HTML omitted -->4.7. 目标七：用<code>webpack</code>引入图片 § <!-- raw HTML omitted --></h3>
+</div>
+<h3 id="a-id-1-href-2-4-7-目标七-用-webpack-引入图片-a"><a id="_$1_" href="#_$2_">4.7. 目标七：用<code>webpack</code>引入图片 § </a></h3>
+
 <blockquote>
 <p><code>index.js</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -2645,7 +2847,7 @@ yarn add postcss-cssnext --dev
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kr">import</span> <span class="nx">x</span> <span class="nx">from</span> <span class="s1">&#39;./x.js&#39;</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kr">import</span> <span class="nx">x</span> <span class="nx">from</span> <span class="s1">&#39;./x.js&#39;</span>
 <span class="kr">const</span> <span class="nx">div</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;app&#39;</span><span class="p">)</span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">)</span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">div</span><span class="p">)</span>
@@ -2654,48 +2856,52 @@ yarn add postcss-cssnext --dev
 </span><span class="sb">`</span>
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p>报错 <code>Cannot set property 'innerHTML of null'</code></p>
 </blockquote>
+
 <ul>
 <li><code>.innerHTNL</code>前面的<code>div</code>是个<code>null</code></li>
 <li>未取到<code>div</code>，<code>console.log(div)</code></li>
 <li>注意<code>&lt;div id=&quot;app&quot;&gt;&lt;/div&gt;</code>中的<code>id</code>没有<code>#</code></li>
 </ul>
+
 <blockquote>
 <p><code>src/assets/index.html</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-HTML" data-lang="HTML"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-HTML" data-lang="HTML">...
+<pre class="chroma"><code class="language-HTML" data-lang="HTML">...
 <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;app&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
 <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
-...
-</code></pre></td></tr></table>
+...</code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p><code>yarn start</code>的页面中为请求到图片</p>
 </blockquote>
+
 <ul>
 <li>因为<code>webpack-dev-server</code>加载的路径并不是当前目录，而是<code>dist</code>目录</li>
 </ul>
+
 <blockquote>
 <p>怎样加载图片路径</p>
-</blockquote>
-<blockquote>
+
 <p><code>index.js</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -2703,7 +2909,7 @@ yarn add postcss-cssnext --dev
 </span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kr">import</span> <span class="nx">x</span> <span class="nx">from</span> <span class="s1">&#39;./x.js&#39;</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kr">import</span> <span class="nx">x</span> <span class="nx">from</span> <span class="s1">&#39;./x.js&#39;</span>
 <span class="kr">import</span> <span class="nx">gif</span> <span class="nx">from</span> <span class="s1">&#39;./assets/BlkHo.gif&#39;</span>
 <span class="kr">const</span> <span class="nx">div</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;app&#39;</span><span class="p">)</span>
 <span class="nx">div</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="sb">`
@@ -2711,7 +2917,8 @@ yarn add postcss-cssnext --dev
 </span><span class="sb">`</span>
 </code></pre></td></tr></table>
 </div>
-</div><ul>
+</div>
+<ul>
 <li><code>import</code>的时什么将由<code>loader</code>决定</li>
 <li>搜<code>webpack image-loader</code>，由许多可供使用的</li>
 <li>使用 <code>file-loader</code> 引入本地图片</li>
@@ -2721,19 +2928,22 @@ yarn add postcss-cssnext --dev
 <li><a href="https://webpack.js.org/loaders/file-loader/">webpack file-loader</a></li>
 <li><a href="https://github.com/webpack-contrib/file-loader">github file-loader</a></li>
 </ul>
+
 <blockquote>
 <p><code>Error: Can't resolve 'file-loader'</code></p>
 </blockquote>
+
 <ul>
 <li>手动安装<code>file-loader</code></li>
 <li><code>yarn add file-loader --dev</code></li>
 </ul>
+
 <blockquote>
 <p><code>webpack.config.base.js</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -2742,7 +2952,7 @@ yarn add postcss-cssnext --dev
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="p">...,</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="p">...,</span>
 <span class="p">{</span>
     <span class="nx">test</span><span class="o">:</span> <span class="sr">/\.(png|svg|je?pg|gif)$/i</span><span class="p">,</span>
     <span class="nx">use</span><span class="o">:</span> <span class="p">[</span>
@@ -2751,12 +2961,13 @@ yarn add postcss-cssnext --dev
 <span class="p">},</span>
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p><code>index.js</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -2770,7 +2981,7 @@ yarn add postcss-cssnext --dev
 </span><span class="lnt">12
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kr">import</span>  <span class="nx">from</span> <span class="s1">&#39;./x.js&#39;</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kr">import</span>  <span class="nx">from</span> <span class="s1">&#39;./x.js&#39;</span>
 <span class="kr">import</span> <span class="nx">gif</span> <span class="nx">from</span> <span class="s1">&#39;./assets/BlkHo.gif&#39;</span>
 <span class="kr">import</span> <span class="nx">png</span> <span class="nx">from</span> <span class="s1">&#39;./assets/1.png&#39;</span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">gif</span><span class="p">)</span>
@@ -2784,33 +2995,40 @@ yarn add postcss-cssnext --dev
 </span><span class="sb">`</span>
 </code></pre></td></tr></table>
 </div>
-</div><ul>
+</div>
+<ul>
 <li>自动添加哈希</li>
 <li>图片放到本地的<code>assets</code></li>
 <li>使用<code>import</code>得到路径的引用</li>
 <li>将引用放到<code>src</code></li>
 <li><code>file-loader</code>的作用就是把文件变成文件路径</li>
 </ul>
-<hr>
-<h3 id="a-id_1_-href_2_48-目标八用webpack的-import-实现懒加载-资源异步加载--a"><!-- raw HTML omitted -->4.8. 目标八：用<code>webpack</code>的 <code>import()</code> 实现懒加载 资源异步加载 § <!-- raw HTML omitted --></h3>
+
+<hr />
+
+<h3 id="a-id-1-href-2-4-8-目标八-用-webpack-的-import-实现懒加载-资源异步加载-a"><a id="_$1_" href="#_$2_">4.8. 目标八：用<code>webpack</code>的 <code>import()</code> 实现懒加载 资源异步加载 § </a></h3>
+
 <blockquote>
 <p>当模块数量过多、资源体积过大时，将暂时用不到的模块延迟加载</p>
+
 <p>使得页面初次渲染时用户下载的资源尽可能小</p>
+
 <p>后续的模块等到恰当的时机再去触发加载</p>
 </blockquote>
+
 <ul>
 <li>提升用户体验</li>
 <li>按需分步加载</li>
 <li><code>import</code> 函数异步加载。返回<code>promise</code>对象实例</li>
 <li>不推荐使用<code>require.ensure</code></li>
 <li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/import">import MDN</a></li>
-<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/import#%E5%8A%A8%E6%80%81import">动态import</a></li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/import#动态import">动态import</a></li>
 <li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/export">export MDN</a></li>
-<li><a href="https://webpack.docschina.org/guides/lazy-loading/">懒加载</a></li>
-</ul>
+
+<li><p><a href="https://webpack.docschina.org/guides/lazy-loading/">懒加载</a></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -2827,64 +3045,74 @@ yarn add postcss-cssnext --dev
 </span><span class="lnt">15
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kr">const</span> <span class="nx">button</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;button&#39;</span><span class="p">)</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kr">const</span> <span class="nx">button</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;button&#39;</span><span class="p">)</span>
 <span class="nx">button</span><span class="p">.</span><span class="nx">innerText</span> <span class="o">=</span> <span class="s1">&#39;懒加载&#39;</span>
 <span class="nx">button</span><span class="p">.</span><span class="nx">onclick</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
-  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;点击了 button&#34;</span><span class="p">)</span>
-  <span class="kr">const</span> <span class="nx">lazyPromise</span> <span class="o">=</span> <span class="kr">import</span><span class="p">(</span><span class="s1">&#39;./lazy.js&#39;</span><span class="p">)</span>
-  <span class="c1">// 加载时异步的 拿到的是一个 Promise对象实例
-</span><span class="c1"></span>  <span class="nx">lazyPromise</span><span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">module</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">module</span><span class="p">)</span>
-    <span class="kr">const</span> <span class="nx">fn</span> <span class="o">=</span> <span class="nx">module</span><span class="p">.</span><span class="k">default</span>
-    <span class="nx">fn</span><span class="p">()</span>
-  <span class="p">},</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
-      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;模块加载错误&#34;</span><span class="p">)</span>
-  <span class="p">})</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;点击了 button&#34;</span><span class="p">)</span>
+<span class="kr">const</span> <span class="nx">lazyPromise</span> <span class="o">=</span> <span class="kr">import</span><span class="p">(</span><span class="s1">&#39;./lazy.js&#39;</span><span class="p">)</span>
+<span class="c1">// 加载时异步的 拿到的是一个 Promise对象实例
+</span><span class="c1"></span><span class="nx">lazyPromise</span><span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">module</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">module</span><span class="p">)</span>
+<span class="kr">const</span> <span class="nx">fn</span> <span class="o">=</span> <span class="nx">module</span><span class="p">.</span><span class="k">default</span>
+<span class="nx">fn</span><span class="p">()</span>
+<span class="p">},</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;模块加载错误&#34;</span><span class="p">)</span>
+<span class="p">})</span>
 <span class="p">}</span>
 <span class="nx">div</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">button</span><span class="p">)</span>
 </code></pre></td></tr></table>
 </div>
-</div><hr>
-<h3 id="a-id_1_-href_2_49-目标九部署到github-pages--a"><!-- raw HTML omitted -->4.9. 目标九：部署到<code>GitHub Pages</code> § <!-- raw HTML omitted --></h3>
+</div></li>
+</ul>
+
+<hr />
+
+<h3 id="a-id-1-href-2-4-9-目标九-部署到-github-pages-a"><a id="_$1_" href="#_$2_">4.9. 目标九：部署到<code>GitHub Pages</code> § </a></h3>
+
 <blockquote>
 <p>本地打包</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">yarn build
-</code></pre></td></tr></table>
+<pre class="chroma"><code class="language-bash" data-lang="bash">yarn build</code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p>本地预览</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">cd</span> dist
-hs -c-1
-</code></pre></td></tr></table>
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">cd</span> dist
+hs -c-1</code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p>上传代码</p>
 </blockquote>
+
 <h3 id="webpack-一键部署到-github">webpack 一键部署到 github</h3>
+
 <blockquote>
 <p>原来的部署过程</p>
 </blockquote>
+
 <p>1.将“站点”部署 上传 dist 目录</p>
+
 <ul>
 <li>githubPages</li>
 </ul>
+
 <p>2.使用git分支 上传到 gh-pages 分支</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -2892,78 +3120,83 @@ hs -c-1
 </span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">rm -f dist
+<pre class="chroma"><code class="language-bash" data-lang="bash">rm -f dist
 git add . <span class="o">&amp;&amp;</span> git commit -am <span class="s2">&#34;remove dist&#34;</span> <span class="o">&amp;&amp;</span> git push
 yarn build
 
 git branch gh-pages
-git checkout gh-pages
-</code></pre></td></tr></table>
+git checkout gh-pages</code></pre></td></tr></table>
 </div>
-</div><ul>
-<li>手滑把<code>.gitignore</code>删除了，重置，撤回上一步</li>
-</ul>
+</div>
+<ul>
+<li><p>手滑把<code>.gitignore</code>删除了，重置，撤回上一步</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">git reset --hard HEAD
-</code></pre></td></tr></table>
+<pre class="chroma"><code class="language-bash" data-lang="bash">git reset --hard HEAD</code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div></li>
+</ul>
+
+<blockquote>
 <p>只保留 <code>dist</code> <code>node_modules</code> <code>.gitignore</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">git add . <span class="o">&amp;&amp;</span> git commit -m <span class="s2">&#34;remove source code&#34;</span> <span class="o">&amp;&amp;</span> git push
-</code></pre></td></tr></table>
+<pre class="chroma"><code class="language-bash" data-lang="bash">git add . <span class="o">&amp;&amp;</span> git commit -m <span class="s2">&#34;remove source code&#34;</span> <span class="o">&amp;&amp;</span> git push</code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p>拷出 dist 的所有内容</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nx">mv</span> <span class="nx">dist</span><span class="o">/*</span> <span class="p">.</span><span class="o">/</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nx">mv</span> <span class="nx">dist</span><span class="o">/*</span> <span class="p">.</span><span class="o">/</span>
 <span class="nx">rm</span> <span class="o">-</span><span class="nx">rf</span> <span class="nx">dist</span>
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p>上传网站根目录</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nx">git</span> <span class="nx">add</span> <span class="p">.</span> <span class="o">&amp;&amp;</span> <span class="nx">git</span> <span class="nx">commit</span> <span class="o">-</span><span class="nx">m</span> <span class="s2">&#34;remove create website&#34;</span> <span class="o">&amp;&amp;</span> <span class="nx">git</span> <span class="nx">push</span> <span class="o">--</span><span class="nx">set</span><span class="o">-</span><span class="nx">upstream</span> <span class="nx">origin</span> <span class="nx">gh</span><span class="o">-</span><span class="nx">pages</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nx">git</span> <span class="nx">add</span> <span class="p">.</span> <span class="o">&amp;&amp;</span> <span class="nx">git</span> <span class="nx">commit</span> <span class="o">-</span><span class="nx">m</span> <span class="s2">&#34;remove create website&#34;</span> <span class="o">&amp;&amp;</span> <span class="nx">git</span> <span class="nx">push</span> <span class="o">--</span><span class="nx">set</span><span class="o">-</span><span class="nx">upstream</span> <span class="nx">origin</span> <span class="nx">gh</span><span class="o">-</span><span class="nx">pages</span>
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p>一个分支用来写代码 一个分支用来预览</p>
 </blockquote>
+
 <ul>
 <li>loading 顺时针转 请求 逆时针转 下载</li>
 <li>git stash 将修改过的文件暂存</li>
 <li>git checkout master</li>
 <li>git stash pop</li>
 </ul>
+
 <blockquote>
 <p>用脚本一键部署 <code>deploy.sh</code></p>
 </blockquote>
+
 <ul>
-<li>回到上一个分支 <code>git checkout -</code></li>
-</ul>
+<li><p>回到上一个分支 <code>git checkout -</code></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-sh" data-lang="sh"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -2974,7 +3207,7 @@ git checkout gh-pages
 </span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">yarn build <span class="o">&amp;&amp;</span>
+<pre class="chroma"><code class="language-sh" data-lang="sh">yarn build <span class="o">&amp;&amp;</span>
 git checkout gh-pages <span class="o">&amp;&amp;</span>
 rm -rf src *.sh *.js *.json yarn.lock *.css *.scss *.less *.styl *.gif *.png  <span class="o">&amp;&amp;</span>
 mv dist/* ./ <span class="o">&amp;&amp;</span>
@@ -2982,21 +3215,24 @@ rm -rf dist<span class="p">;</span>
 git add . <span class="o">&amp;&amp;</span>
 git commit -m <span class="s2">&#34;preview gh-pages&#34;</span> <span class="o">&amp;&amp;</span>
 git push
-git checkout -
-</code></pre></td></tr></table>
+git checkout -</code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div></li>
+</ul>
+
+<blockquote>
 <p>以后如果改了代码 需要更新预览，先提交master 在一键脚本</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">sh ./deploy.sh
-</code></pre></td></tr></table>
+<pre class="chroma"><code class="language-bash" data-lang="bash">sh ./deploy.sh</code></pre></td></tr></table>
 </div>
-</div><h3 id="webpack-一键部署到-gitee">webpack 一键部署到 gitee</h3>
+</div>
+<h3 id="webpack-一键部署到-gitee">webpack 一键部署到 gitee</h3>
+
 <ul>
 <li>登录网站 新建仓库</li>
 <li><strong>点击SSH</strong></li>
@@ -3005,12 +3241,13 @@ git checkout -
 <li><code>git push -u gitee master</code></li>
 <li><code>git remote -v</code>查看仓库</li>
 </ul>
+
 <blockquote>
 <p>再次新建一个脚本<code>deploy_cn.sh</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-sh" data-lang="sh"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -3021,7 +3258,7 @@ git checkout -
 </span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">yarn build <span class="o">&amp;&amp;</span>
+<pre class="chroma"><code class="language-sh" data-lang="sh">yarn build <span class="o">&amp;&amp;</span>
 git checkout gh-pages <span class="o">&amp;&amp;</span>
 rm -rf src *.sh *.js *.json yarn.lock *.css *.scss *.less *.styl *.gif *.png  <span class="o">&amp;&amp;</span>
 mv dist/* ./ <span class="o">&amp;&amp;</span>
@@ -3029,15 +3266,21 @@ rm -rf dist<span class="p">;</span>
 git add . <span class="o">&amp;&amp;</span>
 git commit -m <span class="s2">&#34;preview gh-pages&#34;</span> <span class="o">&amp;&amp;</span>
 git push gitee gh-pages:master <span class="o">&amp;&amp;</span>
-git checkout -
-</code></pre></td></tr></table>
+git checkout -</code></pre></td></tr></table>
 </div>
-</div><h3 id="git-github-gitee-gitlab">git github gitee gitlab</h3>
-<hr>
-<h3 id="a-id_1_-href_2_410-目标十自己写一个loader--a"><!-- raw HTML omitted -->4.10. 目标十：自己写一个<code>loader</code> § <!-- raw HTML omitted --></h3>
-<h3 id="a-id_1_-href_2_411-目标十一自己写一个plugin--a"><!-- raw HTML omitted -->4.11. 目标十一：自己写一个<code>plugin</code> § <!-- raw HTML omitted --></h3>
-<hr>
-<h3 id="a-id_1_-href_2_412-目标十二用webpack实现模块热替换hmr--a"><!-- raw HTML omitted -->4.12. 目标十二：用<code>webpack</code>实现模块热替换<code>HMR</code> § <!-- raw HTML omitted --></h3>
+</div>
+<h3 id="git-github-gitee-gitlab">git github gitee gitlab</h3>
+
+<hr />
+
+<h3 id="a-id-1-href-2-4-10-目标十-自己写一个-loader-a"><a id="_$1_" href="#_$2_">4.10. 目标十：自己写一个<code>loader</code> § </a></h3>
+
+<h3 id="a-id-1-href-2-4-11-目标十一-自己写一个-plugin-a"><a id="_$1_" href="#_$2_">4.11. 目标十一：自己写一个<code>plugin</code> § </a></h3>
+
+<hr />
+
+<h3 id="a-id-1-href-2-4-12-目标十二-用-webpack-实现模块热替换-hmr-a"><a id="_$1_" href="#_$2_">4.12. 目标十二：用<code>webpack</code>实现模块热替换<code>HMR</code> § </a></h3>
+
 <ol>
 <li>目标十二：用<code>webpack</code>实现模块热替换<code>HMR</code></li>
 <li>目标十三：用<code>webpack</code>引入<code>TypeScript</code></li>
@@ -3045,12 +3288,17 @@ git checkout -
 <li>目标十五：用<code>webpack</code>引入各大框架<code>Vuw</code> <code>React</code> <code>Electron</code></li>
 <li>目标十六：用<code>webpack</code>实现 <code>i118n</code></li>
 </ol>
-<hr>
-<h2 id="a-id_1_-href_2_5-从webpack看前端工具的历史--a"><!-- raw HTML omitted -->5. 从webpack看前端工具的历史 § <!-- raw HTML omitted --></h2>
+
+<hr />
+
+<h2 id="a-id-1-href-2-5-从webpack看前端工具的历史-a"><a id="_$1_" href="#_$2_">5. 从webpack看前端工具的历史 § </a></h2>
+
 <ul>
 <li>链接到 理性看待node</li>
 </ul>
-<h3 id="a-id_1_-href_2_9-死掉的前端工具--a"><!-- raw HTML omitted -->9. 死掉的前端工具 § <!-- raw HTML omitted --></h3>
+
+<h3 id="a-id-1-href-2-9-死掉的前端工具-a"><a id="_$1_" href="#_$2_">9. 死掉的前端工具 § </a></h3>
+
 <ul>
 <li>Grunt 太慢，几死</li>
 <li>Gulp 速度ok 但没 webpack 繁荣</li>
@@ -3058,107 +3306,145 @@ git checkout -
 <li>Sea.js 已死</li>
 <li>Browserify 已死</li>
 </ul>
-<h3 id="a-id_1_-href_2_9-和webpack竞争的工具--a"><!-- raw HTML omitted -->9. 和webpack竞争的工具 § <!-- raw HTML omitted --></h3>
+
+<h3 id="a-id-1-href-2-9-和webpack竞争的工具-a"><a id="_$1_" href="#_$2_">9. 和webpack竞争的工具 § </a></h3>
+
 <blockquote>
 <p>rollup</p>
 </blockquote>
+
 <ul>
 <li>比 webpack 的打包体积更小</li>
 <li>生态不丰富</li>
 <li>适合库的开发</li>
 </ul>
+
 <blockquote>
 <p>parcel</p>
 </blockquote>
+
 <ul>
 <li>比 webpack 配置简单</li>
 <li>公司要求负载的配置，变态的需求</li>
 <li>适合demo学习</li>
 </ul>
+
 <blockquote>
 <p>snowpack</p>
 </blockquote>
-<h3 id="a-id_1_-href_2_9-基于webpack的工具--a"><!-- raw HTML omitted -->9. 基于webpack的工具 § <!-- raw HTML omitted --></h3>
+
+<h3 id="a-id-1-href-2-9-基于webpack的工具-a"><a id="_$1_" href="#_$2_">9. 基于webpack的工具 § </a></h3>
+
 <blockquote>
 <p><code>@vue/cli</code></p>
 </blockquote>
+
 <ul>
 <li>快速创建<code>vue</code>项目</li>
 <li>基本不用配置</li>
 <li>特殊配置看文档</li>
 </ul>
+
 <blockquote>
 <p><code>create-react-app</code></p>
 </blockquote>
+
 <ul>
 <li>快速创建<code>react</code>项目</li>
 <li>基本不用配置</li>
 <li>特殊配置看文档</li>
 </ul>
+
 <blockquote>
 <p><code>@angular/cli</code></p>
 </blockquote>
+
 <ul>
 <li>快速创建<code>angular</code>项目</li>
 <li>基本不用配置</li>
 <li>特殊配置看文档</li>
 </ul>
-<hr>
-<h2 id="a-id_1_-href_2_6-总结--a"><!-- raw HTML omitted -->6. 总结 § <!-- raw HTML omitted --></h2>
+
+<hr />
+
+<h2 id="a-id-1-href-2-6-总结-a"><a id="_$1_" href="#_$2_">6. 总结 § </a></h2>
+
 <blockquote>
 <p>术语总结
 自我驱动学习法</p>
 </blockquote>
+
 <ul>
 <li>定一个小目标</li>
 <li>尽一切实现</li>
 <li>再定一个</li>
 </ul>
+
 <blockquote>
 <p>要点</p>
 </blockquote>
+
 <ul>
 <li>不要定太难完成的目标</li>
 <li>不要等别人给你定目标</li>
 </ul>
-<hr>
-<h2 id="a-id_1_-href_2_7-问答--a"><!-- raw HTML omitted -->7. 问答 § <!-- raw HTML omitted --></h2>
+
+<hr />
+
+<h2 id="a-id-1-href-2-7-问答-a"><a id="_$1_" href="#_$2_">7. 问答 § </a></h2>
+
 <blockquote>
 <p>问答1：要将<code>webpack</code>学到什么程度</p>
 </blockquote>
+
 <ul>
 <li>给一个需求就能搞定的程度</li>
 <li>CRM现有解决方案</li>
 </ul>
+
 <blockquote>
 <p>问答2：面试问<code>webpack</code>怎么答</p>
 </blockquote>
+
 <ul>
 <li>相关博客</li>
 <li>几个手写<code>webpack config</code>的项目</li>
 <li>使用<code>@vue/cli</code>、<code>create-react-app</code></li>
 </ul>
-<h2 id="a-id_1_-href_2_8-学英语--a"><!-- raw HTML omitted -->8. 学英语 § <!-- raw HTML omitted --></h2>
+
+<h2 id="a-id-1-href-2-8-学英语-a"><a id="_$1_" href="#_$2_">8. 学英语 § </a></h2>
+
 <ul>
 <li>调手机操作系统语言为英语</li>
 <li>订阅<code>Hacker News</code>、<code>JS Daily</code></li>
 <li>优先看英文文档</li>
 </ul>
+
 <blockquote>
 <p>工具</p>
 </blockquote>
+
 <ul>
 <li>词典</li>
 <li>抽离 <code>extract</code></li>
 </ul>
-<hr>
-<!-- raw HTML omitted -->
-<hr>
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<hr>
+
+<hr />
+
+<!-- Article End -->
+
+<hr />
+
+<!-- test -->
+
+<div style="text-align:center;">·未完待续·</div>
+
+<!-- ok -->
+
+<hr />
+
 <h4 id="参考文章">参考文章</h4>
+
 <ul>
 <li><a href="https://static.xiedaimala.com/xdml/file/3ac7c224-c23d-491f-84b5-4fabfbeab9b8/2019-12-3-17-21-57.pdf">Webpack.pdf</a></li>
 <li><a href="https://github.com/FrankFang/webpack-demo-2">代码</a></li>
@@ -3170,23 +3456,28 @@ git checkout -
 <li><a href="https://zhuanlan.zhihu.com/p/57722935">本科毕业设计的前端技术总结（三）：这可能是最详尽的Webpack基础总结</a></li>
 <li><a href="https://zhuanlan.zhihu.com/p/109527475">webpack多页面打包实践</a></li>
 </ul>
+
 <h4 id="相关文章">相关文章</h4>
+
 <ul>
 <li>无</li>
 </ul>
-<hr>
+
+<hr />
+
 <ul>
 <li>作者： Joel</li>
 <li>文章链接：</li>
-<li><a href="http://xmasuhai.xyz/posts/%E7%89%88%E6%9D%83%E5%A3%B0%E6%98%8E%E9%93%BE%E6%8E%A5/">版权声明</a></li>
+<li><a href="http://xmasuhai.xyz/posts/版权声明链接/">版权声明</a></li>
 <li>非自由转载-非商用-非衍生-保持署名</li>
-<li><!-- raw HTML omitted -->河<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->掘<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->思<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->知<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->简<!-- raw HTML omitted --></li>
+<li><a style='color:#DB2D5D;' href='https://xiedaimala.com/bbs/users/8c266e6f-55a2-4348-a180-17cb8cdb2c46#/?page=1' target='_blank' rel='noreferrer noopener'>河</a>
+<a style='color:#006CFF;' href='https://juejin.im/user/59abfad26fb9a0248f4aa221' target='_blank' rel='noreferrer noopener'>掘</a>
+<a style='color:#009A61;' href='https://segmentfault.com/u/joel_59b17eb9d2155' target='_blank' rel='noreferrer noopener'>思</a>
+<a style='color:#0084FF;' href='https://www.zhihu.com/people/xue-shou-41/posts' target='_blank' rel='noreferrer noopener'>知</a>
+<a style='color:#EA6F5A;' href='https://www.jianshu.com/u/079916729823' target='_blank' rel='noreferrer noopener'>简</a></li>
 </ul>
-<hr>
+
+<hr />
 
     </div>
 
@@ -3355,7 +3646,7 @@ git checkout -
     &copy;
     
       2019 -
-    2022
+    2026
     <span class="heart">
       
       <i class="iconfont">

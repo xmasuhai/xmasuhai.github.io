@@ -7,7 +7,7 @@
   
 
 <meta name="renderer" content="webkit" />
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
 <meta name="MobileOptimized" content="width"/>
 <meta name="HandheldFriendly" content="true"/>
@@ -32,7 +32,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.91.2" />
+<meta name="generator" content="Hugo 0.59.1" />
 
 
 <link rel="canonical" href="http://xmasuhai.xyz/post/promise/js%E5%BC%82%E6%AD%A5%E9%9D%9E%E5%85%A8%E8%A7%A304%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF%E6%9C%BA%E5%88%B6%E4%B8%8E%E6%B5%8F%E8%A7%88%E5%99%A8eventloop/" />
@@ -62,15 +62,21 @@
 <meta property="og:title" content="【JS异步非全解04】事件循环机制与浏览器EventLoop" />
 <meta property="og:description" content="事件循环机制EventLoop Event Loop 即事件循环，是浏览器或Node解决单线程运行不阻塞的一种机制 大纲链接§ [toc] 进程和线程 浏览器打开一个页面就相当" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://xmasuhai.xyz/post/promise/js%E5%BC%82%E6%AD%A5%E9%9D%9E%E5%85%A8%E8%A7%A304%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF%E6%9C%BA%E5%88%B6%E4%B8%8E%E6%B5%8F%E8%A7%88%E5%99%A8eventloop/" /><meta property="article:section" content="post" />
+<meta property="og:url" content="http://xmasuhai.xyz/post/promise/js%E5%BC%82%E6%AD%A5%E9%9D%9E%E5%85%A8%E8%A7%A304%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF%E6%9C%BA%E5%88%B6%E4%B8%8E%E6%B5%8F%E8%A7%88%E5%99%A8eventloop/" />
 <meta property="article:published_time" content="2021-12-31T23:11:17+08:00" />
 <meta property="article:modified_time" content="2021-12-31T23:15:43+08:00" />
-
 <meta itemprop="name" content="【JS异步非全解04】事件循环机制与浏览器EventLoop">
-<meta itemprop="description" content="事件循环机制EventLoop Event Loop 即事件循环，是浏览器或Node解决单线程运行不阻塞的一种机制 大纲链接§ [toc] 进程和线程 浏览器打开一个页面就相当"><meta itemprop="datePublished" content="2021-12-31T23:11:17+08:00" />
-<meta itemprop="dateModified" content="2021-12-31T23:15:43+08:00" />
-<meta itemprop="wordCount" content="8703">
-<meta itemprop="keywords" content="FrontEnd," /><meta name="twitter:card" content="summary"/>
+<meta itemprop="description" content="事件循环机制EventLoop Event Loop 即事件循环，是浏览器或Node解决单线程运行不阻塞的一种机制 大纲链接§ [toc] 进程和线程 浏览器打开一个页面就相当">
+
+
+<meta itemprop="datePublished" content="2021-12-31T23:11:17&#43;08:00" />
+<meta itemprop="dateModified" content="2021-12-31T23:15:43&#43;08:00" />
+<meta itemprop="wordCount" content="8699">
+
+
+
+<meta itemprop="keywords" content="FrontEnd," />
+<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="【JS异步非全解04】事件循环机制与浏览器EventLoop"/>
 <meta name="twitter:description" content="事件循环机制EventLoop Event Loop 即事件循环，是浏览器或Node解决单线程运行不阻塞的一种机制 大纲链接§ [toc] 进程和线程 浏览器打开一个页面就相当"/>
 
@@ -302,7 +308,7 @@
             <a href="http://xmasuhai.xyz/categories/frontend/"> FrontEnd </a>
             
           </div>
-        <span class="more-meta"> 约 8703 字 </span>
+        <span class="more-meta"> 约 8699 字 </span>
           <span class="more-meta"> 预计阅读 18 分钟 </span>
 
         
@@ -319,134 +325,167 @@
   <h2 class="post-toc-title">文章目录</h2>
   <div class="post-toc-content">
     <nav id="TableOfContents">
-  <ul>
-    <li><a href="#大纲链接a-idcatalogue-hrefcatalogue---a">大纲链接<!-- raw HTML omitted --> § <!-- raw HTML omitted --></a></li>
-    <li><a href="#进程和线程">进程和线程</a>
-      <ul>
-        <li><a href="#浏览器中的多线程">浏览器中的多线程</a></li>
-      </ul>
-    </li>
-    <li><a href="#js事件循环机制">JS事件循环机制</a>
-      <ul>
-        <li><a href="#同步任务和异步任务执行顺序">同步任务和异步任务执行顺序</a></li>
-        <li><a href="#同步任务和异步任务的执行过程">同步任务和异步任务的执行过程</a></li>
-      </ul>
-    </li>
-    <li><a href="#宏任务与微任务的概念">宏任务与微任务的概念</a>
-      <ul>
-        <li><a href="#总结-event-loop-执行过程">总结 Event Loop 执行过程</a></li>
-      </ul>
-    </li>
-    <li><a href="#举例分析宏任务和微任务的执行过程">举例分析宏任务和微任务的执行过程</a></li>
-    <li><a href="#总结eventloop的概念及经典面试题">总结<code>EventLoop</code>的概念及经典面试题</a>
-      <ul>
-        <li><a href="#结合-eventloop-分析输出的顺序">结合 EventLoop 分析输出的顺序</a></li>
-      </ul>
-    </li>
-    <li><a href="#异步经典面试题">异步经典面试题</a>
-      <ul>
-        <li><a href="#第一题">第一题：</a></li>
-        <li><a href="#第二题">第二题：</a></li>
-        <li><a href="#第三题">第三题：</a></li>
-        <li><a href="#第四题">第四题：</a></li>
-        <li><a href="#第五题">第五题：</a></li>
-        <li><a href="#参考文章">参考文章</a></li>
-        <li><a href="#相关文章">相关文章</a></li>
-      </ul>
-    </li>
-  </ul>
+<ul>
+<li><a href="#事件循环机制eventloop">事件循环机制EventLoop</a>
+<ul>
+<li><a href="#大纲链接-a-id-catalogue-href-catalogue-a">大纲链接<a id="catalogue" href="#catalogue" > § </a></a></li>
+<li><a href="#进程和线程">进程和线程</a>
+<ul>
+<li><a href="#浏览器中的多线程">浏览器中的多线程</a></li>
+</ul></li>
+<li><a href="#js事件循环机制">JS事件循环机制</a>
+<ul>
+<li><a href="#同步任务和异步任务执行顺序">同步任务和异步任务执行顺序</a>
+<ul>
+<li><a href="#同步与异步">同步与异步</a></li>
+</ul></li>
+<li><a href="#同步任务和异步任务的执行过程">同步任务和异步任务的执行过程</a></li>
+</ul></li>
+<li><a href="#宏任务与微任务的概念">宏任务与微任务的概念</a>
+<ul>
+<li><a href="#总结-event-loop-执行过程">总结 Event Loop 执行过程</a></li>
+</ul></li>
+<li><a href="#举例分析宏任务和微任务的执行过程">举例分析宏任务和微任务的执行过程</a></li>
+<li><a href="#总结-eventloop-的概念及经典面试题">总结<code>EventLoop</code>的概念及经典面试题</a>
+<ul>
+<li><a href="#结合-eventloop-分析输出的顺序">结合 EventLoop 分析输出的顺序</a></li>
+</ul></li>
+<li><a href="#异步经典面试题">异步经典面试题</a>
+<ul>
+<li><a href="#第一题">第一题：</a>
+<ul>
+<li><a href="#async-做一件什么事情">async 做一件什么事情</a></li>
+<li><a href="#await-在等什么">await 在等什么</a></li>
+<li><a href="#await-等到之后-做了一件什么事情">await 等到之后，做了一件什么事情</a></li>
+<li><a href="#async-await-比-promise有哪些优势">async/await 比 promise有哪些优势</a></li>
+</ul></li>
+<li><a href="#第二题">第二题：</a></li>
+<li><a href="#第三题">第三题：</a></li>
+<li><a href="#第四题">第四题：</a></li>
+<li><a href="#第五题">第五题：</a></li>
+<li><a href="#参考文章">参考文章</a></li>
+<li><a href="#相关文章">相关文章</a></li>
+</ul></li>
+</ul></li>
+</ul>
 </nav>
   </div>
 </div>
 
     
     <div class="post-content">
-      <h1 id="事件循环机制eventloop">事件循环机制EventLoop</h1>
+      
+
+<h1 id="事件循环机制eventloop">事件循环机制EventLoop</h1>
+
 <blockquote>
 <p>Event Loop 即事件循环，是浏览器或Node解决<strong>单线程运行不阻塞</strong>的一种机制</p>
 </blockquote>
-<h2 id="大纲链接a-idcatalogue-hrefcatalogue---a">大纲链接<!-- raw HTML omitted --> § <!-- raw HTML omitted --></h2>
+
+<h2 id="大纲链接-a-id-catalogue-href-catalogue-a">大纲链接<a id="catalogue" href="#catalogue" > § </a></h2>
+
 <p>[toc]</p>
-<hr>
+
+<hr />
+
 <h2 id="进程和线程">进程和线程</h2>
+
 <ul>
 <li>浏览器打开一个页面就相当于开一个进程</li>
 <li>在进程中可以同时做很多事情，每一个事情都有一个“线程”去处理</li>
 <li>所以一个进程中可包含多个线程</li>
 </ul>
+
 <h3 id="浏览器中的多线程">浏览器中的多线程</h3>
+
 <blockquote>
 <p>浏览器中一般包含以下线程：</p>
 </blockquote>
+
 <ul>
 <li>GUI 渲染线程：渲染页面 &amp; 绘制图形
+
 <ul>
 <li>绘制页面，解析HTML、CSS，构建DOM树等</li>
 <li>页面的重绘和重排</li>
 <li>与JS引擎互斥(JS引擎阻塞页面刷新)</li>
-</ul>
-</li>
+</ul></li>
 <li>JS引擎线程：渲染和解析JS代码
+
 <ul>
 <li>js脚本代码执行</li>
 <li>负责执行准备好的事件（任务队列中），例如定时器计时结束或异步请求成功且正确返回的回调</li>
 <li>与GUI渲染线程互斥</li>
-</ul>
-</li>
+</ul></li>
 <li>事件触发线程：监听事件触发
+
 <ul>
 <li>当对应的事件满足触发条件，将事件添加到js的任务队列末尾</li>
 <li>多个事件加入任务队列需要排队等待</li>
-</ul>
-</li>
+</ul></li>
 <li>定时触发器线程：给定时器计时
+
 <ul>
 <li>负责执行异步的定时器类事件：setTimeout、setInterval等</li>
 <li>浏览器定时计时由该线程完成，计时完毕后将事件添加至任务队列队尾，等待主线程执行</li>
-</ul>
-</li>
+</ul></li>
 <li>异步HTTP请求线程：基于HTTP网络从服务器端获取资源和信息
+
 <ul>
 <li>负责异步请求</li>
 <li>当监听到异步请求状态变更时，如果存在回调函数，该线程会将回调函数加入到任务队列队尾</li>
-</ul>
-</li>
+</ul></li>
 <li>WebWorker等</li>
 </ul>
+
 <h2 id="js事件循环机制">JS事件循环机制</h2>
+
 <blockquote>
 <p>浏览器是多线程的，异步任务借助浏览器的线程和JavaScript的执行机制实现</p>
 </blockquote>
+
 <ul>
 <li>JS是单线程语言，浏览器只分配一个线程“JS引擎线程”用来解析运行JS代码，同一时间只能做一件事情</li>
 <li>单线程执行任务队列：如果前一个任务非常耗时，则后续任务必须一致等待，从而导致程序假死</li>
 </ul>
+
 <h3 id="同步任务和异步任务执行顺序">同步任务和异步任务执行顺序</h3>
+
 <h4 id="同步与异步">同步与异步</h4>
+
 <blockquote>
 <p>计算机领域中的同步与异步和中文翻译的同步和异步正好相反</p>
+
 <p>计算机中的同步是连续性的动作，上一步未完成前，下一步会发生堵塞，直至上一步完成后，下一步才可以继续执行</p>
 </blockquote>
+
 <ul>
 <li>为防止某个耗时任务导致程序假死，JS将执行的任务分为两类</li>
 </ul>
+
 <ol>
 <li>同步任务 <code>synchronous</code></li>
 </ol>
+
 <ul>
 <li>又称为<strong>非耗时任务</strong>，指的是<strong>在主线程上排队执行的任务</strong></li>
 <li>只有前一个任务执行完毕，才能执行后一个任务，即按代码顺序执行</li>
 </ul>
-<ol start="2">
+
+<ol>
 <li>异步任务 <code>asynchronous</code></li>
 </ol>
+
 <ul>
 <li>又称为<strong>耗时任务</strong>，异步任务由JS委托给 <strong>宿主环境(浏览器/Node.js)</strong> 进行执行</li>
 <li>异步任务首先到 Event Table 进行回调函数注册</li>
 <li>当异步任务的触发条件满足，将回调函数从Event Table 压入 Event Queue 中</li>
 </ul>
+
 <h3 id="同步任务和异步任务的执行过程">同步任务和异步任务的执行过程</h3>
-<p><img src="https://note.youdao.com/yws/api/personal/file/7D81B05F59394FDD891F6E8DC3FF95CB?method=download&amp;shareKey=decef8572d95a3a90b105afc7ac1a10e" alt="EventLoop"></p>
+
+<p><img src="https://note.youdao.com/yws/api/personal/file/7D81B05F59394FDD891F6E8DC3FF95CB?method=download&amp;shareKey=decef8572d95a3a90b105afc7ac1a10e" alt="EventLoop" /></p>
+
 <ul>
 <li>同步任务由JS主线程依次执行</li>
 <li>异步任务委托给宿主环境执行</li>
@@ -455,30 +494,40 @@
 <li>只要主线程空了，就会去 Event Queue 读取回调函数</li>
 <li>JS主线程不断重复以上步骤，这个过程被称为 Event Loop</li>
 </ul>
+
 <blockquote>
 <p>举例</p>
 </blockquote>
+
 <ul>
 <li><code>setTimeout(cb, 1000)</code>，当1000ms后，就将cb压入 Event Queue</li>
 <li><code>ajax(请求条件, cb)</code>，当http请求发送成功后，cb压入 Event Queue</li>
 </ul>
+
 <blockquote>
 <p>补充</p>
 </blockquote>
+
 <ul>
 <li>队列：先进先出 （队列弹药夹）</li>
 <li>栈：后进先出（薯片栈）</li>
 </ul>
-<hr>
+
+<hr />
+
 <blockquote>
 <p>JavaScript的异步任务是存在优先级的</p>
 </blockquote>
+
 <h2 id="宏任务与微任务的概念">宏任务与微任务的概念</h2>
+
 <blockquote>
 <p>除了广义上将任务划分为同步任务和异步任务（耗时任务），异步任务又进一步分为宏任务和微任务：</p>
 </blockquote>
+
 <ul>
 <li>异步宏任务 <code>macrotask</code>
+
 <ul>
 <li><strong>异步的数据请求: <code>Ajax/Fetch</code></strong></li>
 <li>定时器 API<code>setTimeout/setInterval</code></li>
@@ -489,9 +538,9 @@
 <li>setImmediate[NODE]</li>
 <li>history traversal任务（h5当中的历史操作）</li>
 <li>其他</li>
-</ul>
-</li>
+</ul></li>
 <li>异步微任务 <code>microtask</code>
+
 <ul>
 <li><code>Promise.then()</code>、<code>.catch()</code>和<code>.finally()</code>；<code>Promise.all()</code>、<code>Promise.any()</code>、<code>Promise.allSettled()</code>、<code>Promise.race()</code>等</li>
 <li><strong><code>async/await</code></strong></li>
@@ -501,26 +550,33 @@
 <li><strong><code>requestAnimationFrame</code></strong></li>
 <li><code>process.nextTick</code>(Node.js)</li>
 <li>其他</li>
+</ul></li>
 </ul>
-</li>
-</ul>
+
 <blockquote>
 <p><strong>实例化 new Promise(Cb) 实例中的回调函数Cb为同步任务</strong></p>
 </blockquote>
-<hr>
+
+<hr />
+
 <h3 id="总结-event-loop-执行过程">总结 Event Loop 执行过程</h3>
-<p><img src="https://note.youdao.com/yws/api/personal/file/AD8B5BF7483D430085A489ECF5DE0B79?method=download&amp;shareKey=35a302a5b0bcc985868f53aec8db447d" alt="Event Loop的执行顺序图"></p>
+
+<p><img src="https://note.youdao.com/yws/api/personal/file/AD8B5BF7483D430085A489ECF5DE0B79?method=download&amp;shareKey=35a302a5b0bcc985868f53aec8db447d" alt="Event Loop的执行顺序图" /></p>
+
 <blockquote>
 <p>注意事项</p>
 </blockquote>
+
 <ul>
 <li>每一个宏任务执行完之后，都会检查<strong>是否存在待执行的微任务</strong>，如果有，则执行完所有微任务之后，再继续执行下一个宏任务</li>
 <li>宏任务和微任务是<strong>交替执行的</strong></li>
 <li>宏任务和微任务分别有各自的任务队列 Event Queue，即宏任务队列和微任务队列</li>
 </ul>
+
 <blockquote>
 <p>执行过程</p>
 </blockquote>
+
 <ol>
 <li>代码开始执行，创建一个全局调用栈，script 作为宏任务执行</li>
 <li>执行过程过同步任务立即执行，异步任务根据异步任务类型分别注册到<strong>微任务队列</strong>和<strong>宏任务队列</strong></li>
@@ -528,14 +584,17 @@
 <li>若存在微任务，将微任务队列全部执行(包括<strong>执行微任务过程中产生的新微任务</strong>)</li>
 <li>若无微任务，查看宏任务队列，执行第一个宏任务，宏任务执行完毕，查看微任务队列，重复上述操作，直至宏任务队列为空</li>
 </ol>
-<hr>
+
+<hr />
+
 <h2 id="举例分析宏任务和微任务的执行过程">举例分析宏任务和微任务的执行过程</h2>
+
 <blockquote>
 <p>示例</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -576,10 +635,9 @@
 </span><span class="lnt">39
 </span><span class="lnt">40
 </span><span class="lnt">41
-</span><span class="lnt">42
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="c1">// Promise.resolve 返回一个带着给定值 解析过的 Promise 对象
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="c1">// Promise.resolve 返回一个带着给定值 解析过的 Promise 对象
 </span><span class="c1">// 如果参数本身就是一个 Promise 对象，则直接返回这个 Promise 对象
 </span><span class="c1"></span><span class="kd">let</span> <span class="nx">p1</span> <span class="o">=</span> <span class="nb">Promise</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
 
@@ -620,28 +678,31 @@
 </span><span class="cm">成功: 1000
 </span><span class="cm">p2 3rd Promise { 1000 }
 </span><span class="cm">* */</span>
-
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p>基于then返回的 promise 实例的状态和值，主要看 onFulfilled/onrRejected 是否执行</p>
 </blockquote>
+
 <ul>
 <li>函数返回的不是 promise 实例：
+
 <ul>
 <li>方法执行不报错，p2 状态是 成功，值即返回值</li>
 <li>方法执行报错，则 p2 是失败的，值是报错原因</li>
-</ul>
-</li>
+</ul></li>
 <li>函数返回的是 promise 实例：则这个实例的状态和值决定了 p2 的状态和值</li>
 </ul>
-<hr>
+
+<hr />
+
 <blockquote>
 <p>示例：</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -692,7 +753,7 @@
 </span><span class="lnt">49
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="kd">let</span> <span class="nx">p1</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Promise</span><span class="p">((</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="kd">let</span> <span class="nx">p1</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Promise</span><span class="p">((</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
   <span class="nx">resolve</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
@@ -743,21 +804,23 @@
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;p5&#39;</span><span class="p">,</span> <span class="nx">p5</span><span class="p">)</span>
 </code></pre></td></tr></table>
 </div>
-</div><ul>
+</div>
+<ul>
 <li><code>new Promise(Cb)</code> 实参 回调函数：Cb是同步代码，立即执行</li>
 <li>回调函数：Cb的形参 <code>resolve</code> <code>reject</code>
+
 <ul>
 <li>一旦执行<code>resolve()</code>或<code>reject()</code>就会将状态变为对应的<code>resolved</code>或<code>rejected</code>，不再改变</li>
 <li>一般会使用分支语句或者<code>try..catch..</code>分别调用<code>resolve()</code>、<code>reject()</code></li>
+</ul></li>
 </ul>
-</li>
-</ul>
+
 <blockquote>
 <p><strong>调用<code>resolve()</code>的时机</strong>，示例：</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -800,10 +863,9 @@
 </span><span class="lnt">41
 </span><span class="lnt">42
 </span><span class="lnt">43
-</span><span class="lnt">44
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="kd">let</span> <span class="nx">p2</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Promise</span><span class="p">((</span><span class="nx">resolve</span> <span class="cm">/*， reject*/</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="kd">let</span> <span class="nx">p2</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Promise</span><span class="p">((</span><span class="nx">resolve</span> <span class="cm">/*， reject*/</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="c1">// resolve(200) // 同步调用
 </span><span class="c1"></span>
   <span class="c1">// setTimeoutA
@@ -846,19 +908,20 @@
 </span><span class="cm">成功结果为:200
 </span><span class="cm">res 200
 </span><span class="cm">*/</span>
-
 </code></pre></td></tr></table>
 </div>
-</div><ul>
+</div>
+<ul>
 <li>在同步代码中调用 <code>resolve()</code>，之后的 .then 方法都为微任务，按顺序添加到微任务队列中</li>
 <li>在宏任务中调用 <code>resolve()</code>，之后的 .then 方法都为宏任务中的微任务，需在<strong>当前宏任务执行之后</strong>，按顺序添加到微任务队列中</li>
 </ul>
+
 <blockquote>
 <p>示例：</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -869,10 +932,9 @@
 </span><span class="lnt"> 9
 </span><span class="lnt">10
 </span><span class="lnt">11
-</span><span class="lnt">12
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="c1">// macrotask
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="c1">// macrotask
 </span><span class="c1"></span><span class="nx">setTimeout</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;4&#39;</span><span class="p">)})</span>
 <span class="c1">// synchronous
 </span><span class="c1"></span><span class="k">new</span> <span class="nb">Promise</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">resolve</span><span class="p">)</span> <span class="p">{</span>
@@ -883,10 +945,10 @@
 </span><span class="c1"></span>  <span class="p">.</span><span class="nx">then</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;3&#39;</span><span class="p">)})</span>
 <span class="c1">// synchronous
 </span><span class="c1"></span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;2&#39;</span><span class="p">)</span>
-
 </code></pre></td></tr></table>
 </div>
-</div><ul>
+</div>
+<ul>
 <li>将<code>setTimeout</code>放到宏任务队列</li>
 <li>执行同步任务<code>new Promise(function (resolve) {})</code></li>
 <li>将<code>.then()</code>放到微任务队列</li>
@@ -894,9 +956,11 @@
 <li>执行微任务队列中所有微任务<code>.then()</code></li>
 <li>执行下一个宏任务<code>setTimeout</code></li>
 </ul>
+
 <blockquote>
 <p>总结影响异步代码执行顺序的因素</p>
 </blockquote>
+
 <ol>
 <li>同步代码的耗时</li>
 <li>异步微任务队列</li>
@@ -905,12 +969,13 @@
 <li>setTimeout 的耗时影响<strong>回调被添加到任务队列的时机</strong></li>
 <li>在 setTimeout 回调函数中调用 resolve()，影响依赖此实例的微任务 .then()</li>
 </ol>
+
 <blockquote>
 <p>加强示例</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -941,10 +1006,9 @@
 </span><span class="lnt">29
 </span><span class="lnt">30
 </span><span class="lnt">31
-</span><span class="lnt">32
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="kr">const</span> <span class="nx">sleep</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="kr">const</span> <span class="nx">sleep</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="k">return</span> <span class="k">new</span> <span class="nb">Promise</span><span class="p">(</span><span class="nx">resolve</span> <span class="p">=&gt;</span> <span class="p">{</span>
     <span class="nx">setTimeout</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
         <span class="k">return</span> <span class="nx">resolve</span><span class="p">(</span><span class="mi">300</span><span class="p">)</span>
@@ -953,17 +1017,17 @@
   <span class="p">})</span>
 <span class="p">};</span>
 
-<span class="p">;(</span><span class="kr">async</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+<span class="p">;(</span><span class="nx">async</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="c1">// await 后面放置的不是一个 Promise 实例
 </span><span class="c1"></span>  <span class="c1">// 则浏览器默认会把其转换为一个“状态为成功
 </span><span class="c1"></span>  <span class="c1">// 值就是 await 后的值”的 promise 实例
-</span><span class="c1"></span>  <span class="kd">let</span> <span class="nx">result</span> <span class="o">=</span> <span class="kr">await</span> <span class="mi">1</span> <span class="c1">// await Promise.resolve(1)
+</span><span class="c1"></span>  <span class="kd">let</span> <span class="nx">result</span> <span class="o">=</span> <span class="nx">await</span> <span class="mi">1</span> <span class="c1">// await Promise.resolve(1)
 </span><span class="c1"></span>  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;result 1st&#39;</span><span class="p">,</span> <span class="nx">result</span><span class="p">)</span>
 
-  <span class="nx">result</span> <span class="o">=</span> <span class="kr">await</span> <span class="nb">Promise</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+  <span class="nx">result</span> <span class="o">=</span> <span class="nx">await</span> <span class="nb">Promise</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;result 2nd&#39;</span><span class="p">,</span> <span class="nx">result</span><span class="p">)</span>
 
-  <span class="nx">result</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">sleep</span><span class="p">()</span>
+  <span class="nx">result</span> <span class="o">=</span> <span class="nx">await</span> <span class="nx">sleep</span><span class="p">()</span>
   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;result 3rd&#39;</span><span class="p">,</span> <span class="nx">result</span><span class="p">)</span>
   <span class="c1">// 先 sleep 执行
 </span><span class="c1"></span>  <span class="c1">// 把返回的 promise 实例放在 await 后面等着
@@ -975,37 +1039,41 @@
 </span><span class="cm">result 2nd 2
 </span><span class="cm">result 3rd 300
 </span><span class="cm">* */</span>
-
 </code></pre></td></tr></table>
 </div>
-</div><ul>
+</div>
+<ul>
 <li>await 需要等待<strong>后面的 promise 实例是状态为成功</strong>时，才会执行之后的代码</li>
 <li>首先 当前上下文中，await 之后的代码都是<strong>异步微任务</strong> @aw</li>
 <li>如果已经知道 await 后面的实例状态是成功的话
+
 <ul>
 <li>则 @aw 直接放在Event Queue中，等待执行即可</li>
-</ul>
-</li>
+</ul></li>
 <li>如果 await 后面实例状态是失败的话
+
 <ul>
 <li>则 @aw 在 Web API 中永远不会进入到 Event Queue中，因为永远不会执行</li>
-</ul>
-</li>
+</ul></li>
 <li>如果暂时还不知道是成功还是失败，则 @aw 先放置在 Web API 中
+
 <ul>
 <li>等到知道实例状态是成功后，再挪至到 Event Queue 中等待执行</li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<hr>
-<h2 id="总结eventloop的概念及经典面试题">总结<code>EventLoop</code>的概念及经典面试题</h2>
+
+<hr />
+
+<h2 id="总结-eventloop-的概念及经典面试题">总结<code>EventLoop</code>的概念及经典面试题</h2>
+
 <blockquote>
 <p>JS主线程中任务队列中读取异步任务的回调函数，放到执行栈中依次执行，这个过程是循环不断的，整个机制又称为 EventLoop 事件循环</p>
 </blockquote>
+
 <h3 id="结合-eventloop-分析输出的顺序">结合 EventLoop 分析输出的顺序</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1023,7 +1091,7 @@
 </span><span class="lnt">16
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="kr">import</span> <span class="nx">thenFs</span> <span class="nx">from</span> <span class="s1">&#39;then-fs&#39;</span>
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="kr">import</span> <span class="nx">thenFs</span> <span class="nx">from</span> <span class="s1">&#39;then-fs&#39;</span>
 
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">)</span>
 <span class="nx">thenFs</span><span class="p">.</span><span class="nx">readFile</span><span class="p">(</span><span class="s1">&#39;./files/1.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;utf8&#39;</span><span class="p">)</span>
@@ -1041,9 +1109,11 @@
 </span><span class="c1">// readFile cost time then B
 </span></code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p>分析</p>
 </blockquote>
+
 <ul>
 <li>A D 属于同步任务，根据代码的先后顺序依次被执行</li>
 <li><code>thenFs.readFile</code>异步任务，具体为** <code>I/O</code>任务**，属于宏任务，委托给宿主环境执行</li>
@@ -1053,25 +1123,28 @@
 <li><code>I/O</code>任务和setTimeout同样是宏任务，按先来顺序执行，但 B 是在 I/O 宏任务之后的 promise 微任务里面打印的，所以应该先打印C</li>
 <li>任务队列先进先出，首先执行的是<code>setTimeout</code>的回调函数，后执行的是<code>thenFs.readFile</code>的回调函数</li>
 </ul>
+
 <blockquote>
 <p>小结</p>
 </blockquote>
+
 <ul>
 <li>I/O 任务和 setTimeout 同样是宏任务，按先后顺序执行</li>
 <li>I/O 宏任务里面的 微任务 .then() 需要等待当前宏任务执行完毕，在依次添加到微任务队列中等待执行</li>
 <li><strong>异步任务操作的耗时</strong>影响着其回调函数被<strong>加入到任务队列的先后顺序</strong>
+
 <ul>
 <li><code>setTimeout</code>耗时由第二个参数决定</li>
 <li><code>thenFs.readFile</code>耗时不定，取决于文件</li>
+</ul></li>
 </ul>
-</li>
-</ul>
+
 <blockquote>
 <p>关于 setTimeout 耗时</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1118,7 +1191,7 @@
 </span><span class="lnt">45
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="nx">setTimeout</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="nx">setTimeout</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
     <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
 <span class="p">},</span> <span class="mi">20</span><span class="p">);</span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
@@ -1165,18 +1238,22 @@
 </span><span class="cm">*/</span> 
 </code></pre></td></tr></table>
 </div>
-</div><ul>
+</div>
+<ul>
 <li>Web API任务事件监听队列，定时器任务，浏览器开始分配一个定时器监听线程，计时完毕，将回调函数放到宏任务队列中</li>
 <li>多个定时器，第二个参数决定<strong>将回调函数添加到宏任务队列中</strong>的先后顺序</li>
 <li>定时器第二个参数相同时，则按代码顺序添加</li>
 <li>一般情况，同步代码的耗时不考虑在内；如果定时器第二个参数为毫秒级别，耗时相近的定时器任务不能确定哪一个先添加到红任务队列中</li>
 </ul>
-<hr>
+
+<hr />
+
 <h2 id="异步经典面试题">异步经典面试题</h2>
+
 <h3 id="第一题">第一题：</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1224,17 +1301,16 @@
 </span><span class="lnt">46
 </span><span class="lnt">47
 </span><span class="lnt">48
-</span><span class="lnt">49
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="c1">// declaration
-</span><span class="c1"></span><span class="kr">async</span> <span class="kd">function</span> <span class="nx">async1</span><span class="p">()</span> <span class="p">{</span>
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="c1">// declaration
+</span><span class="c1"></span><span class="nx">async</span> <span class="kd">function</span> <span class="nx">async1</span><span class="p">()</span> <span class="p">{</span>
   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;async1 start&#39;</span><span class="p">)</span>
-  <span class="kr">await</span> <span class="nx">async2</span><span class="p">()</span> <span class="c1">// 从 async2 返回的 Promise 对象 被忽略
+  <span class="nx">await</span> <span class="nx">async2</span><span class="p">()</span> <span class="c1">// 从 async2 返回的 Promise 对象 被忽略
 </span><span class="c1"></span>  <span class="c1">// microtask A
 </span><span class="c1"></span>  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;async1 end&#39;</span><span class="p">)</span>
 <span class="p">}</span>
-<span class="kr">async</span> <span class="kd">function</span> <span class="nx">async2</span><span class="p">()</span> <span class="p">{</span>
+<span class="nx">async</span> <span class="kd">function</span> <span class="nx">async2</span><span class="p">()</span> <span class="p">{</span>
   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;async2&#39;</span><span class="p">)</span> <span class="c1">// return undefined
 </span><span class="c1"></span><span class="p">}</span>
 <span class="c1">// run code
@@ -1275,90 +1351,103 @@
 </span><span class="cm">  -[x] setTimeout A
 </span><span class="cm">
 </span><span class="cm">* */</span>
-
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p>分析 执行<code>await async2()</code></p>
 </blockquote>
+
 <ul>
 <li>先得到 <code>await</code> 右侧表达式的结果
+
 <ul>
 <li>即执行 <code>async2()</code>，打印同步代码 <code>console.log('async2')</code></li>
 <li>并且 <code>return Promise.resolve(undefined)</code></li>
-</ul>
-</li>
+</ul></li>
 <li><code>await</code> 表达式执行后，将后续代码作为微任务推入微任务队列（可以标记为 microtask A）</li>
 <li>再中断 <code>async</code> 函数，先执行 <code>async1()</code> 外的同步代码（包括如果后面有 .then也中断执行）</li>
 </ul>
+
 <blockquote>
 <p>分析 执行 <code>new Promise()</code></p>
 </blockquote>
+
 <ul>
 <li>Promise 构造函数是直接调用的同步代码，所以 <code>console.log( 'promise1' )</code></li>
 </ul>
+
 <blockquote>
 <p>代码运行到 <code>promise.then()</code></p>
 </blockquote>
+
 <ul>
 <li>是微任务，所以暂时不打印</li>
 <li>只是推入当前宏任务的微任务队列中</li>
 <li>微任务会在当前宏任务的同步代码执行完毕，才会依次执行</li>
 </ul>
+
 <blockquote>
 <p>同步代码执行完毕，开始执行微任务队列</p>
 </blockquote>
+
 <ul>
 <li>回到 <code>async</code> 内部，执行 <code>await Promise.resolve(undefined)</code></li>
 <li>如果一个 <code>Promise</code> 对象被传递给一个 await 操作符，await 将等待 Promise 正常处理完成并返回其处理结果，即从 <code>Promise</code> 对象中 <strong>解包出 返回值</strong></li>
 <li>本例中就是 <code>Promise.resolve(undefined)</code> 正常处理完成，并返回其处理结果 <code>undefined</code></li>
 </ul>
-<hr>
+
+<hr />
+
 <blockquote>
 <p>小结1</p>
 </blockquote>
+
 <ul>
 <li>将语句的执行类型分为 <strong>同步</strong> 和 <strong>异步</strong>
+
 <ul>
 <li>异步又分为 <strong>宏任务</strong> 和 <strong>微任务</strong></li>
-</ul>
-</li>
+</ul></li>
 <li><code>async function xxx() {}</code> 异步函数中，关键字<code>await</code>第一次出现之前的语句，为<strong>同步执行</strong>，包括 <strong>首个<code>await</code></strong> 修饰的语句也是<strong>同步执行</strong>（ await 操作符是从右往左执行）</li>
 <li><strong>首个<code>await</code></strong> 语句的后续代码为异步执行
+
 <ul>
 <li>可看做是微任务，依次添加到微任务队列</li>
-</ul>
-</li>
+</ul></li>
 <li>如果一个 <code>Promise</code> 对象被传递给一个 await 操作符，await 将等待 Promise 正常处理完成并返回其处理结果，即从 <code>Promise</code> 对象中 <strong>解包出 返回值</strong></li>
 <li><code>await</code> 表达式的后续代码被阻塞后，要执行 <code>async</code> 之外的代码</li>
 <li>await  操作符用于等待一个Promise 对象。只能在异步函数 async function 中使用
+
 <ul>
 <li><code>[返回值] = await 表达式;</code></li>
 <li>表达式为一个 Promise 对象或者任何要等待的值</li>
 <li>返回值为返回 Promise 对象的处理结果</li>
 <li>如果等待的不是 Promise 对象，则返回该值本身</li>
+</ul></li>
 </ul>
-</li>
-</ul>
+
 <blockquote>
 <p>小结2</p>
 </blockquote>
+
 <ul>
 <li><code>new Promise(function (resolve) {})</code> Promise 实例化语句中的回调函数 <code>function (resolve) {}</code>是 <strong>同步执行</strong></li>
 <li><code>new Promise(function (resolve) {})</code>中 如果不调用 <code>resolve()</code> ，就永不执行 后续 <code>.then</code> 的回调</li>
 <li><code>.then()</code> 的回调函数为异步执行，添加到 <strong>微任务队列</strong></li>
 <li>使用 <code>new Promise()</code>，调用 resolve 后，需要在 .then 的第一个参数里，才能拿到结果
+
 <ul>
 <li>即调用 <code>resolve</code> 时，会把 .then 的参数推入微任务队列，等主线程空闲时，再执行</li>
+</ul></li>
 </ul>
-</li>
-</ul>
+
 <blockquote>
 <p>思考如果代码变为以下，该如何执行</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1392,13 +1481,13 @@
 </span><span class="lnt">32
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="kr">async</span> <span class="kd">function</span> <span class="nx">async1</span><span class="p">()</span> <span class="p">{</span>
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="nx">async</span> <span class="kd">function</span> <span class="nx">async1</span><span class="p">()</span> <span class="p">{</span>
   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;async1 start&#39;</span><span class="p">)</span>
-  <span class="kr">await</span> <span class="nx">async2</span><span class="p">()</span>
+  <span class="nx">await</span> <span class="nx">async2</span><span class="p">()</span>
   <span class="c1">// microtask A
 </span><span class="c1"></span>  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;async1 end&#39;</span><span class="p">)</span>
 <span class="p">}</span>
-<span class="kr">async</span> <span class="kd">function</span> <span class="nx">async2</span><span class="p">()</span> <span class="p">{</span>
+<span class="nx">async</span> <span class="kd">function</span> <span class="nx">async2</span><span class="p">()</span> <span class="p">{</span>
   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;async2&#39;</span><span class="p">)</span>
 <span class="p">}</span>
 
@@ -1426,9 +1515,11 @@
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;script end&#39;</span><span class="p">)</span>
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p>解异步执行顺序题的公式，准备以下几个框：</p>
 </blockquote>
+
 <ol>
 <li>主线程执行栈</li>
 <li>微任务队列</li>
@@ -1436,53 +1527,63 @@
 <li>Web API （定时器等）</li>
 <li>Event Queue</li>
 </ol>
+
 <blockquote>
 <p>按照代码顺序将相应类型的语句依次添加到 <strong>执行栈-&gt;微任务队列-&gt;宏任务队列</strong></p>
+
 <p>依次执行 <strong>执行栈中的语句-&gt;微任务队列中的语句-&gt;宏任务队列中的语句</strong>
 问题：</p>
 </blockquote>
+
 <ul>
 <li>async 做一件什么事情</li>
 <li>await 在等什么</li>
 <li>await 等到之后，做了一件什么事情</li>
 <li>async/await 比 promise有哪些优势</li>
 </ul>
+
 <h4 id="async-做一件什么事情">async 做一件什么事情</h4>
+
 <blockquote>
 <p>带 async 关键字的函数，使得函数的返回值必定是 promise 对象</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="p">(</span><span class="kr">async</span><span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{})()</span> <span class="c1">// Promise {&lt;fulfilled&gt;: undefined}
-</span><span class="c1"></span><span class="p">(</span><span class="kr">async</span><span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span><span class="k">return</span> <span class="mi">1</span><span class="p">})()</span> <span class="c1">// Promise {&lt;fulfilled&gt;: 1}
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="p">(</span><span class="nx">async</span><span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{})()</span> <span class="c1">// Promise {&lt;fulfilled&gt;: undefined}
+</span><span class="c1"></span><span class="p">(</span><span class="nx">async</span><span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span><span class="k">return</span> <span class="mi">1</span><span class="p">})()</span> <span class="c1">// Promise {&lt;fulfilled&gt;: 1}
 </span></code></pre></td></tr></table>
 </div>
-</div><ul>
+</div>
+<ul>
 <li>仅是把return值包装成了promise对象
+
 <ul>
 <li>如果async关键字函数返回的不是promise，会自动用<code>Promise.resolve()</code>包装</li>
 <li>如果async关键字函数显式地返回promise，那就以返回的promise为准</li>
-</ul>
-</li>
+</ul></li>
 <li>在语义上，async表示函数内部有异步操作</li>
 <li>await 关键字要在 async 关键字函数的内部，await 写在外面会报错</li>
 </ul>
-<hr>
+
+<hr />
+
 <h4 id="await-在等什么">await 在等什么</h4>
+
 <blockquote>
 <p>await等的是 <strong>右侧「表达式」的结果</strong></p>
 </blockquote>
+
 <ul>
 <li>右侧如果是函数，那么这个函数的return值就是「await表达式的结果」</li>
-<li>右侧如果是一个 常量，那await表达式的结果就是 这个常量</li>
-</ul>
+
+<li><p>右侧如果是一个 常量，那await表达式的结果就是 这个常量</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1503,14 +1604,14 @@
 </span><span class="lnt">19
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="kr">async</span> <span class="kd">function</span> <span class="nx">async1</span><span class="p">()</span> <span class="p">{</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span> <span class="s1">&#39;async1 start&#39;</span> <span class="p">)</span>
-    <span class="kr">await</span> <span class="nx">async2</span><span class="p">()</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span> <span class="s1">&#39;async1 end&#39;</span> <span class="p">)</span>
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="nx">async</span> <span class="kd">function</span> <span class="nx">async1</span><span class="p">()</span> <span class="p">{</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span> <span class="s1">&#39;async1 start&#39;</span> <span class="p">)</span>
+<span class="nx">await</span> <span class="nx">async2</span><span class="p">()</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span> <span class="s1">&#39;async1 end&#39;</span> <span class="p">)</span>
 <span class="p">}</span>
 
-<span class="kr">async</span> <span class="kd">function</span> <span class="nx">async2</span><span class="p">()</span> <span class="p">{</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span> <span class="s1">&#39;async2&#39;</span> <span class="p">)</span>
+<span class="nx">async</span> <span class="kd">function</span> <span class="nx">async2</span><span class="p">()</span> <span class="p">{</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span> <span class="s1">&#39;async2&#39;</span> <span class="p">)</span>
 <span class="p">}</span>
 
 <span class="nx">async1</span><span class="p">()</span>
@@ -1524,52 +1625,67 @@
 </span><span class="cm">*/</span>
 </code></pre></td></tr></table>
 </div>
-</div><ul>
-<li><code>await</code> 表达式 会让出线程，阻塞 <strong>await表达式后面</strong> 的代码</li>
-<li><strong>从右向左</strong>，先执行async2后，发现有await关键字，于是让出线程，阻塞 <strong>await表达式代码</strong>后面的代码（如果有）</li>
-<li>先打印async2 （同步），后打印的script start（同步）</li>
+</div></li>
+
+<li><p><code>await</code> 表达式 会让出线程，阻塞 <strong>await表达式后面</strong> 的代码</p></li>
+
+<li><p><strong>从右向左</strong>，先执行async2后，发现有await关键字，于是让出线程，阻塞 <strong>await表达式代码</strong>后面的代码（如果有）</p></li>
+
+<li><p>先打印async2 （同步），后打印的script start（同步）</p></li>
 </ul>
-<hr>
-<h4 id="await-等到之后做了一件什么事情">await 等到之后，做了一件什么事情</h4>
+
+<hr />
+
+<h4 id="await-等到之后-做了一件什么事情">await 等到之后，做了一件什么事情</h4>
+
 <blockquote>
 <p>等到之后，对于await来说，分2个情况</p>
 </blockquote>
+
 <ul>
 <li>不是promise对象</li>
 <li>是promise对象</li>
 </ul>
+
 <blockquote>
 <p>分析</p>
 </blockquote>
+
 <ul>
 <li>如果不是 promise , await会阻塞 <strong>await表达式</strong> 后面的代码，先执行async 函数外面的同步代码
+
 <ul>
 <li>同步代码执行完，再回到async内部，把这个非promise的东西，作为 await表达式的结果 （微任务）</li>
-</ul>
-</li>
+</ul></li>
 <li>如果它等到的是一个 promise 对象，await 也会暂停async 函数后面的代码，先执行async函数外面的同步代码
+
 <ul>
 <li>等到 Promise 对象 fulfilled后</li>
 <li>把 resolve 的参数作为 await 表达式的运算结果 （微任务）</li>
+</ul></li>
 </ul>
-</li>
-</ul>
+
 <blockquote>
 <p>解析宏任务、微任务的执行过程</p>
 </blockquote>
+
 <ul>
 <li>如果将整个script代码块执行的代码看做是一个 宏任务</li>
 <li>则先执行 这个宏任务中的同步代码</li>
 <li>如果执行中遇到 setTimeout 之类宏任务，就把这个 setTimeout 内部的函数推入「宏任务的队列」中，下一轮宏任务执行时调用</li>
 <li>如果执行中遇到 promise.then() 之类的微任务，就推入到「当前宏任务的微任务队列」中，在本轮宏任务的同步代码执行都完成后，依次执行微任务队列中所有的微任务</li>
 </ul>
-<hr>
-<h4 id="asyncawait-比-promise有哪些优势">async/await 比 promise有哪些优势</h4>
-<hr>
+
+<hr />
+
+<h4 id="async-await-比-promise有哪些优势">async/await 比 promise有哪些优势</h4>
+
+<hr />
+
 <h3 id="第二题">第二题：</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1627,10 +1743,9 @@
 </span><span class="lnt">56
 </span><span class="lnt">57
 </span><span class="lnt">58
-</span><span class="lnt">59
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="c1">// sync
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="c1">// sync
 </span><span class="c1"></span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">)</span>
 <span class="c1">// setTimeout A
 </span><span class="c1"></span><span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
@@ -1688,14 +1803,15 @@
 </span><span class="cm">  -[x] setTimeout B
 </span><span class="cm">
 </span><span class="cm">* */</span>
-
 </code></pre></td></tr></table>
 </div>
-</div><hr>
+</div>
+<hr />
+
 <h3 id="第三题">第三题：</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1735,10 +1851,9 @@
 </span><span class="lnt">38
 </span><span class="lnt">39
 </span><span class="lnt">40
-</span><span class="lnt">41
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;script start&#39;</span><span class="p">)</span>
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;script start&#39;</span><span class="p">)</span>
 
 <span class="c1">// setTimeoutA
 </span><span class="c1"></span><span class="nx">setTimeout</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
@@ -1753,16 +1868,16 @@
     <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;promise2&#39;</span><span class="p">)</span>
   <span class="p">})</span>
 
-<span class="kr">async</span> <span class="kd">function</span> <span class="nx">foo</span><span class="p">()</span> <span class="p">{</span>
-  <span class="kr">await</span> <span class="nx">bar</span><span class="p">()</span>
+<span class="nx">async</span> <span class="kd">function</span> <span class="nx">foo</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">await</span> <span class="nx">bar</span><span class="p">()</span>
   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;async1 end&#39;</span><span class="p">)</span>
 <span class="p">}</span>
 
 <span class="nx">foo</span><span class="p">()</span>
 
-<span class="kr">async</span> <span class="kd">function</span> <span class="nx">errorFunc</span><span class="p">()</span> <span class="p">{</span>
+<span class="nx">async</span> <span class="kd">function</span> <span class="nx">errorFunc</span><span class="p">()</span> <span class="p">{</span>
   <span class="k">try</span> <span class="p">{</span>
-    <span class="kr">await</span> <span class="nb">Promise</span><span class="p">.</span><span class="nx">reject</span><span class="p">(</span><span class="s1">&#39;error!!!&#39;</span><span class="p">)</span> <span class="c1">// 将 promise 对象的状态锁定为失败
+    <span class="nx">await</span> <span class="nb">Promise</span><span class="p">.</span><span class="nx">reject</span><span class="p">(</span><span class="s1">&#39;error!!!&#39;</span><span class="p">)</span> <span class="c1">// 将 promise 对象的状态锁定为失败
 </span><span class="c1"></span>    <span class="c1">// await 之后的代码都是异步执行
 </span><span class="c1"></span>  <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
     <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="c1">// 异步微任务 相当于promise.catch
@@ -1778,21 +1893,20 @@
 <span class="p">}</span>
 
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;script end&#39;</span><span class="p">)</span>
-
 </code></pre></td></tr></table>
 </div>
-</div><ul>
-<li>重写代码顺序，函数声明提前
+</div>
+<ul>
+<li><p>重写代码顺序，函数声明提前</p>
+
 <ul>
 <li>声明 async function foo</li>
 <li>声明 async function errorFunc</li>
-<li>声明 function bar</li>
-</ul>
-</li>
-</ul>
+
+<li><p>声明 function bar</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1835,55 +1949,56 @@
 </span><span class="lnt">41
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="c1">// 重写代码顺序
-</span><span class="c1"></span><span class="kr">async</span> <span class="kd">function</span> <span class="nx">foo</span><span class="p">()</span> <span class="p">{</span>
-  <span class="kr">await</span> <span class="nx">bar</span><span class="p">()</span>
-  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;async1 end&#39;</span><span class="p">)</span>
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="c1">// 重写代码顺序
+</span><span class="c1"></span><span class="nx">async</span> <span class="kd">function</span> <span class="nx">foo</span><span class="p">()</span> <span class="p">{</span>
+<span class="nx">await</span> <span class="nx">bar</span><span class="p">()</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;async1 end&#39;</span><span class="p">)</span>
 <span class="p">}</span>
 
-<span class="kr">async</span> <span class="kd">function</span> <span class="nx">errorFunc</span><span class="p">()</span> <span class="p">{</span>
-  <span class="k">try</span> <span class="p">{</span>
-    <span class="kr">await</span> <span class="nb">Promise</span><span class="p">.</span><span class="nx">reject</span><span class="p">(</span><span class="s1">&#39;error!!!&#39;</span><span class="p">)</span> <span class="c1">// 将 promise 对象的状态锁定为失败
-</span><span class="c1"></span>    <span class="c1">// await 之后的代码都是异步执行
-</span><span class="c1"></span>  <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="c1">// 异步微任务 相当于promise.catch
-</span><span class="c1"></span>  <span class="p">}</span>
-  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;async1&#39;</span><span class="p">)</span>
-  <span class="k">return</span> <span class="nb">Promise</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="s1">&#39;async1 success&#39;</span><span class="p">)</span>
+<span class="nx">async</span> <span class="kd">function</span> <span class="nx">errorFunc</span><span class="p">()</span> <span class="p">{</span>
+<span class="k">try</span> <span class="p">{</span>
+<span class="nx">await</span> <span class="nb">Promise</span><span class="p">.</span><span class="nx">reject</span><span class="p">(</span><span class="s1">&#39;error!!!&#39;</span><span class="p">)</span> <span class="c1">// 将 promise 对象的状态锁定为失败
+</span><span class="c1">// await 之后的代码都是异步执行
+</span><span class="c1"></span><span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="c1">// 异步微任务 相当于promise.catch
+</span><span class="c1"></span><span class="p">}</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;async1&#39;</span><span class="p">)</span>
+<span class="k">return</span> <span class="nb">Promise</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="s1">&#39;async1 success&#39;</span><span class="p">)</span>
 <span class="p">}</span>
 
 <span class="kd">function</span> <span class="nx">bar</span><span class="p">()</span> <span class="p">{</span>
-  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;async2 end&#39;</span><span class="p">)</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;async2 end&#39;</span><span class="p">)</span>
 <span class="p">}</span>
 
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;script start&#39;</span><span class="p">)</span>
  
 <span class="nx">setTimeout</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
-  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;time1&#39;</span><span class="p">)</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;time1&#39;</span><span class="p">)</span>
 <span class="p">},</span> <span class="mi">1</span> <span class="o">*</span> <span class="mi">2000</span><span class="p">)</span>
 
 <span class="nb">Promise</span><span class="p">.</span><span class="nx">resolve</span><span class="p">()</span>
-  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;promise1&#39;</span><span class="p">)</span>
-  <span class="p">})</span>
-  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;promise2&#39;</span><span class="p">)</span>
-  <span class="p">})</span>
+<span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;promise1&#39;</span><span class="p">)</span>
+<span class="p">})</span>
+<span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;promise2&#39;</span><span class="p">)</span>
+<span class="p">})</span>
 
 <span class="nx">foo</span><span class="p">()</span>
 
 <span class="nx">errorFunc</span><span class="p">()</span>
-  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="p">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">res</span><span class="p">))</span>
+<span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="p">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">res</span><span class="p">))</span>
 
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;script end&#39;</span><span class="p">)</span>
 </code></pre></td></tr></table>
 </div>
-</div><ul>
-<li>将函数声明带入函数执行位置</li>
-</ul>
+</div></li>
+</ul></li>
+
+<li><p>将函数声明带入函数执行位置</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1915,74 +2030,73 @@
 </span><span class="lnt">30
 </span><span class="lnt">31
 </span><span class="lnt">32
-</span><span class="lnt">33
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;script start&#39;</span><span class="p">)</span>
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;script start&#39;</span><span class="p">)</span>
  
 <span class="nx">setTimeout</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
-  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;time1&#39;</span><span class="p">)</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;time1&#39;</span><span class="p">)</span>
 <span class="p">},</span> <span class="mi">1</span> <span class="o">*</span> <span class="mi">2000</span><span class="p">)</span>
 
 <span class="nb">Promise</span><span class="p">.</span><span class="nx">resolve</span><span class="p">()</span>
-  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;promise1&#39;</span><span class="p">)</span>
-  <span class="p">})</span>
-  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;promise2&#39;</span><span class="p">)</span>
-  <span class="p">})</span>
+<span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;promise1&#39;</span><span class="p">)</span>
+<span class="p">})</span>
+<span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;promise2&#39;</span><span class="p">)</span>
+<span class="p">})</span>
 
-<span class="p">(</span><span class="kr">async</span> <span class="kd">function</span> <span class="nx">foo</span><span class="p">()</span> <span class="p">{</span>
-  <span class="kr">await</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;async2 end&#39;</span><span class="p">)</span>
-  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;async1 end&#39;</span><span class="p">)</span>
+<span class="p">(</span><span class="nx">async</span> <span class="kd">function</span> <span class="nx">foo</span><span class="p">()</span> <span class="p">{</span>
+<span class="nx">await</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;async2 end&#39;</span><span class="p">)</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;async1 end&#39;</span><span class="p">)</span>
 <span class="p">})()</span>
 
-<span class="p">(</span><span class="kr">async</span> <span class="kd">function</span> <span class="nx">errorFunc</span><span class="p">()</span> <span class="p">{</span>
-  <span class="k">try</span> <span class="p">{</span>
-    <span class="kr">await</span> <span class="nb">Promise</span><span class="p">.</span><span class="nx">reject</span><span class="p">(</span><span class="s1">&#39;error!!!&#39;</span><span class="p">)</span> <span class="c1">// 将 promise 对象的状态锁定为失败
-</span><span class="c1"></span>    <span class="c1">// await 之后的代码都是异步执行
-</span><span class="c1"></span>  <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="c1">// 异步微任务 相当于promise.catch
-</span><span class="c1"></span>  <span class="p">}</span>
-  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;async1&#39;</span><span class="p">)</span>
-  <span class="k">return</span> <span class="nb">Promise</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="s1">&#39;async1 success&#39;</span><span class="p">)</span>
+<span class="p">(</span><span class="nx">async</span> <span class="kd">function</span> <span class="nx">errorFunc</span><span class="p">()</span> <span class="p">{</span>
+<span class="k">try</span> <span class="p">{</span>
+<span class="nx">await</span> <span class="nb">Promise</span><span class="p">.</span><span class="nx">reject</span><span class="p">(</span><span class="s1">&#39;error!!!&#39;</span><span class="p">)</span> <span class="c1">// 将 promise 对象的状态锁定为失败
+</span><span class="c1">// await 之后的代码都是异步执行
+</span><span class="c1"></span><span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="c1">// 异步微任务 相当于promise.catch
+</span><span class="c1"></span><span class="p">}</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;async1&#39;</span><span class="p">)</span>
+<span class="k">return</span> <span class="nb">Promise</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="s1">&#39;async1 success&#39;</span><span class="p">)</span>
 <span class="p">})()</span>
-  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="p">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">res</span><span class="p">))</span>
+<span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="p">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">res</span><span class="p">))</span>
 
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;script end&#39;</span><span class="p">)</span>
-
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div></li>
+</ul>
+
+<blockquote>
 <p>总结解题顺序</p>
 </blockquote>
+
 <ul>
 <li>使执行顺序更符合人类阅读顺序</li>
 <li>重写代码顺序</li>
 <li>将函数声明带入函数执行位置</li>
-<li><strong>标记每一个 <code>setTimeoutA B C... </code> <code>thenA B C...</code></strong></li>
-<li><strong>标记每一个 <code>setTimeoutA B C... </code> <code>thenA B C...</code></strong></li>
-<li><strong>标记每一个 <code>setTimeoutA B C... </code> <code>thenA B C...</code></strong></li>
+<li><strong>标记每一个 <code>setTimeoutA B C...</code> <code>thenA B C...</code></strong></li>
+<li><strong>标记每一个 <code>setTimeoutA B C...</code> <code>thenA B C...</code></strong></li>
+<li><strong>标记每一个 <code>setTimeoutA B C...</code> <code>thenA B C...</code></strong></li>
 <li>setTimeout 添加到 Web API 时，注意第二个参数的耗时，影响添加到异步宏任务队列的先后顺序</li>
-<li><code>new Promise(Cb)</code> 中的回调 Cb 为同步执行
+
+<li><p><code>new Promise(Cb)</code> 中的回调 Cb 为同步执行</p>
+
 <ul>
-<li>Cb 参数的 <code>resolve</code>和<code>reject</code>执行时机，以<code>resolve</code>为例
-<ul>
+<li>Cb 参数的 <code>resolve</code>和<code>reject</code>执行时机，以<code>resolve</code>为例</li>
 <li><code>resolve</code>同步执行</li>
-<li><code>resolve</code>异步执行
+
+<li><p><code>resolve</code>异步执行</p>
+
 <ul>
 <li><code>resolve</code>在异步微任务</li>
-<li><code>resolve</code>在异步宏任务</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
+
+<li><p><code>resolve</code>在异步宏任务</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -2066,61 +2180,61 @@
 </span><span class="lnt">82
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;script start&#39;</span><span class="p">)</span>
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;script start&#39;</span><span class="p">)</span>
 
 <span class="c1">// setTimeoutA
 </span><span class="c1"></span><span class="nx">setTimeout</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
-  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;time1&#39;</span><span class="p">)</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;time1&#39;</span><span class="p">)</span>
 <span class="p">},</span> <span class="mi">1</span> <span class="o">*</span> <span class="mi">2000</span><span class="p">)</span>
 
 <span class="nb">Promise</span><span class="p">.</span><span class="nx">resolve</span><span class="p">()</span> <span class="c1">// 同步 将 promise 对象的状态锁定为成功
-</span><span class="c1"></span>  <span class="c1">// thenA
-</span><span class="c1"></span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;promise1&#39;</span><span class="p">)</span>
-  <span class="p">})</span> <span class="c1">// 带 thenB 等待promise的状态改变 运行到此时在第二轮微任务队列末尾添加thenB 的微任务
-</span><span class="c1"></span>  <span class="c1">// thenB
-</span><span class="c1"></span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;promise2&#39;</span><span class="p">)</span>
-  <span class="p">})</span>
+</span><span class="c1">// thenA
+</span><span class="c1"></span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;promise1&#39;</span><span class="p">)</span>
+<span class="p">})</span> <span class="c1">// 带 thenB 等待promise的状态改变 运行到此时在第二轮微任务队列末尾添加thenB 的微任务
+</span><span class="c1">// thenB
+</span><span class="c1"></span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;promise2&#39;</span><span class="p">)</span>
+<span class="p">})</span>
 
-<span class="p">(</span><span class="kr">async</span> <span class="kd">function</span> <span class="nx">foo</span><span class="p">()</span> <span class="p">{</span>
-  <span class="kr">await</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;async2 end&#39;</span><span class="p">)</span> <span class="c1">// 同步 首个await
-</span><span class="c1"></span>  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;async1 end&#39;</span><span class="p">)</span> <span class="c1">// 添加到异步微任务队列
+<span class="p">(</span><span class="nx">async</span> <span class="kd">function</span> <span class="nx">foo</span><span class="p">()</span> <span class="p">{</span>
+<span class="nx">await</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;async2 end&#39;</span><span class="p">)</span> <span class="c1">// 同步 首个await
+</span><span class="c1"></span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;async1 end&#39;</span><span class="p">)</span> <span class="c1">// 添加到异步微任务队列
 </span><span class="c1"></span><span class="p">})()</span>
 
-<span class="p">(</span><span class="kr">async</span> <span class="kd">function</span> <span class="nx">errorFunc</span><span class="p">()</span> <span class="p">{</span>
-  <span class="k">try</span> <span class="p">{</span>
-    <span class="kr">await</span> <span class="nb">Promise</span><span class="p">.</span><span class="nx">reject</span><span class="p">(</span><span class="s1">&#39;error!!!&#39;</span><span class="p">)</span> <span class="c1">// 同步 将 promise 对象的状态锁定为失败
-</span><span class="c1"></span>    <span class="c1">// await 之后的代码都是异步执行
-</span><span class="c1"></span>  <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="c1">// 捕获错误 console.log(error!!!) 添加到异步微任务队列 相当于 promise.catch
-</span><span class="c1"></span>  <span class="p">}</span>
-  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;async1&#39;</span><span class="p">)</span> <span class="c1">// 添加到异步微任务队列
-</span><span class="c1"></span>  <span class="k">return</span> <span class="nb">Promise</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="s1">&#39;async1 success&#39;</span><span class="p">)</span> <span class="c1">// 异步 将 promise 对象的状态锁定为成功 值为 &#39;async1 success&#39;
+<span class="p">(</span><span class="nx">async</span> <span class="kd">function</span> <span class="nx">errorFunc</span><span class="p">()</span> <span class="p">{</span>
+<span class="k">try</span> <span class="p">{</span>
+<span class="nx">await</span> <span class="nb">Promise</span><span class="p">.</span><span class="nx">reject</span><span class="p">(</span><span class="s1">&#39;error!!!&#39;</span><span class="p">)</span> <span class="c1">// 同步 将 promise 对象的状态锁定为失败
+</span><span class="c1">// await 之后的代码都是异步执行
+</span><span class="c1"></span><span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="c1">// 捕获错误 console.log(error!!!) 添加到异步微任务队列 相当于 promise.catch
+</span><span class="c1"></span><span class="p">}</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;async1&#39;</span><span class="p">)</span> <span class="c1">// 添加到异步微任务队列
+</span><span class="c1"></span><span class="k">return</span> <span class="nb">Promise</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="s1">&#39;async1 success&#39;</span><span class="p">)</span> <span class="c1">// 异步 将 promise 对象的状态锁定为成功 值为 &#39;async1 success&#39;
 </span><span class="c1"></span><span class="p">})()</span> <span class="c1">// 带thenC 运行到此时在第二轮微任务队列末尾添加thenC 的微任务
-</span><span class="c1"></span>  <span class="c1">// thenC
-</span><span class="c1"></span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="p">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">res</span><span class="p">))</span>
+</span><span class="c1">// thenC
+</span><span class="c1"></span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="p">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">res</span><span class="p">))</span>
 
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;script end&#39;</span><span class="p">)</span>
 
 <span class="cm">/*
 </span><span class="cm">- 同步
-</span><span class="cm">  - console.log(&#39;script start&#39;);
-</span><span class="cm">  - console.log(&#39;async2 end&#39;)
-</span><span class="cm">  - console.log(&#39;script end&#39;)
+</span><span class="cm">- console.log(&#39;script start&#39;);
+</span><span class="cm">- console.log(&#39;async2 end&#39;)
+</span><span class="cm">- console.log(&#39;script end&#39;)
 </span><span class="cm">- Web API
-</span><span class="cm">  - setTimeoutA 2000ms
+</span><span class="cm">- setTimeoutA 2000ms
 </span><span class="cm">- 异步
-</span><span class="cm">  - 第一轮微任务队列
-</span><span class="cm">    - console.log(&#39;promise1&#39;) // 带 thenB 等待promise的状态改变 运行到此时在第二轮微任务队列末尾添加.then 的微任务
-</span><span class="cm">    - console.log(&#39;async1 end&#39;)
-</span><span class="cm">    - console.log(&#39;error!!!&#39;)
-</span><span class="cm">    - console.log(&#39;async1&#39;) // 带 thenC 等待promise的状态改变 运行到此时在第二轮微任务队列末尾添加.then 的微任务
-</span><span class="cm">  - 第二轮微任务队列
-</span><span class="cm">    - console.log(&#39;promise2&#39;) // thenB
-</span><span class="cm">    - console.log(&#39;async1 success&#39;) // thenC
-</span><span class="cm">  - 宏任务队列
-</span><span class="cm">    - console.log(&#39;time1&#39;)
+</span><span class="cm">- 第一轮微任务队列
+</span><span class="cm">- console.log(&#39;promise1&#39;) // 带 thenB 等待promise的状态改变 运行到此时在第二轮微任务队列末尾添加.then 的微任务
+</span><span class="cm">- console.log(&#39;async1 end&#39;)
+</span><span class="cm">- console.log(&#39;error!!!&#39;)
+</span><span class="cm">- console.log(&#39;async1&#39;) // 带 thenC 等待promise的状态改变 运行到此时在第二轮微任务队列末尾添加.then 的微任务
+</span><span class="cm">- 第二轮微任务队列
+</span><span class="cm">- console.log(&#39;promise2&#39;) // thenB
+</span><span class="cm">- console.log(&#39;async1 success&#39;) // thenC
+</span><span class="cm">- 宏任务队列
+</span><span class="cm">- console.log(&#39;time1&#39;)
 </span><span class="cm">* */</span>
 
 <span class="cm">/*
@@ -2150,11 +2264,17 @@
 </span><span class="cm">* */</span>
 </code></pre></td></tr></table>
 </div>
-</div><hr>
+</div></li>
+</ul></li>
+</ul></li>
+</ul>
+
+<hr />
+
 <h3 id="第四题">第四题：</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -2201,10 +2321,9 @@
 </span><span class="lnt">45
 </span><span class="lnt">46
 </span><span class="lnt">47
-</span><span class="lnt">48
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="c1">// setTimeoutA
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="c1">// setTimeoutA
 </span><span class="c1"></span><span class="nx">setTimeout</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 <span class="p">},</span> <span class="mi">0</span><span class="p">)</span>
@@ -2251,14 +2370,15 @@
 </span><span class="cm">3
 </span><span class="cm">4
 </span><span class="cm">* */</span>
-
 </code></pre></td></tr></table>
 </div>
-</div><hr>
+</div>
+<hr />
+
 <h3 id="第五题">第五题：</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -2298,10 +2418,9 @@
 </span><span class="lnt">38
 </span><span class="lnt">39
 </span><span class="lnt">40
-</span><span class="lnt">41
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="kr">const</span> <span class="nx">p1</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Promise</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">resolve</span><span class="p">)</span> <span class="p">{</span>
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="kr">const</span> <span class="nx">p1</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Promise</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">resolve</span><span class="p">)</span> <span class="p">{</span>
   <span class="nx">resolve</span><span class="p">(</span><span class="s1">&#39;2&#39;</span><span class="p">)</span> <span class="c1">// 同步执行
 </span><span class="c1"></span><span class="p">})</span>
 
@@ -2341,36 +2460,47 @@
 </span><span class="cm">3
 </span><span class="cm">1
 </span><span class="cm">* */</span>
-
 </code></pre></td></tr></table>
 </div>
-</div><hr>
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<hr>
+</div>
+<hr />
+
+<!-- Article End -->
+
+<div style="text-align:center;">·未完待续·</div>
+
+<hr />
+
 <h3 id="参考文章">参考文章</h3>
+
 <ul>
 <li><a href="https://juejin.cn/post/6844903735290757133">关于 async 函数的理解</a></li>
 <li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/await">await MDN</a></li>
 </ul>
+
 <h3 id="相关文章">相关文章</h3>
+
 <ul>
 <li>无</li>
 </ul>
-<hr>
+
+<hr />
+
 <ul>
 <li>作者： Joel</li>
 <li>文章链接：</li>
-<li><a href="http://xmasuhai.xyz/posts/%E7%89%88%E6%9D%83%E5%A3%B0%E6%98%8E%E9%93%BE%E6%8E%A5/">版权声明</a></li>
+<li><a href="http://xmasuhai.xyz/posts/版权声明链接/">版权声明</a></li>
 <li>非自由转载-非商用-非衍生-保持署名</li>
-<li><!-- raw HTML omitted -->河<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->掘<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->思<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->知<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->简<!-- raw HTML omitted --></li>
+<li><a style='color:#DB2D5D;' href='https://xiedaimala.com/bbs/users/8c266e6f-55a2-4348-a180-17cb8cdb2c46#/?page=1' target='_blank' rel='noreferrer noopener'>河</a>
+<a style='color:#006CFF;' href='https://juejin.im/user/59abfad26fb9a0248f4aa221' target='_blank' rel='noreferrer noopener'>掘</a>
+<a style='color:#009A61;' href='https://segmentfault.com/u/joel_59b17eb9d2155' target='_blank' rel='noreferrer noopener'>思</a>
+<a style='color:#0084FF;' href='https://www.zhihu.com/people/xue-shou-41/posts' target='_blank' rel='noreferrer noopener'>知</a>
+<a style='color:#EA6F5A;' href='https://www.jianshu.com/u/079916729823' target='_blank' rel='noreferrer noopener'>简</a></li>
 </ul>
-<hr>
-<hr>
+
+<hr />
+
+<hr />
 
     </div>
 
@@ -2532,7 +2662,7 @@
     &copy;
     
       2019 -
-    2022
+    2026
     <span class="heart">
       
       <i class="iconfont">

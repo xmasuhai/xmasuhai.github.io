@@ -7,7 +7,7 @@
   
 
 <meta name="renderer" content="webkit" />
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
 <meta name="MobileOptimized" content="width"/>
 <meta name="HandheldFriendly" content="true"/>
@@ -32,7 +32,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.91.2" />
+<meta name="generator" content="Hugo 0.59.1" />
 
 
 <link rel="canonical" href="http://xmasuhai.xyz/post/addition/axios%E6%8B%A6%E6%88%AA%E5%99%A8-%E6%8E%A5%E5%8F%A3%E5%B0%81%E8%A3%85/" />
@@ -62,15 +62,21 @@
 <meta property="og:title" content="Axios拦截器 接口封装" />
 <meta property="og:description" content="axios 拦截器 接口封装 大纲链接 § [toc] 1. axios 接口封装概述 ⇧ 安装略，引入axios ⇧ import axios from &#39;axios&#39;，后代码中略 处理加载页面效果 ⇧ 在请求拦截器和响应式" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://xmasuhai.xyz/post/addition/axios%E6%8B%A6%E6%88%AA%E5%99%A8-%E6%8E%A5%E5%8F%A3%E5%B0%81%E8%A3%85/" /><meta property="article:section" content="post" />
+<meta property="og:url" content="http://xmasuhai.xyz/post/addition/axios%E6%8B%A6%E6%88%AA%E5%99%A8-%E6%8E%A5%E5%8F%A3%E5%B0%81%E8%A3%85/" />
 <meta property="article:published_time" content="2022-09-03T09:31:52+08:00" />
 <meta property="article:modified_time" content="2022-09-19T09:51:39+08:00" />
-
 <meta itemprop="name" content="Axios拦截器 接口封装">
-<meta itemprop="description" content="axios 拦截器 接口封装 大纲链接 § [toc] 1. axios 接口封装概述 ⇧ 安装略，引入axios ⇧ import axios from &#39;axios&#39;，后代码中略 处理加载页面效果 ⇧ 在请求拦截器和响应式"><meta itemprop="datePublished" content="2022-09-03T09:31:52+08:00" />
-<meta itemprop="dateModified" content="2022-09-19T09:51:39+08:00" />
-<meta itemprop="wordCount" content="3570">
-<meta itemprop="keywords" content="FrontEnd,Axios," /><meta name="twitter:card" content="summary"/>
+<meta itemprop="description" content="axios 拦截器 接口封装 大纲链接 § [toc] 1. axios 接口封装概述 ⇧ 安装略，引入axios ⇧ import axios from &#39;axios&#39;，后代码中略 处理加载页面效果 ⇧ 在请求拦截器和响应式">
+
+
+<meta itemprop="datePublished" content="2022-09-03T09:31:52&#43;08:00" />
+<meta itemprop="dateModified" content="2022-09-19T09:51:39&#43;08:00" />
+<meta itemprop="wordCount" content="3576">
+
+
+
+<meta itemprop="keywords" content="FrontEnd,Axios," />
+<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Axios拦截器 接口封装"/>
 <meta name="twitter:description" content="axios 拦截器 接口封装 大纲链接 § [toc] 1. axios 接口封装概述 ⇧ 安装略，引入axios ⇧ import axios from &#39;axios&#39;，后代码中略 处理加载页面效果 ⇧ 在请求拦截器和响应式"/>
 
@@ -302,7 +308,7 @@
             <a href="http://xmasuhai.xyz/categories/blog/"> Blog </a>
             
           </div>
-        <span class="more-meta"> 约 3570 字 </span>
+        <span class="more-meta"> 约 3576 字 </span>
           <span class="more-meta"> 预计阅读 8 分钟 </span>
 
         
@@ -319,68 +325,86 @@
   <h2 class="post-toc-title">文章目录</h2>
   <div class="post-toc-content">
     <nav id="TableOfContents">
-  <ul>
-    <li><a href="#1-axios-接口封装概述-a-hrefcatalogue--a">1. <code>axios</code> 接口封装概述 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a>
-      <ul>
-        <li><a href="#安装略引入axios-a-hrefcatalogue--a">安装略，引入<code>axios</code> <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-        <li><a href="#处理加载页面效果-a-hrefcatalogue--a">处理加载页面效果 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-        <li><a href="#二次封装axios的目的-a-hrefcatalogue--a">二次封装<code>axios</code>的目的 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-        <li><a href="#主动取消请求的场景-a-hrefcatalogue--a">主动取消请求的场景 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-        <li><a href="#全局配置-axios-a-hrefcatalogue--a">全局配置 <code>axios</code> <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-        <li><a href="#axios-接口封装-a-hrefcatalogue--a"><code>axios</code> 接口封装 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-      </ul>
-    </li>
-    <li><a href="#2-axios请求拦截器-a-hrefcatalogue--a">2. <code>axios</code>请求拦截器 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-    <li><a href="#3-axios响应拦截器-a-hrefcatalogue--a">3. <code>axios</code>响应拦截器 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-    <li><a href="#4-实现-axios-取消普通请求-a-hrefcatalogue--a">4. 实现 <code>axios</code> 取消普通请求 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-    <li><a href="#5-axios-功能的二次封装-a-hrefcatalogue--a">5. <code>axios</code> 功能的二次封装 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a>
-      <ul>
-        <li><a href="#axios-取消重复请求-的封装-a-hrefcatalogue--a"><code>axios</code> 取消重复请求 的封装 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-        <li><a href="#使用数组-和-abortcontroller-实现-a-hrefcatalogue--a">使用数组 和 <code>AbortController</code> 实现 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-        <li><a href="#使用-map--axioscanceltoken-实现略-a-hrefcatalogue--a">使用 <code>Map</code> + <code>axios.CancelToken</code> 实现，略 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-        <li><a href="#axios-响应错误后-重试请求-的封装-a-hrefcatalogue--a"><code>axios</code> 响应错误后 重试请求 的封装 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-        <li><a href="#token-失效-返回登录页面-的封装-a-hrefcatalogue--a"><code>token</code> 失效 返回登录页面 的封装 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-      </ul>
-    </li>
-    <li><a href="#6-axios-另一种取消请求功能-a-hrefcatalogue--a">6. <code>axios</code> 另一种取消请求功能&hellip; <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-    <li><a href="#7-axios-接口封装在vue中的应用-a-hrefcatalogue--a">7. <code>axios</code> 接口封装在<code>Vue</code>中的应用 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-    <li><a href="#8-axios-封装为hooks-a-hrefcatalogue--a">8. <code>axios</code> 封装为<code>hooks</code> <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-    <li><a href="#9-axios-接口封装总结-a-hrefcatalogue--a">9. <code>axios</code> 接口封装总结 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-    <li><a href="#参考文章-a-hrefcatalogue--a">参考文章 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-    <li><a href="#相关文章-a-hrefcatalogue--a">相关文章 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-  </ul>
+<ul>
+<li><a href="#axios-拦截器-接口封装"><code>axios</code> 拦截器 接口封装</a>
+<ul>
+<li><a href="#1-axios-接口封装概述-a-href-catalogue-a">1. <code>axios</code> 接口封装概述 <a href="#catalogue"> ⇧ </a></a>
+<ul>
+<li><a href="#安装略-引入-axios-a-href-catalogue-a">安装略，引入<code>axios</code> <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#处理加载页面效果-a-href-catalogue-a">处理加载页面效果 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#二次封装-axios-的目的-a-href-catalogue-a">二次封装<code>axios</code>的目的 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#主动取消请求的场景-a-href-catalogue-a">主动取消请求的场景 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#全局配置-axios-a-href-catalogue-a">全局配置 <code>axios</code> <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#axios-接口封装-a-href-catalogue-a"><code>axios</code> 接口封装 <a href="#catalogue"> ⇧ </a></a></li>
+</ul></li>
+<li><a href="#2-axios-请求拦截器-a-href-catalogue-a">2. <code>axios</code>请求拦截器 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#3-axios-响应拦截器-a-href-catalogue-a">3. <code>axios</code>响应拦截器 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#4-实现-axios-取消普通请求-a-href-catalogue-a">4. 实现 <code>axios</code> 取消普通请求 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#5-axios-功能的二次封装-a-href-catalogue-a">5. <code>axios</code> 功能的二次封装 <a href="#catalogue"> ⇧ </a></a>
+<ul>
+<li><a href="#axios-取消重复请求-的封装-a-href-catalogue-a"><code>axios</code> 取消重复请求 的封装 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#使用数组-和-abortcontroller-实现-a-href-catalogue-a">使用数组 和 <code>AbortController</code> 实现 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#使用-map-axios-canceltoken-实现-略-a-href-catalogue-a">使用 <code>Map</code> + <code>axios.CancelToken</code> 实现，略 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#axios-响应错误后-重试请求-的封装-a-href-catalogue-a"><code>axios</code> 响应错误后 重试请求 的封装 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#token-失效-返回登录页面-的封装-a-href-catalogue-a"><code>token</code> 失效 返回登录页面 的封装 <a href="#catalogue"> ⇧ </a></a></li>
+</ul></li>
+<li><a href="#6-axios-另一种取消请求功能-a-href-catalogue-a">6. <code>axios</code> 另一种取消请求功能&hellip; <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#7-axios-接口封装在-vue-中的应用-a-href-catalogue-a">7. <code>axios</code> 接口封装在<code>Vue</code>中的应用 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#8-axios-封装为-hooks-a-href-catalogue-a">8. <code>axios</code> 封装为<code>hooks</code> <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#9-axios-接口封装总结-a-href-catalogue-a">9. <code>axios</code> 接口封装总结 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#参考文章-a-href-catalogue-a">参考文章 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#相关文章-a-href-catalogue-a">相关文章 <a href="#catalogue"> ⇧ </a></a></li>
+</ul></li>
+</ul>
 </nav>
   </div>
 </div>
 
     
     <div class="post-content">
-      <h1 id="axios-拦截器-接口封装"><code>axios</code> 拦截器 接口封装</h1>
+      
+
+<h1 id="axios-拦截器-接口封装"><code>axios</code> 拦截器 接口封装</h1>
+
 <blockquote>
-<p>大纲链接 <!-- raw HTML omitted --> § <!-- raw HTML omitted --></p>
+<p>大纲链接 <a id="catalogue" href="#catalogue" > § </a></p>
 </blockquote>
+
 <p>[toc]</p>
-<hr>
-<h2 id="1-axios-接口封装概述-a-hrefcatalogue--a">1. <code>axios</code> 接口封装概述 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
-<h3 id="安装略引入axios-a-hrefcatalogue--a">安装略，引入<code>axios</code> <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+
+<hr />
+
+<h2 id="1-axios-接口封装概述-a-href-catalogue-a">1. <code>axios</code> 接口封装概述 <a href="#catalogue"> ⇧ </a></h2>
+
+<h3 id="安装略-引入-axios-a-href-catalogue-a">安装略，引入<code>axios</code> <a href="#catalogue"> ⇧ </a></h3>
+
 <ul>
 <li><code>import axios from 'axios'</code>，后代码中略</li>
 </ul>
-<hr>
-<h3 id="处理加载页面效果-a-hrefcatalogue--a">处理加载页面效果 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+
+<hr />
+
+<h3 id="处理加载页面效果-a-href-catalogue-a">处理加载页面效果 <a href="#catalogue"> ⇧ </a></h3>
+
 <ul>
 <li>在请求拦截器和响应式拦截器中根据记录的 <strong>正在发起的请求数 来处理</strong></li>
 <li>请求拦截器 <code>axios.interceptors.request.use()</code></li>
 <li>响应式拦截器 <code>axios.interceptors.response.use()</code></li>
 </ul>
-<hr>
-<h3 id="二次封装axios的目的-a-hrefcatalogue--a">二次封装<code>axios</code>的目的 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+
+<hr />
+
+<h3 id="二次封装-axios-的目的-a-href-catalogue-a">二次封装<code>axios</code>的目的 <a href="#catalogue"> ⇧ </a></h3>
+
 <ul>
 <li>由于业务根据不同的功能模块，划分为不同的 <code>url</code> 前缀，所以需要二次封装 <code>axios</code></li>
 <li>根据功能模块配置不同的 <code>axios</code> 配置</li>
 </ul>
-<hr>
-<h3 id="主动取消请求的场景-a-hrefcatalogue--a">主动取消请求的场景 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+
+<hr />
+
+<h3 id="主动取消请求的场景-a-href-catalogue-a">主动取消请求的场景 <a href="#catalogue"> ⇧ </a></h3>
+
 <ul>
 <li>搜索框 需要防止 用户输入每次一变化，就向服务端发送一次请求</li>
 <li>用户输入过快 前端用 debounce（如延时 200ms 发请求)，连续输入间隔小于 200ms，之前的输入都不会发请求</li>
@@ -388,65 +412,79 @@
 <li>先后两次请求 <code>A -&gt; B</code>，<code>B</code> 响应后发而先至，前面请求响应结果，覆盖后面请求响应结果的情况</li>
 <li>除了做 debounce，后发请求时，之前请求未响应，可以把前面的请求取消</li>
 </ul>
-<hr>
-<h3 id="全局配置-axios-a-hrefcatalogue--a">全局配置 <code>axios</code> <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+
+<hr />
+
+<h3 id="全局配置-axios-a-href-catalogue-a">全局配置 <code>axios</code> <a href="#catalogue"> ⇧ </a></h3>
+
 <ul>
 <li>自定义请求头 <code>axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';</code></li>
 <li>将配置和调用解耦，将一些相关配置配置成常量后在引入使用
+
 <ul>
 <li>创建<code>env.ts</code>设置并导出配置常量<code>BASE_URL</code>和<code>TIME_OUT</code></li>
 <li>基本请求公共路径 <code>axios.defaults.baseURL = BASE_URL;</code></li>
 <li>超时时间 <code>axios.defaults.timeout = TIME_OUT;</code></li>
-</ul>
-</li>
+</ul></li>
 <li>或者使用环境配置文件<code>.env.*</code>
+
 <ul>
 <li><code>Vite</code> 在一个特殊的 <code>import.meta.env</code> 对象上暴露环境变量</li>
 <li><code>Vue-CLI</code> 是基于<code>webpack</code>，它是在 <code>process.env</code> 上挂载的</li>
 <li>比如 <code>.env.development</code> 设置 <code>VITE_APP_BASE_API='https://blog-server.hunger-valley.com'</code></li>
 <li>使用时，在js源代码文件中通过 <code>import.meta.env.VITE_xxx</code>来访问，类似<code>vue/cli</code>中的<code>process.env.VUE_APP_BASE_URL</code></li>
+</ul></li>
 </ul>
-</li>
-</ul>
+
 <blockquote>
 <p>也可以通过创建实例，在创建时配置属性，以配置公共路径为例：</p>
 </blockquote>
+
 <ul>
 <li>调用 <code>axios.create</code> 方法创建实例 和 对该实例的拦截器 <code>interceptors</code> 方法进行重写，在此基础上添加取消重复请求的功能</li>
 <li><code>const http = axios.create({ baseURL: import.meta.env.VITE_APP_BASE_URL, });</code></li>
 <li>然后使用实例
+
 <ul>
 <li><code>http.interceptors.request.use(/* ... */)</code></li>
 <li><code>http.interceptors.request.use(/* ... */)</code></li>
 <li><code>export default http;</code></li>
+</ul></li>
 </ul>
-</li>
-</ul>
+
 <blockquote>
 <p>参考</p>
 </blockquote>
+
 <ul>
 <li><a href="https://www.jianshu.com/p/e40709390301">vue/cli 中axios封装、配置不同开发环境变量</a></li>
 </ul>
-<hr>
-<h3 id="axios-接口封装-a-hrefcatalogue--a"><code>axios</code> 接口封装 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+
+<hr />
+
+<h3 id="axios-接口封装-a-href-catalogue-a"><code>axios</code> 接口封装 <a href="#catalogue"> ⇧ </a></h3>
+
 <ul>
 <li><code>axios</code> 取消重复请求 的封装</li>
 <li><code>axios</code> 响应错误后 重试请求 的封装</li>
 <li><code>token</code> 失效返回登录页面 的封装</li>
 </ul>
+
 <blockquote>
 <p>参考</p>
 </blockquote>
+
 <ul>
 <li><a href="https://juejin.cn/post/7119455615840092173#heading-2">Vite真香之路 问题记录 环境变量</a></li>
 <li><a href="https://juejin.cn/post/7144242499391848462">axios请求的一些常见操作</a></li>
 </ul>
-<hr>
-<h2 id="2-axios请求拦截器-a-hrefcatalogue--a">2. <code>axios</code>请求拦截器 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+
+<hr />
+
+<h2 id="2-axios-请求拦截器-a-href-catalogue-a">2. <code>axios</code>请求拦截器 <a href="#catalogue"> ⇧ </a></h2>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -459,7 +497,7 @@
 </span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="nx">axios</span><span class="p">.</span><span class="nx">interceptors</span><span class="p">.</span><span class="nx">request</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span>
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="nx">axios</span><span class="p">.</span><span class="nx">interceptors</span><span class="p">.</span><span class="nx">request</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span>
   <span class="kd">function</span> <span class="p">(</span><span class="nx">config</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// 在发送请求之前处理的逻辑
 </span><span class="c1"></span>    <span class="k">return</span> <span class="nx">config</span><span class="p">;</span>
   <span class="p">},</span>
@@ -472,11 +510,13 @@
 </span><span class="c1"></span><span class="nx">axios</span><span class="p">.</span><span class="nx">interceptors</span><span class="p">.</span><span class="nx">request</span><span class="p">.</span><span class="nx">use</span><span class="p">((</span><span class="nx">config</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="nx">config</span><span class="p">,</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="nb">Promise</span><span class="p">.</span><span class="nx">reject</span><span class="p">(</span><span class="nx">err</span><span class="p">))</span>
 </code></pre></td></tr></table>
 </div>
-</div><hr>
-<h2 id="3-axios响应拦截器-a-hrefcatalogue--a">3. <code>axios</code>响应拦截器 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+</div>
+<hr />
+
+<h2 id="3-axios-响应拦截器-a-href-catalogue-a">3. <code>axios</code>响应拦截器 <a href="#catalogue"> ⇧ </a></h2>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -494,7 +534,7 @@
 </span><span class="lnt">16
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="nx">axios</span><span class="p">.</span><span class="nx">interceptors</span><span class="p">.</span><span class="nx">response</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span>
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="nx">axios</span><span class="p">.</span><span class="nx">interceptors</span><span class="p">.</span><span class="nx">response</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span>
   <span class="kd">function</span> <span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
     <span class="c1">// 2xx 范围内的状态码都会触发该逻辑。
 </span><span class="c1"></span>    <span class="c1">// 对响应数据处理的逻辑
@@ -512,39 +552,44 @@
 </span><span class="c1"></span><span class="nx">axios</span><span class="p">.</span><span class="nx">interceptors</span><span class="p">.</span><span class="nx">response</span><span class="p">.</span><span class="nx">use</span><span class="p">((</span><span class="nx">res</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="nx">res</span><span class="p">,</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="nb">Promise</span><span class="p">.</span><span class="nx">reject</span><span class="p">(</span><span class="nx">err</span><span class="p">))</span>
 </code></pre></td></tr></table>
 </div>
-</div><hr>
-<h2 id="4-实现-axios-取消普通请求-a-hrefcatalogue--a">4. 实现 <code>axios</code> 取消普通请求 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+</div>
+<hr />
+
+<h2 id="4-实现-axios-取消普通请求-a-href-catalogue-a">4. 实现 <code>axios</code> 取消普通请求 <a href="#catalogue"> ⇧ </a></h2>
+
 <blockquote>
 <p>对普通的 <code>XMLHttpRequest</code> 请求进行取消，用到了实例的 <code>abort()</code> 方法</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="kr">const</span> <span class="nx">xhr</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">()</span>
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="kr">const</span> <span class="nx">xhr</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">()</span>
 <span class="nx">xhr</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;/abc&#39;</span><span class="p">)</span>
 <span class="nx">xhr</span><span class="p">.</span><span class="nx">send</span><span class="p">()</span>
 <span class="cm">/* 取消当前请求 */</span> 
 <span class="nx">setTimeout</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span> <span class="nx">xhr</span><span class="p">.</span><span class="nx">abort</span><span class="p">()</span> <span class="p">},</span> <span class="mi">300</span><span class="p">)</span>
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p>取消 <code>axios</code> 请求</p>
 </blockquote>
+
 <ul>
 <li>使用 <code>axios</code> 的 <code>cancelToken</code> 方法</li>
 <li>获取实例 <code>const source = axios.CancelToken.source()</code></li>
 <li>在 <code>config</code> 中写入属性 <code>cancelToken: source.token</code></li>
-<li>取消请求 <code>source.cancel()</code></li>
-</ul>
+
+<li><p>取消请求 <code>source.cancel()</code></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -553,104 +598,120 @@
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="kr">const</span> <span class="nx">source</span> <span class="o">=</span> <span class="nx">axios</span><span class="p">.</span><span class="nx">CancelToken</span><span class="p">.</span><span class="nx">source</span><span class="p">()</span>
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="kr">const</span> <span class="nx">source</span> <span class="o">=</span> <span class="nx">axios</span><span class="p">.</span><span class="nx">CancelToken</span><span class="p">.</span><span class="nx">source</span><span class="p">()</span>
 <span class="nx">axios</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/user/12345&#39;</span><span class="p">,</span> <span class="p">{</span>
-  <span class="nx">cancelToken</span><span class="o">:</span> <span class="nx">source</span><span class="p">.</span><span class="nx">token</span>
+<span class="nx">cancelToken</span><span class="o">:</span> <span class="nx">source</span><span class="p">.</span><span class="nx">token</span>
 <span class="p">}).</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="p">=&gt;</span> <span class="p">{})</span>
 
 <span class="c1">// cancel 方法里面的参数是可选的
 </span><span class="c1"></span><span class="nx">source</span><span class="p">.</span><span class="nx">cancel</span><span class="p">(</span><span class="s1">&#39;Operation canceled by the user.&#39;</span><span class="p">)</span>
 </code></pre></td></tr></table>
 </div>
-</div><hr>
-<h2 id="5-axios-功能的二次封装-a-hrefcatalogue--a">5. <code>axios</code> 功能的二次封装 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+</div></li>
+</ul>
+
+<hr />
+
+<h2 id="5-axios-功能的二次封装-a-href-catalogue-a">5. <code>axios</code> 功能的二次封装 <a href="#catalogue"> ⇧ </a></h2>
+
 <ul>
 <li><code>axios</code> 取消重复请求 的封装</li>
 <li><code>axios</code> 响应错误后 重试请求 的封装</li>
 <li><code>token</code> 失效返回登录页面 的封装</li>
 </ul>
+
 <blockquote>
 <p>通用代码，后略</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="kr">import</span> <span class="nx">axios</span> <span class="kr">from</span> <span class="s2">&#34;axios&#34;</span><span class="p">;</span>
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="kr">import</span> <span class="nx">axios</span> <span class="nx">from</span> <span class="s2">&#34;axios&#34;</span><span class="p">;</span>
 <span class="kr">const</span> <span class="nx">http</span> <span class="o">=</span> <span class="nx">axios</span><span class="p">.</span><span class="nx">create</span><span class="p">({</span>
   <span class="nx">baseURL</span>: <span class="kt">import.meta.env.VUE_APP_BASE_URL</span><span class="p">,</span>
 <span class="p">});</span>
 <span class="c1">// ...
 </span></code></pre></td></tr></table>
 </div>
-</div><hr>
-<h3 id="axios-取消重复请求-的封装-a-hrefcatalogue--a"><code>axios</code> 取消重复请求 的封装 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+</div>
+<hr />
+
+<h3 id="axios-取消重复请求-的封装-a-href-catalogue-a"><code>axios</code> 取消重复请求 的封装 <a href="#catalogue"> ⇧ </a></h3>
+
 <blockquote>
 <p>实现思路</p>
 </blockquote>
+
 <ul>
 <li>针对多个重复请求发送</li>
 <li>先后紧接着发送了两个相同的请求，对前一个请求进行取消操作，真正发送出去的是后一个</li>
 <li>判断请求重复
+
 <ul>
 <li>通过 请求的地址 <code>url</code></li>
 <li>通过 请求方式 <code>method</code></li>
 <li>请求参数 <code>params | data</code> 这几个值来做唯一判断</li>
 <li>如果两个请求上的这些信息都相同，那么就可以判断这两个请求是重复的</li>
-</ul>
-</li>
+</ul></li>
 <li>获取 这个请求的 <code>cancel</code> 方法，调用 <code>cancel</code> 方法进行取消
+
 <ul>
 <li>把当前请求和对应的 <code>cancel</code> 进行关联</li>
 <li>用对象、数组或者 <code>Map</code> 进行存储
+
 <ul>
 <li>把当前请求的信息作为 <code>key</code></li>
 <li>把对应的 <code>cancel</code> 方法作为 <code>value</code></li>
 <li>存储到对象或者 <code>Map</code> 中</li>
-</ul>
-</li>
+</ul></li>
 <li>根据当前请求信息，获取到对应的取消方法
+
 <ul>
 <li>每一个请求的 <code>cancel</code> 方法需要调用 <code>new CancelToken()</code> 才可以获取</li>
+</ul></li>
+</ul></li>
 </ul>
-</li>
-</ul>
-</li>
-</ul>
+
 <blockquote>
 <p>在页面离开时，丢弃所有未完成的请求 使用 <code>AbortController</code></p>
 </blockquote>
+
 <ul>
 <li>访问一个请求会消耗比较长时间的页面，如果此时切换到其它页面，这些未完成的请求会影响下个页面的数据载入</li>
 <li>也就是说，下面页面中的请求会在前一个页面请求完成后才执行</li>
 </ul>
+
 <blockquote>
 <p>原理简述</p>
 </blockquote>
+
 <ul>
 <li>页面中创建一个 <code>AbortControlller</code> 的实例</li>
 <li>在所有有可能需要结束请求的 <code>config</code> 里，添加 <code>signal: abortController.sinal</code> 这个选项</li>
 <li>当离开页面的时候，使用 <code>abortController.abort()</code> 结束所有的请求即可</li>
 </ul>
-<h3 id="使用数组-和-abortcontroller-实现-a-hrefcatalogue--a">使用数组 和 <code>AbortController</code> 实现 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+
+<h3 id="使用数组-和-abortcontroller-实现-a-href-catalogue-a">使用数组 和 <code>AbortController</code> 实现 <a href="#catalogue"> ⇧ </a></h3>
+
 <ul>
 <li>请求列表 <code>reqList</code></li>
-<li>删除重复请求的方法 <code>rmSameReq</code>
+
+<li><p>删除重复请求的方法 <code>rmSameReq</code></p>
+
 <ul>
 <li>通过判断 <code>reqList</code> 中是否有相同 <code>method</code> 和 <code>url</code> 的项</li>
 <li>若重复 则调用该项中的 <code>reqList[index].controller.abort()</code> 方法 取消请求</li>
-<li>当 <code>abort()</code> 被调用时，这个 promise 将 reject 一个名为 AbortError 的 DOMException</li>
-</ul>
-</li>
-</ul>
+
+<li><p>当 <code>abort()</code> 被调用时，这个 promise 将 reject 一个名为 AbortError 的 DOMException</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -702,65 +763,70 @@
 </span><span class="lnt">50
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="c1">// ts
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="c1">// ts
 </span><span class="c1"></span><span class="nx">type</span> <span class="nx">reqConfig</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="p">[</span><span class="nx">K</span> <span class="k">in</span> <span class="nx">keyof</span> <span class="nx">AxiosRequestConfig</span><span class="p">]</span><span class="o">:</span> <span class="nx">AxiosRequestConfig</span><span class="p">[</span><span class="nx">K</span><span class="p">]</span>
+<span class="p">[</span><span class="nx">K</span> <span class="k">in</span> <span class="nx">keyof</span> <span class="nx">AxiosRequestConfig</span><span class="p">]</span><span class="o">:</span> <span class="nx">AxiosRequestConfig</span><span class="p">[</span><span class="nx">K</span><span class="p">]</span>
 <span class="p">}</span>
 <span class="kr">const</span> <span class="nx">reqList</span><span class="o">:</span> <span class="p">(</span><span class="nx">reqConfig</span> <span class="o">&amp;</span> <span class="p">{</span> <span class="nx">controller</span><span class="o">:</span> <span class="nx">AbortController</span> <span class="p">})[]</span> <span class="o">=</span> <span class="p">[];</span>
 
 <span class="kr">const</span> <span class="nx">rmSameReq</span> <span class="o">=</span> <span class="p">(</span><span class="nx">method</span><span class="o">:</span> <span class="nx">string</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="nx">url</span><span class="o">:</span> <span class="nx">string</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">:</span> <span class="k">void</span> <span class="p">=&gt;</span> <span class="p">{</span>
-  <span class="kr">const</span> <span class="nx">index</span> <span class="o">=</span> <span class="nx">reqList</span><span class="p">.</span><span class="nx">findIndex</span><span class="p">(</span><span class="nx">v</span> <span class="p">=&gt;</span> <span class="nx">v</span><span class="p">.</span><span class="nx">method</span> <span class="o">===</span> <span class="nx">method</span> <span class="o">&amp;&amp;</span> <span class="nx">v</span><span class="p">.</span><span class="nx">url</span> <span class="o">===</span> <span class="nx">url</span><span class="p">);</span>
-  <span class="k">if</span> <span class="p">(</span><span class="nx">index</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-    <span class="c1">// 取消请求
-</span><span class="c1"></span>    <span class="nx">reqList</span><span class="p">[</span><span class="nx">index</span><span class="p">].</span><span class="nx">controller</span><span class="p">.</span><span class="nx">abort</span><span class="p">();</span>
-    <span class="c1">// 删除当前数据
-</span><span class="c1"></span>    <span class="nx">reqList</span><span class="p">.</span><span class="nx">splice</span><span class="p">(</span><span class="nx">index</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
-  <span class="p">}</span>
+<span class="kr">const</span> <span class="nx">index</span> <span class="o">=</span> <span class="nx">reqList</span><span class="p">.</span><span class="nx">findIndex</span><span class="p">(</span><span class="nx">v</span> <span class="p">=&gt;</span> <span class="nx">v</span><span class="p">.</span><span class="nx">method</span> <span class="o">===</span> <span class="nx">method</span> <span class="o">&amp;&amp;</span> <span class="nx">v</span><span class="p">.</span><span class="nx">url</span> <span class="o">===</span> <span class="nx">url</span><span class="p">);</span>
+<span class="k">if</span> <span class="p">(</span><span class="nx">index</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+<span class="c1">// 取消请求
+</span><span class="c1"></span><span class="nx">reqList</span><span class="p">[</span><span class="nx">index</span><span class="p">].</span><span class="nx">controller</span><span class="p">.</span><span class="nx">abort</span><span class="p">();</span>
+<span class="c1">// 删除当前数据
+</span><span class="c1"></span><span class="nx">reqList</span><span class="p">.</span><span class="nx">splice</span><span class="p">(</span><span class="nx">index</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+<span class="p">}</span>
 <span class="p">};</span>
 
 <span class="nx">http</span><span class="p">.</span><span class="nx">interceptors</span><span class="p">.</span><span class="nx">request</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span> <span class="nx">config</span> <span class="p">=&gt;</span> <span class="p">{</span>
-  <span class="kr">const</span> <span class="p">{</span><span class="nx">method</span><span class="p">,</span> <span class="nx">url</span><span class="p">}</span> <span class="o">=</span> <span class="nx">config</span>
-    <span class="c1">// 在push之前 遍历数组找到相同的请求取消掉
-</span><span class="c1"></span>    <span class="nx">rmSameReq</span><span class="p">(</span><span class="nx">method</span><span class="p">,</span> <span class="nx">url</span><span class="p">)</span>
+<span class="kr">const</span> <span class="p">{</span><span class="nx">method</span><span class="p">,</span> <span class="nx">url</span><span class="p">}</span> <span class="o">=</span> <span class="nx">config</span>
+<span class="c1">// 在push之前 遍历数组找到相同的请求取消掉
+</span><span class="c1"></span><span class="nx">rmSameReq</span><span class="p">(</span><span class="nx">method</span><span class="p">,</span> <span class="nx">url</span><span class="p">)</span>
     
-    <span class="c1">// 取消请求控制器
-</span><span class="c1"></span>    <span class="kr">const</span> <span class="nx">controller</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">AbortController</span><span class="p">()</span>
+<span class="c1">// 取消请求控制器
+</span><span class="c1"></span><span class="kr">const</span> <span class="nx">controller</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">AbortController</span><span class="p">()</span>
     
-    <span class="c1">// 记录取消操作的key
-</span><span class="c1"></span>    <span class="nx">config</span><span class="p">.</span><span class="nx">signal</span> <span class="o">=</span> <span class="nx">controller</span><span class="p">.</span><span class="nx">signal</span>
+<span class="c1">// 记录取消操作的key
+</span><span class="c1"></span><span class="nx">config</span><span class="p">.</span><span class="nx">signal</span> <span class="o">=</span> <span class="nx">controller</span><span class="p">.</span><span class="nx">signal</span>
     
-    <span class="c1">// 每次的请求加入到数组 并带上控制器 闭包
-</span><span class="c1"></span>    <span class="nx">reqList</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span> <span class="p">{</span> <span class="p">...</span><span class="nx">config</span><span class="p">,</span> <span class="nx">controller</span> <span class="p">}</span> <span class="p">)</span>
-    <span class="k">return</span> <span class="nx">config</span>
-  <span class="p">},</span> <span class="cm">/* error略 */</span>
+<span class="c1">// 每次的请求加入到数组 并带上控制器 闭包
+</span><span class="c1"></span><span class="nx">reqList</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span> <span class="p">{</span> <span class="p">...</span><span class="nx">config</span><span class="p">,</span> <span class="nx">controller</span> <span class="p">}</span> <span class="p">)</span>
+<span class="k">return</span> <span class="nx">config</span>
+<span class="p">},</span> <span class="cm">/* error略 */</span>
 <span class="p">)</span>
 
 <span class="c1">// 响应拦截器
 </span><span class="c1"></span><span class="nx">http</span><span class="p">.</span><span class="nx">interceptors</span><span class="p">.</span><span class="nx">response</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">res</span> <span class="p">=&gt;</span> <span class="p">{</span>
-  	<span class="c1">// 移除 成功请求记录 参数 res.config
-</span><span class="c1"></span>  	<span class="kr">const</span> <span class="p">{</span><span class="nx">method</span><span class="p">,</span> <span class="nx">url</span><span class="p">}</span> <span class="o">=</span> <span class="nx">res</span><span class="p">.</span><span class="nx">config</span>
-  	<span class="nx">rmSameReq</span><span class="p">(</span><span class="nx">method</span><span class="p">,</span> <span class="nx">url</span><span class="p">)</span>
-    <span class="k">return</span> <span class="nx">res</span><span class="p">.</span><span class="nx">data</span><span class="p">;</span>
+	<span class="c1">// 移除 成功请求记录 参数 res.config
+</span><span class="c1"></span>	<span class="kr">const</span> <span class="p">{</span><span class="nx">method</span><span class="p">,</span> <span class="nx">url</span><span class="p">}</span> <span class="o">=</span> <span class="nx">res</span><span class="p">.</span><span class="nx">config</span>
+	<span class="nx">rmSameReq</span><span class="p">(</span><span class="nx">method</span><span class="p">,</span> <span class="nx">url</span><span class="p">)</span>
+<span class="k">return</span> <span class="nx">res</span><span class="p">.</span><span class="nx">data</span><span class="p">;</span>
 <span class="p">},</span> <span class="nx">err</span> <span class="p">=&gt;</span> <span class="p">{</span>
-  	<span class="c1">// 移除 失败的请求记录 参数 err.config || {}
-</span><span class="c1"></span>  	<span class="kr">const</span> <span class="p">{</span><span class="nx">method</span><span class="p">,</span> <span class="nx">url</span><span class="p">}</span> <span class="o">=</span> <span class="nx">err</span><span class="p">.</span><span class="nx">config</span>
-  	<span class="nx">rmSameReq</span><span class="p">(</span><span class="nx">method</span><span class="p">,</span> <span class="nx">url</span><span class="p">)</span>
+	<span class="c1">// 移除 失败的请求记录 参数 err.config || {}
+</span><span class="c1"></span>	<span class="kr">const</span> <span class="p">{</span><span class="nx">method</span><span class="p">,</span> <span class="nx">url</span><span class="p">}</span> <span class="o">=</span> <span class="nx">err</span><span class="p">.</span><span class="nx">config</span>
+	<span class="nx">rmSameReq</span><span class="p">(</span><span class="nx">method</span><span class="p">,</span> <span class="nx">url</span><span class="p">)</span>
   	
-  	<span class="c1">// 提示消息
-</span><span class="c1"></span>    <span class="c1">// axios.isCancel(err) || console.log(`重复请求信息：${err.message}`)
-</span><span class="c1"></span>    <span class="k">return</span> <span class="nb">Promise</span><span class="p">.</span><span class="nx">reject</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
+	<span class="c1">// 提示消息
+</span><span class="c1">// axios.isCancel(err) || console.log(`重复请求信息：${err.message}`)
+</span><span class="c1"></span><span class="k">return</span> <span class="nb">Promise</span><span class="p">.</span><span class="nx">reject</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
 <span class="p">});</span>
 
 <span class="kr">export</span> <span class="k">default</span> <span class="nx">http</span><span class="p">;</span>
 </code></pre></td></tr></table>
 </div>
-</div><h3 id="使用-map--axioscanceltoken-实现略-a-hrefcatalogue--a">使用 <code>Map</code> + <code>axios.CancelToken</code> 实现，略 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+</div></li>
+</ul></li>
+</ul>
+
+<h3 id="使用-map-axios-canceltoken-实现-略-a-href-catalogue-a">使用 <code>Map</code> + <code>axios.CancelToken</code> 实现，略 <a href="#catalogue"> ⇧ </a></h3>
+
 <blockquote>
 <p>额外封装一个 <code>CancelRequest</code> 类，导出，供拦截器实现使用</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -784,7 +850,7 @@
 </span><span class="lnt">22
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="kr">const</span> <span class="nx">instance</span> <span class="o">=</span> <span class="nx">axios</span><span class="p">.</span><span class="nx">create</span><span class="p">({</span> <span class="cm">/* ... */</span> <span class="p">});</span>
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="kr">const</span> <span class="nx">instance</span> <span class="o">=</span> <span class="nx">axios</span><span class="p">.</span><span class="nx">create</span><span class="p">({</span> <span class="cm">/* ... */</span> <span class="p">});</span>
 
 <span class="c1">// 请求拦截器
 </span><span class="c1"></span><span class="nx">instance</span><span class="p">.</span><span class="nx">interceptors</span><span class="p">.</span><span class="nx">request</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">config</span> <span class="p">=&gt;</span> <span class="p">{</span>
@@ -808,30 +874,34 @@
 <span class="kr">export</span> <span class="k">default</span> <span class="nx">instance</span><span class="p">;</span>
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p>参考</p>
 </blockquote>
+
 <ul>
 <li><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/AbortController">MDN AbortController</a></li>
 <li><a href="https://github.com/axios/axios#cancellation">axios 官方取消请求的说明</a></li>
 <li><a href="https://juejin.cn/post/6992083732253376549">axios请求封装（取消重复请求）</a></li>
 <li><a href="https://juejin.cn/post/7053471988752318472">不要再被误导了，封装 Axios 只看这一篇文章就行了 </a>
+
 <ul>
 <li>使用函数代替拦截器</li>
 <li>支持请求重试</li>
 <li>支持 jsonp 请求</li>
 <li>支持 URI 版本控制</li>
 <li>保持请求唯一</li>
-</ul>
-</li>
+</ul></li>
 <li><a href="https://juejin.cn/post/7103743662315536392">真没必要再对 axios 进行过度的封装</a></li>
 <li><a href="https://www.axios-http.cn/docs/cancellation#:~:text=Axios%20%E7%9A%84%20cancel%20token%20API%20%E6%98%AF%E5%9F%BA%E4%BA%8E%E8%A2%AB%E6%92%A4%E9%94%80%20cancelable%20promises,v0.22.0%20%E5%BC%80%E5%A7%8B%E5%B7%B2%E8%A2%AB%E5%BC%83%E7%94%A8%EF%BC%8C%E4%B8%8D%E5%BA%94%E5%9C%A8%E6%96%B0%E9%A1%B9%E7%9B%AE%E4%B8%AD%E4%BD%BF%E7%94%A8%E3%80%82%20%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8%20CancelToken.source%20%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%20cancel%20token%20%EF%BC%8C%E5%A6%82%E4%B8%8B%E6%89%80%E7%A4%BA%EF%BC%9A">Axios中文文档 取消请求</a></li>
 </ul>
-<hr>
-<h3 id="axios-响应错误后-重试请求-的封装-a-hrefcatalogue--a"><code>axios</code> 响应错误后 重试请求 的封装 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+
+<hr />
+
+<h3 id="axios-响应错误后-重试请求-的封装-a-href-catalogue-a"><code>axios</code> 响应错误后 重试请求 的封装 <a href="#catalogue"> ⇧ </a></h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -865,7 +935,7 @@
 </span><span class="lnt">32
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="nx">http</span><span class="p">.</span><span class="nx">interceptors</span><span class="p">.</span><span class="nx">response</span><span class="p">.</span><span class="nx">use</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="k">void</span><span class="p">,</span> <span class="kd">function</span> <span class="nx">axiosRetryInterceptor</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="nx">http</span><span class="p">.</span><span class="nx">interceptors</span><span class="p">.</span><span class="nx">response</span><span class="p">.</span><span class="nx">use</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="k">void</span><span class="p">,</span> <span class="kd">function</span> <span class="nx">axiosRetryInterceptor</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
   <span class="kr">const</span> <span class="nx">config</span> <span class="o">=</span> <span class="nx">err</span><span class="p">.</span><span class="nx">config</span><span class="p">;</span>
   <span class="c1">// 如果配置不存在或未设置重试选项，则拒绝
 </span><span class="c1"></span>  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">config</span> <span class="o">||</span> <span class="o">!</span><span class="nx">config</span><span class="p">.</span><span class="nx">retry</span><span class="p">)</span> <span class="k">return</span> <span class="nx">Promise</span><span class="p">.</span><span class="nx">reject</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
@@ -899,11 +969,13 @@
 <span class="p">});</span>
 </code></pre></td></tr></table>
 </div>
-</div><hr>
-<h3 id="token-失效-返回登录页面-的封装-a-hrefcatalogue--a"><code>token</code> 失效 返回登录页面 的封装 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+</div>
+<hr />
+
+<h3 id="token-失效-返回登录页面-的封装-a-href-catalogue-a"><code>token</code> 失效 返回登录页面 的封装 <a href="#catalogue"> ⇧ </a></h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -928,7 +1000,7 @@
 </span><span class="lnt">23
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="c1">// 放入不需要拼接 token 的接口
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="c1">// 放入不需要拼接 token 的接口
 </span><span class="c1"></span><span class="kr">const</span> <span class="nx">whiteList</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;/login&#39;</span><span class="p">,</span> <span class="s1">&#39;/logup&#39;</span><span class="p">]</span>
 
 <span class="nx">axios</span><span class="p">.</span><span class="nx">interceptors</span><span class="p">.</span><span class="nx">request</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span> <span class="nx">config</span> <span class="o">=&gt;</span> <span class="nx">config</span><span class="p">,</span> <span class="nx">error</span> <span class="o">=&gt;</span> <span class="nx">Promise</span><span class="p">.</span><span class="nx">reject</span><span class="p">(</span><span class="nx">error</span><span class="p">));</span>
@@ -953,23 +1025,31 @@
   <span class="p">},</span> <span class="nx">error</span> <span class="o">=&gt;</span> <span class="nx">Promise</span><span class="p">.</span><span class="nx">reject</span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">);</span>
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p>参考</p>
 </blockquote>
+
 <ul>
 <li><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Status/401">MDN status code 401 Unauthorized</a></li>
 </ul>
-<hr>
-<h2 id="6-axios-另一种取消请求功能-a-hrefcatalogue--a">6. <code>axios</code> 另一种取消请求功能&hellip; <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+
+<hr />
+
+<h2 id="6-axios-另一种取消请求功能-a-href-catalogue-a">6. <code>axios</code> 另一种取消请求功能&hellip; <a href="#catalogue"> ⇧ </a></h2>
+
 <blockquote>
 <p>需要为该请求配置一个 <code>cancelToken</code>，然后在外部调用一个 <code>cancel</code> 方法</p>
 </blockquote>
+
 <ul>
 <li><code>CancelToken</code> 废弃了，故略</li>
 </ul>
+
 <blockquote>
 <p>参考</p>
 </blockquote>
+
 <ul>
 <li><a href="https://github.com/tc39/proposal-cancelable-promises">CancelToken deprecated</a></li>
 <li><a href="https://juejin.cn/post/7025884912141991972">axios之cancelToken取消多次重复请求</a></li>
@@ -982,22 +1062,27 @@
 <li><a href="https://blog.csdn.net/harsima/article/details/93717217">axios.CancelToken axios中取消请求及阻止重复请求的方法</a></li>
 <li><a href="https://juejin.cn/post/7137600734060609567">axios.CancelToken 取消功能的设计与实现 看评论</a></li>
 </ul>
-<hr>
-<h2 id="7-axios-接口封装在vue中的应用-a-hrefcatalogue--a">7. <code>axios</code> 接口封装在<code>Vue</code>中的应用 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+
+<hr />
+
+<h2 id="7-axios-接口封装在-vue-中的应用-a-href-catalogue-a">7. <code>axios</code> 接口封装在<code>Vue</code>中的应用 <a href="#catalogue"> ⇧ </a></h2>
+
 <blockquote>
 <p>原理回顾</p>
 </blockquote>
+
 <ul>
 <li>页面中创建一个 <code>AbortControlller</code> 的实例</li>
 <li>在所有有可能需要结束请求的 <code>config</code> 里，添加 <code>signal: abortController.sinal</code> 这个选项</li>
 <li>当离开页面的时候，使用 <code>abortController.abort()</code> 结束所有的请求即可</li>
 </ul>
+
 <blockquote>
 <p><code>vue</code>代码</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1021,7 +1106,7 @@
 </span><span class="lnt">22
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="kr">import</span> <span class="p">{</span><span class="nx">defineComponent</span><span class="p">,}</span> <span class="kr">from</span> <span class="s1">&#39;vue&#39;</span><span class="p">;</span>
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="kr">import</span> <span class="p">{</span><span class="nx">defineComponent</span><span class="p">,}</span> <span class="nx">from</span> <span class="s1">&#39;vue&#39;</span><span class="p">;</span>
 
 <span class="kr">export</span> <span class="k">default</span> <span class="nx">defineComponent</span><span class="p">({</span>
   <span class="nx">setup</span><span class="p">(</span><span class="cm">/*props, ctx*/</span><span class="p">)</span> <span class="p">{</span>
@@ -1045,12 +1130,15 @@
 <span class="p">})</span>
 </code></pre></td></tr></table>
 </div>
-</div><ul>
+</div>
+<ul>
 <li>在离开这个页面的时，都会丢弃所有添加了 <code>signal</code> 的请求，不管页面中有没有未完成的请求，不会影响下一个页面的数据请求</li>
 </ul>
+
 <blockquote>
 <p>封装到原型上</p>
 </blockquote>
+
 <table>
 <thead>
 <tr>
@@ -1058,6 +1146,7 @@
 <th>3.x 实例 API (app)</th>
 </tr>
 </thead>
+
 <tbody>
 <tr>
 <td><code>Vue.prototype</code></td>
@@ -1065,30 +1154,44 @@
 </tr>
 </tbody>
 </table>
+
 <blockquote>
 <p>参考</p>
 </blockquote>
+
 <ul>
 <li><a href="https://blog.csdn.net/KimBing/article/details/122327724#:~:text=%E5%AE%98%E6%96%B9%E4%BB%8B%E7%BB%8D%E4%BA%86%E5%A5%BD%E4%B8%89%E4%B8%AA%E5%8F%96%E6%B6%88%E8%AF%B7%E6%B1%82%E7%9A%84%E6%96%B9%E6%B3%95%EF%BC%8C%20CancelToken%20%E7%9A%84%E5%BD%A2%E5%BC%8F%E5%85%B6%E5%AE%9E%E5%B7%B2%E7%BB%8F%E8%A2%AB%E5%BA%9F%E5%BC%83%E4%BA%86%EF%BC%8C%E4%B8%8D%E6%8E%A8%E8%8D%90%EF%BC%8C%E4%BD%86%E8%BF%98%E8%83%BD%E7%94%A8%20%E9%A1%B5%E9%9D%A2%20data%20%E4%B8%AD%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E5%8F%98%E9%87%8F%E7%94%A8%E6%88%B7%E7%9B%9B%E6%94%BE%E8%AF%A5%E9%A1%B5%E9%9D%A2%E4%B8%AD%E8%AF%B7%E6%B1%82%E7%9A%84%20cancelToken.source%20%28%29,%E5%AE%9E%E4%BE%8B%20%E5%9C%A8%20axios%20%E8%AF%B7%E6%B1%82%E7%9A%84%20config%20%E4%B8%AD%E6%B7%BB%E5%8A%A0%20cancelToken%20%E5%8F%82%E6%95%B0">vue 在页面离开时，丢弃所有未完成的请求 AbortController signal / CancelToken.cancel 取消请求</a></li>
 <li><a href="https://juejin.cn/post/7060752562332368932">40张图全面剖析Vue3核心的CompositionAPI（十四）</a></li>
 <li><a href="https://juejin.cn/post/7134610733962100750#heading-24">vue3.2 + vite + vant + pinia + ts 移动端 h5 项目新手实践 之 封装 Axios</a></li>
 </ul>
-<hr>
-<h2 id="8-axios-封装为hooks-a-hrefcatalogue--a">8. <code>axios</code> 封装为<code>hooks</code> <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
-<hr>
-<h2 id="9-axios-接口封装总结-a-hrefcatalogue--a">9. <code>axios</code> 接口封装总结 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
-<hr>
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<hr>
-<h2 id="参考文章-a-hrefcatalogue--a">参考文章 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+
+<hr />
+
+<h2 id="8-axios-封装为-hooks-a-href-catalogue-a">8. <code>axios</code> 封装为<code>hooks</code> <a href="#catalogue"> ⇧ </a></h2>
+
+<hr />
+
+<h2 id="9-axios-接口封装总结-a-href-catalogue-a">9. <code>axios</code> 接口封装总结 <a href="#catalogue"> ⇧ </a></h2>
+
+<hr />
+
+<!-- Article End -->
+
+<div style="text-align:center;">·未完待续·</div>
+
+<hr />
+
+<h2 id="参考文章-a-href-catalogue-a">参考文章 <a href="#catalogue"> ⇧ </a></h2>
+
 <ul>
 <li><a href="http://43.138.187.142:9000/vue-hooks-plus/docs/useRequest/">VueHooks Plus/useRequest</a></li>
 <li><a href="https://vueuse.org/integrations/useaxios/#useaxios">VueUse/useAxios</a></li>
 <li><a href="https://baidu.com">VueUse/useFetch</a></li>
 <li><a href="https://github.com/AttoJS/vue-request">vue-request</a></li>
 </ul>
-<h2 id="相关文章-a-hrefcatalogue--a">相关文章 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+
+<h2 id="相关文章-a-href-catalogue-a">相关文章 <a href="#catalogue"> ⇧ </a></h2>
+
 <ul>
 <li><a href="https://juejin.cn/post/6844903569745788941">Axios 作弊表（Cheat Sheet）</a></li>
 <li><a href="https://juejin.cn/post/7144242499391848462">axios请求的一些常见操作</a></li>
@@ -1097,24 +1200,30 @@
 <li><a href="https://juejin.cn/post/7060752562332368932">40张图全面剖析Vue3核心的CompositionAPI（十四）</a></li>
 <li><a href="https://juejin.cn/post/7134610733962100750#heading-24">vue3.2 + vite + vant + pinia + ts 移动端 h5 项目新手实践 Axios封装</a></li>
 </ul>
+
 <blockquote>
 <p>VueRequest 系列周边</p>
 </blockquote>
+
 <ul>
 <li><a href="https://next.cn.attojs.org/guide/introduction.html#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%80%89%E6%8B%A9-vuerequest">VueRequest文档</a></li>
 <li><a href="https://juejin.cn/post/7143488626955911181">Vue3开发，或许你需要这样使用请求API</a></li>
 <li><a href="https://juejin.cn/post/7048214402121596959">Vue➕TS实现小白也能看懂的管理网络请求的 Hook</a></li>
 <li><a href="https://juejin.cn/post/7130813191902199844">浅谈我为什么不使用VueUse，而选择造轮子</a></li>
 </ul>
-<hr>
+
+<hr />
+
 <ul>
 <li>作者： Joel</li>
 <li>文章链接：</li>
-<li><a href="http://xmasuhai.xyz/posts/%E7%89%88%E6%9D%83%E5%A3%B0%E6%98%8E%E9%93%BE%E6%8E%A5/">版权声明</a></li>
+<li><a href="http://xmasuhai.xyz/posts/版权声明链接/">版权声明</a></li>
 <li>非自由转载-非商用-非衍生-保持署名</li>
 </ul>
-<hr>
-<hr>
+
+<hr />
+
+<hr />
 
     </div>
 
@@ -1277,7 +1386,7 @@
     &copy;
     
       2019 -
-    2022
+    2026
     <span class="heart">
       
       <i class="iconfont">

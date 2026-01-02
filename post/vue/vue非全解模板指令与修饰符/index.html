@@ -7,7 +7,7 @@
   
 
 <meta name="renderer" content="webkit" />
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
 <meta name="MobileOptimized" content="width"/>
 <meta name="HandheldFriendly" content="true"/>
@@ -32,7 +32,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.91.2" />
+<meta name="generator" content="Hugo 0.59.1" />
 
 
 <link rel="canonical" href="http://xmasuhai.xyz/post/vue/vue%E9%9D%9E%E5%85%A8%E8%A7%A3%E6%A8%A1%E6%9D%BF%E6%8C%87%E4%BB%A4%E4%B8%8E%E4%BF%AE%E9%A5%B0%E7%AC%A6/" />
@@ -62,15 +62,21 @@
 <meta property="og:title" content="【Vue非全解】模板、指令与修饰符" />
 <meta property="og:description" content="1. 三种写模板template的方式§ ⇧ Vue完整版，写在HTML里 Vue完整版，写在选项options里 Vue非完整版，配合*.vue文件 V" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://xmasuhai.xyz/post/vue/vue%E9%9D%9E%E5%85%A8%E8%A7%A3%E6%A8%A1%E6%9D%BF%E6%8C%87%E4%BB%A4%E4%B8%8E%E4%BF%AE%E9%A5%B0%E7%AC%A6/" /><meta property="article:section" content="post" />
+<meta property="og:url" content="http://xmasuhai.xyz/post/vue/vue%E9%9D%9E%E5%85%A8%E8%A7%A3%E6%A8%A1%E6%9D%BF%E6%8C%87%E4%BB%A4%E4%B8%8E%E4%BF%AE%E9%A5%B0%E7%AC%A6/" />
 <meta property="article:published_time" content="2020-09-18T05:47:28+08:00" />
 <meta property="article:modified_time" content="2022-09-03T10:26:25+08:00" />
-
 <meta itemprop="name" content="【Vue非全解】模板、指令与修饰符">
-<meta itemprop="description" content="1. 三种写模板template的方式§ ⇧ Vue完整版，写在HTML里 Vue完整版，写在选项options里 Vue非完整版，配合*.vue文件 V"><meta itemprop="datePublished" content="2020-09-18T05:47:28+08:00" />
-<meta itemprop="dateModified" content="2022-09-03T10:26:25+08:00" />
-<meta itemprop="wordCount" content="4887">
-<meta itemprop="keywords" content="Vue,Vue3.x,.sync,directive," /><meta name="twitter:card" content="summary"/>
+<meta itemprop="description" content="1. 三种写模板template的方式§ ⇧ Vue完整版，写在HTML里 Vue完整版，写在选项options里 Vue非完整版，配合*.vue文件 V">
+
+
+<meta itemprop="datePublished" content="2020-09-18T05:47:28&#43;08:00" />
+<meta itemprop="dateModified" content="2022-09-03T10:26:25&#43;08:00" />
+<meta itemprop="wordCount" content="4893">
+
+
+
+<meta itemprop="keywords" content="Vue,Vue3.x,.sync,directive," />
+<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="【Vue非全解】模板、指令与修饰符"/>
 <meta name="twitter:description" content="1. 三种写模板template的方式§ ⇧ Vue完整版，写在HTML里 Vue完整版，写在选项options里 Vue非完整版，配合*.vue文件 V"/>
 
@@ -302,7 +308,7 @@
             <a href="http://xmasuhai.xyz/categories/vue/"> Vue </a>
             
           </div>
-        <span class="more-meta"> 约 4887 字 </span>
+        <span class="more-meta"> 约 4893 字 </span>
           <span class="more-meta"> 预计阅读 10 分钟 </span>
 
         
@@ -319,114 +325,127 @@
   <h2 class="post-toc-title">文章目录</h2>
   <div class="post-toc-content">
     <nav id="TableOfContents">
-  <ul>
-    <li><a href="#1-三种写模板template的方式a-id三种写模板的方式-href三种写模板的方式--aa-hrefcatalogue--a">1. 三种写模板<code>template</code>的方式<!-- raw HTML omitted --> § <!-- raw HTML omitted --><!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a>
-      <ul>
-        <li><a href="#vue完整版写在html文件中"><code>Vue</code>完整版，写在<code>HTML</code>文件中</a></li>
-        <li><a href="#vue完整版写在选项options里"><code>Vue</code>完整版，写在选项<code>options</code>里</a></li>
-        <li><a href="#vue非完整版配合vue文件"><code>Vue</code>非完整版，配合<code>*.vue</code>文件</a></li>
-      </ul>
-    </li>
-    <li><a href="#2-模板语法v-html-v-on-v-bind-v-if-v-for-v-showa-id模板语法-href模板语法--aa-hrefcatalogue--a">2. 模板语法<code>v-html v-on v-bind v-if v-for v-show</code><!-- raw HTML omitted --> § <!-- raw HTML omitted --><!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a>
-      <ul>
-        <li><a href="#展示内容">展示内容</a></li>
-        <li><a href="#绑定属性">绑定属性</a></li>
-        <li><a href="#绑定事件">绑定事件</a></li>
-        <li><a href="#条件判断">条件判断</a></li>
-        <li><a href="#循环操作">循环操作</a></li>
-        <li><a href="#显示隐藏">显示/隐藏</a></li>
-        <li><a href="#模板语法小结">模板语法小结</a></li>
-      </ul>
-    </li>
-    <li><a href="#3-指令directive与修饰符a-id指令与修饰符-href指令与修饰符--aa-hrefcatalogue--a">3. 指令<code>Directive</code>与修饰符<code>.*</code><!-- raw HTML omitted --> § <!-- raw HTML omitted --><!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a>
-      <ul>
-        <li><a href="#指令">指令</a></li>
-        <li><a href="#修饰符">修饰符</a></li>
-      </ul>
-    </li>
-    <li><a href="#4-sync-修饰符a-idsync-hrefsync--aa-hrefcatalogue--a">4. <code>.sync</code> 修饰符<!-- raw HTML omitted --> § <!-- raw HTML omitted --><!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-    <li><a href="#总结a-hrefcatalogue--a">总结<!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a>
-      <ul>
-        <li><a href="#参考文章">参考文章</a></li>
-        <li><a href="#相关文章">相关文章</a></li>
-      </ul>
-    </li>
-  </ul>
+<ul>
+<li>
+<ul>
+<li><a href="#1-三种写模板-template-的方式-a-id-三种写模板的方式-href-三种写模板的方式-a-a-href-catalogue-a">1. 三种写模板<code>template</code>的方式<a id="三种写模板的方式" href="#三种写模板的方式"> § </a><a href="#catalogue"> ⇧ </a></a>
+<ul>
+<li><a href="#vue-完整版-写在-html-文件中"><code>Vue</code>完整版，写在<code>HTML</code>文件中</a></li>
+<li><a href="#vue-完整版-写在选项-options-里"><code>Vue</code>完整版，写在选项<code>options</code>里</a></li>
+<li><a href="#vue-非完整版-配合-vue-文件"><code>Vue</code>非完整版，配合<code>*.vue</code>文件</a></li>
+</ul></li>
+<li><a href="#2-模板语法-v-html-v-on-v-bind-v-if-v-for-v-show-a-id-模板语法-href-模板语法-a-a-href-catalogue-a">2. 模板语法<code>v-html v-on v-bind v-if v-for v-show</code><a id="模板语法" href="#模板语法"> § </a><a href="#catalogue"> ⇧ </a></a>
+<ul>
+<li><a href="#展示内容">展示内容</a></li>
+<li><a href="#绑定属性">绑定属性</a></li>
+<li><a href="#绑定事件">绑定事件</a></li>
+<li><a href="#条件判断">条件判断</a></li>
+<li><a href="#循环操作">循环操作</a></li>
+<li><a href="#显示-隐藏">显示/隐藏</a></li>
+<li><a href="#模板语法小结">模板语法小结</a></li>
+</ul></li>
+<li><a href="#3-指令-directive-与修饰符-a-id-指令与修饰符-href-指令与修饰符-a-a-href-catalogue-a">3. 指令<code>Directive</code>与修饰符<code>.*</code><a id="指令与修饰符" href="#指令与修饰符"> § </a><a href="#catalogue"> ⇧ </a></a>
+<ul>
+<li><a href="#指令">指令</a></li>
+<li><a href="#修饰符">修饰符</a>
+<ul>
+<li><a href="#修饰符的种类">修饰符的种类</a></li>
+<li><a href="#事件修饰符">事件修饰符</a></li>
+<li><a href="#按键修饰符">按键修饰符</a></li>
+<li><a href="#系统修饰符">系统修饰符</a></li>
+<li><a href="#鼠标按钮修饰符">鼠标按钮修饰符</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#4-sync-修饰符-a-id-sync-href-sync-a-a-href-catalogue-a">4. <code>.sync</code> 修饰符<a id="sync" href="#sync"> § </a><a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#总结-a-href-catalogue-a">总结<a href="#catalogue"> ⇧ </a></a>
+<ul>
+<li><a href="#参考文章">参考文章</a></li>
+<li><a href="#相关文章">相关文章</a></li>
+</ul></li>
+</ul></li>
+</ul>
 </nav>
   </div>
 </div>
 
     
     <div class="post-content">
-      <h2 id="1-三种写模板template的方式a-id三种写模板的方式-href三种写模板的方式--aa-hrefcatalogue--a">1. 三种写模板<code>template</code>的方式<!-- raw HTML omitted --> § <!-- raw HTML omitted --><!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+      
+
+<h2 id="1-三种写模板-template-的方式-a-id-三种写模板的方式-href-三种写模板的方式-a-a-href-catalogue-a">1. 三种写模板<code>template</code>的方式<a id="三种写模板的方式" href="#三种写模板的方式"> § </a><a href="#catalogue"> ⇧ </a></h2>
+
 <ol>
 <li><code>Vue</code>完整版，写在<code>HTML</code>里</li>
 <li><code>Vue</code>完整版，写在选项<code>options</code>里</li>
 <li><code>Vue</code>非完整版，配合<code>*.vue</code>文件</li>
 </ol>
-<hr>
-<h3 id="vue完整版写在html文件中"><code>Vue</code>完整版，写在<code>HTML</code>文件中</h3>
+
+<hr />
+
+<h3 id="vue-完整版-写在-html-文件中"><code>Vue</code>完整版，写在<code>HTML</code>文件中</h3>
+
 <ul>
-<li><code>Vue2.6</code>写法</li>
-</ul>
+<li><p><code>Vue2.6</code>写法</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-XML" data-lang="XML"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-XML" data-lang="XML"><span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">xxx</span><span class="nt">&gt;</span>
-    {{n}}
-    <span class="nt">&lt;button</span> <span class="err">@</span><span class="na">click=</span><span class="s">&#34;add&#34;</span><span class="nt">&gt;</span>+1<span class="nt">&lt;/button&gt;</span>
-<span class="nt">&lt;/div&gt;</span>
-</code></pre></td></tr></table>
+<pre class="chroma"><code class="language-XML" data-lang="XML"><span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">xxx</span><span class="nt">&gt;</span>
+{{n}}
+<span class="nt">&lt;button</span> <span class="err">@</span><span class="na">click=</span><span class="s">&#34;add&#34;</span><span class="nt">&gt;</span>+1<span class="nt">&lt;/button&gt;</span>
+<span class="nt">&lt;/div&gt;</span></code></pre></td></tr></table>
 </div>
 </div><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
-    <span class="nx">el</span><span class="o">:</span> <span class="s1">&#39;#xxx&#39;</span><span class="p">,</span>
-    <span class="nx">data</span><span class="o">:</span> <span class="p">{</span><span class="nx">n</span><span class="o">:</span> <span class="mi">0</span><span class="p">},</span> <span class="c1">// data 可改写成函数
-</span><span class="c1"></span>    <span class="nx">methods</span><span class="o">:</span> <span class="p">{</span><span class="nx">add</span><span class="p">()</span> <span class="p">{...}}</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
+<span class="nx">el</span><span class="o">:</span> <span class="s1">&#39;#xxx&#39;</span><span class="p">,</span>
+<span class="nx">data</span><span class="o">:</span> <span class="p">{</span><span class="nx">n</span><span class="o">:</span> <span class="mi">0</span><span class="p">},</span> <span class="c1">// data 可改写成函数
+</span><span class="c1"></span><span class="nx">methods</span><span class="o">:</span> <span class="p">{</span><span class="nx">add</span><span class="p">()</span> <span class="p">{...}}</span>
 <span class="p">})</span>
 </code></pre></td></tr></table>
 </div>
-</div><ul>
-<li><code>Vue3.x</code>写法</li>
-</ul>
+</div></li>
+
+<li><p><code>Vue3.x</code>写法</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kr">import</span> <span class="p">{</span> <span class="nx">createApp</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue&#39;</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kr">import</span> <span class="p">{</span> <span class="nx">createApp</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue&#39;</span>
 <span class="nx">createApp</span><span class="p">(</span><span class="nx">App</span><span class="p">).</span><span class="nx">use</span><span class="p">(</span><span class="nx">router</span><span class="p">).</span><span class="nx">use</span><span class="p">(</span><span class="nx">store</span><span class="p">).</span><span class="nx">mount</span><span class="p">(</span><span class="s1">&#39;#app&#39;</span><span class="p">)</span>
 <span class="c1">// el 属性不再适用，而挂载时的 mount 也无需再加上 `$`
 </span></code></pre></td></tr></table>
 </div>
-</div><hr>
-<h3 id="vue完整版写在选项options里"><code>Vue</code>完整版，写在选项<code>options</code>里</h3>
+</div></li>
+</ul>
+
+<hr />
+
+<h3 id="vue-完整版-写在选项-options-里"><code>Vue</code>完整版，写在选项<code>options</code>里</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-HTML" data-lang="HTML"><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-HTML" data-lang="HTML"><span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">app</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-</code></pre></td></tr></table>
+<pre class="chroma"><code class="language-HTML" data-lang="HTML"><span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">app</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
 </div><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -438,7 +457,7 @@
 </span><span class="lnt">10
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
     <span class="nx">template</span><span class="o">:</span> <span class="sb">`
 </span><span class="sb">        &lt;div&gt;
 </span><span class="sb">            {{n}}
@@ -450,14 +469,17 @@
 <span class="p">}).</span><span class="nx">$mount</span><span class="p">(</span><span class="s1">&#39;#app&#39;</span><span class="p">)</span>
 </code></pre></td></tr></table>
 </div>
-</div><ul>
+</div>
+<ul>
 <li>注意一个细节：<code>div#app</code>会被替代，即替换后，就不存在<code>#app</code>的<code>div</code>了</li>
 </ul>
-<hr>
-<h3 id="vue非完整版配合vue文件"><code>Vue</code>非完整版，配合<code>*.vue</code>文件</h3>
+
+<hr />
+
+<h3 id="vue-非完整版-配合-vue-文件"><code>Vue</code>非完整版，配合<code>*.vue</code>文件</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-Vue" data-lang="Vue"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -472,7 +494,7 @@
 </span><span class="lnt">13
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-Vue" data-lang="Vue"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-Vue" data-lang="Vue"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
     <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
         <span class="p">{{</span><span class="nx">n</span><span class="p">}}</span>
         <span class="p">&lt;</span><span class="nt">button</span> <span class="nt">@click</span><span class="s">=&#34;add&#34;</span><span class="p">&gt;</span><span class="err">+</span><span class="na">1</span><span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
@@ -484,28 +506,32 @@
 </span><span class="c1"></span>        <span class="nx">methods</span><span class="o">:</span> <span class="p">{</span><span class="nx">add</span><span class="p">()</span> <span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">n</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">}}</span>
     <span class="p">}</span>
 <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span><span class="nx">这里写CSS</span><span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
-</code></pre></td></tr></table>
+<span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span><span class="nx">这里写CSS</span><span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><ul>
-<li><code>*.js</code>中引入使用</li>
-</ul>
+</div>
+<ul>
+<li><p><code>*.js</code>中引入使用</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kr">import</span> <span class="nx">Xxx</span> <span class="nx">from</span> <span class="s1">&#39;./xxx.vue&#39;</span> <span class="c1">// Xxx 是一个 options 对象
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kr">import</span> <span class="nx">Xxx</span> <span class="nx">from</span> <span class="s1">&#39;./xxx.vue&#39;</span> <span class="c1">// Xxx 是一个 options 对象
 </span><span class="c1"></span><span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
-    <span class="nx">render</span><span class="o">:</span> <span class="nx">h</span> <span class="p">=&gt;</span> <span class="nx">h</span><span class="p">(</span><span class="nx">Xxx</span><span class="p">)</span>
+<span class="nx">render</span><span class="o">:</span> <span class="nx">h</span> <span class="p">=&gt;</span> <span class="nx">h</span><span class="p">(</span><span class="nx">Xxx</span><span class="p">)</span>
 <span class="p">}).</span><span class="nx">$mount</span><span class="p">(</span><span class="s1">&#39;#app&#39;</span><span class="p">)</span>
 </code></pre></td></tr></table>
 </div>
-</div><hr>
-<h2 id="2-模板语法v-html-v-on-v-bind-v-if-v-for-v-showa-id模板语法-href模板语法--aa-hrefcatalogue--a">2. 模板语法<code>v-html v-on v-bind v-if v-for v-show</code><!-- raw HTML omitted --> § <!-- raw HTML omitted --><!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+</div></li>
+</ul>
+
+<hr />
+
+<h2 id="2-模板语法-v-html-v-on-v-bind-v-if-v-for-v-show-a-id-模板语法-href-模板语法-a-a-href-catalogue-a">2. 模板语法<code>v-html v-on v-bind v-if v-for v-show</code><a id="模板语法" href="#模板语法"> § </a><a href="#catalogue"> ⇧ </a></h2>
+
 <ol>
 <li>展示内容</li>
 <li>绑定属性</li>
@@ -514,11 +540,15 @@
 <li>循环操作</li>
 <li>显示/隐藏</li>
 </ol>
-<hr>
+
+<hr />
+
 <h3 id="展示内容">展示内容</h3>
+
 <blockquote>
 <p>表达式</p>
 </blockquote>
+
 <ul>
 <li><code>{{object.a}}</code>表达式</li>
 <li><code>{{n + 1}}</code>可以写任何运算（只支持运算，不支持条件判断 if 或循环等）</li>
@@ -526,80 +556,98 @@
 <li>如果值为<code>undefined</code>或<code>null</code>，空值就不显示</li>
 <li>另一种写法为<code>&lt;div v-text=&quot;表达式&quot;&gt;&lt;/div&gt;</code>同<code>{{}}</code></li>
 </ul>
+
 <blockquote>
 <p>HTML 富文本内容</p>
 </blockquote>
+
 <ul>
 <li>假设<code>data.x</code>值为<code>&lt;strong&gt;hi&lt;/strong&gt;</code></li>
 <li><code>&lt;div v-html=&quot;x&quot;&gt;&lt;/div&gt;</code>即可显示粗体的<code>hi</code></li>
 </ul>
+
 <blockquote>
 <p>展示源代码文本<code>{{n}}</code></p>
 </blockquote>
+
 <ul>
 <li><code>&lt;div v-pre&gt;{{n}}&lt;/div&gt;</code></li>
 <li><code>v-pre</code>不会对模板进行编译</li>
 </ul>
+
 <h3 id="绑定属性">绑定属性</h3>
+
 <blockquote>
 <p>绑定<code>src</code>或其它任意属性</p>
 </blockquote>
+
 <ul>
 <li><code>&lt;img v-bind:src=&quot;x&quot; /&gt;</code></li>
 </ul>
+
 <blockquote>
 <p><code>v-bind:</code>可简写为<code>:</code></p>
 </blockquote>
+
 <ul>
 <li><code>&lt;img :src=&quot;x&quot; /&gt;</code></li>
 </ul>
+
 <blockquote>
 <p>绑定对象</p>
 </blockquote>
+
 <ul>
 <li><code>&lt;div :style=&quot;{border: '1px solid red', height:100}&quot;&gt; 可以省略默认单位px&lt;/div&gt;</code></li>
 </ul>
+
 <h3 id="绑定事件">绑定事件</h3>
+
 <blockquote>
 <p><code>v-on:</code>事件名</p>
 </blockquote>
+
 <ul>
 <li>函数名
+
 <ul>
 <li><code>&lt;button v-on:click=&quot;add&quot;&gt;+1&lt;/button&gt;</code></li>
 <li>点击之后，<code>Vue</code>会运行<code>add()</code></li>
 <li>在<code>methods</code>中定义</li>
-</ul>
-</li>
+</ul></li>
 <li>函数名加参数
+
 <ul>
 <li><code>&lt;button v-on:click=&quot;fn(1)&quot;&gt;xxx&lt;/button&gt;</code></li>
 <li>点击之后，<code>Vue</code>会运行<code>fn(1)</code>（不会立即执行）</li>
 <li>在<code>methods</code>中定义</li>
-</ul>
-</li>
+</ul></li>
 <li>表达式（可执行代码不支持<code>if..else</code> 支持三目运算符）
+
 <ul>
 <li><code>&lt;button v-on:click=&quot;n += 1&quot;&gt;xxx&lt;/button&gt;</code></li>
 <li>点击之后，<code>Vue</code>会运行<code>n += 1</code></li>
-</ul>
-</li>
+</ul></li>
 <li>发现<strong>函数</strong>就加括号调用，否则就直接运行代码</li>
 <li><code>Vue</code>不会处理运行<code>fn(1)</code>后返回的函数</li>
 </ul>
+
 <blockquote>
 <p>缩写</p>
 </blockquote>
+
 <ul>
 <li><code>&lt;button @click=&quot;add&quot;&gt;+1&lt;/button&gt;</code></li>
 </ul>
+
 <h3 id="条件判断">条件判断</h3>
+
 <blockquote>
 <p><code>if..else</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-XML" data-lang="XML"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -610,7 +658,7 @@
 </span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-XML" data-lang="XML"><span class="nt">&lt;div</span> <span class="na">v-if=</span><span class="s">&#34;x &gt; 0&#34;</span><span class="nt">&gt;</span>
+<pre class="chroma"><code class="language-XML" data-lang="XML"><span class="nt">&lt;div</span> <span class="na">v-if=</span><span class="s">&#34;x &gt; 0&#34;</span><span class="nt">&gt;</span>
     x大于0
 <span class="nt">&lt;/div&gt;</span>
 <span class="nt">&lt;div</span> <span class="na">v-else-if=</span><span class="s">&#34;x === 0&#34;</span><span class="nt">&gt;</span>
@@ -618,18 +666,19 @@
 <span class="nt">&lt;/div&gt;</span>
 <span class="nt">&lt;div</span> <span class="err">v-else</span><span class="nt">&gt;</span>
     x小于0
-<span class="nt">&lt;/div&gt;</span>
-</code></pre></td></tr></table>
+<span class="nt">&lt;/div&gt;</span></code></pre></td></tr></table>
 </div>
-</div><h3 id="循环操作">循环操作</h3>
+</div>
+<h3 id="循环操作">循环操作</h3>
+
 <ul>
 <li><code>for(value, key) in (obj || array)</code>对象或数组</li>
 <li>先写<code>value</code>，再写<code>key</code></li>
-<li>必须绑定<code>:key=&quot;&quot;</code></li>
-</ul>
+
+<li><p>必须绑定<code>:key=&quot;&quot;</code></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-Vue" data-lang="Vue"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -670,61 +719,67 @@
 </span><span class="lnt">39
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-Vue" data-lang="Vue"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-Vue" data-lang="Vue"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
 <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;container&#34;</span><span class="p">&gt;</span>
-    <span class="c">&lt;!--</span> <span class="nx">遍历数组</span> <span class="o">--&gt;</span>
-    <span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
-        <span class="p">&lt;</span><span class="nt">li</span> <span class="nt">v-for</span><span class="s">=&#34;(value, index) in usersArray&#34; :key=&#34;index&#34;&gt;
-</span><span class="s">            索引：{{index}} 值：{{value}}
-</span><span class="s">        &lt;/li&gt;
-</span><span class="s">    &lt;/ul&gt;
-</span><span class="s">    &lt;!-- 遍历对象 --&gt;
-</span><span class="s">    &lt;ul&gt;
-</span><span class="s">        &lt;li v-for=&#34;(value, keyName) in usersObj&#34; :key=&#34;keyName&#34;&gt;
-</span><span class="s">            属性名：{{keyName}} 属性值：{{value}}
-</span><span class="s">        &lt;/li&gt;
-</span><span class="s">    &lt;/ul&gt;
-</span><span class="s">    &lt;!-- 遍历单标签 --&gt;
-</span><span class="s">    &lt;div class=&#34;wrapper&#34;&gt;
-</span><span class="s">        &lt;div v-for=&#34;(value, keyName) in keys&#34; </span><span class="nt">:key</span><span class="s">=&#34;keyName&#34;</span><span class="p">&gt;</span>
-            <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;button&#34;</span> <span class="na">v</span><span class="nt">-for</span><span class="err">=&#34;(</span><span class="na">value</span><span class="err">,</span> <span class="na">index</span><span class="err">)</span> <span class="na">in</span> <span class="na">keys</span><span class="err">[</span><span class="na">keyName</span><span class="err">]&#34;</span> <span class="nt">:key</span><span class="s">=&#34;index&#34;</span> <span class="nt">:value</span><span class="s">=&#34;value&#34;</span> <span class="p">/&gt;</span>
-        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="c">&lt;!--</span> <span class="nx">遍历数组</span> <span class="o">--&gt;</span>
+<span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">li</span> <span class="nt">v-for</span><span class="s">=&#34;(value, index) in usersArray&#34; :key=&#34;index&#34;&gt;
+</span><span class="s">        索引：{{index}} 值：{{value}}
+</span><span class="s">    &lt;/li&gt;
+</span><span class="s">&lt;/ul&gt;
+</span><span class="s">&lt;!-- 遍历对象 --&gt;
+</span><span class="s">&lt;ul&gt;
+</span><span class="s">    &lt;li v-for=&#34;(value, keyName) in usersObj&#34; :key=&#34;keyName&#34;&gt;
+</span><span class="s">        属性名：{{keyName}} 属性值：{{value}}
+</span><span class="s">    &lt;/li&gt;
+</span><span class="s">&lt;/ul&gt;
+</span><span class="s">&lt;!-- 遍历单标签 --&gt;
+</span><span class="s">&lt;div class=&#34;wrapper&#34;&gt;
+</span><span class="s">    &lt;div v-for=&#34;(value, keyName) in keys&#34; </span><span class="nt">:key</span><span class="s">=&#34;keyName&#34;</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;button&#34;</span> <span class="na">v</span><span class="nt">-for</span><span class="err">=&#34;(</span><span class="na">value</span><span class="err">,</span> <span class="na">index</span><span class="err">)</span> <span class="na">in</span> <span class="na">keys</span><span class="err">[</span><span class="na">keyName</span><span class="err">]&#34;</span> <span class="nt">:key</span><span class="s">=&#34;index&#34;</span> <span class="nt">:value</span><span class="s">=&#34;value&#34;</span> <span class="p">/&gt;</span>
     <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
 <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
 <span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
 <span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
 <span class="kr">export</span> <span class="k">default</span> <span class="p">{</span>
-  <span class="nx">data</span><span class="p">()</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="p">{</span>
-      <span class="nx">usersArray</span><span class="o">:</span> <span class="p">[],</span>
-      <span class="nx">usersObj</span><span class="o">:</span> <span class="p">{},</span>
-      <span class="nx">keys</span><span class="o">:</span> <span class="p">{</span>
-        <span class="mi">0</span><span class="o">:</span> <span class="p">[</span><span class="s2">&#34;1&#34;</span><span class="p">,</span> <span class="s2">&#34;2&#34;</span><span class="p">,</span> <span class="s2">&#34;3&#34;</span><span class="p">,</span> <span class="s2">&#34;4&#34;</span><span class="p">,</span> <span class="s2">&#34;5&#34;</span><span class="p">,</span> <span class="s2">&#34;6&#34;</span><span class="p">,</span> <span class="s2">&#34;7&#34;</span><span class="p">,</span> <span class="s2">&#34;8&#34;</span><span class="p">,</span> <span class="s2">&#34;9&#34;</span><span class="p">,</span> <span class="s2">&#34;0&#34;</span><span class="p">],</span>
-        <span class="mi">1</span><span class="o">:</span> <span class="p">[</span><span class="s2">&#34;Q&#34;</span><span class="p">,</span> <span class="s2">&#34;W&#34;</span><span class="p">,</span> <span class="s2">&#34;E&#34;</span><span class="p">,</span> <span class="s2">&#34;R&#34;</span><span class="p">,</span> <span class="s2">&#34;T&#34;</span><span class="p">,</span> <span class="s2">&#34;Y&#34;</span><span class="p">,</span> <span class="s2">&#34;U&#34;</span><span class="p">,</span> <span class="s2">&#34;I&#34;</span><span class="p">,</span> <span class="s2">&#34;O&#34;</span><span class="p">,</span> <span class="s2">&#34;P&#34;</span><span class="p">],</span>
-        <span class="mi">2</span><span class="o">:</span> <span class="p">[</span><span class="s2">&#34;A&#34;</span><span class="p">,</span> <span class="s2">&#34;S&#34;</span><span class="p">,</span> <span class="s2">&#34;D&#34;</span><span class="p">,</span> <span class="s2">&#34;F&#34;</span><span class="p">,</span> <span class="s2">&#34;G&#34;</span><span class="p">,</span> <span class="s2">&#34;H&#34;</span><span class="p">,</span> <span class="s2">&#34;J&#34;</span><span class="p">,</span> <span class="s2">&#34;K&#34;</span><span class="p">,</span> <span class="s2">&#34;L&#34;</span><span class="p">],</span>
-        <span class="mi">3</span><span class="o">:</span> <span class="p">[</span><span class="s2">&#34;Z&#34;</span><span class="p">,</span> <span class="s2">&#34;X&#34;</span><span class="p">,</span> <span class="s2">&#34;C&#34;</span><span class="p">,</span> <span class="s2">&#34;V&#34;</span><span class="p">,</span> <span class="s2">&#34;B&#34;</span><span class="p">,</span> <span class="s2">&#34;N&#34;</span><span class="p">,</span> <span class="s2">&#34;M&#34;</span><span class="p">],</span>
-        <span class="mi">4</span><span class="o">:</span> <span class="p">[</span><span class="s2">&#34;SPACE&#34;</span><span class="p">],</span>
-      <span class="p">},</span>
-    <span class="p">};</span>
+<span class="nx">data</span><span class="p">()</span> <span class="p">{</span>
+<span class="k">return</span> <span class="p">{</span>
+  <span class="nx">usersArray</span><span class="o">:</span> <span class="p">[],</span>
+  <span class="nx">usersObj</span><span class="o">:</span> <span class="p">{},</span>
+  <span class="nx">keys</span><span class="o">:</span> <span class="p">{</span>
+    <span class="mi">0</span><span class="o">:</span> <span class="p">[</span><span class="s2">&#34;1&#34;</span><span class="p">,</span> <span class="s2">&#34;2&#34;</span><span class="p">,</span> <span class="s2">&#34;3&#34;</span><span class="p">,</span> <span class="s2">&#34;4&#34;</span><span class="p">,</span> <span class="s2">&#34;5&#34;</span><span class="p">,</span> <span class="s2">&#34;6&#34;</span><span class="p">,</span> <span class="s2">&#34;7&#34;</span><span class="p">,</span> <span class="s2">&#34;8&#34;</span><span class="p">,</span> <span class="s2">&#34;9&#34;</span><span class="p">,</span> <span class="s2">&#34;0&#34;</span><span class="p">],</span>
+    <span class="mi">1</span><span class="o">:</span> <span class="p">[</span><span class="s2">&#34;Q&#34;</span><span class="p">,</span> <span class="s2">&#34;W&#34;</span><span class="p">,</span> <span class="s2">&#34;E&#34;</span><span class="p">,</span> <span class="s2">&#34;R&#34;</span><span class="p">,</span> <span class="s2">&#34;T&#34;</span><span class="p">,</span> <span class="s2">&#34;Y&#34;</span><span class="p">,</span> <span class="s2">&#34;U&#34;</span><span class="p">,</span> <span class="s2">&#34;I&#34;</span><span class="p">,</span> <span class="s2">&#34;O&#34;</span><span class="p">,</span> <span class="s2">&#34;P&#34;</span><span class="p">],</span>
+    <span class="mi">2</span><span class="o">:</span> <span class="p">[</span><span class="s2">&#34;A&#34;</span><span class="p">,</span> <span class="s2">&#34;S&#34;</span><span class="p">,</span> <span class="s2">&#34;D&#34;</span><span class="p">,</span> <span class="s2">&#34;F&#34;</span><span class="p">,</span> <span class="s2">&#34;G&#34;</span><span class="p">,</span> <span class="s2">&#34;H&#34;</span><span class="p">,</span> <span class="s2">&#34;J&#34;</span><span class="p">,</span> <span class="s2">&#34;K&#34;</span><span class="p">,</span> <span class="s2">&#34;L&#34;</span><span class="p">],</span>
+    <span class="mi">3</span><span class="o">:</span> <span class="p">[</span><span class="s2">&#34;Z&#34;</span><span class="p">,</span> <span class="s2">&#34;X&#34;</span><span class="p">,</span> <span class="s2">&#34;C&#34;</span><span class="p">,</span> <span class="s2">&#34;V&#34;</span><span class="p">,</span> <span class="s2">&#34;B&#34;</span><span class="p">,</span> <span class="s2">&#34;N&#34;</span><span class="p">,</span> <span class="s2">&#34;M&#34;</span><span class="p">],</span>
+    <span class="mi">4</span><span class="o">:</span> <span class="p">[</span><span class="s2">&#34;SPACE&#34;</span><span class="p">],</span>
   <span class="p">},</span>
 <span class="p">};</span>
-<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-</code></pre></td></tr></table>
+<span class="p">},</span>
+<span class="p">};</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><ul>
-<li>坑预警<code>:key = &quot;index&quot;</code>有<code>bug</code></li>
-<li><code>:key</code>一般用不会重合的值</li>
+</div></li>
+
+<li><p>坑预警<code>:key = &quot;index&quot;</code>有<code>bug</code></p></li>
+
+<li><p><code>:key</code>一般用不会重合的值</p></li>
 </ul>
-<h3 id="显示隐藏">显示/隐藏</h3>
+
+<h3 id="显示-隐藏">显示/隐藏</h3>
+
 <blockquote>
 <p><code>v-show</code></p>
 </blockquote>
+
 <ul>
 <li><code>&lt;div v-show=&quot;n%2 === 0&quot;&gt; n 是偶数&lt;/div&gt;</code></li>
 </ul>
+
 <blockquote>
 <p>近似等于</p>
 </blockquote>
+
 <ul>
 <li><code>&lt;div :style=&quot;{display:n%2===0?'block':'none'}&quot;&gt; n 是偶数&lt;/div&gt;</code></li>
 <li>注意可以显示在页面中的元素，<code>display</code>不只有<code>block</code></li>
@@ -732,120 +787,152 @@
 <li>如<code>li</code>的<code>display: list-item</code></li>
 <li><code>DOM</code>解耦，高内聚，低耦合 <code>jQuery</code> 虚拟<code>DOM</code></li>
 </ul>
-<hr>
+
+<hr />
+
 <h3 id="模板语法小结">模板语法小结</h3>
+
 <blockquote>
 <p><code>Vue</code>模板主要特点有</p>
 </blockquote>
+
 <ul>
 <li>使用<code>XML</code>语法，注意<code>template</code>中的不是<code>HTML</code>
+
 <ul>
 <li><code>XML</code>里与有闭合标签的（更容易写编译器，体积小），如</li>
 <li><code>&lt;input name=&quot;userName&quot;&gt;</code>or<code>&lt;div&gt;&lt;/div&gt;</code>- HTML</li>
 <li><code>&lt;input name=&quot;userName&quot; /&gt;</code> - <strong>XML</strong> or HTML</li>
 <li><code>&lt;div /&gt;</code> - <strong>XML</strong>自闭合标签</li>
-</ul>
-</li>
+</ul></li>
 <li>使用<code>{{}}</code>插入表达式</li>
 <li>使用<code>v-html</code>、<code>v-on</code>、<code>v-bind</code>等指令操作<code>DOM</code>（<code>Vue</code>声明式编程代替原生 JS 的命令式编程<code>div.innerHTML = x</code>）</li>
 <li>使用<code>v-if</code>、<code>v-for</code>等指令实现条件判断和循环</li>
 </ul>
+
 <blockquote>
 <p>其他指令</p>
 </blockquote>
+
 <ul>
 <li><code>v-model</code>在<code>Vue</code>表单里说明</li>
 <li><code>v-slot</code>在插槽里说明</li>
 <li><code>v-cloak</code>看<a href="https://cn.vuejs.org/v2/api/#v-cloak">文档</a></li>
 <li><code>v-once</code>看<a href="https://cn.vuejs.org/v2/api/#v-once">文档</a></li>
 </ul>
+
 <blockquote>
 <p><code>v-if</code> V.S. <code>v-show</code></p>
 </blockquote>
+
 <ul>
 <li><code>v-if</code> 是否存在于 DOM 中</li>
 <li><code>v-show</code> CSS</li>
 </ul>
-<hr>
-<h2 id="3-指令directive与修饰符a-id指令与修饰符-href指令与修饰符--aa-hrefcatalogue--a">3. 指令<code>Directive</code>与修饰符<code>.*</code><!-- raw HTML omitted --> § <!-- raw HTML omitted --><!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+
+<hr />
+
+<h2 id="3-指令-directive-与修饰符-a-id-指令与修饰符-href-指令与修饰符-a-a-href-catalogue-a">3. 指令<code>Directive</code>与修饰符<code>.*</code><a id="指令与修饰符" href="#指令与修饰符"> § </a><a href="#catalogue"> ⇧ </a></h2>
+
 <blockquote>
 <p>同义词：命令、指示</p>
 </blockquote>
+
 <h3 id="指令">指令</h3>
+
 <blockquote>
 <p>什么是指令</p>
 </blockquote>
+
 <ul>
 <li><code>&lt;div v-text=&quot;x&quot;&gt;&lt;/div&gt;</code></li>
 <li><code>&lt;div v-html=&quot;x&quot;&gt;&lt;/div&gt;</code></li>
 <li>以<code>v-</code>开头的就是指令</li>
 </ul>
+
 <blockquote>
 <p>语法</p>
 </blockquote>
+
 <ul>
 <li><strong><code>v-指令明:参数=值</code></strong>，如<code>v-on:click=add</code></li>
 <li>如果<strong>值</strong>里没有特殊字符，则可以不加引号</li>
 <li>有些指令没有参数和值，如<code>v-pre</code></li>
 <li>有些指令可以没有值
+
 <ul>
 <li>如<code>&lt;a v-on:click.prevent href=&quot;https://www.baidu.com&quot;&gt;Baidu&lt;/a&gt;</code></li>
-</ul>
-</li>
+</ul></li>
 <li>也可以有值
+
 <ul>
 <li>如<code>&lt;a v-on:click.prevent=&quot;xx&quot; href=&quot;https://www.baidu.com&quot;&gt;Baidu&lt;/a&gt;</code></li>
 <li>点击 a 标签不会跳转链接</li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<hr>
+
+<hr />
+
 <h3 id="修饰符">修饰符</h3>
+
 <blockquote>
 <p>什么是修饰符</p>
 </blockquote>
+
 <ul>
 <li>修饰符 (modifier) 是以半角句号<code>.</code>指明的特殊后缀，用于指出一个指令应该以特殊方式绑定</li>
 <li><a href="https://vue-docs-next-zh-cn.netlify.app/guide/template-syntax.html#%E4%BF%AE%E9%A5%B0%E7%AC%A6">Vue #修饰符</a></li>
 </ul>
+
 <blockquote>
 <p>支持修饰符的指令</p>
 </blockquote>
+
 <ul>
 <li><code>@click.stop=&quot;add&quot;</code>表示阻止事件传播/冒泡</li>
 <li><code>@click.prevent=&quot;add&quot;</code>表示阻止默认动作</li>
 <li><code>@click.stop.prevent=&quot;add&quot;</code>表示以上两种操作同时执行</li>
 </ul>
+
 <h4 id="修饰符的种类">修饰符的种类</h4>
+
 <blockquote>
 <p>修饰符的种类：按指令支持分</p>
 </blockquote>
+
 <ul>
 <li><code>v-on</code>支持的主要有 <strong><em><code>.{keycode | keyAlias}</code>、<code>.stop</code>、<code>.prevent</code></em></strong>、
+
 <ul>
 <li>其他<code>.capture</code>、<code>self</code>、<code>once</code>、<code>passive</code>、<code>native</code></li>
 <li>快捷键相关：<code>.ctrl</code>、<code>.alt</code>、<code>.shift</code>、<code>.meta</code>、<code>.exact</code></li>
 <li>鼠标相关：<code>.left</code>、<code>.right</code>、<code>.middle</code>、</li>
-</ul>
-</li>
+</ul></li>
 <li><code>v-bind</code>支持的有<code>.prop</code>、<code>.camel</code>、<strong><em><code>.sync</code></em></strong></li>
 <li><code>v-model</code>支持的有 <strong><em><code>.lazy</code>、<code>number</code>、<code>trim</code></em></strong></li>
 </ul>
+
 <blockquote>
 <p>内置修饰符的种类：按作用分</p>
 </blockquote>
+
 <ul>
 <li>事件修饰符</li>
 <li>按键修饰符</li>
 <li>系统修饰符</li>
 <li>鼠标按钮修饰符</li>
 </ul>
-<hr>
+
+<hr />
+
 <h4 id="事件修饰符">事件修饰符</h4>
+
 <blockquote>
 <p>vue 官方解释 ：在事件处理程序中调用 <code>event.preventDefault()</code> 或 <code>event.stopPropagation()</code> 是非常常见的需求。</p>
+
 <p>尽管我们可以在方法中轻松实现这点，但更好的方式是：方法只有纯粹的数据逻辑，而不是去处理 DOM 事件细节</p>
 </blockquote>
+
 <ul>
 <li><code>.stop</code> 阻止事件的传播或者冒泡</li>
 <li><code>.prevent</code> 阻止事件的默认事件</li>
@@ -856,37 +943,43 @@
 <li><code>.native</code> 我们不能在组件上监听原生<code>dom</code>事件</li>
 <li>例如在<code>router-link</code>上不能监听<code>click</code></li>
 <li>因此要加上<code>.native</code>修饰符，意为本地的，将他作为原来的<code>html5</code>标签来监听的意思</li>
-<li>注意：<code>prevent</code>和<code>passive</code>不能一起使用，例如<code>@click.prevent.passive</code>会报错</li>
-</ul>
+
+<li><p>注意：<code>prevent</code>和<code>passive</code>不能一起使用，例如<code>@click.prevent.passive</code>会报错</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-XML" data-lang="XML"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-XML" data-lang="XML"><span class="c">&lt;!--当点击提交按钮时阻止对表单的提交--&gt;</span>
+<pre class="chroma"><code class="language-XML" data-lang="XML"><span class="c">&lt;!--当点击提交按钮时阻止对表单的提交--&gt;</span>
 <span class="c">&lt;!--提交事件不再重载页面--&gt;</span>
 <span class="nt">&lt;form</span> <span class="na">v-on:submit.prevent=</span><span class="s">&#34;onSubmit&#34;</span><span class="nt">&gt;&lt;/form&gt;</span>
 <span class="c">&lt;!--点击a标签不会跳转链接--&gt;</span>
-<span class="nt">&lt;a</span> <span class="err">@click.prevent</span> <span class="na">href=</span><span class="s">&#34;baidu.com&#34;</span><span class="nt">&gt;&lt;/a&gt;</span>
-</code></pre></td></tr></table>
+<span class="nt">&lt;a</span> <span class="err">@click.prevent</span> <span class="na">href=</span><span class="s">&#34;baidu.com&#34;</span><span class="nt">&gt;&lt;/a&gt;</span></code></pre></td></tr></table>
 </div>
-</div><h4 id="按键修饰符">按键修饰符</h4>
+</div></li>
+</ul>
+
+<h4 id="按键修饰符">按键修饰符</h4>
+
 <blockquote>
 <p><code>KeyBoardEvent.key</code>的有效按键</p>
 </blockquote>
+
 <ul>
 <li>可以传入键盘上的有效按键键名（F1 等不可以，需自定义）</li>
 <li>可以写<code>ASCII</code>码，也可以写字母等等，实际上是<a href="https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/keyCode"><code>KeyBoardEvent.key</code></a>的有效按键，已被弃用，<code>Vue3.x</code>不再支持</li>
 <li><code>ASCII</code>码是<code>keyCode</code>的值</li>
 <li><code>Vue.config.keyCodes</code>已弃用，将不再支持</li>
 </ul>
+
 <blockquote>
 <p>别名（alias）</p>
 </blockquote>
+
 <ul>
 <li><code>.enter</code></li>
 <li><code>.tab</code></li>
@@ -896,27 +989,29 @@
 <li><code>.up</code></li>
 <li><code>.down</code></li>
 <li><code>.left</code></li>
-<li><code>.right</code></li>
-</ul>
+
+<li><p><code>.right</code></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-XML" data-lang="XML"><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-XML" data-lang="XML"><span class="c">&lt;!-- 当用户在键盘 敲下enter回车键时，会触发xxx事件 --&gt;</span>
-<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&#34;text&#34;</span> <span class="err">@</span><span class="na">keypress.enter=</span><span class="s">&#34;xxx&#34;</span><span class="nt">&gt;</span>
-</code></pre></td></tr></table>
+<pre class="chroma"><code class="language-XML" data-lang="XML"><span class="c">&lt;!-- 当用户在键盘 敲下enter回车键时，会触发xxx事件 --&gt;</span>
+<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&#34;text&#34;</span> <span class="err">@</span><span class="na">keypress.enter=</span><span class="s">&#34;xxx&#34;</span><span class="nt">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div></li>
+</ul>
+
+<blockquote>
 <p>Vue3 迁移策略 —— 按键修饰符（破坏性改动）</p>
 </blockquote>
+
 <ul>
-<li><a href="https://v3.vuejs.org/guide/migration/keycode-modifiers.html">vue 3 官方文档原文—— keycode modifiers</a></li>
-</ul>
+<li><p><a href="https://v3.vuejs.org/guide/migration/keycode-modifiers.html">vue 3 官方文档原文—— keycode modifiers</a></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -944,45 +1039,49 @@
 </span><span class="lnt">26
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
-    <span class="nx">template</span><span class="o">:</span> <span class="sb">`
-</span><span class="sb">    &lt;div&gt;
-</span><span class="sb">        {{n}}
-</span><span class="sb">        &lt;a v-on:click.prevent=&#34;xx&#34; href=&#34;https://www.baidu.com&#34;&gt;Baidu&lt;/a&gt;
-</span><span class="sb">        &lt;input @keypress.13=&#34;y&#34; /&gt;
-</span><span class="sb">        &lt;input @keypress.enter=&#34;y&#34; /&gt;
-</span><span class="sb">    &lt;/div&gt;
-</span><span class="sb">    `</span><span class="p">,</span>
-    <span class="nx">data</span><span class="o">:</span> <span class="p">{</span><span class="nx">n</span><span class="o">:</span> <span class="mi">0</span><span class="p">},</span>
-    <span class="nx">methods</span><span class="o">:</span> <span class="p">{</span>
-        <span class="nx">x</span><span class="p">()</span> <span class="p">{</span>
-            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;xxx&#34;</span><span class="p">)</span>
-        <span class="p">},</span>
-        <span class="cm">/*
-</span><span class="cm">        y(e) {
-</span><span class="cm">            if(e.keycode === 13) {
-</span><span class="cm">                console.log(&#34;用户敲了回车&#34;)
-</span><span class="cm">            }
-</span><span class="cm">        },
-</span><span class="cm">        */</span>
-        <span class="nx">y</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
-          <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;用户敲了回车&#34;</span><span class="p">)</span>
-        <span class="p">},</span>
-    <span class="p">}</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
+<span class="nx">template</span><span class="o">:</span> <span class="sb">`
+</span><span class="sb">&lt;div&gt;
+</span><span class="sb">    {{n}}
+</span><span class="sb">    &lt;a v-on:click.prevent=&#34;xx&#34; href=&#34;https://www.baidu.com&#34;&gt;Baidu&lt;/a&gt;
+</span><span class="sb">    &lt;input @keypress.13=&#34;y&#34; /&gt;
+</span><span class="sb">    &lt;input @keypress.enter=&#34;y&#34; /&gt;
+</span><span class="sb">&lt;/div&gt;
+</span><span class="sb">`</span><span class="p">,</span>
+<span class="nx">data</span><span class="o">:</span> <span class="p">{</span><span class="nx">n</span><span class="o">:</span> <span class="mi">0</span><span class="p">},</span>
+<span class="nx">methods</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">x</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;xxx&#34;</span><span class="p">)</span>
+    <span class="p">},</span>
+    <span class="cm">/*
+</span><span class="cm">    y(e) {
+</span><span class="cm">        if(e.keycode === 13) {
+</span><span class="cm">            console.log(&#34;用户敲了回车&#34;)
+</span><span class="cm">        }
+</span><span class="cm">    },
+</span><span class="cm">    */</span>
+    <span class="nx">y</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;用户敲了回车&#34;</span><span class="p">)</span>
+    <span class="p">},</span>
+<span class="p">}</span>
 <span class="p">})</span>
 </code></pre></td></tr></table>
 </div>
-</div><h4 id="系统修饰符">系统修饰符</h4>
+</div></li>
+</ul>
+
+<h4 id="系统修饰符">系统修饰符</h4>
+
 <ul>
 <li><code>.ctrl</code></li>
 <li><code>.alt</code></li>
 <li><code>.shift</code></li>
 <li><code>.meta</code></li>
-<li><code>.exact</code></li>
-</ul>
+
+<li><p><code>.exact</code></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-XML" data-lang="XML"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -993,7 +1092,7 @@
 </span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-XML" data-lang="XML"><span class="c">&lt;!-- Alt + C --&gt;</span>
+<pre class="chroma"><code class="language-XML" data-lang="XML"><span class="c">&lt;!-- Alt + C --&gt;</span>
 <span class="nt">&lt;input</span> <span class="na">v-on:keyup.alt.67=</span><span class="s">&#34;clear&#34;</span><span class="nt">&gt;</span>
 
 <span class="c">&lt;!-- Ctrl + Click --&gt;</span>
@@ -1001,55 +1100,68 @@
 
 <span class="c">&lt;!-- 有且只有 Ctrl 被按下的时候才触发 --&gt;</span>
 <span class="nt">&lt;button</span> <span class="na">v-on:click.ctrl.exact=</span><span class="s">&#34;onCtrlClick&#34;</span><span class="nt">&gt;</span>A<span class="nt">&lt;/button&gt;</span>
-<span class="c">&lt;!-- 不加exact的话可以一起按下别的键--&gt;</span>
-</code></pre></td></tr></table>
+<span class="c">&lt;!-- 不加exact的话可以一起按下别的键--&gt;</span></code></pre></td></tr></table>
 </div>
-</div><h4 id="鼠标按钮修饰符">鼠标按钮修饰符</h4>
+</div></li>
+</ul>
+
+<h4 id="鼠标按钮修饰符">鼠标按钮修饰符</h4>
+
 <ul>
 <li><code>.left</code></li>
 <li><code>.right</code></li>
 <li><code>.middle</code></li>
 </ul>
-<hr>
-<h2 id="4-sync-修饰符a-idsync-hrefsync--aa-hrefcatalogue--a">4. <code>.sync</code> 修饰符<!-- raw HTML omitted --> § <!-- raw HTML omitted --><!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+
+<hr />
+
+<h2 id="4-sync-修饰符-a-id-sync-href-sync-a-a-href-catalogue-a">4. <code>.sync</code> 修饰符<a id="sync" href="#sync"> § </a><a href="#catalogue"> ⇧ </a></h2>
+
 <ul>
 <li><a href="https://cn.vuejs.org/v2/guide/components-custom-events.html#sync-%E4%BF%AE%E9%A5%B0%E7%AC%A6"><code>.sync</code> 修饰符文档</a></li>
 </ul>
+
 <blockquote>
 <p>场景描述</p>
 </blockquote>
+
 <ul>
 <li>爸爸给儿子钱，儿子要钱花，<a href="https://codesandbox.io/s/affectionate-jang-nvd71?file=/src/App.vue">示例</a></li>
 <li>儿子打电话（触发事件）想爸爸要钱</li>
 </ul>
+
 <blockquote>
 <p>需求抽象</p>
 </blockquote>
+
 <ul>
 <li>当一个子组件改变了一外部传入的属性时，此变化也会同步到父组件中所绑定的数据中</li>
 <li>子组件要“通知”父组件，才可以改变</li>
 </ul>
+
 <blockquote>
 <p>Vue 规则</p>
 </blockquote>
+
 <ul>
 <li>子组件不可修改<code>props</code>外部数据，否则会出现警告，数据会被父组件的重新覆盖</li>
 <li>子组件中使用发布（发出）<code>$emit(eventName, fn | 单个 JavaScript 表达式)</code>，可以触发事件，并传参（<code>eventBus</code>）
+
 <ul>
 <li>即事件回传机制明确通知父组件，真正的更新还是父组件自己实现</li>
-</ul>
-</li>
+</ul></li>
 <li>注意子组件发布（发出） <code>$emit('update:money ', money - 100)</code>， 在事件后传入的应该是一个值，而不是一个其他表达式等，如 <code>money = money - 100</code> 返回的是<code>undefined</code></li>
 <li>父组件中在<strong>插入的子组件标签</strong>上使用<code>$event</code>（订阅）可以获取（监听）子组件的<code>$emit</code>发布（发出）的数据，重新赋值给数据，实现同步更新</li>
 <li>即事件的“发布订阅”</li>
 <li>事件名<code>eventName</code>的命名规则为<code>'update:myPropName'</code>，注意是有带冒号的字符串</li>
 </ul>
+
 <blockquote>
 <p><code>Child.vue</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-Vue" data-lang="Vue"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1081,7 +1193,7 @@
 </span><span class="lnt">30
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-Vue" data-lang="Vue"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-Vue" data-lang="Vue"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
 <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;child&#34;</span><span class="p">&gt;</span>
   <span class="p">{{</span><span class="nx">money</span><span class="p">}}</span>
   <span class="c">&lt;!--</span>
@@ -1110,26 +1222,29 @@
 <span class="p">.</span><span class="nx">child</span> <span class="p">{</span>
   <span class="nx">border</span><span class="o">:</span> <span class="mi">3</span><span class="nx">px</span> <span class="nx">solid</span> <span class="nx">yellowgreen</span><span class="p">;</span>
 <span class="p">}</span>
-<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
-</code></pre></td></tr></table>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><ul>
+</div>
+<ul>
 <li>子组件需要修改从实例引入的 <code>props</code> 数据 <code>money</code>，不直接改，而是使用了 <code>$emit</code> 将 <code>money</code> 处理并且传参</li>
 </ul>
+
 <blockquote>
 <p>由于这种场景很常见</p>
 </blockquote>
+
 <ul>
 <li><code>.sync</code>可实现以上场景，<code>Vue</code>内置了<code>EventBus</code>事件总线传值方法，<code>.sync</code>是<code>EventBus</code>的语法糖，封装为修饰符，代替了 <code>$event</code> 的使用</li>
 <li>父组件中插入的子组件标签上使用<code>:money.sync=&quot;total&quot;</code>等价于<code>:money=&quot;total&quot; v-on:update:money=&quot;total=$event&quot;</code></li>
 <li>父组件中对属性使用<code>.sync</code>修饰符，同步子组件中相应数据的修改</li>
 </ul>
+
 <blockquote>
 <p><code>Father.vue</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-Vue" data-lang="Vue"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1175,7 +1290,7 @@
 </span><span class="lnt">44
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-Vue" data-lang="Vue"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-Vue" data-lang="Vue"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
 <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;app&#34;</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;app&#34;</span><span class="p">&gt;</span>
   <span class="nx">App</span><span class="p">.</span><span class="nx">vue</span> <span class="nx">我现在有</span><span class="p">{{</span><span class="nx">total</span><span class="p">}}</span>
   <span class="p">&lt;</span><span class="nt">hr</span> <span class="p">/&gt;</span>
@@ -1218,32 +1333,34 @@
   <span class="nx">border</span><span class="o">:</span> <span class="mi">3</span><span class="nx">px</span> <span class="nx">solid</span> <span class="nx">orange</span><span class="p">;</span>
   <span class="nx">padding</span><span class="o">:</span> <span class="mi">10</span><span class="nx">px</span><span class="p">;</span>
 <span class="p">}</span>
-<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
-</code></pre></td></tr></table>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><ul>
+</div>
+<ul>
 <li>插入的子组件标签，添加监听，事件名<code>update:money</code>，意图是更新赋值<code>total = $event</code>，即拿到捕获到的参数，也就是子组件发过来的 <code>money - 100</code> 的值</li>
 </ul>
+
 <blockquote>
 <p>注意</p>
 </blockquote>
+
 <ul>
 <li>带有 <code>.sync</code> 修饰符的 <code>v-bind</code> 不能和 JS 表达式一起使用</li>
 <li>例如 <code>v-bind:title.sync=”doc.title + ‘!’”</code> 是无效的</li>
 <li>取而代之的是，只能提供要绑定的 <code>property</code> 名，类似 <code>v-model</code></li>
 <li>当子组件需要更新 <code>myProp</code> 的值时，可以显式地触发一个更新事件<code>this.$emit('update:myProp', newValue)</code>，注意是<code>newValue</code></li>
 <li>用一个对象同时设置多个 <code>prop</code> 的时候，也可以将这个 <code>.sync</code> 修饰符和 <code>v-bind</code> 配合使用
+
 <ul>
 <li><code>&lt;text-document v-bind.sync=&quot;doc&quot;&gt;&lt;/text-document&gt;</code></li>
 <li>这样会把 <code>doc</code> 对象中的每一个 <code>property</code> (如 <code>title</code>) 都作为一个独立的 <code>prop</code> 传进去，然后各自添加用于更新的 <code>v-on</code> 监听器</li>
-</ul>
-</li>
+</ul></li>
 <li><code>.sync</code>只是作为一个编译时的语法糖。它会被扩展为一个自动更新父组件属性的 <code>v-on</code> 监听器，实现表面的“数据双向绑定”</li>
-<li><code>.sync</code>避免真正的“双向绑定”所带来的维护上的问题，会引起父子组件都以更改数据容易混乱，因为子组件可以变更父组件，且在父组件和子组件都没有明显的变更来源</li>
-</ul>
+
+<li><p><code>.sync</code>避免真正的“双向绑定”所带来的维护上的问题，会引起父子组件都以更改数据容易混乱，因为子组件可以变更父组件，且在父组件和子组件都没有明显的变更来源</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-XML" data-lang="XML"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1282,115 +1399,136 @@
 </span><span class="lnt">37
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-XML" data-lang="XML"><span class="nt">&lt;template&gt;</span>
+<pre class="chroma"><code class="language-XML" data-lang="XML"><span class="nt">&lt;template&gt;</span>
 <span class="nt">&lt;div&gt;</span>
-    <span class="nt">&lt;p&gt;</span>{{bar}}<span class="nt">&lt;/p&gt;</span>
-    <span class="nt">&lt;p&gt;</span>
-        <span class="nt">&lt;ChildInsertToFather</span> <span class="na">:foo.sync=</span><span class="s">&#34;bar&#34;</span><span class="nt">/&gt;</span>
-    <span class="nt">&lt;/p&gt;</span>
-    <span class="c">&lt;!-- 会被扩展为（等价、语法糖） --&gt;</span>
-    <span class="nt">&lt;p&gt;</span>
-        <span class="nt">&lt;ChildInsertToFather</span> <span class="na">:foo=</span><span class="s">&#34;bar&#34;</span> <span class="err">@</span><span class="na">update:foo=</span><span class="s">&#34;val =&gt; bar = val&#34;</span><span class="nt">/&gt;</span>
-    <span class="nt">&lt;p&gt;</span>
-        <span class="nt">&lt;ChildInsertToFather</span> <span class="na">:foo=</span><span class="s">&#34;bar&#34;</span> <span class="err">@</span><span class="na">update:foo=</span><span class="s">&#34;bar = $event&#34;</span><span class="nt">/&gt;</span>
-    <span class="nt">&lt;/p&gt;</span>
+<span class="nt">&lt;p&gt;</span>{{bar}}<span class="nt">&lt;/p&gt;</span>
+<span class="nt">&lt;p&gt;</span>
+    <span class="nt">&lt;ChildInsertToFather</span> <span class="na">:foo.sync=</span><span class="s">&#34;bar&#34;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/p&gt;</span>
+<span class="c">&lt;!-- 会被扩展为（等价、语法糖） --&gt;</span>
+<span class="nt">&lt;p&gt;</span>
+    <span class="nt">&lt;ChildInsertToFather</span> <span class="na">:foo=</span><span class="s">&#34;bar&#34;</span> <span class="err">@</span><span class="na">update:foo=</span><span class="s">&#34;val =&gt; bar = val&#34;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;p&gt;</span>
+    <span class="nt">&lt;ChildInsertToFather</span> <span class="na">:foo=</span><span class="s">&#34;bar&#34;</span> <span class="err">@</span><span class="na">update:foo=</span><span class="s">&#34;bar = $event&#34;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/p&gt;</span>
 <span class="nt">&lt;/div&gt;</span>
 <span class="nt">&lt;/template&gt;</span>
 <span class="nt">&lt;script&gt;</span>
 Vue.component(&#39;my-comp&#39;, {
-    template: &#39;<span class="nt">&lt;div</span> <span class="err">@</span><span class="na">click=</span><span class="s">&#34;increment&#34;</span><span class="nt">&gt;</span>+1s<span class="nt">&lt;/div&gt;</span>&#39;,
-    data() {
-        return {copyFoo: this.foo}
-    },
-    props: [&#39;foo&#39;],
-    methods: {
-        increment: function() {
-        // 当子组件需要更新 foo 的值时，它需要显式地触发一个更新事件
-            this.$emit(&#39;update:foo&#39;, ++this.copyFoo)
-            // this.$emit(&#39;update:foo&#39;, newValue)
-        }
+template: &#39;<span class="nt">&lt;div</span> <span class="err">@</span><span class="na">click=</span><span class="s">&#34;increment&#34;</span><span class="nt">&gt;</span>+1s<span class="nt">&lt;/div&gt;</span>&#39;,
+data() {
+    return {copyFoo: this.foo}
+},
+props: [&#39;foo&#39;],
+methods: {
+    increment: function() {
+    // 当子组件需要更新 foo 的值时，它需要显式地触发一个更新事件
+        this.$emit(&#39;update:foo&#39;, ++this.copyFoo)
+        // this.$emit(&#39;update:foo&#39;, newValue)
     }
+}
 })
 new Vue({
-    data() {
-        return {
-            bar: 0
-        }
+data() {
+    return {
+        bar: 0
     }
+}
 })
-<span class="nt">&lt;/script&gt;</span>
-</code></pre></td></tr></table>
+<span class="nt">&lt;/script&gt;</span></code></pre></td></tr></table>
 </div>
-</div><ul>
-<li>小结：<code>vue2.x</code> 修饰符<code>.sync</code>的功能是：当一个子组件改变了一个 <code>prop</code> 的值时，这变化也会同步到父组件中所绑定的对应属性</li>
-<li>父组件中在插入的子组件标签上，绑定的属性加后缀<code>.sync</code>，并指向父组件中响应的数据<code>&lt;Child :childProp.sync=&quot;dadData&quot; /&gt;</code></li>
-<li>子组件发布（主动通知）给外部<code>$emit('update:childProp', changeDadData)</code></li>
+</div></li>
+
+<li><p>小结：<code>vue2.x</code> 修饰符<code>.sync</code>的功能是：当一个子组件改变了一个 <code>prop</code> 的值时，这变化也会同步到父组件中所绑定的对应属性</p></li>
+
+<li><p>父组件中在插入的子组件标签上，绑定的属性加后缀<code>.sync</code>，并指向父组件中响应的数据<code>&lt;Child :childProp.sync=&quot;dadData&quot; /&gt;</code></p></li>
+
+<li><p>子组件发布（主动通知）给外部<code>$emit('update:childProp', changeDadData)</code></p></li>
 </ul>
-<hr>
+
+<hr />
+
 <blockquote>
 <p><code>Vue3.0</code> 移除 v-bind 中的 .sync 修饰符</p>
 </blockquote>
+
 <ul>
-<li><code>vue 3.x</code> 又去掉了 <code>.sync</code> ，合并到了 <code>v-model</code> 里</li>
-</ul>
+<li><p><code>vue 3.x</code> 又去掉了 <code>.sync</code> ，合并到了 <code>v-model</code> 里</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-XML" data-lang="XML"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-XML" data-lang="XML"><span class="c">&lt;!-- vue 2.x --&gt;</span>
+<pre class="chroma"><code class="language-XML" data-lang="XML"><span class="c">&lt;!-- vue 2.x --&gt;</span>
 <span class="nt">&lt;MyComponent</span> <span class="na">v-bind:title.sync=</span><span class="s">&#34;title&#34;</span> <span class="nt">/&gt;</span>
 
 <span class="c">&lt;!-- vue 3.x --&gt;</span>
-<span class="nt">&lt;MyComponent</span> <span class="na">v-model:title=</span><span class="s">&#34;title&#34;</span> <span class="nt">/&gt;</span>
-</code></pre></td></tr></table>
+<span class="nt">&lt;MyComponent</span> <span class="na">v-model:title=</span><span class="s">&#34;title&#34;</span> <span class="nt">/&gt;</span></code></pre></td></tr></table>
 </div>
-</div><ul>
-<li><code>:xxx.sync</code> 将被 <code>v-model:xxx</code> 取代</li>
+</div></li>
+
+<li><p><code>:xxx.sync</code> 将被 <code>v-model:xxx</code> 取代</p></li>
 </ul>
-<hr>
-<h2 id="总结a-hrefcatalogue--a">总结<!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+
+<hr />
+
+<h2 id="总结-a-href-catalogue-a">总结<a href="#catalogue"> ⇧ </a></h2>
+
 <blockquote>
 <p>四个常用修饰符</p>
 </blockquote>
+
 <ul>
 <li><code>@click.stop=&quot;xxx&quot;</code></li>
 <li><code>@click.prevent=&quot;xxx&quot;</code></li>
 <li><code>@keypress.enter=&quot;xxx&quot;</code></li>
 <li><code>:money.sync=&quot;total&quot;</code></li>
 </ul>
-<!-- raw HTML omitted -->
-<hr>
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<hr>
+
+<!-- Article End -->
+
+<hr />
+
+<!-- test -->
+
+<div style="text-align:center;">·未完待续·</div>
+
+<!-- ok -->
+
+<hr />
+
 <h3 id="参考文章">参考文章</h3>
+
 <ul>
 <li><a href="https://static.xiedaimala.com/xdml/file/3ac7c224-c23d-491f-84b5-4fabfbeab9b8/2019-12-24-23-22-58.pdf">Vue 模板与修饰符.pdf</a></li>
 <li><a href="https://vue-docs-next-zh-cn.netlify.app/guide/template-syntax.html#%E4%BF%AE%E9%A5%B0%E7%AC%A6">Vue #修饰符</a></li>
 </ul>
+
 <h3 id="相关文章">相关文章</h3>
+
 <ul>
 <li>无</li>
 </ul>
-<hr>
+
+<hr />
+
 <ul>
 <li>作者： Joel</li>
 <li>文章链接：</li>
-<li><a href="http://xmasuhai.xyz/posts/%E7%89%88%E6%9D%83%E5%A3%B0%E6%98%8E%E9%93%BE%E6%8E%A5/">版权声明</a></li>
+<li><a href="http://xmasuhai.xyz/posts/版权声明链接/">版权声明</a></li>
 <li>非自由转载-非商用-非衍生-保持署名</li>
-<li><!-- raw HTML omitted -->河<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->掘<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->思<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->知<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->简<!-- raw HTML omitted --></li>
+<li><a style='color:#DB2D5D;' href='https://xiedaimala.com/bbs/users/8c266e6f-55a2-4348-a180-17cb8cdb2c46#/?page=1' target='_blank' rel='noreferrer noopener'>河</a>
+<a style='color:#006CFF;' href='https://juejin.im/user/59abfad26fb9a0248f4aa221' target='_blank' rel='noreferrer noopener'>掘</a>
+<a style='color:#009A61;' href='https://segmentfault.com/u/joel_59b17eb9d2155' target='_blank' rel='noreferrer noopener'>思</a>
+<a style='color:#0084FF;' href='https://www.zhihu.com/people/xue-shou-41/posts' target='_blank' rel='noreferrer noopener'>知</a>
+<a style='color:#EA6F5A;' href='https://www.jianshu.com/u/079916729823' target='_blank' rel='noreferrer noopener'>简</a></li>
 </ul>
-<hr>
+
+<hr />
 
     </div>
 
@@ -1555,7 +1693,7 @@ new Vue({
     &copy;
     
       2019 -
-    2022
+    2026
     <span class="heart">
       
       <i class="iconfont">

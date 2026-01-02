@@ -7,7 +7,7 @@
   
 
 <meta name="renderer" content="webkit" />
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
 <meta name="MobileOptimized" content="width"/>
 <meta name="HandheldFriendly" content="true"/>
@@ -32,7 +32,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.91.2" />
+<meta name="generator" content="Hugo 0.59.1" />
 
 
 <link rel="canonical" href="http://xmasuhai.xyz/post/project/share-blog/%E9%A1%B9%E7%9B%AE-%E5%A4%9A%E4%BA%BA%E5%85%B1%E4%BA%AB%E5%8D%9A%E5%AE%A26.-%E6%89%93%E5%8C%85%E9%83%A8%E7%BD%B2/" />
@@ -62,15 +62,21 @@
 <meta property="og:title" content="【项目 多人共享博客】6. 打包部署" />
 <meta property="og:description" content="使用Vite对项目进行打包和上线部署 大纲链接§ [toc] 基本概念 import.meta.url node文档 import.meta.url import.meta MDN 配置文件 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://xmasuhai.xyz/post/project/share-blog/%E9%A1%B9%E7%9B%AE-%E5%A4%9A%E4%BA%BA%E5%85%B1%E4%BA%AB%E5%8D%9A%E5%AE%A26.-%E6%89%93%E5%8C%85%E9%83%A8%E7%BD%B2/" /><meta property="article:section" content="post" />
+<meta property="og:url" content="http://xmasuhai.xyz/post/project/share-blog/%E9%A1%B9%E7%9B%AE-%E5%A4%9A%E4%BA%BA%E5%85%B1%E4%BA%AB%E5%8D%9A%E5%AE%A26.-%E6%89%93%E5%8C%85%E9%83%A8%E7%BD%B2/" />
 <meta property="article:published_time" content="2022-07-27T10:11:18+08:00" />
 <meta property="article:modified_time" content="2022-06-07T08:48:37+08:00" />
-
 <meta itemprop="name" content="【项目 多人共享博客】6. 打包部署">
-<meta itemprop="description" content="使用Vite对项目进行打包和上线部署 大纲链接§ [toc] 基本概念 import.meta.url node文档 import.meta.url import.meta MDN 配置文件 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28"><meta itemprop="datePublished" content="2022-07-27T10:11:18+08:00" />
-<meta itemprop="dateModified" content="2022-06-07T08:48:37+08:00" />
-<meta itemprop="wordCount" content="2686">
-<meta itemprop="keywords" content="FrontEnd,Project," /><meta name="twitter:card" content="summary"/>
+<meta itemprop="description" content="使用Vite对项目进行打包和上线部署 大纲链接§ [toc] 基本概念 import.meta.url node文档 import.meta.url import.meta MDN 配置文件 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28">
+
+
+<meta itemprop="datePublished" content="2022-07-27T10:11:18&#43;08:00" />
+<meta itemprop="dateModified" content="2022-06-07T08:48:37&#43;08:00" />
+<meta itemprop="wordCount" content="2802">
+
+
+
+<meta itemprop="keywords" content="FrontEnd,Project," />
+<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="【项目 多人共享博客】6. 打包部署"/>
 <meta name="twitter:description" content="使用Vite对项目进行打包和上线部署 大纲链接§ [toc] 基本概念 import.meta.url node文档 import.meta.url import.meta MDN 配置文件 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28"/>
 
@@ -301,7 +307,7 @@
         <div class="post-category">
             
           </div>
-        <span class="more-meta"> 约 2686 字 </span>
+        <span class="more-meta"> 约 2802 字 </span>
           <span class="more-meta"> 预计阅读 6 分钟 </span>
 
         
@@ -318,43 +324,55 @@
   <h2 class="post-toc-title">文章目录</h2>
   <div class="post-toc-content">
     <nav id="TableOfContents">
-  <ul>
-    <li><a href="#基本概念">基本概念</a>
-      <ul>
-        <li><a href="#importmetaurl"><code>import.meta.url</code></a></li>
-        <li><a href="#配置文件">配置文件</a></li>
-      </ul>
-    </li>
-    <li><a href="#打包">打包</a></li>
-    <li><a href="#部署">部署</a></li>
-    <li><a href="#使用github-actions实现自动化部署">使用<code>Github Actions</code>实现自动化部署</a></li>
-    <li><a href="#遇错">遇错</a></li>
-    <li><a href="#参考文章">参考文章</a></li>
-    <li><a href="#相关文章">相关文章</a></li>
-  </ul>
+<ul>
+<li><a href="#使用-vite-对项目进行打包和上线部署">使用<code>Vite</code>对项目进行打包和上线部署</a>
+<ul>
+<li><a href="#基本概念">基本概念</a>
+<ul>
+<li><a href="#import-meta-url"><code>import.meta.url</code></a></li>
+<li><a href="#配置文件">配置文件</a></li>
+</ul></li>
+<li><a href="#打包">打包</a></li>
+<li><a href="#部署">部署</a></li>
+<li><a href="#使用-github-actions-实现自动化部署">使用<code>Github Actions</code>实现自动化部署</a></li>
+<li><a href="#遇错">遇错</a></li>
+<li><a href="#参考文章">参考文章</a></li>
+<li><a href="#相关文章">相关文章</a></li>
+</ul></li>
+</ul>
 </nav>
   </div>
 </div>
 
     
     <div class="post-content">
-      <h1 id="使用vite对项目进行打包和上线部署">使用<code>Vite</code>对项目进行打包和上线部署</h1>
-<hr>
+      
+
+<h1 id="使用-vite-对项目进行打包和上线部署">使用<code>Vite</code>对项目进行打包和上线部署</h1>
+
+<hr />
+
 <blockquote>
-<p>大纲链接<!-- raw HTML omitted --> § <!-- raw HTML omitted --></p>
+<p>大纲链接<a id="catalogue" href="#catalogue" > § </a></p>
 </blockquote>
+
 <p>[toc]</p>
-<hr>
+
+<hr />
+
 <h2 id="基本概念">基本概念</h2>
-<h3 id="importmetaurl"><code>import.meta.url</code></h3>
+
+<h3 id="import-meta-url"><code>import.meta.url</code></h3>
+
 <ul>
 <li><a href="http://nodejs.cn/api/esm/import_meta_url.html">node文档 import.meta.url</a></li>
 <li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/import.meta">import.meta MDN</a></li>
 </ul>
+
 <h3 id="配置文件">配置文件</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="lnt">  1
 </span><span class="lnt">  2
 </span><span class="lnt">  3
 </span><span class="lnt">  4
@@ -533,30 +551,29 @@
 </span><span class="lnt">177
 </span><span class="lnt">178
 </span><span class="lnt">179
-</span><span class="lnt">180
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="kr">import</span> <span class="p">{</span><span class="nx">defineConfig</span><span class="p">,</span> <span class="nx">loadEnv</span><span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;vite&#39;</span><span class="p">;</span>
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="kr">import</span> <span class="p">{</span><span class="nx">defineConfig</span><span class="p">,</span> <span class="nx">loadEnv</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vite&#39;</span><span class="p">;</span>
 <span class="c1">// @types/node
 </span><span class="c1">// @ts-ignore
-</span><span class="c1"></span><span class="kr">import</span> <span class="nx">path</span> <span class="kr">from</span> <span class="s1">&#39;path&#39;</span><span class="p">;</span>
+</span><span class="c1"></span><span class="kr">import</span> <span class="nx">path</span> <span class="nx">from</span> <span class="s1">&#39;path&#39;</span><span class="p">;</span>
 
 <span class="c1">// plugins
-</span><span class="c1"></span><span class="kr">import</span> <span class="nx">vue</span> <span class="kr">from</span> <span class="s1">&#39;@vitejs/plugin-vue&#39;</span><span class="p">;</span>
-<span class="kr">import</span> <span class="nx">vueJsx</span> <span class="kr">from</span> <span class="s1">&#39;@vitejs/plugin-vue-jsx&#39;</span><span class="p">;</span>
-<span class="kr">import</span> <span class="p">{</span><span class="nx">createSvgIconsPlugin</span><span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;vite-plugin-svg-icons&#39;</span><span class="p">;</span>
+</span><span class="c1"></span><span class="kr">import</span> <span class="nx">vue</span> <span class="nx">from</span> <span class="s1">&#39;@vitejs/plugin-vue&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">vueJsx</span> <span class="nx">from</span> <span class="s1">&#39;@vitejs/plugin-vue-jsx&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span><span class="nx">createSvgIconsPlugin</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vite-plugin-svg-icons&#39;</span><span class="p">;</span>
 <span class="c1">// @ts-ignore
-</span><span class="c1"></span><span class="kr">import</span> <span class="nx">removeConsole</span> <span class="kr">from</span> <span class="s1">&#39;vite-plugin-remove-console&#39;</span><span class="p">;</span>
+</span><span class="c1"></span><span class="kr">import</span> <span class="nx">removeConsole</span> <span class="nx">from</span> <span class="s1">&#39;vite-plugin-remove-console&#39;</span><span class="p">;</span>
 
 <span class="c1">// setup name
-</span><span class="c1"></span><span class="kr">import</span> <span class="nx">VueSetupExtend</span> <span class="kr">from</span> <span class="s1">&#39;vite-plugin-vue-setup-extend&#39;</span><span class="p">;</span>
+</span><span class="c1"></span><span class="kr">import</span> <span class="nx">VueSetupExtend</span> <span class="nx">from</span> <span class="s1">&#39;vite-plugin-vue-setup-extend&#39;</span><span class="p">;</span>
 <span class="c1">// 自动引入组件和方法
-</span><span class="c1"></span><span class="kr">import</span> <span class="nx">autoComponents</span> <span class="kr">from</span> <span class="s1">&#39;unplugin-vue-components/vite&#39;</span><span class="p">;</span>
-<span class="kr">import</span> <span class="p">{</span><span class="nx">AntDesignVueResolver</span><span class="p">,}</span> <span class="kr">from</span> <span class="s1">&#39;unplugin-vue-components/resolvers&#39;</span><span class="p">;</span>
-<span class="kr">import</span> <span class="nx">AutoImport</span> <span class="kr">from</span> <span class="s1">&#39;unplugin-auto-import/vite&#39;</span><span class="p">;</span>
+</span><span class="c1"></span><span class="kr">import</span> <span class="nx">autoComponents</span> <span class="nx">from</span> <span class="s1">&#39;unplugin-vue-components/vite&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span><span class="nx">AntDesignVueResolver</span><span class="p">,}</span> <span class="nx">from</span> <span class="s1">&#39;unplugin-vue-components/resolvers&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">AutoImport</span> <span class="nx">from</span> <span class="s1">&#39;unplugin-auto-import/vite&#39;</span><span class="p">;</span>
 
 <span class="c1">//mock
-</span><span class="c1"></span><span class="kr">import</span> <span class="p">{</span><span class="nx">viteMockServe</span><span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;vite-plugin-mock&#39;</span><span class="p">;</span>
+</span><span class="c1"></span><span class="kr">import</span> <span class="p">{</span><span class="nx">viteMockServe</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vite-plugin-mock&#39;</span><span class="p">;</span>
 
 
 <span class="c1">// 查看本地环境
@@ -715,34 +732,43 @@
     <span class="p">},</span>
   <span class="p">};</span>
 <span class="p">});</span>
-
 </code></pre></td></tr></table>
 </div>
-</div><hr>
+</div>
+<hr />
+
 <h2 id="打包">打包</h2>
+
 <blockquote>
 <p>直接<code>pnpm run build</code>就可以得到生产环境的代码，但是如果需要对打包做更精确的操作，还需要单独做一些配置</p>
 </blockquote>
+
 <h2 id="部署">部署</h2>
+
 <blockquote>
 <p>部署在<code>github</code></p>
 </blockquote>
+
 <ul>
 <li>开启<code>Git Pages</code></li>
 </ul>
+
 <blockquote>
 <p>部署在<code>gitee</code></p>
 </blockquote>
+
 <ul>
 <li>开启<code>Gitee Pages</code></li>
 </ul>
-<h2 id="使用github-actions实现自动化部署">使用<code>Github Actions</code>实现自动化部署</h2>
+
+<h2 id="使用-github-actions-实现自动化部署">使用<code>Github Actions</code>实现自动化部署</h2>
+
 <blockquote>
 <p><code>.github/workflows/deploy-website.yml</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-yml" data-lang="yml"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -775,99 +801,101 @@
 </span><span class="lnt">31
 </span><span class="lnt">32
 </span><span class="lnt">33
-</span><span class="lnt">34
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-yml" data-lang="yml"><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Deploy GitHub Pages</span><span class="w">
+<pre class="chroma"><code class="language-yml" data-lang="yml">name<span class="p">:</span><span class="w"> </span>Deploy<span class="w"> </span>GitHub<span class="w"> </span>Pages<span class="w">
 </span><span class="w">
-</span><span class="w"></span><span class="nt">on</span><span class="p">:</span><span class="w">
+</span><span class="w"></span>on<span class="p">:</span><span class="w">
 </span><span class="w">  </span><span class="c"># 每当 push 到 main 分支时触发部署</span><span class="w">
-</span><span class="w">  </span><span class="nt">push</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="nt">branches</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="l">main]</span><span class="w">
+</span><span class="w">  </span>push<span class="p">:</span><span class="w">
+</span><span class="w">    </span>branches<span class="p">:</span><span class="w"> </span><span class="p">[</span>main<span class="p">]</span><span class="w">
 </span><span class="w">
 </span><span class="w"></span><span class="c"># 任务</span><span class="w">
-</span><span class="w"></span><span class="nt">jobs</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="nt">build-and-deploy</span><span class="p">:</span><span class="w">
+</span><span class="w"></span>jobs<span class="p">:</span><span class="w">
+</span><span class="w">  </span>build-and-deploy<span class="p">:</span><span class="w">
 </span><span class="w">    </span><span class="c"># 服务器环境：最新版 Ubuntu</span><span class="w">
-</span><span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l">ubuntu-latest</span><span class="w">
+</span><span class="w">    </span>runs-on<span class="p">:</span><span class="w"> </span>ubuntu-latest<span class="w">
 </span><span class="w">
-</span><span class="w">    </span><span class="nt">steps</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>steps<span class="p">:</span><span class="w">
 </span><span class="w">      </span><span class="c"># 拉取代码</span><span class="w">
-</span><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Checkout</span><span class="w">
-</span><span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l">actions/checkout@v2</span><span class="w">
-</span><span class="w">        </span><span class="nt">with</span><span class="p">:</span><span class="w">
-</span><span class="w">          </span><span class="nt">persist-credentials</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+</span><span class="w">      </span>-<span class="w"> </span>name<span class="p">:</span><span class="w"> </span>Checkout<span class="w">
+</span><span class="w">        </span>uses<span class="p">:</span><span class="w"> </span>actions/checkout@v2<span class="w">
+</span><span class="w">        </span>with<span class="p">:</span><span class="w">
+</span><span class="w">          </span>persist-credentials<span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
 </span><span class="w">
 </span><span class="w">      </span><span class="c"># 1、生成静态文件</span><span class="w">
-</span><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Build</span><span class="w">
-</span><span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l">yarn install &amp;&amp; yarn build:app</span><span class="w">
+</span><span class="w">      </span>-<span class="w"> </span>name<span class="p">:</span><span class="w"> </span>Build<span class="w">
+</span><span class="w">        </span>run<span class="p">:</span><span class="w"> </span>yarn<span class="w"> </span>install<span class="w"> </span><span class="cp">&amp;&amp;</span><span class="w"> </span>yarn<span class="w"> </span>build<span class="p">:</span>app<span class="w">
 </span><span class="w">
 </span><span class="w">      </span><span class="c"># 2、部署到 GitHub Pages</span><span class="w">
-</span><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Deploy WebSite</span><span class="w">
-</span><span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l">JamesIves/github-pages-deploy-action@v4.2.5</span><span class="w">
-</span><span class="w">        </span><span class="nt">with</span><span class="p">:</span><span class="w">
-</span><span class="w">          </span><span class="nt">ACCESS_TOKEN</span><span class="p">:</span><span class="w"> </span><span class="l">${{ secrets.ACCESS_TOKEN }}</span><span class="w">
-</span><span class="w">          </span><span class="nt">REPOSITORY_NAME</span><span class="p">:</span><span class="w"> </span><span class="l">xmasuhai/vite-share-blog</span><span class="w">
-</span><span class="w">          </span><span class="nt">BASE_BRANCH</span><span class="p">:</span><span class="w"> </span><span class="l">main</span><span class="w">
-</span><span class="w">          </span><span class="nt">BRANCH</span><span class="p">:</span><span class="w"> </span><span class="l">gh-pages</span><span class="w">
-</span><span class="w">          </span><span class="nt">FOLDER</span><span class="p">:</span><span class="w"> </span><span class="l">dist</span><span class="w">
-</span><span class="w">
-</span></code></pre></td></tr></table>
+</span><span class="w">      </span>-<span class="w"> </span>name<span class="p">:</span><span class="w"> </span>Deploy<span class="w"> </span>WebSite<span class="w">
+</span><span class="w">        </span>uses<span class="p">:</span><span class="w"> </span>JamesIves/github-pages-deploy-action@v4<span class="m">.2.5</span><span class="w">
+</span><span class="w">        </span>with<span class="p">:</span><span class="w">
+</span><span class="w">          </span>ACCESS_TOKEN<span class="p">:</span><span class="w"> </span>${{<span class="w"> </span>secrets.ACCESS_TOKEN<span class="w"> </span>}}<span class="w">
+</span><span class="w">          </span>REPOSITORY_NAME<span class="p">:</span><span class="w"> </span>xmasuhai/vite-share-blog<span class="w">
+</span><span class="w">          </span>BASE_BRANCH<span class="p">:</span><span class="w"> </span>main<span class="w">
+</span><span class="w">          </span>BRANCH<span class="p">:</span><span class="w"> </span>gh-pages<span class="w">
+</span><span class="w">          </span>FOLDER<span class="p">:</span><span class="w"> </span>dist</code></pre></td></tr></table>
 </div>
-</div><hr>
+</div>
+<hr />
+
 <h2 id="遇错">遇错</h2>
+
 <blockquote>
-<p><code>/usr/bin/git worktree remove github-pages-deploy-action-temp-deployment-folder --force fatal: 'github-pages-deploy-action-temp-deployment-folder' is not a working tree</code></p>
+<p><code>/usr/bin/git worktree remove github-pages-deploy-action-temp-deployment-folder --force
+fatal: 'github-pages-deploy-action-temp-deployment-folder' is not a working tree</code></p>
 </blockquote>
+
 <ul>
 <li>更改版本<code>uses: JamesIves/github-pages-deploy-action@v4.2.5</code></li>
 <li><code>BASE_BRANCH: main</code></li>
 <li><a href="https://stackoverflow.com/questions/62734631/fail-to-deploy-to-github-pages-blazor-webassembly-using-github-actions">Fail to deploy to Github Pages - Blazor webassembly using GitHub Actions</a></li>
 <li><a href="https://github.com/xmasuhai/vite-share-blog/actions/runs/1991203949">🚀 📦 🔨 🔧 发布部署 Deploy GitHub Pages #11</a></li>
 </ul>
-<hr>
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<hr>
+
+<hr />
+
+<!-- Article End -->
+
+<div style="text-align:center;">·未完待续·</div>
+
+<hr />
+
 <h2 id="参考文章">参考文章</h2>
+
 <ul>
-<li></li>
-<li>
-<p><a href="https://juejin.cn/post/7028773763827105829">Vite 开发实践 - 打包部署</a></p>
-</li>
-<li>
-<p><a href="https://juejin.cn/post/7062260711681949703">vite + webpack 工程化实践</a></p>
-</li>
-<li>
-<p><a href="https://juejin.cn/post/6900852894321836046">开发用vite,打包用webpack&ndash;解决别名路径不同的问题</a></p>
-</li>
-<li>
-<p><a href="https://juejin.cn/post/6910014283707318279#heading-20">2021：vite工程化实践</a></p>
-</li>
-<li>
-<p><a href="https://juejin.cn/post/7027381540849975326">Vite快速构建项目</a></p>
-</li>
-<li>
-<p><a href="https://juejin.cn/post/7040655239849967652">基于 Vite 搭建开发体验超级丝滑的 Vue3 组件库开发框架-分开文档和库的构建逻辑</a></p>
-</li>
-<li>
-<p><a href="https://juejin.cn/post/7049147751866564621">前端构建新世代，Esbuild</a></p>
-</li>
-<li>
-<p><a href="https://juejin.cn/post/6963069843864027144">精读《新一代前端构建工具对比》</a></p>
-</li>
-<li>
-<p><a href="https://juejin.cn/post/7028143088220504095#heading-11">由一次业务项目落地 Vite 的经历，  Vite 预构建踩坑</a></p>
-</li>
-<li>
-<p><a href="https://juejin.cn/post/6930878407559348231">vite2插件开发指南</a></p>
-</li>
-<li>
-<p><a href="https://juejin.cn/post/7072176925061414925?utm_source=gold_browser_extension">Vite多环境配置</a></p>
-</li>
+<li><blockquote>
+<p>vite 打包部署项目</p>
+</blockquote></li>
+
+<li><p><a href="https://juejin.cn/post/7028773763827105829">Vite 开发实践 - 打包部署</a></p></li>
+
+<li><p><a href="https://juejin.cn/post/7062260711681949703">vite + webpack 工程化实践</a></p></li>
+
+<li><p><a href="https://juejin.cn/post/6900852894321836046">开发用vite,打包用webpack&ndash;解决别名路径不同的问题</a></p></li>
+
+<li><p><a href="https://juejin.cn/post/6910014283707318279#heading-20">2021：vite工程化实践</a></p></li>
+
+<li><p><a href="https://juejin.cn/post/7027381540849975326">Vite快速构建项目</a></p></li>
+
+<li><p><a href="https://juejin.cn/post/7040655239849967652">基于 Vite 搭建开发体验超级丝滑的 Vue3 组件库开发框架-分开文档和库的构建逻辑</a></p></li>
+
+<li><p><a href="https://juejin.cn/post/7049147751866564621">前端构建新世代，Esbuild</a></p></li>
+
+<li><p><a href="https://juejin.cn/post/6963069843864027144">精读《新一代前端构建工具对比》</a></p></li>
+
+<li><p><a href="https://juejin.cn/post/7028143088220504095#heading-11">由一次业务项目落地 Vite 的经历，  Vite 预构建踩坑</a></p></li>
+
+<li><p><a href="https://juejin.cn/post/6930878407559348231">vite2插件开发指南</a></p></li>
+
+<li><p><a href="https://juejin.cn/post/7072176925061414925?utm_source=gold_browser_extension">Vite多环境配置</a></p></li>
 </ul>
-<hr>
+
+<hr />
+
 <h2 id="相关文章">相关文章</h2>
+
 <p><a href="https://juejin.cn/post/6986169708722520072#heading-17">https://juejin.cn/post/6986169708722520072#heading-17</a> | Vite+Typescript+React 构建标准化应用 - 掘金
 <a href="https://cn.vitejs.dev/config/">https://cn.vitejs.dev/config/</a> | 配置 Vite | Vite 官方中文文档
 <a href="https://juejin.cn/post/7028773763827105829">https://juejin.cn/post/7028773763827105829</a> | Vite 开发实践 - 打包部署 - 掘金
@@ -892,6 +920,7 @@
 <a href="https://juejin.cn/post/7065538392322211877">https://juejin.cn/post/7065538392322211877</a> | 老项目从webpack迁移到vite失败经验 - 掘金
 <a href="https://juejin.cn/post/6923417451333959694">https://juejin.cn/post/6923417451333959694</a> | 浅谈Vite 原理与 Webpack比较 - 掘金
 <a href="https://juejin.cn/post/7031421642513317918">https://juejin.cn/post/7031421642513317918</a> | 带你解读 webpack 打包原理及vite的优势 - 掘金</p>
+
 <p><a href="https://juejin.cn/post/6986169708722520072#heading-17">https://juejin.cn/post/6986169708722520072#heading-17</a> | Vite+Typescript+React 构建标准化应用 - 掘金
 <a href="https://cn.vitejs.dev/config/">https://cn.vitejs.dev/config/</a> | 配置 Vite | Vite 官方中文文档
 <a href="https://juejin.cn/post/7028773763827105829">https://juejin.cn/post/7028773763827105829</a> | Vite 开发实践 - 打包部署 - 掘金
@@ -915,15 +944,19 @@
 <a href="https://juejin.cn/post/7065538392322211877">https://juejin.cn/post/7065538392322211877</a> | 老项目从webpack迁移到vite失败经验 - 掘金
 <a href="https://juejin.cn/post/6923417451333959694">https://juejin.cn/post/6923417451333959694</a> | 浅谈Vite 原理与 Webpack比较 - 掘金
 <a href="https://juejin.cn/post/7031421642513317918">https://juejin.cn/post/7031421642513317918</a> | 带你解读 webpack 打包原理及vite的优势 - 掘金</p>
-<hr>
+
+<hr />
+
 <ul>
 <li>作者： Joel</li>
 <li>文章链接：</li>
-<li><a href="http://xmasuhai.xyz/posts/%E7%89%88%E6%9D%83%E5%A3%B0%E6%98%8E%E9%93%BE%E6%8E%A5/">版权声明</a></li>
+<li><a href="http://xmasuhai.xyz/posts/版权声明链接/">版权声明</a></li>
 <li>非自由转载-非商用-非衍生-保持署名</li>
 </ul>
-<hr>
-<hr>
+
+<hr />
+
+<hr />
 
     </div>
 
@@ -1086,7 +1119,7 @@
     &copy;
     
       2019 -
-    2022
+    2026
     <span class="heart">
       
       <i class="iconfont">

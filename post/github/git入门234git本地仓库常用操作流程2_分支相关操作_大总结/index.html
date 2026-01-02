@@ -7,7 +7,7 @@
   
 
 <meta name="renderer" content="webkit" />
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
 <meta name="MobileOptimized" content="width"/>
 <meta name="HandheldFriendly" content="true"/>
@@ -32,7 +32,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.91.2" />
+<meta name="generator" content="Hugo 0.59.1" />
 
 
 <link rel="canonical" href="http://xmasuhai.xyz/post/github/git%E5%85%A5%E9%97%A8234git%E6%9C%AC%E5%9C%B0%E4%BB%93%E5%BA%93%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C%E6%B5%81%E7%A8%8B2_%E5%88%86%E6%94%AF%E7%9B%B8%E5%85%B3%E6%93%8D%E4%BD%9C_%E5%A4%A7%E6%80%BB%E7%BB%93/" />
@@ -62,15 +62,21 @@
 <meta property="og:title" content="【Git入门234】Git本地仓库常用操作流程2_分支相关操作_大总结" />
 <meta property="og:description" content="创建分支git branch 1 git branch x 仅创建一个叫x的分支拷贝，不对代码进行任何变动 可以创造平行时间线x 术语叫“分支” 虚拷贝，引用 可以同时基于master" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://xmasuhai.xyz/post/github/git%E5%85%A5%E9%97%A8234git%E6%9C%AC%E5%9C%B0%E4%BB%93%E5%BA%93%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C%E6%B5%81%E7%A8%8B2_%E5%88%86%E6%94%AF%E7%9B%B8%E5%85%B3%E6%93%8D%E4%BD%9C_%E5%A4%A7%E6%80%BB%E7%BB%93/" /><meta property="article:section" content="post" />
+<meta property="og:url" content="http://xmasuhai.xyz/post/github/git%E5%85%A5%E9%97%A8234git%E6%9C%AC%E5%9C%B0%E4%BB%93%E5%BA%93%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C%E6%B5%81%E7%A8%8B2_%E5%88%86%E6%94%AF%E7%9B%B8%E5%85%B3%E6%93%8D%E4%BD%9C_%E5%A4%A7%E6%80%BB%E7%BB%93/" />
 <meta property="article:published_time" content="2020-01-03T22:48:00+08:00" />
 <meta property="article:modified_time" content="2022-09-03T10:26:25+08:00" />
-
 <meta itemprop="name" content="【Git入门234】Git本地仓库常用操作流程2_分支相关操作_大总结">
-<meta itemprop="description" content="创建分支git branch 1 git branch x 仅创建一个叫x的分支拷贝，不对代码进行任何变动 可以创造平行时间线x 术语叫“分支” 虚拷贝，引用 可以同时基于master"><meta itemprop="datePublished" content="2020-01-03T22:48:00+08:00" />
-<meta itemprop="dateModified" content="2022-09-03T10:26:25+08:00" />
-<meta itemprop="wordCount" content="1497">
-<meta itemprop="keywords" content="git," /><meta name="twitter:card" content="summary"/>
+<meta itemprop="description" content="创建分支git branch 1 git branch x 仅创建一个叫x的分支拷贝，不对代码进行任何变动 可以创造平行时间线x 术语叫“分支” 虚拷贝，引用 可以同时基于master">
+
+
+<meta itemprop="datePublished" content="2020-01-03T22:48:00&#43;08:00" />
+<meta itemprop="dateModified" content="2022-09-03T10:26:25&#43;08:00" />
+<meta itemprop="wordCount" content="1516">
+
+
+
+<meta itemprop="keywords" content="git," />
+<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="【Git入门234】Git本地仓库常用操作流程2_分支相关操作_大总结"/>
 <meta name="twitter:description" content="创建分支git branch 1 git branch x 仅创建一个叫x的分支拷贝，不对代码进行任何变动 可以创造平行时间线x 术语叫“分支” 虚拷贝，引用 可以同时基于master"/>
 
@@ -302,8 +308,8 @@
             <a href="http://xmasuhai.xyz/categories/git-github/"> Git &amp; GitHub </a>
             
           </div>
-        <span class="more-meta"> 约 1497 字 </span>
-          <span class="more-meta"> 预计阅读 3 分钟 </span>
+        <span class="more-meta"> 约 1516 字 </span>
+          <span class="more-meta"> 预计阅读 4 分钟 </span>
 
         
         
@@ -319,59 +325,61 @@
   <h2 class="post-toc-title">文章目录</h2>
   <div class="post-toc-content">
     <nav id="TableOfContents">
-  <ul>
-    <li><a href="#创建分支git-branch">创建分支git branch</a></li>
-    <li><a href="#切换分支git-checkout">切换分支git checkout</a></li>
-    <li><a href="#小结">小结</a>
-      <ul>
-        <li><a href="#git-branch">git branch</a></li>
-        <li><a href="#git-checkout">git checkout</a></li>
-      </ul>
-    </li>
-    <li><a href="#直接查看当前所在branch">直接查看当前所在branch</a></li>
-    <li><a href="#合并分支git-merge">合并分支git merge</a>
-      <ul>
-        <li><a href="#1-切到你想保留的那个分支一般是主分支master">1. 切到你想保留的那个分支，一般是主分支master</a></li>
-        <li><a href="#2-将另一个分支合并到当前分支">2. 将另一个分支合并到当前分支</a></li>
-        <li><a href="#3-提示有冲突查看status">3. 提示有冲突,查看status</a></li>
-        <li><a href="#4-在vscode里逐行修改">4. 在VSCode里逐行修改</a></li>
-        <li><a href="#5-git-add标记下暂存">5. git add标记下(暂存)</a></li>
-        <li><a href="#6-直接提交">6. 直接提交</a></li>
-        <li><a href="#git-merge-可能有冲突也可能没">git merge 可能有冲突，也可能没</a></li>
-      </ul>
-    </li>
-    <li><a href="#小结2">小结2</a>
-      <ul>
-        <li><a href="#分支可以合并">分支可以合并</a></li>
-        <li><a href="#合并时冲突处理">合并时冲突处理</a></li>
-      </ul>
-    </li>
-    <li><a href="#命令">命令</a></li>
-    <li><a href="#git目录本地仓库">.git目录：本地仓库</a></li>
-    <li><a href="#一些细节">一些细节</a>
-      <ul>
-        <li><a href="#参考文章">参考文章</a></li>
-        <li><a href="#相关文章">相关文章</a></li>
-      </ul>
-    </li>
-  </ul>
+<ul>
+<li>
+<ul>
+<li><a href="#创建分支git-branch">创建分支git branch</a></li>
+<li><a href="#切换分支git-checkout">切换分支git checkout</a></li>
+<li><a href="#小结">小结</a>
+<ul>
+<li><a href="#git-branch">git branch</a></li>
+<li><a href="#git-checkout">git checkout</a></li>
+</ul></li>
+<li><a href="#直接查看当前所在branch">直接查看当前所在branch</a></li>
+<li><a href="#合并分支git-merge">合并分支git merge</a>
+<ul>
+<li><a href="#1-切到你想保留的那个分支-一般是主分支master">1. 切到你想保留的那个分支，一般是主分支master</a></li>
+<li><a href="#2-将另一个分支合并到当前分支">2. 将另一个分支合并到当前分支</a></li>
+<li><a href="#3-提示有冲突-查看status">3. 提示有冲突,查看status</a></li>
+<li><a href="#4-在vscode里逐行修改">4. 在VSCode里逐行修改</a></li>
+<li><a href="#5-git-add标记下-暂存">5. git add标记下(暂存)</a></li>
+<li><a href="#6-直接提交">6. 直接提交</a></li>
+<li><a href="#git-merge-可能有冲突-也可能没">git merge 可能有冲突，也可能没</a></li>
+</ul></li>
+<li><a href="#小结2">小结2</a>
+<ul>
+<li><a href="#分支可以合并">分支可以合并</a></li>
+<li><a href="#合并时冲突处理">合并时冲突处理</a></li>
+</ul></li>
+<li><a href="#命令">命令</a></li>
+<li><a href="#git目录-本地仓库">.git目录：本地仓库</a></li>
+<li><a href="#一些细节">一些细节</a>
+<ul>
+<li><a href="#参考文章">参考文章</a></li>
+<li><a href="#相关文章">相关文章</a></li>
+</ul></li>
+</ul></li>
+</ul>
 </nav>
   </div>
 </div>
 
     
     <div class="post-content">
-      <h2 id="创建分支git-branch">创建分支git branch</h2>
+      
+
+<h2 id="创建分支git-branch">创建分支git branch</h2>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">git branch x
-</code></pre></td></tr></table>
+<pre class="chroma"><code class="language-bash" data-lang="bash">git branch x</code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p>仅创建一个叫x的分支拷贝，不对代码进行任何变动</p>
+
 <ul>
 <li>可以创造平行时间线x</li>
 <li>术语叫“分支”</li>
@@ -379,27 +387,29 @@
 <li>可以同时基于master/branch x开发</li>
 </ul>
 </blockquote>
+
 <h2 id="切换分支git-checkout">切换分支git checkout</h2>
+
 <ul>
-<li>.git同时维护master和branch x</li>
-</ul>
+<li><p>.git同时维护master和branch x</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">git checkout x
-</code></pre></td></tr></table>
+<pre class="chroma"><code class="language-bash" data-lang="bash">git checkout x</code></pre></td></tr></table>
 </div>
 </div><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">git checkout master
-</code></pre></td></tr></table>
+<pre class="chroma"><code class="language-bash" data-lang="bash">git checkout master</code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div></li>
+</ul>
+
+<blockquote>
 <ul>
 <li>两个时间线交替进行</li>
 <li>时不时查看下<code>git status</code></li>
@@ -410,236 +420,267 @@
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">history</span>
-</code></pre></td></tr></table>
+<pre class="chroma"><code class="language-bash" data-lang="bash">history</code></pre></td></tr></table>
 </div>
-</div><h2 id="小结">小结</h2>
+</div>
+<h2 id="小结">小结</h2>
+
 <h3 id="git-branch">git branch</h3>
-<ul>
-<li><input checked="" disabled="" type="checkbox"> 基于当前最新commit创建一个新的时间线（分支的快照），不是基于当前代码</li>
-<li><input checked="" disabled="" type="checkbox"> 在哪个分支提交，代码就出现在哪个分支</li>
-<li><input checked="" disabled="" type="checkbox"> 默认在master主分支</li>
-<li><input checked="" disabled="" type="checkbox"> Cmder/git-bash会提示目前所在的分支，如果你初始化过，iterm2默认不会，要设置</li>
+
+<ul class="task-list">
+<li><label><input type="checkbox" checked disabled class="task-list-item"> 基于当前最新commit创建一个新的时间线（分支的快照），不是基于当前代码</label></li>
+<li><label><input type="checkbox" checked disabled class="task-list-item"> 在哪个分支提交，代码就出现在哪个分支</label></li>
+<li><label><input type="checkbox" checked disabled class="task-list-item"> 默认在master主分支</label></li>
+<li><label><input type="checkbox" checked disabled class="task-list-item"> Cmder/git-bash会提示目前所在的分支，如果你初始化过，iterm2默认不会，要设置</label></li>
 </ul>
+
 <h3 id="git-checkout">git checkout</h3>
-<ul>
-<li><input checked="" disabled="" type="checkbox"> 用于切换另一个分支</li>
-<li><input checked="" disabled="" type="checkbox"> 当前目录有未add/未提交的代码，只要跟另一分支不冲突，就不需要理会，不影响硬盘上原有的文件（git reset是影响的）</li>
-<li><input checked="" disabled="" type="checkbox"> 如果冲突（修改了文件内容），会报一个error，使<code>git checkout</code> 切换失败</li>
-<li><input checked="" disabled="" type="checkbox"> 此时要么<code>git commit</code>下，要么使用git stash合并冲突</li>
+
+<ul class="task-list">
+<li><label><input type="checkbox" checked disabled class="task-list-item"> 用于切换另一个分支</label></li>
+<li><label><input type="checkbox" checked disabled class="task-list-item"> 当前目录有未add/未提交的代码，只要跟另一分支不冲突，就不需要理会，不影响硬盘上原有的文件（git reset是影响的）</label></li>
+<li><label><input type="checkbox" checked disabled class="task-list-item"> 如果冲突（修改了文件内容），会报一个error，使<code>git checkout</code> 切换失败</label></li>
+<li><label><input type="checkbox" checked disabled class="task-list-item"> 此时要么<code>git commit</code>下，要么使用git stash合并冲突</label></li>
 </ul>
+
 <h2 id="直接查看当前所在branch">直接查看当前所在branch</h2>
+
 <p>不加参：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-git" data-lang="git"><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">git branch
-</code></pre></td></tr></table>
+<pre class="chroma"><code class="language-git" data-lang="git">git branch</code></pre></td></tr></table>
 </div>
-</div><p>输出：</p>
+</div>
+<p>输出：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-git" data-lang="git"><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">* master
-  x
-</code></pre></td></tr></table>
+<pre class="chroma"><code class="language-git" data-lang="git">* master
+  x</code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p>*就表示当前所在branch，智能的Cmder就不用了</p>
 </blockquote>
+
 <h2 id="合并分支git-merge">合并分支git merge</h2>
-<h3 id="1-切到你想保留的那个分支一般是主分支master">1. 切到你想保留的那个分支，一般是主分支master</h3>
+
+<h3 id="1-切到你想保留的那个分支-一般是主分支master">1. 切到你想保留的那个分支，一般是主分支master</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-git" data-lang="git"><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">git checkout master
-</code></pre></td></tr></table>
+<pre class="chroma"><code class="language-git" data-lang="git">git checkout master</code></pre></td></tr></table>
 </div>
-</div><h3 id="2-将另一个分支合并到当前分支">2. 将另一个分支合并到当前分支</h3>
+</div>
+<h3 id="2-将另一个分支合并到当前分支">2. 将另一个分支合并到当前分支</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-git" data-lang="git"><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">git merge xxx
-</code></pre></td></tr></table>
+<pre class="chroma"><code class="language-git" data-lang="git">git merge xxx</code></pre></td></tr></table>
 </div>
-</div><h3 id="3-提示有冲突查看status">3. 提示有冲突,查看status</h3>
+</div>
+<h3 id="3-提示有冲突-查看status">3. 提示有冲突,查看status</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-git" data-lang="git"><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">git status
-</code></pre></td></tr></table>
+<pre class="chroma"><code class="language-git" data-lang="git">git status</code></pre></td></tr></table>
 </div>
-</div><h3 id="4-在vscode里逐行修改">4. 在VSCode里逐行修改</h3>
+</div>
+<h3 id="4-在vscode里逐行修改">4. 在VSCode里逐行修改</h3>
+
 <ol>
 <li>找到========</li>
 <li>逐行修改，删掉=======</li>
-<li>删掉标记&laquo;&laquo;&laquo;&lt;</li>
-<li>删掉标记&raquo;&raquo;&raquo;&gt;</li>
+<li>删掉标记&lt;&lt;&lt;&lt;&lt;&lt;&lt;</li>
+<li>删掉标记&gt;&gt;&gt;&gt;&gt;&gt;&gt;</li>
 <li>保存，修改完毕</li>
 </ol>
-<h3 id="5-git-add标记下暂存">5. git add标记下(暂存)</h3>
+
+<h3 id="5-git-add标记下-暂存">5. git add标记下(暂存)</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-git" data-lang="git"><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">git add
-</code></pre></td></tr></table>
+<pre class="chroma"><code class="language-git" data-lang="git">git add</code></pre></td></tr></table>
 </div>
-</div><h3 id="6-直接提交">6. 直接提交</h3>
+</div>
+<h3 id="6-直接提交">6. 直接提交</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-git" data-lang="git"><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">git commit
-</code></pre></td></tr></table>
+<pre class="chroma"><code class="language-git" data-lang="git">git commit</code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p>不用加参数，自动添加标记 Merge branch &lsquo;xxxx&rsquo;</p>
 </blockquote>
-<h3 id="git-merge-可能有冲突也可能没">git merge 可能有冲突，也可能没</h3>
-<ul>
+
+<h3 id="git-merge-可能有冲突-也可能没">git merge 可能有冲突，也可能没</h3>
+
+<ul class="task-list">
 <li>发现冲突</li>
-<li><input checked="" disabled="" type="checkbox"> 合并分支时 ，会得到CONFLICT提示</li>
-<li><input checked="" disabled="" type="checkbox"> 使用<code>git status -sb</code>查看哪个/哪些文件冲突了</li>
+<li><label><input type="checkbox" checked disabled class="task-list-item"> 合并分支时 ，会得到CONFLICT提示</label></li>
+<li><label><input type="checkbox" checked disabled class="task-list-item"> 使用<code>git status -sb</code>查看哪个/哪些文件冲突了</label></li>
 </ul>
+
 <blockquote>
 <ul>
 <li>UU表示两边都改了</li>
 <li>s表示summary b表示brunch</li>
 </ul>
 </blockquote>
-<ul>
+
+<ul class="task-list">
 <li>解决冲突</li>
-<li><input checked="" disabled="" type="checkbox"> 依次打开每个文件</li>
-<li><input checked="" disabled="" type="checkbox"> 搜索====<strong>四个等于号</strong></li>
-<li><input checked="" disabled="" type="checkbox"> 在上下两个部分中选择要保留的代码，只选上面/只选下面/都保留</li>
-<li><input checked="" disabled="" type="checkbox"> 删除不用的代码</li>
-<li><input checked="" disabled="" type="checkbox"> 删除==== &laquo;&laquo; &raquo;&raquo;这些标记</li>
-<li><input checked="" disabled="" type="checkbox"> <strong>git add 暂存对应的文件</strong></li>
-<li><input checked="" disabled="" type="checkbox"> 再次 <code>git status -sb</code>，解决下一个文件的冲突</li>
-<li><input checked="" disabled="" type="checkbox"> 直到没有冲突，<strong>运行<code>git commit</code>（注意不需要选项）</strong></li>
+<li><label><input type="checkbox" checked disabled class="task-list-item"> 依次打开每个文件</label></li>
+<li><label><input type="checkbox" checked disabled class="task-list-item"> 搜索====<strong>四个等于号</strong></label></li>
+<li><label><input type="checkbox" checked disabled class="task-list-item"> 在上下两个部分中选择要保留的代码，只选上面/只选下面/都保留</label></li>
+<li><label><input type="checkbox" checked disabled class="task-list-item"> 删除不用的代码</label></li>
+<li><label><input type="checkbox" checked disabled class="task-list-item"> 删除==== &lt;&lt;&lt;&lt; &gt;&gt;&gt;&gt;这些标记</label></li>
+<li><label><input type="checkbox" checked disabled class="task-list-item"> <strong>git add 暂存对应的文件</strong></label></li>
+<li><label><input type="checkbox" checked disabled class="task-list-item"> 再次 <code>git status -sb</code>，解决下一个文件的冲突</label></li>
+<li><label><input type="checkbox" checked disabled class="task-list-item"> 直到没有冲突，<strong>运行<code>git commit</code>（注意不需要选项）</strong></label></li>
 </ul>
+
 <h2 id="小结2">小结2</h2>
+
 <ul>
-<li>
-<h3 id="分支可以合并">分支可以合并</h3>
-</li>
-<li>
-<p><input checked="" disabled="" type="checkbox"> 进入要保留的分支</p>
-</li>
-<li>
-<p><input checked="" disabled="" type="checkbox"> 运行<code>git merge xxx</code></p>
-</li>
-<li>
-<p><input checked="" disabled="" type="checkbox"> 合并后，删除无用的分支<code>git branch -d xxx</code></p>
-</li>
-<li>
-<h3 id="合并时冲突处理">合并时冲突处理</h3>
-</li>
-<li>
-<p><input checked="" disabled="" type="checkbox"> 修改代码，解决冲突</p>
-</li>
-<li>
-<p><input checked="" disabled="" type="checkbox"> 然后<code>git commit</code>，使用默认的commit message</p>
-</li>
+<li><h3 id="分支可以合并">分支可以合并</h3></li>
+
+<li><p>[x] 进入要保留的分支</p></li>
+
+<li><p>[x] 运行<code>git merge xxx</code></p></li>
+
+<li><p>[x] 合并后，删除无用的分支<code>git branch -d xxx</code></p></li>
+
+<li><h3 id="合并时冲突处理">合并时冲突处理</h3></li>
+
+<li><p>[x] 修改代码，解决冲突</p></li>
+
+<li><p>[x] 然后<code>git commit</code>，使用默认的commit message</p></li>
 </ul>
+
 <p>Git本地仓库_大总结</p>
+
 <h2 id="命令">命令</h2>
-<ul>
-<li><input checked="" disabled="" type="checkbox"> <code>git config</code> （6行配置）</li>
-<li><input checked="" disabled="" type="checkbox"> <code>git add 路径</code> （标记：加进/移除购物车 暂存）</li>
-<li><input checked="" disabled="" type="checkbox"> <code>git status -sb</code> （简化状态信息）</li>
-<li><input checked="" disabled="" type="checkbox"> <code>git commit -v</code> （提交：结算+记笔账）</li>
-<li><input checked="" disabled="" type="checkbox"> <code>git branch xxx</code> （创建分支）</li>
-<li><input checked="" disabled="" type="checkbox"> <code>git checkout xxx</code> （进入分支）</li>
-<li><input checked="" disabled="" type="checkbox"> <code>git merge xxx</code> （合并分支，还要add下，加进购物车）</li>
-<li><input checked="" disabled="" type="checkbox"> <code>git commit</code> （提交合并，自动记账）</li>
-<li><input checked="" disabled="" type="checkbox"> <code>git branch -d xxx</code> （砍掉分支）</li>
-<li><input checked="" disabled="" type="checkbox"> <code>git log</code> （查看）</li>
-<li><input checked="" disabled="" type="checkbox"> <code>git reflog</code> （本地上帝视角查看）</li>
-<li><input checked="" disabled="" type="checkbox"> <code>git reset --hard ******</code> （版本穿越）</li>
+
+<ul class="task-list">
+<li><label><input type="checkbox" checked disabled class="task-list-item"> <code>git config</code> （6行配置）</label></li>
+<li><label><input type="checkbox" checked disabled class="task-list-item"> <code>git add 路径</code> （标记：加进/移除购物车 暂存）</label></li>
+<li><label><input type="checkbox" checked disabled class="task-list-item"> <code>git status -sb</code> （简化状态信息）</label></li>
+<li><label><input type="checkbox" checked disabled class="task-list-item"> <code>git commit -v</code> （提交：结算+记笔账）</label></li>
+<li><label><input type="checkbox" checked disabled class="task-list-item"> <code>git branch xxx</code> （创建分支）</label></li>
+<li><label><input type="checkbox" checked disabled class="task-list-item"> <code>git checkout xxx</code> （进入分支）</label></li>
+<li><label><input type="checkbox" checked disabled class="task-list-item"> <code>git merge xxx</code> （合并分支，还要add下，加进购物车）</label></li>
+<li><label><input type="checkbox" checked disabled class="task-list-item"> <code>git commit</code> （提交合并，自动记账）</label></li>
+<li><label><input type="checkbox" checked disabled class="task-list-item"> <code>git branch -d xxx</code> （砍掉分支）</label></li>
+<li><label><input type="checkbox" checked disabled class="task-list-item"> <code>git log</code> （查看）</label></li>
+<li><label><input type="checkbox" checked disabled class="task-list-item"> <code>git reflog</code> （本地上帝视角查看）</label></li>
+<li><label><input type="checkbox" checked disabled class="task-list-item"> <code>git reset --hard ******</code> （版本穿越）</label></li>
 </ul>
-<h2 id="git目录本地仓库">.git目录：本地仓库</h2>
-<ul>
-<li><input checked="" disabled="" type="checkbox"> 不会重复复制相同的文件（优化）</li>
-<li><input checked="" disabled="" type="checkbox"> 可以支持多个分支</li>
+
+<h2 id="git目录-本地仓库">.git目录：本地仓库</h2>
+
+<ul class="task-list">
+<li><label><input type="checkbox" checked disabled class="task-list-item"> 不会重复复制相同的文件（优化）</label></li>
+<li><label><input type="checkbox" checked disabled class="task-list-item"> 可以支持多个分支</label></li>
 </ul>
+
 <h2 id="一些细节">一些细节</h2>
-<ul>
-<li><input checked="" disabled="" type="checkbox"> <code>git add</code></li>
+
+<ul class="task-list">
+<li><label><input type="checkbox" checked disabled class="task-list-item"> <code>git add</code></label></li>
 <li>使用<code>git add</code>来临时记录变动外，也能记录<code>git rm xxx</code>(处理的是文件的变化，而不是文件本身)</li>
 </ul>
+
 <blockquote>
 <p>比如删除一个文件后，依然要用<code>git add</code> 来添加到待提交区</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">rm xxx
+<pre class="chroma"><code class="language-bash" data-lang="bash">rm xxx
 git add xxx
 git status
-git commit -v
-</code></pre></td></tr></table>
+git commit -v</code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p>当使用<code>git commit</code>提交后，.git会移除xxx：
 此时<code>git add xxx</code> 、<code>git commit -m</code>&ldquo;delete xxx&rdquo; 等同于 <code>git rm xxx</code>、<code>git commit -m</code>&ldquo;delete xxx&rdquo;</p>
 </blockquote>
-<ul>
-<li><input checked="" disabled="" type="checkbox"> 大部分时候，只需<code>git add</code> 和<code>git commit -v</code></li>
-<li><input checked="" disabled="" type="checkbox"> 不需要GUI，当然你会用，还知道原理</li>
+
+<ul class="task-list">
+<li><label><input type="checkbox" checked disabled class="task-list-item"> 大部分时候，只需<code>git add</code> 和<code>git commit -v</code></label></li>
+<li><label><input type="checkbox" checked disabled class="task-list-item"> 不需要GUI，当然你会用，还知道原理</label></li>
 </ul>
+
 <blockquote>
 <p>VSCode插件git-easy使用：在当前文件里Ctrl + Shift + p;搜<code>git add</code>；<code>Add All Modified</code>；&hellip;</p>
 </blockquote>
-<!-- raw HTML omitted -->
-<hr>
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<hr>
+
+<!-- Article End -->
+
+<hr />
+
+<!-- test -->
+
+<div style="text-align:center;">·未完待续·</div>
+
+<!-- ok -->
+
+<hr />
+
 <h3 id="参考文章">参考文章</h3>
+
 <ul>
 <li><a href="https://static.xiedaimala.com/xdml/file/3ac7c224-c23d-491f-84b5-4fabfbeab9b8/2019-8-8-10-23-55.pdf">git 本地仓库.pdf</a></li>
 </ul>
+
 <h3 id="相关文章">相关文章</h3>
+
 <ul>
 <li>无</li>
 </ul>
-<hr>
+
+<hr />
+
 <ul>
 <li>作者： Joel</li>
 <li>文章链接：</li>
-<li><a href="http://xmasuhai.xyz/posts/%E7%89%88%E6%9D%83%E5%A3%B0%E6%98%8E%E9%93%BE%E6%8E%A5/">版权声明</a></li>
+<li><a href="http://xmasuhai.xyz/posts/版权声明链接/">版权声明</a></li>
 <li>非自由转载-非商用-非衍生-保持署名</li>
-<li><!-- raw HTML omitted -->河<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->掘<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->思<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->知<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->简<!-- raw HTML omitted --></li>
+<li><a style='color:#DB2D5D;' href='https://xiedaimala.com/bbs/users/8c266e6f-55a2-4348-a180-17cb8cdb2c46#/?page=1' target='_blank' rel='noreferrer noopener'>河</a>
+<a style='color:#006CFF;' href='https://juejin.im/user/59abfad26fb9a0248f4aa221' target='_blank' rel='noreferrer noopener'>掘</a>
+<a style='color:#009A61;' href='https://segmentfault.com/u/joel_59b17eb9d2155' target='_blank' rel='noreferrer noopener'>思</a>
+<a style='color:#0084FF;' href='https://www.zhihu.com/people/xue-shou-41/posts' target='_blank' rel='noreferrer noopener'>知</a>
+<a style='color:#EA6F5A;' href='https://www.jianshu.com/u/079916729823' target='_blank' rel='noreferrer noopener'>简</a></li>
 </ul>
-<hr>
+
+<hr />
 
     </div>
 
@@ -801,7 +842,7 @@ git commit -v
     &copy;
     
       2019 -
-    2022
+    2026
     <span class="heart">
       
       <i class="iconfont">

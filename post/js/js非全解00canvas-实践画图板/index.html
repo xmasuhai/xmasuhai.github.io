@@ -7,7 +7,7 @@
   
 
 <meta name="renderer" content="webkit" />
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
 <meta name="MobileOptimized" content="width"/>
 <meta name="HandheldFriendly" content="true"/>
@@ -32,7 +32,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.91.2" />
+<meta name="generator" content="Hugo 0.59.1" />
 
 
 <link rel="canonical" href="http://xmasuhai.xyz/post/js/js%E9%9D%9E%E5%85%A8%E8%A7%A300canvas-%E5%AE%9E%E8%B7%B5%E7%94%BB%E5%9B%BE%E6%9D%BF/" />
@@ -62,15 +62,21 @@
 <meta property="og:title" content="【JS非全解00】Canvas 实践—画图板" />
 <meta property="og:description" content="准备工作 能画丁老头的画板 Canvas教程MDN 创建项目目录，并初始化git 1 2 #预览 hs . -c-1 面向谷歌编程 google搜js create div mdn document.createElement(&#39;div&#39;) google" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://xmasuhai.xyz/post/js/js%E9%9D%9E%E5%85%A8%E8%A7%A300canvas-%E5%AE%9E%E8%B7%B5%E7%94%BB%E5%9B%BE%E6%9D%BF/" /><meta property="article:section" content="post" />
+<meta property="og:url" content="http://xmasuhai.xyz/post/js/js%E9%9D%9E%E5%85%A8%E8%A7%A300canvas-%E5%AE%9E%E8%B7%B5%E7%94%BB%E5%9B%BE%E6%9D%BF/" />
 <meta property="article:published_time" content="2020-02-14T01:59:31+08:00" />
 <meta property="article:modified_time" content="2022-09-03T10:26:25+08:00" />
-
 <meta itemprop="name" content="【JS非全解00】Canvas 实践—画图板">
-<meta itemprop="description" content="准备工作 能画丁老头的画板 Canvas教程MDN 创建项目目录，并初始化git 1 2 #预览 hs . -c-1 面向谷歌编程 google搜js create div mdn document.createElement(&#39;div&#39;) google"><meta itemprop="datePublished" content="2020-02-14T01:59:31+08:00" />
-<meta itemprop="dateModified" content="2022-09-03T10:26:25+08:00" />
+<meta itemprop="description" content="准备工作 能画丁老头的画板 Canvas教程MDN 创建项目目录，并初始化git 1 2 #预览 hs . -c-1 面向谷歌编程 google搜js create div mdn document.createElement(&#39;div&#39;) google">
+
+
+<meta itemprop="datePublished" content="2020-02-14T01:59:31&#43;08:00" />
+<meta itemprop="dateModified" content="2022-09-03T10:26:25&#43;08:00" />
 <meta itemprop="wordCount" content="2050">
-<meta itemprop="keywords" content="Canvas,JavaScript,JS,FrontEnd," /><meta name="twitter:card" content="summary"/>
+
+
+
+<meta itemprop="keywords" content="Canvas,JavaScript,JS,FrontEnd," />
+<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="【JS非全解00】Canvas 实践—画图板"/>
 <meta name="twitter:description" content="准备工作 能画丁老头的画板 Canvas教程MDN 创建项目目录，并初始化git 1 2 #预览 hs . -c-1 面向谷歌编程 google搜js create div mdn document.createElement(&#39;div&#39;) google"/>
 
@@ -319,98 +325,117 @@
   <h2 class="post-toc-title">文章目录</h2>
   <div class="post-toc-content">
     <nav id="TableOfContents">
-  <ul>
-    <li><a href="#准备工作">准备工作</a>
-      <ul>
-        <li><a href="#面向谷歌编程">面向谷歌编程</a></li>
-      </ul>
-    </li>
-    <li><a href="#代码">代码</a>
-      <ul>
-        <li><a href="#让canvas占满屏幕并且没有滚动条">让canvas占满屏幕，并且没有滚动条</a></li>
-        <li><a href="#用canvas画点">用<code>Canvas</code>画点</a></li>
-        <li><a href="#画点">画点</a></li>
-        <li><a href="#手机适配">手机适配</a></li>
-        <li><a href="#画线">画线</a></li>
-        <li><a href="#流程小结">流程小结</a></li>
-      </ul>
-    </li>
-    <li><a href="#部署到-github-上">部署到 GitHub 上</a></li>
-    <li><a href="#总结">总结</a></li>
-  </ul>
+<ul>
+<li>
+<ul>
+<li><a href="#准备工作">准备工作</a>
+<ul>
+<li><a href="#面向谷歌编程">面向谷歌编程</a></li>
+</ul></li>
+<li><a href="#代码">代码</a>
+<ul>
+<li><a href="#让canvas占满屏幕-并且没有滚动条">让canvas占满屏幕，并且没有滚动条</a></li>
+<li><a href="#用-canvas-画点">用<code>Canvas</code>画点</a></li>
+<li><a href="#画点">画点</a></li>
+<li><a href="#手机适配">手机适配</a></li>
+<li><a href="#画线">画线</a></li>
+<li><a href="#流程小结">流程小结</a></li>
+</ul></li>
+<li><a href="#部署到-github-上">部署到 GitHub 上</a></li>
+<li><a href="#总结">总结</a></li>
+</ul></li>
+</ul>
 </nav>
   </div>
 </div>
 
     
     <div class="post-content">
-      <h2 id="准备工作">准备工作</h2>
+      
+
+<h2 id="准备工作">准备工作</h2>
+
 <blockquote>
 <p>能画丁老头的画板</p>
+
 <p><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Canvas_API/Tutorial">Canvas教程MDN</a></p>
 </blockquote>
+
 <p>创建项目目录，并初始化git</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1">#预览</span>
-hs . -c-1
-</code></pre></td></tr></table>
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1">#预览</span>
+hs . -c-1</code></pre></td></tr></table>
 </div>
-</div><h3 id="面向谷歌编程">面向谷歌编程</h3>
+</div>
+<h3 id="面向谷歌编程">面向谷歌编程</h3>
+
 <blockquote>
 <p>google搜<code>js create div mdn</code></p>
 </blockquote>
+
 <ul>
 <li><code>document.createElement('div')</code></li>
 </ul>
+
 <blockquote>
 <p>google搜<code>js insert div into page mdn</code></p>
 </blockquote>
+
 <ul>
-<li>在页面中添加这个元素</li>
-</ul>
+<li><p>在页面中添加这个元素</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-HTML" data-lang="HTML"><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-HTML" data-lang="HTML"><span class="p">&lt;</span><span class="nt">canvas</span> <span class="na">id</span><span class="o">=</span><span class="s">&#39;canvas&#39;</span> <span class="na">width</span><span class="o">=</span><span class="s">&#34;100&#34;</span> <span class="na">height</span><span class="o">=</span><span class="s">&#34;100&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">canvas</span><span class="p">&gt;</span>
-</code></pre></td></tr></table>
+<pre class="chroma"><code class="language-HTML" data-lang="HTML"><span class="p">&lt;</span><span class="nt">canvas</span> <span class="na">id</span><span class="o">=</span><span class="s">&#39;canvas&#39;</span> <span class="na">width</span><span class="o">=</span><span class="s">&#34;100&#34;</span> <span class="na">height</span><span class="o">=</span><span class="s">&#34;100&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">canvas</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
 </div><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">div</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">)</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">div</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">)</span>
 <span class="kd">let</span> <span class="nx">canvas</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&#34;canvas&#34;</span><span class="p">);</span>
 <span class="nx">canvas</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">div</span><span class="p">)</span>
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div></li>
+</ul>
+
+<blockquote>
 <p>google搜<code>js get body mdn</code></p>
 </blockquote>
-<hr>
+
+<hr />
+
 <h2 id="代码">代码</h2>
-<h3 id="让canvas占满屏幕并且没有滚动条">让canvas占满屏幕，并且没有滚动条</h3>
+
+<h3 id="让canvas占满屏幕-并且没有滚动条">让canvas占满屏幕，并且没有滚动条</h3>
+
 <blockquote>
 <p>增加样式</p>
 </blockquote>
+
 <p><code>div.style.xxx</code></p>
+
 <blockquote>
 <p>点出现在鼠标中间，而不是右下角，对称，偶数</p>
+
 <p>由方变圆，变实心</p>
+
 <p>点击事件改成鼠标移动事件</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -441,7 +466,7 @@ hs . -c-1
 </span><span class="lnt">29
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nx">canvas</span><span class="p">.</span><span class="nx">onclick</span> <span class="o">=</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nx">canvas</span><span class="p">.</span><span class="nx">onclick</span> <span class="o">=</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
 
     <span class="c1">//console.log()调试大法
 </span><span class="c1"></span>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">clientX</span><span class="p">,</span> <span class="nx">e</span><span class="p">.</span><span class="nx">clientY</span><span class="p">)</span>
@@ -472,55 +497,69 @@ hs . -c-1
 <span class="p">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p>这样会卡 JS操作DOM 低效 跨线程通信</p>
 </blockquote>
-<h3 id="用canvas画点">用<code>Canvas</code>画点</h3>
+
+<h3 id="用-canvas-画点">用<code>Canvas</code>画点</h3>
+
 <p><code>&lt;canvas&gt;&lt;/canvas&gt;</code>默认的<code>display:inline</code>，类似于<code>&lt;img&gt;</code></p>
+
 <blockquote>
 <p>改为<code>display:block</code></p>
+
 <p>干掉影响总宽高的滚动条加上<code>width: 100vw; height: 100vh;</code></p>
+
 <p>但会导致<code>canvas</code>模糊，所以不行</p>
+
 <ul>
 <li><code>&lt;canvas&gt;&lt;/canvas&gt;</code>的宽高需在一开始就确定</li>
 </ul>
+
 <p>可以在<code>&lt;canvas&gt;&lt;/canvas&gt;</code>上写宽高，但会被CSS覆盖，同<code>&lt;img&gt;</code></p>
+
 <ul>
 <li>用JS获取屏幕宽高，并设置</li>
 </ul>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nx">canvas</span><span class="p">.</span><span class="nx">width</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">clientWidth</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nx">canvas</span><span class="p">.</span><span class="nx">width</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">clientWidth</span>
 <span class="nx">canvas</span><span class="p">.</span><span class="nx">height</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">clientHeight</span>
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p>但body 默认是由子元素决定，未撑开</p>
+
 <p>所以要直接获取文档的高度</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">var</span> <span class="nx">canvas</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&#34;canvas&#34;</span><span class="p">);</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">var</span> <span class="nx">canvas</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&#34;canvas&#34;</span><span class="p">);</span>
 <span class="nx">canvas</span><span class="p">.</span><span class="nx">width</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">documentElement</span><span class="p">.</span><span class="nx">clientWidth</span><span class="p">;</span>
 <span class="nx">canvas</span><span class="p">.</span><span class="nx">height</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">documentElement</span><span class="p">.</span><span class="nx">clientHeight</span><span class="p">;</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>这就让canvas占满屏幕，并且没有滚动条</p>
-<hr>
+</div>
+<p>这就让canvas占满屏幕，并且没有滚动条</p>
+
+<hr />
+
 <h3 id="画点">画点</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -531,7 +570,7 @@ hs . -c-1
 </span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="c1">//样式
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="c1">//样式
 </span><span class="c1"></span><span class="kd">var</span> <span class="nx">ctx</span> <span class="o">=</span> <span class="nx">canvas</span><span class="p">.</span><span class="nx">getContext</span><span class="p">(</span><span class="s2">&#34;2d&#34;</span><span class="p">)</span>
 <span class="nx">ctx</span><span class="p">.</span><span class="nx">fillStyle</span> <span class="o">=</span> <span class="s2">&#34;orange&#34;</span><span class="p">;</span>
 
@@ -542,32 +581,39 @@ hs . -c-1
 <span class="p">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p><code>e.clientX-5</code>让宽度减一半，使其在鼠标中心</p>
+
 <p><code>onclick</code>改成<code>onmousemove</code></p>
+
 <p>没有新建任何节点，只是在画像素点，不需要操作DOM</p>
+
 <p>加开关，标记，按下，抬起鼠标左键的开关记号</p>
+
 <p><code>let painting = false</code></p>
+
 <p>加动作，鼠标按下</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nx">canvas</span><span class="p">.</span><span class="nx">onmousedown</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nx">canvas</span><span class="p">.</span><span class="nx">onmousedown</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
     <span class="nx">painting</span> <span class="o">=</span> <span class="kc">true</span>
 <span class="p">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p>加判断，开关开启，动作执行</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -578,7 +624,7 @@ hs . -c-1
 </span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nx">canvas</span><span class="p">.</span><span class="nx">onmousemove</span> <span class="o">=</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nx">canvas</span><span class="p">.</span><span class="nx">onmousemove</span> <span class="o">=</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
     <span class="k">if</span> <span class="p">(</span><span class="nx">painting</span> <span class="o">===</span> <span class="kc">true</span><span class="p">)</span> <span class="p">{</span>
         <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">clientX</span><span class="p">)</span>
         <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">clientY</span><span class="p">)</span>
@@ -589,128 +635,142 @@ hs . -c-1
 <span class="p">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p>加关闭触发动作</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nx">canvas</span><span class="p">.</span><span class="nx">onmouseup</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nx">canvas</span><span class="p">.</span><span class="nx">onmouseup</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
     <span class="nx">painting</span> <span class="o">=</span> <span class="kc">false</span>
 <span class="p">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p>锯齿太严重，换圆形试试</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nx">ctx</span><span class="p">.</span><span class="nx">beginPath</span><span class="p">();</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nx">ctx</span><span class="p">.</span><span class="nx">beginPath</span><span class="p">();</span>
 <span class="nx">ctx</span><span class="p">.</span><span class="nx">arc</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">clientX</span><span class="p">,</span> <span class="nx">e</span><span class="p">.</span><span class="nx">clientY</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">PI</span><span class="p">);</span>
 <span class="nx">ctx</span><span class="p">.</span><span class="nx">fill</span><span class="p">()</span>
 <span class="nx">ctx</span><span class="p">.</span><span class="nx">stroke</span><span class="p">();</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>一些注意事项</p>
+</div>
+<p>一些注意事项</p>
+
 <blockquote>
 <p>浏览器会调用</p>
 </blockquote>
+
 <ul>
 <li><code>canvas.onmousemove(事件相关信息)</code>，传参<code>e</code></li>
 </ul>
+
 <blockquote>
 <p>单位</p>
 </blockquote>
+
 <ul>
-<li><code>&lt;canvas&gt;&lt;/canvas&gt;</code>是HTML标签的单位同<code>&lt;img&gt;</code></li>
-</ul>
+<li><p><code>&lt;canvas&gt;&lt;/canvas&gt;</code>是HTML标签的单位同<code>&lt;img&gt;</code></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-HTML" data-lang="HTML"><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-HTML" data-lang="HTML"><span class="p">&lt;</span><span class="nt">canvas</span> <span class="na">id</span><span class="o">=</span><span class="s">&#39;canvas&#39;</span> <span class="na">width</span><span class="o">=</span><span class="s">&#34;100&#34;</span> <span class="na">height</span><span class="o">=</span><span class="s">&#34;100&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">canvas</span><span class="p">&gt;</span>
-</code></pre></td></tr></table>
+<pre class="chroma"><code class="language-HTML" data-lang="HTML"><span class="p">&lt;</span><span class="nt">canvas</span> <span class="na">id</span><span class="o">=</span><span class="s">&#39;canvas&#39;</span> <span class="na">width</span><span class="o">=</span><span class="s">&#34;100&#34;</span> <span class="na">height</span><span class="o">=</span><span class="s">&#34;100&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">canvas</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div></li>
+</ul>
+
+<blockquote>
 <p><code>100vh</code>是CSS单位</p>
+
 <p><code>canvas.width</code>也是HTML的属性单位，而<code>canvas.style.width</code>的单位是CSS样式的单位，即</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-HTML" data-lang="HTML"><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-HTML" data-lang="HTML"><span class="p">&lt;</span><span class="nt">canvas</span> <span class="na">id</span><span class="o">=</span><span class="s">&#39;canvas&#39;</span> <span class="na">width</span><span class="o">=</span><span class="s">&#34;100&#34;</span> <span class="na">height</span><span class="o">=</span><span class="s">&#34;100&#34;</span> <span class="na">style</span><span class="o">=</span> <span class="s">&#39;width:100vh&#39;</span><span class="p">&gt;&lt;/</span><span class="nt">canvas</span><span class="p">&gt;</span>
-</code></pre></td></tr></table>
+<pre class="chroma"><code class="language-HTML" data-lang="HTML"><span class="p">&lt;</span><span class="nt">canvas</span> <span class="na">id</span><span class="o">=</span><span class="s">&#39;canvas&#39;</span> <span class="na">width</span><span class="o">=</span><span class="s">&#34;100&#34;</span> <span class="na">height</span><span class="o">=</span><span class="s">&#34;100&#34;</span> <span class="na">style</span><span class="o">=</span> <span class="s">&#39;width:100vh&#39;</span><span class="p">&gt;&lt;/</span><span class="nt">canvas</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><hr>
+</div>
+<hr />
+
 <h3 id="手机适配">手机适配</h3>
+
 <blockquote>
 <p>google搜<code>js detect touch support</code>，得判断代码</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">var</span> <span class="nx">isTouchDevice</span> <span class="o">=</span> <span class="s1">&#39;ontouchstart&#39;</span> <span class="k">in</span> <span class="nb">document</span><span class="p">.</span><span class="nx">documentElement</span><span class="p">;</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">var</span> <span class="nx">isTouchDevice</span> <span class="o">=</span> <span class="s1">&#39;ontouchstart&#39;</span> <span class="k">in</span> <span class="nb">document</span><span class="p">.</span><span class="nx">documentElement</span><span class="p">;</span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">isTouchDevice</span><span class="p">);</span>
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p>写判断</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="k">if</span> <span class="p">(</span><span class="nx">isTouchDevice</span> <span class="o">===</span> <span class="kc">true</span><span class="p">)</span> <span class="p">{</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="k">if</span> <span class="p">(</span><span class="nx">isTouchDevice</span> <span class="o">===</span> <span class="kc">true</span><span class="p">)</span> <span class="p">{</span>
             <span class="c1">// console.log(&#39;目前什么也不写&#39;);
 </span><span class="c1"></span>        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
             <span class="c1">//把PC端的代码扔进来
 </span><span class="c1"></span>        <span class="p">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p>把PC端的代码扔进<code>else{}</code>里后，开始写手机端代码</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="c1">//监听触屏事件
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="c1">//监听触屏事件
 </span><span class="c1"></span><span class="nx">canvas</span><span class="p">.</span><span class="nx">ontouchmove</span> <span class="o">=</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
     <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span>
 <span class="p">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p>第一根手指</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -719,7 +779,7 @@ hs . -c-1
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="c1">//监听触屏事件
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="c1">//监听触屏事件
 </span><span class="c1"></span><span class="nx">canvas</span><span class="p">.</span><span class="nx">ontouchmove</span> <span class="o">=</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
 <span class="c1">// console.log(e.touches[0]);//获取第一个手指
 </span><span class="c1"></span><span class="kd">let</span> <span class="nx">x</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">touches</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">clientX</span><span class="p">;</span>
@@ -728,35 +788,41 @@ hs . -c-1
 <span class="p">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p>后面加上PC端抄来的代码，改吧改吧</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nx">ctx</span><span class="p">.</span><span class="nx">beginPath</span><span class="p">();</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nx">ctx</span><span class="p">.</span><span class="nx">beginPath</span><span class="p">();</span>
 <span class="nx">ctx</span><span class="p">.</span><span class="nx">arc</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">PI</span><span class="p">);</span>
 <span class="nx">ctx</span><span class="p">.</span><span class="nx">fill</span><span class="p">();</span>
 <span class="nx">ctx</span><span class="p">.</span><span class="nx">stroke</span><span class="p">();</span>
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p>发现不用监听手指抬起，比PC端更简单，特殊app内置浏览器会有向下划同步向下滚动的bug，以后处理</p>
 </blockquote>
-<hr>
+
+<hr />
+
 <h3 id="画线">画线</h3>
+
 <blockquote>
 <p>回到PC页面，由点画线，解决不连贯的问题</p>
+
 <p>从画三角，抽象一个画线的函数</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -768,7 +834,7 @@ hs . -c-1
 </span><span class="lnt">10
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">canvas</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&#34;canvas&#34;</span><span class="p">);</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">canvas</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&#34;canvas&#34;</span><span class="p">);</span>
 <span class="kd">let</span> <span class="nx">ctx</span> <span class="o">=</span> <span class="nx">canvas</span><span class="p">.</span><span class="nx">getContext</span><span class="p">(</span><span class="s2">&#34;2d&#34;</span><span class="p">);</span>
 <span class="nx">ctx</span><span class="p">.</span><span class="nx">fillStyle</span> <span class="o">=</span> <span class="s2">&#34;black&#34;</span><span class="p">;</span>
 <span class="nx">ctx</span><span class="p">.</span><span class="nx">strokeStyle</span> <span class="o">=</span> <span class="s1">&#39;none&#39;</span><span class="p">;</span>
@@ -780,12 +846,13 @@ hs . -c-1
 <span class="nx">ctx</span><span class="p">.</span><span class="nx">stroke</span><span class="p">();</span>
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p>画线的函数</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -793,7 +860,7 @@ hs . -c-1
 </span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">function</span> <span class="nx">drawLine</span><span class="p">(</span><span class="nx">x1</span><span class="p">,</span> <span class="nx">x2</span><span class="p">,</span> <span class="nx">y1</span><span class="p">,</span> <span class="nx">y2</span><span class="p">)</span> <span class="p">{</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">function</span> <span class="nx">drawLine</span><span class="p">(</span><span class="nx">x1</span><span class="p">,</span> <span class="nx">x2</span><span class="p">,</span> <span class="nx">y1</span><span class="p">,</span> <span class="nx">y2</span><span class="p">)</span> <span class="p">{</span>
     <span class="nx">ctx</span><span class="p">.</span><span class="nx">beginPath</span><span class="p">();</span>
     <span class="nx">ctx</span><span class="p">.</span><span class="nx">moveTo</span><span class="p">(</span><span class="nx">x1</span><span class="p">,</span> <span class="nx">y1</span><span class="p">);</span>
     <span class="nx">ctx</span><span class="p">.</span><span class="nx">lineTo</span><span class="p">(</span><span class="nx">x2</span><span class="p">,</span> <span class="nx">y2</span><span class="p">);</span>
@@ -801,89 +868,113 @@ hs . -c-1
 <span class="p">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p>需要记录上一次的位置，每当按下鼠标后，就记录一次，修改<code>canvas.onmousedown</code>事件</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nx">canvas</span><span class="p">.</span><span class="nx">onmousedown</span> <span class="o">=</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">=&gt;{</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nx">canvas</span><span class="p">.</span><span class="nx">onmousedown</span> <span class="o">=</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">=&gt;{</span>
     <span class="nx">painting</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
     <span class="nx">last</span> <span class="o">=</span> <span class="p">[</span><span class="nx">e</span><span class="p">.</span><span class="nx">clientX</span><span class="p">,</span> <span class="nx">e</span><span class="p">.</span><span class="nx">clientY</span><span class="p">];</span>
 <span class="p">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p>修改<code>canvas.onmousemove</code>事件</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nx">drawLine</span><span class="p">(</span><span class="nx">last</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nx">last</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="nx">e</span><span class="p">.</span><span class="nx">clientX</span><span class="p">,</span> <span class="nx">e</span><span class="p">.</span><span class="nx">clientY</span><span class="p">);</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nx">drawLine</span><span class="p">(</span><span class="nx">last</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nx">last</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="nx">e</span><span class="p">.</span><span class="nx">clientX</span><span class="p">,</span> <span class="nx">e</span><span class="p">.</span><span class="nx">clientY</span><span class="p">);</span>
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p>画完，需要每次更新<code>last = [e.clientX, e.clientY]</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nx">drawLine</span><span class="p">(</span><span class="nx">last</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nx">last</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="nx">e</span><span class="p">.</span><span class="nx">clientX</span><span class="p">,</span> <span class="nx">e</span><span class="p">.</span><span class="nx">clientY</span><span class="p">);</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nx">drawLine</span><span class="p">(</span><span class="nx">last</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nx">last</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="nx">e</span><span class="p">.</span><span class="nx">clientX</span><span class="p">,</span> <span class="nx">e</span><span class="p">.</span><span class="nx">clientY</span><span class="p">);</span>
 <span class="nx">last</span> <span class="o">=</span> <span class="p">[</span><span class="nx">e</span><span class="p">.</span><span class="nx">clientX</span><span class="p">,</span> <span class="nx">e</span><span class="p">.</span><span class="nx">clientY</span><span class="p">];</span><span class="c1">//实时更新当前位置
 </span></code></pre></td></tr></table>
 </div>
-</div><h3 id="流程小结">流程小结</h3>
+</div>
+<h3 id="流程小结">流程小结</h3>
+
 <ul>
 <li>在最外面声明<code>last</code>变量</li>
 <li>再当鼠标按下时，赋值此时的点的位置坐标给<code>last</code></li>
 <li>在鼠标动的时候，以<code>last</code>和移动后点坐标的四个值，画线</li>
 <li>更新当前点的坐标</li>
 </ul>
+
 <blockquote>
 <p>其他细节</p>
 </blockquote>
+
 <ul>
 <li>线型变粗<code>ctx.lineWidth</code></li>
 <li>线转弯处的节点有缺口，搜<code>js line end round</code>，得<code>ctx.lineCap</code>，使其圆润
+
 <ul>
 <li>实验放大<code>ctx.lineWidth = 4; drawLine(0,0,300,300); drawLine(300,300,500,200);</code>，突然变向</li>
+</ul></li>
 </ul>
-</li>
-</ul>
+
 <p>别忘了改手机端</p>
+
 <ul>
 <li>手机没有<code>onmousedown</code>事件，取而代之的是<code>ontouchstart</code>事件</li>
 <li>相对应的还有<code>ontouchstart</code>和<code>ontouchend</code></li>
 <li>坐标位置变为<code>let x = e.touches[0].clientX; let y = e.touches[0].clientY;</code></li>
 <li>同样要记录上次位置，和更新上次位置</li>
 </ul>
-<hr>
+
+<hr />
+
 <h2 id="部署到-github-上">部署到 GitHub 上</h2>
+
 <p><a href="http://xmasuhai.xyz/canvas-demo-1/index.html">我的项目地址</a></p>
+
 <p><a href="http://xmasuhai.xyz/js-demo-0/index.html">Canvas画板（第一版）预览请点击</a></p>
-<hr>
+
+<hr />
+
 <h2 id="总结">总结</h2>
+
 <blockquote>
 <p>事物规律，常识抽象到代码</p>
+
 <p>思维方式到了，直到搜什么</p>
+
 <p>用<code>console.log()</code>验证</p>
+
 <p>不断试错</p>
 </blockquote>
-<hr>
+
+<hr />
+
 <p><a href="https://xiedaimala.com/tasks/76fb32ad-4a1b-4efe-8a84-c80c4ad1435e">2020版前端体系课【方方】之【JS全解】Canvas 实践—画图板</a></p>
+
 <p><a href="https://frankfang.github.io/js-demo-01/index.html">方方的部署结果</a></p>
-<hr>
-<hr>
+
+<hr />
+
+<hr />
 
     </div>
 
@@ -1048,7 +1139,7 @@ hs . -c-1
     &copy;
     
       2019 -
-    2022
+    2026
     <span class="heart">
       
       <i class="iconfont">

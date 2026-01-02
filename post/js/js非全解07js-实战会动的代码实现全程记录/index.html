@@ -7,7 +7,7 @@
   
 
 <meta name="renderer" content="webkit" />
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
 <meta name="MobileOptimized" content="width"/>
 <meta name="HandheldFriendly" content="true"/>
@@ -32,7 +32,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.91.2" />
+<meta name="generator" content="Hugo 0.59.1" />
 
 
 <link rel="canonical" href="http://xmasuhai.xyz/post/js/js%E9%9D%9E%E5%85%A8%E8%A7%A307js-%E5%AE%9E%E6%88%98%E4%BC%9A%E5%8A%A8%E7%9A%84%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0%E5%85%A8%E7%A8%8B%E8%AE%B0%E5%BD%95/" />
@@ -62,15 +62,21 @@
 <meta property="og:title" content="【JS非全解07】JS 实战，会动的代码实现全程记录" />
 <meta property="og:description" content="目标：动态展示代码与效果 页面效果一 源码地址 页面效果二 源码地址 CRM 实现效果、了解代码思路、会用会查相关API、可复现步骤（半盲打）、拓展 可以将之" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://xmasuhai.xyz/post/js/js%E9%9D%9E%E5%85%A8%E8%A7%A307js-%E5%AE%9E%E6%88%98%E4%BC%9A%E5%8A%A8%E7%9A%84%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0%E5%85%A8%E7%A8%8B%E8%AE%B0%E5%BD%95/" /><meta property="article:section" content="post" />
+<meta property="og:url" content="http://xmasuhai.xyz/post/js/js%E9%9D%9E%E5%85%A8%E8%A7%A307js-%E5%AE%9E%E6%88%98%E4%BC%9A%E5%8A%A8%E7%9A%84%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0%E5%85%A8%E7%A8%8B%E8%AE%B0%E5%BD%95/" />
 <meta property="article:published_time" content="2020-02-27T01:49:17+08:00" />
 <meta property="article:modified_time" content="2022-09-03T10:26:25+08:00" />
-
 <meta itemprop="name" content="【JS非全解07】JS 实战，会动的代码实现全程记录">
-<meta itemprop="description" content="目标：动态展示代码与效果 页面效果一 源码地址 页面效果二 源码地址 CRM 实现效果、了解代码思路、会用会查相关API、可复现步骤（半盲打）、拓展 可以将之"><meta itemprop="datePublished" content="2020-02-27T01:49:17+08:00" />
-<meta itemprop="dateModified" content="2022-09-03T10:26:25+08:00" />
-<meta itemprop="wordCount" content="6127">
-<meta itemprop="keywords" content="JavaScript,demo,JS,会动的代码,全程记录," /><meta name="twitter:card" content="summary"/>
+<meta itemprop="description" content="目标：动态展示代码与效果 页面效果一 源码地址 页面效果二 源码地址 CRM 实现效果、了解代码思路、会用会查相关API、可复现步骤（半盲打）、拓展 可以将之">
+
+
+<meta itemprop="datePublished" content="2020-02-27T01:49:17&#43;08:00" />
+<meta itemprop="dateModified" content="2022-09-03T10:26:25&#43;08:00" />
+<meta itemprop="wordCount" content="6139">
+
+
+
+<meta itemprop="keywords" content="JavaScript,demo,JS,会动的代码,全程记录," />
+<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="【JS非全解07】JS 实战，会动的代码实现全程记录"/>
 <meta name="twitter:description" content="目标：动态展示代码与效果 页面效果一 源码地址 页面效果二 源码地址 CRM 实现效果、了解代码思路、会用会查相关API、可复现步骤（半盲打）、拓展 可以将之"/>
 
@@ -302,7 +308,7 @@
             <a href="http://xmasuhai.xyz/categories/javascript/"> JavaScript </a>
             
           </div>
-        <span class="more-meta"> 约 6127 字 </span>
+        <span class="more-meta"> 约 6139 字 </span>
           <span class="more-meta"> 预计阅读 13 分钟 </span>
 
         
@@ -319,84 +325,96 @@
   <h2 class="post-toc-title">文章目录</h2>
   <div class="post-toc-content">
     <nav id="TableOfContents">
-  <ul>
-    <li><a href="#目标动态展示代码与效果">目标：动态展示代码与效果</a></li>
-    <li><a href="#目录">目录</a></li>
-    <li><a href="#起手">起手</a></li>
-    <li><a href="#实现思路与细节">实现思路与细节</a></li>
-    <li><a href="#实现原理">实现原理</a></li>
-    <li><a href="#实现过程">实现过程</a>
-      <ul>
-        <li><a href="#显示一段话">显示一段话</a></li>
-        <li><a href="#小结">小结</a></li>
-      </ul>
-    </li>
-    <li><a href="#制作太极">制作太极</a>
-      <ul>
-        <li><a href="#准备一个div">准备一个div</a></li>
-        <li><a href="#把-div-变成一个圆">把 div 变成一个圆</a></li>
-        <li><a href="#背景渐变实现一黑一白">背景渐变实现一黑一白</a></li>
-        <li><a href="#加两个神秘的小球">加两个神秘的小球</a></li>
-        <li><a href="#点睛">点睛</a></li>
-        <li><a href="#背景">背景</a></li>
-        <li><a href="#代码文字折行">代码文字折行</a></li>
-      </ul>
-    </li>
-    <li><a href="#优化以及永远都要考虑手机">优化以及永远都要考虑手机</a></li>
-    <li><a href="#部署到-github-pages">部署到 GitHub Pages</a>
-      <ul>
-        <li><a href="#验证">验证</a></li>
-        <li><a href="#gitignore"><code>.gitignore</code></a></li>
-        <li><a href="#上传提交">上传提交</a></li>
-      </ul>
-    </li>
-    <li><a href="#动态化项目复盘">动态化项目复盘</a>
-      <ul>
-        <li><a href="#参考文章">参考文章</a></li>
-        <li><a href="#相关文章">相关文章</a></li>
-      </ul>
-    </li>
-  </ul>
+<ul>
+<li>
+<ul>
+<li><a href="#目标-动态展示代码与效果">目标：动态展示代码与效果</a></li>
+<li><a href="#目录">目录</a></li>
+<li><a href="#起手">起手</a></li>
+<li><a href="#实现思路与细节">实现思路与细节</a></li>
+<li><a href="#实现原理">实现原理</a></li>
+<li><a href="#实现过程">实现过程</a>
+<ul>
+<li><a href="#显示一段话">显示一段话</a>
+<ul>
+<li><a href="#第一步-让字动起来">第一步：让字动起来</a></li>
+<li><a href="#第二步-同时展示-html-和加上样式">第二步：同时展示<code>HTML</code>和加上样式</a></li>
+</ul></li>
+<li><a href="#小结">小结</a></li>
+</ul></li>
+<li><a href="#制作太极">制作太极</a>
+<ul>
+<li><a href="#准备一个div">准备一个div</a></li>
+<li><a href="#把-div-变成一个圆">把 div 变成一个圆</a></li>
+<li><a href="#背景渐变实现一黑一白">背景渐变实现一黑一白</a></li>
+<li><a href="#加两个神秘的小球">加两个神秘的小球</a></li>
+<li><a href="#点睛">点睛</a></li>
+<li><a href="#背景">背景</a></li>
+<li><a href="#代码文字折行">代码文字折行</a></li>
+</ul></li>
+<li><a href="#优化以及永远都要考虑手机">优化以及永远都要考虑手机</a></li>
+<li><a href="#部署到-github-pages">部署到 GitHub Pages</a>
+<ul>
+<li><a href="#验证">验证</a></li>
+<li><a href="#gitignore"><code>.gitignore</code></a></li>
+<li><a href="#上传提交">上传提交</a></li>
+</ul></li>
+<li><a href="#动态化项目复盘">动态化项目复盘</a>
+<ul>
+<li><a href="#参考文章">参考文章</a></li>
+<li><a href="#相关文章">相关文章</a></li>
+</ul></li>
+</ul></li>
+</ul>
 </nav>
   </div>
 </div>
 
     
     <div class="post-content">
-      <h2 id="目标动态展示代码与效果">目标：动态展示代码与效果</h2>
+      
+
+<h2 id="目标-动态展示代码与效果">目标：动态展示代码与效果</h2>
+
 <ul>
 <li><a href="https://jirengu-inc.github.io/animating-resume/public/">页面效果一</a>
+
 <ul>
 <li><a href="https://github.com/jirengu-inc/animating-resume">源码地址</a></li>
-</ul>
-</li>
+</ul></li>
 <li><a href="http://fangyinghang.com/cv-1/dist/index.html">页面效果二</a>
+
 <ul>
 <li><a href="https://github.com/FrankFang/cv-1">源码地址</a></li>
+</ul></li>
 </ul>
-</li>
-</ul>
+
 <blockquote>
 <p>CRM 实现效果、了解代码思路、会用会查相关API、可复现步骤（半盲打）、拓展</p>
 </blockquote>
+
 <ul>
 <li>可以将之前的项目：Canvas画板和拖动一个div项目也改成动态代码展示，当做练习</li>
 </ul>
+
 <h2 id="目录">目录</h2>
+
 <ul>
 <li>起手</li>
 <li>原理</li>
 <li>思路</li>
 <li>实现过程
+
 <ul>
 <li>显示一段话，并加上样式</li>
 <li>制作太极</li>
-</ul>
-</li>
+</ul></li>
 <li>永远都要考虑手机</li>
 <li>部署到 GitHub Pages</li>
 </ul>
+
 <h2 id="起手">起手</h2>
+
 <ul>
 <li>创建<code>cv-1/src/</code>路径</li>
 <li>创建<code>index.html</code></li>
@@ -407,20 +425,28 @@
 <li>启动<code>parcel</code>服务</li>
 <li><code>parcel src/index.html</code></li>
 </ul>
+
 <blockquote>
 <p>测试成功运行</p>
 </blockquote>
+
 <ul>
 <li>在<code>&lt;body&gt;hi&lt;/body&gt;</code>里写个字，在<code>main.js</code>里写一句<code>console.log('hi')</code></li>
 <li>看页面以及打开控制台，看是否生效</li>
 </ul>
-<hr>
+
+<hr />
+
 <h2 id="实现思路与细节">实现思路与细节</h2>
+
 <blockquote>
 <p>分解步骤，一步步由简单到复杂</p>
+
 <p>抽象</p>
 </blockquote>
+
 <p>1）让字在页面中一个个显示</p>
+
 <ul>
 <li>在<code>HTML</code>里写个数字</li>
 <li>在<code>main.js</code>里操作这个<code>demo</code></li>
@@ -430,15 +456,21 @@
 <li>显示完整字符串，即显示从<code>0</code>个到<code>n</code>个字符串，实现“改变一段字”</li>
 <li>加几段字</li>
 </ul>
+
 <p>2）加上样式</p>
+
 <ul>
 <li>不用<code>&lt;span id=&quot;demo&quot;&gt;&lt;/span&gt;</code>，用<code>&lt;div id=&quot;html&quot;&gt;&lt;/div&gt;</code></li>
 </ul>
-<hr>
+
+<hr />
+
 <h2 id="实现原理">实现原理</h2>
+
 <blockquote>
 <p>用到的API</p>
 </blockquote>
+
 <ul>
 <li>取<code>ID</code>选择器<code>document.querySelector(&quot;#xxx&quot;)</code>，赋值给<code>xxx</code></li>
 <li>写入<code>xxx.innerHTML = 123</code></li>
@@ -450,67 +482,80 @@
 <li><code>string[0].charCodeAt()</code></li>
 <li>正则匹配<code>string.replace(/\n/g,'&lt;br&gt;')</code>，把所有的<code>\n</code>筛选出来</li>
 </ul>
+
 <blockquote>
 <p>不用的API</p>
 </blockquote>
+
 <ul>
 <li><code>setInterval(()=&gt;{},0)</code>，用递归的<code>setTimeout</code>代替，好处是可以随时停止，即更自由地控制暂停/开始</li>
 </ul>
-<hr>
+
+<hr />
+
 <h2 id="实现过程">实现过程</h2>
+
 <h3 id="显示一段话">显示一段话</h3>
-<h4 id="第一步让字动起来">第一步：让字动起来</h4>
+
+<h4 id="第一步-让字动起来">第一步：让字动起来</h4>
+
 <p>1）生成一个容器放数字</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-HTML" data-lang="HTML"><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-HTML" data-lang="HTML"><span class="p">&lt;</span><span class="nt">span</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;demo&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
-</code></pre></td></tr></table>
+<pre class="chroma"><code class="language-HTML" data-lang="HTML"><span class="p">&lt;</span><span class="nt">span</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;demo&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><p>2）在<code>main.js</code>里操作这个<code>demo</code></p>
+</div>
+<p>2）在<code>main.js</code>里操作这个<code>demo</code></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="cm">/* 获取`demo` */</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="cm">/* 获取`demo` */</span>
 <span class="kd">let</span> <span class="nx">demo</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">&#39;#demo&#39;</span><span class="p">);</span>
 <span class="cm">/* 在`demo`里写字 即设置内容 */</span>
 <span class="nx">demo</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p><code>parcel</code>会自动刷新</p>
 </blockquote>
+
 <p>3）让数字变</p>
+
 <blockquote>
 <p><code>2s</code>后让字变为<code>2</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nx">setTimeout</span><span class="p">(()=&gt;{</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nx">setTimeout</span><span class="p">(()=&gt;{</span>
    <span class="nx">demo</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
 <span class="p">},</span><span class="mi">2000</span><span class="p">)</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>4）让数字不停地变</p>
+</div>
+<p>4）让数字不停地变</p>
+
 <blockquote>
 <p>用一个变量<code>n</code>，去保存当前变成的字<code>demo.innerHTML = n</code></p>
-<p>在‘定时器’中累加<em><strong>一次</strong></em> <code>n = n + 1</code></p>
+
+<p>在‘定时器’中累加<strong><em>一次</em></strong> <code>n = n + 1</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -518,7 +563,7 @@
 </span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">n</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">n</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
 <span class="nx">demo</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">n</span><span class="p">;</span>
 <span class="nx">setTimeout</span><span class="p">(()=&gt;{</span>
     <span class="nx">n</span> <span class="o">=</span> <span class="nx">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
@@ -526,34 +571,39 @@
 <span class="p">},</span><span class="mi">1000</span><span class="p">)</span>
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p>联想一早响n次的闹钟</p>
+
 <p>为什么不用<code>setInterval</code>？</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nx">setInterval</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nx">setInterval</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
     <span class="nx">n</span> <span class="o">=</span> <span class="nx">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
     <span class="nx">demo</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">n</span><span class="p">;</span>
 <span class="p">},</span> <span class="mi">2000</span><span class="p">);</span>
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p>老手不用<code>setInterval(()=&gt;{},0)</code>，用递归的<code>setTimeout</code>代替，封装一个函数</p>
 </blockquote>
+
 <p>4）递归函数每隔一段时间，调用自己</p>
+
 <blockquote>
 <p>通过<code>setTimeout</code>模拟<code>setInterval</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -563,7 +613,7 @@
 </span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">step</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">step</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
     <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;1s后把n加1并显示&#34;</span><span class="p">);</span>
     <span class="nx">setTimeout</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
         <span class="nx">n</span> <span class="o">=</span> <span class="nx">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
@@ -573,12 +623,12 @@
 <span class="p">};</span>
 </code></pre></td></tr></table>
 </div>
-</div><ul>
-<li>好处是，可以加上停止的条件，更自由地控制</li>
-</ul>
+</div>
+<ul>
+<li><p>好处是，可以加上停止的条件，更自由地控制</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -592,30 +642,34 @@
 </span><span class="lnt">12
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">step</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;1s后把n加1并显示&#34;</span><span class="p">);</span>
-    <span class="nx">setTimeout</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
-        <span class="nx">n</span> <span class="o">=</span> <span class="nx">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
-        <span class="nx">demo</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">n</span><span class="p">;</span>
-        <span class="k">if</span><span class="p">(</span><span class="nx">n</span> <span class="o">&lt;=</span> <span class="mi">5</span><span class="p">){</span> <span class="c1">// 在第5次停止
-</span><span class="c1"></span>            <span class="nx">step</span><span class="p">();</span>
-        <span class="p">}</span><span class="k">else</span><span class="p">{</span>
-            <span class="c1">// do noting
-</span><span class="c1"></span>        <span class="p">}</span>
-    <span class="p">},</span> <span class="mi">1000</span><span class="p">);</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">step</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;1s后把n加1并显示&#34;</span><span class="p">);</span>
+<span class="nx">setTimeout</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="nx">n</span> <span class="o">=</span> <span class="nx">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="nx">demo</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">n</span><span class="p">;</span>
+    <span class="k">if</span><span class="p">(</span><span class="nx">n</span> <span class="o">&lt;=</span> <span class="mi">5</span><span class="p">){</span> <span class="c1">// 在第5次停止
+</span><span class="c1"></span>        <span class="nx">step</span><span class="p">();</span>
+    <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+        <span class="c1">// do noting
+</span><span class="c1"></span>    <span class="p">}</span>
+<span class="p">},</span> <span class="mi">1000</span><span class="p">);</span>
 <span class="p">};</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>5）把数字改为字符串，实现“改变一段字”</p>
+</div></li>
+</ul>
+
+<p>5）把数字改为字符串，实现“改变一段字”</p>
+
 <ul>
 <li>让内容变为字符串<code>let string = '...';</code></li>
-<li>ES6的反引号 &lsquo;`'，可以处理换行的字符</li>
+<li>ES6的反引号 &lsquo;`&lsquo;，可以处理换行的字符</li>
 <li>引入下标<code>let n = 0;</code></li>
-<li>通过字符串的过装对象下标来一个个处理字符串中的字</li>
-</ul>
+
+<li><p>通过字符串的过装对象下标来一个个处理字符串中的字</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -632,41 +686,49 @@
 </span><span class="lnt">15
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="cm">/* ... */</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="cm">/* ... */</span>
 <span class="kd">let</span> <span class="nx">string</span> <span class="o">=</span> <span class="sb">`你好,我是一名前端新人`</span><span class="p">;</span>
 <span class="kd">let</span> <span class="nx">n</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">// 下标
 </span><span class="c1"></span><span class="nx">demo</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">string</span><span class="p">[</span><span class="nx">n</span><span class="p">];</span> <span class="c1">// 初始
 </span><span class="c1"></span><span class="kd">let</span> <span class="nx">step</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;1s后把n加1并显示&#34;</span><span class="p">);</span>
-    <span class="nx">setTimeout</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
-        <span class="nx">n</span> <span class="o">=</span> <span class="nx">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
-        <span class="nx">demo</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">string</span><span class="p">[</span><span class="nx">n</span><span class="p">];</span>
-        <span class="k">if</span> <span class="p">(</span><span class="nx">n</span> <span class="o">&lt;</span> <span class="nx">string</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span> <span class="p">{</span>
-            <span class="nx">step</span><span class="p">();</span>
-        <span class="p">}</span> <span class="k">else</span> <span class="p">{}</span>
-    <span class="p">},</span> <span class="mi">1000</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;1s后把n加1并显示&#34;</span><span class="p">);</span>
+<span class="nx">setTimeout</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="nx">n</span> <span class="o">=</span> <span class="nx">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="nx">demo</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">string</span><span class="p">[</span><span class="nx">n</span><span class="p">];</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">n</span> <span class="o">&lt;</span> <span class="nx">string</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">step</span><span class="p">();</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{}</span>
+<span class="p">},</span> <span class="mi">1000</span><span class="p">);</span>
 <span class="p">};</span>
 <span class="nx">step</span><span class="p">();</span>
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div></li>
+</ul>
+
+<blockquote>
 <p>在控制台看到，最后一个是<code>undefined</code></p>
 </blockquote>
+
 <ul>
 <li>初始<code>n = 0</code></li>
 <li>因为此时<code>n &lt; string.length</code>在<code>n+=1</code>后</li>
 <li>代入<code>n = 2</code>，长度<code>3</code></li>
 <li>仍要运一次<code>step()</code>，取到超过字符串长度下标值为<code>undefined</code></li>
 </ul>
+
 <p>6）改掉最后一个<code>undefined</code></p>
+
 <blockquote>
 <p>思考初步改掉if 的判断条件的顺序</p>
+
 <p><code>console.log(n)</code></p>
+
 <p>代入<code>n = 10</code>，看</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -684,7 +746,7 @@
 </span><span class="lnt">16
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="cm">/* ... */</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="cm">/* ... */</span>
 <span class="kd">let</span> <span class="nx">n</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 <span class="nx">demo</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">string</span><span class="p">[</span><span class="nx">n</span><span class="p">];</span> <span class="c1">// 初始
 </span><span class="c1"></span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">string</span><span class="p">.</span><span class="nx">length</span><span class="p">);</span>
@@ -702,20 +764,27 @@
 <span class="p">};</span>
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p>把判断条件改成<code>if (n + 1 &gt;= string.length)</code>就ok了？</p>
+
 <p>“暴力”尝试比“想”，更快</p>
+
 <p>效果不对，<code>console.log()</code>试</p>
 </blockquote>
+
 <p>7）显示完整字符串，即显示从<code>0</code>个到<code>n</code>个字符串</p>
+
 <blockquote>
 <p>把<code>string[n]</code>换为<code>string.substring(0,n)</code></p>
+
 <p>效果不对，<code>console.log()</code>试</p>
+
 <p>程序员的“测不准定理”，只关注代码现在可以运行成功</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -729,7 +798,7 @@
 </span><span class="lnt">12
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="c1">//++++++++++++++++++++++++++++++++++
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="c1">//++++++++++++++++++++++++++++++++++
 </span><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="nx">n</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&gt;=</span> <span class="nx">string</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span> <span class="p">{</span>
 <span class="c1">//==================================
 </span><span class="c1"></span>        <span class="k">return</span><span class="p">;</span>
@@ -743,12 +812,13 @@
 <span class="p">},</span> <span class="mi">500</span><span class="p">);</span>
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p>效果不对，调整顺序</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -758,7 +828,7 @@
 </span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">n</span><span class="p">);</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">n</span><span class="p">);</span>
 <span class="nx">n</span> <span class="o">=</span> <span class="nx">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
 <span class="nx">demo</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">string</span><span class="p">.</span><span class="nx">substring</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nx">n</span><span class="p">);</span>
 <span class="k">if</span> <span class="p">(</span><span class="nx">n</span> <span class="o">&gt;=</span> <span class="nx">string</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span> <span class="p">{</span>
@@ -768,14 +838,17 @@
 <span class="p">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p>代码逻辑优化</p>
+
 <p>改代码顺序，即改代码逻辑，重调</p>
+
 <p>需求一变，代码全变</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -788,7 +861,7 @@
 </span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">step</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">step</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
     <span class="nx">setTimeout</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
         <span class="nx">n</span> <span class="o">=</span> <span class="nx">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
         <span class="nx">demo</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">string</span><span class="p">.</span><span class="nx">substring</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nx">n</span><span class="p">);</span>
@@ -801,12 +874,13 @@
 <span class="nx">step</span><span class="p">();</span>
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p>加几行字</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -816,7 +890,7 @@
 </span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">string</span> <span class="o">=</span> <span class="sb">`
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">string</span> <span class="o">=</span> <span class="sb">`
 </span><span class="sb">你好,我是一名前端新人
 </span><span class="sb">接下来,我要开始加样式了
 </span><span class="sb">我要加的样式是
@@ -826,31 +900,39 @@
 </span><span class="sb">`</span><span class="p">;</span>
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p>但只显示在一行里</p>
 </blockquote>
+
 <p>8）要显示换行的格式</p>
+
 <blockquote>
 <p><code>string</code>里加的回车都缩为空格了</p>
+
 <p>问题：<code>HTML</code>源代码里敲回车会自动变成空格，从而使字符串变为一行</p>
+
 <p>变成<code>HTML</code>里的回车，<code>&lt;br&gt;</code>标签</p>
+
 <p>解决：<code>string.replace('\n','&lt;br&gt;')</code>，这也是文本编辑器中自动换行的原理</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nx">string</span> <span class="o">=</span> <span class="nx">string</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="s2">&#34;\n&#34;</span><span class="p">,</span> <span class="s2">&#34;&lt;br&gt;&#34;</span><span class="p">);</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nx">string</span> <span class="o">=</span> <span class="nx">string</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="s2">&#34;\n&#34;</span><span class="p">,</span> <span class="s2">&#34;&lt;br&gt;&#34;</span><span class="p">);</span>
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p>效果不对，并没换行</p>
+
 <p>控制台中，判断字符</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -861,7 +943,7 @@
 </span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">string</span> <span class="o">=</span> <span class="sb">`
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">string</span> <span class="o">=</span> <span class="sb">`
 </span><span class="sb">你好,我是一名前端新人
 </span><span class="sb">接下来,我要开始加样式了
 </span><span class="sb">我要加的样式是
@@ -872,65 +954,81 @@
 <span class="nx">string</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">charCodeAt</span><span class="p">()</span>
 </code></pre></td></tr></table>
 </div>
-</div><ul>
+</div>
+<ul>
 <li>将字符串在控制台里打出来看，每个下标对应的字符是什么</li>
 <li>用<code>string[0].charCodeAt()</code>，得出一个字符的<code>Unicode</code>编码<code>10</code></li>
-<li>查看<code>Ascii Table</code>，换行符<code>new line</code></li>
-</ul>
+
+<li><p>查看<code>Ascii Table</code>，换行符<code>new line</code></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nx">string</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="c1">// &#34;&#34;
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nx">string</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="c1">// &#34;&#34;
 </span><span class="c1"></span><span class="nx">string</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">charCodeAt</span><span class="p">()</span> <span class="c1">// 10
 </span></code></pre></td></tr></table>
 </div>
-</div><ul>
-<li>运行<code>string = string.replace(&quot;\n&quot;, &quot;&lt;br&gt;&quot;);</code></li>
-<li>再看，只替换了第一个<code>&lt;br&gt;</code>，并没替换所有的</li>
+</div></li>
+
+<li><p>运行<code>string = string.replace(&quot;\n&quot;, &quot;&lt;br&gt;&quot;);</code></p></li>
+
+<li><p>再看，只替换了第一个<code>&lt;br&gt;</code>，并没替换所有的</p></li>
 </ul>
+
 <blockquote>
 <p>用正则表达式匹配，把所有的<code>\n</code>筛选出来</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nx">string</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/\n/g</span><span class="p">,</span><span class="s1">&#39;&lt;br&gt;&#39;</span><span class="p">);</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nx">string</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/\n/g</span><span class="p">,</span><span class="s1">&#39;&lt;br&gt;&#39;</span><span class="p">);</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>9）完善细节</p>
+</div>
+<p>9）完善细节</p>
+
 <blockquote>
 <p>代码优化，细节，找一找重复的代码，想办法整合：<code>demo.innerHTML = string.substring(0,n)</code>目前重复出现了两次</p>
+
 <p><code>let n = -1</code>，将初始的的<code>demo.innerHTML = string.substring(0,n)</code>整合放入<code>let step() = ...</code>中</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nx">n</span> <span class="o">=</span> <span class="nx">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span> <span class="c1">// 设初始值 n = -1，此步，n = 0
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nx">n</span> <span class="o">=</span> <span class="nx">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span> <span class="c1">// 设初始值 n = -1，此步，n = 0
 </span><span class="c1"></span><span class="nx">demo</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">string</span><span class="p">.</span><span class="nx">substring</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nx">n</span><span class="p">);</span> <span class="c1">// 每次重新刷新整个字符串
 </span></code></pre></td></tr></table>
 </div>
-</div><ul>
+</div>
+<ul>
 <li>不符合常规从<code>0</code>开始，让<code>if(n &lt; string.length - 1)</code>，就可以<code>n = 0</code>开始</li>
 </ul>
+
 <blockquote>
 <p>调慢速度后，回车的地方怎么出现了<code>&lt;</code></p>
-<p>在<code> n = n + 1;</code>加上<code>console.log(string[n]);</code></p>
+
+<p>在<code>n = n + 1;</code>加上<code>console.log(string[n]);</code></p>
+
 <p>一个字一个字蹦，解析到<code>&lt;br</code>，就先显示出<code>&lt;</code></p>
 </blockquote>
+
 <p>11）完整地解析<code>&lt;br&gt;</code></p>
+
 <blockquote>
 <p>重想全部方法：不能一下子全部替换</p>
+
 <p>放弃使用<code>string = string.replace(/\n/g, &quot;&lt;br&gt;&quot;);</code></p>
+
 <p>声明一个变量<code>string2</code>用作寄存字符串，<code>string[n]</code>只作为判断<code>\n</code>的标记，累加赋值给寄存器<code>string2</code></p>
 </blockquote>
+
 <ul>
 <li><code>string[n]</code>不再作为累加的字符串，字符不再一一对应</li>
 <li>而是作为判断<code>innnerHTML</code>哪里出现了<code>\n</code>的标记</li>
@@ -940,16 +1038,21 @@
 <li>分叉判断：<code>string2 += &quot;&lt;br&gt;&quot; : string2 += string[n]</code></li>
 <li>汇总：<code>demo.innerHTML = string2</code></li>
 </ul>
+
 <blockquote>
 <p>对<code>n</code>进行加1的操作</p>
+
 <p>取<code>string</code>的第n个字符</p>
+
 <p>判断取得字符是否回车？替换 ：照抄</p>
+
 <p>得到的结果保存到另一个字符串</p>
+
 <p>判断n是否到最后一个？跳出 ：继续n+1的操作</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -968,7 +1071,7 @@
 </span><span class="lnt">17
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="cm">/* ... */</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="cm">/* ... */</span>
 <span class="kd">let</span> <span class="nx">string2</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span><span class="p">;</span>
 <span class="kd">let</span> <span class="nx">n</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 <span class="kd">let</span> <span class="nx">step</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
@@ -987,15 +1090,19 @@
 <span class="p">};</span>
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p>超过三十行，大脑就不够用了</p>
+
 <p>每过几行就回顾一下代码，做了些什么，达到的程度</p>
+
 <p>在注释中，写出分步思路，每个变量的作用，开始的取值，最后一步的取值</p>
+
 <p>简化<code>if else</code>成三目运算，<code>n</code>累加和步进<code>step()</code>写到一起</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1024,7 +1131,7 @@
 </span><span class="lnt">27
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">demo</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">&#34;#demo&#34;</span><span class="p">);</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">demo</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">&#34;#demo&#34;</span><span class="p">);</span>
 <span class="kd">let</span> <span class="nx">string</span> <span class="o">=</span> <span class="sb">`
 </span><span class="sb">你好,我是一名前端新人
 </span><span class="sb">接下来,我要开始加样式了
@@ -1053,31 +1160,41 @@
 <span class="nx">step</span><span class="p">();</span>
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p>三大难题</p>
 </blockquote>
+
 <ul>
 <li>要不要加1（1-offset problem）</li>
 <li>怎么命名（naming problem）</li>
 <li>缓存失效（cache problem）</li>
 </ul>
+
 <blockquote>
 <p>只有试</p>
+
 <p>尽量把思路用注释写下来，防止遗忘</p>
 </blockquote>
-<hr>
+
+<hr />
+
 <blockquote>
 <p>空格未显示</p>
 </blockquote>
+
 <p>9）显示缩进，空格转义符</p>
+
 <blockquote>
 <p>要显示空格</p>
+
 <p>加个判断<code>string[n] === &quot; &quot;</code></p>
+
 <p>将<code>' '</code>转义为实体字符<code>&amp;nbsp;</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1089,7 +1206,7 @@
 </span><span class="lnt">10
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="k">if</span> <span class="p">(</span><span class="nx">string</span><span class="p">[</span><span class="nx">n</span><span class="p">]</span> <span class="o">===</span> <span class="s2">&#34;\n&#34;</span><span class="p">)</span> <span class="p">{</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="k">if</span> <span class="p">(</span><span class="nx">string</span><span class="p">[</span><span class="nx">n</span><span class="p">]</span> <span class="o">===</span> <span class="s2">&#34;\n&#34;</span><span class="p">)</span> <span class="p">{</span>
     <span class="c1">//是回车就改成&lt;br&gt; 累加赋值给string2
 </span><span class="c1"></span>    <span class="nx">string2</span> <span class="o">+=</span> <span class="s2">&#34;&lt;br&gt;&#34;</span><span class="p">;</span>
 <span class="p">}</span> <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="nx">string</span><span class="p">[</span><span class="nx">n</span><span class="p">]</span> <span class="o">===</span> <span class="s2">&#34; &#34;</span><span class="p">){</span>
@@ -1101,19 +1218,25 @@
 <span class="p">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><hr>
+</div>
+<hr />
+
 <blockquote>
 <p><code>body{ color: red; }</code>如何生效？</p>
 </blockquote>
-<h4 id="第二步同时展示html和加上样式">第二步：同时展示<code>HTML</code>和加上样式</h4>
+
+<h4 id="第二步-同时展示-html-和加上样式">第二步：同时展示<code>HTML</code>和加上样式</h4>
+
 <p>1）改样式</p>
+
 <ul>
 <li>加上<code>&lt;style id=&quot;style&quot;&gt;&lt;/style&gt;</code></li>
 </ul>
+
 <p>测试可以更改样式</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -1123,7 +1246,7 @@
 </span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">style</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">&#34;#style&#34;</span><span class="p">);</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">style</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">&#34;#style&#34;</span><span class="p">);</span>
 <span class="nx">setTimeout</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
     <span class="nx">style</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="sb">`
 </span><span class="sb">    body{
@@ -1133,13 +1256,14 @@
 <span class="p">},</span> <span class="mi">3000</span><span class="p">);</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>2）把展示的字符串同时写到<code>HTML</code>和<code>Style</code>里</p>
+</div>
+<p>2）把展示的字符串同时写到<code>HTML</code>和<code>Style</code>里</p>
+
 <ul>
-<li>同时写入<code>&lt;style id=&quot;style&quot;&gt;&lt;/style&gt;</code>里</li>
-</ul>
+<li><p>同时写入<code>&lt;style id=&quot;style&quot;&gt;&lt;/style&gt;</code>里</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -1147,29 +1271,37 @@
 </span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">html</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">&#34;#html&#34;</span><span class="p">);</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">html</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">&#34;#html&#34;</span><span class="p">);</span>
 <span class="kd">let</span> <span class="nx">style</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">&#34;#style&#34;</span><span class="p">);</span>
 <span class="c1">//...
 </span><span class="c1">//...
-</span><span class="c1"></span>    <span class="nx">html</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">string2</span><span class="p">;</span>
-    <span class="nx">style</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">string2</span><span class="p">;</span>
+</span><span class="c1"></span><span class="nx">html</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">string2</span><span class="p">;</span>
+<span class="nx">style</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">string2</span><span class="p">;</span>
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div></li>
+</ul>
+
+<blockquote>
 <p>问题：在控制台里<code>&lt;style id=&quot;style&quot;&gt;&lt;/style&gt;</code>里混入了<code>&lt;br&gt;</code>和<code>&amp;bsp;</code>，并不能得到预期的效果</p>
 </blockquote>
+
 <ul>
 <li>用替换空格和换行前的字符串<code>string.substring(0,n)</code></li>
 </ul>
+
 <blockquote>
 <p>怎么style里有html，中文（字符）会使CSS失效</p>
+
 <p><code>&lt;style id=&quot;style&quot;&gt;&lt;/style&gt;</code>里仍受中文字符影响</p>
+
 <p>加注释 <code>/*  */</code></p>
 </blockquote>
+
 <p>代码</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1181,7 +1313,7 @@
 </span><span class="lnt">10
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">string</span> <span class="o">=</span> <span class="sb">`
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="kd">let</span> <span class="nx">string</span> <span class="o">=</span> <span class="sb">`
 </span><span class="sb">/*
 </span><span class="sb">** 你好,我是一名前端新人
 </span><span class="sb">** 接下来,我要开始加样式了
@@ -1193,34 +1325,40 @@
 </span><span class="sb">`</span><span class="p">;</span>
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p>写<code>html</code>的时候同时写<code>style</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nx">html</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">string2</span><span class="p">;</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nx">html</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">string2</span><span class="p">;</span>
 <span class="nx">style</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">string</span><span class="p">.</span><span class="nx">substring</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nx">n</span><span class="p">);</span>
 </code></pre></td></tr></table>
 </div>
-</div><h3 id="小结">小结</h3>
+</div>
+<h3 id="小结">小结</h3>
+
 <ul>
 <li>如何显示写入<code>HTML</code>里的内容</li>
 <li>如何写入<code>Style</code>样式</li>
 <li>如何让显示的内容的样式立即生效</li>
 </ul>
-<hr>
+
+<hr />
+
 <h2 id="制作太极">制作太极</h2>
+
 <h3 id="准备一个div">准备一个div</h3>
+
 <ul>
-<li><code>index.html</code></li>
-</ul>
+<li><p><code>index.html</code></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-HTML" data-lang="HTML"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1235,67 +1373,74 @@
 </span><span class="lnt">13
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-HTML" data-lang="HTML"><span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">style</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;style&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span>
-        <span class="p">#</span><span class="nn">div1</span> <span class="p">{</span>
-            <span class="k">position</span><span class="p">:</span> <span class="kc">fixed</span><span class="p">;</span>
-            <span class="k">right</span><span class="p">:</span> <span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
-            <span class="k">top</span><span class="p">:</span> <span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
-        <span class="p">}</span>
-    <span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;html&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;div1&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;main_log.js&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
-</code></pre></td></tr></table>
+<pre class="chroma"><code class="language-HTML" data-lang="HTML"><span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">style</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;style&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span>
+    <span class="p">#</span><span class="nn">div1</span> <span class="p">{</span>
+        <span class="k">position</span><span class="p">:</span> <span class="kc">fixed</span><span class="p">;</span>
+        <span class="k">right</span><span class="p">:</span> <span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
+        <span class="k">top</span><span class="p">:</span> <span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;html&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;div1&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;main_log.js&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><h3 id="把-div-变成一个圆">把 div 变成一个圆</h3>
-<ul>
-<li><code>main.js</code>里的<code>string</code>加上以下代码</li>
+</div></li>
 </ul>
+
+<h3 id="把-div-变成一个圆">把 div 变成一个圆</h3>
+
+<ul>
+<li><p><code>main.js</code>里的<code>string</code>加上以下代码</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-CSS" data-lang="CSS"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-CSS" data-lang="CSS"><span class="p">#</span><span class="nn">div1</span><span class="p">{</span>
-    <span class="k">border-radius</span><span class="p">:</span> <span class="mi">50</span><span class="kt">%</span><span class="p">;</span>
-    <span class="k">box-shadow</span><span class="p">:</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">3</span><span class="kt">px</span> <span class="nb">rgba</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mf">0.5</span><span class="p">);</span>
-    <span class="k">border</span><span class="p">:</span> <span class="kc">none</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre class="chroma"><code class="language-CSS" data-lang="CSS"><span class="p">#</span><span class="nn">div1</span><span class="p">{</span>
+<span class="k">border-radius</span><span class="p">:</span> <span class="mi">50</span><span class="kt">%</span><span class="p">;</span>
+<span class="k">box-shadow</span><span class="p">:</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">3</span><span class="kt">px</span> <span class="nb">rgba</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mf">0.5</span><span class="p">);</span>
+<span class="k">border</span><span class="p">:</span> <span class="kc">none</span><span class="p">;</span>
+<span class="p">}</span></code></pre></td></tr></table>
 </div>
-</div><h3 id="背景渐变实现一黑一白">背景渐变实现一黑一白</h3>
+</div></li>
+</ul>
+
+<h3 id="背景渐变实现一黑一白">背景渐变实现一黑一白</h3>
+
 <blockquote>
 <p>gradient background generator <a href="https://cssgradient.io/">https://cssgradient.io/</a></p>
 </blockquote>
+
 <ul>
-<li><code>main.js</code>里的<code>string</code>加上以下代码</li>
-</ul>
+<li><p><code>main.js</code>里的<code>string</code>加上以下代码</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-CSS" data-lang="CSS"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-CSS" data-lang="CSS"><span class="p">#</span><span class="nn">div1</span><span class="p">{</span>
-    <span class="k">background</span><span class="p">:</span> <span class="nb">linear-gradient</span><span class="p">(</span><span class="mi">90</span><span class="kt">deg</span><span class="p">,</span> <span class="nb">rgba</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span><span class="mi">255</span><span class="p">,</span><span class="mi">255</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="mi">0</span><span class="kt">%</span><span class="p">,</span> <span class="nb">rgba</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span><span class="mi">255</span><span class="p">,</span><span class="mi">255</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="mi">50</span><span class="kt">%</span><span class="p">,</span> <span class="nb">rgba</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="mi">50</span><span class="kt">%</span><span class="p">,</span> <span class="nb">rgba</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="mi">100</span><span class="kt">%</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre class="chroma"><code class="language-CSS" data-lang="CSS"><span class="p">#</span><span class="nn">div1</span><span class="p">{</span>
+<span class="k">background</span><span class="p">:</span> <span class="nb">linear-gradient</span><span class="p">(</span><span class="mi">90</span><span class="kt">deg</span><span class="p">,</span> <span class="nb">rgba</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span><span class="mi">255</span><span class="p">,</span><span class="mi">255</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="mi">0</span><span class="kt">%</span><span class="p">,</span> <span class="nb">rgba</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span><span class="mi">255</span><span class="p">,</span><span class="mi">255</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="mi">50</span><span class="kt">%</span><span class="p">,</span> <span class="nb">rgba</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="mi">50</span><span class="kt">%</span><span class="p">,</span> <span class="nb">rgba</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="mi">100</span><span class="kt">%</span><span class="p">);</span>
+<span class="p">}</span></code></pre></td></tr></table>
 </div>
-</div><h3 id="加两个神秘的小球">加两个神秘的小球</h3>
-<ul>
-<li><code>index.html</code></li>
+</div></li>
 </ul>
+
+<h3 id="加两个神秘的小球">加两个神秘的小球</h3>
+
+<ul>
+<li><p><code>index.html</code></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-HTML" data-lang="HTML"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1307,29 +1452,33 @@
 </span><span class="lnt">10
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-HTML" data-lang="HTML"><span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-HTML" data-lang="HTML"><span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span>
 <span class="p">#</span><span class="nn">div1</span><span class="p">::</span><span class="nd">before</span><span class="o">,</span>
 <span class="p">#</span><span class="nn">div1</span><span class="p">::</span><span class="nd">after</span> <span class="p">{</span>
-    <span class="k">content</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
-    <span class="k">display</span><span class="p">:</span> <span class="kc">block</span><span class="p">;</span>
-    <span class="k">width</span><span class="p">:</span> <span class="mi">200</span><span class="kt">px</span><span class="p">;</span>
-    <span class="k">height</span><span class="p">:</span> <span class="mi">200</span><span class="kt">px</span><span class="p">;</span>
-    <span class="k">position</span><span class="p">:</span> <span class="kc">absolute</span><span class="p">;</span>
+<span class="k">content</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+<span class="k">display</span><span class="p">:</span> <span class="kc">block</span><span class="p">;</span>
+<span class="k">width</span><span class="p">:</span> <span class="mi">200</span><span class="kt">px</span><span class="p">;</span>
+<span class="k">height</span><span class="p">:</span> <span class="mi">200</span><span class="kt">px</span><span class="p">;</span>
+<span class="k">position</span><span class="p">:</span> <span class="kc">absolute</span><span class="p">;</span>
 <span class="p">}</span>
-<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
-</code></pre></td></tr></table>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><h3 id="点睛">点睛</h3>
+</div></li>
+</ul>
+
+<h3 id="点睛">点睛</h3>
+
 <blockquote>
 <p>辐射渐变</p>
 </blockquote>
+
 <ul>
 <li><code>radial-gradient</code></li>
-<li><code>main.js</code>里的<code>string</code>加上以下代码</li>
-</ul>
+
+<li><p><code>main.js</code>里的<code>string</code>加上以下代码</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-CSS" data-lang="CSS"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1351,60 +1500,67 @@
 </span><span class="lnt">20
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-CSS" data-lang="CSS"><span class="p">#</span><span class="nn">div1</span><span class="p">::</span><span class="nd">before</span><span class="o">,</span><span class="p">#</span><span class="nn">div1</span><span class="p">::</span><span class="nd">after</span><span class="p">{</span>
-    <span class="k">width</span><span class="p">:</span> <span class="mi">100</span><span class="kt">px</span><span class="p">;</span>
-    <span class="k">height</span><span class="p">:</span> <span class="mi">100</span><span class="kt">px</span><span class="p">;</span>
-    <span class="k">left</span><span class="p">:</span> <span class="mi">50</span><span class="kt">%</span><span class="p">;</span>
-    <span class="k">transform</span><span class="p">:</span> <span class="nb">translateX</span><span class="p">(</span><span class="mi">-50</span><span class="kt">%</span><span class="p">);</span>
-    <span class="k">border</span><span class="p">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="kc">solid</span> <span class="kc">whitesmoke</span><span class="p">;</span>
-    <span class="k">border-radius</span><span class="p">:</span> <span class="mi">50</span><span class="kt">%</span><span class="p">;</span>
-    <span class="k">border</span><span class="p">:</span><span class="kc">none</span><span class="p">;</span>
+<pre class="chroma"><code class="language-CSS" data-lang="CSS"><span class="p">#</span><span class="nn">div1</span><span class="p">::</span><span class="nd">before</span><span class="o">,</span><span class="p">#</span><span class="nn">div1</span><span class="p">::</span><span class="nd">after</span><span class="p">{</span>
+<span class="k">width</span><span class="p">:</span> <span class="mi">100</span><span class="kt">px</span><span class="p">;</span>
+<span class="k">height</span><span class="p">:</span> <span class="mi">100</span><span class="kt">px</span><span class="p">;</span>
+<span class="k">left</span><span class="p">:</span> <span class="mi">50</span><span class="kt">%</span><span class="p">;</span>
+<span class="k">transform</span><span class="p">:</span> <span class="nb">translateX</span><span class="p">(</span><span class="mi">-50</span><span class="kt">%</span><span class="p">);</span>
+<span class="k">border</span><span class="p">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="kc">solid</span> <span class="kc">whitesmoke</span><span class="p">;</span>
+<span class="k">border-radius</span><span class="p">:</span> <span class="mi">50</span><span class="kt">%</span><span class="p">;</span>
+<span class="k">border</span><span class="p">:</span><span class="kc">none</span><span class="p">;</span>
 <span class="p">}</span>
 <span class="p">#</span><span class="nn">div1</span><span class="p">::</span><span class="nd">before</span><span class="p">{</span>
-    <span class="k">top</span><span class="p">:</span> <span class="mi">0</span><span class="p">;</span>
-    <span class="k">background</span><span class="p">:</span> <span class="mh">#000</span><span class="p">;</span>
-    <span class="k">background</span><span class="p">:</span> <span class="nb">radial-gradient</span><span class="p">(</span><span class="kc">circle</span><span class="p">,</span> <span class="nb">rgba</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span><span class="mi">255</span><span class="p">,</span><span class="mi">255</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="mi">0</span><span class="kt">%</span><span class="p">,</span> <span class="nb">rgba</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span><span class="mi">255</span><span class="p">,</span><span class="mi">255</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="mi">25</span><span class="kt">%</span><span class="p">,</span> <span class="nb">rgba</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="mi">25</span><span class="kt">%</span><span class="p">,</span> <span class="nb">rgba</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="mi">100</span><span class="kt">%</span><span class="p">);</span>
+<span class="k">top</span><span class="p">:</span> <span class="mi">0</span><span class="p">;</span>
+<span class="k">background</span><span class="p">:</span> <span class="mh">#000</span><span class="p">;</span>
+<span class="k">background</span><span class="p">:</span> <span class="nb">radial-gradient</span><span class="p">(</span><span class="kc">circle</span><span class="p">,</span> <span class="nb">rgba</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span><span class="mi">255</span><span class="p">,</span><span class="mi">255</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="mi">0</span><span class="kt">%</span><span class="p">,</span> <span class="nb">rgba</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span><span class="mi">255</span><span class="p">,</span><span class="mi">255</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="mi">25</span><span class="kt">%</span><span class="p">,</span> <span class="nb">rgba</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="mi">25</span><span class="kt">%</span><span class="p">,</span> <span class="nb">rgba</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="mi">100</span><span class="kt">%</span><span class="p">);</span>
 <span class="p">}</span>
 <span class="p">#</span><span class="nn">div1</span><span class="p">::</span><span class="nd">after</span><span class="p">{</span>
-    <span class="k">bottom</span><span class="p">:</span> <span class="mi">0</span><span class="p">;</span>
-    <span class="k">left</span><span class="p">:</span> <span class="mi">50</span><span class="kt">%</span><span class="p">;</span>
-    <span class="k">background</span><span class="p">:</span> <span class="mh">#fff</span><span class="p">;</span>
-    <span class="k">background</span><span class="p">:</span> <span class="nb">radial-gradient</span><span class="p">(</span><span class="kc">circle</span><span class="p">,</span> <span class="nb">rgba</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="mi">0</span><span class="kt">%</span><span class="p">,</span> <span class="nb">rgba</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="mi">25</span><span class="kt">%</span><span class="p">,</span> <span class="nb">rgba</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span><span class="mi">255</span><span class="p">,</span><span class="mi">255</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="mi">25</span><span class="kt">%</span><span class="p">,</span> <span class="nb">rgba</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span><span class="mi">255</span><span class="p">,</span><span class="mi">255</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="mi">100</span><span class="kt">%</span><span class="p">,</span> <span class="nb">rgba</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="mi">100</span><span class="kt">%</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<span class="k">bottom</span><span class="p">:</span> <span class="mi">0</span><span class="p">;</span>
+<span class="k">left</span><span class="p">:</span> <span class="mi">50</span><span class="kt">%</span><span class="p">;</span>
+<span class="k">background</span><span class="p">:</span> <span class="mh">#fff</span><span class="p">;</span>
+<span class="k">background</span><span class="p">:</span> <span class="nb">radial-gradient</span><span class="p">(</span><span class="kc">circle</span><span class="p">,</span> <span class="nb">rgba</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="mi">0</span><span class="kt">%</span><span class="p">,</span> <span class="nb">rgba</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="mi">25</span><span class="kt">%</span><span class="p">,</span> <span class="nb">rgba</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span><span class="mi">255</span><span class="p">,</span><span class="mi">255</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="mi">25</span><span class="kt">%</span><span class="p">,</span> <span class="nb">rgba</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span><span class="mi">255</span><span class="p">,</span><span class="mi">255</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="mi">100</span><span class="kt">%</span><span class="p">,</span> <span class="nb">rgba</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="mi">100</span><span class="kt">%</span><span class="p">);</span>
+<span class="p">}</span></code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div></li>
+</ul>
+
+<blockquote>
 <p>微元素中不能再套伪元素</p>
 </blockquote>
+
 <h3 id="背景">背景</h3>
+
 <blockquote>
 <p>白色背景太单调了，我们来点背景</p>
 </blockquote>
+
 <ul>
-<li><code>main.js</code>里的<code>srtring</code>加上以下代码</li>
-</ul>
+<li><p><code>main.js</code>里的<code>srtring</code>加上以下代码</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-CSS" data-lang="CSS"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-CSS" data-lang="CSS"><span class="nt">html</span> <span class="p">{</span>
-    <span class="k">background</span><span class="p">:</span> <span class="nb">rgba</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span><span class="mi">200</span><span class="p">,</span><span class="mi">200</span><span class="p">,</span><span class="mf">0.8</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre class="chroma"><code class="language-CSS" data-lang="CSS"><span class="nt">html</span> <span class="p">{</span>
+<span class="k">background</span><span class="p">:</span> <span class="nb">rgba</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span><span class="mi">200</span><span class="p">,</span><span class="mi">200</span><span class="p">,</span><span class="mf">0.8</span><span class="p">);</span>
+<span class="p">}</span></code></pre></td></tr></table>
 </div>
-</div><h3 id="代码文字折行">代码文字折行</h3>
+</div></li>
+</ul>
+
+<h3 id="代码文字折行">代码文字折行</h3>
+
 <blockquote>
 <p>以及确定宽高</p>
 </blockquote>
+
 <ul>
-<li><code>index.html</code></li>
-</ul>
+<li><p><code>index.html</code></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-HTML" data-lang="HTML"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1416,86 +1572,96 @@
 </span><span class="lnt">10
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-HTML" data-lang="HTML"><span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-HTML" data-lang="HTML"><span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span>
 <span class="p">#</span><span class="nn">html</span> <span class="p">{</span>
-    <span class="k">text-overflow</span><span class="p">:</span> <span class="kc">ellipsis</span><span class="p">;</span>
-    <span class="k">overflow-y</span><span class="p">:</span> <span class="kc">visible</span><span class="p">;</span>
-    <span class="k">word-wrap</span><span class="p">:</span> <span class="kc">break-word</span><span class="p">;</span>
-    <span class="k">word-break</span><span class="p">:</span> <span class="kc">break-word</span><span class="p">;</span>
-    <span class="k">width</span><span class="p">:</span> <span class="mi">50</span><span class="kt">vw</span><span class="p">;</span>
-    <span class="k">height</span><span class="p">:</span> <span class="mi">100</span><span class="kt">vh</span><span class="p">;</span>
+<span class="k">text-overflow</span><span class="p">:</span> <span class="kc">ellipsis</span><span class="p">;</span>
+<span class="k">overflow-y</span><span class="p">:</span> <span class="kc">visible</span><span class="p">;</span>
+<span class="k">word-wrap</span><span class="p">:</span> <span class="kc">break-word</span><span class="p">;</span>
+<span class="k">word-break</span><span class="p">:</span> <span class="kc">break-word</span><span class="p">;</span>
+<span class="k">width</span><span class="p">:</span> <span class="mi">50</span><span class="kt">vw</span><span class="p">;</span>
+<span class="k">height</span><span class="p">:</span> <span class="mi">100</span><span class="kt">vh</span><span class="p">;</span>
 <span class="p">}</span>
-<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
-</code></pre></td></tr></table>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><hr>
+</div></li>
+</ul>
+
+<hr />
+
 <h2 id="优化以及永远都要考虑手机">优化以及永远都要考虑手机</h2>
+
 <blockquote>
 <p>自动处于底部</p>
 </blockquote>
+
 <ul>
 <li><code>JS</code>控制滚动条</li>
 <li><code>window.scrollTo(x,y)</code></li>
-<li>加到<code>main.js</code>里</li>
-</ul>
+
+<li><p>加到<code>main.js</code>里</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nx">html</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">string2</span><span class="p">;</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nx">html</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">string2</span><span class="p">;</span>
 <span class="nx">style</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">string</span><span class="p">.</span><span class="nx">substring</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nx">n</span><span class="p">);</span>
 <span class="nb">window</span><span class="p">.</span><span class="nx">scrollTo</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">9999</span><span class="p">);</span>
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div></li>
+</ul>
+
+<blockquote>
 <p>干掉X方向滚动条</p>
 </blockquote>
+
 <ul>
-<li><code>CSS</code>设置换行</li>
-</ul>
+<li><p><code>CSS</code>设置换行</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="err">#</span><span class="nx">demo</span> <span class="p">{</span>
-  <span class="nx">word</span><span class="o">-</span><span class="k">break</span><span class="o">:</span> <span class="k">break</span><span class="o">-</span><span class="nx">all</span><span class="p">;</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="err">#</span><span class="nx">demo</span> <span class="p">{</span>
+<span class="nx">word</span><span class="o">-</span><span class="k">break</span><span class="o">:</span> <span class="k">break</span><span class="o">-</span><span class="nx">all</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div></li>
+</ul>
+
+<blockquote>
 <p>页面布局适配</p>
 </blockquote>
+
 <ul>
-<li>媒体查询，测试有效性</li>
-</ul>
+<li><p>媒体查询，测试有效性</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-CSS" data-lang="CSS"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-CSS" data-lang="CSS"><span class="p">@</span><span class="k">media</span> <span class="o">(</span><span class="nt">max-width500px</span><span class="o">)</span><span class="p">{</span>
-    <span class="nt">body</span> <span class="p">{</span>
-        <span class="k">color</span><span class="p">:</span> <span class="kc">red</span><span class="p">;</span>
-    <span class="p">}</span>
+<pre class="chroma"><code class="language-CSS" data-lang="CSS"><span class="p">@</span><span class="k">media</span> <span class="o">(</span><span class="nt">max-width500px</span><span class="o">)</span><span class="p">{</span>
+<span class="nt">body</span> <span class="p">{</span>
+    <span class="k">color</span><span class="p">:</span> <span class="kc">red</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre></td></tr></table>
+<span class="p">}</span></code></pre></td></tr></table>
 </div>
-</div><ul>
-<li>上下各50%</li>
-</ul>
+</div></li>
+
+<li><p>上下各50%</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-CSS" data-lang="CSS"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -1506,45 +1672,49 @@
 </span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-CSS" data-lang="CSS"><span class="p">@</span><span class="k">media</span> <span class="o">(</span><span class="nt">max-width</span><span class="p">:</span><span class="nd">500px</span><span class="o">)</span> <span class="p">{</span>
-    <span class="p">#</span><span class="nn">html</span> <span class="p">{</span>
-        <span class="k">height</span><span class="p">:</span> <span class="mi">50</span><span class="kt">vh</span><span class="p">;</span>
-        <span class="k">border</span><span class="p">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="kc">solid</span> <span class="kc">red</span><span class="p">;</span>
-    <span class="p">}</span>
-    <span class="p">#</span><span class="nn">div1</span><span class="p">{</span>
-        <span class="k">height</span><span class="p">:</span><span class="mi">50</span><span class="kt">vh</span><span class="p">;</span>        <span class="k">border</span><span class="p">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="kc">solid</span> <span class="kc">red</span><span class="p">;</span>
-    <span class="p">}</span>
+<pre class="chroma"><code class="language-CSS" data-lang="CSS"><span class="p">@</span><span class="k">media</span> <span class="o">(</span><span class="nt">max-width</span><span class="p">:</span><span class="nd">500px</span><span class="o">)</span> <span class="p">{</span>
+<span class="p">#</span><span class="nn">html</span> <span class="p">{</span>
+    <span class="k">height</span><span class="p">:</span> <span class="mi">50</span><span class="kt">vh</span><span class="p">;</span>
+    <span class="k">border</span><span class="p">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="kc">solid</span> <span class="kc">red</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre></td></tr></table>
+<span class="p">#</span><span class="nn">div1</span><span class="p">{</span>
+    <span class="k">height</span><span class="p">:</span><span class="mi">50</span><span class="kt">vh</span><span class="p">;</span>        <span class="k">border</span><span class="p">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="kc">solid</span> <span class="kc">red</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="p">}</span></code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div></li>
+</ul>
+
+<blockquote>
 <p>变成椭圆，未包裹div，定位不可固定</p>
 </blockquote>
+
 <ul>
 <li>媒体查询的优先级更高，样式被影响</li>
 <li>设置的宽高是固定数值，因此变形</li>
 </ul>
+
 <blockquote>
 <p>外面再套一个<code>div#div1Wrapper</code>，专门用来定位</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-HTML" data-lang="HTML"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-HTML" data-lang="HTML"><span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;html&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-HTML" data-lang="HTML"><span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;html&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
 <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;div1Wrapper&#34;</span><span class="p">&gt;</span>
     <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;div1&#34;</span><span class="p">&gt;</span> <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-</code></pre></td></tr></table>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><p>对应在样式里修改</p>
+</div>
+<p>对应在样式里修改</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-CSS" data-lang="CSS"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1561,7 +1731,7 @@
 </span><span class="lnt">15
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-CSS" data-lang="CSS"><span class="p">@</span><span class="k">media</span> <span class="o">(</span><span class="nt">max-width</span><span class="p">:</span><span class="nd">500px</span><span class="o">)</span> <span class="p">{</span>
+<pre class="chroma"><code class="language-CSS" data-lang="CSS"><span class="p">@</span><span class="k">media</span> <span class="o">(</span><span class="nt">max-width</span><span class="p">:</span><span class="nd">500px</span><span class="o">)</span> <span class="p">{</span>
     <span class="p">#</span><span class="nn">html</span> <span class="p">{</span> <span class="c">/* 上一半 */</span>
         <span class="k">height</span><span class="p">:</span> <span class="mi">50</span><span class="kt">vh</span><span class="p">;</span>
         <span class="k">border</span><span class="p">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="kc">solid</span> <span class="kc">red</span><span class="p">;</span>
@@ -1575,18 +1745,18 @@
         <span class="k">top</span><span class="p">:</span> <span class="mi">0</span><span class="p">;</span>
         <span class="k">right</span><span class="p">:</span> <span class="mi">0</span><span class="p">;</span>
     <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<span class="p">}</span></code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p>上半部分文字超出，到下方</p>
 </blockquote>
+
 <ul>
-<li>加滚动条<code>overflow: auto;</code></li>
-</ul>
+<li><p>加滚动条<code>overflow: auto;</code></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-CSS" data-lang="CSS"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -1596,43 +1766,45 @@
 </span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-CSS" data-lang="CSS"><span class="p">@</span><span class="k">media</span> <span class="o">(</span><span class="nt">max-width</span><span class="p">:</span><span class="nd">500px</span><span class="o">)</span> <span class="p">{</span>
-    <span class="p">#</span><span class="nn">html</span> <span class="p">{</span>
-        <span class="c">/* 上一半 */</span>
-        <span class="k">width</span><span class="p">:</span> <span class="mi">100</span><span class="kt">vw</span><span class="p">;</span>
-        <span class="k">height</span><span class="p">:</span> <span class="mi">50</span><span class="kt">vh</span><span class="p">;</span>
-        <span class="k">overflow</span><span class="p">:</span> <span class="kc">auto</span><span class="p">;</span>
-    <span class="p">}</span>
+<pre class="chroma"><code class="language-CSS" data-lang="CSS"><span class="p">@</span><span class="k">media</span> <span class="o">(</span><span class="nt">max-width</span><span class="p">:</span><span class="nd">500px</span><span class="o">)</span> <span class="p">{</span>
+<span class="p">#</span><span class="nn">html</span> <span class="p">{</span>
+    <span class="c">/* 上一半 */</span>
+    <span class="k">width</span><span class="p">:</span> <span class="mi">100</span><span class="kt">vw</span><span class="p">;</span>
+    <span class="k">height</span><span class="p">:</span> <span class="mi">50</span><span class="kt">vh</span><span class="p">;</span>
+    <span class="k">overflow</span><span class="p">:</span> <span class="kc">auto</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre></td></tr></table>
+<span class="p">}</span></code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div></li>
+</ul>
+
+<blockquote>
 <p>代码自动向下滚</p>
 </blockquote>
+
 <ul>
-<li>
-<p>之前设置的是浏览器的滚动条，现在要加上div的滚动条</p>
-</li>
-<li>
-<p>在JS里加一句<code>html.scrollTo(0, 9999);</code></p>
-</li>
-</ul>
+<li><p>之前设置的是浏览器的滚动条，现在要加上div的滚动条</p></li>
+
+<li><p>在JS里加一句<code>html.scrollTo(0, 9999);</code></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nb">window</span><span class="p">.</span><span class="nx">scrollTo</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">9999</span><span class="p">);</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nb">window</span><span class="p">.</span><span class="nx">scrollTo</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">9999</span><span class="p">);</span>
 <span class="nx">html</span><span class="p">.</span><span class="nx">scrollTo</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">9999</span><span class="p">);</span>
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div></li>
+</ul>
+
+<blockquote>
 <p>关键帧动画里，<code>transform</code>属性要完全覆盖之前的，相同的部分（状态）也要保留</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-CSS" data-lang="CSS"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1647,7 +1819,7 @@
 </span><span class="lnt">13
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-CSS" data-lang="CSS"><span class="p">#</span><span class="nn">div1</span><span class="p">{</span>
+<pre class="chroma"><code class="language-CSS" data-lang="CSS"><span class="p">#</span><span class="nn">div1</span><span class="p">{</span>
     <span class="k">animation</span><span class="p">:</span> <span class="mi">5</span><span class="kt">s</span> <span class="kc">linear</span> <span class="kc">infinite</span>  <span class="n">taiJi</span><span class="p">;</span>
 <span class="p">}</span>
 <span class="p">@</span><span class="k">keyframes</span> <span class="nt">taiJi</span><span class="p">{</span>
@@ -1659,43 +1831,48 @@
         <span class="k">left</span><span class="p">:</span> <span class="mi">50</span><span class="kt">%</span><span class="p">;</span>
         <span class="k">transform</span> <span class="p">:</span> <span class="nb">translateX</span><span class="p">(</span><span class="mi">-50</span><span class="kt">%</span><span class="p">)</span> <span class="nb">rotate</span><span class="p">(</span><span class="mi">360</span><span class="kt">deg</span><span class="p">);</span>
     <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<span class="p">}</span></code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p>注意别忘了写<code>CSS_reset</code>，以及修改 <del>五</del> 六个<code>meta</code>值，适配移动页面，抄大厂的</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-HTML" data-lang="HTML"><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-HTML" data-lang="HTML"><span class="p">&lt;</span><span class="nt">meta</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;viewport&#34;</span> <span class="na">content</span><span class="o">=</span><span class="s">&#34;width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no,viewport-fit=cover&#34;</span><span class="p">&gt;</span>
-</code></pre></td></tr></table>
+<pre class="chroma"><code class="language-HTML" data-lang="HTML"><span class="p">&lt;</span><span class="nt">meta</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;viewport&#34;</span> <span class="na">content</span><span class="o">=</span><span class="s">&#34;width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no,viewport-fit=cover&#34;</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><hr>
+</div>
+<hr />
+
 <h2 id="部署到-github-pages">部署到 GitHub Pages</h2>
+
 <blockquote>
 <p>演示中，不能把<code>&lt;style&gt;&lt;/style&gt;</code>写到<code>&lt;body&gt;&lt;/body&gt;</code>里，会被<code>parcel</code>删掉</p>
 </blockquote>
+
 <ul>
 <li>单独保存样式到一个<code>style.css</code>里，就好了</li>
 </ul>
+
 <h3 id="验证">验证</h3>
+
 <blockquote>
 <p>生成的<code>dist</code>目录里的<code>index.html</code>能否运行</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">cd</span> dist
-hs . -c-1
-</code></pre></td></tr></table>
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">cd</span> dist
+hs . -c-1</code></pre></td></tr></table>
 </div>
-</div><ul>
+</div>
+<ul>
 <li>点开链接，加上路径<code>/index.html</code>查看，可以运行</li>
 <li><code>src</code>里的不能直接运行</li>
 <li>配置<code>Setting&gt;GitHub Pages</code>，选<code>master</code></li>
@@ -1703,160 +1880,195 @@ hs . -c-1
 <li>等待</li>
 <li>在此页面下，打开开发者工具，<code>Network</code>选项卡，勾选<code>Disable Cache</code>禁用缓存，刷新</li>
 </ul>
+
 <blockquote>
 <p>验证<code>Network</code>里，生成的<code>main.***.js</code>请求路径是否正确，包含<code>/cv-1/dist/index.html</code></p>
 </blockquote>
+
 <ul>
 <li>手动更改打包路径</li>
 </ul>
+
 <p>参考</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">parcel --help
-parcel build --help
-</code></pre></td></tr></table>
+<pre class="chroma"><code class="language-bash" data-lang="bash">parcel --help
+parcel build --help</code></pre></td></tr></table>
 </div>
-</div><ul>
+</div>
+<ul>
 <li>更改<code>parcel build --public-url &lt;url&gt;</code></li>
-<li>验证</li>
-</ul>
+
+<li><p>验证</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nx">cd</span> <span class="nx">cv</span><span class="o">-</span><span class="mi">1</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nx">cd</span> <span class="nx">cv</span><span class="o">-</span><span class="mi">1</span>
 <span class="nx">parcel</span> <span class="nx">build</span> <span class="nx">src</span><span class="o">/</span><span class="nx">index</span><span class="p">.</span><span class="nx">html</span> <span class="o">--</span><span class="kr">public</span><span class="o">-</span><span class="nx">url</span> <span class="nx">fuck</span>
 </code></pre></td></tr></table>
 </div>
-</div><ul>
-<li>打开重新生成的<code>dist/index.html</code>里，查找<code>fuck</code>，找到<code>src='fuck/main.***.js'</code></li>
-<li><code>fuck</code>调试法</li>
-<li>将<code>fuck</code>的位置替换为<code>dist</code></li>
-</ul>
+</div></li>
+
+<li><p>打开重新生成的<code>dist/index.html</code>里，查找<code>fuck</code>，找到<code>src='fuck/main.***.js'</code></p></li>
+
+<li><p><code>fuck</code>调试法</p></li>
+
+<li><p>将<code>fuck</code>的位置替换为<code>dist</code></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nx">parcel</span> <span class="nx">build</span> <span class="nx">src</span><span class="o">/</span><span class="nx">index</span><span class="p">.</span><span class="nx">html</span> <span class="o">--</span><span class="kr">public</span><span class="o">-</span><span class="nx">url</span> <span class="nx">dist</span>
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="nx">parcel</span> <span class="nx">build</span> <span class="nx">src</span><span class="o">/</span><span class="nx">index</span><span class="p">.</span><span class="nx">html</span> <span class="o">--</span><span class="kr">public</span><span class="o">-</span><span class="nx">url</span> <span class="nx">dist</span>
 </code></pre></td></tr></table>
 </div>
-</div><ul>
-<li>打开重新生成的<code>dist/index.html</code>里，查看到<code>&lt;script src=&quot;dist/main.***.js&quot;&gt;&lt;/script&gt;</code></li>
+</div></li>
+
+<li><p>打开重新生成的<code>dist/index.html</code>里，查看到<code>&lt;script src=&quot;dist/main.***.js&quot;&gt;&lt;/script&gt;</code></p></li>
 </ul>
+
 <h3 id="gitignore"><code>.gitignore</code></h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">**/node_modules
-**.cache
-</code></pre></td></tr></table>
+<pre class="chroma"><code class="language-bash" data-lang="bash">**/node_modules
+**.cache</code></pre></td></tr></table>
 </div>
-</div><h3 id="上传提交">上传提交</h3>
+</div>
+<h3 id="上传提交">上传提交</h3>
+
 <p>忽略建仓操作，具体看</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">git add .
+<pre class="chroma"><code class="language-bash" data-lang="bash">git add .
 git commit -m <span class="s1">&#39;update build&#39;</span>
-git push
-</code></pre></td></tr></table>
+git push</code></pre></td></tr></table>
 </div>
-</div><p>发现路径错<code>/dist/dist/...</code></p>
+</div>
+<p>发现路径错<code>/dist/dist/...</code></p>
+
 <p>重新生成</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">parcel build src/index.html
-parcel build src/index.html --public-url .
-</code></pre></td></tr></table>
+<pre class="chroma"><code class="language-bash" data-lang="bash">parcel build src/index.html
+parcel build src/index.html --public-url .</code></pre></td></tr></table>
 </div>
-</div><ul>
+</div>
+<ul>
 <li>确保<code>main.***.js</code>路径在当前目录</li>
 <li>即<code>index.html</code>里的<code>&lt;script src=&quot;main.***.js&quot; &gt;&lt;/script&gt;</code>中，<code>main.***.js</code>前无其他路径</li>
 </ul>
+
 <blockquote>
 <p>部署方式</p>
 </blockquote>
+
 <ul>
-<li>每次改完代码，必须运行这一行，才能正确的请求 JS 和 CSS：</li>
-</ul>
+<li><p>每次改完代码，必须运行这一行，才能正确的请求 JS 和 CSS：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">parcel build src/index.html --public-url .
-</code></pre></td></tr></table>
+<pre class="chroma"><code class="language-bash" data-lang="bash">parcel build src/index.html --public-url .</code></pre></td></tr></table>
 </div>
-</div><p>&ndash;</p>
+</div></li>
+</ul>
+
+<p>&ndash;</p>
+
 <h2 id="动态化项目复盘">动态化项目复盘</h2>
+
 <blockquote>
 <p>保留静态样式</p>
+
 <p>把JS入门项目动态化</p>
+
 <p>把画板项目也动起来：动态显示构建Canvas画板项目</p>
+
 <p>回顾注释·回顾代码·回顾思路</p>
+
 <p>过程·过程·过程</p>
+
 <p>未适配<code>safari</code></p>
 </blockquote>
-<hr>
+
+<hr />
+
 <ul>
 <li>我实现的代码：<a href="https://github.com/xmasuhai/cv-1">https://github.com/xmasuhai/cv-1</a></li>
 <li>效果：<a href="http://xmasuhai.xyz/cv-1/dist/index.html">http://xmasuhai.xyz/cv-1/dist/index.html</a></li>
 </ul>
-<!-- raw HTML omitted -->
-<hr>
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<hr>
+
+<!-- Article End -->
+
+<hr />
+
+<!-- test -->
+
+<div style="text-align:center;">·未完待续·</div>
+
+<!-- ok -->
+
+<hr />
+
 <h3 id="参考文章">参考文章</h3>
+
 <p>FrankFang的完整代码：<a href="https://github.com/FrankFang/cv-1/tree/master/src">https://github.com/FrankFang/cv-1/tree/master/src</a></p>
+
 <ul>
 <li><a href="https://jirengu-inc.github.io/animating-resume/public/">页面效果一</a>
+
 <ul>
 <li><a href="https://github.com/jirengu-inc/animating-resume">源码地址</a></li>
-</ul>
-</li>
+</ul></li>
 <li><a href="http://fangyinghang.com/cv-1/dist/index.html">页面效果二</a>
+
 <ul>
 <li><a href="https://github.com/FrankFang/cv-1">源码地址</a></li>
+</ul></li>
 </ul>
-</li>
-</ul>
+
 <h3 id="相关文章">相关文章</h3>
+
 <ul>
 <li>无</li>
 </ul>
-<hr>
+
+<hr />
+
 <ul>
 <li>作者： Joel</li>
 <li>文章链接：</li>
-<li><a href="http://xmasuhai.xyz/posts/%E7%89%88%E6%9D%83%E5%A3%B0%E6%98%8E%E9%93%BE%E6%8E%A5/">版权声明</a></li>
+<li><a href="http://xmasuhai.xyz/posts/版权声明链接/">版权声明</a></li>
 <li>非自由转载-非商用-非衍生-保持署名</li>
-<li><!-- raw HTML omitted -->河<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->掘<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->思<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->知<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->简<!-- raw HTML omitted --></li>
+<li><a style='color:#DB2D5D;' href='https://xiedaimala.com/bbs/users/8c266e6f-55a2-4348-a180-17cb8cdb2c46#/?page=1' target='_blank' rel='noreferrer noopener'>河</a>
+<a style='color:#006CFF;' href='https://juejin.im/user/59abfad26fb9a0248f4aa221' target='_blank' rel='noreferrer noopener'>掘</a>
+<a style='color:#009A61;' href='https://segmentfault.com/u/joel_59b17eb9d2155' target='_blank' rel='noreferrer noopener'>思</a>
+<a style='color:#0084FF;' href='https://www.zhihu.com/people/xue-shou-41/posts' target='_blank' rel='noreferrer noopener'>知</a>
+<a style='color:#EA6F5A;' href='https://www.jianshu.com/u/079916729823' target='_blank' rel='noreferrer noopener'>简</a></li>
 </ul>
-<hr>
+
+<hr />
 
     </div>
 
@@ -2022,7 +2234,7 @@ parcel build src/index.html --public-url .
     &copy;
     
       2019 -
-    2022
+    2026
     <span class="heart">
       
       <i class="iconfont">

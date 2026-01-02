@@ -7,7 +7,7 @@
   
 
 <meta name="renderer" content="webkit" />
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
 <meta name="MobileOptimized" content="width"/>
 <meta name="HandheldFriendly" content="true"/>
@@ -32,7 +32,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.91.2" />
+<meta name="generator" content="Hugo 0.59.1" />
 
 
 <link rel="canonical" href="http://xmasuhai.xyz/post/project/vueel2/%E9%A1%B9%E7%9B%AE-vue2-%E8%BD%AE%E5%AD%902.1-%E7%AE%80%E5%8D%95%E8%BD%AE%E5%AD%90-vueinput%E6%96%87%E6%9C%AC%E8%BE%93%E5%85%A5%E6%A1%86-%E5%92%8C%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/" />
@@ -62,15 +62,21 @@
 <meta property="og:title" content="【项目 Vue2 轮子】2.1 简单轮子VueInput.vue：文本输入框 和单元测试" />
 <meta property="og:description" content="2.1 简单轮子VueInput.vue：文本输入框 和单元测试 大纲链接§ [toc] VueInput 组件需求分析 User Case 输入 提示 用户名必须为英文 报错信息 清空 复制/粘贴 键盘 Tab 敲" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://xmasuhai.xyz/post/project/vueel2/%E9%A1%B9%E7%9B%AE-vue2-%E8%BD%AE%E5%AD%902.1-%E7%AE%80%E5%8D%95%E8%BD%AE%E5%AD%90-vueinput%E6%96%87%E6%9C%AC%E8%BE%93%E5%85%A5%E6%A1%86-%E5%92%8C%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/" /><meta property="article:section" content="post" />
+<meta property="og:url" content="http://xmasuhai.xyz/post/project/vueel2/%E9%A1%B9%E7%9B%AE-vue2-%E8%BD%AE%E5%AD%902.1-%E7%AE%80%E5%8D%95%E8%BD%AE%E5%AD%90-vueinput%E6%96%87%E6%9C%AC%E8%BE%93%E5%85%A5%E6%A1%86-%E5%92%8C%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/" />
 <meta property="article:published_time" content="2021-12-18T12:30:25+08:00" />
 <meta property="article:modified_time" content="2022-09-03T10:26:25+08:00" />
-
 <meta itemprop="name" content="【项目 Vue2 轮子】2.1 简单轮子VueInput.vue：文本输入框 和单元测试">
-<meta itemprop="description" content="2.1 简单轮子VueInput.vue：文本输入框 和单元测试 大纲链接§ [toc] VueInput 组件需求分析 User Case 输入 提示 用户名必须为英文 报错信息 清空 复制/粘贴 键盘 Tab 敲"><meta itemprop="datePublished" content="2021-12-18T12:30:25+08:00" />
-<meta itemprop="dateModified" content="2022-09-03T10:26:25+08:00" />
-<meta itemprop="wordCount" content="8252">
-<meta itemprop="keywords" content="FrontEnd,Project,vueel,vue2," /><meta name="twitter:card" content="summary"/>
+<meta itemprop="description" content="2.1 简单轮子VueInput.vue：文本输入框 和单元测试 大纲链接§ [toc] VueInput 组件需求分析 User Case 输入 提示 用户名必须为英文 报错信息 清空 复制/粘贴 键盘 Tab 敲">
+
+
+<meta itemprop="datePublished" content="2021-12-18T12:30:25&#43;08:00" />
+<meta itemprop="dateModified" content="2022-09-03T10:26:25&#43;08:00" />
+<meta itemprop="wordCount" content="8246">
+
+
+
+<meta itemprop="keywords" content="FrontEnd,Project,vueel,vue2," />
+<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="【项目 Vue2 轮子】2.1 简单轮子VueInput.vue：文本输入框 和单元测试"/>
 <meta name="twitter:description" content="2.1 简单轮子VueInput.vue：文本输入框 和单元测试 大纲链接§ [toc] VueInput 组件需求分析 User Case 输入 提示 用户名必须为英文 报错信息 清空 复制/粘贴 键盘 Tab 敲"/>
 
@@ -301,7 +307,7 @@
         <div class="post-category">
             
           </div>
-        <span class="more-meta"> 约 8252 字 </span>
+        <span class="more-meta"> 约 8246 字 </span>
           <span class="more-meta"> 预计阅读 17 分钟 </span>
 
         
@@ -318,148 +324,168 @@
   <h2 class="post-toc-title">文章目录</h2>
   <div class="post-toc-content">
     <nav id="TableOfContents">
-  <ul>
-    <li><a href="#vueinput-组件需求分析"><code>VueInput</code> 组件需求分析</a></li>
-    <li><a href="#api设计">API设计</a></li>
-    <li><a href="#写-vueinput-组件">写 <code>VueInput</code> 组件</a>
-      <ul>
-        <li><a href="#增加-error-状态">增加 <code>error</code> 状态</a></li>
-        <li><a href="#使用templatetemplate配合v-if包裹临时标签组">使用<code>&lt;template&gt;&lt;/template&gt;</code>配合<code>v-if</code>包裹临时标签组</a></li>
-        <li><a href="#input-的-change-事件"><code>input</code> 的 <code>change</code> 事件</a></li>
-      </ul>
-    </li>
-    <li><a href="#测试驱动开发">测试驱动开发</a>
-      <ul>
-        <li><a href="#测试外部属性props">测试外部属性<code>props</code></a></li>
-        <li><a href="#重构inputtestts">重构<code>input.test.ts</code></a></li>
-        <li><a href="#测试事件">测试事件</a></li>
-      </ul>
-    </li>
-    <li><a href="#让-vueinput-支持-v-model-模拟双向绑定">让 <code>VueInput</code> 支持 <code>v-model</code> (模拟双向绑定)</a>
-      <ul>
-        <li><a href="#双向绑定">双向绑定</a></li>
-        <li><a href="#vue-使用-v-model模拟双向绑定">Vue 使用 <code>v-model</code>模拟双向绑定</a></li>
-        <li><a href="#vueinput-实现支持-v-model"><code>VueInput</code> 实现支持 <code>v-model</code></a></li>
-        <li><a href="#测试v-model">测试<code>v-model</code></a></li>
-        <li><a href="#使用objectdefineproperty添加事件对象的属性">使用<code>Object.defineProperty</code>添加事件对象的属性</a></li>
-      </ul>
-    </li>
-    <li><a href="#vueinput-简单轮子文本输入框小结"><code>VueInput</code> 简单轮子：文本输入框小结</a></li>
-    <li><a href="#其他">其他</a></li>
-    <li><a href="#参考文章">参考文章</a></li>
-    <li><a href="#相关文章">相关文章</a></li>
-  </ul>
+<ul>
+<li><a href="#2-1-简单轮子vueinput-vue-文本输入框-和单元测试">2.1 简单轮子VueInput.vue：文本输入框 和单元测试</a>
+<ul>
+<li><a href="#vueinput-组件需求分析"><code>VueInput</code> 组件需求分析</a></li>
+<li><a href="#api设计">API设计</a></li>
+<li><a href="#写-vueinput-组件">写 <code>VueInput</code> 组件</a>
+<ul>
+<li><a href="#增加-error-状态">增加 <code>error</code> 状态</a></li>
+<li><a href="#使用-template-template-配合-v-if-包裹临时标签组">使用<code>&lt;template&gt;&lt;/template&gt;</code>配合<code>v-if</code>包裹临时标签组</a></li>
+<li><a href="#input-的-change-事件"><code>input</code> 的 <code>change</code> 事件</a></li>
+</ul></li>
+<li><a href="#测试驱动开发">测试驱动开发</a>
+<ul>
+<li><a href="#测试外部属性-props">测试外部属性<code>props</code></a></li>
+<li><a href="#重构-input-test-ts">重构<code>input.test.ts</code></a></li>
+<li><a href="#测试事件">测试事件</a>
+<ul>
+<li><a href="#测试-change-事件">测试 <code>change</code> 事件</a></li>
+<li><a href="#测试-inputs-vue-事件">测试 <code>Inputs.vue</code>事件</a></li>
+<li><a href="#测试-vueinput-vue-的其他事件">测试 <code>VueInput.vue</code> 的其他事件</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#让-vueinput-支持-v-model-模拟双向绑定">让 <code>VueInput</code> 支持 <code>v-model</code> (模拟双向绑定)</a>
+<ul>
+<li><a href="#双向绑定">双向绑定</a></li>
+<li><a href="#vue-使用-v-model-模拟双向绑定">Vue 使用 <code>v-model</code>模拟双向绑定</a></li>
+<li><a href="#vueinput-实现支持-v-model"><code>VueInput</code> 实现支持 <code>v-model</code></a></li>
+<li><a href="#测试-v-model">测试<code>v-model</code></a></li>
+<li><a href="#使用-object-defineproperty-添加事件对象的属性">使用<code>Object.defineProperty</code>添加事件对象的属性</a></li>
+</ul></li>
+<li><a href="#vueinput-简单轮子-文本输入框小结"><code>VueInput</code> 简单轮子：文本输入框小结</a></li>
+<li><a href="#其他">其他</a></li>
+<li><a href="#参考文章">参考文章</a></li>
+<li><a href="#相关文章">相关文章</a></li>
+</ul></li>
+</ul>
 </nav>
   </div>
 </div>
 
     
     <div class="post-content">
-      <h1 id="21-简单轮子vueinputvue文本输入框-和单元测试">2.1 简单轮子VueInput.vue：文本输入框 和单元测试</h1>
+      
+
+<h1 id="2-1-简单轮子vueinput-vue-文本输入框-和单元测试">2.1 简单轮子VueInput.vue：文本输入框 和单元测试</h1>
+
 <blockquote>
-<p>大纲链接<!-- raw HTML omitted --> § <!-- raw HTML omitted --></p>
+<p>大纲链接<a id="catalogue" href="#catalogue" > § </a></p>
 </blockquote>
+
 <p>[toc]</p>
-<hr>
+
+<hr />
+
 <h2 id="vueinput-组件需求分析"><code>VueInput</code> 组件需求分析</h2>
+
 <blockquote>
 <p><code>User Case</code></p>
 </blockquote>
+
 <ul>
 <li>输入
+
 <ul>
 <li>提示 用户名必须为英文</li>
 <li>报错信息</li>
 <li>清空</li>
-</ul>
-</li>
+</ul></li>
 <li>复制/粘贴</li>
 <li>键盘 <code>Tab</code></li>
 <li>敲击回车</li>
 <li>不可输入</li>
 </ul>
+
 <blockquote>
 <p>输入框状态 11 种</p>
 </blockquote>
+
 <ul>
 <li><code>enable</code>默认状态</li>
 <li><code>hover</code>状态 (移动端无)</li>
 <li><code>focus</code>状态</li>
 <li><code>error</code>状态 (危险色提示文字)
+
 <ul>
 <li><code>error hover</code>状态 (移动端无)</li>
 <li><code>error focus</code>状态</li>
-</ul>
-</li>
+</ul></li>
 <li><code>sucess</code>状态 (原谅色提示文字)
+
 <ul>
 <li><code>sucess hover</code>状态 (移动端无)</li>
 <li><code>sucess focus</code>状态</li>
-</ul>
-</li>
+</ul></li>
 <li><code>disable</code>状态</li>
 <li><code>readonly</code>状态</li>
 </ul>
+
 <blockquote>
 <p><code>lable</code>名称 + 提示文字 / + 按钮</p>
 </blockquote>
+
 <ul>
 <li><code>lable</code>名称 的 位置
+
 <ul>
 <li><code>lable</code>在上方</li>
 <li><code>lable</code>在左方</li>
-</ul>
-</li>
+</ul></li>
 <li>提示图标 + 提示文字
+
 <ul>
 <li>提示图标 叹号</li>
 <li>提示文字 颜色跟随图标</li>
-<li>提示信息
-<ul>
+<li>提示信息</li>
 <li>用户名
+
 <ul>
 <li>已被占用</li>
 <li>错误</li>
 <li>不存在</li>
-</ul>
-</li>
+</ul></li>
 <li>密码
+
 <ul>
 <li>太短</li>
 <li>错误</li>
-</ul>
-</li>
+</ul></li>
 <li>提示信息位置
+
 <ul>
 <li>右方</li>
 <li>下方</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
+</ul></li>
+</ul></li>
 <li>按钮
+
 <ul>
 <li>输入框 + 搜索按钮（右侧）</li>
 <li>名称按钮（左侧） + 输入框</li>
-</ul>
-</li>
+</ul></li>
 <li>默认占位提示 <code>placeholder</code></li>
 </ul>
+
 <blockquote>
 <p><a href="https://yuque.com/u29422/gulu/197282">查看文本输入框 UI</a></p>
 </blockquote>
-<hr>
+
+<hr />
+
 <h2 id="api设计">API设计</h2>
-<hr>
+
+<hr />
+
 <h2 id="写-vueinput-组件">写 <code>VueInput</code> 组件</h2>
+
 <blockquote>
 <p>新建<code>./src/components/input/VueInput.vue</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-vue" data-lang="vue"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -471,10 +497,9 @@
 </span><span class="lnt">10
 </span><span class="lnt">11
 </span><span class="lnt">12
-</span><span class="lnt">13
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-vue" data-lang="vue"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
 <span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
 
@@ -485,21 +510,23 @@
 <span class="kr">export</span> <span class="k">default</span> <span class="kr">class</span> <span class="nx">VueInput</span> <span class="kr">extends</span> <span class="nx">Vue</span> <span class="p">{</span>
   <span class="nx">name</span> <span class="o">=</span> <span class="s1">&#39;VueInput&#39;</span><span class="p">;</span>
 <span class="p">}</span>
-<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-
-</code></pre></td></tr></table>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><ul>
+</div>
+<ul>
 <li>样式标签中加<code>scoped</code>属性，在生成的相同组件中的标签样式使用同一个<code>data-v-xxxxx</code>作为唯一id，隔绝同名样式</li>
 </ul>
-<hr>
+
+<hr />
+
 <h3 id="增加-error-状态">增加 <code>error</code> 状态</h3>
+
 <blockquote>
 <p><code>VueInput.vue</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+<pre class="chroma"><code class="language-vue" data-lang="vue"><span class="lnt">  1
 </span><span class="lnt">  2
 </span><span class="lnt">  3
 </span><span class="lnt">  4
@@ -625,10 +652,9 @@
 </span><span class="lnt">124
 </span><span class="lnt">125
 </span><span class="lnt">126
-</span><span class="lnt">127
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-vue" data-lang="vue"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;wrapper&#34;</span><span class="p">&gt;</span>
     <span class="p">&lt;</span><span class="nt">label</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;form-item&#34;</span><span class="p">&gt;</span>
       <span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
@@ -753,21 +779,22 @@
     <span class="p">}</span>
   <span class="p">}</span>
 <span class="p">}</span>
-<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
-
-</code></pre></td></tr></table>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><ul>
+</div>
+<ul>
 <li><code>:class=&quot;{..., 'error': error}&quot;&gt;</code>可以简写为<code>:class=&quot;{..., error}&quot;&gt;</code></li>
 </ul>
-<hr>
-<h3 id="使用templatetemplate配合v-if包裹临时标签组">使用<code>&lt;template&gt;&lt;/template&gt;</code>配合<code>v-if</code>包裹临时标签组</h3>
+
+<hr />
+
+<h3 id="使用-template-template-配合-v-if-包裹临时标签组">使用<code>&lt;template&gt;&lt;/template&gt;</code>配合<code>v-if</code>包裹临时标签组</h3>
+
 <ul>
-<li>不恰当的写法：</li>
-</ul>
+<li><p>不恰当的写法：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-vue" data-lang="vue"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -795,46 +822,43 @@
 </span><span class="lnt">26
 </span><span class="lnt">27
 </span><span class="lnt">28
-</span><span class="lnt">29
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;wrapper&#34;</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">label</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;form-item&#34;</span><span class="p">&gt;</span>
-      <span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
-        <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;name&#34;</span><span class="p">&gt;{{</span> <span class="nx">labelName</span> <span class="p">}}&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
-        <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;text&#34;</span>
-               <span class="nt">:placeholder</span><span class="s">=&#34;placeholder&#34;</span>
-               <span class="nt">:disabled</span><span class="s">=&#34;disabled&#34;</span>
-               <span class="nt">:readonly</span><span class="s">=&#34;readonly&#34;</span>
-               <span class="nt">:error</span><span class="s">=&#34;error&#34;</span>
-               <span class="o">:</span><span class="na">class</span><span class="o">=</span><span class="s">&#34;{&#39;fake-focus&#39;: isFakeFocus,
-</span><span class="s">                        &#39;fake-hover&#39;: isFakeHover &amp;&amp; !error,
-</span><span class="s">                        &#39;fake-hover-error&#39;: isFakeHover &amp;&amp; error,
-</span><span class="s">                        error}&#34;</span><span class="p">&gt;</span>
-        <span class="p">&lt;</span><span class="nt">VueIcon</span> <span class="na">icon</span><span class="nt">-name</span><span class="err">=&#34;</span><span class="na">settings</span><span class="err">&#34;</span>
-                 <span class="nt">v-if</span><span class="s">=&#34;error&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">VueIcon</span><span class="p">&gt;</span>
-        <span class="p">&lt;</span><span class="nt">span</span> <span class="nt">v-if</span><span class="s">=&#34;error&#34;</span><span class="p">&gt;{{</span> <span class="na">error</span> <span class="p">}}&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-vue" data-lang="vue"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;wrapper&#34;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">label</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;form-item&#34;</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;name&#34;</span><span class="p">&gt;{{</span> <span class="nx">labelName</span> <span class="p">}}&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;text&#34;</span>
+           <span class="nt">:placeholder</span><span class="s">=&#34;placeholder&#34;</span>
+           <span class="nt">:disabled</span><span class="s">=&#34;disabled&#34;</span>
+           <span class="nt">:readonly</span><span class="s">=&#34;readonly&#34;</span>
+           <span class="nt">:error</span><span class="s">=&#34;error&#34;</span>
+           <span class="o">:</span><span class="na">class</span><span class="o">=</span><span class="s">&#34;{&#39;fake-focus&#39;: isFakeFocus,
+</span><span class="s">                    &#39;fake-hover&#39;: isFakeHover &amp;&amp; !error,
+</span><span class="s">                    &#39;fake-hover-error&#39;: isFakeHover &amp;&amp; error,
+</span><span class="s">                    error}&#34;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">VueIcon</span> <span class="na">icon</span><span class="nt">-name</span><span class="err">=&#34;</span><span class="na">settings</span><span class="err">&#34;</span>
+             <span class="nt">v-if</span><span class="s">=&#34;error&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">VueIcon</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">span</span> <span class="nt">v-if</span><span class="s">=&#34;error&#34;</span><span class="p">&gt;{{</span> <span class="na">error</span> <span class="p">}}&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
         
-        <span class="p">&lt;</span><span class="nt">div</span> <span class="nt">v-if</span><span class="s">=&#34;error&#34;
-</span><span class="s">             style=&#34;display: inline-block;&#34;&gt;
-</span><span class="s">          &lt;VueIcon icon-name=&#34;settings&#34;&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">VueIcon</span><span class="p">&gt;</span>
-          <span class="p">&lt;</span><span class="nt">spa</span><span class="p">&gt;{{</span> <span class="nx">error</span> <span class="p">}}&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
-        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="nt">v-if</span><span class="s">=&#34;error&#34;
+</span><span class="s">         style=&#34;display: inline-block;&#34;&gt;
+</span><span class="s">      &lt;VueIcon icon-name=&#34;settings&#34;&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">VueIcon</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">spa</span><span class="p">&gt;{{</span> <span class="nx">error</span> <span class="p">}}&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
         
-      <span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
-    <span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
-  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
-
-</code></pre></td></tr></table>
+  <span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><ul>
-<li>更好的写法：</li>
-</ul>
+</div></li>
+
+<li><p>更好的写法：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-vue" data-lang="vue"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -856,50 +880,53 @@
 </span><span class="lnt">20
 </span><span class="lnt">21
 </span><span class="lnt">22
-</span><span class="lnt">23
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;wrapper&#34;</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">label</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;form-item&#34;</span><span class="p">&gt;</span>
-      <span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
-        <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;name&#34;</span><span class="p">&gt;{{</span> <span class="nx">labelName</span> <span class="p">}}&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
-        <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;text&#34;</span>
-               <span class="nt">:placeholder</span><span class="s">=&#34;placeholder&#34;</span>
-               <span class="nt">:disabled</span><span class="s">=&#34;disabled&#34;</span>
-               <span class="nt">:readonly</span><span class="s">=&#34;readonly&#34;</span>
-               <span class="nt">:error</span><span class="s">=&#34;error&#34;</span>
-               <span class="o">:</span><span class="na">class</span><span class="o">=</span><span class="s">&#34;{&#39;fake-focus&#39;: isFakeFocus,
-</span><span class="s">                        &#39;fake-hover&#39;: isFakeHover &amp;&amp; !error,
-</span><span class="s">                        &#39;fake-hover-error&#39;: isFakeHover &amp;&amp; error,
-</span><span class="s">                        error}&#34;</span><span class="p">&gt;</span>
-        <span class="p">&lt;</span><span class="nt">template</span> <span class="nt">v-if</span><span class="s">=&#34;error&#34;</span><span class="p">&gt;</span>
-          <span class="p">&lt;</span><span class="nt">VueIcon</span> <span class="na">icon</span><span class="nt">-name</span><span class="err">=&#34;</span><span class="na">settings</span><span class="err">&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">VueIcon</span><span class="p">&gt;</span>
-          <span class="p">&lt;</span><span class="nt">span</span><span class="p">&gt;{{</span> <span class="nx">error</span> <span class="p">}}&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
-        <span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
-      <span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
-    <span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
-  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
-
-</code></pre></td></tr></table>
+<pre class="chroma"><code class="language-vue" data-lang="vue"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;wrapper&#34;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">label</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;form-item&#34;</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;name&#34;</span><span class="p">&gt;{{</span> <span class="nx">labelName</span> <span class="p">}}&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;text&#34;</span>
+           <span class="nt">:placeholder</span><span class="s">=&#34;placeholder&#34;</span>
+           <span class="nt">:disabled</span><span class="s">=&#34;disabled&#34;</span>
+           <span class="nt">:readonly</span><span class="s">=&#34;readonly&#34;</span>
+           <span class="nt">:error</span><span class="s">=&#34;error&#34;</span>
+           <span class="o">:</span><span class="na">class</span><span class="o">=</span><span class="s">&#34;{&#39;fake-focus&#39;: isFakeFocus,
+</span><span class="s">                    &#39;fake-hover&#39;: isFakeHover &amp;&amp; !error,
+</span><span class="s">                    &#39;fake-hover-error&#39;: isFakeHover &amp;&amp; error,
+</span><span class="s">                    error}&#34;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">template</span> <span class="nt">v-if</span><span class="s">=&#34;error&#34;</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">VueIcon</span> <span class="na">icon</span><span class="nt">-name</span><span class="err">=&#34;</span><span class="na">settings</span><span class="err">&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">VueIcon</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">span</span><span class="p">&gt;{{</span> <span class="nx">error</span> <span class="p">}}&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><ul>
-<li><code>&lt;template&gt;&lt;/template&gt;</code>会编译后自动消失，不用添加额外的标签和样式</li>
-<li>缺点也是当需要特别的样式时，在<code>&lt;template&gt;&lt;/template&gt;</code>上添加样式无效</li>
+</div></li>
+
+<li><p><code>&lt;template&gt;&lt;/template&gt;</code>会编译后自动消失，不用添加额外的标签和样式</p></li>
+
+<li><p>缺点也是当需要特别的样式时，在<code>&lt;template&gt;&lt;/template&gt;</code>上添加样式无效</p></li>
 </ul>
-<hr>
+
+<hr />
+
 <h3 id="input-的-change-事件"><code>input</code> 的 <code>change</code> 事件</h3>
+
 <ul>
 <li><code>&lt;VueInput&gt;&lt;/VueInput&gt;</code>上添加监听事件 <code>@change.native=&quot;xxx&quot;</code></li>
 <li>或者在<code>VueInput.vue</code>里的<code>&lt;input&gt;</code>标签上监听<code>@change=&quot;xxx&quot;</code></li>
 </ul>
+
 <blockquote>
 <p><code>VueInput.vue</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+<pre class="chroma"><code class="language-vue" data-lang="vue"><span class="lnt">  1
 </span><span class="lnt">  2
 </span><span class="lnt">  3
 </span><span class="lnt">  4
@@ -1051,10 +1078,9 @@
 </span><span class="lnt">150
 </span><span class="lnt">151
 </span><span class="lnt">152
-</span><span class="lnt">153
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-vue" data-lang="vue"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;wrapper&#34;</span><span class="p">&gt;</span>
     <span class="p">&lt;</span><span class="nt">label</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;form-item&#34;</span> <span class="nt">:for</span><span class="s">=&#34;labelName&#34;</span><span class="p">&gt;</span>
       <span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
@@ -1205,27 +1231,27 @@
     <span class="p">}</span>
   <span class="p">}</span>
 <span class="p">}</span>
-<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
-
-</code></pre></td></tr></table>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><ul>
+</div>
+<ul>
 <li>向父组件传递自定义事件 <code>change($event: { target: HTMLInputElement }) {this.$emit('updateChange', $event.target.value);}</code></li>
 <li>使用解构赋值 <code>$event: { target: HTMLInputElement }</code> 定义形参类型</li>
 <li>发布的自定义事件可以传第三个参数
+
 <ul>
 <li><code>this.$emit('updateChange', $event.target.value , 'Hi');</code></li>
 <li><code>Inputs.vue</code>中回调函数接受参数，使用<code>inputChange(xxx, yyy) {console.log(yyy)}</code>的第二个形参接受</li>
 <li><code>yyy</code>的值即<code>'Hi'</code></li>
+</ul></li>
 </ul>
-</li>
-</ul>
+
 <blockquote>
 <p><code>Inputs.vue</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-vue" data-lang="vue"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1281,10 +1307,9 @@
 </span><span class="lnt">54
 </span><span class="lnt">55
 </span><span class="lnt">56
-</span><span class="lnt">57
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-vue" data-lang="vue"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
     <span class="p">&lt;</span><span class="nt">details</span> <span class="na">open</span><span class="p">&gt;</span>
       <span class="p">&lt;</span><span class="nt">summary</span><span class="p">&gt;</span><span class="nx">Primary</span><span class="p">&lt;/</span><span class="nt">summary</span><span class="p">&gt;</span>
@@ -1339,19 +1364,21 @@
     <span class="nx">color</span><span class="o">:</span> <span class="nx">$danger</span><span class="p">;</span>
   <span class="p">}</span>
 <span class="p">}</span>
-<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
-
-</code></pre></td></tr></table>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><hr>
+</div>
+<hr />
+
 <h2 id="测试驱动开发">测试驱动开发</h2>
-<h3 id="测试外部属性props">测试外部属性<code>props</code></h3>
+
+<h3 id="测试外部属性-props">测试外部属性<code>props</code></h3>
+
 <blockquote>
 <p><code>input.test.ts</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1428,12 +1455,11 @@
 </span><span class="lnt">75
 </span><span class="lnt">76
 </span><span class="lnt">77
-</span><span class="lnt">78
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="kr">import</span> <span class="nx">Vue</span> <span class="kr">from</span> <span class="s1">&#39;vue&#39;</span><span class="p">;</span>
-<span class="kr">import</span> <span class="nx">chai</span> <span class="kr">from</span> <span class="s1">&#39;chai&#39;</span><span class="p">;</span>
-<span class="kr">import</span> <span class="nx">VueInput</span> <span class="kr">from</span> <span class="s1">&#39;../src/components/input/VueInput.vue&#39;</span><span class="p">;</span>
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="kr">import</span> <span class="nx">Vue</span> <span class="nx">from</span> <span class="s1">&#39;vue&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">chai</span> <span class="nx">from</span> <span class="s1">&#39;chai&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">VueInput</span> <span class="nx">from</span> <span class="s1">&#39;../src/components/input/VueInput.vue&#39;</span><span class="p">;</span>
 
 <span class="nx">chai</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">sinonChai</span><span class="p">);</span>
 <span class="kr">const</span> <span class="nx">expect</span> <span class="o">=</span> <span class="nx">chai</span><span class="p">.</span><span class="nx">expect</span><span class="p">;</span>
@@ -1481,7 +1507,7 @@
       <span class="kr">const</span> <span class="nx">Constructor</span> <span class="o">=</span> <span class="nx">Vue</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="nx">VueInput</span><span class="p">);</span>
       <span class="kr">const</span> <span class="nx">vm</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Constructor</span><span class="p">({</span>
         <span class="nx">propsData</span><span class="o">:</span> <span class="p">{</span>
-          <span class="kr">readonly</span><span class="o">:</span> <span class="kc">true</span>
+          <span class="nx">readonly</span>: <span class="kt">true</span>
         <span class="p">}</span>
       <span class="p">}).</span><span class="nx">$mount</span><span class="p">();</span>
       <span class="kr">const</span> <span class="nx">inputElement</span> <span class="o">=</span> <span class="nx">vm</span><span class="p">.</span><span class="nx">$el</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">&#39;input&#39;</span><span class="p">);</span>
@@ -1508,19 +1534,21 @@
       <span class="nx">vm</span><span class="p">.</span><span class="nx">$destroy</span><span class="p">();</span>
     <span class="p">});</span>
   <span class="p">});</span>
-
 </code></pre></td></tr></table>
 </div>
-</div><ul>
+</div>
+<ul>
 <li>每次的重复代码太多</li>
 <li>将测试用例中的重复代码提取到 <strong><a href="https://mochajs.org/#hooks"><code>Mocha.js Hooks</code></a></strong> 的生命周期函数中</li>
 <li>使用每次运行测试前后的钩子函数<code>beforeEach</code> <code>afterEach</code></li>
 </ul>
-<hr>
-<h3 id="重构inputtestts">重构<code>input.test.ts</code></h3>
+
+<hr />
+
+<h3 id="重构-input-test-ts">重构<code>input.test.ts</code></h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1597,14 +1625,13 @@
 </span><span class="lnt">75
 </span><span class="lnt">76
 </span><span class="lnt">77
-</span><span class="lnt">78
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="kr">import</span> <span class="nx">Vue</span> <span class="kr">from</span> <span class="s1">&#39;vue&#39;</span><span class="p">;</span>
-<span class="kr">import</span> <span class="nx">chai</span> <span class="kr">from</span> <span class="s1">&#39;chai&#39;</span><span class="p">;</span>
-<span class="kr">import</span> <span class="nx">sinon</span> <span class="kr">from</span> <span class="s1">&#39;sinon&#39;</span><span class="p">;</span>
-<span class="kr">import</span> <span class="nx">sinonChai</span> <span class="kr">from</span> <span class="s1">&#39;sinon-chai&#39;</span><span class="p">;</span>
-<span class="kr">import</span> <span class="nx">VueInput</span> <span class="kr">from</span> <span class="s1">&#39;../src/components/input/VueInput.vue&#39;</span><span class="p">;</span>
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="kr">import</span> <span class="nx">Vue</span> <span class="nx">from</span> <span class="s1">&#39;vue&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">chai</span> <span class="nx">from</span> <span class="s1">&#39;chai&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">sinon</span> <span class="nx">from</span> <span class="s1">&#39;sinon&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">sinonChai</span> <span class="nx">from</span> <span class="s1">&#39;sinon-chai&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">VueInput</span> <span class="nx">from</span> <span class="s1">&#39;../src/components/input/VueInput.vue&#39;</span><span class="p">;</span>
 
 <span class="nx">chai</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">sinonChai</span><span class="p">);</span>
 <span class="kr">const</span> <span class="nx">expect</span> <span class="o">=</span> <span class="nx">chai</span><span class="p">.</span><span class="nx">expect</span><span class="p">;</span>
@@ -1653,7 +1680,7 @@
     <span class="nx">it</span><span class="p">(</span><span class="s1">&#39;VueInput可以接受readOnly&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
       <span class="nx">vm</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Constructor</span><span class="p">({</span>
         <span class="nx">propsData</span><span class="o">:</span> <span class="p">{</span>
-          <span class="kr">readonly</span><span class="o">:</span> <span class="kc">true</span>
+          <span class="nx">readonly</span>: <span class="kt">true</span>
         <span class="p">}</span>
       <span class="p">}).</span><span class="nx">$mount</span><span class="p">();</span>
       <span class="kr">const</span> <span class="nx">inputElement</span> <span class="o">=</span> <span class="nx">vm</span><span class="p">.</span><span class="nx">$el</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">&#39;input&#39;</span><span class="p">);</span>
@@ -1677,24 +1704,27 @@
       <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;VueInput可以接受error&#39;</span><span class="p">);</span>
     <span class="p">});</span>
   <span class="p">});</span>
-
 </code></pre></td></tr></table>
 </div>
-</div><ul>
+</div>
+<ul>
 <li>作用域被隔开了，<code>vm</code>的作用域分别在各自的测试用例中</li>
 <li>在外部统一提前声明
+
 <ul>
 <li><code>const Constructor = Vue.extend(VueInput);</code></li>
 <li><code>let vm: Vue;</code></li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<hr>
+
+<hr />
+
 <h3 id="测试事件">测试事件</h3>
+
 <h4 id="测试-change-事件">测试 <code>change</code> 事件</h4>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1714,7 +1744,7 @@
 </span><span class="lnt">18
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="c1">//...
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="c1">//...
 </span><span class="c1"></span>  <span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;事件&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
     <span class="nx">afterEach</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
       <span class="nx">vm</span><span class="p">.</span><span class="nx">$destroy</span><span class="p">();</span>
@@ -1734,16 +1764,15 @@
 <span class="c1">//...
 </span></code></pre></td></tr></table>
 </div>
-</div><ul>
-<li>如何手动触发事件
+</div>
 <ul>
-<li>搜<code>trigger change event manually</code></li>
-</ul>
-</li>
-</ul>
+<li><p>如何手动触发事件</p>
+
+<ul>
+<li><p>搜<code>trigger change event manually</code></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1773,78 +1802,89 @@
 </span><span class="lnt">28
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="c1">//...
-</span><span class="c1"></span>  <span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;事件&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
-    <span class="nx">afterEach</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
-      <span class="nx">vm</span><span class="p">.</span><span class="nx">$destroy</span><span class="p">();</span>
-    <span class="p">});</span>
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="c1">//...
+</span><span class="c1"></span><span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;事件&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+<span class="nx">afterEach</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+<span class="nx">vm</span><span class="p">.</span><span class="nx">$destroy</span><span class="p">();</span>
+<span class="p">});</span>
 
-    <span class="nx">it</span><span class="p">(</span><span class="s1">&#39;input 支持 change 事件&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
-      <span class="nx">vm</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Constructor</span><span class="p">({}).</span><span class="nx">$mount</span><span class="p">();</span>
-      <span class="kr">const</span> <span class="nx">callback</span> <span class="o">=</span> <span class="nx">sinon</span><span class="p">.</span><span class="nx">fake</span><span class="p">();</span>
-      <span class="c1">// 监听
-</span><span class="c1"></span>      <span class="nx">vm</span><span class="p">.</span><span class="nx">$on</span><span class="p">(</span><span class="s1">&#39;change&#39;</span><span class="p">,</span> <span class="nx">callback</span><span class="p">);</span>
+<span class="nx">it</span><span class="p">(</span><span class="s1">&#39;input 支持 change 事件&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+<span class="nx">vm</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Constructor</span><span class="p">({}).</span><span class="nx">$mount</span><span class="p">();</span>
+<span class="kr">const</span> <span class="nx">callback</span> <span class="o">=</span> <span class="nx">sinon</span><span class="p">.</span><span class="nx">fake</span><span class="p">();</span>
+<span class="c1">// 监听
+</span><span class="c1"></span><span class="nx">vm</span><span class="p">.</span><span class="nx">$on</span><span class="p">(</span><span class="s1">&#39;change&#39;</span><span class="p">,</span> <span class="nx">callback</span><span class="p">);</span>
 
-      <span class="c1">// 手动触发 input 的事件
-</span><span class="c1"></span>      <span class="kr">const</span> <span class="nx">changeEvent</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Event</span><span class="p">(</span><span class="s1">&#39;change&#39;</span><span class="p">);</span>
-      <span class="kr">const</span> <span class="nx">inputElement</span> <span class="o">=</span> <span class="nx">vm</span><span class="p">.</span><span class="nx">$el</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">&#39;input&#39;</span><span class="p">);</span>
+<span class="c1">// 手动触发 input 的事件
+</span><span class="c1"></span><span class="kr">const</span> <span class="nx">changeEvent</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Event</span><span class="p">(</span><span class="s1">&#39;change&#39;</span><span class="p">);</span>
+<span class="kr">const</span> <span class="nx">inputElement</span> <span class="o">=</span> <span class="nx">vm</span><span class="p">.</span><span class="nx">$el</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">&#39;input&#39;</span><span class="p">);</span>
 
-      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;changeEvent: &#39;</span><span class="p">,</span> <span class="nx">changeEvent</span><span class="p">);</span>
-      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;inputElement: &#39;</span><span class="p">,</span> <span class="nx">inputElement</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;changeEvent: &#39;</span><span class="p">,</span> <span class="nx">changeEvent</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;inputElement: &#39;</span><span class="p">,</span> <span class="nx">inputElement</span><span class="p">);</span>
 
-      <span class="p">(</span><span class="nx">inputElement</span> <span class="kr">as</span> <span class="nx">HTMLInputElement</span><span class="p">).</span><span class="nx">dispatchEvent</span><span class="p">(</span><span class="nx">changeEvent</span><span class="p">);</span>
+<span class="p">(</span><span class="nx">inputElement</span> <span class="kr">as</span> <span class="nx">HTMLInputElement</span><span class="p">).</span><span class="nx">dispatchEvent</span><span class="p">(</span><span class="nx">changeEvent</span><span class="p">);</span>
 
-      <span class="c1">// 断言
-</span><span class="c1"></span>      <span class="nx">expect</span><span class="p">(</span><span class="nx">callback</span><span class="p">).</span><span class="nx">to</span><span class="p">.</span><span class="nx">have</span><span class="p">.</span><span class="nx">been</span><span class="p">.</span><span class="nx">called</span><span class="p">;</span>
-      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;改变 input 值 触发 change 事件&#39;</span><span class="p">);</span>
-    <span class="p">});</span>
+<span class="c1">// 断言
+</span><span class="c1"></span><span class="nx">expect</span><span class="p">(</span><span class="nx">callback</span><span class="p">).</span><span class="nx">to</span><span class="p">.</span><span class="nx">have</span><span class="p">.</span><span class="nx">been</span><span class="p">.</span><span class="nx">called</span><span class="p">;</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;改变 input 值 触发 change 事件&#39;</span><span class="p">);</span>
+<span class="p">});</span>
 
-  <span class="p">});</span>
- <span class="c1">//...
+<span class="p">});</span>
+<span class="c1">//...
 </span></code></pre></td></tr></table>
 </div>
-</div><ul>
-<li>使用 <code>new Event('change')</code> API 创建事件</li>
-<li>使用 <code>inputElement.dispatchEvent(new Event('change'));</code> API 触发事件</li>
-<li>控制台打印出<code>changeEvent</code>
+</div></li>
+</ul></li>
+
+<li><p>使用 <code>new Event('change')</code> API 创建事件</p></li>
+
+<li><p>使用 <code>inputElement.dispatchEvent(new Event('change'));</code> API 触发事件</p></li>
+
+<li><p>控制台打印出<code>changeEvent</code></p>
+
 <ul>
 <li>发现 <code>Event{isTrusted: false}</code> 注意属性 <strong><code>{isTrusted: false}</code></strong></li>
 <li>事件不是浏览器响应UI产生的</li>
-</ul>
-</li>
-<li>控制台打印出<code>inputElement</code>
+</ul></li>
+
+<li><p>控制台打印出<code>inputElement</code></p>
+
 <ul>
 <li><code>&lt;input data-v-f67744=&quot;&quot; type=&quot;text&quot; class=&quot;&quot;&gt;</code></li>
+</ul></li>
 </ul>
-</li>
-</ul>
+
 <blockquote>
 <p>测试<code>change</code>事件失败</p>
 </blockquote>
+
 <ul>
 <li>因为<code>VueInput</code>组件传递给外部父组件的是自定义事件<code>updateChange</code>
+
 <ul>
 <li><code>this.$emit('updateChange', $event.target.value);</code></li>
-</ul>
-</li>
+</ul></li>
 <li>改为传<code>change</code>事件
+
 <ul>
 <li><code>this.$emit('change', $event.target.value);</code></li>
-</ul>
-</li>
+</ul></li>
 <li>再次测试 <code>change</code> 事件</li>
 </ul>
+
 <blockquote>
 <p>手动触发的<code>change</code>能否正确地传递事件的参数</p>
 </blockquote>
+
 <ul>
 <li>先将子组件<code>VueInput.vue</code>触发<code>input</code>事件时发布的自定义事件改为<code>this.$emit('change', $event);</code></li>
 </ul>
-<hr>
-<h4 id="测试-inputsvue事件">测试 <code>Inputs.vue</code>事件</h4>
+
+<hr />
+
+<h4 id="测试-inputs-vue-事件">测试 <code>Inputs.vue</code>事件</h4>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-vue" data-lang="vue"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1883,7 +1923,7 @@
 </span><span class="lnt">37
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-vue" data-lang="vue"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
     <span class="p">&lt;</span><span class="nt">VueInput</span> <span class="na">placeholder</span><span class="o">=</span><span class="s">&#34;Enable&#34;</span>
               <span class="na">id</span><span class="o">=</span><span class="s">&#34;testInput&#34;</span>
@@ -1919,38 +1959,42 @@
   <span class="p">}</span>
   
 <span class="p">}</span>
-<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-</code></pre></td></tr></table>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><ul>
+</div>
+<ul>
 <li>对比浏览器触发的和使用 API 代码触发的<code>change</code>事件
+
 <ul>
 <li>用户操作UI产生的 <code>Event {isTrusted: true...}</code></li>
 <li>调用 <code>API</code>产生的<code>Event {isTrusted: false...}</code></li>
 <li>其他属性都相同</li>
-</ul>
-</li>
+</ul></li>
 <li>可以模拟</li>
 </ul>
+
 <blockquote>
 <p>还期待<code>spy</code>函数在触发(<code>called</code>)的时候传递参数<code>Event</code></p>
 </blockquote>
+
 <ul>
 <li>查看<code>sinon-chai</code>文档
+
 <ul>
 <li><a href="https://www.chaijs.com/plugins/sinon-chai/"><code>Sinon.JS Assertions for Chai</code></a></li>
 <li><a href="https://www.chaijs.com/plugins/sinon-chai-in-order/"><code>In-Order Sinon-Chai Assertions</code></a></li>
-</ul>
-</li>
+</ul></li>
 <li>使用<code>expect(callback).to.have.been.calledWith(event)</code></li>
 </ul>
-<hr>
+
+<hr />
+
 <blockquote>
 <p><code>input.test.ts</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="lnt">  1
 </span><span class="lnt">  2
 </span><span class="lnt">  3
 </span><span class="lnt">  4
@@ -2056,14 +2100,13 @@
 </span><span class="lnt">104
 </span><span class="lnt">105
 </span><span class="lnt">106
-</span><span class="lnt">107
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="kr">import</span> <span class="nx">Vue</span> <span class="kr">from</span> <span class="s1">&#39;vue&#39;</span><span class="p">;</span>
-<span class="kr">import</span> <span class="nx">chai</span> <span class="kr">from</span> <span class="s1">&#39;chai&#39;</span><span class="p">;</span>
-<span class="kr">import</span> <span class="nx">sinon</span> <span class="kr">from</span> <span class="s1">&#39;sinon&#39;</span><span class="p">;</span>
-<span class="kr">import</span> <span class="nx">sinonChai</span> <span class="kr">from</span> <span class="s1">&#39;sinon-chai&#39;</span><span class="p">;</span>
-<span class="kr">import</span> <span class="nx">VueInput</span> <span class="kr">from</span> <span class="s1">&#39;../src/components/input/VueInput.vue&#39;</span><span class="p">;</span>
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="kr">import</span> <span class="nx">Vue</span> <span class="nx">from</span> <span class="s1">&#39;vue&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">chai</span> <span class="nx">from</span> <span class="s1">&#39;chai&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">sinon</span> <span class="nx">from</span> <span class="s1">&#39;sinon&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">sinonChai</span> <span class="nx">from</span> <span class="s1">&#39;sinon-chai&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">VueInput</span> <span class="nx">from</span> <span class="s1">&#39;../src/components/input/VueInput.vue&#39;</span><span class="p">;</span>
 
 <span class="nx">chai</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">sinonChai</span><span class="p">);</span>
 <span class="kr">const</span> <span class="nx">expect</span> <span class="o">=</span> <span class="nx">chai</span><span class="p">.</span><span class="nx">expect</span><span class="p">;</span>
@@ -2112,7 +2155,7 @@
     <span class="nx">it</span><span class="p">(</span><span class="s1">&#39;VueInput可以接受readOnly&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
       <span class="nx">vm</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Constructor</span><span class="p">({</span>
         <span class="nx">propsData</span><span class="o">:</span> <span class="p">{</span>
-          <span class="kr">readonly</span><span class="o">:</span> <span class="kc">true</span>
+          <span class="nx">readonly</span>: <span class="kt">true</span>
         <span class="p">}</span>
       <span class="p">}).</span><span class="nx">$mount</span><span class="p">();</span>
       <span class="kr">const</span> <span class="nx">inputElement</span> <span class="o">=</span> <span class="nx">vm</span><span class="p">.</span><span class="nx">$el</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">&#39;input&#39;</span><span class="p">);</span>
@@ -2165,22 +2208,25 @@
   <span class="p">});</span>
 
 <span class="p">});</span>
-
 </code></pre></td></tr></table>
 </div>
-</div><hr>
-<h4 id="测试-vueinputvue-的其他事件">测试 <code>VueInput.vue</code> 的其他事件</h4>
+</div>
+<hr />
+
+<h4 id="测试-vueinput-vue-的其他事件">测试 <code>VueInput.vue</code> 的其他事件</h4>
+
 <ul>
 <li><code>input</code>事件</li>
 <li><code>focus</code>事件</li>
 <li><code>blur</code>事件</li>
 </ul>
+
 <blockquote>
 <p><code>input.test.ts</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -2250,7 +2296,7 @@
 </span><span class="lnt">68
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="c1">//...
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="c1">//...
 </span><span class="c1"></span>  <span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;事件&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
     <span class="nx">afterEach</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
       <span class="nx">vm</span><span class="p">.</span><span class="nx">$destroy</span><span class="p">();</span>
@@ -2320,13 +2366,14 @@
 <span class="c1">//...
 </span></code></pre></td></tr></table>
 </div>
-</div><ul>
+</div>
+<ul>
 <li>重复代码太多</li>
-<li>重构<code>input.test.ts</code></li>
-</ul>
+
+<li><p>重构<code>input.test.ts</code></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -2353,50 +2400,57 @@
 </span><span class="lnt">25
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="c1">//...
-</span><span class="c1"></span>  <span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;事件&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
-    <span class="nx">afterEach</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
-      <span class="nx">vm</span><span class="p">.</span><span class="nx">$destroy</span><span class="p">();</span>
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="c1">//...
+</span><span class="c1"></span><span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;事件&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+<span class="nx">afterEach</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">vm</span><span class="p">.</span><span class="nx">$destroy</span><span class="p">();</span>
+<span class="p">});</span>
+
+<span class="nx">it</span><span class="p">(</span><span class="s1">&#39;VueInput 支持 change/input/focus/blur 事件&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="p">[</span><span class="s1">&#39;change&#39;</span><span class="p">,</span> <span class="s1">&#39;input&#39;</span><span class="p">,</span> <span class="s1">&#39;focus&#39;</span><span class="p">,</span> <span class="s1">&#39;blur&#39;</span><span class="p">]</span>
+    <span class="p">.</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">eventName</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="nx">vm</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Constructor</span><span class="p">({}).</span><span class="nx">$mount</span><span class="p">();</span>
+      <span class="kr">const</span> <span class="nx">callback</span> <span class="o">=</span> <span class="nx">sinon</span><span class="p">.</span><span class="nx">fake</span><span class="p">();</span>
+      <span class="c1">// 监听
+</span><span class="c1"></span>      <span class="nx">vm</span><span class="p">.</span><span class="nx">$on</span><span class="p">(</span><span class="nx">eventName</span><span class="p">,</span> <span class="nx">callback</span><span class="p">);</span>
+      <span class="c1">// 手动触发 input 的事件
+</span><span class="c1"></span>      <span class="kr">const</span> <span class="nx">changeEvent</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Event</span><span class="p">(</span><span class="nx">eventName</span><span class="p">);</span>
+      <span class="kr">const</span> <span class="nx">inputElement</span> <span class="o">=</span> <span class="nx">vm</span><span class="p">.</span><span class="nx">$el</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">&#39;input&#39;</span><span class="p">);</span>
+      <span class="p">(</span><span class="nx">inputElement</span> <span class="kr">as</span> <span class="nx">HTMLInputElement</span><span class="p">).</span><span class="nx">dispatchEvent</span><span class="p">(</span><span class="nx">changeEvent</span><span class="p">);</span>
+
+      <span class="c1">// 断言
+</span><span class="c1"></span>      <span class="nx">expect</span><span class="p">(</span><span class="nx">callback</span><span class="p">).</span><span class="nx">to</span><span class="p">.</span><span class="nx">have</span><span class="p">.</span><span class="nx">been</span><span class="p">.</span><span class="nx">calledWith</span><span class="p">(</span><span class="nx">changeEvent</span><span class="p">);</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`VueInput 支持 </span><span class="si">${</span><span class="nx">eventName</span><span class="si">}</span><span class="sb"> 事件`</span><span class="p">);</span>
     <span class="p">});</span>
 
-    <span class="nx">it</span><span class="p">(</span><span class="s1">&#39;VueInput 支持 change/input/focus/blur 事件&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
-      <span class="p">[</span><span class="s1">&#39;change&#39;</span><span class="p">,</span> <span class="s1">&#39;input&#39;</span><span class="p">,</span> <span class="s1">&#39;focus&#39;</span><span class="p">,</span> <span class="s1">&#39;blur&#39;</span><span class="p">]</span>
-        <span class="p">.</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">eventName</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-          <span class="nx">vm</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Constructor</span><span class="p">({}).</span><span class="nx">$mount</span><span class="p">();</span>
-          <span class="kr">const</span> <span class="nx">callback</span> <span class="o">=</span> <span class="nx">sinon</span><span class="p">.</span><span class="nx">fake</span><span class="p">();</span>
-          <span class="c1">// 监听
-</span><span class="c1"></span>          <span class="nx">vm</span><span class="p">.</span><span class="nx">$on</span><span class="p">(</span><span class="nx">eventName</span><span class="p">,</span> <span class="nx">callback</span><span class="p">);</span>
-          <span class="c1">// 手动触发 input 的事件
-</span><span class="c1"></span>          <span class="kr">const</span> <span class="nx">changeEvent</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Event</span><span class="p">(</span><span class="nx">eventName</span><span class="p">);</span>
-          <span class="kr">const</span> <span class="nx">inputElement</span> <span class="o">=</span> <span class="nx">vm</span><span class="p">.</span><span class="nx">$el</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">&#39;input&#39;</span><span class="p">);</span>
-          <span class="p">(</span><span class="nx">inputElement</span> <span class="kr">as</span> <span class="nx">HTMLInputElement</span><span class="p">).</span><span class="nx">dispatchEvent</span><span class="p">(</span><span class="nx">changeEvent</span><span class="p">);</span>
-
-          <span class="c1">// 断言
-</span><span class="c1"></span>          <span class="nx">expect</span><span class="p">(</span><span class="nx">callback</span><span class="p">).</span><span class="nx">to</span><span class="p">.</span><span class="nx">have</span><span class="p">.</span><span class="nx">been</span><span class="p">.</span><span class="nx">calledWith</span><span class="p">(</span><span class="nx">changeEvent</span><span class="p">);</span>
-          <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`VueInput 支持 </span><span class="si">${</span><span class="nx">eventName</span><span class="si">}</span><span class="sb"> 事件`</span><span class="p">);</span>
-        <span class="p">});</span>
-
-    <span class="p">});</span>
+<span class="p">});</span>
 <span class="c1">//...
 </span></code></pre></td></tr></table>
 </div>
-</div><ul>
-<li>TDD 测试代码全部通过，即开发完毕</li>
+</div></li>
+
+<li><p>TDD 测试代码全部通过，即开发完毕</p></li>
 </ul>
-<hr>
+
+<hr />
+
 <blockquote>
 <p>目前的<code>VueInput</code>只支持传参和事件</p>
 </blockquote>
+
 <h2 id="让-vueinput-支持-v-model-模拟双向绑定">让 <code>VueInput</code> 支持 <code>v-model</code> (模拟双向绑定)</h2>
+
 <h3 id="双向绑定">双向绑定</h3>
+
 <ul>
 <li>用户的操作（输入）可改变数据（绑定到JS中的变量）</li>
 <li>JS代码逻辑改变数据</li>
 </ul>
-<h3 id="vue-使用-v-model模拟双向绑定">Vue 使用 <code>v-model</code>模拟双向绑定</h3>
+
+<h3 id="vue-使用-v-model-模拟双向绑定">Vue 使用 <code>v-model</code>模拟双向绑定</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-vue" data-lang="vue"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -2419,7 +2473,7 @@
 </span><span class="lnt">21
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-vue" data-lang="vue"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
     <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
         <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;text&#34;</span> <span class="nt">v-model</span><span class="s">=&#34;message&#34;</span><span class="p">&gt;</span>
         <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span> <span class="p">{{</span> <span class="nx">message</span> <span class="p">}}&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
@@ -2439,15 +2493,15 @@
             <span class="p">},</span> <span class="mi">1000</span><span class="p">)</span>
         <span class="p">}</span>
     <span class="p">})</span>
-<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-</code></pre></td></tr></table>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p>其实<code>v-model</code>只是语法糖，相当于以下代码</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-vue" data-lang="vue"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -2472,7 +2526,7 @@
 </span><span class="lnt">23
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-vue" data-lang="vue"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
     <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
         <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;text&#34;</span>
                <span class="nt">:value</span><span class="s">=&#34;message&#34;</span>
@@ -2494,31 +2548,36 @@
             <span class="p">},</span> <span class="mi">1000</span><span class="p">)</span>
         <span class="p">}</span>
     <span class="p">})</span>
-<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-</code></pre></td></tr></table>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><ul>
+</div>
+<ul>
 <li><code>&lt;input&gt;</code>中的<code>v-model</code>相当于：
+
 <ul>
 <li>绑定属性 <code>:value=&quot;message&quot;</code></li>
-<li>监听<code>input</code>事件，并且赋给事件目标的值 <code> @input=&quot;message = $event.target.value&quot;</code></li>
+<li>监听<code>input</code>事件，并且赋给事件目标的值 <code>@input=&quot;message = $event.target.value&quot;</code></li>
+</ul></li>
 </ul>
-</li>
-</ul>
+
 <blockquote>
 <p>参考 demo</p>
 </blockquote>
+
 <ul>
 <li><a href="jsbin.com/rasigok/1">jsbin vue v-model</a></li>
 </ul>
-<hr>
+
+<hr />
+
 <h3 id="vueinput-实现支持-v-model"><code>VueInput</code> 实现支持 <code>v-model</code></h3>
+
 <blockquote>
 <p>修改<code>VueInput</code>中的事件传值<code>$event.target.value</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-vue" data-lang="vue"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -2588,10 +2647,9 @@
 </span><span class="lnt">68
 </span><span class="lnt">69
 </span><span class="lnt">70
-</span><span class="lnt">71
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-vue" data-lang="vue"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;wrapper&#34;</span><span class="p">&gt;</span>
     <span class="p">&lt;</span><span class="nt">label</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;form-item&#34;</span> <span class="nt">:for</span><span class="s">=&#34;labelName&#34;</span><span class="p">&gt;</span>
       <span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
@@ -2660,16 +2718,15 @@
 
 <span class="p">&lt;</span><span class="nt">style</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;scss&#34;</span> <span class="na">scoped</span><span class="p">&gt;</span>
 <span class="p">...</span>
-<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
-
-</code></pre></td></tr></table>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p><code>Inpus.vue</code>已经实现了<code>v-model</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-vue" data-lang="vue"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -2717,10 +2774,9 @@
 </span><span class="lnt">46
 </span><span class="lnt">47
 </span><span class="lnt">48
-</span><span class="lnt">49
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-vue" data-lang="vue"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
     <span class="p">&lt;</span><span class="nt">form</span><span class="p">&gt;</span>
       <span class="p">&lt;</span><span class="nt">fieldset</span><span class="p">&gt;</span>
@@ -2767,32 +2823,37 @@
     <span class="nx">color</span><span class="o">:</span> <span class="nx">$danger</span><span class="p">;</span>
   <span class="p">}</span>
 <span class="p">}</span>
-<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
-
-</code></pre></td></tr></table>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p><code>v-model</code>实现了</p>
 </blockquote>
+
 <ul>
 <li>绑定数据 <code>message</code></li>
 <li>监听<code>input</code>事件，响应触发，改变数据 <code>message</code></li>
 </ul>
-<hr>
-<h3 id="测试v-model">测试<code>v-model</code></h3>
+
+<hr />
+
+<h3 id="测试-v-model">测试<code>v-model</code></h3>
+
 <blockquote>
 <p>测试挂了</p>
 </blockquote>
+
 <ul>
 <li>因为之前测试传的是事件<code>expect(callback).to.have.been.calledWith(triggerEvent);</code></li>
 <li>现在传的是事件目标的值<code>$event.target.value</code>，未得到完整的事件对象，未调用<code>calledWith(triggerEvent)</code></li>
 </ul>
+
 <blockquote>
 <p>控制台打出<code>console.log('triggerEvent: ', triggerEvent);</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -2815,7 +2876,7 @@
 </span><span class="lnt">21
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="c1">//...
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="c1">//...
 </span><span class="c1"></span>    <span class="nx">it</span><span class="p">(</span><span class="s1">&#39;VueInput 支持 change/input/focus/blur 事件&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
       <span class="p">[</span><span class="s1">&#39;change&#39;</span><span class="p">,</span> <span class="s1">&#39;input&#39;</span><span class="p">,</span> <span class="s1">&#39;focus&#39;</span><span class="p">,</span> <span class="s1">&#39;blur&#39;</span><span class="p">]</span>
         <span class="p">.</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">eventName</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
@@ -2838,36 +2899,45 @@
 <span class="c1">//...
 </span></code></pre></td></tr></table>
 </div>
-</div><ul>
+</div>
+<ul>
 <li>得到<code>Event{isTrusted: false}</code>，只有<code>isTrusted: false</code>这一个属性，没有<code>value</code>属性</li>
 </ul>
+
 <blockquote>
 <p><code>value = 'hi'</code>赋值？ 期待参数 <code>calledWith('hi')</code></p>
 </blockquote>
+
 <ul>
 <li><code>event.target = { value: 'hi' }</code></li>
 <li>期待参数 <code>expect(callback).to.have.been.calledWith('hi');</code></li>
 <li>报错，显示<code>cannot assign read only property 'target' of object '#&lt;Event&gt;'</code> 是只读属性</li>
 <li>只能在事件上添加指定的属性<code>new Event(&quot;change&quot;, {&quot;bubbles&quot;: true, &quot;canclable&quot;: false, &quot;composed&quot;: true})</code> 是否冒泡 是否可取消 是否合成</li>
 </ul>
+
 <blockquote>
 <p>搜索<code>js new event set target property</code></p>
 </blockquote>
+
 <ul>
 <li><a href="https://note.youdao.com/">stackoverflow How to set target property when simulating mouseclick in javascript?</a></li>
 <li><a href="https://stackoverflow.com/questions/37456443/how-set-the-eventtarget-of-an-event">stackoverflow How set the EventTarget of an Event</a></li>
 </ul>
-<hr>
-<h3 id="使用objectdefineproperty添加事件对象的属性">使用<code>Object.defineProperty</code>添加事件对象的属性</h3>
+
+<hr />
+
+<h3 id="使用-object-defineproperty-添加事件对象的属性">使用<code>Object.defineProperty</code>添加事件对象的属性</h3>
+
 <ul>
 <li><code>Object.defineProperty( triggerEvent, 'target',  {value: {value: 'hi'}} );</code></li>
 </ul>
+
 <blockquote>
 <p><code>input.test.ts</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="lnt">  1
 </span><span class="lnt">  2
 </span><span class="lnt">  3
 </span><span class="lnt">  4
@@ -2977,14 +3047,13 @@
 </span><span class="lnt">108
 </span><span class="lnt">109
 </span><span class="lnt">110
-</span><span class="lnt">111
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="kr">import</span> <span class="nx">Vue</span> <span class="kr">from</span> <span class="s1">&#39;vue&#39;</span><span class="p">;</span>
-<span class="kr">import</span> <span class="nx">chai</span> <span class="kr">from</span> <span class="s1">&#39;chai&#39;</span><span class="p">;</span>
-<span class="kr">import</span> <span class="nx">sinon</span> <span class="kr">from</span> <span class="s1">&#39;sinon&#39;</span><span class="p">;</span>
-<span class="kr">import</span> <span class="nx">sinonChai</span> <span class="kr">from</span> <span class="s1">&#39;sinon-chai&#39;</span><span class="p">;</span>
-<span class="kr">import</span> <span class="nx">VueInput</span> <span class="kr">from</span> <span class="s1">&#39;../src/components/input/VueInput.vue&#39;</span><span class="p">;</span>
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="kr">import</span> <span class="nx">Vue</span> <span class="nx">from</span> <span class="s1">&#39;vue&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">chai</span> <span class="nx">from</span> <span class="s1">&#39;chai&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">sinon</span> <span class="nx">from</span> <span class="s1">&#39;sinon&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">sinonChai</span> <span class="nx">from</span> <span class="s1">&#39;sinon-chai&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">VueInput</span> <span class="nx">from</span> <span class="s1">&#39;../src/components/input/VueInput.vue&#39;</span><span class="p">;</span>
 
 <span class="nx">chai</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">sinonChai</span><span class="p">);</span>
 <span class="kr">const</span> <span class="nx">expect</span> <span class="o">=</span> <span class="nx">chai</span><span class="p">.</span><span class="nx">expect</span><span class="p">;</span>
@@ -3033,7 +3102,7 @@
     <span class="nx">it</span><span class="p">(</span><span class="s1">&#39;VueInput可以接受readOnly&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
       <span class="nx">vm</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Constructor</span><span class="p">({</span>
         <span class="nx">propsData</span><span class="o">:</span> <span class="p">{</span>
-          <span class="kr">readonly</span><span class="o">:</span> <span class="kc">true</span>
+          <span class="nx">readonly</span>: <span class="kt">true</span>
         <span class="p">}</span>
       <span class="p">}).</span><span class="nx">$mount</span><span class="p">();</span>
       <span class="kr">const</span> <span class="nx">inputElement</span> <span class="o">=</span> <span class="nx">vm</span><span class="p">.</span><span class="nx">$el</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">&#39;input&#39;</span><span class="p">);</span>
@@ -3090,86 +3159,101 @@
   <span class="p">});</span>
 
 <span class="p">});</span>
-
 </code></pre></td></tr></table>
 </div>
-</div><hr>
+</div>
+<hr />
+
 <blockquote>
 <p>其他注意</p>
 </blockquote>
+
 <ul>
 <li><code>VueButton.vue</code>注意其中的<code>&lt;button&gt;&lt;/button&gt;</code>元素必须设置属性<code>type=&quot;button&quot;</code>
+
 <ul>
 <li>按钮不是用于向服务器提交数据，请确保这些按钮的 type 属性设置成 button</li>
 <li>否则它们被按下后将会向服务器发送数据并加载（可能并不存在的）响应内容</li>
 <li>因而可能会破坏当前文档的状态，比如在 url 后添加 <code>?</code> ，路由跳转</li>
-<li>详见 <a href="https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/button#%E6%B3%A8%E6%84%8F">MDN <!-- raw HTML omitted --></a></li>
+<li>详见 <a href="https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/button#%E6%B3%A8%E6%84%8F">MDN <button></a></li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<hr>
-<h2 id="vueinput-简单轮子文本输入框小结"><code>VueInput</code> 简单轮子：文本输入框小结</h2>
+
+<hr />
+
+<h2 id="vueinput-简单轮子-文本输入框小结"><code>VueInput</code> 简单轮子：文本输入框小结</h2>
+
 <ul>
 <li>测试驱动开发
+
 <ul>
 <li><code>karma</code>提供运行器，打开<code>ChromeHeadless</code></li>
 <li><code>karma</code>打开测试文件 <code>dist/**/*.test.js</code> <code>dist/**/*.test.css</code></li>
 <li><code>karma</code>测试结果信息 <code>[progress]</code></li>
-<li><code>karma</code>引入<code>mocha</code>
-<ul>
+<li><code>karma</code>引入<code>mocha</code></li>
 <li><code>mocha</code>提供<code>describe</code>方法</li>
 <li><code>mocha</code>提供<code>it</code>方法</li>
 <li>全局属性，无需手动引入</li>
-</ul>
-</li>
-<li><code>karma</code>引入<code>sinon-chai</code>
-<ul>
+<li><code>karma</code>引入<code>sinon-chai</code></li>
 <li><code>sinon-chai</code>提供<code>fake</code>方法</li>
 <li><code>sinon-chai</code>提供<code>expect</code>方法</li>
 <li><code>sinon-chai</code>提供<code>called</code>方法</li>
 <li><code>sinon-chai</code>提供<code>calledWith</code>方法</li>
+<li>`<code>提供</code>describe`方法</li>
+</ul></li>
 </ul>
-</li>
-<li>``提供<code>describe</code>方法</li>
-</ul>
-</li>
-</ul>
-<hr>
+
+<hr />
+
 <h2 id="其他">其他</h2>
+
 <blockquote>
 <p>安装浏览器插件<code>vue</code>开发者工具</p>
 </blockquote>
+
 <ul>
 <li>组件属性<code>name</code>的用途：进行组件标签的命名</li>
 </ul>
-<hr>
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<hr>
+
+<hr />
+
+<!-- Article End -->
+
+<div style="text-align:center;">·未完待续·</div>
+
+<hr />
+
 <h2 id="参考文章">参考文章</h2>
+
 <ul>
 <li><a href="https://yuque.com/u29422/gulu/197282">文本输入框 UI</a></li>
 <li><a href="https://github.com/FrankFang/frank-test-1/blob/button-and-input/src/input.vue">示例仓库代码</a></li>
 <li><a href="https://mochajs.org/#root-hook-plugins">Mocha JavaScript test framework</a></li>
 </ul>
+
 <h2 id="相关文章">相关文章</h2>
+
 <ul>
 <li>无</li>
 </ul>
-<hr>
+
+<hr />
+
 <ul>
 <li>作者： Joel</li>
 <li>文章链接：</li>
-<li><a href="http://xmasuhai.xyz/posts/%E7%89%88%E6%9D%83%E5%A3%B0%E6%98%8E%E9%93%BE%E6%8E%A5/">版权声明</a></li>
+<li><a href="http://xmasuhai.xyz/posts/版权声明链接/">版权声明</a></li>
 <li>非自由转载-非商用-非衍生-保持署名</li>
-<li><!-- raw HTML omitted -->河<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->掘<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->思<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->知<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->简<!-- raw HTML omitted --></li>
+<li><a style='color:#DB2D5D;' href='https://xiedaimala.com/bbs/users/8c266e6f-55a2-4348-a180-17cb8cdb2c46#/?page=1' target='_blank' rel='noreferrer noopener'>河</a>
+<a style='color:#006CFF;' href='https://juejin.im/user/59abfad26fb9a0248f4aa221' target='_blank' rel='noreferrer noopener'>掘</a>
+<a style='color:#009A61;' href='https://segmentfault.com/u/joel_59b17eb9d2155' target='_blank' rel='noreferrer noopener'>思</a>
+<a style='color:#0084FF;' href='https://www.zhihu.com/people/xue-shou-41/posts' target='_blank' rel='noreferrer noopener'>知</a>
+<a style='color:#EA6F5A;' href='https://www.jianshu.com/u/079916729823' target='_blank' rel='noreferrer noopener'>简</a></li>
 </ul>
-<hr>
-<hr>
+
+<hr />
+
+<hr />
 
     </div>
 
@@ -3334,7 +3418,7 @@
     &copy;
     
       2019 -
-    2022
+    2026
     <span class="heart">
       
       <i class="iconfont">

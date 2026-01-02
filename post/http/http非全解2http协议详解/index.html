@@ -7,7 +7,7 @@
   
 
 <meta name="renderer" content="webkit" />
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
 <meta name="MobileOptimized" content="width"/>
 <meta name="HandheldFriendly" content="true"/>
@@ -32,7 +32,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.91.2" />
+<meta name="generator" content="Hugo 0.59.1" />
 
 
 <link rel="canonical" href="http://xmasuhai.xyz/post/http/http%E9%9D%9E%E5%85%A8%E8%A7%A32http%E5%8D%8F%E8%AE%AE%E8%AF%A6%E8%A7%A3/" />
@@ -62,15 +62,21 @@
 <meta property="og:title" content="【HTTP非全解2】HTTP协议详解" />
 <meta property="og:description" content="HTTP协议详解 加强 接口由黑马提供的教学接口 API 点击查看文档 我还制作了关于HTTP知识点的 mochi 记忆卡片 HTTP 大纲链接§ [toc] HTTP协议简介 ⇧ 01. HTTP" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://xmasuhai.xyz/post/http/http%E9%9D%9E%E5%85%A8%E8%A7%A32http%E5%8D%8F%E8%AE%AE%E8%AF%A6%E8%A7%A3/" /><meta property="article:section" content="post" />
+<meta property="og:url" content="http://xmasuhai.xyz/post/http/http%E9%9D%9E%E5%85%A8%E8%A7%A32http%E5%8D%8F%E8%AE%AE%E8%AF%A6%E8%A7%A3/" />
 <meta property="article:published_time" content="2022-01-10T10:09:24+08:00" />
 <meta property="article:modified_time" content="2022-09-03T10:26:25+08:00" />
-
 <meta itemprop="name" content="【HTTP非全解2】HTTP协议详解">
-<meta itemprop="description" content="HTTP协议详解 加强 接口由黑马提供的教学接口 API 点击查看文档 我还制作了关于HTTP知识点的 mochi 记忆卡片 HTTP 大纲链接§ [toc] HTTP协议简介 ⇧ 01. HTTP"><meta itemprop="datePublished" content="2022-01-10T10:09:24+08:00" />
-<meta itemprop="dateModified" content="2022-09-03T10:26:25+08:00" />
-<meta itemprop="wordCount" content="6183">
-<meta itemprop="keywords" content="HTTP," /><meta name="twitter:card" content="summary"/>
+<meta itemprop="description" content="HTTP协议详解 加强 接口由黑马提供的教学接口 API 点击查看文档 我还制作了关于HTTP知识点的 mochi 记忆卡片 HTTP 大纲链接§ [toc] HTTP协议简介 ⇧ 01. HTTP">
+
+
+<meta itemprop="datePublished" content="2022-01-10T10:09:24&#43;08:00" />
+<meta itemprop="dateModified" content="2022-09-03T10:26:25&#43;08:00" />
+<meta itemprop="wordCount" content="6189">
+
+
+
+<meta itemprop="keywords" content="HTTP," />
+<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="【HTTP非全解2】HTTP协议详解"/>
 <meta name="twitter:description" content="HTTP协议详解 加强 接口由黑马提供的教学接口 API 点击查看文档 我还制作了关于HTTP知识点的 mochi 记忆卡片 HTTP 大纲链接§ [toc] HTTP协议简介 ⇧ 01. HTTP"/>
 
@@ -302,7 +308,7 @@
             <a href="http://xmasuhai.xyz/categories/http/"> HTTP </a>
             
           </div>
-        <span class="more-meta"> 约 6183 字 </span>
+        <span class="more-meta"> 约 6189 字 </span>
           <span class="more-meta"> 预计阅读 13 分钟 </span>
 
         
@@ -319,214 +325,269 @@
   <h2 class="post-toc-title">文章目录</h2>
   <div class="post-toc-content">
     <nav id="TableOfContents">
-  <ul>
-    <li><a href="#大纲链接a-idcatalogue-hrefcatalogue---a">大纲链接<!-- raw HTML omitted --> § <!-- raw HTML omitted --></a></li>
-    <li><a href="#http协议简介-a-hrefcatalogue--a">HTTP协议简介 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a>
-      <ul>
-        <li><a href="#01-http协议简介-什么是通信-a-hrefcatalogue--a">01. HTTP协议简介-什么是通信 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-        <li><a href="#02-http协议简介-什么是通信协议-a-hrefcatalogue--a">02. HTTP协议简介-什么是通信协议 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-        <li><a href="#03-http协议简介-什么是http协议-a-hrefcatalogue--a">03. HTTP协议简介-什么是HTTP协议 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-        <li><a href="#04-http协议简介-http协议的交互模型-a-hrefcatalogue--a">04. HTTP协议简介-HTTP协议的交互模型 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-        <li><a href="#05-http协议特性-a-hrefcatalogue--a">05. HTTP协议特性 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-      </ul>
-    </li>
-    <li><a href="#http请求消息-a-hrefcatalogue--a">HTTP请求消息 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a>
-      <ul>
-        <li><a href="#01-http请求消息-什么是http请求消息-a-hrefcatalogue--a">01. HTTP请求消息-什么是HTTP请求消息 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-        <li><a href="#02-http请求消息-http请求消息的-4个组成部分-a-hrefcatalogue--a">02. HTTP请求消息-HTTP请求消息的 <strong>4个组成部分</strong> <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-        <li><a href="#03-http请求消息-请求行-a-hrefcatalogue--a">03. HTTP请求消息-请求行 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-        <li><a href="#04-http请求消息-请求头部-a-hrefcatalogue--a">04. HTTP请求消息-请求头部 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-        <li><a href="#05-http请求消息-空行-a-hrefcatalogue--a">05. HTTP请求消息-空行 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-        <li><a href="#06-http请求消息-请求体-a-hrefcatalogue--a">06. HTTP请求消息-请求体 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-      </ul>
-    </li>
-    <li><a href="#http响应消息-a-hrefcatalogue--a">HTTP响应消息 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a>
-      <ul>
-        <li><a href="#01-http响应消息-响应消息的概念以及组成部分-a-hrefcatalogue--a">01. HTTP响应消息-响应消息的概念以及组成部分 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-        <li><a href="#02-http响应消息-状态行-a-hrefcatalogue--a">02. HTTP响应消息-状态行 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-        <li><a href="#03-http响应消息-响应头部-a-hrefcatalogue--a">03. HTTP响应消息-响应头部 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-        <li><a href="#04-http响应消息-空行-a-hrefcatalogue--a">04. HTTP响应消息-空行 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-        <li><a href="#05-http响应消息-响应体-a-hrefcatalogue--a">05. HTTP响应消息-响应体 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-      </ul>
-    </li>
-    <li><a href="#http请求方法-a-hrefcatalogue--a">HTTP请求方法 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-    <li><a href="#http响应状态码-a-hrefcatalogue--a">HTTP响应状态码 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a>
-      <ul>
-        <li><a href="#01-http响应状态码-什么是http响应状态码-a-hrefcatalogue--a">01. HTTP响应状态码-什么是HTTP响应状态码 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-        <li><a href="#02-http响应状态码-http响应状态码的组成及分类-a-hrefcatalogue--a">02. HTTP响应状态码-HTTP响应状态码的组成及分类 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-        <li><a href="#03-http响应状态码-2xx成功相关的响应状态码-a-hrefcatalogue--a">03. HTTP响应状态码-<code>2xx</code>成功相关的响应状态码 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-        <li><a href="#04-http响应状态码-3xx重定向相关的响应状态码-a-hrefcatalogue--a">04. HTTP响应状态码-<code>3xx</code>重定向相关的响应状态码 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-        <li><a href="#05-http响应状态码-4xx客户端错误相关的响应状态码-a-hrefcatalogue--a">05. HTTP响应状态码-<code>4xx</code>客户端错误相关的响应状态码 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-        <li><a href="#06-http响应状态码-5xx服务端错误相关的响应状态码-a-hrefcatalogue--a">06. HTTP响应状态码-5xx服务端错误相关的响应状态码 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-      </ul>
-    </li>
-    <li><a href="#http缓存">HTTP缓存</a></li>
-    <li><a href="#强缓存">强缓存</a></li>
-    <li><a href="#协商缓存">协商缓存</a>
-      <ul>
-        <li><a href="#etag-与-if-none-match-文件hash值对比"><code>Etag</code> 与 <code>If-None-Match</code> 文件Hash值对比</a></li>
-      </ul>
-    </li>
-    <li><a href="#总结-a-hrefcatalogue--a">总结 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></a></li>
-    <li><a href="#参考文章">参考文章</a></li>
-    <li><a href="#相关文章">相关文章</a></li>
-  </ul>
+<ul>
+<li><a href="#http协议详解-加强">HTTP协议详解 加强</a>
+<ul>
+<li><a href="#大纲链接-a-id-catalogue-href-catalogue-a">大纲链接<a id="catalogue" href="#catalogue" > § </a></a></li>
+<li><a href="#http协议简介-a-href-catalogue-a">HTTP协议简介 <a href="#catalogue"> ⇧ </a></a>
+<ul>
+<li><a href="#01-http协议简介-什么是通信-a-href-catalogue-a">01. HTTP协议简介-什么是通信 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#02-http协议简介-什么是通信协议-a-href-catalogue-a">02. HTTP协议简介-什么是通信协议 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#03-http协议简介-什么是http协议-a-href-catalogue-a">03. HTTP协议简介-什么是HTTP协议 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#04-http协议简介-http协议的交互模型-a-href-catalogue-a">04. HTTP协议简介-HTTP协议的交互模型 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#05-http协议特性-a-href-catalogue-a">05. HTTP协议特性 <a href="#catalogue"> ⇧ </a></a>
+<ul>
+<li><a href="#0-5-1-无连接">0.5.1 无连接</a></li>
+<li><a href="#0-5-2-无状态">0.5.2 无状态</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#http请求消息-a-href-catalogue-a">HTTP请求消息 <a href="#catalogue"> ⇧ </a></a>
+<ul>
+<li><a href="#01-http请求消息-什么是http请求消息-a-href-catalogue-a">01. HTTP请求消息-什么是HTTP请求消息 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#02-http请求消息-http请求消息的-4个组成部分-a-href-catalogue-a">02. HTTP请求消息-HTTP请求消息的 <strong>4个组成部分</strong> <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#03-http请求消息-请求行-a-href-catalogue-a">03. HTTP请求消息-请求行 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#04-http请求消息-请求头部-a-href-catalogue-a">04. HTTP请求消息-请求头部 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#05-http请求消息-空行-a-href-catalogue-a">05. HTTP请求消息-空行 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#06-http请求消息-请求体-a-href-catalogue-a">06. HTTP请求消息-请求体 <a href="#catalogue"> ⇧ </a></a></li>
+</ul></li>
+<li><a href="#http响应消息-a-href-catalogue-a">HTTP响应消息 <a href="#catalogue"> ⇧ </a></a>
+<ul>
+<li><a href="#01-http响应消息-响应消息的概念以及组成部分-a-href-catalogue-a">01. HTTP响应消息-响应消息的概念以及组成部分 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#02-http响应消息-状态行-a-href-catalogue-a">02. HTTP响应消息-状态行 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#03-http响应消息-响应头部-a-href-catalogue-a">03. HTTP响应消息-响应头部 <a href="#catalogue"> ⇧ </a></a>
+<ul>
+<li><a href="#常见的响应头字段">常见的响应头字段</a></li>
+</ul></li>
+<li><a href="#04-http响应消息-空行-a-href-catalogue-a">04. HTTP响应消息-空行 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#05-http响应消息-响应体-a-href-catalogue-a">05. HTTP响应消息-响应体 <a href="#catalogue"> ⇧ </a></a></li>
+</ul></li>
+<li><a href="#http请求方法-a-href-catalogue-a">HTTP请求方法 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#http响应状态码-a-href-catalogue-a">HTTP响应状态码 <a href="#catalogue"> ⇧ </a></a>
+<ul>
+<li><a href="#01-http响应状态码-什么是http响应状态码-a-href-catalogue-a">01. HTTP响应状态码-什么是HTTP响应状态码 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#02-http响应状态码-http响应状态码的组成及分类-a-href-catalogue-a">02. HTTP响应状态码-HTTP响应状态码的组成及分类 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#03-http响应状态码-2xx-成功相关的响应状态码-a-href-catalogue-a">03. HTTP响应状态码-<code>2xx</code>成功相关的响应状态码 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#04-http响应状态码-3xx-重定向相关的响应状态码-a-href-catalogue-a">04. HTTP响应状态码-<code>3xx</code>重定向相关的响应状态码 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#05-http响应状态码-4xx-客户端错误相关的响应状态码-a-href-catalogue-a">05. HTTP响应状态码-<code>4xx</code>客户端错误相关的响应状态码 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#06-http响应状态码-5xx服务端错误相关的响应状态码-a-href-catalogue-a">06. HTTP响应状态码-5xx服务端错误相关的响应状态码 <a href="#catalogue"> ⇧ </a></a></li>
+</ul></li>
+<li><a href="#http缓存">HTTP缓存</a></li>
+<li><a href="#强缓存">强缓存</a></li>
+<li><a href="#协商缓存">协商缓存</a>
+<ul>
+<li><a href="#etag-与-if-none-match-文件hash值对比"><code>Etag</code> 与 <code>If-None-Match</code> 文件Hash值对比</a></li>
+</ul></li>
+<li><a href="#总结-a-href-catalogue-a">总结 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#参考文章">参考文章</a></li>
+<li><a href="#相关文章">相关文章</a></li>
+</ul></li>
+</ul>
 </nav>
   </div>
 </div>
 
     
     <div class="post-content">
-      <h1 id="http协议详解-加强">HTTP协议详解 加强</h1>
+      
+
+<h1 id="http协议详解-加强">HTTP协议详解 加强</h1>
+
 <blockquote>
 <p>接口由黑马提供的教学接口 API <a href="https://docs.apipost.cn/preview/54dfc7877e80a9d9/7b72a529bb2f613e">点击查看文档</a></p>
+
 <p><a href="https://app.mochi.cards/decks/1977d400-e50d-4ae2-80ad-e9761612cbdf/gGaYxYn4hxjtn7Q/HTTP">我还制作了关于HTTP知识点的 mochi 记忆卡片 HTTP</a></p>
 </blockquote>
-<hr>
-<h2 id="大纲链接a-idcatalogue-hrefcatalogue---a">大纲链接<!-- raw HTML omitted --> § <!-- raw HTML omitted --></h2>
+
+<hr />
+
+<h2 id="大纲链接-a-id-catalogue-href-catalogue-a">大纲链接<a id="catalogue" href="#catalogue" > § </a></h2>
+
 <p>[toc]</p>
-<hr>
-<h2 id="http协议简介-a-hrefcatalogue--a">HTTP协议简介 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
-<h3 id="01-http协议简介-什么是通信-a-hrefcatalogue--a">01. HTTP协议简介-什么是通信 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+
+<hr />
+
+<h2 id="http协议简介-a-href-catalogue-a">HTTP协议简介 <a href="#catalogue"> ⇧ </a></h2>
+
+<h3 id="01-http协议简介-什么是通信-a-href-catalogue-a">01. HTTP协议简介-什么是通信 <a href="#catalogue"> ⇧ </a></h3>
+
 <blockquote>
 <p>通信就是信息的传递和交换</p>
 </blockquote>
+
 <ul>
 <li>通信三要素
+
 <ul>
 <li>主体</li>
 <li>内容</li>
 <li>方式</li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<h3 id="02-http协议简介-什么是通信协议-a-hrefcatalogue--a">02. HTTP协议简介-什么是通信协议 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+
+<h3 id="02-http协议简介-什么是通信协议-a-href-catalogue-a">02. HTTP协议简介-什么是通信协议 <a href="#catalogue"> ⇧ </a></h3>
+
 <blockquote>
 <p>通信协议（<code>Communication Protocol</code>）时值通信的双方完成通信所必须遵守的规则和约定</p>
 </blockquote>
+
 <ul>
 <li>通俗地理解，通信双方采用约定好的格式来发送和接受消息，这种事先约定好的通信格式，就叫做通信协议</li>
 </ul>
+
 <blockquote>
 <p>互联网中的通信协议</p>
 </blockquote>
+
 <ul>
 <li>客户端与服务器之间要实现网页内容的传输，则通信的双方必须遵守网页内容的传输协议</li>
 <li>网页内容又叫做超文本，因此网页内容的传输协议又叫做超文本传输协议（<code>Hyper Text Transfer Protocol</code>），简称<code>HTTP</code>协议</li>
 </ul>
-<h3 id="03-http协议简介-什么是http协议-a-hrefcatalogue--a">03. HTTP协议简介-什么是HTTP协议 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+
+<h3 id="03-http协议简介-什么是http协议-a-href-catalogue-a">03. HTTP协议简介-什么是HTTP协议 <a href="#catalogue"> ⇧ </a></h3>
+
 <blockquote>
 <p><code>HTTP</code>协议即超文本传输协议，它规定了客户端与服务器之间进行网页内容传输时，所必须遵守的格式</p>
 </blockquote>
+
 <ul>
 <li>客户端要以HTTP协议要求的格式把数据提交到服务器</li>
 <li>服务器要以HTTP协议要求的格式把内容响应给客户端</li>
 </ul>
-<h3 id="04-http协议简介-http协议的交互模型-a-hrefcatalogue--a">04. HTTP协议简介-HTTP协议的交互模型 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+
+<h3 id="04-http协议简介-http协议的交互模型-a-href-catalogue-a">04. HTTP协议简介-HTTP协议的交互模型 <a href="#catalogue"> ⇧ </a></h3>
+
 <blockquote>
 <p>HTTP协议采用了 <strong>请求/响应</strong> 的交互模型</p>
 </blockquote>
+
 <ul>
 <li>客户端发起 HTTP 请求</li>
 <li>服务器返回 HTTP 响应</li>
 </ul>
-<h3 id="05-http协议特性-a-hrefcatalogue--a">05. HTTP协议特性 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
-<h4 id="051-无连接">0.5.1 无连接</h4>
+
+<h3 id="05-http协议特性-a-href-catalogue-a">05. HTTP协议特性 <a href="#catalogue"> ⇧ </a></h3>
+
+<h4 id="0-5-1-无连接">0.5.1 无连接</h4>
+
 <ul>
 <li>HTTP协议限制每次连接 <strong>只处理一个请求</strong></li>
 <li>服务器处理完客户端的请求，并发出响应之后，立即 断开连接，以此节省传输时间</li>
 <li>若想保持连接可设置字段：<code>&quot;Connection&quot;: &quot;keep-alive&quot;</code>，或使用<code>WebSocket</code></li>
 </ul>
-<h4 id="052-无状态">0.5.2 无状态</h4>
+
+<h4 id="0-5-2-无状态">0.5.2 无状态</h4>
+
 <ul>
 <li>HTTP协议对 <strong>事务处理</strong> 没有记忆能力</li>
 <li>后续处理如果需要先前的信息，则必须 重传，导致每次连接需要的数据量增大</li>
 <li>若想保存状态可采用：<code>Session</code>、<code>Cookie</code>或<code>JWT</code>技术</li>
 </ul>
-<hr>
+
+<hr />
+
 <blockquote>
 <p>HTTP报文/消息</p>
 </blockquote>
+
 <ul>
 <li>用于HTTP协议交互的信息即为HTTP报文，分为 <strong>请求报文</strong> 和 <strong>响应报文</strong></li>
 <li>报文由「报文首部、空行、报文主体」构成</li>
 <li>报文首部由「起始行（请求行/状态行）、首部字段」构成
+
 <ul>
 <li>请求报文首部由「请求行、首部字段」构成
+
 <ul>
 <li>请求报文的 <strong>起始行</strong> 称为 <strong>请求行</strong></li>
 <li>其包括「请求方法、请求URI、HTTP版本」</li>
-</ul>
-</li>
+</ul></li>
 <li>响应报文首部由「状态行、首部字段」构成
+
 <ul>
 <li>响应报文的 <strong>起始行</strong> 称为 <strong>状态行</strong></li>
 <li>其包括「HTTP版本、状态码、原因短语」</li>
-</ul>
-</li>
+</ul></li>
 <li>首部字段 分为：
+
 <ul>
 <li>通用首部字段：请求报文和响应报文都会用到的首部</li>
 <li>请求首部字段</li>
 <li>响应首部字段</li>
 <li>实体首部字段：用于补充与实体相关的信息</li>
 <li>其它：RFC中未定义的首部，如为 <code>Cookie</code> 服务的首部字段 （<code>Cookie</code>、<code>Set-Cookie</code>）</li>
-</ul>
-</li>
+</ul></li>
 <li>空行用于分割 <strong>报文首部</strong> 与 <strong>报文主体</strong></li>
 <li>报文主体即具体数据，<strong>请求报文</strong> 对应 <strong>请求体</strong>，<strong>响应报文</strong> 对应 <strong>响应体</strong></li>
+</ul></li>
 </ul>
-</li>
-</ul>
+
 <blockquote>
 <p>在命令行中使用<code>curl -v https://www.baidu.com</code>发送请求，查看报文结构</p>
 </blockquote>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEB83539762f415f09090be2f47c848c541?method=download&amp;shareKey=4adee1025ba2b685afb90be2612f5bbd" alt="message"></p>
-<h2 id="http请求消息-a-hrefcatalogue--a">HTTP请求消息 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
-<h3 id="01-http请求消息-什么是http请求消息-a-hrefcatalogue--a">01. HTTP请求消息-什么是HTTP请求消息 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB83539762f415f09090be2f47c848c541?method=download&amp;shareKey=4adee1025ba2b685afb90be2612f5bbd" alt="message" /></p>
+
+<h2 id="http请求消息-a-href-catalogue-a">HTTP请求消息 <a href="#catalogue"> ⇧ </a></h2>
+
+<h3 id="01-http请求消息-什么是http请求消息-a-href-catalogue-a">01. HTTP请求消息-什么是HTTP请求消息 <a href="#catalogue"> ⇧ </a></h3>
+
 <ul>
 <li>由于HTTP协议属于客户端浏览器和服务器之间的通信协议</li>
 <li>因此，客户端发起的请求叫做 <strong>HTTP请求</strong></li>
 <li>客户端发送到服务器的消息（报文），叫做 <strong>HTTP请求消息（报文）</strong></li>
 </ul>
-<h3 id="02-http请求消息-http请求消息的-4个组成部分-a-hrefcatalogue--a">02. HTTP请求消息-HTTP请求消息的 <strong>4个组成部分</strong> <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+
+<h3 id="02-http请求消息-http请求消息的-4个组成部分-a-href-catalogue-a">02. HTTP请求消息-HTTP请求消息的 <strong>4个组成部分</strong> <a href="#catalogue"> ⇧ </a></h3>
+
 <blockquote>
 <p>HTTP请求消息由 <strong>请求行（<code>request line</code>或<code>start-line</code>）</strong>、<strong>请求头部（<code>request headers</code>）</strong>、<strong>空行</strong>、和 <strong>请求体（<code>request body</code>）</strong> 4个部分组成</p>
 </blockquote>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEBb78fcfe9bd41758b44dd0b85e24f7e9c?method=download&amp;shareKey=1783f9efe88a8bb40d7505312ddc2e53" alt="request message"></p>
-<h3 id="03-http请求消息-请求行-a-hrefcatalogue--a">03. HTTP请求消息-请求行 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBb78fcfe9bd41758b44dd0b85e24f7e9c?method=download&amp;shareKey=1783f9efe88a8bb40d7505312ddc2e53" alt="request message" /></p>
+
+<h3 id="03-http请求消息-请求行-a-href-catalogue-a">03. HTTP请求消息-请求行 <a href="#catalogue"> ⇧ </a></h3>
+
 <ul>
 <li>请求行由 <strong>请求方式</strong>、<strong>URL</strong> 和 <strong>HTTP协议版本</strong> 3个部分组成</li>
 <li>之间使用空格隔开</li>
 <li>通过浏览器的 Network 面板，发起 AJAX 请求时，查看请求的 标头（<code>Headers</code>）选项卡中的请求头 <code>Request Headers</code></li>
 <li>点击查看源 （<code>View source</code>）</li>
 </ul>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEBab95e8068cbaa9bf16d2520c8e355f0c?method=download&amp;shareKey=f4af3f573c289c94e17d3e891ed28449" alt="start-line"></p>
+
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBab95e8068cbaa9bf16d2520c8e355f0c?method=download&amp;shareKey=f4af3f573c289c94e17d3e891ed28449" alt="start-line" /></p>
+
 <blockquote>
 <p>浏览器打开任意网址控制台打开 Network 面板，点击 view source 查看源</p>
 </blockquote>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEB070182059a3a0ee176b2171840ce8189?method=download&amp;shareKey=ca98beb8671ac6ce65d9db4c26a8f2a7" alt="Request line in Headers"></p>
+
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB070182059a3a0ee176b2171840ce8189?method=download&amp;shareKey=ca98beb8671ac6ce65d9db4c26a8f2a7" alt="Request line in Headers" /></p>
+
 <ul>
 <li><code>POST /api/post HTTP/1.1</code>即请求行</li>
 <li>并不是所有完整的 URL，是去掉 协议、域名和端口号、查询参数后的 URL</li>
 </ul>
-<h3 id="04-http请求消息-请求头部-a-hrefcatalogue--a">04. HTTP请求消息-请求头部 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+
+<h3 id="04-http请求消息-请求头部-a-href-catalogue-a">04. HTTP请求消息-请求头部 <a href="#catalogue"> ⇧ </a></h3>
+
 <ul>
 <li>请求头部用来描述 <strong>客户端基本信息</strong>，负责将客户端相关信息告知服务器</li>
 <li>请求头部 包含不同的字段
+
 <ul>
 <li><code>User-Agent</code> 用来说明当前是什么类型的客户端（浏览器）</li>
 <li><code>Content-Type</code> 用描述发送到服务器的 <strong>数据格式</strong></li>
 <li><code>Accept</code> 用来描述客户端能够接收 <strong>返回内容的类型</strong></li>
 <li><code>Accept-Language</code> 用来描述客户端期望接收那种人类语言的文本内容</li>
-</ul>
-</li>
+</ul></li>
 <li>请求头由多行 <strong>键/值对</strong> 组成，每行的键和值之间用英文的冒号分隔</li>
 </ul>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEB10ee90a6e6112f0c3cf2b299dede7e9f?method=download&amp;shareKey=6cb84610764df22bd9ea29cfa8bda509" alt="Request Headers"></p>
+
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB10ee90a6e6112f0c3cf2b299dede7e9f?method=download&amp;shareKey=6cb84610764df22bd9ea29cfa8bda509" alt="Request Headers" /></p>
+
 <blockquote>
 <p>常见的请求头字段</p>
 </blockquote>
+
 <table>
 <thead>
 <tr>
@@ -534,117 +595,167 @@
 <th>说明</th>
 </tr>
 </thead>
+
 <tbody>
 <tr>
 <td><code>HOST</code></td>
 <td>需要请求的服务器域名</td>
 </tr>
+
 <tr>
 <td><code>Connection</code></td>
 <td>客户端与服务器的连接方式：<code>close</code> 或者 <code>keep-alive</code></td>
 </tr>
+
 <tr>
 <td><code>Content-Length</code></td>
 <td>用来描述请求体的大小</td>
 </tr>
+
 <tr>
 <td><strong><code>Accept</code></strong></td>
 <td>客户端可识别的响应内容类型列表</td>
 </tr>
+
 <tr>
 <td><strong><code>User-Agent</code></strong></td>
 <td>产生请求的浏览器类型</td>
 </tr>
+
 <tr>
 <td><strong><code>Content-Type</code></strong></td>
 <td>客户端告诉服务器实际发送的数据类型</td>
 </tr>
+
 <tr>
 <td><code>Accept-Encoding</code></td>
 <td>客户端可接收的内容压缩编码形式</td>
 </tr>
+
 <tr>
 <td><strong><code>Accept-Language</code></strong></td>
 <td>用户期望获得的自然语言的优先顺序</td>
 </tr>
 </tbody>
 </table>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEBfa07135478b3de71fc32f8f99e47b61f?method=download&amp;shareKey=8fb0981e7f569155f7c4b7e342a33516" alt="request headers fields"></p>
+
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBfa07135478b3de71fc32f8f99e47b61f?method=download&amp;shareKey=8fb0981e7f569155f7c4b7e342a33516" alt="request headers fields" /></p>
+
 <ul>
 <li>关于更多请求头字段的描述，查看 <a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers">MDN 官方文档：https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers</a></li>
 </ul>
-<h3 id="05-http请求消息-空行-a-hrefcatalogue--a">05. HTTP请求消息-空行 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+
+<h3 id="05-http请求消息-空行-a-href-catalogue-a">05. HTTP请求消息-空行 <a href="#catalogue"> ⇧ </a></h3>
+
 <blockquote>
 <p>最后一个请求头字段的后面是一个空行，通知服务器 <strong>请求头部至此结束</strong></p>
 </blockquote>
+
 <ul>
 <li>请求消息中的空行，用来分隔 <strong>请求头部</strong> 和 <strong>请求体</strong></li>
 </ul>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEBeef241e5913e8f9e2cad125af4c754af?method=download&amp;shareKey=dde35bae8543768fb1c9826c344eee99" alt="request blank"></p>
-<h3 id="06-http请求消息-请求体-a-hrefcatalogue--a">06. HTTP请求消息-请求体 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBeef241e5913e8f9e2cad125af4c754af?method=download&amp;shareKey=dde35bae8543768fb1c9826c344eee99" alt="request blank" /></p>
+
+<h3 id="06-http请求消息-请求体-a-href-catalogue-a">06. HTTP请求消息-请求体 <a href="#catalogue"> ⇧ </a></h3>
+
 <blockquote>
 <p>请求体中存放，是要通过 <strong>POST等方式</strong> （非GET方式）提交给服务器的数据</p>
 </blockquote>
+
 <ul>
 <li>GET 请求没有请求体，GET 请求到空行结束</li>
 </ul>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEB8b922317d953b37540c8d8ccc90f609d?method=download&amp;shareKey=521a27d83cf557101d5e85b33f0349e1" alt="request body"></p>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEB7111d4668d815aa627aab496425ac82e?method=download&amp;shareKey=51cc1cd14bbf55ddec4d287e020317d6" alt="request body formdata"></p>
-<hr>
-<h2 id="http响应消息-a-hrefcatalogue--a">HTTP响应消息 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB8b922317d953b37540c8d8ccc90f609d?method=download&amp;shareKey=521a27d83cf557101d5e85b33f0349e1" alt="request body" /></p>
+
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB7111d4668d815aa627aab496425ac82e?method=download&amp;shareKey=51cc1cd14bbf55ddec4d287e020317d6" alt="request body formdata" /></p>
+
+<hr />
+
+<h2 id="http响应消息-a-href-catalogue-a">HTTP响应消息 <a href="#catalogue"> ⇧ </a></h2>
+
 <blockquote>
 <p>响应消息就是 <strong>服务器响应给客户端的消息内容</strong> ，也叫作响应报文，或者应答报文</p>
 </blockquote>
-<h3 id="01-http响应消息-响应消息的概念以及组成部分-a-hrefcatalogue--a">01. HTTP响应消息-响应消息的概念以及组成部分 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+
+<h3 id="01-http响应消息-响应消息的概念以及组成部分-a-href-catalogue-a">01. HTTP响应消息-响应消息的概念以及组成部分 <a href="#catalogue"> ⇧ </a></h3>
+
 <blockquote>
 <p>HTTP响应消息由 <strong>状态行（<code>status line</code>）</strong>、<strong>响应头部（<code>response header</code>）</strong>、<strong>空行</strong>、和 <strong>响应体（<code>response body</code>）</strong> 4个部分组成</p>
 </blockquote>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEB28d0565ce770e7eaed4b03a8d29f28b3?method=download&amp;shareKey=994a2701918f6adc2089cf49f74c9a9b" alt="response message"></p>
-<h3 id="02-http响应消息-状态行-a-hrefcatalogue--a">02. HTTP响应消息-状态行 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB28d0565ce770e7eaed4b03a8d29f28b3?method=download&amp;shareKey=994a2701918f6adc2089cf49f74c9a9b" alt="response message" /></p>
+
+<h3 id="02-http响应消息-状态行-a-href-catalogue-a">02. HTTP响应消息-状态行 <a href="#catalogue"> ⇧ </a></h3>
+
 <ul>
 <li>状态行是由 <strong>HTTP协议版本</strong>、<strong>状态码</strong> 和 <strong>状态码描述</strong> 3个部分组成</li>
 <li>之间使用空格隔开</li>
 </ul>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEB1e82852afc6b60a816fdce1d3e33f451?method=download&amp;shareKey=85bfd77ab5e43d0e4634c850c5acc4d3" alt="status line"></p>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEB432ae6e12d21f21ac8ba97afe8a255d9?method=download&amp;shareKey=e113db02456d3ada7a96f24b9eac9cd0" alt="status line in response headers"></p>
-<h3 id="03-http响应消息-响应头部-a-hrefcatalogue--a">03. HTTP响应消息-响应头部 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB1e82852afc6b60a816fdce1d3e33f451?method=download&amp;shareKey=85bfd77ab5e43d0e4634c850c5acc4d3" alt="status line" /></p>
+
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB432ae6e12d21f21ac8ba97afe8a255d9?method=download&amp;shareKey=e113db02456d3ada7a96f24b9eac9cd0" alt="status line in response headers" /></p>
+
+<h3 id="03-http响应消息-响应头部-a-href-catalogue-a">03. HTTP响应消息-响应头部 <a href="#catalogue"> ⇧ </a></h3>
+
 <blockquote>
 <p>响应头部用来描述 <strong>服务器的基本信息</strong></p>
 </blockquote>
+
 <ul>
 <li>响应头部由多行 <strong>键/值对</strong> 组成</li>
 <li>每行的键和值之间用英文的冒号分隔</li>
 </ul>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEB179da46c81a9132bebc0b357fb1dc121?method=download&amp;shareKey=71cfd845d4f3c9446e904d5f12605f55" alt="response headers"></p>
+
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB179da46c81a9132bebc0b357fb1dc121?method=download&amp;shareKey=71cfd845d4f3c9446e904d5f12605f55" alt="response headers" /></p>
+
 <h4 id="常见的响应头字段">常见的响应头字段</h4>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEBa965a6c73a1d211bdc5666e6df00c62d?method=download&amp;shareKey=ea0a7ac2813cb279ecb5c46f63dd15cb" alt="response header field"></p>
+
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBa965a6c73a1d211bdc5666e6df00c62d?method=download&amp;shareKey=ea0a7ac2813cb279ecb5c46f63dd15cb" alt="response header field" /></p>
+
 <ul>
 <li>关于更多响应头字段的描述，可以查看 <a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers">MDN 官方文档：https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers</a></li>
 </ul>
-<h3 id="04-http响应消息-空行-a-hrefcatalogue--a">04. HTTP响应消息-空行 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+
+<h3 id="04-http响应消息-空行-a-href-catalogue-a">04. HTTP响应消息-空行 <a href="#catalogue"> ⇧ </a></h3>
+
 <ul>
 <li>在最后一个响应头部字段结束之后，会紧跟一个空行，用来通知客户端 <strong>响应头部至此结束</strong></li>
 <li>响应消息中的空行，用来分隔 <strong>响应头部</strong> 和 <strong>响应体</strong></li>
 </ul>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEB89ddcc47a09aeda55a31db1bda765087?method=download&amp;shareKey=f04c4b201a1512fef89d27926e164707" alt="response blank"></p>
-<h3 id="05-http响应消息-响应体-a-hrefcatalogue--a">05. HTTP响应消息-响应体 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB89ddcc47a09aeda55a31db1bda765087?method=download&amp;shareKey=f04c4b201a1512fef89d27926e164707" alt="response blank" /></p>
+
+<h3 id="05-http响应消息-响应体-a-href-catalogue-a">05. HTTP响应消息-响应体 <a href="#catalogue"> ⇧ </a></h3>
+
 <ul>
 <li>响应体中存放的，是服务器响应给客户端的资源内容</li>
 </ul>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEB6d2c679efc9613170673750f8af2d72d?method=download&amp;shareKey=92e5bcc876897bd1f0526b281800818e" alt="response_body"></p>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEB877d0641f694716e06c483cff2722420?method=download&amp;shareKey=ad551407916b9a14bb0e1a21ab30d3b1" alt="response body raw content"></p>
-<hr>
-<h2 id="http请求方法-a-hrefcatalogue--a">HTTP请求方法 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB6d2c679efc9613170673750f8af2d72d?method=download&amp;shareKey=92e5bcc876897bd1f0526b281800818e" alt="response_body" /></p>
+
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB877d0641f694716e06c483cff2722420?method=download&amp;shareKey=ad551407916b9a14bb0e1a21ab30d3b1" alt="response body raw content" /></p>
+
+<hr />
+
+<h2 id="http请求方法-a-href-catalogue-a">HTTP请求方法 <a href="#catalogue"> ⇧ </a></h2>
+
 <blockquote>
 <p>HTTP 请求方法，属于 HTTP 协议中的一部分</p>
+
 <p>请求方法的作用是：用来表明 <strong>对服务器上资源执行的操作</strong></p>
 </blockquote>
+
 <ul>
 <li>常用的请求方法是 <code>GET</code> 和 <code>POST</code></li>
 </ul>
+
 <blockquote>
 <p>区别有：（语义、缓存、编码、传参、幂等性）</p>
 </blockquote>
+
 <ul>
 <li>从 <strong>语义</strong> 角度：<code>GET</code> 用于获取资源，<code>POST</code> 用于上传资源</li>
 <li>从 <strong>缓存</strong> 角度：<code>GET</code> 请求会被浏览器 <strong>主动缓存</strong>，<code>POST</code> 不会；</li>
@@ -652,16 +763,21 @@
 <li>从 <strong>参数</strong> 角度：<code>GET</code> <strong>参数暴露</strong> 在 <code>URL</code> 中，仅接受 <code>ASCII</code> 字符；<code>POST</code> 放在 请求体 中，且参数无限制，更适合传输敏感信息；</li>
 <li>从 <strong>幂等性</strong> 角度：<code>GET</code> 是幂等的，<code>POST</code> 不是；</li>
 </ul>
+
 <blockquote>
 <p>什么是幂等性？</p>
 </blockquote>
+
 <ul>
 <li>在相同条件下，一次请求 和 <strong>重复多次</strong> 请求对资源的影响是一致的，则该操作 <strong>幂等</strong></li>
 </ul>
-<hr>
+
+<hr />
+
 <blockquote>
 <p>HTTP的主要请求方法</p>
 </blockquote>
+
 <table>
 <thead>
 <tr>
@@ -670,47 +786,56 @@
 <th>描述</th>
 </tr>
 </thead>
+
 <tbody>
 <tr>
 <td>1</td>
 <td><strong><code>GET</code></strong></td>
 <td><strong>查询</strong> 发送请求来获取服务器上的资源，请求体中不包含请求数据，请求数据放在请求头中</td>
 </tr>
+
 <tr>
 <td>2</td>
 <td><strong><code>POST</code></strong></td>
 <td><strong>新增</strong> 向服务器提交数据（用户注册/表单/文件上传）数据包含在请求体中提交给服务器</td>
 </tr>
+
 <tr>
 <td>3</td>
 <td><strong><code>PUT</code></strong></td>
 <td><strong>修改</strong> 向服务器提交资源，并使用提交的新数据替换掉服务器中对应的旧资源</td>
 </tr>
+
 <tr>
 <td>4</td>
 <td><strong><code>DELETE</code></strong></td>
 <td><strong>删除</strong> 请求服务器删除指定的资源</td>
 </tr>
+
 <tr>
 <td>5</td>
 <td><code>HEAD</code></td>
 <td>请求一个与 <code>GET</code>请求 <strong>响应头部</strong> 相同的响应，无需响应体，不会返回所请求的实体数据，仅返回响应头；可用于确认资源是否存在或检查资源是否更新，超链接探测器很多都基于 HEAD 方法进行实现</td>
 </tr>
+
 <tr>
 <td>6</td>
 <td><code>OPTIONS</code></td>
 <td>获取目标服务器支持的请求方法，允许客户端查看服务器的性能、AJAX跨域时的预检等</td>
 </tr>
+
 <tr>
 <td>7</td>
 <td><code>CONNECT</code></td>
 <td>建立一个由目标资源标识的服务器的隧道</td>
 </tr>
+
 <tr>
 <td>8</td>
 <td><code>TRACE</code></td>
 <td>沿着到目标资源的路径执行一个消息环回测试， 主要用于测试或诊断</td>
 </tr>
+
 <tr>
 <td>9</td>
 <td><code>PATCH</code></td>
@@ -718,99 +843,128 @@
 </tr>
 </tbody>
 </table>
+
 <blockquote>
 <p>浏览器为什么会自动发起 OPTIONS 请求</p>
 </blockquote>
+
 <ul>
 <li>当发起 <strong>跨域请求</strong> 时，如果为 <strong>非简单请求</strong>，浏览器会自动触发 <strong>预检请求</strong>（即 OPTIONS 请求）</li>
 <li><strong><code>OPTIONS</code>请求</strong> 用于确认目标资源 <strong>是否支持跨域</strong>；若为简单请求，则不触发预检，正常请求</li>
 <li><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Status/204">204 No Content MDN</a></li>
 </ul>
-<p><img src="https://note.youdao.com/yws/api/personal/file/WEBf29c3d678fbfa05cbebfe9bb84b8db3f?method=download&amp;shareKey=eeac174337bbee0b74cb8d977116f4b8" alt="OPTIONS盗图"></p>
+
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBf29c3d678fbfa05cbebfe9bb84b8db3f?method=download&amp;shareKey=eeac174337bbee0b74cb8d977116f4b8" alt="OPTIONS盗图" /></p>
+
 <blockquote>
 <p>也就是一旦触发预检，则发送两次请求，影响性能，可做如下优化：</p>
 </blockquote>
+
 <ul>
 <li>同域则不触发</li>
 <li>避免 OPTIONS 请求：上图为 POST 请求设置头部字段 <code>Content-Type: application/json</code> 后的预检请求</li>
 <li>可将其设置成 <code>application/x-www-form-urlencoded| multipart/form-data | text/plain</code> 之一，来规避触发预检</li>
 <li>设置请求头部字段： <code>&quot;Access-Control-Max-Age&quot;: 600</code>，单位秒，一般设置为10分钟</li>
 </ul>
-<hr>
+
+<hr />
+
 <blockquote>
 <p><code>PUT &amp; DELETE</code></p>
 </blockquote>
+
 <ul>
 <li><code>PUT</code>用于更新替换资源，<code>DELETE</code>用于删除资源</li>
 <li>RESTful 风格会使用 <code>PUT &amp; DELETE</code>；实际开发中大家可自行评估选用 PUT &amp; DELETE 还是 POST</li>
 </ul>
+
 <blockquote>
 <p><code>CONNECT</code></p>
 </blockquote>
+
 <ul>
 <li>创建隧道，用于代理服务器</li>
 </ul>
-<hr>
-<h2 id="http响应状态码-a-hrefcatalogue--a">HTTP响应状态码 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
-<h3 id="01-http响应状态码-什么是http响应状态码-a-hrefcatalogue--a">01. HTTP响应状态码-什么是HTTP响应状态码 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+
+<hr />
+
+<h2 id="http响应状态码-a-href-catalogue-a">HTTP响应状态码 <a href="#catalogue"> ⇧ </a></h2>
+
+<h3 id="01-http响应状态码-什么是http响应状态码-a-href-catalogue-a">01. HTTP响应状态码-什么是HTTP响应状态码 <a href="#catalogue"> ⇧ </a></h3>
+
 <blockquote>
 <p>HTTP 响应状态码（<code>HTTP Status Code</code>），也属于 HTTP 协议的一部分，用来标识响应的状态</p>
 </blockquote>
+
 <ul>
 <li>响应状态码会随着响应消息一起被发送至客户端浏览器</li>
 <li>通过浏览器根据服务器返回的响应状态码，就能知道这次 HTTP 请求的结果是成功还是失败了</li>
 </ul>
-<h3 id="02-http响应状态码-http响应状态码的组成及分类-a-hrefcatalogue--a">02. HTTP响应状态码-HTTP响应状态码的组成及分类 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+
+<h3 id="02-http响应状态码-http响应状态码的组成及分类-a-href-catalogue-a">02. HTTP响应状态码-HTTP响应状态码的组成及分类 <a href="#catalogue"> ⇧ </a></h3>
+
 <ul>
 <li>HTTP 状态码由三个十进制数字组成
+
 <ul>
 <li>第一个十进制数字定义了状态码的类型</li>
 <li>后两个数字用来对状态码进行细分</li>
-</ul>
-</li>
+</ul></li>
 <li>HTTP 状态码共分为 5 种类型</li>
 </ul>
+
 <table>
 <thead>
 <tr>
-<th style="text-align:center">分类</th>
+<th align="center">分类</th>
 <th>分类描</th>
 </tr>
 </thead>
+
 <tbody>
 <tr>
-<td style="text-align:center"><code>1**</code></td>
+<td align="center"><code>1**</code></td>
 <td>信息，服务器收到请求，需要请求者继续执行操作（实际开发中很少遇到 1** 类型的状态码）</td>
 </tr>
+
 <tr>
-<td style="text-align:center"><code>2**</code></td>
+<td align="center"><code>2**</code></td>
 <td>成功，操作被成功接收并处理</td>
 </tr>
+
 <tr>
-<td style="text-align:center"><code>3**</code></td>
+<td align="center"><code>3**</code></td>
 <td>重定向，需要进一步的操作以完成请求</td>
 </tr>
+
 <tr>
-<td style="text-align:center"><code>4**</code></td>
+<td align="center"><code>4**</code></td>
 <td>客户端错误，请求包含语法错误或无法完成请求</td>
 </tr>
+
 <tr>
-<td style="text-align:center"><code>5**</code></td>
+<td align="center"><code>5**</code></td>
 <td>服务器错误，服务器在处理请求的过程中发生了错误</td>
 </tr>
 </tbody>
 </table>
+
 <ul>
 <li>完整的 HTTP 响应状态码，可以参考 <a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Status">MDN 官方文档 https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Status</a></li>
 </ul>
-<hr>
-<h3 id="03-http响应状态码-2xx成功相关的响应状态码-a-hrefcatalogue--a">03. HTTP响应状态码-<code>2xx</code>成功相关的响应状态码 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+
+<hr />
+
+<h3 id="03-http响应状态码-2xx-成功相关的响应状态码-a-href-catalogue-a">03. HTTP响应状态码-<code>2xx</code>成功相关的响应状态码 <a href="#catalogue"> ⇧ </a></h3>
+
 <blockquote>
 <p><code>2**</code> 范围的状态码，表示服务器已成功接收到请求并进行处理</p>
 </blockquote>
+
 <ul>
 <li>常见的 <code>2**</code> 类型的状态码如下：</li>
 </ul>
+
 <table>
 <thead>
 <tr>
@@ -819,36 +973,44 @@
 <th>中文描述</th>
 </tr>
 </thead>
+
 <tbody>
 <tr>
 <td><code>200</code></td>
 <td><code>OK</code></td>
 <td>请求成功。一般用于 GET 与 POST 请求</td>
 </tr>
+
 <tr>
 <td><code>201</code></td>
 <td><code>Created</code></td>
 <td>已创建。成功请求并创建了新的资源，通常用于 POST 或 PUT 请求</td>
 </tr>
+
 <tr>
 <td><code>204</code></td>
 <td><code>No Content</code></td>
 <td>请求成功，但无内容返回</td>
 </tr>
+
 <tr>
 <td><code>206</code></td>
-<td><code> Partial Content</code></td>
+<td><code>Partial Content</code></td>
 <td>客户端进行范围请求，响应报文中返回由 <code>Content-Range</code> 指定范围的实体内容</td>
 </tr>
 </tbody>
 </table>
-<h3 id="04-http响应状态码-3xx重定向相关的响应状态码-a-hrefcatalogue--a">04. HTTP响应状态码-<code>3xx</code>重定向相关的响应状态码 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+
+<h3 id="04-http响应状态码-3xx-重定向相关的响应状态码-a-href-catalogue-a">04. HTTP响应状态码-<code>3xx</code>重定向相关的响应状态码 <a href="#catalogue"> ⇧ </a></h3>
+
 <blockquote>
 <p><code>3**</code> 范围的状态码，表示服务器要求客户端重定向，需要客户端进一步的操作以完成资源的请求</p>
 </blockquote>
+
 <ul>
 <li>常见的 <code>3**</code> 类型的状态码如下：</li>
 </ul>
+
 <table>
 <thead>
 <tr>
@@ -857,17 +1019,20 @@
 <th>中文描述</th>
 </tr>
 </thead>
+
 <tbody>
 <tr>
 <td><code>301</code></td>
 <td><code>Moved Permanently</code></td>
 <td>永久移动。请求的资源已被永久地移动到新的 URI，返回信息会包括新的 URI，浏览器会自动重定向到新的 URI。并标记今后任何新的请求都应使用新的 URI 代替；响应的 Location 头字段会提供资源现在的 URL。直接使用 GET 方法发起新情求。</td>
 </tr>
+
 <tr>
 <td><code>302</code></td>
 <td><code>Found</code></td>
 <td>临时移动。与 301 类似。但资源只是临时被移动。客户端只应该将 Location 返回的 URL当做临时资源来使用。直接使用 GET 方法发起新情求。客户端今后应继续使用原有 URI 请求资源</td>
 </tr>
+
 <tr>
 <td><code>304</code></td>
 <td><code>Not Modified</code></td>
@@ -875,21 +1040,27 @@
 </tr>
 </tbody>
 </table>
+
 <blockquote>
 <p>补充 <code>HTTP</code> 重定向相关</p>
 </blockquote>
+
 <ul>
 <li>在 <code>HTTP</code> 中，如果服务器返回了一个重定向响应进行重定向并且是以3开头的状态码，里面有一个 <code>Location</code> 头字段表示要重定向的位置。浏览器收到响应后会直接加载 <code>Location</code> 里指定的 <code>URL</code></li>
 <li>状态码<code>301</code>和<code>308</code>都属于永久重定向，永久重定向意味着原始 <code>URL</code> 不再可用，替换成了一个新的内容。所以搜索引擎以及其他爬虫识别这两个状态码时，会更新旧 URL 的资源。</li>
 <li>而 <code>302/303/307</code> 都属于临时重定向</li>
 </ul>
-<h3 id="05-http响应状态码-4xx客户端错误相关的响应状态码-a-hrefcatalogue--a">05. HTTP响应状态码-<code>4xx</code>客户端错误相关的响应状态码 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+
+<h3 id="05-http响应状态码-4xx-客户端错误相关的响应状态码-a-href-catalogue-a">05. HTTP响应状态码-<code>4xx</code>客户端错误相关的响应状态码 <a href="#catalogue"> ⇧ </a></h3>
+
 <blockquote>
 <p><code>4**</code> 范围的状态码，表示客户端的请求有非法（不合语法）内容，从而导致请求失败</p>
 </blockquote>
+
 <ul>
 <li>常见的 <code>4**</code> 类型 的状态码如下：</li>
 </ul>
+
 <table>
 <thead>
 <tr>
@@ -898,27 +1069,32 @@
 <th>中文描述</th>
 </tr>
 </thead>
+
 <tbody>
 <tr>
 <td><code>400</code></td>
 <td><code>Bad Request</code></td>
 <td>1 语义有误。当前请求无法被服务器理解。除非进行修改，否则客户端不应重复提交这个请求；2 请求参数有误</td>
 </tr>
+
 <tr>
 <td><code>401</code></td>
 <td><code>Unauthorized</code></td>
 <td>未经授权认证。当前请求需要用行用户验证</td>
 </tr>
+
 <tr>
 <td><code>403</code></td>
 <td><code>Forbidden</code></td>
 <td>服务器已经理解请求，但是拒绝执行</td>
 </tr>
+
 <tr>
 <td><code>404</code></td>
 <td><code>Not Found</code></td>
 <td>服务器无法根据客户端的请求找到资源（通常是网页）</td>
 </tr>
+
 <tr>
 <td><code>408</code></td>
 <td><code>Request Timeout</code></td>
@@ -926,13 +1102,17 @@
 </tr>
 </tbody>
 </table>
-<h3 id="06-http响应状态码-5xx服务端错误相关的响应状态码-a-hrefcatalogue--a">06. HTTP响应状态码-5xx服务端错误相关的响应状态码 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h3>
+
+<h3 id="06-http响应状态码-5xx服务端错误相关的响应状态码-a-href-catalogue-a">06. HTTP响应状态码-5xx服务端错误相关的响应状态码 <a href="#catalogue"> ⇧ </a></h3>
+
 <blockquote>
 <p><code>5**</code> 范围的状态码，表示服务器未能正常处理客户端的请求，而出现意外错误</p>
 </blockquote>
+
 <ul>
 <li>常见的 <code>5**</code> 类型的状态码如下：</li>
 </ul>
+
 <table>
 <thead>
 <tr>
@@ -941,17 +1121,20 @@
 <th>中文描述</th>
 </tr>
 </thead>
+
 <tbody>
 <tr>
 <td><code>500</code></td>
 <td><code>Internal Sever Error</code></td>
 <td>服务器内部错误，无法完成请求</td>
 </tr>
+
 <tr>
 <td><code>501</code></td>
 <td><code>Not Implemented</code></td>
 <td>未实现请求方法 。服务器不支持该请求方法，无法完成请求。 只有 GET 和 HEAD 这两种请求是要求每个服务器必须支持的，其它请求方法在不支持的服务器上会返回 501</td>
 </tr>
+
 <tr>
 <td><code>503</code></td>
 <td><code>Service Unavailable</code></td>
@@ -959,9 +1142,11 @@
 </tr>
 </tbody>
 </table>
+
 <blockquote>
 <p>可以一同记忆的状态码</p>
 </blockquote>
+
 <table>
 <thead>
 <tr>
@@ -970,12 +1155,14 @@
 <th>中文描述</th>
 </tr>
 </thead>
+
 <tbody>
 <tr>
 <td><code>206</code></td>
 <td><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Status/206"><code>Partial Content</code></a></td>
 <td>部分内容。成功状态响应代码表示请求已成功，并且主体包含所请求的 <strong>数据区间</strong>，该数据区间是在请求的 <code>Content-Range</code> 首部指定的</td>
 </tr>
+
 <tr>
 <td><code>416</code></td>
 <td><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Status/416"><code>Range Not Satisfiable</code></a></td>
@@ -983,109 +1170,137 @@
 </tr>
 </tbody>
 </table>
-<hr>
+
+<hr />
+
 <blockquote>
 <p>其他HTTP相关知识点的有：HTTP缓存、HTTP状态管理、HTTP内容协商、HTTP持久连接机制、代理-网关-隧道、HTTP范围请求、HTTPS相关</p>
 </blockquote>
+
 <h2 id="http缓存">HTTP缓存</h2>
+
 <blockquote>
 <p>强缓存 V.S 协商缓存</p>
 </blockquote>
+
 <ul>
 <li>两者的区别在于：
+
 <ul>
 <li>是否需要向服务器 <strong>验证本地缓存</strong> 是否有效</li>
 <li>强缓存 <strong>直接使用</strong> 本地缓存</li>
 <li>协商缓存则需 <strong>与服务器进行协商</strong> 后，确定是否使用本地缓存</li>
+</ul></li>
 </ul>
-</li>
-</ul>
+
 <h2 id="强缓存">强缓存</h2>
+
 <ul>
 <li>响应头部字段中设置 <code>Cache-Control: max-age=xxx,public</code></li>
 <li>表示在<code>xxx</code>秒内再次访问该资源，均使用本地缓存</li>
 <li><code>public</code> 表示允许客户端及代理服务器（CDN）缓存</li>
 </ul>
+
 <blockquote>
 <p><code>General</code>中</p>
 </blockquote>
+
 <ul>
 <li>命中缓存
 -<code>Status Code: 200  (from memory cache)</code>
 -<code>Status Code: 200  (from disk cache)</code></li>
 <li>这里浏览器会自动分配存储到内存（memory cache）中还是磁盘（disk cache）中</li>
 </ul>
+
 <blockquote>
 <p>存在的问题</p>
 </blockquote>
+
 <ul>
 <li>感知不到资源更新，缓存不过期则不会重新获取</li>
 </ul>
+
 <blockquote>
 <p>解决</p>
 </blockquote>
+
 <ul>
 <li>缓存的意义在于减少请求，更多的使用本地资源，给用户更好的体验同时减轻服务器压力</li>
 <li>所以最佳实践应尽可能命中强缓存，同时在更新资源时让客户端的缓存失效</li>
 <li>在打包静态资源文件时，根据内容进行 hash 计算，以此来生成文件名</li>
 <li>此时请求资源URL改变，浏览器重新加载资源</li>
 </ul>
-<hr>
+
+<hr />
+
 <h2 id="协商缓存">协商缓存</h2>
+
 <blockquote>
 <p><code>General</code>中</p>
 </blockquote>
+
 <ul>
 <li>命中缓存
 -<code>Status Code: 304  (Not Modified)</code></li>
 <li>未命中缓存
 -<code>Status Code: 200  (OK)</code></li>
 </ul>
+
 <blockquote>
 <p><code>Response Headers</code>中的<code>Last-Modified</code>， 与<code>Request Headers</code>中的<code>If-Modified-Since</code></p>
 </blockquote>
+
 <ul>
 <li>文件时间戳对比</li>
 <li>首次请求资源时，服务器返回的首部字段中会携带 <code>Last-Modified</code>
+
 <ul>
 <li>值为 GMT 时间戳</li>
-</ul>
-</li>
+</ul></li>
 <li>当再次请求资源时，浏览器会自动带上 <code>If-Modified-Since</code>，该值与 <code>Last-Modified</code> 做对比
+
 <ul>
 <li>若相同，则返回304，命中缓存</li>
 <li>若不同则返回200，发送最新资源</li>
+</ul></li>
 </ul>
-</li>
-</ul>
+
 <blockquote>
 <p>存在的问题</p>
 </blockquote>
+
 <ul>
 <li><code>Last-Modified</code> 记录的是精确到秒的时间格式，若在 1s 内资源发生变化，则 <code>Last-Modified</code> 感知不到，无法返回新资源</li>
 <li>协商缓存最大的问题就是每次都要向服务器验证一下资源的有效性</li>
 </ul>
+
 <h3 id="etag-与-if-none-match-文件hash值对比"><code>Etag</code> 与 <code>If-None-Match</code> 文件Hash值对比</h3>
+
 <ul>
 <li>首次请求资源时，服务器返回的首部字段中会携带 <code>Etag</code></li>
 <li>当再次请求资源时，浏览器会自动带上 <code>If-None-Match</code>，该值与 <code>Etag</code> 做对比</li>
 <li>实体标识<code>Etag</code>与<code>If-None-Match</code>配对
+
 <ul>
 <li>若相同，则返回304，命中缓存</li>
 <li>若不同则返回200，则资源已更改，发送最新资源</li>
+</ul></li>
 </ul>
-</li>
-</ul>
+
 <blockquote>
 <p><code>Etag</code>与<code>If-None-Match</code>优先级高于<code>Last-Modified</code>与<code>If-Modified-Since</code></p>
 </blockquote>
+
 <ul>
 <li>与 <code>Last-Modified</code> 相比，<code>Etag</code> 是根据文件内容生成的唯一标识</li>
 <li>当文件变化，则 <code>Etag</code> 变化</li>
 <li>两者同时存在时，<code>Etag</code> 优先级高于 <code>Last-Modified</code>。</li>
 </ul>
-<hr>
-<h2 id="总结-a-hrefcatalogue--a">总结 <!-- raw HTML omitted --> ⇧ <!-- raw HTML omitted --></h2>
+
+<hr />
+
+<h2 id="总结-a-href-catalogue-a">总结 <a href="#catalogue"> ⇧ </a></h2>
+
 <ul>
 <li>能够说出什么是HTTP协议</li>
 <li>能够知道HTTP请求消息的组成部分</li>
@@ -1093,34 +1308,46 @@
 <li>能够说出常见的请求方法</li>
 <li>能够说出常见的响应状态码</li>
 </ul>
-<hr>
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<hr>
+
+<hr />
+
+<!-- Article End -->
+
+<div style="text-align:center;">·未完待续·</div>
+
+<hr />
+
 <h2 id="参考文章">参考文章</h2>
+
 <ul>
 <li><a href="https://juejin.cn/post/7052224696867094536#refetch">20分钟，巩固你的HTTP知识体系</a></li>
 <li><a href="https://juejin.cn/post/7052915738683637791?utm_source=gold_browser_extension">「查缺补漏」 HTTP 缓存</a></li>
 </ul>
+
 <h2 id="相关文章">相关文章</h2>
+
 <ul>
 <li><a href="https://juejin.cn/post/7051801217705443341">为什么少有人使用 <code>RESTful API</code>？</a></li>
 <li><a href="https://juejin.cn/post/7054001047882170382?utm_source=gold_browser_extension">301，302重定向，如何配置<code>nginx.conf</code></a></li>
 </ul>
-<hr>
+
+<hr />
+
 <ul>
 <li>作者： Joel</li>
 <li>文章链接：</li>
-<li><a href="http://xmasuhai.xyz/posts/%E7%89%88%E6%9D%83%E5%A3%B0%E6%98%8E%E9%93%BE%E6%8E%A5/">版权声明</a></li>
+<li><a href="http://xmasuhai.xyz/posts/版权声明链接/">版权声明</a></li>
 <li>非自由转载-非商用-非衍生-保持署名</li>
-<li><!-- raw HTML omitted -->河<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->掘<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->思<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->知<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->简<!-- raw HTML omitted --></li>
+<li><a style='color:#DB2D5D;' href='https://xiedaimala.com/bbs/users/8c266e6f-55a2-4348-a180-17cb8cdb2c46#/?page=1' target='_blank' rel='noreferrer noopener'>河</a>
+<a style='color:#006CFF;' href='https://juejin.im/user/59abfad26fb9a0248f4aa221' target='_blank' rel='noreferrer noopener'>掘</a>
+<a style='color:#009A61;' href='https://segmentfault.com/u/joel_59b17eb9d2155' target='_blank' rel='noreferrer noopener'>思</a>
+<a style='color:#0084FF;' href='https://www.zhihu.com/people/xue-shou-41/posts' target='_blank' rel='noreferrer noopener'>知</a>
+<a style='color:#EA6F5A;' href='https://www.jianshu.com/u/079916729823' target='_blank' rel='noreferrer noopener'>简</a></li>
 </ul>
-<hr>
-<hr>
+
+<hr />
+
+<hr />
 
     </div>
 
@@ -1282,7 +1509,7 @@
     &copy;
     
       2019 -
-    2022
+    2026
     <span class="heart">
       
       <i class="iconfont">

@@ -7,7 +7,7 @@
   
 
 <meta name="renderer" content="webkit" />
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
 <meta name="MobileOptimized" content="width"/>
 <meta name="HandheldFriendly" content="true"/>
@@ -32,7 +32,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.91.2" />
+<meta name="generator" content="Hugo 0.59.1" />
 
 
 <link rel="canonical" href="http://xmasuhai.xyz/post/project/vueel2/%E9%A1%B9%E7%9B%AE-vue2-%E8%BD%AE%E5%AD%904.1-%E7%AE%80%E5%8D%95%E8%BD%AE%E5%AD%90-vuecontainer-%E5%B8%83%E5%B1%80%E7%BB%84%E4%BB%B6/" />
@@ -62,15 +62,21 @@
 <meta property="og:title" content="【项目 Vue2 轮子】4.1 简单轮子 VueContainer 布局组件" />
 <meta property="og:description" content="4.1 简单轮子 VueContainer 布局组件 [toc] 需求分析 实现常用布局 三栏布局 中栏 左侧菜单栏 中栏 右侧菜单栏 左右两栏布局 左侧菜单栏 API设计 VueMain.vue VueContainer.vue width VueHeader.vue height VueHeader.vue VueFooter.vue VueAside.vue width 组件UI结构" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://xmasuhai.xyz/post/project/vueel2/%E9%A1%B9%E7%9B%AE-vue2-%E8%BD%AE%E5%AD%904.1-%E7%AE%80%E5%8D%95%E8%BD%AE%E5%AD%90-vuecontainer-%E5%B8%83%E5%B1%80%E7%BB%84%E4%BB%B6/" /><meta property="article:section" content="post" />
+<meta property="og:url" content="http://xmasuhai.xyz/post/project/vueel2/%E9%A1%B9%E7%9B%AE-vue2-%E8%BD%AE%E5%AD%904.1-%E7%AE%80%E5%8D%95%E8%BD%AE%E5%AD%90-vuecontainer-%E5%B8%83%E5%B1%80%E7%BB%84%E4%BB%B6/" />
 <meta property="article:published_time" content="2022-01-15T12:32:37+08:00" />
 <meta property="article:modified_time" content="2022-09-03T10:26:25+08:00" />
-
 <meta itemprop="name" content="【项目 Vue2 轮子】4.1 简单轮子 VueContainer 布局组件">
-<meta itemprop="description" content="4.1 简单轮子 VueContainer 布局组件 [toc] 需求分析 实现常用布局 三栏布局 中栏 左侧菜单栏 中栏 右侧菜单栏 左右两栏布局 左侧菜单栏 API设计 VueMain.vue VueContainer.vue width VueHeader.vue height VueHeader.vue VueFooter.vue VueAside.vue width 组件UI结构"><meta itemprop="datePublished" content="2022-01-15T12:32:37+08:00" />
-<meta itemprop="dateModified" content="2022-09-03T10:26:25+08:00" />
-<meta itemprop="wordCount" content="1061">
-<meta itemprop="keywords" content="FrontEnd,Project,vueel,vue2," /><meta name="twitter:card" content="summary"/>
+<meta itemprop="description" content="4.1 简单轮子 VueContainer 布局组件 [toc] 需求分析 实现常用布局 三栏布局 中栏 左侧菜单栏 中栏 右侧菜单栏 左右两栏布局 左侧菜单栏 API设计 VueMain.vue VueContainer.vue width VueHeader.vue height VueHeader.vue VueFooter.vue VueAside.vue width 组件UI结构">
+
+
+<meta itemprop="datePublished" content="2022-01-15T12:32:37&#43;08:00" />
+<meta itemprop="dateModified" content="2022-09-03T10:26:25&#43;08:00" />
+<meta itemprop="wordCount" content="1058">
+
+
+
+<meta itemprop="keywords" content="FrontEnd,Project,vueel,vue2," />
+<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="【项目 Vue2 轮子】4.1 简单轮子 VueContainer 布局组件"/>
 <meta name="twitter:description" content="4.1 简单轮子 VueContainer 布局组件 [toc] 需求分析 实现常用布局 三栏布局 中栏 左侧菜单栏 中栏 右侧菜单栏 左右两栏布局 左侧菜单栏 API设计 VueMain.vue VueContainer.vue width VueHeader.vue height VueHeader.vue VueFooter.vue VueAside.vue width 组件UI结构"/>
 
@@ -301,7 +307,7 @@
         <div class="post-category">
             
           </div>
-        <span class="more-meta"> 约 1061 字 </span>
+        <span class="more-meta"> 约 1058 字 </span>
           <span class="more-meta"> 预计阅读 3 分钟 </span>
 
         
@@ -318,71 +324,80 @@
   <h2 class="post-toc-title">文章目录</h2>
   <div class="post-toc-content">
     <nav id="TableOfContents">
-  <ul>
-    <li><a href="#需求分析">需求分析</a></li>
-    <li><a href="#api设计">API设计</a></li>
-    <li><a href="#组件ui结构">组件UI结构</a></li>
-    <li><a href="#组件代码">组件代码</a>
-      <ul>
-        <li><a href="#父子组件嵌套时创建和挂载的顺序">父子组件嵌套时创建和挂载的顺序</a></li>
-        <li><a href="#组件name属性的作用">组件<code>name</code>属性的作用</a></li>
-        <li><a href="#实现判断子组件中有vueaside方向变为row">实现判断子组件中有<code>VueAside</code>，方向变为<code>row</code></a></li>
-      </ul>
-    </li>
-    <li><a href="#单元测试">单元测试</a></li>
-  </ul>
+<ul>
+<li><a href="#4-1-简单轮子-vuecontainer-布局组件">4.1 简单轮子 VueContainer 布局组件</a>
+<ul>
+<li><a href="#需求分析">需求分析</a></li>
+<li><a href="#api设计">API设计</a></li>
+<li><a href="#组件ui结构">组件UI结构</a></li>
+<li><a href="#组件代码">组件代码</a>
+<ul>
+<li><a href="#父子组件嵌套时创建和挂载的顺序">父子组件嵌套时创建和挂载的顺序</a></li>
+<li><a href="#组件-name-属性的作用">组件<code>name</code>属性的作用</a></li>
+<li><a href="#实现判断子组件中有-vueaside-方向变为-row">实现判断子组件中有<code>VueAside</code>，方向变为<code>row</code></a></li>
+</ul></li>
+<li><a href="#单元测试">单元测试</a></li>
+</ul></li>
+</ul>
 </nav>
   </div>
 </div>
 
     
     <div class="post-content">
-      <h1 id="41-简单轮子-vuecontainer-布局组件">4.1 简单轮子 VueContainer 布局组件</h1>
+      
+
+<h1 id="4-1-简单轮子-vuecontainer-布局组件">4.1 简单轮子 VueContainer 布局组件</h1>
+
 <p>[toc]</p>
+
 <h2 id="需求分析">需求分析</h2>
+
 <ul>
 <li>实现常用布局
+
 <ul>
-<li>三栏布局
-<ul>
+<li>三栏布局</li>
 <li>中栏 左侧菜单栏</li>
 <li>中栏 右侧菜单栏</li>
-</ul>
-</li>
 <li>左右两栏布局 左侧菜单栏</li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<hr>
+
+<hr />
+
 <h2 id="api设计">API设计</h2>
+
 <ul>
 <li><code>VueMain.vue</code></li>
 <li><code>VueContainer.vue</code>
+
 <ul>
 <li><code>width</code></li>
-</ul>
-</li>
+</ul></li>
 <li><code>VueHeader.vue</code>
+
 <ul>
 <li><code>height</code></li>
-</ul>
-</li>
+</ul></li>
 <li><code>VueHeader.vue</code></li>
 <li><code>VueFooter.vue</code></li>
 <li><code>VueAside.vue</code>
+
 <ul>
 <li><code>width</code></li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<hr>
+
+<hr />
+
 <h2 id="组件ui结构">组件UI结构</h2>
+
 <ul>
-<li>可嵌套的<code>&lt;v-layout&gt;</code></li>
-</ul>
+<li><p>可嵌套的<code>&lt;v-layout&gt;</code></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -420,75 +435,78 @@
 </span><span class="lnt">36
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="c">&lt;!-- 三栏布局 --&gt;</span>
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="c">&lt;!-- 三栏布局 --&gt;</span>
 <span class="p">&lt;</span><span class="nt">v-layout</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">v-header</span><span class="p">&gt;&lt;/</span><span class="nt">v-header</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">v-content</span><span class="p">&gt;&lt;/</span><span class="nt">v-content</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">v-footer</span><span class="p">&gt;&lt;/</span><span class="nt">v-footer</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">v-header</span><span class="p">&gt;&lt;/</span><span class="nt">v-header</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">v-content</span><span class="p">&gt;&lt;/</span><span class="nt">v-content</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">v-footer</span><span class="p">&gt;&lt;/</span><span class="nt">v-footer</span><span class="p">&gt;</span>
 <span class="p">&lt;/</span><span class="nt">v-layout</span><span class="p">&gt;</span>
 
 <span class="c">&lt;!-- 三栏布局 中栏 左侧菜单栏 --&gt;</span>
 <span class="p">&lt;</span><span class="nt">v-layout</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">v-header</span><span class="p">&gt;&lt;/</span><span class="nt">v-header</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">v-layout</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">v-sider</span><span class="p">&gt;&lt;/</span><span class="nt">v-sider</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">v-content</span><span class="p">&gt;&lt;/</span><span class="nt">v-content</span><span class="p">&gt;</span>
-  <span class="p">&lt;/</span><span class="nt">v-layout</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">v-footer</span><span class="p">&gt;&lt;/</span><span class="nt">v-footer</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">v-header</span><span class="p">&gt;&lt;/</span><span class="nt">v-header</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">v-layout</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">v-sider</span><span class="p">&gt;&lt;/</span><span class="nt">v-sider</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">v-content</span><span class="p">&gt;&lt;/</span><span class="nt">v-content</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">v-layout</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">v-footer</span><span class="p">&gt;&lt;/</span><span class="nt">v-footer</span><span class="p">&gt;</span>
 <span class="p">&lt;/</span><span class="nt">v-layout</span><span class="p">&gt;</span>
 
 <span class="c">&lt;!-- 三栏布局 中栏 右侧菜单栏--&gt;</span>
 <span class="p">&lt;</span><span class="nt">v-layout</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">v-header</span><span class="p">&gt;&lt;/</span><span class="nt">v-header</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">v-layout</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">v-content</span><span class="p">&gt;&lt;/</span><span class="nt">v-content</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">v-sider</span><span class="p">&gt;&lt;/</span><span class="nt">v-sider</span><span class="p">&gt;</span>
-  <span class="p">&lt;/</span><span class="nt">v-layout</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">v-footer</span><span class="p">&gt;&lt;/</span><span class="nt">v-footer</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">v-header</span><span class="p">&gt;&lt;/</span><span class="nt">v-header</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">v-layout</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">v-content</span><span class="p">&gt;&lt;/</span><span class="nt">v-content</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">v-sider</span><span class="p">&gt;&lt;/</span><span class="nt">v-sider</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">v-layout</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">v-footer</span><span class="p">&gt;&lt;/</span><span class="nt">v-footer</span><span class="p">&gt;</span>
 <span class="p">&lt;/</span><span class="nt">v-layout</span><span class="p">&gt;</span>
 
 <span class="c">&lt;!-- 左右两栏布局 左侧菜单栏 --&gt;</span>
 <span class="p">&lt;</span><span class="nt">v-layout</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">v-sider</span><span class="p">&gt;&lt;/</span><span class="nt">v-sider</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">v-layout</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">v-header</span><span class="p">&gt;&lt;/</span><span class="nt">v-header</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">v-content</span><span class="p">&gt;&lt;/</span><span class="nt">v-content</span><span class="p">&gt;</span>
-  <span class="p">&lt;/</span><span class="nt">v-layout</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">v-footer</span><span class="p">&gt;&lt;/</span><span class="nt">v-footer</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">v-sider</span><span class="p">&gt;&lt;/</span><span class="nt">v-sider</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">v-layout</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">v-header</span><span class="p">&gt;&lt;/</span><span class="nt">v-header</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">v-content</span><span class="p">&gt;&lt;/</span><span class="nt">v-content</span><span class="p">&gt;</span>
 <span class="p">&lt;/</span><span class="nt">v-layout</span><span class="p">&gt;</span>
-</code></pre></td></tr></table>
+<span class="p">&lt;</span><span class="nt">v-footer</span><span class="p">&gt;&lt;/</span><span class="nt">v-footer</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">v-layout</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><ul>
-<li>重复使用<code>&lt;v-layout&gt;</code>作为嵌套容器，相当于<code>div</code>标签</li>
+</div></li>
+
+<li><p>重复使用<code>&lt;v-layout&gt;</code>作为嵌套容器，相当于<code>div</code>标签</p></li>
 </ul>
+
 <h2 id="组件代码">组件代码</h2>
+
 <ul>
 <li>分别创建组件
+
 <ul>
 <li><code>VueContainer.vue</code></li>
 <li><code>VueMain.vue</code></li>
 <li><code>VueHeader.vue</code></li>
 <li><code>VueAside.vue</code></li>
 <li><code>VueFooter.vue</code></li>
-</ul>
-</li>
+</ul></li>
 <li>全局注册组件
+
 <ul>
 <li><code>Vue.component('v-container', VueContainer)</code></li>
 <li><code>Vue.component('v-main', VueMain)</code></li>
 <li><code>Vue.component('v-header', VueHeader)</code></li>
 <li><code>Vue.component('v-asider', VueAside)</code></li>
 <li><code>Vue.component('v-footer', VueFooter)</code></li>
-</ul>
-</li>
+</ul></li>
 <li>IDE 自动导入<code>import VueContainer from ...</code></li>
 </ul>
+
 <blockquote>
 <p><code>./src/components/layout/VueContainer.vue</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-vue" data-lang="vue"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -510,10 +528,9 @@
 </span><span class="lnt">20
 </span><span class="lnt">21
 </span><span class="lnt">22
-</span><span class="lnt">23
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-vue" data-lang="vue"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">section</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;container&#34;</span><span class="p">&gt;</span>
     <span class="p">&lt;</span><span class="nt">slot</span><span class="p">&gt;&lt;/</span><span class="nt">slot</span><span class="p">&gt;</span>
   <span class="p">&lt;/</span><span class="nt">section</span><span class="p">&gt;</span>
@@ -534,19 +551,19 @@
   <span class="nx">flex</span><span class="o">-</span><span class="nx">direction</span><span class="o">:</span> <span class="nx">column</span><span class="p">;</span>
   <span class="nx">flex</span><span class="o">-</span><span class="nx">grow</span><span class="o">:</span> <span class="mi">1</span><span class="p">;</span>
 <span class="p">}</span>
-<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
-
-</code></pre></td></tr></table>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><ul>
+</div>
+<ul>
 <li>其他组件结构类似</li>
 </ul>
+
 <blockquote>
 <p><code>LayoutGroups.vue</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-vue" data-lang="vue"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -601,10 +618,9 @@
 </span><span class="lnt">53
 </span><span class="lnt">54
 </span><span class="lnt">55
-</span><span class="lnt">56
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-vue" data-lang="vue"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
     <span class="p">&lt;</span><span class="nt">details</span> <span class="na">open</span><span class="p">&gt;</span>
       <span class="p">&lt;</span><span class="nt">summary</span><span class="p">&gt;</span><span class="nx">三栏布局</span><span class="p">&lt;/</span><span class="nt">summary</span><span class="p">&gt;</span>
@@ -658,44 +674,45 @@
   <span class="nx">border</span><span class="o">:</span> <span class="mi">1</span><span class="nx">px</span> <span class="nx">solid</span> <span class="nx">orange</span><span class="p">;</span>
   <span class="nx">min</span><span class="o">-</span><span class="nx">height</span><span class="o">:</span> <span class="mi">40</span><span class="nx">px</span><span class="p">;</span>
 <span class="p">}</span>
-<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
-
-</code></pre></td></tr></table>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><h3 id="父子组件嵌套时创建和挂载的顺序">父子组件嵌套时创建和挂载的顺序</h3>
+</div>
+<h3 id="父子组件嵌套时创建和挂载的顺序">父子组件嵌套时创建和挂载的顺序</h3>
+
 <blockquote>
 <p>父子组件嵌套时，父组件视图和子组件视图在页面中渲染谁先谁后？</p>
 </blockquote>
+
 <ul>
 <li>不确定</li>
 <li>子组件先于父组件<code>mounted</code></li>
 <li>所有子孙组件都<code>mounted</code>后，根(父)组件最后<code>mounted</code>到页面中</li>
 </ul>
+
 <blockquote>
 <p>测试的顺序</p>
 </blockquote>
+
 <ul>
 <li>父组件<code>beforeCreated</code></li>
 <li>父组件<code>created</code>
+
 <ul>
 <li>子组件<code>beforeCreated</code></li>
-<li>子组件<code>created</code>
-<ul>
+<li>子组件<code>created</code></li>
 <li>孙组件&hellip;递归查找</li>
-</ul>
-</li>
 <li>子组件<code>mounted</code></li>
-</ul>
-</li>
+</ul></li>
 <li>父组件<code>mounted</code></li>
 <li>&hellip;</li>
 </ul>
+
 <blockquote>
 <p>父子组件嵌套时，所有组件视图都渲染完成后再执行回调操作</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -704,7 +721,7 @@
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="p">...</span>
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="p">...</span>
 <span class="nx">mounted</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">$nextTick</span><span class="p">(()=&gt;{</span>
         <span class="c1">// 仅在渲染整个视图之后，再立即运行的代码
@@ -713,21 +730,24 @@
 <span class="p">...</span>
 </code></pre></td></tr></table>
 </div>
-</div><h3 id="组件name属性的作用">组件<code>name</code>属性的作用</h3>
+</div>
+<h3 id="组件-name-属性的作用">组件<code>name</code>属性的作用</h3>
+
 <ul>
 <li>使用浏览器vue插件时可以直接看到组件原来的命名，而不是直接显示HTML标签名</li>
 <li>组件的实例中的<code>name</code>属性
+
 <ul>
 <li>可以通过判断是否存在特定的<code>name</code>，从而来实现相应的逻辑</li>
+</ul></li>
 </ul>
-</li>
-</ul>
+
 <blockquote>
 <p>打印出<code>VueContainer.vue</code>中，所有子组件的<code>name</code>属性</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-vue" data-lang="vue"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -746,10 +766,9 @@
 </span><span class="lnt">17
 </span><span class="lnt">18
 </span><span class="lnt">19
-</span><span class="lnt">20
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-vue" data-lang="vue"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">section</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;container&#34;</span><span class="p">&gt;</span>
     <span class="p">&lt;</span><span class="nt">slot</span><span class="p">&gt;&lt;/</span><span class="nt">slot</span><span class="p">&gt;</span>
   <span class="p">&lt;/</span><span class="nt">section</span><span class="p">&gt;</span>
@@ -767,30 +786,36 @@
     <span class="p">})</span>
   <span class="p">}</span>
 <span class="p">}</span>
-<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-
-</code></pre></td></tr></table>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><h3 id="实现判断子组件中有vueaside方向变为row">实现判断子组件中有<code>VueAside</code>，方向变为<code>row</code></h3>
+</div>
+<h3 id="实现判断子组件中有-vueaside-方向变为-row">实现判断子组件中有<code>VueAside</code>，方向变为<code>row</code></h3>
+
 <ul>
 <li>获取子组件的集合(数组) <code>this.$children</code></li>
 </ul>
+
 <blockquote>
 <p><code>VueContainer.vue</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code></code></pre></td>
+<pre class="chroma"><code class="language-vue" data-lang="vue"></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-vue" data-lang="vue"></code></pre></td></tr></table>
 </div>
-</div><hr>
+</div>
+<hr />
+
 <h2 id="单元测试">单元测试</h2>
+
 <ul>
 <li>无</li>
 </ul>
-<hr>
-<hr>
+
+<hr />
+
+<hr />
 
     </div>
 
@@ -955,7 +980,7 @@
     &copy;
     
       2019 -
-    2022
+    2026
     <span class="heart">
       
       <i class="iconfont">

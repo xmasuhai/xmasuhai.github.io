@@ -7,7 +7,7 @@
   
 
 <meta name="renderer" content="webkit" />
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
 <meta name="MobileOptimized" content="width"/>
 <meta name="HandheldFriendly" content="true"/>
@@ -32,7 +32,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.91.2" />
+<meta name="generator" content="Hugo 0.59.1" />
 
 
 <link rel="canonical" href="http://xmasuhai.xyz/post/project/vueel3/%E9%A1%B9%E7%9B%AE-vue3-%E8%BD%AE%E5%AD%901.5-%E5%88%B6%E4%BD%9C-dialog-%E7%BB%84%E4%BB%B6/" />
@@ -62,15 +62,21 @@
 <meta property="og:title" content="【项目 Vue3 轮子】1.5 制作 Dialog 组件" />
 <meta property="og:description" content="制作 组件 [toc] Dialog需求分析与API设计 借鉴 AntD/ Bulma/Eleme/iView/Vuetify 等 需求 点击后弹出 有遮罩层 有close按钮x 有标题 有内容 有 OK/Cancel 按钮 API 1 2 3 4 5 &lt;Dialog :visible=&#34;true&#34; title=" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://xmasuhai.xyz/post/project/vueel3/%E9%A1%B9%E7%9B%AE-vue3-%E8%BD%AE%E5%AD%901.5-%E5%88%B6%E4%BD%9C-dialog-%E7%BB%84%E4%BB%B6/" /><meta property="article:section" content="post" />
+<meta property="og:url" content="http://xmasuhai.xyz/post/project/vueel3/%E9%A1%B9%E7%9B%AE-vue3-%E8%BD%AE%E5%AD%901.5-%E5%88%B6%E4%BD%9C-dialog-%E7%BB%84%E4%BB%B6/" />
 <meta property="article:published_time" content="2022-02-02T14:23:14+08:00" />
 <meta property="article:modified_time" content="2022-06-15T08:43:36+08:00" />
-
 <meta itemprop="name" content="【项目 Vue3 轮子】1.5 制作 Dialog 组件">
-<meta itemprop="description" content="制作 组件 [toc] Dialog需求分析与API设计 借鉴 AntD/ Bulma/Eleme/iView/Vuetify 等 需求 点击后弹出 有遮罩层 有close按钮x 有标题 有内容 有 OK/Cancel 按钮 API 1 2 3 4 5 &lt;Dialog :visible=&#34;true&#34; title="><meta itemprop="datePublished" content="2022-02-02T14:23:14+08:00" />
-<meta itemprop="dateModified" content="2022-06-15T08:43:36+08:00" />
-<meta itemprop="wordCount" content="5841">
-<meta itemprop="keywords" content="FrontEnd,Project,vueel," /><meta name="twitter:card" content="summary"/>
+<meta itemprop="description" content="制作 组件 [toc] Dialog需求分析与API设计 借鉴 AntD/ Bulma/Eleme/iView/Vuetify 等 需求 点击后弹出 有遮罩层 有close按钮x 有标题 有内容 有 OK/Cancel 按钮 API 1 2 3 4 5 &lt;Dialog :visible=&#34;true&#34; title=">
+
+
+<meta itemprop="datePublished" content="2022-02-02T14:23:14&#43;08:00" />
+<meta itemprop="dateModified" content="2022-06-15T08:43:36&#43;08:00" />
+<meta itemprop="wordCount" content="5840">
+
+
+
+<meta itemprop="keywords" content="FrontEnd,Project,vueel," />
+<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="【项目 Vue3 轮子】1.5 制作 Dialog 组件"/>
 <meta name="twitter:description" content="制作 组件 [toc] Dialog需求分析与API设计 借鉴 AntD/ Bulma/Eleme/iView/Vuetify 等 需求 点击后弹出 有遮罩层 有close按钮x 有标题 有内容 有 OK/Cancel 按钮 API 1 2 3 4 5 &lt;Dialog :visible=&#34;true&#34; title="/>
 
@@ -301,7 +307,7 @@
         <div class="post-category">
             
           </div>
-        <span class="more-meta"> 约 5841 字 </span>
+        <span class="more-meta"> 约 5840 字 </span>
           <span class="more-meta"> 预计阅读 12 分钟 </span>
 
         
@@ -318,44 +324,52 @@
   <h2 class="post-toc-title">文章目录</h2>
   <div class="post-toc-content">
     <nav id="TableOfContents">
-  <ul>
-    <li><a href="#dialog需求分析与api设计">Dialog需求分析与API设计</a></li>
-    <li><a href="#创建dialog组件">创建Dialog组件</a>
-      <ul>
-        <li><a href="#dialogvue添加基本样式"><code>Dialog.vue</code>添加基本样式</a></li>
-      </ul>
-    </li>
-    <li><a href="#让dialog支持visible属性">让Dialog支持visible属性</a></li>
-    <li><a href="#让dialog支持点击关闭">让Dialog支持点击关闭</a>
-      <ul>
-        <li><a href="#设置关闭图标x的关闭逻辑">设置关闭图标x的关闭逻辑</a></li>
-        <li><a href="#设置点击遮罩层可选的执行关闭逻辑默认为执行关闭">设置点击遮罩层，可选的执行关闭逻辑，默认为执行关闭</a></li>
-        <li><a href="#设置ok和cancel按钮的关闭逻辑">设置<code>OK</code>和<code>Cancel</code>按钮的关闭逻辑</a></li>
-      </ul>
-    </li>
-    <li><a href="#让dialog支持自定义内容title和content">让Dialog支持自定义内容：title和content</a>
-      <ul>
-        <li><a href="#使用插槽实现用户自定义title和content">使用插槽实现用户自定义title和content</a></li>
-        <li><a href="#使用具名插槽">使用具名插槽</a></li>
-      </ul>
-    </li>
-    <li><a href="#使用内置组件-teleport">使用内置组件 Teleport</a></li>
-    <li><a href="#使用自定义hooks一行代码打开-dialog">使用自定义Hooks，一行代码打开 Dialog</a></li>
-  </ul>
+<ul>
+<li><a href="#制作-组件">制作  组件</a>
+<ul>
+<li><a href="#dialog需求分析与api设计">Dialog需求分析与API设计</a></li>
+<li><a href="#创建dialog组件">创建Dialog组件</a>
+<ul>
+<li><a href="#dialog-vue-添加基本样式"><code>Dialog.vue</code>添加基本样式</a></li>
+</ul></li>
+<li><a href="#让dialog支持visible属性">让Dialog支持visible属性</a></li>
+<li><a href="#让dialog支持点击关闭">让Dialog支持点击关闭</a>
+<ul>
+<li><a href="#设置关闭图标x的关闭逻辑">设置关闭图标x的关闭逻辑</a></li>
+<li><a href="#设置点击遮罩层-可选的执行关闭逻辑-默认为执行关闭">设置点击遮罩层，可选的执行关闭逻辑，默认为执行关闭</a></li>
+<li><a href="#设置-ok-和-cancel-按钮的关闭逻辑">设置<code>OK</code>和<code>Cancel</code>按钮的关闭逻辑</a></li>
+</ul></li>
+<li><a href="#让dialog支持自定义内容-title和content">让Dialog支持自定义内容：title和content</a>
+<ul>
+<li><a href="#使用插槽实现用户自定义title和content">使用插槽实现用户自定义title和content</a></li>
+<li><a href="#使用具名插槽">使用具名插槽</a></li>
+</ul></li>
+<li><a href="#使用内置组件-teleport">使用内置组件 Teleport</a></li>
+<li><a href="#使用自定义hooks-一行代码打开-dialog">使用自定义Hooks，一行代码打开 Dialog</a></li>
+</ul></li>
+</ul>
 </nav>
   </div>
 </div>
 
     
     <div class="post-content">
-      <h1 id="制作--组件">制作  组件</h1>
-<p><img src="https://static.xiedaimala.com/xdml/image/3ac7c224-c23d-491f-84b5-4fabfbeab9b8/2020-8-25-20-55-2.png" alt="Dialog"></p>
+      
+
+<h1 id="制作-组件">制作  组件</h1>
+
+<p><img src="https://static.xiedaimala.com/xdml/image/3ac7c224-c23d-491f-84b5-4fabfbeab9b8/2020-8-25-20-55-2.png" alt="Dialog" /></p>
+
 <p>[toc]</p>
-<hr>
+
+<hr />
+
 <h2 id="dialog需求分析与api设计">Dialog需求分析与API设计</h2>
+
 <ul>
 <li>借鉴 <a href="https://note.youdao.com/">AntD</a>/ <a href="https://note.youdao.com/">Bulma</a>/Eleme/iView/Vuetify 等</li>
 <li>需求
+
 <ul>
 <li>点击后弹出</li>
 <li>有遮罩层</li>
@@ -363,35 +377,36 @@
 <li>有标题</li>
 <li>有内容</li>
 <li>有 OK/Cancel 按钮</li>
+</ul></li>
 </ul>
-</li>
-</ul>
+
 <blockquote>
 <p>API</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">Dialog</span> <span class="na">:visible</span><span class="o">=</span><span class="s">&#34;true&#34;</span>
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">Dialog</span> <span class="na">:visible</span><span class="o">=</span><span class="s">&#34;true&#34;</span>
         <span class="na">title</span><span class="o">=</span><span class="s">&#34;标题&#34;</span>
         <span class="err">@</span><span class="na">yes</span><span class="o">=</span><span class="s">&#34;fn1&#34;</span>
         <span class="err">@</span><span class="na">no</span><span class="o">=</span><span class="s">&#34;fn2&#34;</span>
-<span class="p">&gt;&lt;/</span><span class="nt">Dialog</span><span class="p">&gt;</span>
-</code></pre></td></tr></table>
+<span class="p">&gt;&lt;/</span><span class="nt">Dialog</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><h2 id="创建dialog组件">创建Dialog组件</h2>
+</div>
+<h2 id="创建dialog组件">创建Dialog组件</h2>
+
 <blockquote>
 <p><code>Dialog.vue</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -417,7 +432,7 @@
 </span><span class="lnt">24
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
 <span class="kr">import</span> <span class="nx">Button</span> <span class="nx">from</span> <span class="s1">&#39;@/lib/Button.vue&#39;</span><span class="p">;</span>
 <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 
@@ -440,15 +455,15 @@
 <span class="kr">export</span> <span class="k">default</span> <span class="p">{</span>
   <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Dialog&#39;</span>
 <span class="p">};</span>
-<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-</code></pre></td></tr></table>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p><code>DialogDemo.vue</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -465,7 +480,7 @@
 </span><span class="lnt">15
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
 <span class="kr">import</span> <span class="nx">Dialog</span> <span class="nx">from</span> <span class="s1">&#39;@/lib/Dialog.vue&#39;</span><span class="p">;</span>
 <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 
@@ -479,16 +494,16 @@
 <span class="kr">export</span> <span class="k">default</span> <span class="p">{</span>
   <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;DialogDemo&#39;</span>
 <span class="p">};</span>
-<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-</code></pre></td></tr></table>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><h3 id="dialogvue添加基本样式"><code>Dialog.vue</code>添加基本样式</h3>
+</div>
+<h3 id="dialog-vue-添加基本样式"><code>Dialog.vue</code>添加基本样式</h3>
+
 <ul>
-<li>300ms点击穿透，在内容上加一层div.dialog</li>
-</ul>
+<li><p>300ms点击穿透，在内容上加一层div.dialog</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="lnt">  1
 </span><span class="lnt">  2
 </span><span class="lnt">  3
 </span><span class="lnt">  4
@@ -593,33 +608,32 @@
 </span><span class="lnt">103
 </span><span class="lnt">104
 </span><span class="lnt">105
-</span><span class="lnt">106
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
 <span class="kr">import</span> <span class="nx">Button</span> <span class="nx">from</span> <span class="s1">&#39;@/lib/Button.vue&#39;</span><span class="p">;</span>
 <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 
 <span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;vue-dialog-overlay&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;vue-dialog-wrapper&#34;</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;vue-dialog&#34;</span><span class="p">&gt;</span>
-      <span class="p">&lt;</span><span class="nt">header</span><span class="p">&gt;</span>Title <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;vue-dialog-close&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;&lt;/</span><span class="nt">header</span><span class="p">&gt;</span>
-      <span class="p">&lt;</span><span class="nt">main</span><span class="p">&gt;</span>
-        <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>some content...<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
-        <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>some content...<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
-      <span class="p">&lt;/</span><span class="nt">main</span><span class="p">&gt;</span>
-      <span class="p">&lt;</span><span class="nt">footer</span><span class="p">&gt;</span>
-        <span class="p">&lt;</span><span class="nt">Button</span> <span class="na">level</span><span class="o">=</span><span class="s">&#34;main&#34;</span><span class="p">&gt;</span>OK<span class="p">&lt;/</span><span class="nt">Button</span><span class="p">&gt;</span>
-        <span class="p">&lt;</span><span class="nt">Button</span><span class="p">&gt;</span>Cancel<span class="p">&lt;/</span><span class="nt">Button</span><span class="p">&gt;</span>
-      <span class="p">&lt;/</span><span class="nt">footer</span><span class="p">&gt;</span>
-    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;vue-dialog-overlay&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;vue-dialog-wrapper&#34;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;vue-dialog&#34;</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">header</span><span class="p">&gt;</span>Title <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;vue-dialog-close&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;&lt;/</span><span class="nt">header</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">main</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>some content...<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>some content...<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">main</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">footer</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">Button</span> <span class="na">level</span><span class="o">=</span><span class="s">&#34;main&#34;</span><span class="p">&gt;</span>OK<span class="p">&lt;/</span><span class="nt">Button</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">Button</span><span class="p">&gt;</span>Cancel<span class="p">&lt;/</span><span class="nt">Button</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">footer</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
 <span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
 
 <span class="p">&lt;</span><span class="nt">script</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
 <span class="kr">export</span> <span class="k">default</span> <span class="p">{</span>
-  <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Dialog&#39;</span>
+<span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Dialog&#39;</span>
 <span class="p">};</span>
 <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 
@@ -627,91 +641,94 @@
 <span class="p">@</span><span class="k">import</span> <span class="s1">&#39;var.scss&#39;</span><span class="p">;</span>
 
 <span class="p">.</span><span class="nc">vue-dialog</span> <span class="p">{</span>
-  <span class="k">background</span><span class="p">:</span> <span class="kc">white</span><span class="p">;</span>
-  <span class="k">border-radius</span><span class="p">:</span> <span class="err">$</span><span class="n">radius</span><span class="p">;</span>
-  <span class="k">box-shadow</span><span class="p">:</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">3</span><span class="kt">px</span> <span class="nf">fade_out</span><span class="p">(</span><span class="kc">black</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">);</span>
-  <span class="k">min-width</span><span class="p">:</span> <span class="mi">15</span><span class="kt">em</span><span class="p">;</span>
-  <span class="k">max-width</span><span class="p">:</span> <span class="mi">90</span><span class="kt">%</span><span class="p">;</span>
+<span class="k">background</span><span class="p">:</span> <span class="kc">white</span><span class="p">;</span>
+<span class="k">border-radius</span><span class="p">:</span> <span class="err">$</span><span class="n">radius</span><span class="p">;</span>
+<span class="k">box-shadow</span><span class="p">:</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">3</span><span class="kt">px</span> <span class="nf">fade_out</span><span class="p">(</span><span class="kc">black</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">);</span>
+<span class="k">min-width</span><span class="p">:</span> <span class="mi">15</span><span class="kt">em</span><span class="p">;</span>
+<span class="k">max-width</span><span class="p">:</span> <span class="mi">90</span><span class="kt">%</span><span class="p">;</span>
 
-  <span class="err">//</span> <span class="err">邻层的遮罩层</span>
-  <span class="err">&amp;-overlay</span> <span class="err">{</span>
-    <span class="k">position</span><span class="p">:</span> <span class="kc">fixed</span><span class="p">;</span>
-    <span class="k">top</span><span class="p">:</span> <span class="mi">0</span><span class="p">;</span>
-    <span class="k">left</span><span class="p">:</span> <span class="mi">0</span><span class="p">;</span>
-    <span class="k">width</span><span class="p">:</span> <span class="mi">100</span><span class="kt">%</span><span class="p">;</span>
-    <span class="k">height</span><span class="p">:</span> <span class="mi">100</span><span class="kt">%</span><span class="p">;</span>
-    <span class="k">background</span><span class="p">:</span> <span class="nf">fade_out</span><span class="p">(</span><span class="kc">black</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">);</span>
-    <span class="k">z-index</span><span class="p">:</span> <span class="mi">10</span><span class="p">;</span>
-  <span class="p">}</span>
+<span class="err">//</span> <span class="err">邻层的遮罩层</span>
+<span class="err">&amp;-overlay</span> <span class="err">{</span>
+<span class="k">position</span><span class="p">:</span> <span class="kc">fixed</span><span class="p">;</span>
+<span class="k">top</span><span class="p">:</span> <span class="mi">0</span><span class="p">;</span>
+<span class="k">left</span><span class="p">:</span> <span class="mi">0</span><span class="p">;</span>
+<span class="k">width</span><span class="p">:</span> <span class="mi">100</span><span class="kt">%</span><span class="p">;</span>
+<span class="k">height</span><span class="p">:</span> <span class="mi">100</span><span class="kt">%</span><span class="p">;</span>
+<span class="k">background</span><span class="p">:</span> <span class="nf">fade_out</span><span class="p">(</span><span class="kc">black</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">);</span>
+<span class="k">z-index</span><span class="p">:</span> <span class="mi">10</span><span class="p">;</span>
+<span class="p">}</span>
 
-  <span class="o">//</span> <span class="nt">外层样式</span>
-  <span class="o">&amp;</span><span class="nt">-wrapper</span> <span class="p">{</span>
-    <span class="k">position</span><span class="p">:</span> <span class="kc">fixed</span><span class="p">;</span>
-    <span class="k">left</span><span class="p">:</span> <span class="mi">50</span><span class="kt">%</span><span class="p">;</span>
-    <span class="k">top</span><span class="p">:</span> <span class="mi">50</span><span class="kt">%</span><span class="p">;</span>
-    <span class="k">transform</span><span class="p">:</span> <span class="nb">translate</span><span class="p">(</span><span class="mi">-50</span><span class="kt">%</span><span class="p">,</span> <span class="mi">-50</span><span class="kt">%</span><span class="p">);</span>
-    <span class="k">z-index</span><span class="p">:</span> <span class="mi">11</span><span class="p">;</span>
-  <span class="p">}</span>
+<span class="o">//</span> <span class="nt">外层样式</span>
+<span class="o">&amp;</span><span class="nt">-wrapper</span> <span class="p">{</span>
+<span class="k">position</span><span class="p">:</span> <span class="kc">fixed</span><span class="p">;</span>
+<span class="k">left</span><span class="p">:</span> <span class="mi">50</span><span class="kt">%</span><span class="p">;</span>
+<span class="k">top</span><span class="p">:</span> <span class="mi">50</span><span class="kt">%</span><span class="p">;</span>
+<span class="k">transform</span><span class="p">:</span> <span class="nb">translate</span><span class="p">(</span><span class="mi">-50</span><span class="kt">%</span><span class="p">,</span> <span class="mi">-50</span><span class="kt">%</span><span class="p">);</span>
+<span class="k">z-index</span><span class="p">:</span> <span class="mi">11</span><span class="p">;</span>
+<span class="p">}</span>
 
-  <span class="o">&gt;</span> <span class="nt">header</span> <span class="p">{</span>
-    <span class="k">padding</span><span class="p">:</span> <span class="mi">12</span><span class="kt">px</span> <span class="mi">16</span><span class="kt">px</span><span class="p">;</span>
-    <span class="k">border-bottom</span><span class="p">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="kc">solid</span> <span class="err">$</span><span class="k">border-color</span><span class="p">;</span>
-    <span class="k">display</span><span class="p">:</span> <span class="kc">flex</span><span class="p">;</span>
-    <span class="k">align-items</span><span class="p">:</span> <span class="kc">center</span><span class="p">;</span>
-    <span class="k">justify-content</span><span class="p">:</span> <span class="kc">space-between</span><span class="p">;</span>
-    <span class="k">font-size</span><span class="p">:</span> <span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
-  <span class="p">}</span>
+<span class="o">&gt;</span> <span class="nt">header</span> <span class="p">{</span>
+<span class="k">padding</span><span class="p">:</span> <span class="mi">12</span><span class="kt">px</span> <span class="mi">16</span><span class="kt">px</span><span class="p">;</span>
+<span class="k">border-bottom</span><span class="p">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="kc">solid</span> <span class="err">$</span><span class="k">border</span><span class="o">-</span><span class="kc">color</span><span class="p">;</span>
+<span class="k">display</span><span class="p">:</span> <span class="kc">flex</span><span class="p">;</span>
+<span class="k">align-items</span><span class="p">:</span> <span class="kc">center</span><span class="p">;</span>
+<span class="k">justify-content</span><span class="p">:</span> <span class="kc">space</span><span class="o">-</span><span class="n">between</span><span class="p">;</span>
+<span class="k">font-size</span><span class="p">:</span> <span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
 
-  <span class="o">&gt;</span> <span class="nt">main</span> <span class="p">{</span>
-    <span class="k">padding</span><span class="p">:</span> <span class="mi">12</span><span class="kt">px</span> <span class="mi">16</span><span class="kt">px</span><span class="p">;</span>
-  <span class="p">}</span>
+<span class="o">&gt;</span> <span class="nt">main</span> <span class="p">{</span>
+<span class="k">padding</span><span class="p">:</span> <span class="mi">12</span><span class="kt">px</span> <span class="mi">16</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
 
-  <span class="o">&gt;</span> <span class="nt">footer</span> <span class="p">{</span>
-    <span class="k">border-top</span><span class="p">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="kc">solid</span> <span class="err">$</span><span class="k">border-color</span><span class="p">;</span>
-    <span class="k">padding</span><span class="p">:</span> <span class="mi">12</span><span class="kt">px</span> <span class="mi">16</span><span class="kt">px</span><span class="p">;</span>
-    <span class="k">text-align</span><span class="p">:</span> <span class="kc">right</span><span class="p">;</span>
-  <span class="p">}</span>
+<span class="o">&gt;</span> <span class="nt">footer</span> <span class="p">{</span>
+<span class="k">border-top</span><span class="p">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="kc">solid</span> <span class="err">$</span><span class="k">border</span><span class="o">-</span><span class="kc">color</span><span class="p">;</span>
+<span class="k">padding</span><span class="p">:</span> <span class="mi">12</span><span class="kt">px</span> <span class="mi">16</span><span class="kt">px</span><span class="p">;</span>
+<span class="k">text-align</span><span class="p">:</span> <span class="kc">right</span><span class="p">;</span>
+<span class="p">}</span>
 
-  <span class="o">//</span> <span class="nt">关闭的叉字</span>
-  <span class="o">&amp;</span><span class="nt">-close</span> <span class="p">{</span>
-    <span class="k">position</span><span class="p">:</span> <span class="kc">relative</span><span class="p">;</span>
-    <span class="k">display</span><span class="p">:</span> <span class="kc">inline-block</span><span class="p">;</span>
-    <span class="k">width</span><span class="p">:</span> <span class="mi">16</span><span class="kt">px</span><span class="p">;</span>
-    <span class="k">height</span><span class="p">:</span> <span class="mi">16</span><span class="kt">px</span><span class="p">;</span>
-    <span class="k">cursor</span><span class="p">:</span> <span class="kc">pointer</span><span class="p">;</span>
+<span class="o">//</span> <span class="nt">关闭的叉字</span>
+<span class="o">&amp;</span><span class="nt">-close</span> <span class="p">{</span>
+<span class="k">position</span><span class="p">:</span> <span class="kc">relative</span><span class="p">;</span>
+<span class="k">display</span><span class="p">:</span> <span class="kc">inline</span><span class="o">-</span><span class="kc">block</span><span class="p">;</span>
+<span class="k">width</span><span class="p">:</span> <span class="mi">16</span><span class="kt">px</span><span class="p">;</span>
+<span class="k">height</span><span class="p">:</span> <span class="mi">16</span><span class="kt">px</span><span class="p">;</span>
+<span class="k">cursor</span><span class="p">:</span> <span class="kc">pointer</span><span class="p">;</span>
 
-    <span class="err">&amp;::before,</span>
-    <span class="err">&amp;::after</span> <span class="err">{</span>
-      <span class="k">content</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
-      <span class="k">position</span><span class="p">:</span> <span class="kc">absolute</span><span class="p">;</span>
-      <span class="k">height</span><span class="p">:</span> <span class="mi">1</span><span class="kt">px</span><span class="p">;</span>
-      <span class="k">background</span><span class="p">:</span> <span class="kc">black</span><span class="p">;</span>
-      <span class="k">width</span><span class="p">:</span> <span class="mi">100</span><span class="kt">%</span><span class="p">;</span>
-      <span class="k">top</span><span class="p">:</span> <span class="mi">50</span><span class="kt">%</span><span class="p">;</span>
-      <span class="k">left</span><span class="p">:</span> <span class="mi">50</span><span class="kt">%</span><span class="p">;</span>
-    <span class="p">}</span>
+<span class="err">&amp;::before,</span>
+<span class="err">&amp;::after</span> <span class="err">{</span>
+  <span class="k">content</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+  <span class="k">position</span><span class="p">:</span> <span class="kc">absolute</span><span class="p">;</span>
+  <span class="k">height</span><span class="p">:</span> <span class="mi">1</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">background</span><span class="p">:</span> <span class="kc">black</span><span class="p">;</span>
+  <span class="k">width</span><span class="p">:</span> <span class="mi">100</span><span class="kt">%</span><span class="p">;</span>
+  <span class="k">top</span><span class="p">:</span> <span class="mi">50</span><span class="kt">%</span><span class="p">;</span>
+  <span class="k">left</span><span class="p">:</span> <span class="mi">50</span><span class="kt">%</span><span class="p">;</span>
+<span class="p">}</span>
 
-    <span class="o">&amp;</span><span class="p">::</span><span class="nd">before</span> <span class="p">{</span>
-      <span class="k">transform</span><span class="p">:</span> <span class="nb">translate</span><span class="p">(</span><span class="mi">-50</span><span class="kt">%</span><span class="p">,</span> <span class="mi">-50</span><span class="kt">%</span><span class="p">)</span> <span class="nb">rotate</span><span class="p">(</span><span class="mi">-45</span><span class="kt">deg</span><span class="p">);</span>
-    <span class="p">}</span>
+<span class="o">&amp;</span><span class="p">::</span><span class="nd">before</span> <span class="p">{</span>
+  <span class="k">transform</span><span class="p">:</span> <span class="nb">translate</span><span class="p">(</span><span class="mi">-50</span><span class="kt">%</span><span class="p">,</span> <span class="mi">-50</span><span class="kt">%</span><span class="p">)</span> <span class="nb">rotate</span><span class="p">(</span><span class="mi">-45</span><span class="kt">deg</span><span class="p">);</span>
+<span class="p">}</span>
 
-    <span class="o">&amp;</span><span class="p">::</span><span class="nd">after</span> <span class="p">{</span>
-      <span class="k">transform</span><span class="p">:</span> <span class="nb">translate</span><span class="p">(</span><span class="mi">-50</span><span class="kt">%</span><span class="p">,</span> <span class="mi">-50</span><span class="kt">%</span><span class="p">)</span> <span class="nb">rotate</span><span class="p">(</span><span class="mi">45</span><span class="kt">deg</span><span class="p">);</span>
-    <span class="p">}</span>
-  <span class="err">}</span>
+<span class="o">&amp;</span><span class="p">::</span><span class="nd">after</span> <span class="p">{</span>
+  <span class="k">transform</span><span class="p">:</span> <span class="nb">translate</span><span class="p">(</span><span class="mi">-50</span><span class="kt">%</span><span class="p">,</span> <span class="mi">-50</span><span class="kt">%</span><span class="p">)</span> <span class="nb">rotate</span><span class="p">(</span><span class="mi">45</span><span class="kt">deg</span><span class="p">);</span>
+<span class="p">}</span>
 <span class="err">}</span>
-<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
-
-</code></pre></td></tr></table>
+<span class="err">}</span>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><hr>
+</div></li>
+</ul>
+
+<hr />
+
 <h2 id="让dialog支持visible属性">让Dialog支持visible属性</h2>
+
 <blockquote>
 <p>勿用动词show表示是否可见 <code>Dialog.vue</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="lnt">  1
 </span><span class="lnt">  2
 </span><span class="lnt">  3
 </span><span class="lnt">  4
@@ -827,10 +844,9 @@
 </span><span class="lnt">114
 </span><span class="lnt">115
 </span><span class="lnt">116
-</span><span class="lnt">117
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">template</span> <span class="na">v-show</span><span class="o">=</span><span class="s">&#34;visible&#34;</span><span class="p">&gt;</span>
     <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;vue-dialog-overlay&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
     <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;vue-dialog-wrapper&#34;</span><span class="p">&gt;</span>
@@ -900,10 +916,10 @@
 
   <span class="o">&gt;</span> <span class="nt">header</span> <span class="p">{</span>
     <span class="k">padding</span><span class="p">:</span> <span class="mi">12</span><span class="kt">px</span> <span class="mi">16</span><span class="kt">px</span><span class="p">;</span>
-    <span class="k">border-bottom</span><span class="p">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="kc">solid</span> <span class="err">$</span><span class="k">border-color</span><span class="p">;</span>
+    <span class="k">border-bottom</span><span class="p">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="kc">solid</span> <span class="err">$</span><span class="k">border</span><span class="o">-</span><span class="kc">color</span><span class="p">;</span>
     <span class="k">display</span><span class="p">:</span> <span class="kc">flex</span><span class="p">;</span>
     <span class="k">align-items</span><span class="p">:</span> <span class="kc">center</span><span class="p">;</span>
-    <span class="k">justify-content</span><span class="p">:</span> <span class="kc">space-between</span><span class="p">;</span>
+    <span class="k">justify-content</span><span class="p">:</span> <span class="kc">space</span><span class="o">-</span><span class="n">between</span><span class="p">;</span>
     <span class="k">font-size</span><span class="p">:</span> <span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
   <span class="p">}</span>
 
@@ -912,7 +928,7 @@
   <span class="p">}</span>
 
   <span class="o">&gt;</span> <span class="nt">footer</span> <span class="p">{</span>
-    <span class="k">border-top</span><span class="p">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="kc">solid</span> <span class="err">$</span><span class="k">border-color</span><span class="p">;</span>
+    <span class="k">border-top</span><span class="p">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="kc">solid</span> <span class="err">$</span><span class="k">border</span><span class="o">-</span><span class="kc">color</span><span class="p">;</span>
     <span class="k">padding</span><span class="p">:</span> <span class="mi">12</span><span class="kt">px</span> <span class="mi">16</span><span class="kt">px</span><span class="p">;</span>
     <span class="k">text-align</span><span class="p">:</span> <span class="kc">right</span><span class="p">;</span>
   <span class="p">}</span>
@@ -920,7 +936,7 @@
   <span class="o">//</span> <span class="nt">关闭的叉字</span>
   <span class="o">&amp;</span><span class="nt">-close</span> <span class="p">{</span>
     <span class="k">position</span><span class="p">:</span> <span class="kc">relative</span><span class="p">;</span>
-    <span class="k">display</span><span class="p">:</span> <span class="kc">inline-block</span><span class="p">;</span>
+    <span class="k">display</span><span class="p">:</span> <span class="kc">inline</span><span class="o">-</span><span class="kc">block</span><span class="p">;</span>
     <span class="k">width</span><span class="p">:</span> <span class="mi">16</span><span class="kt">px</span><span class="p">;</span>
     <span class="k">height</span><span class="p">:</span> <span class="mi">16</span><span class="kt">px</span><span class="p">;</span>
     <span class="k">cursor</span><span class="p">:</span> <span class="kc">pointer</span><span class="p">;</span>
@@ -945,16 +961,15 @@
     <span class="p">}</span>
   <span class="err">}</span>
 <span class="err">}</span>
-<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
-
-</code></pre></td></tr></table>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p><code>DialogDemo.vue</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -980,10 +995,9 @@
 </span><span class="lnt">24
 </span><span class="lnt">25
 </span><span class="lnt">26
-</span><span class="lnt">27
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
 <span class="kr">import</span> <span class="p">{</span><span class="nx">ref</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue&#39;</span><span class="p">;</span>
 <span class="kr">import</span> <span class="nx">Button</span> <span class="nx">from</span> <span class="s1">&#39;@/lib/Button.vue&#39;</span><span class="p">;</span>
 <span class="kr">import</span> <span class="nx">Dialog</span> <span class="nx">from</span> <span class="s1">&#39;@/lib/Dialog.vue&#39;</span><span class="p">;</span>
@@ -1008,54 +1022,64 @@
 <span class="kr">export</span> <span class="k">default</span> <span class="p">{</span>
   <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;DialogDemo&#39;</span>
 <span class="p">};</span>
-<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-
-</code></pre></td></tr></table>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p>解构props后，会使得数据失去响应，必须使用<code>roRefs()</code>重新赋予数据响应性</p>
 </blockquote>
+
 <ul>
 <li>或者直接使用<code>props.xxx</code></li>
 </ul>
+
 <blockquote>
 <p>使用<code>&lt;template v-show=&quot;visible&quot;&gt;</code>不显示</p>
 </blockquote>
+
 <ul>
-<li><a href="https://v3.cn.vuejs.org/guide/conditional.html#%E5%9C%A8-template-%E5%85%83%E7%B4%A0%E4%B8%8A%E4%BD%BF%E7%94%A8-v-if-%E6%9D%A1%E4%BB%B6%E6%B8%B2%E6%9F%93%E5%88%86%E7%BB%84">在 <!-- raw HTML omitted --> 元素上使用 v-if 条件渲染分组</a></li>
+<li><a href="https://v3.cn.vuejs.org/guide/conditional.html#%E5%9C%A8-template-%E5%85%83%E7%B4%A0%E4%B8%8A%E4%BD%BF%E7%94%A8-v-if-%E6%9D%A1%E4%BB%B6%E6%B8%B2%E6%9F%93%E5%88%86%E7%BB%84">在 <template> 元素上使用 v-if 条件渲染分组</a></li>
 <li>使用<code>&lt;template v-if=&quot;visible&quot;&gt;</code>代替</li>
 <li>带有 <code>v-show</code> 的元素始终会被渲染并保留在 DOM 中</li>
 <li><code>v-show</code> 只是简单地切换元素的 <code>CSS property display</code></li>
-<li><code>v-show</code> 不支持 <code>&lt;template&gt;</code> 元素，也不支持<code> v-else</code></li>
+<li><code>v-show</code> 不支持 <code>&lt;template&gt;</code> 元素，也不支持<code>v-else</code></li>
 </ul>
+
 <blockquote>
 <p><code>v-if</code> vs <code>v-show</code></p>
 </blockquote>
+
 <ol>
-<li>v-if 是**“真正”的条件渲染**，在切换过程中，<strong>条件块内</strong>的<strong>事件监听器</strong>和<strong>子组件</strong>适当地被<em><strong>销毁和重建</strong></em></li>
+<li>v-if 是<strong>“真正”的条件渲染</strong>，在切换过程中，<strong>条件块内</strong>的<strong>事件监听器</strong>和<strong>子组件</strong>适当地被<strong><em>销毁和重建</em></strong></li>
 <li>v-if 是<strong>惰性的</strong>：如果在初始渲染时条件为假，则什么也不做——直到条件第一次变为真时，才会开始渲染条件块</li>
 <li><code>v-show</code> 中元素总是会被渲染，并且只是简单地基于 CSS 进行切换</li>
 <li><code>v-if</code> 有更高的<strong>切换开销</strong>，而 <code>v-show</code> 有更高的<strong>初始渲染开销</strong></li>
-<li><code>v-show</code> 不支持 <code>&lt;template&gt;</code> 元素，也不支持<code> v-else</code></li>
+<li><code>v-show</code> 不支持 <code>&lt;template&gt;</code> 元素，也不支持<code>v-else</code></li>
 </ol>
+
 <ul>
 <li>如果需要非常频繁地切换，则使用 v-show 较好；如果在运行时条件很少改变，则使用 v-if 较好</li>
 </ul>
-<hr>
+
+<hr />
+
 <h2 id="让dialog支持点击关闭">让Dialog支持点击关闭</h2>
+
 <blockquote>
 <p><code>Dialog.vue</code>有四处需要设置监听关闭的逻辑</p>
 </blockquote>
+
 <ul>
 <li>关闭图标x</li>
 <li>黑色遮罩层</li>
 <li>OK按钮</li>
 <li>Cancel按钮</li>
 </ul>
+
 <h3 id="设置关闭图标x的关闭逻辑">设置关闭图标x的关闭逻辑</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="lnt">  1
 </span><span class="lnt">  2
 </span><span class="lnt">  3
 </span><span class="lnt">  4
@@ -1183,7 +1207,7 @@
 </span><span class="lnt">126
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
 <span class="kr">import</span> <span class="nx">Button</span> <span class="nx">from</span> <span class="s1">&#39;@/lib/Button.vue&#39;</span><span class="p">;</span>
 <span class="kr">import</span> <span class="p">{</span><span class="nx">toRefs</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue&#39;</span><span class="p">;</span>
 
@@ -1263,10 +1287,10 @@
 
   <span class="o">&gt;</span> <span class="nt">header</span> <span class="p">{</span>
     <span class="k">padding</span><span class="p">:</span> <span class="mi">12</span><span class="kt">px</span> <span class="mi">16</span><span class="kt">px</span><span class="p">;</span>
-    <span class="k">border-bottom</span><span class="p">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="kc">solid</span> <span class="err">$</span><span class="k">border-color</span><span class="p">;</span>
+    <span class="k">border-bottom</span><span class="p">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="kc">solid</span> <span class="err">$</span><span class="k">border</span><span class="o">-</span><span class="kc">color</span><span class="p">;</span>
     <span class="k">display</span><span class="p">:</span> <span class="kc">flex</span><span class="p">;</span>
     <span class="k">align-items</span><span class="p">:</span> <span class="kc">center</span><span class="p">;</span>
-    <span class="k">justify-content</span><span class="p">:</span> <span class="kc">space-between</span><span class="p">;</span>
+    <span class="k">justify-content</span><span class="p">:</span> <span class="kc">space</span><span class="o">-</span><span class="n">between</span><span class="p">;</span>
     <span class="k">font-size</span><span class="p">:</span> <span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
   <span class="p">}</span>
 
@@ -1275,7 +1299,7 @@
   <span class="p">}</span>
 
   <span class="o">&gt;</span> <span class="nt">footer</span> <span class="p">{</span>
-    <span class="k">border-top</span><span class="p">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="kc">solid</span> <span class="err">$</span><span class="k">border-color</span><span class="p">;</span>
+    <span class="k">border-top</span><span class="p">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="kc">solid</span> <span class="err">$</span><span class="k">border</span><span class="o">-</span><span class="kc">color</span><span class="p">;</span>
     <span class="k">padding</span><span class="p">:</span> <span class="mi">12</span><span class="kt">px</span> <span class="mi">16</span><span class="kt">px</span><span class="p">;</span>
     <span class="k">text-align</span><span class="p">:</span> <span class="kc">right</span><span class="p">;</span>
   <span class="p">}</span>
@@ -1283,7 +1307,7 @@
   <span class="o">//</span> <span class="nt">关闭的叉字</span>
   <span class="o">&amp;</span><span class="nt">-close</span> <span class="p">{</span>
     <span class="k">position</span><span class="p">:</span> <span class="kc">relative</span><span class="p">;</span>
-    <span class="k">display</span><span class="p">:</span> <span class="kc">inline-block</span><span class="p">;</span>
+    <span class="k">display</span><span class="p">:</span> <span class="kc">inline</span><span class="o">-</span><span class="kc">block</span><span class="p">;</span>
     <span class="k">width</span><span class="p">:</span> <span class="mi">16</span><span class="kt">px</span><span class="p">;</span>
     <span class="k">height</span><span class="p">:</span> <span class="mi">16</span><span class="kt">px</span><span class="p">;</span>
     <span class="k">cursor</span><span class="p">:</span> <span class="kc">pointer</span><span class="p">;</span>
@@ -1308,15 +1332,15 @@
     <span class="p">}</span>
   <span class="err">}</span>
 <span class="err">}</span>
-<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
-</code></pre></td></tr></table>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p><code>DialogDemo.vue</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1339,10 +1363,9 @@
 </span><span class="lnt">21
 </span><span class="lnt">22
 </span><span class="lnt">23
-</span><span class="lnt">24
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
 <span class="kr">import</span> <span class="p">{</span><span class="nx">ref</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue&#39;</span><span class="p">;</span>
 <span class="kr">import</span> <span class="nx">Button</span> <span class="nx">from</span> <span class="s1">&#39;@/lib/Button.vue&#39;</span><span class="p">;</span>
 <span class="kr">import</span> <span class="nx">Dialog</span> <span class="nx">from</span> <span class="s1">&#39;@/lib/Dialog.vue&#39;</span><span class="p">;</span>
@@ -1364,27 +1387,29 @@
 <span class="kr">export</span> <span class="k">default</span> <span class="p">{</span>
   <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;DialogDemo&#39;</span>
 <span class="p">};</span>
-<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-
-</code></pre></td></tr></table>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p>注意不能在子组件中直接修改props</p>
 </blockquote>
+
 <ul>
 <li>使用<code>const emits = defineEmits(['update:visible']);</code>发布到外层组件</li>
 <li>外层组件中监听自定义事件<code>&lt;Dialog :visible=&quot;x&quot; @update:visible=&quot;x = $event&quot;&gt;&lt;/Dialog&gt;</code></li>
 <li>可以使用<code>v-moddel</code>语法糖简写<code>&lt;Dialog v-model:visible=&quot;x&quot;&gt;&lt;/Dialog&gt;</code></li>
 </ul>
-<h3 id="设置点击遮罩层可选的执行关闭逻辑默认为执行关闭">设置点击遮罩层，可选的执行关闭逻辑，默认为执行关闭</h3>
+
+<h3 id="设置点击遮罩层-可选的执行关闭逻辑-默认为执行关闭">设置点击遮罩层，可选的执行关闭逻辑，默认为执行关闭</h3>
+
 <ul>
 <li>设置<code>closeOnClickOverlay: Boolean</code>外部数据</li>
 <li>设置<code>onClickOverlay</code>方法</li>
-<li>判断当<code>closeOnClickOverlay === true</code>时，执行关闭逻辑</li>
-</ul>
+
+<li><p>判断当<code>closeOnClickOverlay === true</code>时，执行关闭逻辑</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1443,18 +1468,18 @@
 </span><span class="lnt">57
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
 <span class="kr">import</span> <span class="nx">Button</span> <span class="nx">from</span> <span class="s1">&#39;@/lib/Button.vue&#39;</span><span class="p">;</span>
 <span class="kr">import</span> <span class="p">{</span><span class="nx">toRefs</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue&#39;</span><span class="p">;</span>
 
 <span class="kr">interface</span> <span class="nx">Props</span> <span class="p">{</span>
-  <span class="nx">visible</span><span class="o">?:</span> <span class="kr">boolean</span><span class="p">;</span>
-  <span class="nx">closeOnClickOverlay</span><span class="o">?:</span> <span class="kr">boolean</span><span class="p">;</span>
+<span class="nx">visible</span><span class="o">?:</span> <span class="kr">boolean</span><span class="p">;</span>
+<span class="nx">closeOnClickOverlay</span><span class="o">?:</span> <span class="kr">boolean</span><span class="p">;</span>
 <span class="p">}</span>
 
 <span class="kr">const</span> <span class="nx">props</span> <span class="o">=</span> <span class="nx">withDefaults</span><span class="p">(</span><span class="nx">defineProps</span><span class="o">&lt;</span><span class="nx">Props</span><span class="o">&gt;</span><span class="p">(),</span> <span class="p">{</span>
-  <span class="nx">visible</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
-  <span class="nx">closeOnClickOverlay</span><span class="o">:</span> <span class="kc">true</span>
+<span class="nx">visible</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+<span class="nx">closeOnClickOverlay</span><span class="o">:</span> <span class="kc">true</span>
 <span class="p">});</span>
 
 <span class="c1">// destructured prop visible is Value (integer for e.g.) which cannot be reactive by itself
@@ -1466,50 +1491,54 @@
 <span class="c1">// 关闭对话框逻辑
 </span><span class="c1"></span><span class="kr">const</span> <span class="nx">emits</span> <span class="o">=</span> <span class="nx">defineEmits</span><span class="p">([</span><span class="s1">&#39;update:visible&#39;</span><span class="p">]);</span>
 <span class="kr">const</span> <span class="nx">close</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
-  <span class="nx">emits</span><span class="p">(</span><span class="s1">&#39;update:visible&#39;</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+<span class="nx">emits</span><span class="p">(</span><span class="s1">&#39;update:visible&#39;</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
 <span class="p">};</span>
 
 <span class="c1">// 遮罩层关闭逻辑
 </span><span class="c1"></span><span class="kr">const</span> <span class="nx">onClickOverlay</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
-  <span class="k">if</span> <span class="p">(</span><span class="nx">closeOnClickOverlay</span><span class="p">.</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">close</span><span class="p">();</span>
-  <span class="p">}</span>
+<span class="k">if</span> <span class="p">(</span><span class="nx">closeOnClickOverlay</span><span class="p">.</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+<span class="nx">close</span><span class="p">();</span>
+<span class="p">}</span>
 <span class="p">};</span>
 
 <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 
 <span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">template</span> <span class="na">v-if</span><span class="o">=</span><span class="s">&#34;visible&#34;</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;vue-dialog-overlay&#34;</span> <span class="err">@</span><span class="na">click</span><span class="o">=</span><span class="s">&#34;onClickOverlay&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;vue-dialog-wrapper&#34;</span><span class="p">&gt;</span>
-      <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;vue-dialog&#34;</span><span class="p">&gt;</span>
-        <span class="p">&lt;</span><span class="nt">header</span><span class="p">&gt;</span>Title
-          <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;vue-dialog-close&#34;</span>
-                <span class="err">@</span><span class="na">click</span><span class="o">=</span><span class="s">&#34;close&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
-        <span class="p">&lt;/</span><span class="nt">header</span><span class="p">&gt;</span>
-        <span class="p">&lt;</span><span class="nt">main</span><span class="p">&gt;</span>
-          <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>some content...<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
-          <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>some content...<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
-        <span class="p">&lt;/</span><span class="nt">main</span><span class="p">&gt;</span>
-        <span class="p">&lt;</span><span class="nt">footer</span><span class="p">&gt;</span>
-          <span class="p">&lt;</span><span class="nt">Button</span> <span class="na">level</span><span class="o">=</span><span class="s">&#34;main&#34;</span><span class="p">&gt;</span>OK<span class="p">&lt;/</span><span class="nt">Button</span><span class="p">&gt;</span>
-          <span class="p">&lt;</span><span class="nt">Button</span><span class="p">&gt;</span>Cancel<span class="p">&lt;/</span><span class="nt">Button</span><span class="p">&gt;</span>
-        <span class="p">&lt;/</span><span class="nt">footer</span><span class="p">&gt;</span>
-      <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-  <span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">template</span> <span class="na">v-if</span><span class="o">=</span><span class="s">&#34;visible&#34;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;vue-dialog-overlay&#34;</span> <span class="err">@</span><span class="na">click</span><span class="o">=</span><span class="s">&#34;onClickOverlay&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;vue-dialog-wrapper&#34;</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;vue-dialog&#34;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">header</span><span class="p">&gt;</span>Title
+      <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;vue-dialog-close&#34;</span>
+            <span class="err">@</span><span class="na">click</span><span class="o">=</span><span class="s">&#34;close&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">header</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">main</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>some content...<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>some content...<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">main</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">footer</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">Button</span> <span class="na">level</span><span class="o">=</span><span class="s">&#34;main&#34;</span><span class="p">&gt;</span>OK<span class="p">&lt;/</span><span class="nt">Button</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">Button</span><span class="p">&gt;</span>Cancel<span class="p">&lt;/</span><span class="nt">Button</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">footer</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
 <span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
-...
-</code></pre></td></tr></table>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+...</code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div></li>
+</ul>
+
+<blockquote>
 <p>对不同的<code>&lt;Dialog&gt;</code>的需要设置不同的<code>visible</code></p>
 </blockquote>
-<hr>
-<h3 id="设置ok和cancel按钮的关闭逻辑">设置<code>OK</code>和<code>Cancel</code>按钮的关闭逻辑</h3>
+
+<hr />
+
+<h3 id="设置-ok-和-cancel-按钮的关闭逻辑">设置<code>OK</code>和<code>Cancel</code>按钮的关闭逻辑</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1574,7 +1603,7 @@
 </span><span class="lnt">63
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
 <span class="kr">import</span> <span class="nx">Button</span> <span class="nx">from</span> <span class="s1">&#39;@/lib/Button.vue&#39;</span><span class="p">;</span>
 <span class="kr">import</span> <span class="p">{</span><span class="nx">toRefs</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue&#39;</span><span class="p">;</span>
 
@@ -1636,23 +1665,25 @@
     <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
   <span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
 <span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
-...
-</code></pre></td></tr></table>
+...</code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p>需要考虑到，当用户在对话框中填空时，需要额外的逻辑判断是否按照要求填空</p>
 </blockquote>
+
 <ul>
 <li>当用户在对话框中填空未完成时，不可直接关闭对话框</li>
 <li><code>emits('xxx', false);</code> 发布事件的操作时没有返回值的，永远是<code>undefined</code></li>
 <li>在初始化<code>Dialog</code>组件时就需要用户传递<code>ok</code>与<code>cancel</code>的回调函数</li>
 </ul>
+
 <blockquote>
 <p><code>DialogDemo.vue</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1687,7 +1718,7 @@
 </span><span class="lnt">33
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
 <span class="kr">import</span> <span class="p">{</span><span class="nx">ref</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue&#39;</span><span class="p">;</span>
 <span class="kr">import</span> <span class="nx">Button</span> <span class="nx">from</span> <span class="s1">&#39;@/lib/Button.vue&#39;</span><span class="p">;</span>
 <span class="kr">import</span> <span class="nx">Dialog</span> <span class="nx">from</span> <span class="s1">&#39;@/lib/Dialog.vue&#39;</span><span class="p">;</span>
@@ -1719,15 +1750,15 @@
   <span class="p">&lt;</span><span class="nt">Button</span> <span class="err">@</span><span class="na">click</span><span class="o">=</span><span class="s">&#34;toggle&#34;</span><span class="p">&gt;</span>toggle<span class="p">&lt;/</span><span class="nt">Button</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">Dialog</span> <span class="na">v-model:visible</span><span class="o">=</span><span class="s">&#34;x&#34;</span>
           <span class="na">:ok</span><span class="o">=</span><span class="s">&#34;fn1&#34;</span> <span class="na">:cancek</span><span class="o">=</span><span class="s">&#34;fn2&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">Dialog</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
-</code></pre></td></tr></table>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p><code>Dialog.vue</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1780,7 +1811,7 @@
 </span><span class="lnt">51
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
 <span class="kr">import</span> <span class="nx">Button</span> <span class="nx">from</span> <span class="s1">&#39;@/lib/Button.vue&#39;</span><span class="p">;</span>
 <span class="kr">import</span> <span class="p">{</span><span class="nx">toRefs</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue&#39;</span><span class="p">;</span>
 
@@ -1830,16 +1861,16 @@
   <span class="p">}</span>
 <span class="p">};</span>
 <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-...
-</code></pre></td></tr></table>
+...</code></pre></td></tr></table>
 </div>
-</div><ul>
+</div>
+<ul>
 <li>可以设置<code>ok</code> <code>cancel</code>的回调函数，通过回调的返回值来阻止关闭</li>
-<li><code>props.ok &amp;&amp; props.ok() !== false</code>尅使用可选链语法简写为<code>props.ok?.() !== false</code></li>
-</ul>
+
+<li><p><code>props.ok &amp;&amp; props.ok() !== false</code>尅使用可选链语法简写为<code>props.ok?.() !== false</code></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1914,21 +1945,21 @@
 </span><span class="lnt">73
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
 <span class="kr">import</span> <span class="nx">Button</span> <span class="nx">from</span> <span class="s1">&#39;@/lib/Button.vue&#39;</span><span class="p">;</span>
 <span class="kr">import</span> <span class="p">{</span><span class="nx">toRefs</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue&#39;</span><span class="p">;</span>
 
 <span class="c1">// 注册外部带默认值的数据
 </span><span class="c1"></span><span class="kr">interface</span> <span class="nx">Props</span> <span class="p">{</span>
-  <span class="nx">visible</span><span class="o">?:</span> <span class="kr">boolean</span><span class="p">;</span>
-  <span class="nx">closeOnClickOverlay</span><span class="o">?:</span> <span class="kr">boolean</span><span class="p">;</span>
-  <span class="nx">ok</span><span class="o">?:</span> <span class="nb">Function</span><span class="p">;</span>
-  <span class="nx">cancel</span><span class="o">?:</span> <span class="nb">Function</span><span class="p">;</span>
+<span class="nx">visible</span><span class="o">?:</span> <span class="kr">boolean</span><span class="p">;</span>
+<span class="nx">closeOnClickOverlay</span><span class="o">?:</span> <span class="kr">boolean</span><span class="p">;</span>
+<span class="nx">ok</span><span class="o">?:</span> <span class="nb">Function</span><span class="p">;</span>
+<span class="nx">cancel</span><span class="o">?:</span> <span class="nb">Function</span><span class="p">;</span>
 <span class="p">}</span>
 
 <span class="kr">const</span> <span class="nx">props</span> <span class="o">=</span> <span class="nx">withDefaults</span><span class="p">(</span><span class="nx">defineProps</span><span class="o">&lt;</span><span class="nx">Props</span><span class="o">&gt;</span><span class="p">(),</span> <span class="p">{</span>
-  <span class="nx">visible</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
-  <span class="nx">closeOnClickOverlay</span><span class="o">:</span> <span class="kc">true</span>
+<span class="nx">visible</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+<span class="nx">closeOnClickOverlay</span><span class="o">:</span> <span class="kc">true</span>
 <span class="p">});</span>
 
 <span class="c1">// destructured prop visible is Value (integer for e.g.) which cannot be reactive by itself
@@ -1942,62 +1973,67 @@
 
 <span class="c1">// 关闭对话框逻辑
 </span><span class="c1"></span><span class="kr">const</span> <span class="nx">close</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
-  <span class="nx">emits</span><span class="p">(</span><span class="s1">&#39;update:visible&#39;</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+<span class="nx">emits</span><span class="p">(</span><span class="s1">&#39;update:visible&#39;</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
 <span class="p">};</span>
 
 <span class="c1">// 遮罩层关闭逻辑
 </span><span class="c1"></span><span class="kr">const</span> <span class="nx">onClickOverlay</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
-  <span class="k">if</span> <span class="p">(</span><span class="nx">closeOnClickOverlay</span><span class="p">.</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">close</span><span class="p">();</span>
-  <span class="p">}</span>
+<span class="k">if</span> <span class="p">(</span><span class="nx">closeOnClickOverlay</span><span class="p">.</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+<span class="nx">close</span><span class="p">();</span>
+<span class="p">}</span>
 <span class="p">};</span>
 
 <span class="c1">// OK Cancel按钮关闭逻辑
 </span><span class="c1"></span><span class="kr">const</span> <span class="nx">okFn</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
-  <span class="k">if</span> <span class="p">(</span><span class="nx">props</span><span class="p">.</span><span class="nx">ok</span><span class="o">?</span><span class="p">.()</span> <span class="o">!==</span> <span class="kc">false</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">close</span><span class="p">();</span>
-  <span class="p">}</span>
+<span class="k">if</span> <span class="p">(</span><span class="nx">props</span><span class="p">.</span><span class="nx">ok</span><span class="o">?</span><span class="p">.()</span> <span class="o">!==</span> <span class="kc">false</span><span class="p">)</span> <span class="p">{</span>
+<span class="nx">close</span><span class="p">();</span>
+<span class="p">}</span>
 <span class="p">};</span>
 <span class="kr">const</span> <span class="nx">cancelFn</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
-  <span class="k">if</span> <span class="p">(</span><span class="nx">props</span><span class="p">.</span><span class="nx">cancel</span><span class="o">?</span><span class="p">.()</span> <span class="o">!==</span> <span class="kc">false</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">close</span><span class="p">();</span>
-  <span class="p">}</span>
+<span class="k">if</span> <span class="p">(</span><span class="nx">props</span><span class="p">.</span><span class="nx">cancel</span><span class="o">?</span><span class="p">.()</span> <span class="o">!==</span> <span class="kc">false</span><span class="p">)</span> <span class="p">{</span>
+<span class="nx">close</span><span class="p">();</span>
+<span class="p">}</span>
 <span class="p">};</span>
 <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 
 <span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">template</span> <span class="na">v-if</span><span class="o">=</span><span class="s">&#34;visible&#34;</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;vue-dialog-overlay&#34;</span> <span class="err">@</span><span class="na">click</span><span class="o">=</span><span class="s">&#34;onClickOverlay&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;vue-dialog-wrapper&#34;</span><span class="p">&gt;</span>
-      <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;vue-dialog&#34;</span><span class="p">&gt;</span>
-        <span class="p">&lt;</span><span class="nt">header</span><span class="p">&gt;</span>Title
-          <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;vue-dialog-close&#34;</span>
-                <span class="err">@</span><span class="na">click</span><span class="o">=</span><span class="s">&#34;close&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
-        <span class="p">&lt;/</span><span class="nt">header</span><span class="p">&gt;</span>
-        <span class="p">&lt;</span><span class="nt">main</span><span class="p">&gt;</span>
-          <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>some content...<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
-          <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>some content...<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
-        <span class="p">&lt;/</span><span class="nt">main</span><span class="p">&gt;</span>
-        <span class="p">&lt;</span><span class="nt">footer</span><span class="p">&gt;</span>
-          <span class="p">&lt;</span><span class="nt">Button</span> <span class="na">level</span><span class="o">=</span><span class="s">&#34;main&#34;</span> <span class="err">@</span><span class="na">click</span><span class="o">=</span><span class="s">&#34;okFn&#34;</span><span class="p">&gt;</span>OK<span class="p">&lt;/</span><span class="nt">Button</span><span class="p">&gt;</span>
-          <span class="p">&lt;</span><span class="nt">Button</span> <span class="err">@</span><span class="na">click</span><span class="o">=</span><span class="s">&#34;cancelFn&#34;</span><span class="p">&gt;</span>Cancel<span class="p">&lt;/</span><span class="nt">Button</span><span class="p">&gt;</span>
-        <span class="p">&lt;/</span><span class="nt">footer</span><span class="p">&gt;</span>
-      <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-  <span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">template</span> <span class="na">v-if</span><span class="o">=</span><span class="s">&#34;visible&#34;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;vue-dialog-overlay&#34;</span> <span class="err">@</span><span class="na">click</span><span class="o">=</span><span class="s">&#34;onClickOverlay&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;vue-dialog-wrapper&#34;</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;vue-dialog&#34;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">header</span><span class="p">&gt;</span>Title
+      <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;vue-dialog-close&#34;</span>
+            <span class="err">@</span><span class="na">click</span><span class="o">=</span><span class="s">&#34;close&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">header</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">main</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>some content...<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>some content...<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">main</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">footer</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">Button</span> <span class="na">level</span><span class="o">=</span><span class="s">&#34;main&#34;</span> <span class="err">@</span><span class="na">click</span><span class="o">=</span><span class="s">&#34;okFn&#34;</span><span class="p">&gt;</span>OK<span class="p">&lt;/</span><span class="nt">Button</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">Button</span> <span class="err">@</span><span class="na">click</span><span class="o">=</span><span class="s">&#34;cancelFn&#34;</span><span class="p">&gt;</span>Cancel<span class="p">&lt;/</span><span class="nt">Button</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">footer</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
 <span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
-...
-</code></pre></td></tr></table>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+...</code></pre></td></tr></table>
 </div>
-</div><hr>
-<h2 id="让dialog支持自定义内容title和content">让Dialog支持自定义内容：title和content</h2>
+</div></li>
+</ul>
+
+<hr />
+
+<h2 id="让dialog支持自定义内容-title和content">让Dialog支持自定义内容：title和content</h2>
+
 <h3 id="使用插槽实现用户自定义title和content">使用插槽实现用户自定义title和content</h3>
+
 <blockquote>
 <p><code>DialogDemo.vue</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -2030,10 +2066,9 @@
 </span><span class="lnt">31
 </span><span class="lnt">32
 </span><span class="lnt">33
-</span><span class="lnt">34
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
 <span class="kr">import</span> <span class="p">...;</span>
 
 <span class="kr">const</span> <span class="nx">x</span> <span class="o">=</span> <span class="nx">ref</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
@@ -2065,16 +2100,15 @@
     <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>自定义内容<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
     <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>自定义内容<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
   <span class="p">&lt;/</span><span class="nt">Dialog</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
-
-</code></pre></td></tr></table>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p><code>Dialog.vue</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -2151,7 +2185,7 @@
 </span><span class="lnt">75
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
 <span class="kr">import</span> <span class="nx">Button</span> <span class="nx">from</span> <span class="s1">&#39;@/lib/Button.vue&#39;</span><span class="p">;</span>
 <span class="kr">import</span> <span class="p">{</span><span class="nx">toRefs</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue&#39;</span><span class="p">;</span>
 
@@ -2225,20 +2259,22 @@
     <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
   <span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
 <span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
-...
-</code></pre></td></tr></table>
+...</code></pre></td></tr></table>
 </div>
-</div><h3 id="使用具名插槽">使用具名插槽</h3>
+</div>
+<h3 id="使用具名插槽">使用具名插槽</h3>
+
 <ul>
 <li>让<code>title</code>也支持标签</li>
 <li>具名插槽<code>&lt;template v-slot:title&gt;</code>代替外部数据<code>props.title</code></li>
 </ul>
+
 <blockquote>
 <p><code>Dialog.vue</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -2314,7 +2350,7 @@
 </span><span class="lnt">74
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
 <span class="kr">import</span> <span class="nx">Button</span> <span class="nx">from</span> <span class="s1">&#39;@/lib/Button.vue&#39;</span><span class="p">;</span>
 <span class="kr">import</span> <span class="p">{</span><span class="nx">toRefs</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue&#39;</span><span class="p">;</span>
 
@@ -2387,15 +2423,15 @@
   <span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
 <span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
 
-...
-</code></pre></td></tr></table>
+...</code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p><code>DialogDemo.vue</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -2420,10 +2456,9 @@
 </span><span class="lnt">23
 </span><span class="lnt">24
 </span><span class="lnt">25
-</span><span class="lnt">26
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
 <span class="p">...</span>
 <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 
@@ -2447,18 +2482,19 @@
       <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>自定义内容<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
     <span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
   <span class="p">&lt;/</span><span class="nt">Dialog</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
-
-</code></pre></td></tr></table>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><hr>
+</div>
+<hr />
+
 <h2 id="使用内置组件-teleport">使用内置组件 Teleport</h2>
+
 <blockquote>
 <p>如果有一个元素的 z-index 高于 当前的Dialog，位置重叠</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -2476,7 +2512,7 @@
 </span><span class="lnt">16
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;</span>防止被遮盖<span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">Button</span> <span class="err">@</span><span class="na">click</span><span class="o">=</span><span class="s">&#34;toggle4&#34;</span><span class="p">&gt;</span>toggle<span class="p">&lt;/</span><span class="nt">Button</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">div</span> <span class="na">style</span><span class="o">=</span><span class="s">&#34;position: relative; z-index: 1;&#34;</span><span class="p">&gt;</span>
@@ -2491,22 +2527,24 @@
 </span><span class="s">              background: orange;&#34;</span><span class="p">&gt;</span>
     z-index: 2; 层叠上下文 比较同一级父级的 z-index
   <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
-</code></pre></td></tr></table>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><ul>
+</div>
+<ul>
 <li><code>Dialog</code>组件会被覆盖</li>
 </ul>
+
 <blockquote>
 <p>内置组件 <code>&lt;Teleport&gt;</code>作用是将 Dialog 移到任意节点</p>
 </blockquote>
+
 <ul>
 <li><code>&lt;teleport to=&quot;body&quot;&gt;...&lt;/teleport&gt;</code>将 其中的<code>...</code>移到body的关闭标签之前</li>
-<li>防止 Dialog 由于层叠上下文导致被遮挡</li>
-</ul>
+
+<li><p>防止 Dialog 由于层叠上下文导致被遮挡</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -2580,24 +2618,23 @@
 </span><span class="lnt">72
 </span><span class="lnt">73
 </span><span class="lnt">74
-</span><span class="lnt">75
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span><span class="p">&gt;</span>
 <span class="kr">import</span> <span class="nx">Button</span> <span class="nx">from</span> <span class="s1">&#39;@/lib/Button.vue&#39;</span><span class="p">;</span>
 <span class="kr">import</span> <span class="p">{</span><span class="nx">toRefs</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue&#39;</span><span class="p">;</span>
 
 <span class="c1">// 注册外部带默认值的数据
 </span><span class="c1"></span><span class="kr">interface</span> <span class="nx">Props</span> <span class="p">{</span>
-  <span class="nx">visible</span><span class="o">?:</span> <span class="kr">boolean</span><span class="p">;</span>
-  <span class="nx">closeOnClickOverlay</span><span class="o">?:</span> <span class="kr">boolean</span><span class="p">;</span>
-  <span class="nx">ok</span><span class="o">?:</span> <span class="nb">Function</span><span class="p">;</span>
-  <span class="nx">cancel</span><span class="o">?:</span> <span class="nb">Function</span><span class="p">;</span>
+<span class="nx">visible</span><span class="o">?:</span> <span class="kr">boolean</span><span class="p">;</span>
+<span class="nx">closeOnClickOverlay</span><span class="o">?:</span> <span class="kr">boolean</span><span class="p">;</span>
+<span class="nx">ok</span><span class="o">?:</span> <span class="nb">Function</span><span class="p">;</span>
+<span class="nx">cancel</span><span class="o">?:</span> <span class="nb">Function</span><span class="p">;</span>
 <span class="p">}</span>
 
 <span class="kr">const</span> <span class="nx">props</span> <span class="o">=</span> <span class="nx">withDefaults</span><span class="p">(</span><span class="nx">defineProps</span><span class="o">&lt;</span><span class="nx">Props</span><span class="o">&gt;</span><span class="p">(),</span> <span class="p">{</span>
-  <span class="nx">visible</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
-  <span class="nx">closeOnClickOverlay</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+<span class="nx">visible</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+<span class="nx">closeOnClickOverlay</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
 <span class="p">});</span>
 
 <span class="c1">// destructured prop visible is Value (integer for e.g.) which cannot be reactive by itself
@@ -2611,77 +2648,85 @@
 
 <span class="c1">// 关闭对话框逻辑
 </span><span class="c1"></span><span class="kr">const</span> <span class="nx">close</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
-  <span class="nx">emits</span><span class="p">(</span><span class="s1">&#39;update:visible&#39;</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+<span class="nx">emits</span><span class="p">(</span><span class="s1">&#39;update:visible&#39;</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
 <span class="p">};</span>
 
 <span class="c1">// 遮罩层关闭逻辑
 </span><span class="c1"></span><span class="kr">const</span> <span class="nx">onClickOverlay</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
-  <span class="k">if</span> <span class="p">(</span><span class="nx">closeOnClickOverlay</span><span class="p">.</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">close</span><span class="p">();</span>
-  <span class="p">}</span>
+<span class="k">if</span> <span class="p">(</span><span class="nx">closeOnClickOverlay</span><span class="p">.</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+<span class="nx">close</span><span class="p">();</span>
+<span class="p">}</span>
 <span class="p">};</span>
 
 <span class="c1">// OK Cancel按钮关闭逻辑
 </span><span class="c1"></span><span class="kr">const</span> <span class="nx">okFn</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
-  <span class="k">if</span> <span class="p">(</span><span class="nx">props</span><span class="p">.</span><span class="nx">ok</span><span class="o">?</span><span class="p">.()</span> <span class="o">!==</span> <span class="kc">false</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">close</span><span class="p">();</span>
-  <span class="p">}</span>
+<span class="k">if</span> <span class="p">(</span><span class="nx">props</span><span class="p">.</span><span class="nx">ok</span><span class="o">?</span><span class="p">.()</span> <span class="o">!==</span> <span class="kc">false</span><span class="p">)</span> <span class="p">{</span>
+<span class="nx">close</span><span class="p">();</span>
+<span class="p">}</span>
 <span class="p">};</span>
 <span class="kr">const</span> <span class="nx">cancelFn</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
-  <span class="k">if</span> <span class="p">(</span><span class="nx">props</span><span class="p">.</span><span class="nx">cancel</span><span class="o">?</span><span class="p">.()</span> <span class="o">!==</span> <span class="kc">false</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">close</span><span class="p">();</span>
-  <span class="p">}</span>
+<span class="k">if</span> <span class="p">(</span><span class="nx">props</span><span class="p">.</span><span class="nx">cancel</span><span class="o">?</span><span class="p">.()</span> <span class="o">!==</span> <span class="kc">false</span><span class="p">)</span> <span class="p">{</span>
+<span class="nx">close</span><span class="p">();</span>
+<span class="p">}</span>
 <span class="p">};</span>
 <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 
 <span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">template</span> <span class="na">v-if</span><span class="o">=</span><span class="s">&#34;visible&#34;</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">teleport</span> <span class="na">to</span><span class="o">=</span><span class="s">&#34;body&#34;</span><span class="p">&gt;</span>
-      <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;vue-dialog-overlay&#34;</span> <span class="err">@</span><span class="na">click</span><span class="o">=</span><span class="s">&#34;onClickOverlay&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-      <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;vue-dialog-wrapper&#34;</span><span class="p">&gt;</span>
-        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;vue-dialog&#34;</span><span class="p">&gt;</span>
-          <span class="p">&lt;</span><span class="nt">header</span><span class="p">&gt;</span>
-            <span class="p">&lt;</span><span class="nt">slot</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;title&#34;</span><span class="p">&gt;</span>标题<span class="p">&lt;/</span><span class="nt">slot</span><span class="p">&gt;</span>
-            <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;vue-dialog-close&#34;</span>
-                  <span class="err">@</span><span class="na">click</span><span class="o">=</span><span class="s">&#34;close&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
-          <span class="p">&lt;/</span><span class="nt">header</span><span class="p">&gt;</span>
-          <span class="p">&lt;</span><span class="nt">main</span><span class="p">&gt;</span>
-            <span class="p">&lt;</span><span class="nt">slot</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;content&#34;</span><span class="p">&gt;</span>内容<span class="p">&lt;/</span><span class="nt">slot</span><span class="p">&gt;</span>
-          <span class="p">&lt;/</span><span class="nt">main</span><span class="p">&gt;</span>
-          <span class="p">&lt;</span><span class="nt">footer</span><span class="p">&gt;</span>
-            <span class="p">&lt;</span><span class="nt">Button</span> <span class="na">level</span><span class="o">=</span><span class="s">&#34;main&#34;</span> <span class="err">@</span><span class="na">click</span><span class="o">=</span><span class="s">&#34;okFn&#34;</span><span class="p">&gt;</span>OK<span class="p">&lt;/</span><span class="nt">Button</span><span class="p">&gt;</span>
-            <span class="p">&lt;</span><span class="nt">Button</span> <span class="err">@</span><span class="na">click</span><span class="o">=</span><span class="s">&#34;cancelFn&#34;</span><span class="p">&gt;</span>Cancel<span class="p">&lt;/</span><span class="nt">Button</span><span class="p">&gt;</span>
-          <span class="p">&lt;/</span><span class="nt">footer</span><span class="p">&gt;</span>
-        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-      <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-    <span class="p">&lt;/</span><span class="nt">teleport</span><span class="p">&gt;</span>
-  <span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">template</span> <span class="na">v-if</span><span class="o">=</span><span class="s">&#34;visible&#34;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">teleport</span> <span class="na">to</span><span class="o">=</span><span class="s">&#34;body&#34;</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;vue-dialog-overlay&#34;</span> <span class="err">@</span><span class="na">click</span><span class="o">=</span><span class="s">&#34;onClickOverlay&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;vue-dialog-wrapper&#34;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;vue-dialog&#34;</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">header</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">slot</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;title&#34;</span><span class="p">&gt;</span>标题<span class="p">&lt;/</span><span class="nt">slot</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;vue-dialog-close&#34;</span>
+              <span class="err">@</span><span class="na">click</span><span class="o">=</span><span class="s">&#34;close&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+      <span class="p">&lt;/</span><span class="nt">header</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">main</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">slot</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;content&#34;</span><span class="p">&gt;</span>内容<span class="p">&lt;/</span><span class="nt">slot</span><span class="p">&gt;</span>
+      <span class="p">&lt;/</span><span class="nt">main</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">footer</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">Button</span> <span class="na">level</span><span class="o">=</span><span class="s">&#34;main&#34;</span> <span class="err">@</span><span class="na">click</span><span class="o">=</span><span class="s">&#34;okFn&#34;</span><span class="p">&gt;</span>OK<span class="p">&lt;/</span><span class="nt">Button</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">Button</span> <span class="err">@</span><span class="na">click</span><span class="o">=</span><span class="s">&#34;cancelFn&#34;</span><span class="p">&gt;</span>Cancel<span class="p">&lt;/</span><span class="nt">Button</span><span class="p">&gt;</span>
+      <span class="p">&lt;/</span><span class="nt">footer</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">teleport</span><span class="p">&gt;</span>
 <span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
-
-</code></pre></td></tr></table>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><hr>
-<h2 id="使用自定义hooks一行代码打开-dialog">使用自定义Hooks，一行代码打开 Dialog</h2>
+</div></li>
+</ul>
+
+<hr />
+
+<h2 id="使用自定义hooks-一行代码打开-dialog">使用自定义Hooks，一行代码打开 Dialog</h2>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code></code></pre></td>
+<pre class="chroma"><code class="language-html" data-lang="html"></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-html" data-lang="html"></code></pre></td></tr></table>
 </div>
-</div><ul>
+</div>
+<ul>
 <li>使用<code>hooks</code></li>
 <li>使用<code>h</code>函数，使用<code>h</code>来渲染<code>Dialog</code></li>
 <li>关闭<code>Dialog</code>等价于销毁</li>
 </ul>
-<hr>
+
+<hr />
+
 <blockquote>
 <p>参考</p>
 </blockquote>
+
 <ul>
 <li><a href="https://github.com/xmasuhai/vueel3-demo-1">我的项目Vueel UI源码</a></li>
 </ul>
-<hr>
-<hr>
+
+<hr />
+
+<hr />
 
     </div>
 
@@ -2845,7 +2890,7 @@
     &copy;
     
       2019 -
-    2022
+    2026
     <span class="heart">
       
       <i class="iconfont">

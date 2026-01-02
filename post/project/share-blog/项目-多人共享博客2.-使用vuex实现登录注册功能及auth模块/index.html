@@ -7,7 +7,7 @@
   
 
 <meta name="renderer" content="webkit" />
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
 <meta name="MobileOptimized" content="width"/>
 <meta name="HandheldFriendly" content="true"/>
@@ -32,7 +32,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.91.2" />
+<meta name="generator" content="Hugo 0.59.1" />
 
 
 <link rel="canonical" href="http://xmasuhai.xyz/post/project/share-blog/%E9%A1%B9%E7%9B%AE-%E5%A4%9A%E4%BA%BA%E5%85%B1%E4%BA%AB%E5%8D%9A%E5%AE%A22.-%E4%BD%BF%E7%94%A8vuex%E5%AE%9E%E7%8E%B0%E7%99%BB%E5%BD%95%E6%B3%A8%E5%86%8C%E5%8A%9F%E8%83%BD%E5%8F%8Aauth%E6%A8%A1%E5%9D%97/" />
@@ -62,15 +62,21 @@
 <meta property="og:title" content="【项目 多人共享博客】2. 使用vuex实现登录注册功能及&amp;auth模块" />
 <meta property="og:description" content="使用vuex实现登录注册功能及&amp;auth模块 大纲链接§ [toc] vuex 为什么用 vuex 当项目的许多不同层级组件都需要用到数据和传递数据，即 多个组件共享" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://xmasuhai.xyz/post/project/share-blog/%E9%A1%B9%E7%9B%AE-%E5%A4%9A%E4%BA%BA%E5%85%B1%E4%BA%AB%E5%8D%9A%E5%AE%A22.-%E4%BD%BF%E7%94%A8vuex%E5%AE%9E%E7%8E%B0%E7%99%BB%E5%BD%95%E6%B3%A8%E5%86%8C%E5%8A%9F%E8%83%BD%E5%8F%8Aauth%E6%A8%A1%E5%9D%97/" /><meta property="article:section" content="post" />
+<meta property="og:url" content="http://xmasuhai.xyz/post/project/share-blog/%E9%A1%B9%E7%9B%AE-%E5%A4%9A%E4%BA%BA%E5%85%B1%E4%BA%AB%E5%8D%9A%E5%AE%A22.-%E4%BD%BF%E7%94%A8vuex%E5%AE%9E%E7%8E%B0%E7%99%BB%E5%BD%95%E6%B3%A8%E5%86%8C%E5%8A%9F%E8%83%BD%E5%8F%8Aauth%E6%A8%A1%E5%9D%97/" />
 <meta property="article:published_time" content="2022-07-24T10:07:21+08:00" />
 <meta property="article:modified_time" content="2022-06-07T08:48:37+08:00" />
-
 <meta itemprop="name" content="【项目 多人共享博客】2. 使用vuex实现登录注册功能及&amp;auth模块">
-<meta itemprop="description" content="使用vuex实现登录注册功能及&amp;auth模块 大纲链接§ [toc] vuex 为什么用 vuex 当项目的许多不同层级组件都需要用到数据和传递数据，即 多个组件共享"><meta itemprop="datePublished" content="2022-07-24T10:07:21+08:00" />
-<meta itemprop="dateModified" content="2022-06-07T08:48:37+08:00" />
-<meta itemprop="wordCount" content="5293">
-<meta itemprop="keywords" content="FrontEnd,Project," /><meta name="twitter:card" content="summary"/>
+<meta itemprop="description" content="使用vuex实现登录注册功能及&amp;auth模块 大纲链接§ [toc] vuex 为什么用 vuex 当项目的许多不同层级组件都需要用到数据和传递数据，即 多个组件共享">
+
+
+<meta itemprop="datePublished" content="2022-07-24T10:07:21&#43;08:00" />
+<meta itemprop="dateModified" content="2022-06-07T08:48:37&#43;08:00" />
+<meta itemprop="wordCount" content="5289">
+
+
+
+<meta itemprop="keywords" content="FrontEnd,Project," />
+<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="【项目 多人共享博客】2. 使用vuex实现登录注册功能及&amp;auth模块"/>
 <meta name="twitter:description" content="使用vuex实现登录注册功能及&amp;auth模块 大纲链接§ [toc] vuex 为什么用 vuex 当项目的许多不同层级组件都需要用到数据和传递数据，即 多个组件共享"/>
 
@@ -301,7 +307,7 @@
         <div class="post-category">
             
           </div>
-        <span class="more-meta"> 约 5293 字 </span>
+        <span class="more-meta"> 约 5289 字 </span>
           <span class="more-meta"> 预计阅读 11 分钟 </span>
 
         
@@ -318,70 +324,91 @@
   <h2 class="post-toc-title">文章目录</h2>
   <div class="post-toc-content">
     <nav id="TableOfContents">
-  <ul>
-    <li><a href="#vuex">vuex</a>
-      <ul>
-        <li><a href="#为什么用-vuex">为什么用 vuex</a></li>
-        <li><a href="#vuex-使用详解">vuex 使用详解</a></li>
-      </ul>
-    </li>
-    <li><a href="#vuex--ts添加module的类型"><code>Vuex + TS</code>添加<code>Module</code>的类型</a></li>
-    <li><a href="#vuex在项目中的目录结构">vuex在项目中的目录结构</a></li>
-    <li><a href="#vuex在项目中的使用-auth-模块"><code>vuex</code>在项目中的使用 <code>auth</code> 模块</a>
-      <ul>
-        <li><a href="#blogmodule模块"><code>BlogModule</code>模块</a></li>
-      </ul>
-    </li>
-    <li><a href="#登录注册的功能实现">登录注册的功能实现</a></li>
-    <li><a href="#改用-pinia-代替vuex-操作状态管理">改用 <code>Pinia</code> 代替<code>Vuex</code> 操作状态管理</a>
-      <ul>
-        <li><a href="#初始化-pinia">初始化 pinia</a></li>
-      </ul>
-    </li>
-    <li><a href="#store的目录结构"><code>store</code>的目录结构</a>
-      <ul>
-        <li><a href="#pinia-遇坑">pinia 遇坑</a></li>
-      </ul>
-    </li>
-    <li><a href="#参考文章">参考文章</a></li>
-    <li><a href="#相关文章">相关文章</a></li>
-  </ul>
+<ul>
+<li><a href="#使用vuex实现登录注册功能及-auth模块">使用vuex实现登录注册功能及&amp;auth模块</a>
+<ul>
+<li><a href="#vuex">vuex</a>
+<ul>
+<li><a href="#为什么用-vuex">为什么用 vuex</a></li>
+<li><a href="#vuex-使用详解">vuex 使用详解</a>
+<ul>
+<li><a href="#vuex-使用-typescript-支持">vuex 使用 TypeScript 支持</a></li>
+<li><a href="#简化-usestore-用法">简化 useStore 用法</a></li>
+<li><a href="#使用组合式api-访问-state-和-getter">使用组合式API 访问 State 和 Getter</a></li>
+<li><a href="#使用组合式api-访问-mutation-和-action">使用组合式API 访问 <code>Mutation</code> 和 <code>Action</code></a></li>
+</ul></li>
+</ul></li>
+<li><a href="#vuex-ts-添加-module-的类型"><code>Vuex + TS</code>添加<code>Module</code>的类型</a></li>
+<li><a href="#vuex在项目中的目录结构">vuex在项目中的目录结构</a></li>
+<li><a href="#vuex-在项目中的使用-auth-模块"><code>vuex</code>在项目中的使用 <code>auth</code> 模块</a>
+<ul>
+<li><a href="#blogmodule-模块"><code>BlogModule</code>模块</a></li>
+</ul></li>
+<li><a href="#登录注册的功能实现">登录注册的功能实现</a></li>
+<li><a href="#改用-pinia-代替-vuex-操作状态管理">改用 <code>Pinia</code> 代替<code>Vuex</code> 操作状态管理</a>
+<ul>
+<li><a href="#初始化-pinia">初始化 pinia</a></li>
+</ul></li>
+<li><a href="#store-的目录结构"><code>store</code>的目录结构</a>
+<ul>
+<li><a href="#pinia-遇坑">pinia 遇坑</a></li>
+</ul></li>
+<li><a href="#参考文章">参考文章</a></li>
+<li><a href="#相关文章">相关文章</a></li>
+</ul></li>
+</ul>
 </nav>
   </div>
 </div>
 
     
     <div class="post-content">
-      <h1 id="使用vuex实现登录注册功能及auth模块">使用vuex实现登录注册功能及&amp;auth模块</h1>
-<hr>
+      
+
+<h1 id="使用vuex实现登录注册功能及-auth模块">使用vuex实现登录注册功能及&amp;auth模块</h1>
+
+<hr />
+
 <blockquote>
-<p>大纲链接<!-- raw HTML omitted --> § <!-- raw HTML omitted --></p>
+<p>大纲链接<a id="catalogue" href="#catalogue" > § </a></p>
 </blockquote>
+
 <p>[toc]</p>
-<hr>
+
+<hr />
+
 <h2 id="vuex">vuex</h2>
-<hr>
+
+<hr />
+
 <h3 id="为什么用-vuex">为什么用 vuex</h3>
+
 <ul>
 <li>当项目的许多不同层级组件都需要用到数据和传递数据，即 <strong>多个组件共享状态</strong></li>
 <li>单级数据传递方式<code>props/emits</code>、祖孙通信<code>project/inject</code>或者中央总线<code>eventBus</code>满足不了这样复杂的数据传递方式的同时又要保证代码逻辑简洁清晰</li>
 <li>因此抽象出一个统一状态管理的对象，以一个 <strong>全局单例模式管理</strong>，保证状态变化可预测，并保 <strong>单向数据流</strong>的简洁性</li>
 </ul>
-<hr>
+
+<hr />
+
 <h3 id="vuex-使用详解">vuex 使用详解</h3>
+
 <blockquote>
 <p>由于使用 <code>Composition API</code> 代替 <code>OptionalAPI</code> ，所以<code>mapState</code>、<code>mapGetters</code>等映射方法不再使用</p>
 </blockquote>
+
 <h4 id="vuex-使用-typescript-支持">vuex 使用 TypeScript 支持</h4>
+
 <ul>
 <li><a href="https://vuex.vuejs.org/zh/guide/typescript-support.html">官方文档 TypeScript 支持</a></li>
 </ul>
+
 <blockquote>
 <p>声明 Vue 的自定义类型 <code>ComponentCustomProperties</code> <code>@/types/vuex.d.ts</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -398,13 +425,12 @@
 </span><span class="lnt">15
 </span><span class="lnt">16
 </span><span class="lnt">17
-</span><span class="lnt">18
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="c1">// 声明 Vue 的自定义类型 ComponentCustomProperties
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="c1">// 声明 Vue 的自定义类型 ComponentCustomProperties
 </span><span class="c1"></span>
-<span class="kr">import</span> <span class="p">{</span><span class="nx">ComponentCustomProperties</span><span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;vue&#39;</span><span class="p">;</span>
-<span class="kr">import</span> <span class="p">{</span><span class="nx">Store</span><span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;vuex&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span><span class="nx">ComponentCustomProperties</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span><span class="nx">Store</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vuex&#39;</span><span class="p">;</span>
 
 <span class="kr">declare</span> <span class="nx">module</span> <span class="s1">&#39;@vue/runtime-core&#39;</span> <span class="p">{</span>
   <span class="c1">// 声明自己的 store state
@@ -415,29 +441,32 @@
 
   <span class="c1">// 为 `this.$store` 提供类型声明
 </span><span class="c1"></span>  <span class="kr">interface</span> <span class="nx">ComponentCustomProperties</span> <span class="p">{</span>
-    <span class="nx">$store</span>: <span class="kt">Store</span><span class="p">&lt;</span><span class="nt">State</span><span class="p">&gt;;</span>
+    <span class="nx">$store</span>: <span class="kt">Store</span><span class="o">&lt;</span><span class="nx">State</span><span class="o">&gt;</span><span class="p">;</span>
   <span class="p">}</span>
 <span class="p">}</span>
-
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p>使用 <code>useStore()</code> 组合式函数类型声明</p>
 </blockquote>
+
 <ul>
 <li>希望 <code>useStore</code> 返回类型化的 <code>store</code>，必须执行以下步骤：</li>
 </ul>
+
 <ol>
 <li>定义类型化的 <code>InjectionKey</code>， 定义 <code>export const key: InjectionKey&lt;Store&lt;State&gt;&gt; = Symbol();</code></li>
 <li>将 <code>store</code> 安装到 <code>Vue</code> 应用时，提供该类型化的 <code>InjectionKey</code>，挂载<code>app.use(store, key);</code></li>
 <li>将类型化的 <code>InjectionKey</code> 传给 <code>useStore</code> 方法 ，</li>
 </ol>
+
 <blockquote>
 <p><code>@/store/index.ts</code> 使用 Vue 的 <code>InjectionKey</code> 接口和自己的 store 类型定义来定义 key</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -464,11 +493,10 @@
 </span><span class="lnt">25
 </span><span class="lnt">26
 </span><span class="lnt">27
-</span><span class="lnt">28
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="kr">import</span> <span class="p">{</span><span class="nx">createStore</span><span class="p">,</span> <span class="nx">Store</span><span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;vuex&#39;</span><span class="p">;</span>
-<span class="kr">import</span> <span class="p">{</span><span class="nx">InjectionKey</span><span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;vue&#39;</span><span class="p">;</span>
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="kr">import</span> <span class="p">{</span><span class="nx">createStore</span><span class="p">,</span> <span class="nx">Store</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vuex&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span><span class="nx">InjectionKey</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue&#39;</span><span class="p">;</span>
 
 <span class="c1">// 为 store state 声明类型
 </span><span class="c1"></span><span class="kr">export</span> <span class="kr">interface</span> <span class="nx">State</span> <span class="p">{</span>
@@ -477,10 +505,10 @@
 <span class="p">}</span>
 
 <span class="c1">// 定义 injection key
-</span><span class="c1"></span><span class="kr">export</span> <span class="kr">const</span> <span class="nx">key</span>: <span class="kt">InjectionKey</span><span class="p">&lt;</span><span class="nt">Store</span><span class="err">&lt;</span><span class="na">State</span><span class="p">&gt;</span><span class="o">&gt;</span> <span class="o">=</span> <span class="nx">Symbol</span><span class="p">();</span>
+</span><span class="c1"></span><span class="kr">export</span> <span class="kr">const</span> <span class="nx">key</span>: <span class="kt">InjectionKey</span><span class="o">&lt;</span><span class="nx">Store</span><span class="o">&lt;</span><span class="nx">State</span><span class="o">&gt;&gt;</span> <span class="o">=</span> <span class="nx">Symbol</span><span class="p">();</span>
 
 <span class="c1">// 创建一个新的 store 实例
-</span><span class="c1"></span><span class="kr">export</span> <span class="kr">const</span> <span class="nx">store</span> <span class="o">=</span> <span class="nx">createStore</span><span class="p">&lt;</span><span class="nt">State</span><span class="p">&gt;({</span>
+</span><span class="c1"></span><span class="kr">export</span> <span class="kr">const</span> <span class="nx">store</span> <span class="o">=</span> <span class="nx">createStore</span><span class="o">&lt;</span><span class="nx">State</span><span class="o">&gt;</span><span class="p">({</span>
   <span class="nx">state() {</span>
     <span class="k">return</span> <span class="p">{</span>
       <span class="nx">count</span>: <span class="kt">0</span><span class="p">,</span>
@@ -494,48 +522,48 @@
     <span class="p">...</span>
   <span class="p">}</span>
 <span class="p">});</span>
-
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p><code>main.ts</code> 将 <code>store</code> 安装到 Vue 应用时传入定义好的 <code>injection key</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="kr">import</span> <span class="nx">App</span> <span class="kr">from</span> <span class="s1">&#39;@/App.vue&#39;</span><span class="p">;</span>
-<span class="kr">import</span> <span class="p">{</span><span class="nx">createApp</span><span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;vue&#39;</span><span class="p">;</span>
-<span class="kr">import</span> <span class="p">{</span><span class="nx">store</span><span class="p">,</span> <span class="nx">key</span><span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;@/store&#39;</span><span class="p">;</span>
-<span class="kr">import</span> <span class="nx">router</span> <span class="kr">from</span> <span class="s1">&#39;@/router&#39;</span><span class="p">;</span>
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="kr">import</span> <span class="nx">App</span> <span class="nx">from</span> <span class="s1">&#39;@/App.vue&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span><span class="nx">createApp</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span><span class="nx">store</span><span class="p">,</span> <span class="nx">key</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;@/store&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">router</span> <span class="nx">from</span> <span class="s1">&#39;@/router&#39;</span><span class="p">;</span>
 
 <span class="kr">const</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">createApp</span><span class="p">(</span><span class="nx">App</span><span class="p">);</span>
 <span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">store</span><span class="p">,</span> <span class="nx">key</span><span class="p">);</span>
 <span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">router</span><span class="p">);</span>
 <span class="nx">app</span><span class="p">.</span><span class="nx">mount</span><span class="p">(</span><span class="s1">&#39;#app&#39;</span><span class="p">);</span>
-
 </code></pre></td></tr></table>
 </div>
-</div><ul>
+</div>
+<ul>
 <li>在 <code>main.ts</code> 里面先挂载好 <code>vuex</code>， 再挂路由</li>
 <li>否则在导航守卫中 <code>router.beforeEach</code> 中使用会提示 <code>vuex</code> 还未安装</li>
 </ul>
+
 <blockquote>
 <p>使用时，将上述 <code>injection key</code> 传入 <code>useStore</code> 方法可以获取类型化的 <code>store</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -546,12 +574,11 @@
 </span><span class="lnt"> 9
 </span><span class="lnt">10
 </span><span class="lnt">11
-</span><span class="lnt">12
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="c1">// vue 组件
-</span><span class="c1"></span><span class="kr">import</span> <span class="p">{</span> <span class="nx">useStore</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;vuex&#39;</span><span class="p">;</span>
-<span class="kr">import</span> <span class="p">{</span> <span class="nx">key</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;@/store&#39;</span><span class="p">;</span>
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="c1">// vue 组件
+</span><span class="c1"></span><span class="kr">import</span> <span class="p">{</span> <span class="nx">useStore</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vuex&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">key</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;@/store&#39;</span><span class="p">;</span>
 
 <span class="kr">export</span> <span class="k">default</span> <span class="p">{</span>
   <span class="nx">setup</span> <span class="p">()</span> <span class="p">{</span>
@@ -560,23 +587,26 @@
     <span class="nx">store</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">count</span> <span class="c1">// 类型为 number
 </span><span class="c1"></span>  <span class="p">}</span>
 <span class="p">}</span>
-
 </code></pre></td></tr></table>
 </div>
-</div><ul>
+</div>
+<ul>
 <li>Vuex 将store 安装到 Vue 应用中使用了 Vue 的 <a href="https://v3.cn.vuejs.org/api/composition-api.html#provide-inject">Provide/Inject 特性</a></li>
 </ul>
+
 <h4 id="简化-usestore-用法">简化 useStore 用法</h4>
+
 <ul>
 <li>每次使用<code>useStore</code>，都需引入 <code>InjectionKey</code> 并将其传入 <code>useStore</code> 到使用过的任何地方，重复冗余</li>
 <li>定义自己的组合式函数来检索类型化的 <code>store</code></li>
 </ul>
+
 <blockquote>
 <p><code>@/store/index.ts</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -605,11 +635,10 @@
 </span><span class="lnt">27
 </span><span class="lnt">28
 </span><span class="lnt">29
-</span><span class="lnt">30
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="kr">import</span> <span class="p">{</span><span class="nx">InjectionKey</span><span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;vue&#39;</span><span class="p">;</span>
-<span class="kr">import</span> <span class="p">{</span><span class="nx">createStore</span><span class="p">,</span> <span class="nx">Store</span><span class="p">,</span> <span class="nx">useStore</span> <span class="kr">as</span> <span class="nx">baseUseStore</span><span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;vuex&#39;</span><span class="p">;</span>
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="kr">import</span> <span class="p">{</span><span class="nx">InjectionKey</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span><span class="nx">createStore</span><span class="p">,</span> <span class="nx">Store</span><span class="p">,</span> <span class="nx">useStore</span> <span class="kr">as</span> <span class="nx">baseUseStore</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vuex&#39;</span><span class="p">;</span>
 
 <span class="c1">// 为 store state 声明类型
 </span><span class="c1"></span><span class="kr">export</span> <span class="kr">interface</span> <span class="nx">State</span> <span class="p">{</span>
@@ -617,10 +646,10 @@
 <span class="p">}</span>
 
 <span class="c1">// 定义 injection key
-</span><span class="c1"></span><span class="kr">export</span> <span class="kr">const</span> <span class="nx">key</span>: <span class="kt">InjectionKey</span><span class="p">&lt;</span><span class="nt">Store</span><span class="err">&lt;</span><span class="na">State</span><span class="p">&gt;</span><span class="o">&gt;</span> <span class="o">=</span> <span class="nx">Symbol</span><span class="p">();</span>
+</span><span class="c1"></span><span class="kr">export</span> <span class="kr">const</span> <span class="nx">key</span>: <span class="kt">InjectionKey</span><span class="o">&lt;</span><span class="nx">Store</span><span class="o">&lt;</span><span class="nx">State</span><span class="o">&gt;&gt;</span> <span class="o">=</span> <span class="nx">Symbol</span><span class="p">();</span>
 
 <span class="c1">// 创建一个新的 store 实例
-</span><span class="c1"></span><span class="kr">export</span> <span class="kr">const</span> <span class="nx">store</span> <span class="o">=</span> <span class="nx">createStore</span><span class="p">&lt;</span><span class="nt">State</span><span class="p">&gt;({</span>
+</span><span class="c1"></span><span class="kr">export</span> <span class="kr">const</span> <span class="nx">store</span> <span class="o">=</span> <span class="nx">createStore</span><span class="o">&lt;</span><span class="nx">State</span><span class="o">&gt;</span><span class="p">({</span>
   <span class="nx">state() {</span>
     <span class="k">return</span> <span class="p">{</span>
       <span class="nx">count</span>: <span class="kt">0</span>
@@ -637,15 +666,15 @@
 </span><span class="c1"></span><span class="kr">export</span> <span class="kd">function</span> <span class="nx">useMyStore</span> <span class="p">()</span> <span class="p">{</span>
   <span class="k">return</span> <span class="nx">baseUseStore</span><span class="p">(</span><span class="nx">key</span><span class="p">)</span>
 <span class="p">}</span>
-
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p>通过引入自定义的组合式函数，不用提供 <code>injection key</code> 和类型声明就可以直接得到类型化的 <code>store</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -655,11 +684,10 @@
 </span><span class="lnt"> 8
 </span><span class="lnt"> 9
 </span><span class="lnt">10
-</span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="c1">// vue 组件
-</span><span class="c1"></span><span class="kr">import</span> <span class="p">{</span> <span class="nx">useMyStore</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;@/store&#39;</span>
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="c1">// vue 组件
+</span><span class="c1"></span><span class="kr">import</span> <span class="p">{</span> <span class="nx">useMyStore</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;@/store&#39;</span>
 
 <span class="kr">export</span> <span class="k">default</span> <span class="p">{</span>
   <span class="nx">setup</span> <span class="p">()</span> <span class="p">{</span>
@@ -668,23 +696,26 @@
     <span class="nx">store</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">count</span> <span class="c1">// 类型为 number
 </span><span class="c1"></span>  <span class="p">}</span>
 <span class="p">}</span>
-
 </code></pre></td></tr></table>
 </div>
-</div><ul>
+</div>
+<ul>
 <li>通过调用 <code>useStore</code> 函数，在 <code>setup</code> 钩子函数中访问 <code>store</code></li>
 <li>这与在组件中使用选项式 API 访问 <code>this.$store</code> 是等效的</li>
 </ul>
-<hr>
+
+<hr />
+
 <h4 id="使用组合式api-访问-state-和-getter">使用组合式API 访问 State 和 Getter</h4>
+
 <ul>
 <li>组件中，为了访问 <code>state</code> 和 <code>getter</code>，需要创建 <code>computed</code> 引用，来 <strong>保留响应性</strong></li>
 <li>这与在选项式 API 中创建计算属性等效</li>
-<li>官方文档 <a href="https://vuex.vuejs.org/zh/guide/composition-api.html#%E8%AE%BF%E9%97%AE-state-%E5%92%8C-getter">访问 State 和 Getter</a></li>
-</ul>
+
+<li><p>官方文档 <a href="https://vuex.vuejs.org/zh/guide/composition-api.html#%E8%AE%BF%E9%97%AE-state-%E5%92%8C-getter">访问 State 和 Getter</a></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -710,48 +741,51 @@
 </span><span class="lnt">24
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="c1">// vue 组件
-</span><span class="c1"></span><span class="kr">import</span> <span class="p">{</span> <span class="nx">computed</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;vue&#39;</span>
-<span class="kr">import</span> <span class="p">{</span> <span class="nx">useMyStore</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;@/store&#39;</span>
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="c1">// vue 组件
+</span><span class="c1"></span><span class="kr">import</span> <span class="p">{</span> <span class="nx">computed</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue&#39;</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">useMyStore</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;@/store&#39;</span>
 
 <span class="kr">export</span> <span class="k">default</span> <span class="p">{</span>
-  <span class="nx">setup</span> <span class="p">()</span> <span class="p">{</span>
-    <span class="kr">const</span> <span class="nx">store</span> <span class="o">=</span> <span class="nx">useMyStore</span><span class="p">()</span>
+<span class="nx">setup</span> <span class="p">()</span> <span class="p">{</span>
+<span class="kr">const</span> <span class="nx">store</span> <span class="o">=</span> <span class="nx">useMyStore</span><span class="p">()</span>
     
-    <span class="c1">// 在 computed 函数中访问 state
-</span><span class="c1"></span>    <span class="kr">const</span> <span class="nx">count</span> <span class="o">=</span> <span class="nx">computed</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
-      <span class="k">return</span> <span class="nx">store</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">count</span>
-    <span class="p">})</span>
+<span class="c1">// 在 computed 函数中访问 state
+</span><span class="c1"></span><span class="kr">const</span> <span class="nx">count</span> <span class="o">=</span> <span class="nx">computed</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">store</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">count</span>
+<span class="p">})</span>
     
-    <span class="c1">// 在 computed 函数中访问 getter
-</span><span class="c1"></span>    <span class="kr">const</span> <span class="nx">double</span> <span class="o">=</span> <span class="nx">computed</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
-      <span class="k">return</span> <span class="nx">store</span><span class="p">.</span><span class="nx">getters</span><span class="p">.</span><span class="nx">double</span>
-    <span class="p">})</span>
+<span class="c1">// 在 computed 函数中访问 getter
+</span><span class="c1"></span><span class="kr">const</span> <span class="kr">double</span> <span class="o">=</span> <span class="nx">computed</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">store</span><span class="p">.</span><span class="nx">getters</span><span class="p">.</span><span class="kr">double</span>
+<span class="p">})</span>
 
-    <span class="k">return</span> <span class="p">{</span>
-      <span class="nx">count</span><span class="p">,</span>
-      <span class="nx">double</span>
-    <span class="p">}</span>
-  <span class="p">}</span>
+<span class="k">return</span> <span class="p">{</span>
+  <span class="nx">count</span><span class="p">,</span>
+  <span class="kr">double</span>
+<span class="p">}</span>
+<span class="p">}</span>
 <span class="p">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><ul>
-<li><strong>保留响应性</strong>
+</div></li>
+
+<li><p><strong>保留响应性</strong></p>
+
 <ul>
 <li><code>const count = computed(() =&gt; (store.state.count))</code></li>
 <li><code>onst double = computed(() =&gt; (store.getters.double)</code></li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<hr>
+
+<hr />
+
 <h4 id="使用组合式api-访问-mutation-和-action">使用组合式API 访问 <code>Mutation</code> 和 <code>Action</code></h4>
+
 <ul>
-<li>要使用 <code>mutation</code> 和 <code>action</code> 时，只需要在 <code>setup</code> 钩子函数中调用 <code>commit</code> 和 <code>dispatch</code> 函数</li>
-</ul>
+<li><p>要使用 <code>mutation</code> 和 <code>action</code> 时，只需要在 <code>setup</code> 钩子函数中调用 <code>commit</code> 和 <code>dispatch</code> 函数</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -769,43 +803,47 @@
 </span><span class="lnt">16
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="c1">// vue 组件
-</span><span class="c1"></span><span class="kr">import</span> <span class="p">{</span> <span class="nx">useMyStore</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;@/store&#39;</span>
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="c1">// vue 组件
+</span><span class="c1"></span><span class="kr">import</span> <span class="p">{</span> <span class="nx">useMyStore</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;@/store&#39;</span>
 
 <span class="kr">export</span> <span class="k">default</span> <span class="p">{</span>
-  <span class="nx">setup</span> <span class="p">()</span> <span class="p">{</span>
-    <span class="kr">const</span> <span class="nx">store</span> <span class="o">=</span> <span class="nx">useMyStore</span><span class="p">()</span>
+<span class="nx">setup</span> <span class="p">()</span> <span class="p">{</span>
+<span class="kr">const</span> <span class="nx">store</span> <span class="o">=</span> <span class="nx">useMyStore</span><span class="p">()</span>
 
-    <span class="k">return</span> <span class="p">{</span>
-      <span class="c1">// 使用 mutation
-</span><span class="c1"></span>      <span class="nx">increment</span><span class="o">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="nx">store</span><span class="p">.</span><span class="nx">commit</span><span class="p">(</span><span class="s1">&#39;increment&#39;</span><span class="p">),</span>
+<span class="k">return</span> <span class="p">{</span>
+  <span class="c1">// 使用 mutation
+</span><span class="c1"></span>  <span class="nx">increment</span><span class="o">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="nx">store</span><span class="p">.</span><span class="nx">commit</span><span class="p">(</span><span class="s1">&#39;increment&#39;</span><span class="p">),</span>
 
-      <span class="c1">// 使用 action
-</span><span class="c1"></span>      <span class="nx">asyncIncrement</span><span class="o">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="nx">store</span><span class="p">.</span><span class="nx">dispatch</span><span class="p">(</span><span class="s1">&#39;asyncIncrement&#39;</span><span class="p">)</span>
-    <span class="p">}</span>
-  <span class="p">}</span>
+  <span class="c1">// 使用 action
+</span><span class="c1"></span>  <span class="nx">asyncIncrement</span><span class="o">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="nx">store</span><span class="p">.</span><span class="nx">dispatch</span><span class="p">(</span><span class="s1">&#39;asyncIncrement&#39;</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="p">}</span>
 <span class="p">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><ul>
-<li>状态变更
+</div></li>
+
+<li><p>状态变更</p>
+
 <ul>
 <li><code>const increment = () =&gt; store.commit('increment')</code></li>
 <li><code>const asyncIncrement = () =&gt; store.dispatch('asyncIncrement')</code></li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<hr>
-<h2 id="vuex--ts添加module的类型"><code>Vuex + TS</code>添加<code>Module</code>的类型</h2>
+
+<hr />
+
+<h2 id="vuex-ts-添加-module-的类型"><code>Vuex + TS</code>添加<code>Module</code>的类型</h2>
+
 <blockquote>
 <p>实现 <code>Vuex4 typescript</code> 中自动将<code>modules</code>的类型添加到<code>state</code>中</p>
 </blockquote>
+
 <ul>
-<li>在 <code>vuex4</code> 中使用 <code>typescript</code> 定义类型模块<code>modules</code>时，如果不做一些处理，在使用<code>Hooks</code>获取<code>store</code>然后取子模块的<code>state</code>会丢失类型</li>
-</ul>
+<li><p>在 <code>vuex4</code> 中使用 <code>typescript</code> 定义类型模块<code>modules</code>时，如果不做一些处理，在使用<code>Hooks</code>获取<code>store</code>然后取子模块的<code>state</code>会丢失类型</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-sh" data-lang="sh"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -819,37 +857,43 @@
 </span><span class="lnt">12
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">store
- ┣ modules
- ┃ ┣ auth
- ┃ ┃ ┣ authStore.ts
- ┃ ┃ ┣ index.ts
- ┃ ┃ ┗ interface.ts
- ┃ ┗ blog
- ┃ ┃ ┣ blogStore.ts
- ┃ ┃ ┣ index.ts
- ┃ ┃ ┗ interface.ts
- ┣ index.ts
- ┗ interface.ts
-</code></pre></td></tr></table>
+<pre class="chroma"><code class="language-sh" data-lang="sh">store
+┣ modules
+┃ ┣ auth
+┃ ┃ ┣ authStore.ts
+┃ ┃ ┣ index.ts
+┃ ┃ ┗ interface.ts
+┃ ┗ blog
+┃ ┃ ┣ blogStore.ts
+┃ ┃ ┣ index.ts
+┃ ┃ ┗ interface.ts
+┣ index.ts
+┗ interface.ts</code></pre></td></tr></table>
 </div>
-</div><ul>
-<li>state类型定义单独放在一个文件中处理，方便管理</li>
-<li>各个子模块的类型定义，单独放在子模块的文件夹中处理，最后统一在根节点上</li>
-<li>如果有很多公用的类型可以抽取出来</li>
+</div></li>
+
+<li><p>state类型定义单独放在一个文件中处理，方便管理</p></li>
+
+<li><p>各个子模块的类型定义，单独放在子模块的文件夹中处理，最后统一在根节点上</p></li>
+
+<li><p>如果有很多公用的类型可以抽取出来</p></li>
 </ul>
+
 <blockquote>
 <p>参考</p>
 </blockquote>
+
 <ul>
 <li><a href="https://juejin.cn/post/7005450507531583525">Vuex4 typescript 中自动将modules的类型添加到state中</a></li>
 <li><a href="https://blog.csdn.net/fanweilin0123/article/details/109903447">vuex4.0中使用typescript, vuex4.0中modules的ts使用，vue3 + vuex4.0 + typescript 使用详情</a></li>
 </ul>
-<hr>
+
+<hr />
+
 <h2 id="vuex在项目中的目录结构">vuex在项目中的目录结构</h2>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-sh" data-lang="sh"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -863,7 +907,7 @@
 </span><span class="lnt">12
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">store
+<pre class="chroma"><code class="language-sh" data-lang="sh">store
  ┣ modules
  ┃ ┣ auth
  ┃ ┃ ┣ authStore.ts
@@ -874,15 +918,15 @@
  ┃ ┃ ┣ index.ts
  ┃ ┃ ┗ interface.ts
  ┣ index.ts
- ┗ interface.ts
-</code></pre></td></tr></table>
+ ┗ interface.ts</code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p>定义 root 顶层 state 的数据类型， 在 <code>@/store/interface.ts</code> 中</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -894,10 +938,10 @@
 </span><span class="lnt">10
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="c1">// 定义 root 顶层 state 的数据类型， 在 store/interface.ts 中
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="c1">// 定义 root 顶层 state 的数据类型， 在 store/interface.ts 中
 </span><span class="c1">// 比如在state上定义属性 test 的类型, 然后默认导出该类型定义
-</span><span class="c1"></span><span class="kr">import</span> <span class="nx">AuthModuleTypes</span> <span class="kr">from</span> <span class="s1">&#39;@/store/modules/auth/interface&#39;</span><span class="p">;</span>
-<span class="kr">import</span> <span class="nx">BlogModuleTypes</span> <span class="kr">from</span> <span class="s1">&#39;@/store/modules/blog/interface&#39;</span><span class="p">;</span>
+</span><span class="c1"></span><span class="kr">import</span> <span class="nx">AuthModuleTypes</span> <span class="nx">from</span> <span class="s1">&#39;@/store/modules/auth/interface&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">BlogModuleTypes</span> <span class="nx">from</span> <span class="s1">&#39;@/store/modules/blog/interface&#39;</span><span class="p">;</span>
 
 <span class="kr">export</span> <span class="k">default</span> <span class="kr">interface</span> <span class="nx">RootStateTypes</span> <span class="p">{</span>
     <span class="nx">authStore</span>: <span class="kt">AuthModuleTypes</span><span class="p">;</span>
@@ -906,12 +950,13 @@
 <span class="nx">a</span>
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p><code>Store</code>入口<code>index.ts</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -981,17 +1026,16 @@
 </span><span class="lnt">68
 </span><span class="lnt">69
 </span><span class="lnt">70
-</span><span class="lnt">71
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="kr">import</span> <span class="p">{</span><span class="nx">InjectionKey</span><span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;vue&#39;</span><span class="p">;</span>
-<span class="kr">import</span> <span class="p">{</span><span class="nx">createStore</span><span class="p">,</span> <span class="nx">Store</span><span class="p">,</span> <span class="nx">useStore</span> <span class="kr">as</span> <span class="nx">baseUseStore</span><span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;vuex&#39;</span><span class="p">;</span>
-<span class="kr">import</span> <span class="nx">authStore</span> <span class="kr">from</span> <span class="s1">&#39;@/store/modules/auth/&#39;</span><span class="p">;</span>
-<span class="kr">import</span> <span class="nx">blogStore</span> <span class="kr">from</span> <span class="s1">&#39;@/store/modules/blog/&#39;</span><span class="p">;</span>
-<span class="kr">import</span> <span class="nx">RootStateTypes</span> <span class="kr">from</span> <span class="s1">&#39;@/store/interface&#39;</span><span class="p">;</span>
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="kr">import</span> <span class="p">{</span><span class="nx">InjectionKey</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span><span class="nx">createStore</span><span class="p">,</span> <span class="nx">Store</span><span class="p">,</span> <span class="nx">useStore</span> <span class="kr">as</span> <span class="nx">baseUseStore</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vuex&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">authStore</span> <span class="nx">from</span> <span class="s1">&#39;@/store/modules/auth/&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">blogStore</span> <span class="nx">from</span> <span class="s1">&#39;@/store/modules/blog/&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">RootStateTypes</span> <span class="nx">from</span> <span class="s1">&#39;@/store/interface&#39;</span><span class="p">;</span>
 
 <span class="c1">// 定义 injection key 在注册store时需要用到 app.use(store, key);
-</span><span class="c1"></span><span class="kr">export</span> <span class="kr">const</span> <span class="nx">key</span>: <span class="kt">InjectionKey</span><span class="p">&lt;</span><span class="nt">Store</span><span class="err">&lt;</span><span class="na">RootStateTypes</span><span class="p">&gt;</span><span class="o">&gt;</span> <span class="o">=</span> <span class="nx">Symbol</span><span class="p">(</span><span class="s1">&#39;vue-store&#39;</span><span class="p">);</span>
+</span><span class="c1"></span><span class="kr">export</span> <span class="kr">const</span> <span class="nx">key</span>: <span class="kt">InjectionKey</span><span class="o">&lt;</span><span class="nx">Store</span><span class="o">&lt;</span><span class="nx">RootStateTypes</span><span class="o">&gt;&gt;</span> <span class="o">=</span> <span class="nx">Symbol</span><span class="p">(</span><span class="s1">&#39;vue-store&#39;</span><span class="p">);</span>
 
 <span class="cm">/*
 </span><span class="cm">const modules = {
@@ -1034,7 +1078,7 @@
 </span><span class="cm">*/</span>
 
 <span class="c1">// 创建一个新的 store 实例
-</span><span class="c1"></span><span class="kr">export</span> <span class="kr">const</span> <span class="nx">store</span> <span class="o">=</span> <span class="nx">createStore</span><span class="p">&lt;</span><span class="nt">RootStateTypes</span><span class="p">&gt;({</span>
+</span><span class="c1"></span><span class="kr">export</span> <span class="kr">const</span> <span class="nx">store</span> <span class="o">=</span> <span class="nx">createStore</span><span class="o">&lt;</span><span class="nx">RootStateTypes</span><span class="o">&gt;</span><span class="p">({</span>
   <span class="c1">// state: {},
 </span><span class="c1"></span>  <span class="c1">// getters: {},
 </span><span class="c1"></span>  <span class="c1">// mutations: {},
@@ -1052,19 +1096,21 @@
 </span><span class="cm">* */</span>
 
 <span class="kr">export</span> <span class="kd">function</span> <span class="nx">useStore() {</span>
-  <span class="k">return</span> <span class="nx">baseUseStore</span><span class="p">&lt;</span><span class="nt">RootStateTypes</span><span class="p">&gt;(</span><span class="nx">key</span><span class="p">);</span>
+  <span class="k">return</span> <span class="nx">baseUseStore</span><span class="o">&lt;</span><span class="nx">RootStateTypes</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">key</span><span class="p">);</span>
 <span class="p">}</span>
-
 </code></pre></td></tr></table>
 </div>
-</div><hr>
-<h2 id="vuex在项目中的使用-auth-模块"><code>vuex</code>在项目中的使用 <code>auth</code> 模块</h2>
+</div>
+<hr />
+
+<h2 id="vuex-在项目中的使用-auth-模块"><code>vuex</code>在项目中的使用 <code>auth</code> 模块</h2>
+
 <blockquote>
 <p><code>@/store/modules/auth/interface</code>声明类型</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1092,9 +1138,9 @@
 </span><span class="lnt">26
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="kr">import</span> <span class="p">{</span><span class="nx">ActionContext</span><span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;vuex&#39;</span><span class="p">;</span>
-<span class="kr">import</span> <span class="p">{</span><span class="nx">responseData</span><span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;@/types/responseData&#39;</span><span class="p">;</span>
-<span class="kr">import</span> <span class="nx">RootStateTypes</span> <span class="kr">from</span> <span class="s1">&#39;@/store/interface&#39;</span><span class="p">;</span>
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="kr">import</span> <span class="p">{</span><span class="nx">ActionContext</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vuex&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span><span class="nx">responseData</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;@/types/responseData&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">RootStateTypes</span> <span class="nx">from</span> <span class="s1">&#39;@/store/interface&#39;</span><span class="p">;</span>
 
 <span class="c1">// 定义了modules子模块后会发现
 </span><span class="c1">// 使用的时候会提示类型报错
@@ -1105,10 +1151,10 @@
 </span><span class="c1"></span>
 <span class="kr">export</span> <span class="k">default</span> <span class="kr">interface</span> <span class="nx">AuthModuleTypes</span> <span class="p">{</span>
   <span class="nx">isLogin</span>: <span class="kt">boolean</span>
-  <span class="nx">userData</span>: <span class="kt">Pick</span><span class="p">&lt;</span><span class="nt">responseData</span><span class="err">,</span> <span class="err">&#39;</span><span class="na">data</span><span class="err">&#39;</span><span class="p">&gt;</span> <span class="o">|</span> <span class="kc">null</span><span class="p">,</span>
+  <span class="nx">userData</span>: <span class="kt">Pick</span><span class="o">&lt;</span><span class="nx">responseData</span><span class="p">,</span> <span class="s1">&#39;data&#39;</span><span class="o">&gt;</span> <span class="o">|</span> <span class="kc">null</span><span class="p">,</span>
 <span class="p">}</span>
 
-<span class="kr">export</span> <span class="kr">type</span> <span class="nx">logString</span> <span class="o">=</span> <span class="p">{</span>
+<span class="kr">export</span> <span class="nx">type</span> <span class="nx">logString</span> <span class="o">=</span> <span class="p">{</span>
   <span class="nx">username</span>: <span class="kt">string</span><span class="p">,</span>
   <span class="nx">password</span>: <span class="kt">string</span>
 <span class="p">}</span>
@@ -1117,19 +1163,21 @@
 </span><span class="c1">// 第一个泛型参数为当前子模块的state类型定义
 </span><span class="c1">// 第二个参数为根级state的类型定义
 </span><span class="c1">// 只要定义了state的类型，在所有使用state的地方均会自动推断，不需要再定义
-</span><span class="c1"></span><span class="kr">export</span> <span class="kr">type</span> <span class="nx">ActionContextType</span> <span class="o">=</span> <span class="nx">ActionContext</span><span class="p">&lt;</span><span class="nt">AuthModuleTypes</span><span class="err">,</span> <span class="na">RootStateTypes</span><span class="p">&gt;;</span>
+</span><span class="c1"></span><span class="kr">export</span> <span class="nx">type</span> <span class="nx">ActionContextType</span> <span class="o">=</span> <span class="nx">ActionContext</span><span class="o">&lt;</span><span class="nx">AuthModuleTypes</span><span class="p">,</span> <span class="nx">RootStateTypes</span><span class="o">&gt;</span><span class="p">;</span>
 </code></pre></td></tr></table>
 </div>
-</div><ul>
+</div>
+<ul>
 <li><code>const TestModule: Module&lt;TestModulesTypes, RootStateTypes&gt;</code></li>
 <li><code>ActionContext&lt;AuthModuleTypes, RootStateTypes&gt;;</code></li>
 </ul>
+
 <blockquote>
 <p><code>@/store/modules/auth/authStore.ts</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1202,14 +1250,13 @@
 </span><span class="lnt">71
 </span><span class="lnt">72
 </span><span class="lnt">73
-</span><span class="lnt">74
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="kr">import</span> <span class="nx">auth</span> <span class="kr">from</span> <span class="s1">&#39;@/api/auth&#39;</span><span class="p">;</span>
-<span class="kr">import</span> <span class="p">{</span><span class="nx">responseData</span><span class="p">,</span> <span class="nx">userAuthInfo</span><span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;@/types/responseData&#39;</span><span class="p">;</span>
-<span class="kr">import</span> <span class="nx">RootStateTypes</span> <span class="kr">from</span> <span class="s1">&#39;@/store/interface&#39;</span><span class="p">;</span>
-<span class="kr">import</span> <span class="p">{</span><span class="nx">Module</span><span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;vuex&#39;</span><span class="p">;</span>
-<span class="kr">import</span> <span class="nx">AuthModuleTypes</span><span class="p">,</span> <span class="p">{</span><span class="nx">ActionContextType</span><span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;@/store/modules/auth/interface&#39;</span><span class="p">;</span>
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="kr">import</span> <span class="nx">auth</span> <span class="nx">from</span> <span class="s1">&#39;@/api/auth&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span><span class="nx">responseData</span><span class="p">,</span> <span class="nx">userAuthInfo</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;@/types/responseData&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">RootStateTypes</span> <span class="nx">from</span> <span class="s1">&#39;@/store/interface&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span><span class="nx">Module</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vuex&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">AuthModuleTypes</span><span class="p">,</span> <span class="p">{</span><span class="nx">ActionContextType</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;@/store/modules/auth/interface&#39;</span><span class="p">;</span>
 
 <span class="kr">const</span> <span class="nx">state</span> <span class="o">=</span> <span class="p">()</span><span class="o">:</span> <span class="nx">AuthModuleTypes</span> <span class="o">=&gt;</span> <span class="p">{</span>
   <span class="k">return</span> <span class="p">{</span>
@@ -1234,7 +1281,7 @@
 <span class="p">};</span>
 
 <span class="kr">const</span> <span class="nx">actions</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="nx">login</span><span class="p">({</span><span class="nx">commit</span><span class="p">}</span><span class="o">:</span> <span class="nx">ActionContextType</span><span class="p">,</span> <span class="p">{</span><span class="nx">username</span><span class="p">,</span> <span class="nx">password</span><span class="p">}</span><span class="o">:</span> <span class="nx">userAuthInfo</span><span class="p">)</span><span class="o">:</span> <span class="nx">Promise</span><span class="p">&lt;</span><span class="nt">responseData</span><span class="p">&gt;</span> <span class="p">{</span>
+  <span class="nx">login</span><span class="p">({</span><span class="nx">commit</span><span class="p">}</span><span class="o">:</span> <span class="nx">ActionContextType</span><span class="p">,</span> <span class="p">{</span><span class="nx">username</span><span class="p">,</span> <span class="nx">password</span><span class="p">}</span><span class="o">:</span> <span class="nx">userAuthInfo</span><span class="p">)</span><span class="o">:</span> <span class="nx">Promise</span><span class="o">&lt;</span><span class="nx">responseData</span><span class="o">&gt;</span> <span class="p">{</span>
     <span class="k">return</span> <span class="nx">auth</span><span class="p">.</span><span class="nx">login</span><span class="p">({</span><span class="nx">username</span><span class="p">,</span> <span class="nx">password</span><span class="p">})</span>
       <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="p">{</span>
         <span class="nx">commit</span><span class="p">(</span><span class="s1">&#39;setUser&#39;</span><span class="p">,</span> <span class="p">{</span><span class="nx">userData</span>: <span class="kt">res.data</span><span class="p">});</span>
@@ -1242,25 +1289,25 @@
         <span class="k">return</span> <span class="nx">res</span><span class="p">;</span>
       <span class="p">});</span>
   <span class="p">},</span>
-  <span class="kr">async</span> <span class="nx">register</span><span class="p">({</span><span class="nx">commit</span><span class="p">}</span><span class="o">:</span> <span class="nx">ActionContextType</span><span class="p">,</span> <span class="p">{</span><span class="nx">username</span><span class="p">,</span> <span class="nx">password</span><span class="p">}</span><span class="o">:</span> <span class="nx">userAuthInfo</span><span class="p">)</span><span class="o">:</span> <span class="nx">Promise</span><span class="p">&lt;</span><span class="nt">responseData</span><span class="p">&gt;</span> <span class="p">{</span>
-    <span class="kd">let</span> <span class="nx">res</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">auth</span><span class="p">.</span><span class="nx">register</span><span class="p">({</span><span class="nx">username</span><span class="p">,</span> <span class="nx">password</span><span class="p">});</span>
+  <span class="nx">async</span> <span class="nx">register</span><span class="p">({</span><span class="nx">commit</span><span class="p">}</span><span class="o">:</span> <span class="nx">ActionContextType</span><span class="p">,</span> <span class="p">{</span><span class="nx">username</span><span class="p">,</span> <span class="nx">password</span><span class="p">}</span><span class="o">:</span> <span class="nx">userAuthInfo</span><span class="p">)</span><span class="o">:</span> <span class="nx">Promise</span><span class="o">&lt;</span><span class="nx">responseData</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nx">res</span> <span class="o">=</span> <span class="nx">await</span> <span class="nx">auth</span><span class="p">.</span><span class="nx">register</span><span class="p">({</span><span class="nx">username</span><span class="p">,</span> <span class="nx">password</span><span class="p">});</span>
     <span class="nx">commit</span><span class="p">(</span><span class="s1">&#39;setUser&#39;</span><span class="p">,</span> <span class="p">{</span><span class="nx">userData</span>: <span class="kt">res.data</span><span class="p">});</span>
     <span class="nx">commit</span><span class="p">(</span><span class="s1">&#39;setLogin&#39;</span><span class="p">,</span> <span class="p">{</span><span class="nx">isLogin</span>: <span class="kt">true</span><span class="p">});</span>
     <span class="k">return</span> <span class="nx">res</span><span class="p">;</span>
   <span class="p">},</span>
-  <span class="kr">async</span> <span class="nx">logout</span><span class="p">({</span><span class="nx">commit</span><span class="p">}</span><span class="o">:</span> <span class="nx">ActionContextType</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">await</span> <span class="nx">auth</span><span class="p">.</span><span class="nx">logout</span><span class="p">();</span>
+  <span class="nx">async</span> <span class="nx">logout</span><span class="p">({</span><span class="nx">commit</span><span class="p">}</span><span class="o">:</span> <span class="nx">ActionContextType</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">await</span> <span class="nx">auth</span><span class="p">.</span><span class="nx">logout</span><span class="p">();</span>
     <span class="c1">// 注销用户
 </span><span class="c1"></span>    <span class="nx">commit</span><span class="p">(</span><span class="s1">&#39;setUser&#39;</span><span class="p">,</span> <span class="p">{</span><span class="nx">userData</span>: <span class="kt">null</span><span class="p">});</span>
     <span class="nx">commit</span><span class="p">(</span><span class="s1">&#39;setLogin&#39;</span><span class="p">,</span> <span class="p">{</span><span class="nx">isLogin</span>: <span class="kt">false</span><span class="p">});</span>
   <span class="p">},</span>
-  <span class="kr">async</span> <span class="nx">checkLogin</span><span class="p">({</span><span class="nx">commit</span><span class="p">,</span> <span class="nx">state</span><span class="p">}</span><span class="o">:</span> <span class="nx">ActionContextType</span><span class="p">)</span><span class="o">:</span> <span class="p">(</span><span class="nx">Promise</span><span class="p">&lt;</span><span class="nt">Boolean</span><span class="p">&gt;)</span> <span class="p">{</span>
+  <span class="nx">async</span> <span class="nx">checkLogin</span><span class="p">({</span><span class="nx">commit</span><span class="p">,</span> <span class="nx">state</span><span class="p">}</span><span class="o">:</span> <span class="nx">ActionContextType</span><span class="p">)</span><span class="o">:</span> <span class="p">(</span><span class="nx">Promise</span><span class="o">&lt;</span><span class="nb">Boolean</span><span class="o">&gt;</span><span class="p">)</span> <span class="p">{</span>
     <span class="c1">// 已处于登录状态，直接返回 true，短路先验
 </span><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="nx">state</span><span class="p">.</span><span class="nx">isLogin</span><span class="p">)</span> <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
 
     <span class="c1">// 处于非登录状态
 </span><span class="c1"></span>    <span class="c1">// 向服务器发出 auth.getInfo() 请求，验证用户是否处于登录状态
-</span><span class="c1"></span>    <span class="kr">const</span> <span class="nx">res</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">auth</span><span class="p">.</span><span class="nx">getInfo</span><span class="p">();</span>
+</span><span class="c1"></span>    <span class="kr">const</span> <span class="nx">res</span> <span class="o">=</span> <span class="nx">await</span> <span class="nx">auth</span><span class="p">.</span><span class="nx">getInfo</span><span class="p">();</span>
 
     <span class="c1">// 将返回结果的 user 和 isLogin 设置到 本地状态
 </span><span class="c1"></span>    <span class="nx">commit</span><span class="p">(</span><span class="s1">&#39;setLogin&#39;</span><span class="p">,</span> <span class="p">{</span><span class="nx">isLogin</span>: <span class="kt">res.isLogin</span><span class="p">});</span>
@@ -1270,7 +1317,7 @@
   <span class="p">}</span>
 <span class="p">};</span>
 
-<span class="kr">const</span> <span class="nx">authModule</span>: <span class="kt">Module</span><span class="p">&lt;</span><span class="nt">AuthModuleTypes</span><span class="err">,</span> <span class="na">RootStateTypes</span><span class="p">&gt;</span> <span class="o">=</span> <span class="p">{</span>
+<span class="kr">const</span> <span class="nx">authModule</span>: <span class="kt">Module</span><span class="o">&lt;</span><span class="nx">AuthModuleTypes</span><span class="p">,</span> <span class="nx">RootStateTypes</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">{</span>
   <span class="nx">state</span><span class="p">,</span>
   <span class="nx">getters</span><span class="p">,</span>
   <span class="nx">mutations</span><span class="p">,</span>
@@ -1278,20 +1325,21 @@
 <span class="p">};</span>
 
 <span class="kr">export</span> <span class="k">default</span> <span class="nx">authModule</span><span class="p">;</span>
-
 </code></pre></td></tr></table>
 </div>
-</div><ul>
+</div>
+<ul>
 <li>第一个泛型参数为当前子模块<code>AuthModuleTypes</code>的 state 类型定义</li>
 <li>第二个参数为根级 state 的类型定义 <code>RootStateTypes</code></li>
 <li>只要定义了 state 的类型，在所有使用state的地方均会自动推断，不需要再定义</li>
 </ul>
+
 <blockquote>
 <p><code>@/store/modules/auth/index</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -1300,52 +1348,66 @@
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="c1">// store 文件夹下一级目录 auth 有index.ts 初始化vuex的配置
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="c1">// store 文件夹下一级目录 auth 有index.ts 初始化vuex的配置
 </span><span class="c1">// interface.ts 设置root层state类型
 </span><span class="c1">// modules用来存放vuex子模块定义
 </span><span class="c1"></span>
-<span class="kr">import</span> <span class="nx">authStore</span> <span class="kr">from</span> <span class="s1">&#39;@/store/modules/auth/authStore&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">authStore</span> <span class="nx">from</span> <span class="s1">&#39;@/store/modules/auth/authStore&#39;</span><span class="p">;</span>
 
 <span class="kr">export</span> <span class="k">default</span> <span class="nx">authStore</span><span class="p">;</span>
 </code></pre></td></tr></table>
 </div>
-</div><hr>
-<h3 id="blogmodule模块"><code>BlogModule</code>模块</h3>
+</div>
+<hr />
+
+<h3 id="blogmodule-模块"><code>BlogModule</code>模块</h3>
+
 <blockquote>
 <p><code>@/store/modules/blog/</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code></code></pre></td>
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="lnt">1
+</span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-ts" data-lang="ts">
+</code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p><code>@/store/modules/blog/</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code></code></pre></td>
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="lnt">1
+</span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-ts" data-lang="ts">
+</code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p><code>@/store/modules/blog/</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code></code></pre></td>
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="lnt">1
+</span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-ts" data-lang="ts">
+</code></pre></td></tr></table>
 </div>
-</div><hr>
+</div>
+<hr />
+
 <h2 id="登录注册的功能实现">登录注册的功能实现</h2>
+
 <blockquote>
 <p><code>@/pages/login/Login.vue</code>登录</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-vue" data-lang="vue"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1396,10 +1458,9 @@
 </span><span class="lnt">49
 </span><span class="lnt">50
 </span><span class="lnt">51
-</span><span class="lnt">52
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;Login&#34;</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-vue" data-lang="vue"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;Login&#34;</span><span class="p">&gt;</span>
 <span class="kr">import</span> <span class="nx">UserInput</span> <span class="nx">from</span> <span class="s1">&#39;@/components/user-authentication/UserInput.vue&#39;</span><span class="p">;</span>
 <span class="kr">import</span> <span class="nx">UserSubmitBtnTip</span> <span class="nx">from</span> <span class="s1">&#39;@/components/user-authentication/UserSubmitBtnTip.vue&#39;</span><span class="p">;</span>
 <span class="kr">import</span> <span class="p">{</span><span class="nx">ref</span><span class="p">,}</span> <span class="nx">from</span> <span class="s1">&#39;vue&#39;</span><span class="p">;</span>
@@ -1449,19 +1510,19 @@
 
 <span class="p">&lt;</span><span class="nt">style</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;scss&#34;</span> <span class="na">scoped</span><span class="p">&gt;</span>
 <span class="p">...</span>
-<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
-
-</code></pre></td></tr></table>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><ul>
+</div>
+<ul>
 <li>调用<code>store.dispatch('login', logString);</code></li>
 </ul>
+
 <blockquote>
 <p><code>@/pages/register/Register.vue</code>注册</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-vue" data-lang="vue"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1497,10 +1558,9 @@
 </span><span class="lnt">34
 </span><span class="lnt">35
 </span><span class="lnt">36
-</span><span class="lnt">37
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;Register&#34;</span><span class="p">&gt;</span>
+<pre class="chroma"><code class="language-vue" data-lang="vue"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">setup</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;ts&#34;</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;Register&#34;</span><span class="p">&gt;</span>
 <span class="kr">import</span> <span class="p">{</span><span class="nx">ref</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue&#39;</span><span class="p">;</span>
 <span class="kr">import</span> <span class="nx">UserInput</span> <span class="nx">from</span> <span class="s1">&#39;@/components/user-authentication/UserInput.vue&#39;</span><span class="p">;</span>
 <span class="kr">import</span> <span class="nx">UserSubmitBtnTip</span> <span class="nx">from</span> <span class="s1">&#39;@/components/user-authentication/UserSubmitBtnTip.vue&#39;</span><span class="p">;</span>
@@ -1535,37 +1595,44 @@
 
 <span class="p">&lt;</span><span class="nt">style</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;scss&#34;</span> <span class="na">scoped</span><span class="p">&gt;</span>
 <span class="p">...</span>
-<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
-
-</code></pre></td></tr></table>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span></code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p>vuex只能在使用 state 时，能够享受到TS的完全加持，但是却不能很好地对 mutation , action 以及 getter 进行很友好的类型检查</p>
 </blockquote>
+
 <ul>
 <li>参考
+
 <ul>
 <li><a href="https://juejin.cn/post/7079745031250116621">sps-vue-store： 基于 Vue3 + TS 的轻量级状态管理</a></li>
 <li><a href="https://juejin.cn/post/6984604019272450085">Vue3+TS 优雅地使用状态管理 </a></li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<hr>
-<hr>
-<h2 id="改用-pinia-代替vuex-操作状态管理">改用 <code>Pinia</code> 代替<code>Vuex</code> 操作状态管理</h2>
+
+<hr />
+
+<hr />
+
+<h2 id="改用-pinia-代替-vuex-操作状态管理">改用 <code>Pinia</code> 代替<code>Vuex</code> 操作状态管理</h2>
+
 <blockquote>
 <p>Vuex 没有为 this.$store 属性提供开箱即用的TypeScript 类型声明</p>
 </blockquote>
+
 <h3 id="初始化-pinia">初始化 pinia</h3>
+
 <ul>
 <li>通过 <code>createPinia</code> 初始化 Pinia，并将其挂载到 Vue 的实例上</li>
 </ul>
+
 <blockquote>
 <p><code>src/main.ts</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1576,12 +1643,11 @@
 </span><span class="lnt"> 9
 </span><span class="lnt">10
 </span><span class="lnt">11
-</span><span class="lnt">12
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="kr">import</span> <span class="p">{</span> <span class="nx">createApp</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;vue&#39;</span>
-<span class="kr">import</span> <span class="p">{</span> <span class="nx">createPinia</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;pinia&#39;</span>
-<span class="kr">import</span> <span class="nx">App</span> <span class="kr">from</span> <span class="s1">&#39;./App.vue&#39;</span>
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="kr">import</span> <span class="p">{</span> <span class="nx">createApp</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue&#39;</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">createPinia</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;pinia&#39;</span>
+<span class="kr">import</span> <span class="nx">App</span> <span class="nx">from</span> <span class="s1">&#39;./App.vue&#39;</span>
 
 <span class="c1">// 创建 pinia
 </span><span class="c1"></span><span class="kr">const</span> <span class="nx">pinia</span> <span class="o">=</span> <span class="nx">createPinia</span><span class="p">()</span>
@@ -1590,15 +1656,15 @@
 <span class="c1">// 挂载到 Vue 实例上
 </span><span class="c1"></span><span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">pinia</span><span class="p">)</span>
 <span class="nx">app</span><span class="p">.</span><span class="nx">mount</span><span class="p">(</span><span class="s1">&#39;#app&#39;</span><span class="p">)</span>
-
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
+</div>
+<blockquote>
 <p>创建 <code>src/store/index.ts</code> 文件，用于存放 <code>store</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -1606,7 +1672,7 @@
 </span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="kr">import</span> <span class="p">{</span> <span class="nx">defineStore</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;pinia&#39;</span>
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="kr">import</span> <span class="p">{</span> <span class="nx">defineStore</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;pinia&#39;</span>
 
 <span class="c1">// 定义 store 名为 myFirstStore 是 store 的名称，该名称必须唯一，不可重复
 </span><span class="c1"></span><span class="kr">export</span> <span class="kr">const</span> <span class="nx">useStore</span> <span class="o">=</span> <span class="nx">defineStore</span><span class="p">(</span><span class="s1">&#39;myFirstStore&#39;</span><span class="p">,</span> <span class="p">{</span>
@@ -1614,13 +1680,15 @@
 <span class="p">})</span>
 </code></pre></td></tr></table>
 </div>
-</div><ul>
+</div>
+<ul>
 <li><code>defineStore()</code> 的第一个参数用于设置 <code>store</code> 的容器名称，该名称必须唯一，不可重复！</li>
 </ul>
-<h2 id="store的目录结构"><code>store</code>的目录结构</h2>
+
+<h2 id="store-的目录结构"><code>store</code>的目录结构</h2>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-sh" data-lang="sh"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1635,7 +1703,7 @@
 </span><span class="lnt">13
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">store
+<pre class="chroma"><code class="language-sh" data-lang="sh">store
  ┣ modules
  ┃ ┣ auth
  ┃ ┃ ┣ authStore.ts
@@ -1647,16 +1715,17 @@
  ┃ ┃ ┗ interface.ts
  ┣ index.ts
  ┣ interface.ts
- ┗ store.ts
-</code></pre></td></tr></table>
+ ┗ store.ts</code></pre></td></tr></table>
 </div>
-</div><hr>
+</div>
+<hr />
+
 <blockquote>
 <p><code>@/store/modules/auth/authStore</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1732,17 +1801,16 @@
 </span><span class="lnt">74
 </span><span class="lnt">75
 </span><span class="lnt">76
-</span><span class="lnt">77
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="kr">import</span> <span class="p">{</span><span class="nx">defineStore</span><span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;pinia&#39;</span><span class="p">;</span>
-<span class="kr">import</span> <span class="nx">auth</span> <span class="kr">from</span> <span class="s1">&#39;@/api/auth&#39;</span><span class="p">;</span>
-<span class="kr">import</span> <span class="p">{</span><span class="nx">responseData</span><span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;@/types/responseData&#39;</span><span class="p">;</span>
-<span class="kr">import</span> <span class="nx">AuthModuleTypes</span><span class="p">,</span> <span class="p">{</span><span class="nx">logString</span><span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;@/store/modules/auth/interface&#39;</span><span class="p">;</span>
-<span class="kr">import</span> <span class="p">{</span><span class="nx">message</span><span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;ant-design-vue&#39;</span><span class="p">;</span>
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="kr">import</span> <span class="p">{</span><span class="nx">defineStore</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;pinia&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">auth</span> <span class="nx">from</span> <span class="s1">&#39;@/api/auth&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span><span class="nx">responseData</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;@/types/responseData&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">AuthModuleTypes</span><span class="p">,</span> <span class="p">{</span><span class="nx">logString</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;@/store/modules/auth/interface&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span><span class="nx">message</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;ant-design-vue&#39;</span><span class="p">;</span>
 
-<span class="kr">type</span> <span class="nx">getUser</span> <span class="o">=</span> <span class="nx">Pick</span><span class="p">&lt;</span><span class="nt">AuthModuleTypes</span><span class="err">,</span> <span class="err">&#39;</span><span class="na">userData</span><span class="err">&#39;</span><span class="p">&gt;;</span>
-<span class="kr">type</span> <span class="nx">getIsLogin</span> <span class="o">=</span> <span class="nx">Pick</span><span class="p">&lt;</span><span class="nt">AuthModuleTypes</span><span class="err">,</span> <span class="err">&#39;</span><span class="na">isLogin</span><span class="err">&#39;</span><span class="p">&gt;;</span>
+<span class="nx">type</span> <span class="nx">getUser</span> <span class="o">=</span> <span class="nx">Pick</span><span class="o">&lt;</span><span class="nx">AuthModuleTypes</span><span class="p">,</span> <span class="s1">&#39;userData&#39;</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="nx">type</span> <span class="nx">getIsLogin</span> <span class="o">=</span> <span class="nx">Pick</span><span class="o">&lt;</span><span class="nx">AuthModuleTypes</span><span class="p">,</span> <span class="s1">&#39;isLogin&#39;</span><span class="o">&gt;</span><span class="p">;</span>
 
 <span class="kr">export</span> <span class="kr">const</span> <span class="nx">useAuthStore</span> <span class="o">=</span> <span class="nx">defineStore</span><span class="p">(</span><span class="s1">&#39;authStore&#39;</span><span class="p">,</span> <span class="p">{</span>
   <span class="nx">state</span><span class="o">:</span> <span class="p">()</span><span class="o">:</span> <span class="nx">AuthModuleTypes</span> <span class="o">=&gt;</span> <span class="p">{</span>
@@ -1774,8 +1842,8 @@
           <span class="k">return</span> <span class="nx">res</span><span class="p">;</span>
         <span class="p">});</span>
     <span class="p">},</span>
-    <span class="kr">async</span> <span class="nx">register</span><span class="p">({</span><span class="nx">username</span><span class="p">,</span> <span class="nx">password</span><span class="p">}</span><span class="o">:</span> <span class="nx">logString</span><span class="p">)</span><span class="o">:</span> <span class="nx">Promise</span><span class="p">&lt;</span><span class="nt">responseData</span><span class="p">&gt;</span> <span class="p">{</span>
-      <span class="kr">const</span> <span class="nx">res</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">auth</span><span class="p">.</span><span class="nx">register</span><span class="p">({</span><span class="nx">username</span><span class="p">,</span> <span class="nx">password</span><span class="p">});</span>
+    <span class="nx">async</span> <span class="nx">register</span><span class="p">({</span><span class="nx">username</span><span class="p">,</span> <span class="nx">password</span><span class="p">}</span><span class="o">:</span> <span class="nx">logString</span><span class="p">)</span><span class="o">:</span> <span class="nx">Promise</span><span class="o">&lt;</span><span class="nx">responseData</span><span class="o">&gt;</span> <span class="p">{</span>
+      <span class="kr">const</span> <span class="nx">res</span> <span class="o">=</span> <span class="nx">await</span> <span class="nx">auth</span><span class="p">.</span><span class="nx">register</span><span class="p">({</span><span class="nx">username</span><span class="p">,</span> <span class="nx">password</span><span class="p">});</span>
       <span class="c1">// this.setUser({userData: res.data});
 </span><span class="c1"></span>      <span class="k">this</span><span class="p">.</span><span class="nx">setUser</span><span class="p">({</span><span class="nx">userData</span>: <span class="kt">null</span><span class="p">});</span>
       <span class="c1">// this.setLogin({isLogin: true});
@@ -1785,14 +1853,14 @@
       <span class="c1">// 提示注册成功 重新登录
 </span><span class="c1"></span>      <span class="k">return</span> <span class="nx">res</span><span class="p">;</span><span class="c1">// 做进一步的处理
 </span><span class="c1"></span>    <span class="p">},</span>
-    <span class="kr">async</span> <span class="nx">checkLogin</span><span class="p">()</span><span class="o">:</span> <span class="nx">Promise</span><span class="p">&lt;</span><span class="nt">boolean</span><span class="p">&gt;</span> <span class="p">{</span>
+    <span class="nx">async</span> <span class="nx">checkLogin</span><span class="p">()</span><span class="o">:</span> <span class="nx">Promise</span><span class="o">&lt;</span><span class="kr">boolean</span><span class="o">&gt;</span> <span class="p">{</span>
       <span class="c1">// 已处于登录状态，直接返回 true，短路先验
 </span><span class="c1"></span>      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;this.isLogin test first&#39;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">isLogin</span><span class="p">);</span>
       <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">isLogin</span><span class="p">)</span> <span class="p">{</span><span class="k">return</span> <span class="kc">true</span><span class="p">;}</span>
 
       <span class="c1">// 处于非登录状态
 </span><span class="c1"></span>      <span class="c1">// 向服务器发出 auth.getInfo() 请求，验证用户是否处于登录状态
-</span><span class="c1"></span>      <span class="kr">const</span> <span class="nx">res</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">auth</span><span class="p">.</span><span class="nx">getInfo</span><span class="p">();</span>
+</span><span class="c1"></span>      <span class="kr">const</span> <span class="nx">res</span> <span class="o">=</span> <span class="nx">await</span> <span class="nx">auth</span><span class="p">.</span><span class="nx">getInfo</span><span class="p">();</span>
 
       <span class="c1">// 将返回结果的 isLogin 设置到 本地状态
 </span><span class="c1"></span>      <span class="k">this</span><span class="p">.</span><span class="nx">setLogin</span><span class="p">({</span><span class="nx">isLogin</span>: <span class="kt">res.isLogin</span><span class="p">});</span>
@@ -1803,24 +1871,25 @@
       <span class="k">return</span> <span class="nx">res</span><span class="p">.</span><span class="nx">isLogin</span><span class="p">;</span>
 
     <span class="p">},</span>
-    <span class="kr">async</span> <span class="nx">logout() {</span>
+    <span class="nx">async</span> <span class="nx">logout() {</span>
       <span class="c1">// 注销用户
 </span><span class="c1"></span>      <span class="k">this</span><span class="p">.</span><span class="nx">userData</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
       <span class="k">this</span><span class="p">.</span><span class="nx">isLogin</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
-      <span class="k">return</span> <span class="k">await</span> <span class="nx">auth</span><span class="p">.</span><span class="nx">logout</span><span class="p">();</span>
+      <span class="k">return</span> <span class="nx">await</span> <span class="nx">auth</span><span class="p">.</span><span class="nx">logout</span><span class="p">();</span>
     <span class="p">}</span>
   <span class="p">},</span>
 <span class="p">});</span>
-
 </code></pre></td></tr></table>
 </div>
-</div><hr>
+</div>
+<hr />
+
 <blockquote>
 <p><code>@/store/modules/auth/interface</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1831,41 +1900,44 @@
 </span><span class="lnt"> 9
 </span><span class="lnt">10
 </span><span class="lnt">11
-</span><span class="lnt">12
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="kr">import</span> <span class="p">{</span><span class="nx">responseData</span><span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;@/types/responseData&#39;</span><span class="p">;</span>
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="kr">import</span> <span class="p">{</span><span class="nx">responseData</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;@/types/responseData&#39;</span><span class="p">;</span>
 
 <span class="kr">export</span> <span class="k">default</span> <span class="kr">interface</span> <span class="nx">AuthModuleTypes</span> <span class="p">{</span>
   <span class="nx">isLogin</span>: <span class="kt">boolean</span>
   <span class="nx">userData</span>: <span class="kt">responseData</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span> <span class="o">|</span> <span class="kc">null</span><span class="p">,</span>
 <span class="p">}</span>
 
-<span class="kr">export</span> <span class="kr">type</span> <span class="nx">logString</span> <span class="o">=</span> <span class="p">{</span>
+<span class="kr">export</span> <span class="nx">type</span> <span class="nx">logString</span> <span class="o">=</span> <span class="p">{</span>
   <span class="nx">username</span>: <span class="kt">string</span><span class="p">,</span>
   <span class="nx">password</span>: <span class="kt">string</span>
 <span class="p">}</span>
-
 </code></pre></td></tr></table>
 </div>
-</div><hr>
+</div>
+<hr />
+
 <blockquote>
 <p><code>@/store/modules/auth/index</code></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="kr">import</span> <span class="p">{</span><span class="nx">useAuthStore</span><span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;@/store/modules/auth/authStore&#39;</span><span class="p">;</span>
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="kr">import</span> <span class="p">{</span><span class="nx">useAuthStore</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;@/store/modules/auth/authStore&#39;</span><span class="p">;</span>
 
 <span class="kr">export</span> <span class="k">default</span> <span class="nx">useAuthStore</span><span class="p">;</span>
 </code></pre></td></tr></table>
 </div>
-</div><hr>
+</div>
+<hr />
+
 <h3 id="pinia-遇坑">pinia 遇坑</h3>
+
 <ul>
 <li>报错 <code>Uncaught Error: [🍍]: getActivePinia was called with no active Pinia. Did you forget to install pinia?</code></li>
 <li>在<code>router</code>中使用的例子，必须在钩子函数中声明<code>const  store = useStore()</code>，而不是在钩子外</li>
@@ -1873,11 +1945,11 @@
 <li><a href="https://pinia.vuejs.org/core-concepts/outside-component-usage.html#using-a-store-outside-of-a-component">Pinia官网示例 Using a store outside of a component</a></li>
 <li><a href="https://pinia.vuejs.org/ssr/#using-the-store-outside-of-setup">Pinia官网示例 Using the store outside of setup()</a></li>
 <li><a href="https://github.com/vuejs/pinia/issues/666">github issue #666 I can&rsquo;t use pinia outside of component setup</a></li>
-<li><a href="https://stackoverflow.com/a/70714477/16435155">stackoverflow Vue: Can&rsquo;t access Pinia Store in beforeEnter vue-router</a></li>
-</ul>
+
+<li><p><a href="https://stackoverflow.com/a/70714477/16435155">stackoverflow Vue: Can&rsquo;t access Pinia Store in beforeEnter vue-router</a></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1903,39 +1975,44 @@
 </span><span class="lnt">24
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="kr">import</span> <span class="p">{</span> <span class="nx">createRouter</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;vue-router&#39;</span>
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="kr">import</span> <span class="p">{</span> <span class="nx">createRouter</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vue-router&#39;</span>
 
 <span class="kr">const</span> <span class="nx">router</span> <span class="o">=</span> <span class="nx">createRouter</span><span class="p">({</span>
-  <span class="c1">// ...
+<span class="c1">// ...
 </span><span class="c1"></span><span class="p">})</span>
 
 <span class="c1">// ❌ Depending on the order of imports this will fail
 </span><span class="c1"></span><span class="kr">const</span> <span class="nx">store</span> <span class="o">=</span> <span class="nx">useStore</span><span class="p">()</span>
 
-<span class="nx">router</span><span class="p">.</span><span class="nx">beforeEach</span><span class="p">((</span><span class="nx">to</span><span class="p">,</span> <span class="kr">from</span><span class="p">,</span> <span class="nx">next</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-  <span class="c1">// we wanted to use the store here
-</span><span class="c1"></span>  <span class="k">if</span> <span class="p">(</span><span class="nx">store</span><span class="p">.</span><span class="nx">isLoggedIn</span><span class="p">)</span> <span class="nx">next</span><span class="p">()</span>
-  <span class="k">else</span> <span class="nx">next</span><span class="p">(</span><span class="s1">&#39;/login&#39;</span><span class="p">)</span>
+<span class="nx">router</span><span class="p">.</span><span class="nx">beforeEach</span><span class="p">((</span><span class="nx">to</span><span class="p">,</span> <span class="nx">from</span><span class="p">,</span> <span class="nx">next</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+<span class="c1">// we wanted to use the store here
+</span><span class="c1"></span><span class="k">if</span> <span class="p">(</span><span class="nx">store</span><span class="p">.</span><span class="nx">isLoggedIn</span><span class="p">)</span> <span class="nx">next</span><span class="p">()</span>
+<span class="k">else</span> <span class="nx">next</span><span class="p">(</span><span class="s1">&#39;/login&#39;</span><span class="p">)</span>
 <span class="p">})</span>
 
 <span class="c1">// Good way below
 </span><span class="c1"></span>
 <span class="nx">router</span><span class="p">.</span><span class="nx">beforeEach</span><span class="p">((</span><span class="nx">to</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-  <span class="c1">// ✅ This will work because the router starts its navigation after
-</span><span class="c1"></span>  <span class="c1">// the router is installed and pinia will be installed too
-</span><span class="c1"></span>  <span class="kr">const</span> <span class="nx">store</span> <span class="o">=</span> <span class="nx">useStore</span><span class="p">()</span>
+<span class="c1">// ✅ This will work because the router starts its navigation after
+</span><span class="c1">// the router is installed and pinia will be installed too
+</span><span class="c1"></span><span class="kr">const</span> <span class="nx">store</span> <span class="o">=</span> <span class="nx">useStore</span><span class="p">()</span>
 
-  <span class="k">if</span> <span class="p">(</span><span class="nx">to</span><span class="p">.</span><span class="nx">meta</span><span class="p">.</span><span class="nx">requiresAuth</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nx">store</span><span class="p">.</span><span class="nx">isLoggedIn</span><span class="p">)</span> <span class="k">return</span> <span class="s1">&#39;/login&#39;</span>
+<span class="k">if</span> <span class="p">(</span><span class="nx">to</span><span class="p">.</span><span class="nx">meta</span><span class="p">.</span><span class="nx">requiresAuth</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nx">store</span><span class="p">.</span><span class="nx">isLoggedIn</span><span class="p">)</span> <span class="k">return</span> <span class="s1">&#39;/login&#39;</span>
 <span class="p">})</span>
 </code></pre></td></tr></table>
 </div>
-</div><hr>
-<hr>
+</div></li>
+</ul>
+
+<hr />
+
+<hr />
+
 <p><a href="https://juejin.cn/post/7057950109832577054?utm_source=gold_browser_extension">https://juejin.cn/post/7057950109832577054?utm_source=gold_browser_extension</a> | Pinia初体验 - 掘金
 <a href="https://juejin.cn/post/7036745610954801166#heading-33">https://juejin.cn/post/7036745610954801166#heading-33</a> | Vite2 + Vue3 + TypeScript + Pinia 搭建一套企业级的开发脚手架【值得收藏】 - 掘金
 <a href="https://juejin.cn/post/7057439040911441957">https://juejin.cn/post/7057439040911441957</a> | Pinia进阶：优雅的setup（函数式）写法+封装到你的企业项目 - 掘金
 <a href="https://juejin.cn/post/7056894606650114085#heading-3">https://juejin.cn/post/7056894606650114085#heading-3</a> | Vue3.2+Vite+TS+pinia+router4搭建 - 掘金
-http://localhost:3000/#/create
+<a href="http://localhost:3000/#/create">http://localhost:3000/#/create</a>
 <a href="https://pinia.vuejs.org/getting-started.html">https://pinia.vuejs.org/getting-started.html</a> | Installation | Pinia
 <a href="https://stackblitz.com/github/piniajs/example-vue-3-vite?file=src%2Fcomponents%2FPiniaLogo.vue">https://stackblitz.com/github/piniajs/example-vue-3-vite?file=src%2Fcomponents%2FPiniaLogo.vue</a> | Piniajs - Example Vue 3 Vite - StackBlitz
 <a href="https://pinia.vuejs.org/introduction.html#comparison-with-vuex">https://pinia.vuejs.org/introduction.html#comparison-with-vuex</a> | Introduction | Pinia
@@ -1946,11 +2023,17 @@ http://localhost:3000/#/create
 <a href="https://jishuin.proginn.com/p/763bfbd61629">https://jishuin.proginn.com/p/763bfbd61629</a> | Pinia是Vuex的良好替代品吗？-技术圈
 <a href="https://zhuanlan.zhihu.com/p/413389658">https://zhuanlan.zhihu.com/p/413389658</a> | Vuex4 对 TypeScript 并不友好，所以我选择 Pinia - 知乎
 <a href="https://juejin.cn/post/7041188884864040991">https://juejin.cn/post/7041188884864040991</a> | vite + vue3 + setup + pinia + ts 项目实战 - 掘金</p>
-<hr>
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<hr>
+
+<hr />
+
+<!-- Article End -->
+
+<div style="text-align:center;">·未完待续·</div>
+
+<hr />
+
 <h2 id="参考文章">参考文章</h2>
+
 <ul>
 <li><a href="https://juejin.cn/post/6898504898380464142">Vue3,我决定不再使用Vuex</a></li>
 <li><a href="https://juejin.cn/post/7054481067297734693">简洁轻量的Pinia，你确定不使用吗？</a></li>
@@ -1958,19 +2041,25 @@ http://localhost:3000/#/create
 <li><a href="https://juejin.cn/post/7057443820115329055?utm_source=gold_browser_extension">抛弃 Vuex，使用 Pinia</a></li>
 <li><a href="https://juejin.cn/post/7083103819285921799">Pinia 作弊表（Vue 3 版）</a></li>
 </ul>
+
 <h2 id="相关文章">相关文章</h2>
+
 <ul>
 <li>无</li>
 </ul>
-<hr>
+
+<hr />
+
 <ul>
 <li>作者： Joel</li>
 <li>文章链接：</li>
-<li><a href="http://xmasuhai.xyz/posts/%E7%89%88%E6%9D%83%E5%A3%B0%E6%98%8E%E9%93%BE%E6%8E%A5/">版权声明</a></li>
+<li><a href="http://xmasuhai.xyz/posts/版权声明链接/">版权声明</a></li>
 <li>非自由转载-非商用-非衍生-保持署名</li>
 </ul>
-<hr>
-<hr>
+
+<hr />
+
+<hr />
 
     </div>
 
@@ -2133,7 +2222,7 @@ http://localhost:3000/#/create
     &copy;
     
       2019 -
-    2022
+    2026
     <span class="heart">
       
       <i class="iconfont">
