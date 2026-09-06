@@ -1,0 +1,2197 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>【山竹记账】搭建docker开发环境 - Joel in The House</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="Joel Xu" />
+  <meta name="description" content="【山竹记账】搭建docker开发环境 ⇧ 大纲链接§ [TOC] 1. 环境 ⇧ 环境主要分两种：生产环境 和 开发环境 兼容 Windows 11、macOS、Linux 生产环境 ⇧ 一般" />
+
+  <meta name="keywords" content="Hugo, theme, jane" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.59.1" />
+
+
+<link rel="canonical" href="http://xmasuhai.xyz/post/%E5%B1%B1%E7%AB%B9%E8%AE%B0%E8%B4%A6/%E5%B1%B1%E7%AB%B9%E8%AE%B0%E8%B4%A6%E6%90%AD%E5%BB%BAdocker%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="【山竹记账】搭建docker开发环境" />
+<meta property="og:description" content="【山竹记账】搭建docker开发环境 ⇧ 大纲链接§ [TOC] 1. 环境 ⇧ 环境主要分两种：生产环境 和 开发环境 兼容 Windows 11、macOS、Linux 生产环境 ⇧ 一般" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://xmasuhai.xyz/post/%E5%B1%B1%E7%AB%B9%E8%AE%B0%E8%B4%A6/%E5%B1%B1%E7%AB%B9%E8%AE%B0%E8%B4%A6%E6%90%AD%E5%BB%BAdocker%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/" />
+<meta property="article:published_time" content="2026-09-04T19:41:53+08:00" />
+<meta property="article:modified_time" content="2026-09-06T11:56:12+08:00" />
+<meta itemprop="name" content="【山竹记账】搭建docker开发环境">
+<meta itemprop="description" content="【山竹记账】搭建docker开发环境 ⇧ 大纲链接§ [TOC] 1. 环境 ⇧ 环境主要分两种：生产环境 和 开发环境 兼容 Windows 11、macOS、Linux 生产环境 ⇧ 一般">
+
+
+<meta itemprop="datePublished" content="2026-09-04T19:41:53&#43;08:00" />
+<meta itemprop="dateModified" content="2026-09-06T11:56:12&#43;08:00" />
+<meta itemprop="wordCount" content="6329">
+
+
+
+<meta itemprop="keywords" content="Project,山竹记账," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="【山竹记账】搭建docker开发环境"/>
+<meta name="twitter:description" content="【山竹记账】搭建docker开发环境 ⇧ 大纲链接§ [TOC] 1. 环境 ⇧ 环境主要分两种：生产环境 和 开发环境 兼容 Windows 11、macOS、Linux 生产环境 ⇧ 一般"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Joel in The House</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/post/">文档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/categories/">目录</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/about/">关于我</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Joel in The House
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/post/">文档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/categories/">目录</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/about/">关于我</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">【山竹记账】搭建docker开发环境</h1>
+      
+      <div class="post-meta">
+        <time datetime="2026-09-04" class="post-time">
+          2026-09-04
+        </time>
+        <div class="post-category">
+            <a href="http://xmasuhai.xyz/categories/project/"> Project </a>
+            
+          </div>
+        <span class="more-meta"> 约 6329 字 </span>
+          <span class="more-meta"> 预计阅读 13 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#山竹记账-搭建docker开发环境-a-href-catalogue-a">【山竹记账】搭建docker开发环境 <a href="#catalogue"> ⇧ </a></a>
+<ul>
+<li><a href="#1-环境-a-href-catalogue-a">1. 环境 <a href="#catalogue"> ⇧ </a></a>
+<ul>
+<li><a href="#生产环境-a-href-catalogue-a">生产环境 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#开发环境-a-href-catalogue-a">开发环境 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#生产环境-与-开发环境-系统不一致导致的-bug-a-href-catalogue-a">生产环境 与 开发环境 系统不一致导致的 bug <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#docker-优缺点对比-a-href-catalogue-a"><code>Docker</code> 优缺点对比 <a href="#catalogue"> ⇧ </a></a></li>
+</ul></li>
+<li><a href="#2-docker-知识归纳-a-href-catalogue-a">2. <code>Docker</code>知识归纳 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#3-使用-docker-的准备工作-a-href-catalogue-a">3. 使用<code>Docker</code>的准备工作 <a href="#catalogue"> ⇧ </a></a>
+<ul>
+<li><a href="#win11-开启-wsl2-a-href-catalogue-a"><code>win11</code> 开启 <code>WSL2</code> <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#安装-docker-最新版客户端-a-href-catalogue-a">安装<code>Docker</code>最新版客户端 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#给-docker-加速-a-href-catalogue-a">给<code>Docker</code>加速 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#安装-visual-studio-code-最新版-a-href-catalogue-a">安装<code>Visual Studio Code</code>最新版 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#尝试使用-docker-镜像-创建容器-a-href-catalogue-a">尝试使用<code>Docker</code>镜像，创建容器 <a href="#catalogue"> ⇧ </a></a>
+<ul>
+<li><a href="#创建-dockerfile-a-href-catalogue-a">创建 <code>Dockerfile</code> <a href="#catalogue"> ⇧ </a></a></li>
+</ul></li>
+<li><a href="#在-workspace-中新建项目文件夹-a-href-catalogue-a">在<code>workspace</code>中新建项目文件夹 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#使用-oh-my-env-模板代码-a-href-catalogue-a">使用 <code>oh-my-env</code> 模板代码 <a href="#catalogue"> ⇧ </a></a>
+<ul>
+<li><a href="#下载-oh-my-env-a-href-catalogue-a">下载<code>oh-my-env</code> <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#oh-my-env-检查已安装软件版本-a-href-catalogue-a"><code>oh-my-env</code> 检查已安装软件版本 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#重新打开-oh-my-env-环境-a-href-catalogue-a">重新打开 <code>oh-my-env</code> 环境 <a href="#catalogue"> ⇧ </a></a></li>
+</ul></li>
+</ul></li>
+<li><a href="#4-oh-my-env-环境说明-a-href-catalogue-a">4. <code>oh-my-env</code> 环境说明 <a href="#catalogue"> ⇧ </a></a>
+<ul>
+<li><a href="#oh-my-env-工作空间-a-href-catalogue-a"><code>oh-my-env</code> 工作空间 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#oh-my-env-持久化-a-href-catalogue-a"><code>oh-my-env</code> 持久化 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#oh-my-env-环境功能-a-href-catalogue-a"><code>oh-my-env</code> 环境功能 <a href="#catalogue"> ⇧ </a></a></li>
+</ul></li>
+<li><a href="#5-新建项目示例-a-href-catalogue-a">5.新建项目示例 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#6-vscode-端口转发-a-href-catalogue-a">6.<code>VSCode</code> 端口转发 <a href="#catalogue"> ⇧ </a></a>
+<ul>
+<li><a href="#docker-容器开启-github443-端口-a-href-catalogue-a">docker 容器开启 <code>github443</code> 端口 <a href="#catalogue"> ⇧ </a></a></li>
+</ul></li>
+<li><a href="#7-高性能文件-docker-volume-a-href-catalogue-a">7.高性能文件： <code>docker volume</code> <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#8-连接任意数据库-a-href-catalogue-a">8.连接任意数据库 <a href="#catalogue"> ⇧ </a></a>
+<ul>
+<li><a href="#创建-network1-a-href-catalogue-a">创建 <code>network1</code> <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#启动-mysql-镜像-得到数据库服务的容器-a-href-catalogue-a">启动 mysql 镜像，得到数据库服务的容器 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#让-oh-my-docker-连入-network1-a-href-catalogue-a">让 <code>oh-my-docker</code> 连入 <code>network1</code> <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#预装-mysql-客户端软件-a-href-catalogue-a">预装 <code>mysql</code> 客户端软件 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#验证链接-a-href-catalogue-a">验证链接 <a href="#catalogue"> ⇧ </a></a></li>
+</ul></li>
+<li><a href="#9-常用的-docker-命令一览表-a-href-catalogue-a">9.常用的 docker 命令一览表 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#10-配置-git-github-创建-ssh-密钥-a-href-catalogue-a">10.配置<code>git/github</code>，创建<code>.ssh</code> 密钥 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#oh-my-env-工作流-a-href-catalogue-a"><code>oh-my-env</code> 工作流 <a href="#catalogue"> ⇧ </a></a>
+<ul>
+<li><a href="#初始工作配置各种文件-拷贝备份配置-a-href-catalogue-a">初始工作配置各种文件：拷贝备份配置 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#工作目录操作-a-href-catalogue-a">工作目录操作 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#备份配置文件-使用脚本-backup-sh-a-href-catalogue-a">备份配置文件 使用脚本 <code>backup.sh</code> <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#备份数据库-a-href-catalogue-a">备份数据库 <a href="#catalogue"> ⇧ </a></a></li>
+</ul></li>
+<li><a href="#参考文章">参考文章</a></li>
+<li><a href="#相关文章">相关文章</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+
+<h1 id="山竹记账-搭建docker开发环境-a-href-catalogue-a">【山竹记账】搭建docker开发环境 <a href="#catalogue"> ⇧ </a></h1>
+
+<hr />
+
+<blockquote>
+<p>大纲链接<a id="catalogue" href="#catalogue"> § </a></p>
+</blockquote>
+
+<p>[TOC]</p>
+
+<hr />
+
+<h2 id="1-环境-a-href-catalogue-a">1. 环境 <a href="#catalogue"> ⇧ </a></h2>
+
+<blockquote>
+<p>环境主要分两种：生产环境 和 开发环境
+兼容 <code>Windows 11</code>、<code>macOS</code>、<code>Linux</code></p>
+</blockquote>
+
+<h3 id="生产环境-a-href-catalogue-a">生产环境 <a href="#catalogue"> ⇧ </a></h3>
+
+<ul>
+<li>一般使用 <code>Linux</code> 服务器（包括买云服务器）</li>
+<li>关闭 <code>debug</code> 端口</li>
+<li>使用 <code>log</code> 日志进行排错</li>
+<li>环境变量 举例：<code>RAILS_ENV=production</code></li>
+<li>编辑器： <code>vi</code> 或 <code>vim</code> 或 <code>neovim</code></li>
+<li><code>Shell</code>：<code>bash</code> 或者 <code>sh</code></li>
+</ul>
+
+<hr />
+
+<h3 id="开发环境-a-href-catalogue-a">开发环境 <a href="#catalogue"> ⇧ </a></h3>
+
+<ul>
+<li>一般使用 <code>Windows</code> 或者 <code>macOS</code></li>
+<li>开启 <code>debug</code> 端口</li>
+<li>使用 <code>log</code> 或者断点进行排错</li>
+<li>环境变量 一般不设置，默认：<code>development</code></li>
+<li>编辑器： <code>VSCode</code>（直连<code>Docker</code>） 或 <code>JetBrains</code>（无法直连<code>Docker</code>）</li>
+<li><code>Shell</code>：<code>zsh</code> 或者 <code>fish</code></li>
+</ul>
+
+<h3 id="生产环境-与-开发环境-系统不一致导致的-bug-a-href-catalogue-a">生产环境 与 开发环境 系统不一致导致的 bug <a href="#catalogue"> ⇧ </a></h3>
+
+<ul>
+<li>缺少依赖库</li>
+<li><code>API</code>不兼容</li>
+</ul>
+
+<blockquote>
+<p>为了减少环境不一致带来的bug，确保每个开发运维人员生产环境和开发环境一致，需要使用 <code>Docker</code>，保证环境一致</p>
+</blockquote>
+
+<h3 id="docker-优缺点对比-a-href-catalogue-a"><code>Docker</code> 优缺点对比 <a href="#catalogue"> ⇧ </a></h3>
+
+<blockquote>
+<p>优点：</p>
+</blockquote>
+
+<ul>
+<li>在所有地方（操作系统）使用同一套环境
+
+<ul>
+<li>在 <code>Windows</code> 里运行 <code>Linux</code> 容器，开启 <code>WSL2</code></li>
+<li>在 <code>macOS</code> 里运行 <code>Linux</code> 容器</li>
+<li>在 <code>Linux</code> 里运行 <code>Linux</code> 容器</li>
+</ul></li>
+</ul>
+
+<blockquote>
+<p>缺点：</p>
+</blockquote>
+
+<ul>
+<li>学习门槛较高
+
+<ul>
+<li>需要会 <strong><code>Linux</code></strong> 命令</li>
+<li>需要了解<strong>容器</strong>的概念</li>
+<li>需要做<strong>端口</strong>映射</li>
+<li>需要做<strong>数据卷</strong>映射</li>
+</ul></li>
+<li>占用内存和硬盘</li>
+</ul>
+
+<hr />
+
+<h2 id="2-docker-知识归纳-a-href-catalogue-a">2. <code>Docker</code>知识归纳 <a href="#catalogue"> ⇧ </a></h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-mermaid" data-lang="mermaid"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-mermaid" data-lang="mermaid">graph TB
+    A[DockerFile: FROM RUN ADD ENV] --&gt; | docker build . -t xxx | B(image 镜像)
+    B --&gt; |docker run -dit xxx| C([container 容器])
+    C --&gt; |docker exec -it yyy zsh| D((&#34;
+      Linux 系统
+      bash
+      node...
+    &#34;))
+    B --&gt; |docker push| H(Docker Hub)</code></pre></td></tr></table>
+</div>
+</div>
+<hr />
+
+<h2 id="3-使用-docker-的准备工作-a-href-catalogue-a">3. 使用<code>Docker</code>的准备工作 <a href="#catalogue"> ⇧ </a></h2>
+
+<blockquote>
+<p>各个操作系统的基本要求</p>
+</blockquote>
+
+<ul>
+<li><code>Win11</code> 开启 <code>WSL</code></li>
+<li><code>macOS</code> 版本 <code>10.15+</code>，不可安装 <code>VirtualBox</code></li>
+<li><code>Linux</code> 内核 <code>3.10+</code></li>
+</ul>
+
+<hr />
+
+<h3 id="win11-开启-wsl2-a-href-catalogue-a"><code>win11</code> 开启 <code>WSL2</code> <a href="#catalogue"> ⇧ </a></h3>
+
+<ol>
+<li><code>控制面板\所有控制面板项\程序和功能</code> 点击 <code>启用或关闭Windows功能</code>，勾选 <code>Hyper-V</code>、<code>Windows拟机监控程序平台</code>、<code>适用于Linux的Windows子系统</code>，确认并重启</li>
+<li>家庭版开启 <code>Hyper-V</code> 需额外设置</li>
+<li>Windows 11 安装 WSL2，启动终端或打开Power Shell 以管理员命令输入下方代码： <code>bcdedit /set hypervisorlaunchtype auto</code></li>
+<li>使用 <code>PowerShell</code>，以管理员权限启动，输入下方命令执行：<code>wsl --install -d Ubuntu</code>，需要重启计算机</li>
+<li>系统登录，设置默认账户和密码，该账户默认为该Linux系统的管理员，具备和root相同的权限。（root已经有了不能起重复的账户名）</li>
+<li>升级WSL内核：<code>wsl --update</code></li>
+<li>重启WSL内核：<code>wsl -l -shutdown</code></li>
+<li>查看本系统WSL情况：<code>wsl -l -v</code></li>
+<li>在<code>Ubuntu</code>命令行中，升级Linux系统的包：<code>sudo apt update &amp;&amp; sudo apt upgrade</code></li>
+<li>查看可用发行版列表：<code>wsl --list --online</code> / <code>wsl -l -o</code></li>
+<li>更改默认安装的 Linux 发行版：<code>wsl --install -d &lt;Distribution Name&gt;</code></li>
+<li>如果要通过 Linux/Bash 命令行（而不是通过 PowerShell 或命令提示符）安装其他发行版，必须在命令中使用 .exe：<code>wsl.exe --install -d &lt;Distribution Name&gt;</code> 或若要列出可用发行版，则使用：<code>wsl.exe -l -o</code></li>
+<li>使用 <code>wsl --install</code> 命令安装的新 Linux 安装将默认设置为 <code>WSL 2</code>，无需额外设置：<code>wsl --set-default-version 2</code></li>
+<li>在终端启动运行，<code>ubuntu.exe</code> 或 <code>ubuntu</code> 或 <code>wsl.exe</code></li>
+<li>查看当前目录路径在 WSL 中的装载位置：<code>wsl pwd</code></li>
+<li>如果已在 Windows 提示符或 PowerShell 窗口中打开 WSL 命令行并想退出，请输入命令：<code>exit</code></li>
+</ol>
+
+<blockquote>
+<p>参考</p>
+</blockquote>
+
+<ul>
+<li><a href="https://zhuanlan.zhihu.com/p/558063980">在 Windows 11 Home 中启用 Hyper-V</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/475462241">Windows 11 安装 WSL2</a></li>
+<li><a href="https://learn.microsoft.com/zh-cn/windows/wsl/install">使用 WSL 在 Windows 上安装 Linux</a></li>
+<li><a href="https://learn.microsoft.com/zh-cn/windows/wsl/setup/environment#set-up-your-linux-username-and-password">设置 WSL 开发环境</a></li>
+</ul>
+
+<hr />
+
+<h3 id="安装-docker-最新版客户端-a-href-catalogue-a">安装<code>Docker</code>最新版客户端 <a href="#catalogue"> ⇧ </a></h3>
+
+<ul>
+<li><a href="https://docs.docker.com/desktop/install/windows-install/"><code>Install Docker Desktop on Windows: Docker Desktop 2.0+</code></a></li>
+<li>安装成功后，需要在命令行运行 <code>docker network create network1</code> 创建网络</li>
+<li>运行这个命令才能保证 <code>reopen</code> 不报错</li>
+<li>第一次成功，重复运行命令会报错，但不影响功能</li>
+</ul>
+
+<hr />
+
+<h3 id="给-docker-加速-a-href-catalogue-a">给<code>Docker</code>加速 <a href="#catalogue"> ⇧ </a></h3>
+
+<blockquote>
+<p>配置 <code>docker.desktop@v4.89.0</code> <code>docker@29.7.2</code> 的 <code>Docker Engine</code></p>
+</blockquote>
+
+<ul>
+<li>Configure the Docker daemon by typing a JSON Docker daemon</li>
+</ul>
+
+<blockquote>
+<p>设置<code>Docker Engine</code>国内镜像地址</p>
+</blockquote>
+
+<ul>
+<li>启动 <code>Docker Desktop</code>，在设置中找到 <code>Docker Engine</code></li>
+
+<li><p>修改 <code>daemon.json</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-json" data-lang="json"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-json" data-lang="json"><span class="p">{</span>
+<span class="nt">&#34;builder&#34;</span><span class="p">:</span> <span class="p">{</span>
+<span class="nt">&#34;gc&#34;</span><span class="p">:</span> <span class="p">{</span>
+  <span class="nt">&#34;defaultKeepStorage&#34;</span><span class="p">:</span> <span class="s2">&#34;20GB&#34;</span><span class="p">,</span>
+  <span class="nt">&#34;enabled&#34;</span><span class="p">:</span> <span class="kc">true</span>
+<span class="p">}</span>
+<span class="p">},</span>
+<span class="nt">&#34;debug&#34;</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+<span class="nt">&#34;experimental&#34;</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+<span class="nt">&#34;insecure-registries&#34;</span><span class="p">:</span> <span class="p">[</span>
+<span class="s2">&#34;docker.mirrors.ustc.edu.cn&#34;</span>
+<span class="p">],</span>
+<span class="nt">&#34;registry-mirrors&#34;</span><span class="p">:</span> <span class="p">[</span>
+<span class="s2">&#34;https://docker.mirrors.ustc.edu.cn&#34;</span><span class="p">,</span>
+<span class="s2">&#34;https://o3b9ba2s.mirror.aliyuncs.com&#34;</span><span class="p">,</span>
+<span class="s2">&#34;https://reg-mirror.qiniu.com&#34;</span><span class="p">,</span>
+<span class="s2">&#34;https://hub-mirror.c.163.com&#34;</span>
+<span class="p">]</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div></li>
+
+<li><p><a href="https://www.runoob.com/docker/docker-mirror-acceleration.html">Docker 镜像加速</a></p></li>
+
+<li><p>检查加速器是否生效，运行命令 <code>docker info</code></p></li>
+</ul>
+
+<hr />
+
+<h3 id="安装-visual-studio-code-最新版-a-href-catalogue-a">安装<code>Visual Studio Code</code>最新版 <a href="#catalogue"> ⇧ </a></h3>
+
+<ul>
+<li>安装 <del><code>Remote - Containers</code></del> <code>Dev Containers</code> 插件</li>
+</ul>
+
+<hr />
+
+<h3 id="尝试使用-docker-镜像-创建容器-a-href-catalogue-a">尝试使用<code>Docker</code>镜像，创建容器 <a href="#catalogue"> ⇧ </a></h3>
+
+<h4 id="创建-dockerfile-a-href-catalogue-a">创建 <code>Dockerfile</code> <a href="#catalogue"> ⇧ </a></h4>
+
+<blockquote>
+<p>尝试使用 <code>Dockerfile</code> 创建容器</p>
+</blockquote>
+
+<ul>
+<li>在工作目录中新建 <code>docker-test</code> 目录，新建 <code>.devcontainer</code> 目录</li>
+<li>新建名为 <code>Dockerfile</code> 的文件，无后缀</li>
+<li>使用<code>Docker Hub</code>上开源的镜像，在 <code>Dockerfile</code> 文件中写入 <code>FROM frankfang128/oh-my-docker:latest</code></li>
+<li>按 <code>Ctrl + Shift + P</code>，键入 <code>Reopen in Container</code></li>
+<li>在弹出的选项中点击第二项 <code>From 'Dockerfile'</code></li>
+<li><code>VSCode</code>自动重新启动，并运行一个 <code>container</code></li>
+<li>等到全部安装成功后，点击终端的<code>+</code>，打开一个<code>zsh</code>，输入以下命令
+
+<ul>
+<li>查看路径 <code>pwd</code></li>
+<li>查看版本 <code>node -v;pnpm -v;npm -v;yarn -v</code></li>
+</ul></li>
+<li>创建 <code>.devcontainer/devcontainer.json</code></li>
+</ul>
+
+<blockquote>
+<p><code>devcontainer.json</code>配置</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-json" data-lang="json"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-json" data-lang="json"><span class="err">//</span> <span class="err">For</span> <span class="err">format</span> <span class="err">details,</span> <span class="err">see</span> <span class="err">https://aka.ms/devcontainer.json.</span>
+<span class="err">//</span> <span class="err">For</span> <span class="err">config</span> <span class="err">options,</span> <span class="err">see</span> <span class="err">the</span> <span class="err">README</span> <span class="err">at:</span>
+<span class="err">//</span> <span class="err">https://github.com/microsoft/vscode-dev-containers/tree/v</span><span class="mf">0.194</span><span class="err">.</span><span class="mi">0</span><span class="err">/containers/docker-existing-dockerfile</span>
+<span class="p">{</span>
+  <span class="nt">&#34;name&#34;</span><span class="p">:</span> <span class="s2">&#34;OhMyEnv&#34;</span><span class="p">,</span>
+  <span class="nt">&#34;context&#34;</span><span class="p">:</span> <span class="s2">&#34;..&#34;</span><span class="p">,</span>
+  <span class="nt">&#34;dockerFile&#34;</span><span class="p">:</span> <span class="s2">&#34;./Dockerfile&#34;</span><span class="p">,</span>
+  <span class="nt">&#34;settings&#34;</span><span class="p">:</span> <span class="p">{},</span>
+  <span class="nt">&#34;extensions&#34;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="s2">&#34;golang.go&#34;</span><span class="p">,</span>
+    <span class="s2">&#34;dbaeumer.vscode-eslint&#34;</span><span class="p">,</span>
+    <span class="s2">&#34;esbenp.prettier-vscode&#34;</span><span class="p">,</span>
+    <span class="s2">&#34;rebornix.ruby&#34;</span><span class="p">,</span>
+    <span class="s2">&#34;castwide.solargraph&#34;</span><span class="p">,</span>
+    <span class="s2">&#34;kaiwood.endwise&#34;</span><span class="p">,</span>
+    <span class="s2">&#34;sianglim.slim&#34;</span><span class="p">,</span>
+    <span class="s2">&#34;jnbt.vscode-rufo&#34;</span>
+  <span class="p">],</span>
+  <span class="nt">&#34;runArgs&#34;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="s2">&#34;--privileged&#34;</span><span class="p">,</span>
+    <span class="err">//</span> <span class="err">如果你用的是长城宽带，在遇到网络不通的时候，可以删掉这一行</span>
+    <span class="err">//</span> <span class="s2">&#34;--dns=114.114.114.114&#34;</span><span class="p">,</span>
+    <span class="s2">&#34;--network=network1&#34;</span>
+  <span class="p">],</span>
+  <span class="nt">&#34;containerEnv&#34;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&#34;DISPLAY&#34;</span><span class="p">:</span> <span class="s2">&#34;host.docker.internal:0.0&#34;</span>
+  <span class="p">},</span>
+  <span class="err">//</span> <span class="err">持久化数据</span>
+  <span class="err">//</span> <span class="err">修改之前请看一下上面内容是否已经包含你需要的挂载</span>
+  <span class="err">//</span> <span class="err">重复挂载将导致容器启动失败！</span>
+  <span class="nt">&#34;mounts&#34;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="s2">&#34;source=docker,target=/var/lib/docker,type=volume&#34;</span><span class="p">,</span>
+    <span class="s2">&#34;source=config,target=/root/.config,type=volume&#34;</span><span class="p">,</span>
+    <span class="s2">&#34;source=vscode-extensions,target=/root/.vscode-server/extensions,type=volume&#34;</span><span class="p">,</span>
+    <span class="s2">&#34;source=ssh,target=/root/.ssh,type=volume&#34;</span><span class="p">,</span>
+    <span class="s2">&#34;source=go-bin,target=/root/go/bin,type=volume&#34;</span><span class="p">,</span>
+    <span class="s2">&#34;source=pnpm-bin,target=/root/.local/share/pnpm,type=volume&#34;</span><span class="p">,</span>
+    <span class="s2">&#34;source=gems,target=/usr/local/rvm/gems,type=volume&#34;</span><span class="p">,</span>
+    <span class="s2">&#34;source=repos,target=/root/repos,type=volume&#34;</span>
+  <span class="p">],</span>
+  <span class="err">//</span> <span class="err">Uncomment</span> <span class="err">to</span> <span class="err">connect</span> <span class="err">as</span> <span class="err">a</span> <span class="err">non-root</span> <span class="err">user</span> <span class="err">if</span> <span class="err">you&#39;ve</span> <span class="err">added</span> <span class="err">one.</span> <span class="err">See</span> <span class="err">https://aka.ms/vscode-remote/containers/non-root.</span>
+  <span class="err">//</span> <span class="nt">&#34;shutdownAction&#34;</span><span class="p">:</span> <span class="s2">&#34;none&#34;</span><span class="p">,</span>
+  <span class="nt">&#34;remoteUser&#34;</span><span class="p">:</span> <span class="s2">&#34;root&#34;</span><span class="p">,</span>
+  <span class="err">//</span> <span class="nt">&#34;overrideCommand&#34;</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+  <span class="err">//</span> <span class="nt">&#34;forwardPorts&#34;</span><span class="p">:</span> <span class="p">[],</span>
+  <span class="err">//</span> <span class="nt">&#34;postCreateCommand&#34;</span><span class="p">:</span> <span class="s2">&#34;apt-get update &amp;&amp; apt-get install -y curl&#34;</span><span class="p">,</span>
+  <span class="nt">&#34;postStartCommand&#34;</span><span class="p">:</span> <span class="s2">&#34;nohup bash -c &#39;/usr/sbin/dockerd &amp;&gt; /var/log/dockerd.log &amp;&#39; &amp;&gt; /dev/null&#34;</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<hr />
+
+<h3 id="在-workspace-中新建项目文件夹-a-href-catalogue-a">在<code>workspace</code>中新建项目文件夹 <a href="#catalogue"> ⇧ </a></h3>
+
+<ul>
+<li>最外层新建 <code>node-demos</code> 文件夹</li>
+<li>在<code>VSCode</code>菜单选项中，打开文件夹，默认在<code>/workspaces/</code>中，点击下一级</li>
+<li>会把新建的都映射到<code>windows</code>目录中</li>
+</ul>
+
+<blockquote>
+<p>区分是<code>VSCode</code>直接打开的项目 或 <strong>使用容器打开的项目</strong></p>
+</blockquote>
+
+<ul>
+<li>容器打开的项目名后跟着 <code>[开发容器：EXISTING DOCKERFILE]</code> 或 <code>[DEV CONTAINER：EXISTING DOCKERFILE]</code></li>
+</ul>
+
+<hr />
+
+<h3 id="使用-oh-my-env-模板代码-a-href-catalogue-a">使用 <code>oh-my-env</code> 模板代码 <a href="#catalogue"> ⇧ </a></h3>
+
+<h4 id="下载-oh-my-env-a-href-catalogue-a">下载<code>oh-my-env</code> <a href="#catalogue"> ⇧ </a></h4>
+
+<blockquote>
+<p><a href="https://github.com/FrankFang/oh-my-env-1">oh-my-env github开源代码</a></p>
+</blockquote>
+
+<ul>
+<li><code>git clone git@github.com:FrankFang/oh-my-env-1.git</code>，下载后删除 <code>.git</code>，使用 <code>VSCode</code> 打开</li>
+<li>按 <code>Ctrl + Shift + P</code> 输入 <code>reopen in container</code> 选择该选项后进入自动构建 <code>Linux</code> 镜像，等待</li>
+<li>可以关闭 第一个终端 &lsquo;开发者容器&rsquo;，也可以开着看日志</li>
+<li>点击 <code>+</code> 打开新终端，进入已经配置好的 <code>zsh</code> 终端环境</li>
+<li>在终端输入 <code>pwd</code> 查看当前目录 <code>/workspaces/oh-my-env-2</code>，说明已经进入了一个 <code>Linux</code> 环境</li>
+<li>在终端输入 <code>uname -a</code> 查看当前 <code>Linux</code> 环境版本信息</li>
+
+<li><p>在终端输入 <code>echo $0</code> 查看 <code>Shell</code> 信息 <code>/bin/zsh</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-zsh" data-lang="zsh"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-zsh" data-lang="zsh"><span class="nb">pwd</span>
+<span class="c1"># 当前系统信息</span>
+uname -a
+<span class="c1"># 读取当前用户名</span>
+whoami
+<span class="nb">echo</span> <span class="nv">$0</span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+
+<hr />
+
+<h4 id="oh-my-env-检查已安装软件版本-a-href-catalogue-a"><code>oh-my-env</code> 检查已安装软件版本 <a href="#catalogue"> ⇧ </a></h4>
+
+<blockquote>
+<p>在终端输入</p>
+</blockquote>
+
+<ul>
+<li><code>rvm --version</code> 查看为 <code>rvm 1.29.12</code></li>
+<li>激活 <code>ruby</code> 输入命令： <code>rvm use 3</code>，可以看到 <code>Using /usr/local/rvm/gems/ruby-3.0.0</code></li>
+<li><code>ruby --version</code> 版本为 <code>ruby 3.0.0p0</code></li>
+<li><code>bundle --version</code> 版本为 <code>Bundler version 2.2.3</code></li>
+<li><code>irb --version</code> 版本为 <code>irb 1.3.0</code></li>
+<li><code>gem --version</code> 版本为 <code>3.2.3</code></li>
+<li><code>VSCode</code> 版本 <code>code --version</code></li>
+<li><code>git --version</code></li>
+</ul>
+
+<blockquote>
+<p><code>node</code> 相关</p>
+</blockquote>
+
+<ul>
+<li><code>nvm --version</code> 查看为 <code>0.39.1</code></li>
+<li>安装 <code>node@20</code>： <code>nvm install 20.19.1</code>，使用 <code>nvm use 20.19.1</code></li>
+<li><code>npm --version</code></li>
+<li><code>yarn --version</code></li>
+<li><code>pnpm --version</code></li>
+</ul>
+
+<h4 id="重新打开-oh-my-env-环境-a-href-catalogue-a">重新打开 <code>oh-my-env</code> 环境 <a href="#catalogue"> ⇧ </a></h4>
+
+<blockquote>
+<p>可以关闭后，再打开，注意查看最近项目 <code>xxx [开发容器]</code></p>
+</blockquote>
+
+<ul>
+<li>可以打开容器项目文件，<code>reopen</code> 容器 <code>oh-my-env</code></li>
+<li>也可以打开新窗口，在最近列表中找到带有 <code>xxx [开发容器]</code> 的项目打开</li>
+</ul>
+
+<blockquote>
+<p>查看 <code>oh-my-env</code> 的 <code>.devcontainer/Dockerfile</code></p>
+</blockquote>
+
+<ul>
+<li>山竹记账的镜像 <code>FROM frankfang128/oh-my-docker:mangosteen</code></li>
+</ul>
+
+<blockquote>
+<p>新版 <code>.devcontainer/devcontainer.json</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-json" data-lang="json"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-json" data-lang="json"><span class="p">{</span>
+  <span class="nt">&#34;name&#34;</span><span class="p">:</span> <span class="s2">&#34;OhMyEnv&#34;</span><span class="p">,</span>
+  <span class="nt">&#34;context&#34;</span><span class="p">:</span> <span class="s2">&#34;..&#34;</span><span class="p">,</span>
+  <span class="nt">&#34;dockerFile&#34;</span><span class="p">:</span> <span class="s2">&#34;./Dockerfile&#34;</span><span class="p">,</span>
+  <span class="nt">&#34;customizations&#34;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&#34;vscode&#34;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&#34;settings&#34;</span><span class="p">:</span> <span class="p">{},</span>
+      <span class="nt">&#34;extensions&#34;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&#34;streetsidesoftware.code-spell-checker&#34;</span><span class="p">,</span>
+        <span class="s2">&#34;golang.go&#34;</span><span class="p">,</span>
+        <span class="s2">&#34;Shopify.ruby-lsp&#34;</span><span class="p">,</span>
+        <span class="s2">&#34;testdouble.vscode-standard-ruby&#34;</span><span class="p">,</span>
+        <span class="s2">&#34;sorbet.sorbet-vscode-extension&#34;</span><span class="p">,</span>
+        <span class="s2">&#34;dbaeumer.vscode-eslint&#34;</span><span class="p">,</span>
+        <span class="s2">&#34;esbenp.prettier-vscode&#34;</span><span class="p">,</span>
+        <span class="s2">&#34;castwide.solargraph&#34;</span><span class="p">,</span>
+        <span class="s2">&#34;kaiwood.endwise&#34;</span><span class="p">,</span>
+        <span class="s2">&#34;sianglim.slim&#34;</span><span class="p">,</span>
+        <span class="s2">&#34;jnbt.vscode-rufo&#34;</span><span class="p">,</span>
+        <span class="s2">&#34;Vue.volar&#34;</span><span class="p">,</span>
+        <span class="s2">&#34;mtxr.sqltools&#34;</span>
+      <span class="p">]</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="nt">&#34;runArgs&#34;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="s2">&#34;--privileged&#34;</span><span class="p">,</span>
+    <span class="s2">&#34;--network=network1&#34;</span>
+  <span class="p">],</span>
+  <span class="nt">&#34;containerEnv&#34;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&#34;DISPLAY&#34;</span><span class="p">:</span> <span class="s2">&#34;host.docker.internal:0.0&#34;</span>
+  <span class="p">},</span>
+  <span class="nt">&#34;mounts&#34;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="s2">&#34;source=docker,target=/var/lib/docker,type=volume&#34;</span><span class="p">,</span>
+    <span class="s2">&#34;source=config,target=/root/.config,type=volume&#34;</span><span class="p">,</span>
+    <span class="s2">&#34;source=vscode-extensions,target=/root/.vscode-server/extensions,type=volume&#34;</span><span class="p">,</span>
+    <span class="s2">&#34;source=ssh,target=/root/.ssh,type=volume&#34;</span><span class="p">,</span>
+    <span class="s2">&#34;source=go-bin,target=/root/go/bin,type=volume&#34;</span><span class="p">,</span>
+    <span class="s2">&#34;source=pnpm-bin,target=/root/.local/share/pnpm,type=volume&#34;</span><span class="p">,</span>
+    <span class="s2">&#34;source=gems,target=/usr/local/rvm/gems,type=volume&#34;</span><span class="p">,</span>
+    <span class="s2">&#34;source=repos,target=/root/repos,type=volume&#34;</span>
+  <span class="p">],</span>
+  <span class="nt">&#34;remoteUser&#34;</span><span class="p">:</span> <span class="s2">&#34;root&#34;</span><span class="p">,</span>
+  <span class="nt">&#34;postStartCommand&#34;</span><span class="p">:</span> <span class="s2">&#34;nohup bash -c &#39;/usr/sbin/dockerd &amp;&gt; /var/log/dockerd.log &amp;&#39; &amp;&gt; /dev/null&#34;</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<hr />
+
+<blockquote>
+<p>小结</p>
+</blockquote>
+
+<ul>
+<li>各个操作系统的基本要求
+
+<ul>
+<li><code>Win11</code> 开启 <code>WSL</code></li>
+<li><code>macOS</code> 版本 <code>10.15+</code>，不可安装 <code>VirtualBox</code></li>
+<li><code>Linux</code> 内核 <code>3.10+</code></li>
+</ul></li>
+<li>给 <code>Docker</code> 加速
+
+<ul>
+<li><a href="https://www.runoob.com/docker/docker-mirror-acceleration.html">Docker 镜像加速</a></li>
+</ul></li>
+<li>安装 <code>VSCode</code>
+
+<ul>
+<li>安装 <code>Dev Containers</code> 插件</li>
+</ul></li>
+<li>安装 <code>Docker DeskTop</code> 客户端</li>
+<li>直接使用模板代码 <a href="https://github.com/FrankFang/oh-my-env-1">oh-my-env</a>
+
+<ul>
+<li>下载后删除 <code>.git</code> 使用</li>
+<li><code>Docker</code> 安装成功后，请在命令行运行 <code>docker network create network1</code> 以防报错</li>
+<li>输入 <code>reopen in container</code> 回车</li>
+</ul></li>
+<li>测试命令是否可用
+
+<ul>
+<li>新建终端，输入版本检查命令</li>
+<li>确保 <code>ruby</code>、<code>bundle</code>、<code>irb</code>、<code>node</code>、<code>npm</code> 等命令可用</li>
+</ul></li>
+</ul>
+
+<hr />
+
+<h2 id="4-oh-my-env-环境说明-a-href-catalogue-a">4. <code>oh-my-env</code> 环境说明 <a href="#catalogue"> ⇧ </a></h2>
+
+<h3 id="oh-my-env-工作空间-a-href-catalogue-a"><code>oh-my-env</code> 工作空间 <a href="#catalogue"> ⇧ </a></h3>
+
+<ul>
+<li><code>oh-my-env</code> 会自动映射为 <code>workspaces/oh-my-env</code>
+
+<ul>
+<li>该目录里的文件是本地系统和容器 <strong>内外共享</strong> 的</li>
+<li><code>ntfs</code> 系统格式，性能一般</li>
+<li><code>temp</code> 目录可作为文件中转，实时更新，有时需要手动点击刷新</li>
+</ul></li>
+<li>提前另外准备好了 <code>~/repos</code> 目录，该目录是 <strong>容器专属</strong> 的，性能较好
+
+<ul>
+<li>默认会在 <code>~/repos</code> 中工作，存放各个项目代码</li>
+<li>需要共享时才会用到 <code>workspaces/oh-my-env/temp</code> 目录</li>
+<li><code>cd ~/repos</code> 或者 <code>cd root/repos</code></li>
+<li>在 <code>docker deskop</code> 的数据卷中可以查看</li>
+</ul></li>
+</ul>
+
+<hr />
+
+<h3 id="oh-my-env-持久化-a-href-catalogue-a"><code>oh-my-env</code> 持久化 <a href="#catalogue"> ⇧ </a></h3>
+
+<ul>
+<li>在 <code>Ctrl + Shift + P</code> 弹出框内输入 <code>rebuild container</code> 相当于 <strong>重装Linux系统</strong></li>
+<li>重新构建镜像后，未持久化的目录都会被删除</li>
+<li>只有写在 <code>mounts</code> 配置中的目录和 <code>oh-my-env</code> 目录（容器外系统可访问）会被保留
+
+<ul>
+<li>会被持久化到数据卷中，不会随容器重启或重建而消失</li>
+</ul></li>
+</ul>
+
+<blockquote>
+<p><code>.devcontainer/devcontainer.json</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-json" data-lang="json"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-json" data-lang="json"><span class="p">{</span>
+  <span class="nt">&#34;//...&#34;</span><span class="p">:</span> <span class="s2">&#34;&#34;</span><span class="p">,</span>
+  <span class="nt">&#34;mounts&#34;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="s2">&#34;source=docker,target=/var/lib/docker,type=volume&#34;</span><span class="p">,</span>
+    <span class="s2">&#34;source=config,target=/root/.config,type=volume&#34;</span><span class="p">,</span>
+    <span class="s2">&#34;source=vscode-extensions,target=/root/.vscode-server/extensions,type=volume&#34;</span><span class="p">,</span>
+    <span class="s2">&#34;source=ssh,target=/root/.ssh,type=volume&#34;</span><span class="p">,</span>
+    <span class="s2">&#34;source=go-bin,target=/root/go/bin,type=volume&#34;</span><span class="p">,</span>
+    <span class="s2">&#34;source=pnpm-bin,target=/root/.local/share/pnpm,type=volume&#34;</span><span class="p">,</span>
+    <span class="s2">&#34;source=gems,target=/usr/local/rvm/gems,type=volume&#34;</span><span class="p">,</span>
+    <span class="s2">&#34;source=repos,target=/root/repos,type=volume&#34;</span>
+  <span class="p">],</span>
+  <span class="nt">&#34;//...&#34;</span><span class="p">:</span> <span class="s2">&#34;&#34;</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>需要自定义持久化的，也可以添加到 <code>mounts</code> 中</li>
+<li>修改之前请看一下上面内容是否已经包含你需要的挂载</li>
+<li>重复挂载将导致容器启动失败</li>
+</ul>
+
+<blockquote>
+<p>主要使用的持久化的工作目录</p>
+</blockquote>
+
+<ul>
+<li><code>~/repos</code> 供容器内部系统使用</li>
+<li><code>/workspaces/oh-my-env2</code> 供容器内外系统中转数据使用</li>
+</ul>
+
+<hr />
+
+<h3 id="oh-my-env-环境功能-a-href-catalogue-a"><code>oh-my-env</code> 环境功能 <a href="#catalogue"> ⇧ </a></h3>
+
+<blockquote>
+<p>现有功能</p>
+</blockquote>
+
+<ul>
+<li><code>archlinux</code></li>
+<li><code>zsh</code> 已配置终端，相当于 <code>bash</code></li>
+<li><code>fzf</code> 索引当前目录下所有文件，可模糊查找，只可以找到文件目录路径，该命令无法打开
+
+<ul>
+<li>使用自定义脚本，操作打开目录或者文件 <code>vi ~/.bashrc</code></li>
+<li>命令 <code>fd</code> 打开文件所在的目录</li>
+<li>命令 <code>f</code> 使用默认的 <code>editor</code> 打开文件</li>
+<li>命令 <code>j</code> 会用 <code>fzf</code> 打开所有打开过的目录，可快速查找，回车可进入该目录</li>
+<li>命令 <code>jj</code> 反悔重新查找</li>
+</ul></li>
+<li><code>rvm + ruby + gem + bundle</code></li>
+<li><code>nvm + node + pnpm</code></li>
+<li><code>go</code></li>
+<li><code>git</code></li>
+<li><code>vscode</code></li>
+<li>各种国内加速</li>
+<li>其他多余的已删除
+
+<ul>
+<li><code>neovim</code></li>
+</ul></li>
+<li><del><code>docker in docker</code>(<code>dockerd</code>)</del>
+
+<ul>
+<li>使用命令 <code>dockerd</code> 来启动</li>
+<li>新打开一个终端，输入 <code>docker ps</code> 查看运行的镜像</li>
+<li>可运行 <code>docker run hello-world</code> 成功显示 <code>Hello from Docker!</code></li>
+<li><code>chezmoi</code> 可管理所有配置</li>
+</ul></li>
+</ul>
+
+<blockquote>
+<p>如何自定义</p>
+</blockquote>
+
+<ul>
+<li>打开 <code>.devcontainer/Dockerfile</code></li>
+<li>使用 <code>RUN</code> 命令来添加想要的依赖，方便扩展，例如：
+
+<ul>
+<li><code>RUN yes | pacman -S fish</code></li>
+<li><code>RUN npm i -g http-server</code></li>
+<li>然后 <code>rebuild container</code> 即可</li>
+</ul></li>
+<li>更多功能可查看 <a href="https://github.com/FrankFang/oh-my-docker">oh-my-docker</a>
+
+<ul>
+<li><a href="https://github.com/FrankFang/oh-my-env-1">oh-my-env-1</a></li>
+<li><a href="https://github.com/FrankFang/oh-my-docker-m1">oh-my-docker-m1</a></li>
+<li>新 <a href="https://github.com/FrankFang/oh-my-rust-env">oh-my-rust-env</a></li>
+<li>旧 <a href="https://github.com/FrankFang/oh-my-docker-for-rust">oh-my-docker-for-rust</a></li>
+</ul></li>
+</ul>
+
+<blockquote>
+<p>如何让容器与宿主机共享 ssh 认证信息</p>
+</blockquote>
+
+<ul>
+<li>参考微软官方的教程：<a href="https://code.visualstudio.com/remote/advancedcontainers/sharing-git-credentials">https://code.visualstudio.com/remote/advancedcontainers/sharing-git-credentials</a></li>
+</ul>
+
+<hr />
+
+<h2 id="5-新建项目示例-a-href-catalogue-a">5.新建项目示例 <a href="#catalogue"> ⇧ </a></h2>
+
+<ul>
+<li>运行容器后，<code>cd ~/repos</code> 或 <code>cd /root/repos</code> 或使用 <code>j</code> 命令查找</li>
+<li>运行 <code>code .</code> 在当前目录下开发</li>
+<li>创建新目录 <code>mkdir xxx</code>，之后 <code>code xxx</code></li>
+<li>删除项目目录，先<code>cd ..</code> 到上一级，再<code>rm -rf xxx</code>删除，会自动关闭对应 <code>Linux</code> 目录</li>
+</ul>
+
+<blockquote>
+<p>步骤小结</p>
+</blockquote>
+
+<ul>
+<li>创建目录
+
+<ul>
+<li><code>mkdir ~/repos/hello</code></li>
+<li><code>code ~/repos/hello</code></li>
+</ul></li>
+<li>切换窗口
+
+<ul>
+<li>关闭 <code>oh-my-env</code> 窗口</li>
+<li>使用 <code>hello</code> 窗口</li>
+</ul></li>
+<li>原则
+
+<ul>
+<li>每次只打开一个目录</li>
+<li>不要一次打开很多目录，会卡</li>
+</ul></li>
+</ul>
+
+<hr />
+
+<h2 id="6-vscode-端口转发-a-href-catalogue-a">6.<code>VSCode</code> 端口转发 <a href="#catalogue"> ⇧ </a></h2>
+
+<ul>
+<li>由于开启了 windows 中的 Linux 子系统，实现自动映射端口</li>
+</ul>
+
+<blockquote>
+<p>测试 在容器项目目录中创建 <code>server.js</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="kr">const</span> <span class="nx">http</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;http&#39;</span><span class="p">)</span>
+<span class="kr">const</span> <span class="nx">handler</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="s1">&#39;Hello, World!&#39;</span><span class="p">)</span>
+<span class="p">}</span>
+ <span class="kr">const</span> <span class="nx">server</span> <span class="o">=</span> <span class="nx">http</span><span class="p">.</span><span class="nx">createServer</span><span class="p">(</span><span class="nx">handler</span><span class="p">)</span>
+<span class="nx">server</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="mi">3000</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;请访问 http:127.0.0.1:3000&#39;</span><span class="p">)</span>
+<span class="p">})</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<blockquote>
+<p>运行 <code>node server.js</code></p>
+</blockquote>
+
+<ul>
+<li>在终端点击跳转网页，可以看到 <code>Hello, World!</code></li>
+<li><code>VSCode</code> 提示端口窗口，如果网页中没有显示，则可以在端口删除原来的后重新添加 <code>3000</code> 端口，再刷新</li>
+</ul>
+
+<blockquote>
+<p>说明</p>
+</blockquote>
+
+<ul>
+<li>实际上需要监听的是 <code>Linux</code> 的<code>3000</code>端口，<code>windows</code> 本地并没有</li>
+<li><code>VSCode</code> 检测到<code>docker</code>中<code>Linux</code>的<code>3000</code>端口，自动在 <code>windows</code> 中做一个映射</li>
+</ul>
+
+<h3 id="docker-容器开启-github443-端口-a-href-catalogue-a">docker 容器开启 <code>github443</code> 端口 <a href="#catalogue"> ⇧ </a></h3>
+
+<ul>
+<li>打开 <code>Ubantu</code> 命令行</li>
+
+<li><p>运行以下命令行</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">sudo apt-get update
+sudo apt-get install -y iputils-ping
+sudo sudo apt install net-tools</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+
+<hr />
+
+<h2 id="7-高性能文件-docker-volume-a-href-catalogue-a">7.高性能文件： <code>docker volume</code> <a href="#catalogue"> ⇧ </a></h2>
+
+<blockquote>
+<p>在容器项目中运行 <code>mkdir aaa;touch aaa/frank.txt</code></p>
+</blockquote>
+
+<ul>
+<li>发现需要手动刷新 <code>VSCode</code> 目录才能看到添加的文件/文件夹</li>
+<li><code>docker</code> 没有立即检测到文件变化</li>
+</ul>
+
+<blockquote>
+<p>加速方法</p>
+</blockquote>
+
+<ul>
+<li>在<code>docker desktop &gt; Volumes</code>中，新建一个 <code>Docker volume</code>，自定义命名</li>
+<li>相当于在命令行运行 <code>docker volume create xxx</code></li>
+
+<li><p>在<code>my-projects/.devcontainer/devcontainer.json</code> 中改写 <code>mounts</code> 为</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-json" data-lang="json"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-json" data-lang="json"><span class="p">{</span>
+<span class="nt">&#34;//xxx&#34;</span><span class="p">:</span> <span class="s2">&#34;...&#34;</span><span class="p">,</span>
+<span class="nt">&#34;mounts&#34;</span><span class="p">:</span> <span class="p">[</span>
+<span class="s2">&#34;source=刚才创建的volume的名字,target=${containerWorkspaceFolder}/high_speed_files,type=volume&#34;</span>
+<span class="p">],</span>
+<span class="nt">&#34;//...&#34;</span><span class="p">:</span> <span class="s2">&#34;...&#34;</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div></li>
+
+<li><p>在 VSCode 中运行 <code>rebuild Container</code></p></li>
+
+<li><p>这样一来 <code>high_speed_files</code> 目录里的文件的性能就非常高了，名称可以任意</p></li>
+
+<li><p>相当于专门给<code>docker</code>使用的硬盘，提升文件性能，但 <code>windows</code> 中不能直接访问该文件/文件夹，需要导出 <code>volume</code></p></li>
+
+<li><p>不过要记得经常把 volume 中的文件上传到 GitHub，不然你哪天不小心把 volume 删了，代码就彻底没了</p></li>
+</ul>
+
+<blockquote>
+<p>参考</p>
+</blockquote>
+
+<ul>
+<li><a href="https://github.com/FrankFang/oh-my-docker">github.com/FrankFang/oh-my-docker</a></li>
+</ul>
+
+<hr />
+
+<h2 id="8-连接任意数据库-a-href-catalogue-a">8.连接任意数据库 <a href="#catalogue"> ⇧ </a></h2>
+
+<blockquote>
+<p>连接 <code>MYSQL</code> 步骤</p>
+</blockquote>
+
+<ol>
+<li>创建 <code>network1</code></li>
+<li>启动 <code>mysql1 server</code> 容器服务，连入 <code>network1</code></li>
+<li>让 <code>oh-my-docker</code> 连入 <code>network1</code></li>
+<li>预装 <code>mysql</code> 客户端镜像</li>
+<li>重启重新构建容器 <code>rebuild</code></li>
+<li>验证连接 <code>mysql -u root -h mysql1 -p</code></li>
+</ol>
+
+<hr />
+
+<h3 id="创建-network1-a-href-catalogue-a">创建 <code>network1</code> <a href="#catalogue"> ⇧ </a></h3>
+
+<ul>
+<li>打开 <code>windows</code> 终端（非容器内），运行命令 <code>docker network create network1</code></li>
+<li>相当于组建了一个局域网 wifi，需要将mysql服务器和 docker连入该wifi</li>
+<li>如果报错，就换一个网络名称 <code>network2</code></li>
+</ul>
+
+<hr />
+
+<h3 id="启动-mysql-镜像-得到数据库服务的容器-a-href-catalogue-a">启动 mysql 镜像，得到数据库服务的容器 <a href="#catalogue"> ⇧ </a></h3>
+
+<ul>
+<li>搜索 <a href="https://www.bing.com/search?q=docker+hub+mysql&amp;cvid=f25819e45c88473bb93ee7001b335ea9&amp;gs_lcrp=EgZjaHJvbWUqBAgAEAAyBAgAEAAyBAgBEAAyBAgCEAAyBAgDEAAyBAgEEAAyBAgFEAAyBAgGEAAyBAgHEAAyBAgIEADSAQg2NjMyajBqMagCALACAA&amp;FORM=ANAB01&amp;PC=U531&amp;mkt=zh-CN">docker hub mysql</a>
+
+<ul>
+<li><a href="https://hub.docker.com/_/mysql/">mysql docker</a></li>
+<li><code>windows</code>终端中运行 <code>docker run --name mysql1 -e MYSQL_ROOT_PASSWORD=123456 --network=network1 -d mysql:5.7.35</code></li>
+<li>说明：<code>docker run --name 数据库名称 -e MYSQL_ROOT_PASSWORD=数据库密码 --network=需要连入的网络 -d mysql:数据库版本号</code></li>
+<li><code>-d</code> 表示 <code>deamon</code></li>
+</ul></li>
+</ul>
+
+<hr />
+
+<h3 id="让-oh-my-docker-连入-network1-a-href-catalogue-a">让 <code>oh-my-docker</code> 连入 <code>network1</code> <a href="#catalogue"> ⇧ </a></h3>
+
+<ul>
+<li><p>在 <code>.devcontainer/devcontainer.json</code> 配置中，确保写入以下配置</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-json" data-lang="json"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-json" data-lang="json"><span class="p">{</span>
+<span class="nt">&#34;//xxx&#34;</span><span class="p">:</span> <span class="s2">&#34;...&#34;</span><span class="p">,</span>
+<span class="nt">&#34;runArgs&#34;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&#34;--network=network1&#34;</span><span class="p">],</span>
+<span class="nt">&#34;//...&#34;</span><span class="p">:</span> <span class="s2">&#34;...&#34;</span><span class="p">,</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div></li>
+
+<li><p>写完保存后 <code>Ctrl + Shift + p</code> 选择 <code>rebuild</code></p></li>
+</ul>
+
+<hr />
+
+<h3 id="预装-mysql-客户端软件-a-href-catalogue-a">预装 <code>mysql</code> 客户端软件 <a href="#catalogue"> ⇧ </a></h3>
+
+<blockquote>
+<p>在 <code>Dockerfile</code> 中写入</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-Dockerfile" data-lang="Dockerfile"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Dockerfile" data-lang="Dockerfile"><span class="k">FROM</span><span class="s"> frankfang128/oh-my-docker:latest</span><span class="err">
+</span><span class="err">
+</span><span class="err"></span><span class="k">RUN</span> apk add mysql-client</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>写完保存后 <code>Ctrl + Shift + p</code> 选择 <code>rebuild</code></li>
+</ul>
+
+<hr />
+
+<h3 id="验证链接-a-href-catalogue-a">验证链接 <a href="#catalogue"> ⇧ </a></h3>
+
+<ul>
+<li><code>mysql -u root -h mysql1 -p</code></li>
+<li>会提示输入密码</li>
+</ul>
+
+<blockquote>
+<p>关机重启</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh"><span class="c1"># 显示所有容器</span>
+docker ps -a
+
+<span class="c1"># 启动服务</span>
+docker start mysql1
+
+<span class="c1"># 关机</span>
+docker stop mysql1
+
+<span class="c1"># 删除</span>
+docker rm mysql1</code></pre></td></tr></table>
+</div>
+</div>
+<hr />
+
+<h2 id="9-常用的-docker-命令一览表-a-href-catalogue-a">9.常用的 docker 命令一览表 <a href="#catalogue"> ⇧ </a></h2>
+
+<ul>
+<li><code>docker ps</code> 查看正在运行的容器</li>
+<li><code>docker ps -a</code> 查看运行过的容器</li>
+<li><code>docker pull ubuntu:20.04</code> 下载 <code>ubuntu</code> 镜像</li>
+<li><code>docker pull myregistry.local:5000/testing/test-image:0.1</code> 下载指定域名下的镜像</li>
+<li><code>docker run --name test -dit alpine</code> 由镜像得到容器（容器在后台运行），并把容器取名为 test</li>
+<li><code>docker run alpine sh</code> 由镜像得到容器，并运行 sh 命令（容器在当前终端运行）</li>
+<li><code>docker run -p 9090:8080 -dit alpine</code> 端口映射</li>
+<li><code>docker run -e ENV1=foo -dit alpine</code> 设置环境变量</li>
+<li><code>docker run --network=xxx -dit alpine</code> 设置网络</li>
+<li><code>docker stop container_id</code> 或 <code>docker kill container_id</code> 停止容器（二者区别见这里）</li>
+<li><code>docker start container_id</code> 开始运行容器</li>
+<li><code>docker rm container_id</code> 删除已停止运行的容器</li>
+<li><code>docker rm -f container_id</code> 强制删除容器，不管有没有在运行</li>
+<li><code>docker rm $(docker ps --filter status=exited -q)</code> 删除所有已停止运行的容器</li>
+<li><code>docker rmi image_id</code> 删除镜像</li>
+<li><code>docker system prune</code> 删除占用硬盘的垃圾对象，包括没用的 <code>container</code>、<code>images</code>、<code>network</code></li>
+<li><code>docker image prune -a</code> 删除所有没被用到的镜像</li>
+</ul>
+
+<hr />
+
+<h2 id="10-配置-git-github-创建-ssh-密钥-a-href-catalogue-a">10.配置<code>git/github</code>，创建<code>.ssh</code> 密钥 <a href="#catalogue"> ⇧ </a></h2>
+
+<ul>
+<li><p>已经预装，查看版本 <code>git --version</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-zsh" data-lang="zsh"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-zsh" data-lang="zsh"><span class="nb">cd</span> ~
+git config --global user.name xmasuhai
+git config --global user.email xmasuhai@163.com
+git config --global push.default simple
+git config --global core.quotepath <span class="nb">false</span>
+git config --global core.editor <span class="s2">&#34;code --wait&#34;</span>
+git config --global core.autocrlf input
+
+<span class="c1"># 生成ssh key</span>
+ssh-keygen -t rsa -b <span class="m">4096</span> -C <span class="s2">&#34;xmasuhai@163.com&#34;</span>
+<span class="c1"># 查看并复制生成的密钥，填写到 GitHub SSH key</span>
+cat ~/.ssh/id_rsa.pub
+<span class="c1"># 测试是否配置</span>
+ssh -T git@github.com
+<span class="c1"># 备份</span>
+<span class="nb">cd</span> ~/.ssh
+ll</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+
+<blockquote>
+<p>确保 <code>SSH agent service on Windows</code> 服务正在运行</p>
+</blockquote>
+
+<ul>
+<li>在 docker 容器命令行zsh中 重新配置 .ssh 后，命令行提示 <code>WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!</code></li>
+<li>按照网络上提示删除提示信息中，对应的行数后，vscode 又警告无法连接到 local 主机 (\.\pipe\openssh-ssh-agent) 上的 ssh-agent。请确保服务正在运行。</li>
+</ul>
+
+<p><img src="https://share.note.youdao.com/yws/api/personal/file/WEB07b29c81ea85b64df4994d665d843e27?method=download&amp;shareKey=b6b7d314c71d9673e6c9f4ef9fa815c3" alt="WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!" /></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">ssh-keyscan github.com
+
+github.com:22 SSH-2.0-babeld-dd067d10
+github.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl
+<span class="c1"># github.com:22 SSH-2.0-babeld-dd067d10</span>
+github.com ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCj7ndNxQowgcQnjshcLrqPEiiphnt+VTTvDP6mHBL9j1aNUkY4Ue1gvwnGLVlOhGeYrnZaMgRK6+PKCUXaDbC7qtbW8gIkhL7aGCsOr/C56SJMy/BCZfxd1nWzAOxSDPgVsmerOBYfNqltV9/hWCqBywINIR+5dIg6JTJ72pcEpEjcYgXkE2YEFXV1JHnsKgbLWNlhScqb2UmyRkQyytRLtL+38TGxkxCflmO+5Z8CSSNY7GidjMIZ7Q4zMjA2n1nGrlTDkzwDCsw+wqFPGQA179cnfGWOWRVruj16z6XyvxvjJwbz0wQZ75XK5tKSb7FNyeIEs4TT4jk+S4dhPeAUC5y+bDYirYgM4GC7uEnztnZyaVWQ7B381AK4Qdrwt51ZqExKbQpTUNn+EjqoTwvqNj4kqx5QUCI0ThS/YkOxJCXmPUWZbhjpCg56i+2aB6CmK2JGhn57K5mj0MNdBXA4/WnwH6XoPWJzK5Nyu2zB3nAZp+S5hpQs+p1vN1/wsjk<span class="o">=</span>
+<span class="c1"># github.com:22 SSH-2.0-babeld-dd067d10</span>
+github.com ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBEmKSENjQEezOmxkZMy7opKgwFB9nkt5YRrYMjNuG5N87uRgg6CLrbo5wAdT/y6v0mKV0U2w0WZ2YB/++Tpockg<span class="o">=</span></code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>运行并查看 <code>ssh-keyscan github.com</code></li>
+</ul>
+
+<blockquote>
+<p>将新生成的公钥写入 <code>known_hosts</code>，请运行以下命令</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">ssh-keyscan github.com &gt;&gt; /root/.ssh/known_hosts</code></pre></td></tr></table>
+</div>
+</div>
+<blockquote>
+<p>英语报错文字</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">Could not connect to ssh-agent on local host (\\.\pipe\openssh-ssh-agent). Make sure the service is running.</pre></td></tr></table>
+</div>
+</div>
+<blockquote>
+<p>原因</p>
+</blockquote>
+
+<ul>
+<li>SSH agent service on Windows is not running</li>
+<li>Windows upgrade had for some reason disabled the ssh-agent service</li>
+</ul>
+
+<blockquote>
+<p>解决步骤</p>
+</blockquote>
+
+<ul>
+<li><p>管理员打开 <code>powershell</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-ps" data-lang="ps"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-ps" data-lang="ps"><span class="nf">PS</span> <span class="nf">C:\Developer</span><span class="p">&gt;</span> <span class="nf">ssh-agent</span>
+<span class="nf">unable</span> <span class="nf">to</span> <span class="nf">start</span> <span class="nf">ssh-agent</span> <span class="nf">service,</span> <span class="nf">error</span> <span class="nf">:1058</span>
+
+<span class="nf">PS</span> <span class="nf">C:\Developer</span><span class="p">&gt;</span> <span class="nf">Get-Service</span> <span class="nf">ssh-agent</span>
+<span class="nf">Status</span>   <span class="nf">Name</span>               <span class="nf">DisplayName</span>
+<span class="nf">------</span>   <span class="nf">----</span>               <span class="nf">-----------</span>
+<span class="nf">Stopped</span>  <span class="nf">ssh-agent</span>          <span class="nf">OpenSSH</span> <span class="nf">Authentication</span> <span class="nf">Agent</span>
+
+<span class="nf">PS</span> <span class="nf">C:\Developer</span><span class="p">&gt;</span> <span class="nf">Get-Service</span> <span class="nf">ssh-agent</span> <span class="nf">|</span> <span class="nf">Select</span> <span class="nf">StartType</span>
+
+<span class="nf">StartType</span>
+<span class="nf">---------</span>
+<span class="err">Disabled</span></code></pre></td></tr></table>
+</div>
+</div></li>
+
+<li><p>依次输入命令</p>
+
+<ul>
+<li><code>Get-Service -Name ssh-agent | Set-Service -StartupType Manual</code></li>
+<li><code>ssh-agent</code></li>
+<li><code>Get-Service ssh-agent</code></li>
+</ul></li>
+
+<li><p>看到正在运行</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-ps" data-lang="ps"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-ps" data-lang="ps"><span class="nf">Status</span>   <span class="nf">Name</span>               <span class="nf">DisplayName</span>
+<span class="nf">------</span>   <span class="nf">----</span>               <span class="nf">-----------</span>
+<span class="nf">Running</span>  <span class="nf">ssh-agent</span>          <span class="nf">OpenSSH</span> <span class="nf">Authentication</span> <span class="err">Agent</span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+
+<blockquote>
+<p>参考</p>
+</blockquote>
+
+<ul>
+<li><a href="https://github.com/microsoft/vscode-remote-release/issues/3597">openssh agent not working inside devcontainer with Win10 2004 and WSL2</a></li>
+<li><a href="https://stackoverflow.com/questions/52113738/starting-ssh-agent-on-windows-10-fails-unable-to-start-ssh-agent-service-erro">Starting ssh-agent on Windows 10 fails: &ldquo;unable to start ssh-agent service, error :1058&rdquo;</a></li>
+<li><a href="https://github.com/microsoft/vscode-remote-release/issues/5184">building remote-container fails</a></li>
+<li><a href="https://builtin.com/software-engineering-perspectives/git-remote-host-identification-has-changed">How to Fix the GitHub Error ‘Remote Host Identification Has Changed’</a></li>
+<li><a href="https://code.visualstudio.com/remote/advancedcontainers/sharing-git-credentials#_using-ssh-keys">Using SSH keys</a></li>
+</ul>
+
+<blockquote>
+<p>完整过程</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">PS C:\Windows\system32&gt;  Get-Service ssh-agent
+
+Status   Name               DisplayName
+------   ----               -----------
+Stopped  ssh-agent          OpenSSH Authentication Agent
+
+
+PS C:\Windows\system32&gt; Get-Service ssh-agent | Select StartType
+
+StartType
+---------
+ Disabled
+
+
+PS C:\Windows\system32&gt; Get-Service -Name ssh-agent | Set-Service -StartupType Manual
+PS C:\Windows\system32&gt; ssh-agent
+PS C:\Windows\system32&gt; Get-Service ssh-agent
+
+Status   Name               DisplayName
+------   ----               -----------
+Running  ssh-agent          OpenSSH Authentication Agent
+
+
+PS C:\Windows\system32&gt; ssh-add -l
+The agent has no identities.
+PS C:\Windows\system32&gt; ssh-agent
+PS C:\Windows\system32&gt;</pre></td></tr></table>
+</div>
+</div>
+<blockquote>
+<p>避免每次需要重启服务，需要设置 <code>ssh-agent</code> 启动方式</p>
+</blockquote>
+
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB075e971f18f8ebf2c2f32ea180830283?method=download&amp;shareKey=8f760baa1b42d2026587d9a9853d0f6d" alt="ssh-agent" /></p>
+
+<hr />
+
+<h2 id="oh-my-env-工作流-a-href-catalogue-a"><code>oh-my-env</code> 工作流 <a href="#catalogue"> ⇧ </a></h2>
+
+<h3 id="初始工作配置各种文件-拷贝备份配置-a-href-catalogue-a">初始工作配置各种文件：拷贝备份配置 <a href="#catalogue"> ⇧ </a></h3>
+
+<ul>
+<li>拷贝 <code>.ssh</code> 文件夹</li>
+<li>拷贝 <code>.bashrc</code></li>
+<li>拷贝 <code>bash_modules</code> 文件夹</li>
+<li>拷贝 <code>.nvmrc</code></li>
+</ul>
+
+<h3 id="工作目录操作-a-href-catalogue-a">工作目录操作 <a href="#catalogue"> ⇧ </a></h3>
+
+<ul>
+<li><code>cd ~/repos</code> 或者 <code>cd /root/repos</code> 或者 <code>j repos</code></li>
+<li>使用 <code>code xxx-project-name</code> 打开新的 <code>VSCode</code> 窗口，可以把旧的关了</li>
+<li>新建 <code>mkdir xxx-project-name</code> 在用 <code>VSCode</code> 打开</li>
+<li>删除 <code>rm -rf xxx</code> 容器自动清除数据卷</li>
+</ul>
+
+<h3 id="备份配置文件-使用脚本-backup-sh-a-href-catalogue-a">备份配置文件 使用脚本 <code>backup.sh</code> <a href="#catalogue"> ⇧ </a></h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-zsh" data-lang="zsh"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-zsh" data-lang="zsh"><span class="cp">#!/bin/bash
+</span><span class="cp"></span>
+<span class="c1"># 定义源路径和目标路径</span>
+<span class="nv">BACKUP_DIR</span><span class="o">=</span><span class="s2">&#34;/workspaces/oh-my-env-2/temp/dotEnv_backup&#34;</span>
+<span class="nv">SRC_DIR</span><span class="o">=</span><span class="s2">&#34;/root&#34;</span>
+<span class="nv">TIMESTAMP</span><span class="o">=</span><span class="k">$(</span>date +%Y%m%d_%H%M%S<span class="k">)</span>
+<span class="nv">ZIP_FILE</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">BACKUP_DIR</span><span class="si">}</span><span class="s2">/backup_</span><span class="si">${</span><span class="nv">TIMESTAMP</span><span class="si">}</span><span class="s2">.zip&#34;</span>
+
+<span class="c1"># 创建备份目录（如果不存在）</span>
+mkdir -p <span class="s2">&#34;</span><span class="si">${</span><span class="nv">BACKUP_DIR</span><span class="si">}</span><span class="s2">&#34;</span>
+
+<span class="c1"># 创建一个临时目录用于收集备份文件</span>
+<span class="nv">TEMP_STAGE</span><span class="o">=</span><span class="k">$(</span>mktemp -d<span class="k">)</span>
+
+<span class="nb">echo</span> <span class="s2">&#34;开始复制备份文件...&#34;</span>
+
+<span class="c1"># 复制 bash_modules 文件夹</span>
+<span class="k">if</span> <span class="o">[</span> -d <span class="s2">&#34;</span><span class="si">${</span><span class="nv">SRC_DIR</span><span class="si">}</span><span class="s2">/bash_modules&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+    cp -r <span class="s2">&#34;</span><span class="si">${</span><span class="nv">SRC_DIR</span><span class="si">}</span><span class="s2">/bash_modules&#34;</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">TEMP_STAGE</span><span class="si">}</span><span class="s2">/&#34;</span>
+    <span class="nb">echo</span> <span class="s2">&#34;✔ 已复制 bash_modules&#34;</span>
+<span class="k">else</span>
+    <span class="nb">echo</span> <span class="s2">&#34;⚠ 未找到 </span><span class="si">${</span><span class="nv">SRC_DIR</span><span class="si">}</span><span class="s2">/bash_modules&#34;</span>
+<span class="k">fi</span>
+
+<span class="c1"># 复制 .ssh 文件夹</span>
+<span class="k">if</span> <span class="o">[</span> -d <span class="s2">&#34;</span><span class="si">${</span><span class="nv">SRC_DIR</span><span class="si">}</span><span class="s2">/.ssh&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+    cp -r <span class="s2">&#34;</span><span class="si">${</span><span class="nv">SRC_DIR</span><span class="si">}</span><span class="s2">/.ssh&#34;</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">TEMP_STAGE</span><span class="si">}</span><span class="s2">/&#34;</span>
+    <span class="nb">echo</span> <span class="s2">&#34;✔ 已复制 .ssh&#34;</span>
+<span class="k">else</span>
+    <span class="nb">echo</span> <span class="s2">&#34;⚠ 未找到 </span><span class="si">${</span><span class="nv">SRC_DIR</span><span class="si">}</span><span class="s2">/.ssh&#34;</span>
+<span class="k">fi</span>
+
+<span class="c1"># 复制 .bashrc 文件</span>
+<span class="k">if</span> <span class="o">[</span> -f <span class="s2">&#34;</span><span class="si">${</span><span class="nv">SRC_DIR</span><span class="si">}</span><span class="s2">/.bashrc&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+    cp <span class="s2">&#34;</span><span class="si">${</span><span class="nv">SRC_DIR</span><span class="si">}</span><span class="s2">/.bashrc&#34;</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">TEMP_STAGE</span><span class="si">}</span><span class="s2">/&#34;</span>
+    <span class="nb">echo</span> <span class="s2">&#34;✔ 已复制 .bashrc&#34;</span>
+<span class="k">else</span>
+    <span class="nb">echo</span> <span class="s2">&#34;⚠ 未找到 </span><span class="si">${</span><span class="nv">SRC_DIR</span><span class="si">}</span><span class="s2">/.bashrc&#34;</span>
+<span class="k">fi</span>
+
+<span class="c1"># 检查临时目录中是否有文件</span>
+<span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="k">$(</span>ls -A <span class="si">${</span><span class="nv">TEMP_STAGE</span><span class="si">}</span><span class="k">)</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="nb">echo</span> <span class="s2">&#34;开始压缩为 zip...&#34;</span>
+    <span class="c1"># 切换到临时目录压缩，避免包含绝对路径层级</span>
+    <span class="o">(</span><span class="nb">cd</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">TEMP_STAGE</span><span class="si">}</span><span class="s2">&#34;</span> <span class="o">&amp;&amp;</span> zip -r <span class="s2">&#34;</span><span class="si">${</span><span class="nv">ZIP_FILE</span><span class="si">}</span><span class="s2">&#34;</span> .<span class="o">)</span>
+    
+    <span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> -eq <span class="m">0</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+        <span class="nb">echo</span> <span class="s2">&#34;稳定备份成功！文件已保存至: </span><span class="si">${</span><span class="nv">ZIP_FILE</span><span class="si">}</span><span class="s2">&#34;</span>
+    <span class="k">else</span>
+        <span class="nb">echo</span> <span class="s2">&#34;❌ 压缩失败！&#34;</span>
+    <span class="k">fi</span>
+<span class="k">else</span>
+    <span class="nb">echo</span> <span class="s2">&#34;❌ 没有找到任何需要备份的文件或文件夹。&#34;</span>
+<span class="k">fi</span>
+
+<span class="c1"># 清理临时目录</span>
+rm -rf <span class="s2">&#34;</span><span class="si">${</span><span class="nv">TEMP_STAGE</span><span class="si">}</span><span class="s2">&#34;</span></code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>即使删除镜像，仍可还原配置文件</li>
+</ul>
+
+<h3 id="备份数据库-a-href-catalogue-a">备份数据库 <a href="#catalogue"> ⇧ </a></h3>
+
+<hr />
+
+<!-- Article End -->
+
+<div style="text-align:center;">&middot;完待续&middot;</div>
+
+<hr />
+
+<h2 id="参考文章">参考文章</h2>
+
+<ul>
+<li>常见报错点击 <a href="https://docs.qq.com/doc/DU1VBVkJvS3VYSFVV">https://docs.qq.com/doc/DU1VBVkJvS3VYSFVV</a> 即可查看</li>
+<li><a href="https://docs.docker.com/get-started/">docker docs Overview of the get started guide</a></li>
+<li><a href="https://juejin.cn/post/7002505996220416037?searchId=2023100523153076A0441A3695DD1DF984">VSCode + Docker 配置完美开发环境 方应杭</a></li>
+<li><a href="https://docs.google.com/presentation/d/15vL9FzNF28J6MsNktyfofZX1o7xYY9EJcfH9JYHOhBQ/edit?pli=1#slide=id.p10">PPT docs.google.com</a></li>
+<li><a href="https://github.com/FrankFang/oh-my-env-1">oh-my-env-1</a></li>
+<li><a href="https://github.com/FrankFang/oh-my-env-1/tree/fec621a76fbef7b7844f464cb99bb304ce55563a">oh-my-env-1 如何 trojan</a></li>
+</ul>
+
+<h2 id="相关文章">相关文章</h2>
+
+<ul>
+<li><a href="https://fangyinghang.com/morney-api-doc">在线文档</a></li>
+<li><a href="https://github.com/FrankFang/morney-api-doc">API文档仓库 FrankFang/morney-api-doc</a></li>
+<li><a href="https://www.runoob.com/docker/docker-mirror-acceleration.html">Docker 镜像加速</a></li>
+<li><a href="https://learn.microsoft.com/zh-cn/visualstudio/docker/tutorials/docker-tutorial">教程：使用 Visual Studio Code 创建 Docker 应用</a></li>
+<li><a href="https://learn.microsoft.com/zh-cn/windows/terminal/tutorials/ssh">教程：Windows 终端中的 SSH</a></li>
+<li><a href="https://code.visualstudio.com/remote/advancedcontainers/sharing-git-credentials">如何让容器与宿主机共享 ssh 认证信息 Sharing Git credentials with your container</a></li>
+</ul>
+
+<hr />
+
+<ul>
+<li>作者： Joel</li>
+<li>文章链接：</li>
+<li><a href="http://xmasuhai.xyz/posts/版权声明链接/">版权声明</a></li>
+<li>非自由转载-非商用-非衍生-保持署名</li>
+</ul>
+
+<hr />
+
+<hr />
+
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Joel Xu</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2026-09-06
+      
+        
+        
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="http://xmasuhai.xyz/tags/project/">Project</a>
+          <a href="http://xmasuhai.xyz/tags/%E5%B1%B1%E7%AB%B9%E8%AE%B0%E8%B4%A6/">山竹记账</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/%E5%B1%B1%E7%AB%B9%E8%AE%B0%E8%B4%A6/%E5%B1%B1%E7%AB%B9%E8%AE%B0%E8%B4%A6%E5%90%8E%E7%AB%AF1.%E5%88%9B%E5%BB%BA%E5%90%8E%E7%AB%AF%E9%A1%B9%E7%9B%AE/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">【山竹记账后端】1.搭建后端项目</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/%E5%B1%B1%E7%AB%B9%E8%AE%B0%E8%B4%A6/%E5%B1%B1%E7%AB%B9%E8%AE%B0%E8%B4%A6%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/">
+            <span class="next-text nav-default">【山竹记账】项目介绍</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:xmasuhai@163.com" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="https://github.com/xmasuhai" rel="me noopener" class="iconfont"
+      title="github"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M512 12.672c-282.88 0-512 229.248-512 512 0 226.261333 146.688 418.133333 350.08 485.76 25.6 4.821333 34.986667-11.008 34.986667-24.618667 0-12.16-0.426667-44.373333-0.64-87.04-142.421333 30.890667-172.458667-68.693333-172.458667-68.693333C188.672 770.986667 155.008 755.2 155.008 755.2c-46.378667-31.744 3.584-31.104 3.584-31.104 51.413333 3.584 78.421333 52.736 78.421333 52.736 45.653333 78.293333 119.850667 55.68 149.12 42.581333 4.608-33.109333 17.792-55.68 32.426667-68.48-113.706667-12.8-233.216-56.832-233.216-253.013333 0-55.893333 19.84-101.546667 52.693333-137.386667-5.76-12.928-23.04-64.981333 4.48-135.509333 0 0 42.88-13.738667 140.8 52.48 40.96-11.392 84.48-17.024 128-17.28 43.52 0.256 87.04 5.888 128 17.28 97.28-66.218667 140.16-52.48 140.16-52.48 27.52 70.528 10.24 122.581333 5.12 135.509333 32.64 35.84 52.48 81.493333 52.48 137.386667 0 196.693333-119.68 240-233.6 252.586667 17.92 15.36 34.56 46.762667 34.56 94.72 0 68.522667-0.64 123.562667-0.64 140.202666 0 13.44 8.96 29.44 35.2 24.32C877.44 942.592 1024 750.592 1024 524.672c0-282.752-229.248-512-512-512"></path>
+</svg>
+
+    </a>
+  
+    <a href="https://www.zhihu.com/people/xue-shou-41/posts" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+
+
+<a href="http://xmasuhai.xyz/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane">Jane</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy;
+    
+      2019 -
+    2026
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Joel Xu
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
