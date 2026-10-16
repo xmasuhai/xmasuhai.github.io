@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>对比三大测试框架-第一篇：Cypress、Playwright、Selenium 官方AI支持能力对比文档 - Joel in The House</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="Joel Xu" />
+  <meta name="description" content="对比三大测试框架-第一篇：Cypress、Playwright、Selenium 官方AI支持能力对比文档 文档说明 本文档全部依据三大框架官方官" />
+
+  <meta name="keywords" content="Hugo, theme, jane" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.59.1" />
+
+
+<link rel="canonical" href="http://xmasuhai.xyz/post/test/%E5%AF%B9%E6%AF%94%E4%B8%89%E5%A4%A7%E6%B5%8B%E8%AF%95%E6%A1%86%E6%9E%B6-%E7%AC%AC%E4%B8%80%E7%AF%87cypressplaywrightselenium-%E5%AE%98%E6%96%B9ai%E6%94%AF%E6%8C%81%E8%83%BD%E5%8A%9B%E5%AF%B9%E6%AF%94%E6%96%87%E6%A1%A3/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="对比三大测试框架-第一篇：Cypress、Playwright、Selenium 官方AI支持能力对比文档" />
+<meta property="og:description" content="对比三大测试框架-第一篇：Cypress、Playwright、Selenium 官方AI支持能力对比文档 文档说明 本文档全部依据三大框架官方官" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://xmasuhai.xyz/post/test/%E5%AF%B9%E6%AF%94%E4%B8%89%E5%A4%A7%E6%B5%8B%E8%AF%95%E6%A1%86%E6%9E%B6-%E7%AC%AC%E4%B8%80%E7%AF%87cypressplaywrightselenium-%E5%AE%98%E6%96%B9ai%E6%94%AF%E6%8C%81%E8%83%BD%E5%8A%9B%E5%AF%B9%E6%AF%94%E6%96%87%E6%A1%A3/" />
+<meta property="article:published_time" content="2026-08-16T22:47:48+08:00" />
+<meta property="article:modified_time" content="2026-08-21T11:26:27+08:00" />
+<meta itemprop="name" content="对比三大测试框架-第一篇：Cypress、Playwright、Selenium 官方AI支持能力对比文档">
+<meta itemprop="description" content="对比三大测试框架-第一篇：Cypress、Playwright、Selenium 官方AI支持能力对比文档 文档说明 本文档全部依据三大框架官方官">
+
+
+<meta itemprop="datePublished" content="2026-08-16T22:47:48&#43;08:00" />
+<meta itemprop="dateModified" content="2026-08-21T11:26:27&#43;08:00" />
+<meta itemprop="wordCount" content="2116">
+
+
+
+<meta itemprop="keywords" content="测试," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="对比三大测试框架-第一篇：Cypress、Playwright、Selenium 官方AI支持能力对比文档"/>
+<meta name="twitter:description" content="对比三大测试框架-第一篇：Cypress、Playwright、Selenium 官方AI支持能力对比文档 文档说明 本文档全部依据三大框架官方官"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Joel in The House</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/post/">文档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/categories/">目录</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/about/">关于我</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Joel in The House
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/post/">文档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/categories/">目录</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/about/">关于我</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">对比三大测试框架-第一篇：Cypress、Playwright、Selenium 官方AI支持能力对比文档</h1>
+      
+      <div class="post-meta">
+        <time datetime="2026-08-16" class="post-time">
+          2026-08-16
+        </time>
+        <div class="post-category">
+            <a href="http://xmasuhai.xyz/categories/%E6%B5%8B%E8%AF%95/"> 测试 </a>
+            
+          </div>
+        <span class="more-meta"> 约 2116 字 </span>
+          <span class="more-meta"> 预计阅读 5 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#对比三大测试框架-第一篇-cypress-playwright-selenium-官方ai支持能力对比文档">对比三大测试框架-第一篇：Cypress、Playwright、Selenium 官方AI支持能力对比文档</a>
+<ul>
+<li><a href="#文档说明">文档说明</a></li>
+<li><a href="#一-playwright-ai-官方支持能力-最优">一、Playwright AI 官方支持能力（最优）</a>
+<ul>
+<li><a href="#1-核心官方能力">1. 核心官方能力</a></li>
+<li><a href="#2-能力边界">2. 能力边界</a></li>
+<li><a href="#3-核心定位">3. 核心定位</a></li>
+</ul></li>
+<li><a href="#二-cypress-ai-官方支持能力-辅助测试型">二、Cypress AI 官方支持能力（辅助测试型）</a>
+<ul>
+<li><a href="#1-核心官方能力-1">1. 核心官方能力</a></li>
+<li><a href="#2-能力边界-1">2. 能力边界</a></li>
+<li><a href="#3-核心定位-1">3. 核心定位</a></li>
+</ul></li>
+<li><a href="#三-selenium-ai-官方支持能力-无原生能力">三、Selenium AI 官方支持能力（无原生能力）</a>
+<ul>
+<li><a href="#1-官方原生能力">1. 官方原生能力</a></li>
+<li><a href="#2-所有-ai-能力均为社区第三方">2. 所有 AI 能力均为社区第三方</a></li>
+<li><a href="#3-核心定位-2">3. 核心定位</a></li>
+</ul></li>
+<li><a href="#四-三大框架-ai-支持能力多维对比表">四、三大框架 AI 支持能力多维对比表</a></li>
+<li><a href="#五-场景化选型结论">五、场景化选型结论</a></li>
+<li><a href="#六-最终总结">六、最终总结</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+
+<h1 id="对比三大测试框架-第一篇-cypress-playwright-selenium-官方ai支持能力对比文档">对比三大测试框架-第一篇：Cypress、Playwright、Selenium 官方AI支持能力对比文档</h1>
+
+<h2 id="文档说明">文档说明</h2>
+
+<p>本文档<strong>全部依据三大框架官方官网、正式 Release 公告、官方文档</strong>整理，仅统计<strong>官方原生能力</strong>
+区分：框架内置 AI API、官方 MCP 协议支持、AI Agent 浏览器操控能力、云平台 AI 能力、社区第三方能力（不计入官方能力）。</p>
+
+<p>核心区分标准：</p>
+
+<ol>
+<li>原生 AI：框架官方正式发布、维护的 AI 相关功能 / 协议 / API</li>
+<li>只读 AI：仅支持分析报告、生成代码、复盘问题，<strong>无法操控浏览器</strong></li>
+<li>操控 AI：支持大模型 / AI Agent<strong>直接驱动浏览器执行页面操作</strong></li>
+<li>第三方 AI：非官方出品，不计入框架原生能力</li>
+</ol>
+
+<h2 id="一-playwright-ai-官方支持能力-最优">一、Playwright AI 官方支持能力（最优）</h2>
+
+<p>Playwright 为微软官方维护，是<strong>唯一将 AI Agent 网页自动化列为核心官方场景</strong>的测试框架，原生适配大模型自动化需求。</p>
+
+<h3 id="1-核心官方能力">1. 核心官方能力</h3>
+
+<ul>
+<li><strong>官方原生 Playwright MCP 协议</strong>
+提供标准化 MCP 服务，支持 Claude、Cursor、Copilot 等所有主流大模型客户端，AI 可直接调用 API 操控浏览器完成导航、点击、填表、截图、网络拦截等全量页面操作。
+基于浏览器无障碍树识别元素，而非简单截图视觉识别，稳定性、精准度远超第三方 AI 方案。</li>
+<li><strong>官方 AI 代码生成工作流</strong>
+官方文档内置标准工作流：<code>codegen 录制</code> + AI 优化生成生产级测试用例，是行业标准化 AI 造例方案。</li>
+<li><strong>语义化定位适配 AI</strong>
+官方主推 <code>getByRole</code>、<code>getByText</code> 等语义化定位器，专为 LLM 大模型设计，大幅降低 AI 脚本维护成本。</li>
+</ul>
+
+<h3 id="2-能力边界">2. 能力边界</h3>
+
+<ul>
+<li>框架<strong>不内置大模型</strong>，无需绑定指定 LLM，可自由对接任意外部大模型</li>
+<li>所有 AI 浏览器操控能力<strong>本地离线可用</strong>，不依赖任何云服务、付费服务</li>
+<li>完美适配 Docker 无头环境、CI 自动化场景</li>
+</ul>
+
+<h3 id="3-核心定位">3. 核心定位</h3>
+
+<p><strong>支持 AI Agent 自主操控浏览器</strong>，是目前网页智能自动化、AI 数字人、智能 Agent 场景的行业首选底座。</p>
+
+<hr />
+
+<h2 id="二-cypress-ai-官方支持能力-辅助测试型">二、Cypress AI 官方支持能力（辅助测试型）</h2>
+
+<p>Cypress 官方具备完善的 AI 辅助测试能力，但<strong>无官方 AI 操控浏览器的能力</strong>，AI 功能主要服务于测试脚本开发、用例运维、结果分析。</p>
+
+<h3 id="1-核心官方能力-1">1. 核心官方能力</h3>
+
+<ul>
+<li><strong>本地运行时 AI API（v15+ 新版特性）</strong>
+提供原生 <code>cy.prompt()</code> API，支持自然语言描述测试步骤，AI 自动生成测试命令，具备基础的页面元素变更自愈能力，需自主配置外部大模型。</li>
+<li><strong>Studio AI 智能辅助</strong>
+录制测试操作时，AI 自动推荐适配的断言逻辑、补全测试校验规则，辅助快速编写完整用例。</li>
+<li><strong>Cypress Cloud MCP 协议（官方 GA）</strong>
+仅支持<strong>只读场景</strong>：AI 可读取测试报告、失败用例、UI 覆盖率、兼容性数据，用于智能分析报错、复盘问题、优化测试策略。</li>
+</ul>
+
+<h3 id="2-能力边界-1">2. 能力边界</h3>
+
+<ul>
+<li><strong>官方不支持 AI 直接操控浏览器执行测试</strong>，所有页面操作仍依赖固定代码脚本</li>
+<li>高阶 AI 分析、批量用例智能优化等能力<strong>高度依赖 Cypress Cloud 付费云平台</strong></li>
+<li>无原生 AI Agent 自动化能力，浏览器智能操控仅可通过社区第三方插件实现</li>
+</ul>
+
+<h3 id="3-核心定位-1">3. 核心定位</h3>
+
+<p>AI 专注<strong>辅助测试研发、测试运维、问题分析</strong>，仅服务 E2E 测试场景，不支持通用 AI 网页自动化。</p>
+
+<hr />
+
+<h2 id="三-selenium-ai-官方支持能力-无原生能力">三、Selenium AI 官方支持能力（无原生能力）</h2>
+
+<p>Selenium 框架本体<strong>零官方 AI 能力</strong>，官网无任何 AI 功能、MCP 协议、智能 API 相关介绍与迭代更新。</p>
+
+<h3 id="1-官方原生能力">1. 官方原生能力</h3>
+
+<ul>
+<li>无内置 AI API、无官方 MCP 协议、无官方 AI 辅助工具</li>
+<li>框架核心协议（BiDi 双向协议）仅为浏览器通信底层能力，<strong>不属于 AI 能力</strong>，仅为第三方 AI 工具提供数据基础</li>
+</ul>
+
+<h3 id="2-所有-ai-能力均为社区第三方">2. 所有 AI 能力均为社区第三方</h3>
+
+<p>市面可见的 Selenium AI 功能均为开源社区封装：Healenium 元素自愈、selenium-ai-agent 智能操控、大模型脚本生成等，无官方维护、无官方适配标准、稳定性无保障。</p>
+
+<h3 id="3-核心定位-2">3. 核心定位</h3>
+
+<p>纯传统自动化测试框架，<strong>不适配 AI 智能自动化场景</strong>，仅可通过第三方工具勉强实现基础 AI 辅助能力。</p>
+
+<h2 id="四-三大框架-ai-支持能力多维对比表">四、三大框架 AI 支持能力多维对比表</h2>
+
+<table>
+<thead>
+<tr>
+<th>对比维度</th>
+<th>Playwright</th>
+<th>Cypress</th>
+<th>Selenium</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>官网标注 AI/Agent 场景</td>
+<td>✅ 核心官方场景</td>
+<td>✅ 云平台 AI 功能场景</td>
+<td>❌ 无任何官方 AI 标注</td>
+</tr>
+
+<tr>
+<td>官方 MCP 协议支持</td>
+<td>✅ 完整操控型 MCP（可操作浏览器）</td>
+<td>✅ 只读云 MCP（仅读测试报告）</td>
+<td>❌ 无官方 MCP</td>
+</tr>
+
+<tr>
+<td>AI 直接操控浏览器</td>
+<td>✅ 原生支持（AI Agent 核心能力）</td>
+<td>❌ 官方不支持，仅社区插件实现</td>
+<td>❌ 无官方支持</td>
+</tr>
+
+<tr>
+<td>本地 AI 运行 API</td>
+<td>❌ 无内置 LLM，可自由对接外部模型</td>
+<td>✅ 原生 <code>cy.prompt()</code> 自然语言 API</td>
+<td>❌ 无任何原生 AI API</td>
+</tr>
+
+<tr>
+<td>AI 辅助代码生成</td>
+<td>✅ 官方标准化工作流（codegen+AI）</td>
+<td>✅ Studio AI 辅助生成断言 / 用例</td>
+<td>❌ 无官方 AI 造例能力</td>
+</tr>
+
+<tr>
+<td>功能依赖云服务</td>
+<td>❌ 全部 AI 能力本地可用</td>
+<td>✅ 高阶 AI 能力依赖付费云平台</td>
+<td>❌ 无 AI 相关云服务</td>
+</tr>
+
+<tr>
+<td>AI 脚本适配性</td>
+<td>极高（语义化定位专为 LLM 设计）</td>
+<td>高（适配前端 JS AI 开发）</td>
+<td>低（无官方 AI 适配规范）</td>
+</tr>
+
+<tr>
+<td>官方 AI 迭代更新</td>
+<td>持续高频迭代（适配 AI Agent 生态）</td>
+<td>常规迭代（仅优化测试辅助 AI）</td>
+<td>零官方 AI 迭代</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="五-场景化选型结论">五、场景化选型结论</h2>
+
+<ol>
+<li><p><strong>AI Agent 智能自动化、网页数字人、大模型自主操作系统</strong>
+优先选择 <strong>Playwright</strong>，三者中唯一官方原生支持 AI 操控浏览器，生态成熟、无付费依赖、适配所有无头 / 容器场景。</p></li>
+
+<li><p><strong>前端 E2E 测试、AI 辅助写用例、智能分析测试报错</strong>
+优先选择 <strong>Cypress</strong>，JS/TS 友好，AI 能力聚焦测试研发提效，适配前端项目自动化测试场景。</p></li>
+
+<li><p><strong>传统项目兼容、老旧自动化维护</strong>
+选择 <strong>Selenium</strong>，仅适合存量传统测试项目，<strong>不建议用于任何 AI 智能化自动化场景</strong>。</p></li>
+</ol>
+
+<h2 id="六-最终总结">六、最终总结</h2>
+
+<ul>
+<li>Playwright：<strong>AI 智能化自动化天花板</strong>，兼顾传统测试 + AI Agent 双场景</li>
+<li>Cypress：<strong>测试专用 AI 辅助工具</strong>，仅服务自动化测试研发，无通用网页智能操控能力</li>
+<li>Selenium：<strong>纯传统测试框架</strong>，无任何官方 AI 原生支持，已不适配当下 AI 自动化生态</li>
+</ul>
+
+<hr />
+
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Joel Xu</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2026-08-21
+      
+        
+        
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="http://xmasuhai.xyz/tags/%E6%B5%8B%E8%AF%95/">测试</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/%E5%B1%B1%E7%AB%B9%E8%AE%B0%E8%B4%A6/%E5%B1%B1%E7%AB%B9%E8%AE%B0%E8%B4%A6%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">【山竹记账】项目介绍</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/css/css%E9%9D%9E%E5%85%A8%E8%A7%A301css%E5%9F%BA%E7%A1%80-%E5%88%9D%E8%AF%86css/">
+            <span class="next-text nav-default">【CSS非全解01】CSS基础 初识CSS</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:xmasuhai@163.com" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="https://github.com/xmasuhai" rel="me noopener" class="iconfont"
+      title="github"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M512 12.672c-282.88 0-512 229.248-512 512 0 226.261333 146.688 418.133333 350.08 485.76 25.6 4.821333 34.986667-11.008 34.986667-24.618667 0-12.16-0.426667-44.373333-0.64-87.04-142.421333 30.890667-172.458667-68.693333-172.458667-68.693333C188.672 770.986667 155.008 755.2 155.008 755.2c-46.378667-31.744 3.584-31.104 3.584-31.104 51.413333 3.584 78.421333 52.736 78.421333 52.736 45.653333 78.293333 119.850667 55.68 149.12 42.581333 4.608-33.109333 17.792-55.68 32.426667-68.48-113.706667-12.8-233.216-56.832-233.216-253.013333 0-55.893333 19.84-101.546667 52.693333-137.386667-5.76-12.928-23.04-64.981333 4.48-135.509333 0 0 42.88-13.738667 140.8 52.48 40.96-11.392 84.48-17.024 128-17.28 43.52 0.256 87.04 5.888 128 17.28 97.28-66.218667 140.16-52.48 140.16-52.48 27.52 70.528 10.24 122.581333 5.12 135.509333 32.64 35.84 52.48 81.493333 52.48 137.386667 0 196.693333-119.68 240-233.6 252.586667 17.92 15.36 34.56 46.762667 34.56 94.72 0 68.522667-0.64 123.562667-0.64 140.202666 0 13.44 8.96 29.44 35.2 24.32C877.44 942.592 1024 750.592 1024 524.672c0-282.752-229.248-512-512-512"></path>
+</svg>
+
+    </a>
+  
+    <a href="https://www.zhihu.com/people/xue-shou-41/posts" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+
+
+<a href="http://xmasuhai.xyz/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane">Jane</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy;
+    
+      2019 -
+    2026
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Joel Xu
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
