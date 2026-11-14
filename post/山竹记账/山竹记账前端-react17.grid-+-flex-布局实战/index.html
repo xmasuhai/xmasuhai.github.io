@@ -1,0 +1,2478 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>【山竹记账前端-react】17.Grid &#43; Flex 布局实战 - Joel in The House</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="Joel Xu" />
+  <meta name="description" content="【山竹记账前端-react】17.Grid &#43; Flex 布局实战 大纲链接 § [toc] 1. 记账页面 ⇧ 包括收入、支出tab切换 tab内容中的标签列表，添加标签按钮 输" />
+
+  <meta name="keywords" content="Hugo, theme, jane" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.59.1" />
+
+
+<link rel="canonical" href="http://xmasuhai.xyz/post/%E5%B1%B1%E7%AB%B9%E8%AE%B0%E8%B4%A6/%E5%B1%B1%E7%AB%B9%E8%AE%B0%E8%B4%A6%E5%89%8D%E7%AB%AF-react17.grid-&#43;-flex-%E5%B8%83%E5%B1%80%E5%AE%9E%E6%88%98/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="【山竹记账前端-react】17.Grid &#43; Flex 布局实战" />
+<meta property="og:description" content="【山竹记账前端-react】17.Grid &#43; Flex 布局实战 大纲链接 § [toc] 1. 记账页面 ⇧ 包括收入、支出tab切换 tab内容中的标签列表，添加标签按钮 输" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://xmasuhai.xyz/post/%E5%B1%B1%E7%AB%B9%E8%AE%B0%E8%B4%A6/%E5%B1%B1%E7%AB%B9%E8%AE%B0%E8%B4%A6%E5%89%8D%E7%AB%AF-react17.grid-&#43;-flex-%E5%B8%83%E5%B1%80%E5%AE%9E%E6%88%98/" />
+<meta property="article:published_time" content="2026-11-01T20:46:21+08:00" />
+<meta property="article:modified_time" content="2026-11-04T22:40:44+08:00" />
+<meta itemprop="name" content="【山竹记账前端-react】17.Grid &#43; Flex 布局实战">
+<meta itemprop="description" content="【山竹记账前端-react】17.Grid &#43; Flex 布局实战 大纲链接 § [toc] 1. 记账页面 ⇧ 包括收入、支出tab切换 tab内容中的标签列表，添加标签按钮 输">
+
+
+<meta itemprop="datePublished" content="2026-11-01T20:46:21&#43;08:00" />
+<meta itemprop="dateModified" content="2026-11-04T22:40:44&#43;08:00" />
+<meta itemprop="wordCount" content="4544">
+
+
+
+<meta itemprop="keywords" content="FrontEnd," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="【山竹记账前端-react】17.Grid &#43; Flex 布局实战"/>
+<meta name="twitter:description" content="【山竹记账前端-react】17.Grid &#43; Flex 布局实战 大纲链接 § [toc] 1. 记账页面 ⇧ 包括收入、支出tab切换 tab内容中的标签列表，添加标签按钮 输"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Joel in The House</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/post/">文档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/categories/">目录</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/about/">关于我</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Joel in The House
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/post/">文档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/categories/">目录</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/about/">关于我</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">【山竹记账前端-react】17.Grid &#43; Flex 布局实战</h1>
+      
+      <div class="post-meta">
+        <time datetime="2026-11-01" class="post-time">
+          2026-11-01
+        </time>
+        <div class="post-category">
+            <a href="http://xmasuhai.xyz/categories/frontend/"> FrontEnd </a>
+            
+          </div>
+        <span class="more-meta"> 约 4544 字 </span>
+          <span class="more-meta"> 预计阅读 10 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#山竹记账前端-react-17-grid-flex-布局实战">【山竹记账前端-react】17.Grid + Flex 布局实战</a>
+<ul>
+<li><a href="#1-记账页面-a-href-catalogue-a">1. 记账页面 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#2-tabs组件与泛型组件-a-href-catalogue-a">2. Tabs组件与泛型组件 <a href="#catalogue"> ⇧ </a></a>
+<ul>
+<li><a href="#添加路由-新建页面组件-a-href-catalogue-a">添加路由，新建页面组件 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#封装-switchtabs-泛型组件-a-href-catalogue-a">封装 SwitchTabs 泛型组件 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#删代码调试法解决-cursor-pointer-导致页面闪烁-a-href-catalogue-a">删代码调试法解决 cursor-pointer 导致页面闪烁 <a href="#catalogue"> ⇧ </a></a></li>
+</ul></li>
+<li><a href="#3-完成顶部导航栏-a-href-catalogue-a">3. 完成顶部导航栏 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#4-实现tabs内容切换-添加-classprefix-区分内部结构-a-href-catalogue-a">4. 实现Tabs内容切换，添加 <code>classPrefix</code> 区分内部结构 <a href="#catalogue"> ⇧ </a></a>
+<ul>
+<li><a href="#通过传参-reactnode-显示tab内容-a-href-catalogue-a">通过传参 <code>ReactNode</code> 显示tab内容 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#添加-classprefix-区分内部结构-a-href-catalogue-a">添加 <code>classPrefix</code> 区分内部结构 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#styled-components-支持泛型传参-a-href-catalogue-a">Styled Components 支持泛型传参 <a href="#catalogue"> ⇧ </a></a></li>
+</ul></li>
+<li><a href="#5-grid布局展示所有标签-数量宽高不定-a-href-catalogue-a">5. Grid布局展示所有标签，数量宽高不定 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#6-完善样式细节-抽离组件-icontagitem-a-href-catalogue-a">6. 完善样式细节，抽离组件 IconTagItem <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#7-这个布局写得好-头尾固定-中间伸缩可滚动-a-href-catalogue-a">7. 这个布局写得好：头尾固定，中间伸缩可滚动 <a href="#catalogue"> ⇧ </a></a>
+<ul>
+<li><a href="#创建多个组件占位-a-href-catalogue-a">创建多个组件占位 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#头尾固定-中间伸缩可滚动-a-href-catalogue-a">头尾固定，中间伸缩可滚动 <a href="#catalogue"> ⇧ </a></a></li>
+</ul></li>
+<li><a href="#8-使用-vh-check-解决全屏-bug-a-href-catalogue-a">8. 使用 vh-check 解决全屏 bug <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#参考文章">参考文章</a></li>
+<li><a href="#相关文章">相关文章</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+
+<h1 id="山竹记账前端-react-17-grid-flex-布局实战">【山竹记账前端-react】17.Grid + Flex 布局实战</h1>
+
+<hr />
+
+<blockquote>
+<p>大纲链接 <a id="catalogue" href="#catalogue" > § </a></p>
+</blockquote>
+
+<p>[toc]</p>
+
+<hr />
+
+<h2 id="1-记账页面-a-href-catalogue-a">1. 记账页面 <a href="#catalogue"> ⇧ </a></h2>
+
+<p><img src="https://share.note.youdao.com/yws/api/personal/file/WEBadb285615678b59011f9df86e20e553d?method=download&amp;shareKey=8db9e799b753f9b1f29763bd6ac67f40" alt="记账页面" /></p>
+
+<ul>
+<li>包括收入、支出tab切换</li>
+<li>tab内容中的标签列表，添加标签按钮</li>
+<li>输入日期、金额显示，数字按钮键盘</li>
+</ul>
+
+<hr />
+
+<h2 id="2-tabs组件与泛型组件-a-href-catalogue-a">2. Tabs组件与泛型组件 <a href="#catalogue"> ⇧ </a></h2>
+
+<h3 id="添加路由-新建页面组件-a-href-catalogue-a">添加路由，新建页面组件 <a href="#catalogue"> ⇧ </a></h3>
+
+<blockquote>
+<p><code>@/route/routes.tsx</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-tsx" data-lang="tsx"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-tsx" data-lang="tsx"><span class="kr">import</span> <span class="p">{</span> <span class="nx">Root</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;@/components/Root&#39;</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">Home</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;@/pages/Home&#39;</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">ItemCreatePage</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;@/pages/ItemCreatePage&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">ItemsPage</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;@/pages/ItemsPage&#39;</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">SignInPage</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;@/pages/SignInPage&#39;</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">welcomeRouter</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;@/route/welcomeRouter&#39;</span>
+<span class="kr">import</span> <span class="nx">type</span> <span class="p">{</span> <span class="nx">RouteObject</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;react-router-dom&#39;</span>
+
+<span class="kr">export</span> <span class="kr">const</span> <span class="nx">routes</span>: <span class="kt">RouteObject</span><span class="p">[]</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">{</span> <span class="nx">path</span><span class="o">:</span> <span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="nx">element</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">Root</span> <span class="o">/&gt;</span><span class="p">,</span> <span class="p">},</span>
+  <span class="p">{</span> <span class="nx">path</span><span class="o">:</span> <span class="s1">&#39;/home&#39;</span><span class="p">,</span> <span class="nx">element</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">Home</span> <span class="nx">title</span><span class="o">=</span><span class="s2">&#34;首页&#34;</span> <span class="o">/&gt;</span><span class="p">,</span> <span class="p">},</span>
+  <span class="nx">welcomeRouter</span><span class="p">,</span>
+  <span class="p">{</span> <span class="nx">path</span><span class="o">:</span> <span class="s1">&#39;/items&#39;</span><span class="p">,</span> <span class="nx">element</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">ItemsPage</span> <span class="o">/&gt;</span><span class="p">,</span> <span class="p">},</span>
+  <span class="p">{</span> <span class="nx">path</span><span class="o">:</span> <span class="s1">&#39;/items/create&#39;</span><span class="p">,</span> <span class="nx">element</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">ItemCreatePage</span> <span class="o">/&gt;</span><span class="p">,</span> <span class="p">},</span>
+  <span class="p">{</span> <span class="nx">path</span><span class="o">:</span> <span class="s1">&#39;/sign_in&#39;</span><span class="p">,</span> <span class="nx">element</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">SignInPage</span> <span class="o">/&gt;</span><span class="p">},</span>
+  <span class="p">{</span> <span class="nx">path</span><span class="o">:</span> <span class="s1">&#39;/statistics&#39;</span><span class="p">,</span> <span class="nx">element</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span><span class="err">统计图表</span><span class="o">&lt;</span><span class="err">/div&gt;},</span>
+  <span class="p">{</span> <span class="nx">path</span><span class="o">:</span> <span class="s1">&#39;/export&#39;</span><span class="p">,</span> <span class="nx">element</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span><span class="err">敬请期待</span><span class="o">&lt;</span><span class="err">/div&gt;},</span>
+  <span class="p">{</span> <span class="nx">path</span><span class="o">:</span> <span class="s1">&#39;/notify&#39;</span><span class="p">,</span> <span class="nx">element</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span><span class="err">敬请期待</span><span class="o">&lt;</span><span class="err">/div&gt;},</span>
+  <span class="p">{</span> <span class="nx">path</span><span class="o">:</span> <span class="s1">&#39;/tags&#39;</span><span class="p">,</span> <span class="nx">element</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span><span class="err">标签</span><span class="o">&lt;</span><span class="err">/div&gt;},</span>
+  <span class="p">{</span> <span class="nx">path</span><span class="o">:</span> <span class="s1">&#39;/tech_stack&#39;</span><span class="p">,</span> <span class="nx">element</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span><span class="err">敬请期待</span><span class="o">&lt;</span><span class="err">/div&gt;},</span>
+<span class="p">]</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<blockquote>
+<p><code>@/pages/ItemCreatePage.tsx</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-tsx" data-lang="tsx"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-tsx" data-lang="tsx"><span class="kr">import</span> <span class="p">{</span> <span class="nx">GradientBanner</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">&#34;@/components/GradientBanner&#34;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">SvgIcon</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">&#34;@/components/SvgIcon&#34;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">TopNav</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">&#34;@/components/TopNav&#34;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">cn</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">&#34;cn&#34;</span><span class="p">;</span>
+
+<span class="kr">interface</span> <span class="nx">Props</span> <span class="p">{</span>
+  <span class="nx">className?</span>: <span class="kt">string</span>
+<span class="p">}</span>
+
+<span class="kr">export</span> <span class="kr">const</span> <span class="nx">ItemCreatePage</span>: <span class="kt">React.FC</span><span class="o">&lt;</span><span class="nx">Props</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">({</span> <span class="cm">/* className, */</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">Icon</span> <span class="o">=</span> <span class="p">(</span><span class="o">&lt;</span><span class="nx">SvgIcon</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&#34;back-arrow&#34;</span> <span class="nx">className</span><span class="o">=</span><span class="s2">&#34;size-[24px]&#34;</span> <span class="o">/&gt;</span><span class="p">)</span>
+
+  <span class="k">return</span> <span class="p">(</span>
+    <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="p">{</span><span class="nx">cn</span><span class="p">(</span><span class="s1">&#39;container w-screen h-screen relative&#39;</span><span class="p">)}</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="nx">GradientBanner</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">TopNav</span> <span class="nx">icon</span><span class="o">=</span><span class="p">{</span><span class="nx">Icon</span><span class="p">}</span> <span class="nx">title</span><span class="o">=</span><span class="s2">&#34;记一笔&#34;</span> <span class="o">/&gt;</span>
+      <span class="o">&lt;</span><span class="err">/GradientBanner&gt;</span>
+    <span class="o">&lt;</span><span class="err">/div&gt;</span>
+  <span class="p">)</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<hr />
+
+<h3 id="封装-switchtabs-泛型组件-a-href-catalogue-a">封装 SwitchTabs 泛型组件 <a href="#catalogue"> ⇧ </a></h3>
+
+<blockquote>
+<p><code>@/components/SwitchTabs.tsx</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-tsx" data-lang="tsx"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-tsx" data-lang="tsx"><span class="kr">import</span> <span class="p">{</span> <span class="nx">cn</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">&#34;cn&#34;</span><span class="p">;</span>
+
+<span class="kr">interface</span> <span class="nx">Props</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span> <span class="p">{</span>
+  <span class="nx">className?</span>: <span class="kt">string</span>
+  <span class="nx">selectedTabKey</span>: <span class="kt">T</span>
+  <span class="nx">tabItems</span>: <span class="kt">Readonly</span><span class="o">&lt;</span><span class="nb">Array</span><span class="o">&lt;</span><span class="p">{</span> <span class="nx">key</span>: <span class="kt">T</span><span class="p">;</span> <span class="nx">text</span>: <span class="kt">string</span> <span class="p">}</span><span class="o">&gt;&gt;</span>
+  <span class="nx">onSwitchTab</span><span class="o">:</span> <span class="p">(</span><span class="nx">key</span>: <span class="kt">T</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="k">void</span>
+<span class="p">}</span>
+
+<span class="kr">export</span> <span class="kr">const</span> <span class="nx">SwitchTabs</span> <span class="o">=</span> <span class="o">&lt;</span><span class="nx">T</span> <span class="kr">extends</span> <span class="kt">string</span><span class="o">&gt;</span><span class="p">({</span> <span class="nx">className</span><span class="p">,</span> <span class="nx">tabItems</span><span class="p">,</span> <span class="nx">selectedTabKey</span><span class="p">,</span> <span class="nx">onSwitchTab</span><span class="p">,</span> <span class="p">}</span><span class="o">:</span> <span class="nx">Props</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">selectedClass</span> <span class="o">=</span> <span class="p">(</span><span class="nx">key</span>: <span class="kt">string</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">cn</span><span class="p">(</span>
+    <span class="s1">&#39;relative&#39;</span><span class="p">,</span>
+    <span class="nx">key</span> <span class="o">===</span> <span class="nx">selectedTabKey</span>
+      <span class="o">?</span> <span class="s1">&#39;after:(content-[&#34;&#34;] block absolute bottom-0 left-0 w-full h-4px bg-[var(--tabs-indicator-bg)])&#39;</span>
+      <span class="o">:</span> <span class="s1">&#39;&#39;</span>
+  <span class="p">)</span>
+
+  <span class="k">return</span> <span class="p">(</span>
+    <span class="o">&lt;</span><span class="nx">nav</span> <span class="nx">className</span><span class="o">=</span><span class="p">{</span><span class="nx">className</span><span class="p">}</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="nx">menu</span> <span class="nx">className</span><span class="o">=</span><span class="p">{</span><span class="nx">cn</span><span class="p">(</span>
+        <span class="s1">&#39;flex text-white&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;children:(px-24px py-12px cursor-pointer)&#39;</span><span class="p">,</span>
+      <span class="p">)}</span><span class="o">&gt;</span>
+        <span class="p">{</span>
+          <span class="nx">tabItems</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">item</span> <span class="o">=&gt;</span> <span class="p">(</span>
+            <span class="o">&lt;</span><span class="nx">li</span>
+              <span class="nx">key</span><span class="o">=</span><span class="p">{</span><span class="nx">item</span><span class="p">.</span><span class="nx">key</span><span class="p">}</span>
+              <span class="nx">onClick</span><span class="o">=</span><span class="p">{()</span> <span class="o">=&gt;</span> <span class="nx">onSwitchTab</span><span class="p">(</span><span class="nx">item</span><span class="p">.</span><span class="nx">key</span><span class="p">)}</span>
+              <span class="nx">className</span><span class="o">=</span><span class="p">{</span><span class="nx">selectedClass</span><span class="p">(</span><span class="nx">item</span><span class="p">.</span><span class="nx">key</span><span class="p">)}</span><span class="o">&gt;</span>
+              <span class="p">{</span><span class="nx">item</span><span class="p">.</span><span class="nx">text</span><span class="p">}</span>
+            <span class="o">&lt;</span><span class="err">/li&gt;</span>
+          <span class="p">))</span>
+        <span class="p">}</span>
+      <span class="o">&lt;</span><span class="err">/menu&gt;</span>
+    <span class="o">&lt;</span><span class="err">/nav&gt;</span>
+  <span class="p">)</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>去除函数组建声明 <code>: React.FC&lt;Props&gt;</code></li>
+<li>参数前声明泛型 <code>&lt;T extends string&gt;</code>
+
+<ul>
+<li>泛型参数 <code>T</code> 用于限制 <code>tabItems</code> 中的 <code>key</code> 类型为 <code>string</code></li>
+</ul></li>
+<li>参数后声明类型 <code>{ className, tabItems, selectedTabKey, onSwitchTab, }: Props&lt;T&gt;)</code></li>
+<li>声明外部参数 <code>interface Props&lt;T&gt;</code> 传类型参数 <code>T</code>
+
+<ul>
+<li>声明 <code>selectedTabKey: T</code></li>
+<li>声明 <code>tabItems: Readonly&lt;Array&lt;{ key: T; text: string }&gt;&gt;</code></li>
+<li>声明 <code>onSwitchTab: (key: T) =&gt; void</code></li>
+</ul></li>
+</ul>
+
+<blockquote>
+<p>重构 <code>@/components/DateRangePicker.tsx</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-tsx" data-lang="tsx"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-tsx" data-lang="tsx"><span class="kr">import</span> <span class="p">{</span> <span class="nx">SwitchTabs</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">&#34;@/components/SwitchTabs&#34;</span><span class="p">;</span>
+
+<span class="kr">export</span> <span class="nx">type</span> <span class="nx">DateTabRangeStr</span> <span class="o">=</span> <span class="s1">&#39;thisMonth&#39;</span> <span class="o">|</span> <span class="s1">&#39;lastMonth&#39;</span> <span class="o">|</span> <span class="s1">&#39;thisYear&#39;</span> <span class="o">|</span> <span class="s1">&#39;customDate&#39;</span>
+
+<span class="kr">interface</span> <span class="nx">Props</span> <span class="p">{</span>
+  <span class="nx">selectedId</span>: <span class="kt">DateTabRangeStr</span>
+  <span class="nx">onSelect</span><span class="o">:</span> <span class="p">(</span><span class="nx">key</span>: <span class="kt">DateTabRangeStr</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="k">void</span>
+<span class="p">}</span>
+
+<span class="nx">type</span> <span class="nx">DateRange</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nx">key</span>: <span class="kt">DateTabRangeStr</span>
+  <span class="nx">text</span>: <span class="kt">string</span>
+<span class="p">}</span>
+
+<span class="kr">const</span> <span class="nx">dateRanges</span>: <span class="kt">Readonly</span><span class="o">&lt;</span><span class="nx">DateRange</span><span class="p">[]</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">{</span> <span class="nx">key</span><span class="o">:</span> <span class="s1">&#39;thisMonth&#39;</span><span class="p">,</span> <span class="nx">text</span><span class="o">:</span> <span class="s1">&#39;本月&#39;</span><span class="p">,</span> <span class="p">},</span>
+  <span class="p">{</span> <span class="nx">key</span><span class="o">:</span> <span class="s1">&#39;lastMonth&#39;</span><span class="p">,</span> <span class="nx">text</span><span class="o">:</span> <span class="s1">&#39;上月&#39;</span><span class="p">,</span> <span class="p">},</span>
+  <span class="p">{</span> <span class="nx">key</span><span class="o">:</span> <span class="s1">&#39;thisYear&#39;</span><span class="p">,</span> <span class="nx">text</span><span class="o">:</span> <span class="s1">&#39;今年&#39;</span><span class="p">,</span> <span class="p">},</span>
+  <span class="p">{</span> <span class="nx">key</span><span class="o">:</span> <span class="s1">&#39;customDate&#39;</span><span class="p">,</span> <span class="nx">text</span><span class="o">:</span> <span class="s1">&#39;去自定义日期&#39;</span><span class="p">,</span> <span class="p">},</span>
+<span class="p">]</span>
+
+<span class="kr">export</span> <span class="kr">const</span> <span class="nx">DateRangePicker</span>: <span class="kt">React.FC</span><span class="o">&lt;</span><span class="nx">Props</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">({</span>
+  <span class="nx">selectedId</span> <span class="o">=</span> <span class="s1">&#39;thisMonth&#39;</span><span class="p">,</span>
+  <span class="nx">onSelect</span>: <span class="kt">onSelected</span><span class="p">,</span>
+<span class="p">})</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="p">(</span>
+    <span class="o">&lt;</span><span class="nx">SwitchTabs</span>
+      <span class="nx">selectedTabKey</span><span class="o">=</span><span class="p">{</span><span class="nx">selectedId</span><span class="p">}</span>
+      <span class="nx">tabItems</span><span class="o">=</span><span class="p">{</span><span class="nx">dateRanges</span><span class="p">}</span>
+      <span class="nx">onSwitchTab</span><span class="o">=</span><span class="p">{</span><span class="nx">onSelected</span><span class="p">}</span> <span class="o">/&gt;</span>
+  <span class="p">)</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<blockquote>
+<p>重构 <code>@/pages/ItemsPage.tsx</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-tsx" data-lang="tsx"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-tsx" data-lang="tsx"><span class="c1">// import ...
+</span><span class="c1"></span>
+<span class="kr">export</span> <span class="kr">const</span> <span class="nx">ItemsPage</span>: <span class="kt">React.FC</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="p">[</span><span class="nx">selectedDate</span><span class="p">,</span> <span class="nx">setSelectedDate</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="o">&lt;</span><span class="nx">DateTabRangeStr</span><span class="o">&gt;</span><span class="p">(</span><span class="s1">&#39;thisMonth&#39;</span><span class="p">)</span>
+  <span class="kr">const</span> <span class="p">{</span> <span class="nx">visible</span><span class="p">,</span> <span class="nx">setVisible</span><span class="p">,</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">useMenuStore</span><span class="p">()</span>
+  <span class="kr">const</span> <span class="nx">onClickMenu</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">setVisible</span><span class="p">(</span><span class="o">!</span><span class="nx">visible</span><span class="p">)</span>
+  <span class="p">}</span>
+  <span class="kr">const</span> <span class="nx">Icon</span> <span class="o">=</span> <span class="p">(</span><span class="o">&lt;</span><span class="nx">SvgIcon</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&#34;menu&#34;</span> <span class="nx">className</span><span class="o">=</span><span class="s2">&#34;size-[24px]&#34;</span> <span class="nx">onClick</span><span class="o">=</span><span class="p">{</span><span class="nx">onClickMenu</span><span class="p">}</span> <span class="o">/&gt;</span><span class="p">)</span>
+
+  <span class="k">return</span> <span class="p">(</span>
+    <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="p">{</span><span class="nx">cn</span><span class="p">(</span><span class="s1">&#39;container w-screen h-screen relative&#39;</span><span class="p">)}</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="nx">GradientBanner</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">TopNav</span> <span class="nx">icon</span><span class="o">=</span><span class="p">{</span><span class="nx">Icon</span><span class="p">}</span> <span class="nx">title</span><span class="o">=</span><span class="s2">&#34;山竹记账&#34;</span> <span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="nx">DateRangePicker</span> <span class="nx">selectedId</span><span class="o">=</span><span class="p">{</span><span class="nx">selectedDate</span><span class="p">}</span> <span class="nx">onSelect</span><span class="o">=</span><span class="p">{</span><span class="nx">setSelectedDate</span><span class="p">}</span> <span class="o">/&gt;</span>
+      <span class="o">&lt;</span><span class="err">/GradientBanner&gt;</span>
+
+      <span class="o">&lt;</span><span class="nx">main</span> <span class="nx">className</span><span class="o">=</span><span class="s2">&#34;max-h-[calc(100svh-112px)]&#34;</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="s2">&#34;relative max-h-[calc(100svh-112px)] flex flex-col&#34;</span><span class="o">&gt;</span>
+          <span class="o">&lt;</span><span class="nx">ItemsSummary</span> <span class="nx">startDate</span><span class="o">=</span><span class="p">{</span><span class="nx">selectedDate</span><span class="p">}</span> <span class="nx">endDate</span><span class="o">=</span><span class="p">{</span><span class="nx">selectedDate</span><span class="p">}</span> <span class="o">/&gt;</span>
+
+          <span class="o">&lt;</span><span class="nx">ItemsList</span> <span class="nx">startDate</span><span class="o">=</span><span class="p">{</span><span class="nx">selectedDate</span><span class="p">}</span> <span class="nx">endDate</span><span class="o">=</span><span class="p">{</span><span class="nx">selectedDate</span><span class="p">}</span> <span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="err">/div&gt;</span>
+
+        <span class="o">&lt;</span><span class="nx">AddItemFloatButton</span> <span class="o">/&gt;</span>
+
+        <span class="o">&lt;</span><span class="nx">FloatingOverlayMenu</span> <span class="o">/&gt;</span>
+      <span class="o">&lt;</span><span class="err">/main&gt;</span>
+    <span class="o">&lt;</span><span class="err">/div&gt;</span>
+  <span class="p">)</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<hr />
+
+<h3 id="删代码调试法解决-cursor-pointer-导致页面闪烁-a-href-catalogue-a">删代码调试法解决 cursor-pointer 导致页面闪烁 <a href="#catalogue"> ⇧ </a></h3>
+
+<ul>
+<li>由于本项目只在移动端，不需要 <code>cursor-pointer</code></li>
+<li>使用<strong>删代码调试法</strong>
+
+<ul>
+<li>粗定位在 <code>tab</code> 相关组件的 bug</li>
+<li>先删除多余 tab 点击查看是否仍会闪烁</li>
+<li>删除剩余最后一个 tab 查看是否仍会闪烁</li>
+<li>删除所有 tab，给容器一个高度，再点击查看仍会有闪烁</li>
+<li>逐步删除容器的 css 样式，锁定 <code>cursor: pointer;</code></li>
+</ul></li>
+</ul>
+
+<blockquote>
+<p>参考</p>
+</blockquote>
+
+<ul>
+<li><a href="https://share.google/aimode/b43FOdbbzl5CsfkaV">cursor-pointer 导致页面闪烁</a></li>
+</ul>
+
+<hr />
+
+<h2 id="3-完成顶部导航栏-a-href-catalogue-a">3. 完成顶部导航栏 <a href="#catalogue"> ⇧ </a></h2>
+
+<blockquote>
+<p><code>@/pages/ItemCreatePage.tsx</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-tsx" data-lang="tsx"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-tsx" data-lang="tsx"><span class="kr">import</span> <span class="p">{</span> <span class="nx">GradientBanner</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">&#34;@/components/GradientBanner&#34;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">SvgIcon</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">&#34;@/components/SvgIcon&#34;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">SwitchTabs</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">&#34;@/components/SwitchTabs&#34;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">TopNav</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">&#34;@/components/TopNav&#34;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">cn</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">&#34;cn&#34;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">useState</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">&#34;react&#34;</span><span class="p">;</span>
+
+<span class="kr">interface</span> <span class="nx">Props</span> <span class="p">{</span>
+  <span class="nx">className?</span>: <span class="kt">string</span>
+<span class="p">}</span>
+
+<span class="nx">type</span> <span class="nx">TabKey</span> <span class="o">=</span> <span class="s1">&#39;incomes&#39;</span> <span class="o">|</span> <span class="s1">&#39;expenses&#39;</span>
+<span class="kr">const</span> <span class="nx">tabItems</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">{</span> <span class="nx">key</span><span class="o">:</span> <span class="s1">&#39;expenses&#39;</span><span class="p">,</span> <span class="nx">text</span><span class="o">:</span> <span class="s1">&#39;支出&#39;</span> <span class="p">},</span>
+  <span class="p">{</span> <span class="nx">key</span><span class="o">:</span> <span class="s1">&#39;incomes&#39;</span><span class="p">,</span> <span class="nx">text</span><span class="o">:</span> <span class="s1">&#39;收入&#39;</span> <span class="p">},</span>
+<span class="p">]</span> <span class="kr">as</span> <span class="kr">const</span>
+
+<span class="kr">export</span> <span class="kr">const</span> <span class="nx">ItemCreatePage</span>: <span class="kt">React.FC</span><span class="o">&lt;</span><span class="nx">Props</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">({</span> <span class="nx">className</span><span class="p">,</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">Icon</span> <span class="o">=</span> <span class="p">(</span><span class="o">&lt;</span><span class="nx">SvgIcon</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&#34;back-arrow&#34;</span> <span class="nx">className</span><span class="o">=</span><span class="s2">&#34;size-[24px]&#34;</span> <span class="o">/&gt;</span><span class="p">)</span>
+  <span class="kr">const</span> <span class="p">[</span><span class="nx">selectedKey</span><span class="p">,</span> <span class="nx">setSelectedKey</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="o">&lt;</span><span class="nx">TabKey</span><span class="o">&gt;</span><span class="p">(</span><span class="s1">&#39;incomes&#39;</span><span class="p">)</span>
+  <span class="k">return</span> <span class="p">(</span>
+    <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="p">{</span><span class="nx">cn</span><span class="p">(</span><span class="s1">&#39;container w-screen h-screen relative&#39;</span><span class="p">,</span> <span class="nx">className</span><span class="p">)}</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="nx">GradientBanner</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">TopNav</span> <span class="nx">icon</span><span class="o">=</span><span class="p">{</span><span class="nx">Icon</span><span class="p">}</span> <span class="nx">title</span><span class="o">=</span><span class="s2">&#34;记一笔&#34;</span> <span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="nx">SwitchTabs</span>
+          <span class="nx">selectedTabKey</span><span class="o">=</span><span class="p">{</span><span class="nx">selectedKey</span><span class="p">}</span>
+          <span class="nx">tabItems</span><span class="o">=</span><span class="p">{</span><span class="nx">tabItems</span><span class="p">}</span>
+          <span class="nx">onSwitchTab</span><span class="o">=</span><span class="p">{(</span><span class="nx">key</span>: <span class="kt">TabKey</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="nx">setSelectedKey</span><span class="p">(</span><span class="nx">key</span><span class="p">)</span> <span class="p">}}</span>
+          <span class="nx">className</span><span class="o">=</span><span class="p">{</span><span class="nx">cn</span><span class="p">(</span><span class="s1">&#39;[&amp;&gt;menu&gt;li]:(grow-1 text-center)&#39;</span><span class="p">)}</span><span class="o">/&gt;</span>
+      <span class="o">&lt;</span><span class="err">/GradientBanner&gt;</span>
+    <span class="o">&lt;</span><span class="err">/div&gt;</span>
+  <span class="p">)</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>使用 <code>SwitchTabs</code> 实现支出、收入切换tab</li>
+<li><code>cn('[&amp;&gt;menu&gt;li]:(grow-1 text-center)')</code> 调整tab切换页内部文字样式</li>
+</ul>
+
+<hr />
+
+<h2 id="4-实现tabs内容切换-添加-classprefix-区分内部结构-a-href-catalogue-a">4. 实现Tabs内容切换，添加 <code>classPrefix</code> 区分内部结构 <a href="#catalogue"> ⇧ </a></h2>
+
+<h3 id="通过传参-reactnode-显示tab内容-a-href-catalogue-a">通过传参 <code>ReactNode</code> 显示tab内容 <a href="#catalogue"> ⇧ </a></h3>
+
+<blockquote>
+<p><code>@/components/SwitchTabs.tsx</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-tsx" data-lang="tsx"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-tsx" data-lang="tsx"><span class="kr">import</span> <span class="p">{</span> <span class="nx">cn</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">&#34;cn&#34;</span><span class="p">;</span>
+
+<span class="kr">interface</span> <span class="nx">Props</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span> <span class="p">{</span>
+  <span class="nx">className?</span>: <span class="kt">string</span>
+  <span class="nx">selectedTabKey</span>: <span class="kt">T</span>
+  <span class="nx">tabItems</span>: <span class="kt">Readonly</span><span class="o">&lt;</span><span class="nb">Array</span><span class="o">&lt;</span><span class="p">{</span> <span class="nx">key</span>: <span class="kt">T</span><span class="p">;</span> <span class="nx">text</span>: <span class="kt">string</span><span class="p">;</span> <span class="nx">tabContent?</span>: <span class="kt">React.ReactNode</span> <span class="p">}</span><span class="o">&gt;&gt;</span>
+  <span class="nx">onSwitchTab</span><span class="o">:</span> <span class="p">(</span><span class="nx">key</span>: <span class="kt">T</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="k">void</span>
+<span class="p">}</span>
+
+<span class="kr">export</span> <span class="kr">const</span> <span class="nx">SwitchTabs</span> <span class="o">=</span> <span class="o">&lt;</span><span class="nx">T</span> <span class="kr">extends</span> <span class="kt">string</span><span class="o">&gt;</span><span class="p">({</span>
+  <span class="nx">className</span><span class="p">,</span>
+  <span class="nx">selectedTabKey</span><span class="p">,</span>
+  <span class="nx">tabItems</span><span class="p">,</span>
+  <span class="nx">onSwitchTab</span><span class="p">,</span>
+<span class="p">}</span><span class="o">:</span> <span class="nx">Props</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">selectedClass</span> <span class="o">=</span> <span class="p">(</span><span class="nx">key</span>: <span class="kt">string</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">cn</span><span class="p">(</span>
+    <span class="s1">&#39;relative&#39;</span><span class="p">,</span>
+    <span class="nx">key</span> <span class="o">===</span> <span class="nx">selectedTabKey</span>
+      <span class="o">?</span> <span class="s1">&#39;after:(content-[&#34;&#34;] block absolute bottom-0 left-0 w-full h-4px bg-[var(--tabs-indicator-bg)])&#39;</span>
+      <span class="o">:</span> <span class="s1">&#39;&#39;</span>
+  <span class="p">)</span>
+
+  <span class="k">return</span> <span class="p">(</span>
+    <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="p">{</span><span class="nx">cn</span><span class="p">(</span><span class="nx">className</span><span class="p">,)}</span><span class="o">&gt;</span>
+      <span class="p">{</span><span class="cm">/* 切换标签导航 */</span><span class="p">}</span>
+      <span class="o">&lt;</span><span class="nx">nav</span> <span class="nx">className</span><span class="o">=</span><span class="p">{</span><span class="nx">cn</span><span class="p">(</span><span class="s1">&#39;tab-nav&#39;</span><span class="p">,)}</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">menu</span> <span class="nx">className</span><span class="o">=</span><span class="p">{</span><span class="nx">cn</span><span class="p">(</span>
+          <span class="s1">&#39;tab-menu&#39;</span><span class="p">,</span>
+          <span class="s1">&#39;flex text-white&#39;</span><span class="p">,</span>
+          <span class="s1">&#39;children:(px-24px py-12px cursor-pointer)&#39;</span><span class="p">,</span>
+        <span class="p">)}</span><span class="o">&gt;</span>
+          <span class="p">{</span>
+            <span class="nx">tabItems</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">item</span> <span class="o">=&gt;</span> <span class="p">(</span>
+              <span class="o">&lt;</span><span class="nx">li</span>
+                <span class="nx">key</span><span class="o">=</span><span class="p">{</span><span class="nx">item</span><span class="p">.</span><span class="nx">key</span><span class="p">}</span>
+                <span class="nx">onClick</span><span class="o">=</span><span class="p">{()</span> <span class="o">=&gt;</span> <span class="nx">onSwitchTab</span><span class="p">(</span><span class="nx">item</span><span class="p">.</span><span class="nx">key</span><span class="p">)}</span>
+                <span class="nx">className</span><span class="o">=</span><span class="p">{</span><span class="nx">cn</span><span class="p">(</span>
+                  <span class="nx">selectedClass</span><span class="p">(</span><span class="nx">item</span><span class="p">.</span><span class="nx">key</span><span class="p">),</span>
+                  <span class="s1">&#39;tab-menu-item&#39;</span><span class="p">,</span>
+                <span class="p">)}</span><span class="o">&gt;</span>
+                <span class="p">{</span><span class="nx">item</span><span class="p">.</span><span class="nx">text</span><span class="p">}</span>
+              <span class="o">&lt;</span><span class="err">/li&gt;</span>
+            <span class="p">))</span>
+          <span class="p">}</span>
+        <span class="o">&lt;</span><span class="err">/menu&gt;</span>
+      <span class="o">&lt;</span><span class="err">/nav&gt;</span>
+
+      <span class="p">{</span><span class="cm">/* 导航内容 */</span><span class="p">}</span>
+      <span class="o">&lt;</span><span class="nx">section</span> <span class="nx">className</span><span class="o">=</span><span class="p">{</span><span class="nx">cn</span><span class="p">(</span> <span class="s1">&#39;tab-content&#39;</span><span class="p">,</span> <span class="p">)}</span><span class="o">&gt;</span>
+        <span class="p">{</span><span class="nx">tabItems</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="nx">item</span> <span class="o">=&gt;</span> <span class="nx">item</span><span class="p">.</span><span class="nx">key</span> <span class="o">===</span> <span class="nx">selectedTabKey</span><span class="p">)</span><span class="o">?</span><span class="p">.</span><span class="nx">tabContent</span><span class="p">}</span>
+      <span class="o">&lt;</span><span class="err">/section&gt;</span>
+    <span class="o">&lt;</span><span class="err">/div&gt;</span>
+  <span class="p">)</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>添加传参 <code>tabContent?: React.ReactNode</code>
+
+<ul>
+<li><code>tabItems: Readonly&lt;Array&lt;{ key: T; text: string; tabContent?: React.ReactNode }&gt;&gt;</code></li>
+</ul></li>
+<li>渲染导航内容 <code>{tabItems.find(item =&gt; item.key === selectedTabKey)?.tabContent}</code></li>
+</ul>
+
+<blockquote>
+<p>修改 <code>@/pages/ItemCreatePage.tsx</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-tsx" data-lang="tsx"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-tsx" data-lang="tsx"><span class="kr">import</span> <span class="p">{</span> <span class="nx">GradientBanner</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">&#34;@/components/GradientBanner&#34;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">SvgIcon</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">&#34;@/components/SvgIcon&#34;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">SwitchTabs</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">&#34;@/components/SwitchTabs&#34;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">TopNav</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">&#34;@/components/TopNav&#34;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">cn</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">&#34;cn&#34;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">useState</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">&#34;react&#34;</span><span class="p">;</span>
+
+<span class="kr">interface</span> <span class="nx">Props</span> <span class="p">{</span>
+  <span class="nx">className?</span>: <span class="kt">string</span>
+<span class="p">}</span>
+
+<span class="nx">type</span> <span class="nx">TabKey</span> <span class="o">=</span> <span class="s1">&#39;incomes&#39;</span> <span class="o">|</span> <span class="s1">&#39;expenses&#39;</span>
+<span class="kr">interface</span> <span class="nx">TabItem</span> <span class="p">{</span>
+  <span class="nx">key</span>: <span class="kt">TabKey</span>
+  <span class="nx">text</span>: <span class="kt">string</span>
+  <span class="nx">tabContent?</span>: <span class="kt">React.ReactNode</span>
+<span class="p">}</span>
+<span class="kr">const</span> <span class="nx">tabItems</span>: <span class="kt">Readonly</span><span class="o">&lt;</span><span class="nb">Array</span><span class="o">&lt;</span><span class="nx">TabItem</span><span class="o">&gt;&gt;</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">{</span> <span class="nx">key</span><span class="o">:</span> <span class="s1">&#39;expenses&#39;</span><span class="p">,</span> <span class="nx">text</span><span class="o">:</span> <span class="s1">&#39;支出&#39;</span><span class="p">,</span> <span class="nx">tabContent</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span><span class="err">支出</span><span class="o">&lt;</span><span class="err">/div&gt;, },</span>
+  <span class="p">{</span> <span class="nx">key</span><span class="o">:</span> <span class="s1">&#39;incomes&#39;</span><span class="p">,</span> <span class="nx">text</span><span class="o">:</span> <span class="s1">&#39;收入&#39;</span><span class="p">,</span> <span class="nx">tabContent</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span><span class="err">收入</span><span class="o">&lt;</span><span class="err">/div&gt;, },</span>
+<span class="p">]</span> <span class="kr">as</span> <span class="kr">const</span>
+
+<span class="kr">export</span> <span class="kr">const</span> <span class="nx">ItemCreatePage</span>: <span class="kt">React.FC</span><span class="o">&lt;</span><span class="nx">Props</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">({</span> <span class="nx">className</span><span class="p">,</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">Icon</span> <span class="o">=</span> <span class="p">(</span><span class="o">&lt;</span><span class="nx">SvgIcon</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&#34;back-arrow&#34;</span> <span class="nx">className</span><span class="o">=</span><span class="s2">&#34;size-[24px]&#34;</span> <span class="o">/&gt;</span><span class="p">)</span>
+  <span class="kr">const</span> <span class="p">[</span><span class="nx">selectedKey</span><span class="p">,</span> <span class="nx">setSelectedKey</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="o">&lt;</span><span class="nx">TabKey</span><span class="o">&gt;</span><span class="p">(</span><span class="s1">&#39;expenses&#39;</span><span class="p">)</span>
+  <span class="k">return</span> <span class="p">(</span>
+    <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="p">{</span><span class="nx">cn</span><span class="p">(</span><span class="s1">&#39;container w-screen h-screen relative&#39;</span><span class="p">,</span> <span class="nx">className</span><span class="p">)}</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="nx">GradientBanner</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">TopNav</span> <span class="nx">icon</span><span class="o">=</span><span class="p">{</span><span class="nx">Icon</span><span class="p">}</span> <span class="nx">title</span><span class="o">=</span><span class="s2">&#34;记一笔&#34;</span> <span class="o">/&gt;</span>
+      <span class="o">&lt;</span><span class="err">/GradientBanner&gt;</span>
+
+      <span class="o">&lt;</span><span class="nx">SwitchTabs</span>
+        <span class="nx">selectedTabKey</span><span class="o">=</span><span class="p">{</span><span class="nx">selectedKey</span><span class="p">}</span>
+        <span class="nx">tabItems</span><span class="o">=</span><span class="p">{</span><span class="nx">tabItems</span><span class="p">}</span>
+        <span class="nx">onSwitchTab</span><span class="o">=</span><span class="p">{(</span><span class="nx">key</span>: <span class="kt">TabKey</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="nx">setSelectedKey</span><span class="p">(</span><span class="nx">key</span><span class="p">)</span> <span class="p">}}</span>
+        <span class="nx">className</span><span class="o">=</span><span class="p">{</span><span class="nx">cn</span><span class="p">(</span><span class="s1">&#39;[&amp;&gt;nav&gt;menu&gt;li]:(grow-1 text-center bg-[var(--welcome-card-end)])&#39;</span><span class="p">)}</span> <span class="o">/&gt;</span>
+    <span class="o">&lt;</span><span class="err">/div&gt;</span>
+  <span class="p">)</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li><code>SwitchTabs</code> 内部自动判断是否传参 <code>tabContent</code></li>
+</ul>
+
+<hr />
+
+<h3 id="添加-classprefix-区分内部结构-a-href-catalogue-a">添加 <code>classPrefix</code> 区分内部结构 <a href="#catalogue"> ⇧ </a></h3>
+
+<blockquote>
+<p><code>@/components/SwitchTabs.tsx</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-tsx" data-lang="tsx"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-tsx" data-lang="tsx"><span class="kr">import</span> <span class="p">{</span> <span class="nx">cn</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">&#34;cn&#34;</span><span class="p">;</span>
+
+<span class="kr">interface</span> <span class="nx">Props</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span> <span class="p">{</span>
+  <span class="nx">className?</span>: <span class="kt">string</span>
+  <span class="nx">classPrefix?</span>: <span class="kt">string</span>
+  <span class="nx">selectedTabKey</span>: <span class="kt">T</span>
+  <span class="nx">tabItems</span>: <span class="kt">Readonly</span><span class="o">&lt;</span><span class="nb">Array</span><span class="o">&lt;</span><span class="p">{</span> <span class="nx">key</span>: <span class="kt">T</span><span class="p">;</span> <span class="nx">text</span>: <span class="kt">string</span><span class="p">;</span> <span class="nx">tabContent?</span>: <span class="kt">React.ReactNode</span> <span class="p">}</span><span class="o">&gt;&gt;</span>
+  <span class="nx">onSwitchTab</span><span class="o">:</span> <span class="p">(</span><span class="nx">key</span>: <span class="kt">T</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="k">void</span>
+<span class="p">}</span>
+
+<span class="kr">export</span> <span class="kr">const</span> <span class="nx">SwitchTabs</span> <span class="o">=</span> <span class="o">&lt;</span><span class="nx">T</span> <span class="kr">extends</span> <span class="kt">string</span><span class="o">&gt;</span><span class="p">({</span>
+  <span class="nx">className</span><span class="p">,</span>
+  <span class="nx">classPrefix</span><span class="p">,</span>
+  <span class="nx">selectedTabKey</span><span class="p">,</span>
+  <span class="nx">tabItems</span><span class="p">,</span>
+  <span class="nx">onSwitchTab</span><span class="p">,</span>
+<span class="p">}</span><span class="o">:</span> <span class="nx">Props</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">selectedClass</span> <span class="o">=</span> <span class="p">(</span><span class="nx">key</span>: <span class="kt">string</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">cn</span><span class="p">(</span>
+    <span class="s1">&#39;relative&#39;</span><span class="p">,</span>
+    <span class="nx">key</span> <span class="o">===</span> <span class="nx">selectedTabKey</span>
+      <span class="o">?</span> <span class="s1">&#39;after:(content-[&#34;&#34;] block absolute bottom-0 left-0 w-full h-4px bg-[var(--tabs-indicator-bg)])&#39;</span>
+      <span class="o">:</span> <span class="s1">&#39;&#39;</span>
+  <span class="p">)</span>
+
+  <span class="k">return</span> <span class="p">(</span>
+    <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="p">{</span><span class="nx">cn</span><span class="p">(</span><span class="nx">className</span><span class="p">,</span> <span class="nx">classPrefix</span><span class="p">)}</span><span class="o">&gt;</span>
+      <span class="p">{</span><span class="cm">/* 切换标签导航 */</span><span class="p">}</span>
+      <span class="o">&lt;</span><span class="nx">nav</span> <span class="nx">className</span><span class="o">=</span><span class="p">{</span><span class="nx">cn</span><span class="p">(</span><span class="nx">classPrefix</span> <span class="o">?</span> <span class="sb">`</span><span class="si">${</span><span class="nx">classPrefix</span><span class="si">}</span><span class="sb">-tab-nav`</span> <span class="o">:</span> <span class="s1">&#39;tab-nav&#39;</span><span class="p">,)}</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">menu</span> <span class="nx">className</span><span class="o">=</span><span class="p">{</span><span class="nx">cn</span><span class="p">(</span>
+          <span class="nx">classPrefix</span> <span class="o">?</span> <span class="sb">`</span><span class="si">${</span><span class="nx">classPrefix</span><span class="si">}</span><span class="sb">-tab-menu`</span> <span class="o">:</span> <span class="s1">&#39;tab-menu&#39;</span><span class="p">,</span>
+          <span class="s1">&#39;flex text-white&#39;</span><span class="p">,</span>
+          <span class="s1">&#39;children:(px-24px py-12px cursor-pointer)&#39;</span><span class="p">,</span>
+        <span class="p">)}</span><span class="o">&gt;</span>
+          <span class="p">{</span>
+            <span class="nx">tabItems</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">item</span> <span class="o">=&gt;</span> <span class="p">(</span>
+              <span class="o">&lt;</span><span class="nx">li</span>
+                <span class="nx">key</span><span class="o">=</span><span class="p">{</span><span class="nx">item</span><span class="p">.</span><span class="nx">key</span><span class="p">}</span>
+                <span class="nx">onClick</span><span class="o">=</span><span class="p">{()</span> <span class="o">=&gt;</span> <span class="nx">onSwitchTab</span><span class="p">(</span><span class="nx">item</span><span class="p">.</span><span class="nx">key</span><span class="p">)}</span>
+                <span class="nx">className</span><span class="o">=</span><span class="p">{</span><span class="nx">cn</span><span class="p">(</span>
+                  <span class="nx">selectedClass</span><span class="p">(</span><span class="nx">item</span><span class="p">.</span><span class="nx">key</span><span class="p">),</span>
+                  <span class="nx">classPrefix</span> <span class="o">?</span> <span class="sb">`</span><span class="si">${</span><span class="nx">classPrefix</span><span class="si">}</span><span class="sb">-tab-menu-item`</span> <span class="o">:</span> <span class="s1">&#39;tab-menu-item&#39;</span><span class="p">,</span>
+                <span class="p">)}</span><span class="o">&gt;</span>
+                <span class="p">{</span><span class="nx">item</span><span class="p">.</span><span class="nx">text</span><span class="p">}</span>
+              <span class="o">&lt;</span><span class="err">/li&gt;</span>
+            <span class="p">))</span>
+          <span class="p">}</span>
+        <span class="o">&lt;</span><span class="err">/menu&gt;</span>
+      <span class="o">&lt;</span><span class="err">/nav&gt;</span>
+
+      <span class="p">{</span><span class="cm">/* 导航内容 */</span><span class="p">}</span>
+      <span class="o">&lt;</span><span class="nx">section</span> <span class="nx">className</span><span class="o">=</span><span class="p">{</span><span class="nx">cn</span><span class="p">(</span>
+        <span class="nx">classPrefix</span> <span class="o">?</span> <span class="sb">`</span><span class="si">${</span><span class="nx">classPrefix</span><span class="si">}</span><span class="sb">-tab-content`</span> <span class="o">:</span> <span class="s1">&#39;tab-content&#39;</span><span class="p">,</span>
+      <span class="p">)}</span><span class="o">&gt;</span>
+        <span class="p">{</span><span class="nx">tabItems</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="nx">item</span> <span class="o">=&gt;</span> <span class="nx">item</span><span class="p">.</span><span class="nx">key</span> <span class="o">===</span> <span class="nx">selectedTabKey</span><span class="p">)</span><span class="o">?</span><span class="p">.</span><span class="nx">tabContent</span><span class="p">}</span>
+      <span class="o">&lt;</span><span class="err">/section&gt;</span>
+    <span class="o">&lt;</span><span class="err">/div&gt;</span>
+  <span class="p">)</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>内部结构样式
+
+<ul>
+<li><code>classPrefix</code> &gt; <code>${classPrefix}-tab-nav</code> &gt; <code>${classPrefix}-tab-menu</code> &gt; <code>${classPrefix}-tab-menu-item</code></li>
+<li><code>classPrefix</code> &gt; <code>${classPrefix}-tab-content</code></li>
+</ul></li>
+</ul>
+
+<hr />
+
+<h3 id="styled-components-支持泛型传参-a-href-catalogue-a">Styled Components 支持泛型传参 <a href="#catalogue"> ⇧ </a></h3>
+
+<blockquote>
+<ol>
+<li>基础语法（推荐写法）</li>
+</ol>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-tsx" data-lang="tsx"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-tsx" data-lang="tsx"><span class="kr">import</span> <span class="nx">styled</span> <span class="nx">from</span> <span class="s1">&#39;styled-components&#39;</span><span class="p">;</span>
+
+<span class="c1">// 1. 定义 Props 接口
+</span><span class="c1"></span><span class="kr">interface</span> <span class="nx">ButtonProps</span> <span class="p">{</span>
+  <span class="nx">$primary?</span>: <span class="kt">boolean</span><span class="p">;</span>
+  <span class="nx">$size</span><span class="o">?:</span> <span class="s1">&#39;small&#39;</span> <span class="o">|</span> <span class="s1">&#39;large&#39;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// 2. 使用泛型传参
+</span><span class="c1"></span><span class="kr">const</span> <span class="nx">Button</span> <span class="o">=</span> <span class="nx">styled</span><span class="p">.</span><span class="nx">button</span><span class="o">&lt;</span><span class="nx">ButtonProps</span><span class="o">&gt;</span><span class="sb">`
+</span><span class="sb">  background: </span><span class="si">${</span><span class="nx">props</span> <span class="o">=&gt;</span> <span class="nx">props</span><span class="p">.</span><span class="nx">$primary</span> <span class="o">?</span> <span class="s1">&#39;blue&#39;</span> <span class="o">:</span> <span class="s1">&#39;gray&#39;</span><span class="si">}</span><span class="sb">;
+</span><span class="sb">  padding: </span><span class="si">${</span><span class="nx">props</span> <span class="o">=&gt;</span> <span class="nx">props</span><span class="p">.</span><span class="nx">$size</span> <span class="o">===</span> <span class="s1">&#39;large&#39;</span> <span class="o">?</span> <span class="s1">&#39;12px 24px&#39;</span> <span class="o">:</span> <span class="s1">&#39;8px 16px&#39;</span><span class="si">}</span><span class="sb">;
+</span><span class="sb">  color: white;
+</span><span class="sb">  border: none;
+</span><span class="sb">`</span>
+
+<span class="c1">// 3. 在组件中使用
+</span><span class="c1"></span><span class="kr">export</span> <span class="kr">const</span> <span class="nx">App</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">(</span>
+  <span class="o">&lt;</span><span class="nx">Button</span> <span class="nx">$primary</span> <span class="nx">$size</span><span class="o">=</span><span class="s2">&#34;large&#34;</span><span class="o">&gt;</span><span class="err">点击我</span><span class="o">&lt;</span><span class="err">/Button&gt;</span>
+<span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>注意上面代码中属性名前面的 <code>$</code> 符号。这是 <code>styled-components</code> 的 <code>Transient Props</code> 特性</li>
+<li>带有 <code>$</code> 的属性只会在样式组件中生效，不会被透传到最终的 <code>HTML</code> 标签上
+
+<ul>
+<li>避免抛出 <code>React does not recognize the ... prop on a DOM element</code> 的警告</li>
+</ul></li>
+</ul>
+
+<blockquote>
+<p>包装自定义组件时的泛型</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-tsx" data-lang="tsx"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-tsx" data-lang="tsx"><span class="kr">import</span> <span class="nx">styled</span> <span class="nx">from</span> <span class="s1">&#39;styled-components&#39;</span>
+
+<span class="c1">// 一个基础的泛型列表组件
+</span><span class="c1"></span><span class="kr">interface</span> <span class="nx">ListProps</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span> <span class="p">{</span>
+  <span class="nx">items</span>: <span class="kt">T</span><span class="p">[];</span>
+  <span class="nx">renderItem</span><span class="o">:</span> <span class="p">(</span><span class="nx">item</span>: <span class="kt">T</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">React</span><span class="p">.</span><span class="nx">ReactNode</span><span class="p">;</span>
+  <span class="nx">className?</span>: <span class="kt">string</span><span class="p">;</span> <span class="c1">// 必须包裹 className 才能被 styled() 继承样式
+</span><span class="c1"></span><span class="p">}</span>
+<span class="kd">function</span> <span class="nx">List</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span><span class="p">({</span> <span class="nx">items</span><span class="p">,</span> <span class="nx">renderItem</span><span class="p">,</span> <span class="nx">className</span> <span class="p">}</span><span class="o">:</span> <span class="nx">ListProps</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="p">{</span><span class="nx">className</span><span class="p">}</span><span class="o">&gt;</span><span class="p">{</span><span class="nx">items</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">renderItem</span><span class="p">)}</span><span class="o">&lt;</span><span class="err">/div&gt;</span>
+<span class="p">}</span>
+
+<span class="c1">// 为泛型组件包裹样式
+</span><span class="c1"></span><span class="kr">const</span> <span class="nx">StyledList</span> <span class="o">=</span> <span class="nx">styled</span><span class="p">(</span><span class="nx">List</span><span class="p">)</span><span class="sb">`
+</span><span class="sb">  background-color: #f5f5f5;
+</span><span class="sb">  padding: 200px;
+</span><span class="sb">`</span> <span class="kr">as</span> <span class="k">typeof</span> <span class="nx">List</span> <span class="c1">// 使用 as typeof 保持原组件的泛型能力
+</span></code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>在 <code>Styled Components</code> 组件后添加断言 <code>as typeof</code> 保持原组件的泛型能力</li>
+<li>必须包裹 <code>className</code> 才能被 <code>styled()</code> 继承样式</li>
+</ul>
+
+<blockquote>
+<p>参考</p>
+</blockquote>
+
+<ul>
+<li><a href="https://styled-components.com/docs/basics#passed-props">Passed props</a></li>
+<li><a href="https://styled-components.com/docs/api#transient-props">Transient props</a></li>
+<li><a href="https://styled-components.com/docs/api#typescript">styled-components TypeScript</a></li>
+<li><a href="https://styled-components.com/docs/api#caveat-with-classname">Caveat with className</a></li>
+</ul>
+
+<blockquote>
+<p>尝试使用</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-tsx" data-lang="tsx"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-tsx" data-lang="tsx"><span class="kr">const</span> <span class="nx">StyledTabs</span> <span class="o">=</span> <span class="nx">styled</span><span class="p">(</span><span class="nx">SwitchTabs</span><span class="p">)</span><span class="sb">`
+</span><span class="sb">  .your-prefix-nav {}
+</span><span class="sb">  .your-prefix-menu {}
+</span><span class="sb">  .your-prefix-menu-item {flex: 1; text-align: center; background: var(--welcome-card-end);}
+</span><span class="sb">  .your-prefix-content {}
+</span><span class="sb">`</span> <span class="kr">as</span> <span class="k">typeof</span> <span class="nx">SwitchTabs</span>
+
+<span class="kr">export</span> <span class="kr">const</span> <span class="nx">ItemCreatePage</span>: <span class="kt">React.FC</span><span class="o">&lt;</span><span class="nx">Props</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">({</span> <span class="nx">className</span><span class="p">,</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">Icon</span> <span class="o">=</span> <span class="p">(</span><span class="o">&lt;</span><span class="nx">SvgIcon</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&#34;back-arrow&#34;</span> <span class="nx">className</span><span class="o">=</span><span class="s2">&#34;size-[24px]&#34;</span> <span class="o">/&gt;</span><span class="p">)</span>
+  <span class="kr">const</span> <span class="p">[</span><span class="nx">selectedKey</span><span class="p">,</span> <span class="nx">setSelectedKey</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="o">&lt;</span><span class="nx">TabKey</span><span class="o">&gt;</span><span class="p">(</span><span class="s1">&#39;expenses&#39;</span><span class="p">)</span>
+  <span class="k">return</span> <span class="p">(</span>
+    <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="p">{</span><span class="nx">cn</span><span class="p">(</span><span class="s1">&#39;container w-screen h-screen relative&#39;</span><span class="p">,</span> <span class="nx">className</span><span class="p">)}</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="nx">GradientBanner</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">TopNav</span> <span class="nx">icon</span><span class="o">=</span><span class="p">{</span><span class="nx">Icon</span><span class="p">}</span> <span class="nx">title</span><span class="o">=</span><span class="s2">&#34;记一笔&#34;</span> <span class="o">/&gt;</span>
+      <span class="o">&lt;</span><span class="err">/GradientBanner&gt;</span>
+
+      <span class="o">&lt;</span><span class="nx">StyledTabs</span>
+        <span class="nx">selectedTabKey</span><span class="o">=</span><span class="p">{</span><span class="nx">selectedKey</span><span class="p">}</span>
+        <span class="nx">tabItems</span><span class="o">=</span><span class="p">{</span><span class="nx">tabItems</span><span class="p">}</span>
+        <span class="nx">onSwitchTab</span><span class="o">=</span><span class="p">{(</span><span class="nx">key</span>: <span class="kt">TabKey</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="nx">setSelectedKey</span><span class="p">(</span><span class="nx">key</span><span class="p">)</span> <span class="p">}}</span>
+        <span class="nx">classPrefix</span><span class="o">=</span><span class="s2">&#34;your-prefix&#34;</span> <span class="o">/&gt;</span>
+    <span class="o">&lt;</span><span class="err">/div&gt;</span>
+  <span class="p">)</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<hr />
+
+<h2 id="5-grid布局展示所有标签-数量宽高不定-a-href-catalogue-a">5. Grid布局展示所有标签，数量宽高不定 <a href="#catalogue"> ⇧ </a></h2>
+
+<blockquote>
+<p><code>@/modules/tags/IconTags.tsx</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-tsx" data-lang="tsx"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-tsx" data-lang="tsx"><span class="kr">import</span> <span class="nx">type</span> <span class="p">{</span> <span class="nx">TabKind</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">&#34;@/global&#34;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">cn</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">&#34;cn&#34;</span><span class="p">;</span>
+
+<span class="kr">interface</span> <span class="nx">Props</span> <span class="p">{</span>
+  <span class="nx">className?</span>: <span class="kt">string</span>
+  <span class="nx">kind</span>: <span class="kt">TabKind</span>
+<span class="p">}</span>
+
+<span class="kr">export</span> <span class="kr">const</span> <span class="nx">IconTags</span>: <span class="kt">React.FC</span><span class="o">&lt;</span><span class="nx">Props</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">({</span> <span class="nx">className</span><span class="p">,</span> <span class="nx">kind</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;IconTags %c⧭ kind&#39;</span><span class="p">,</span> <span class="s1">&#39;color: #007300&#39;</span><span class="p">,</span> <span class="nx">kind</span><span class="p">);</span>
+  <span class="kr">const</span> <span class="nx">tags</span> <span class="o">=</span> <span class="nb">Array</span><span class="p">.</span><span class="nx">from</span><span class="p">({</span> <span class="nx">length</span>: <span class="kt">99</span> <span class="p">},</span> <span class="p">(</span><span class="nx">_</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+  <span class="k">return</span> <span class="p">(</span>
+    <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="p">{</span><span class="nx">cn</span><span class="p">(</span><span class="nx">className</span><span class="p">)</span> <span class="p">}</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="nx">ol</span> <span class="nx">className</span><span class="o">=</span><span class="p">{</span><span class="nx">cn</span><span class="p">(</span>
+        <span class="s1">&#39;grid place-items-center justify-center grid-cols-[repeat(auto-fit,3em)]&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;py-1em px-.5em gap-x-[2em] gap-y-[1em]&#39;</span>
+      <span class="p">)}</span><span class="o">&gt;</span>
+        <span class="p">{</span><span class="nx">tags</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">tag</span> <span class="o">=&gt;</span> <span class="p">(</span>
+          <span class="o">&lt;</span><span class="nx">li</span>
+            <span class="nx">key</span><span class="o">=</span><span class="p">{</span><span class="nx">tag</span><span class="p">}</span>
+            <span class="nx">className</span><span class="o">=</span><span class="p">{</span><span class="nx">cn</span><span class="p">(</span>
+            <span class="s1">&#39;size-3em flex items-center justify-center&#39;</span><span class="p">,</span>
+            <span class="s1">&#39; b-1 b-solid b-red &#39;</span>
+          <span class="p">)}</span><span class="o">&gt;</span>
+            <span class="err">🐱</span>
+          <span class="o">&lt;</span><span class="err">/li&gt;</span>
+        <span class="p">))}</span>
+
+      <span class="o">&lt;</span><span class="err">/ol&gt;</span>
+    <span class="o">&lt;</span><span class="err">/div&gt;</span>
+  <span class="p">)</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>划分列数 <code>grid grid-cols-[1fr_1fr_1fr_1fr_1fr]</code>
+
+<ul>
+<li>可使用重复函数 <code>grid-cols-[repeat(5,1fr)]</code></li>
+<li>可使用自适应列数 <code>auto-fit</code>，但每项宽度必须为具体数字单位 <code>grid-cols-[repeat(auto-fit,3em)]</code></li>
+</ul></li>
+</ul>
+
+<blockquote>
+<p><code>@/pages/ItemCreatePage.tsx</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-tsx" data-lang="tsx"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-tsx" data-lang="tsx"><span class="c1">// import ...
+</span><span class="c1"></span>
+<span class="kr">interface</span> <span class="nx">TabItem</span> <span class="p">{</span>
+  <span class="nx">key</span>: <span class="kt">TabKind</span>
+  <span class="nx">text</span>: <span class="kt">string</span>
+  <span class="nx">tabContent?</span>: <span class="kt">React.ReactNode</span>
+<span class="p">}</span>
+<span class="kr">const</span> <span class="nx">tabItems</span>: <span class="kt">Readonly</span><span class="o">&lt;</span><span class="nb">Array</span><span class="o">&lt;</span><span class="nx">TabItem</span><span class="o">&gt;&gt;</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">{</span>
+    <span class="nx">key</span><span class="o">:</span> <span class="s1">&#39;expenses&#39;</span><span class="p">,</span> <span class="nx">text</span><span class="o">:</span> <span class="s1">&#39;支出&#39;</span><span class="p">,</span> <span class="nx">tabContent</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">IconTags</span> <span class="nx">kind</span><span class="o">=</span><span class="s2">&#34;expenses&#34;</span> <span class="o">/&gt;</span><span class="p">,</span> <span class="p">},</span>
+  <span class="p">{</span> <span class="nx">key</span><span class="o">:</span> <span class="s1">&#39;incomes&#39;</span><span class="p">,</span> <span class="nx">text</span><span class="o">:</span> <span class="s1">&#39;收入&#39;</span><span class="p">,</span> <span class="nx">tabContent</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">IconTags</span> <span class="nx">kind</span><span class="o">=</span><span class="s2">&#34;incomes&#34;</span> <span class="o">/&gt;</span><span class="p">,</span> <span class="p">},</span>
+<span class="p">]</span> <span class="kr">as</span> <span class="kr">const</span>
+
+<span class="kr">export</span> <span class="kr">const</span> <span class="nx">ItemCreatePage</span>: <span class="kt">React.FC</span><span class="o">&lt;</span><span class="nx">Props</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">({</span> <span class="nx">className</span><span class="p">,</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">Icon</span> <span class="o">=</span> <span class="p">(</span><span class="o">&lt;</span><span class="nx">SvgIcon</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&#34;back-arrow&#34;</span> <span class="nx">className</span><span class="o">=</span><span class="s2">&#34;size-[24px]&#34;</span> <span class="o">/&gt;</span><span class="p">)</span>
+  <span class="kr">const</span> <span class="p">[</span><span class="nx">selectedKey</span><span class="p">,</span> <span class="nx">setSelectedKey</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="o">&lt;</span><span class="nx">TabKind</span><span class="o">&gt;</span><span class="p">(</span><span class="s1">&#39;expenses&#39;</span><span class="p">)</span>
+  <span class="k">return</span> <span class="p">(</span>
+    <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="p">{</span><span class="nx">cn</span><span class="p">(</span><span class="s1">&#39;container w-screen h-screen relative&#39;</span><span class="p">,</span> <span class="nx">className</span><span class="p">)}</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="nx">GradientBanner</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">TopNav</span> <span class="nx">icon</span><span class="o">=</span><span class="p">{</span><span class="nx">Icon</span><span class="p">}</span> <span class="nx">title</span><span class="o">=</span><span class="s2">&#34;记一笔&#34;</span> <span class="o">/&gt;</span>
+      <span class="o">&lt;</span><span class="err">/GradientBanner&gt;</span>
+
+      <span class="o">&lt;</span><span class="nx">SwitchTabs</span>
+        <span class="nx">selectedTabKey</span><span class="o">=</span><span class="p">{</span><span class="nx">selectedKey</span><span class="p">}</span>
+        <span class="nx">tabItems</span><span class="o">=</span><span class="p">{</span><span class="nx">tabItems</span><span class="p">}</span>
+        <span class="nx">onSwitchTab</span><span class="o">=</span><span class="p">{(</span><span class="nx">key</span>: <span class="kt">TabKind</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="nx">setSelectedKey</span><span class="p">(</span><span class="nx">key</span><span class="p">)</span> <span class="p">}}</span>
+        <span class="nx">className</span><span class="o">=</span><span class="p">{</span><span class="nx">cn</span><span class="p">(</span><span class="s1">&#39;[&amp;&gt;nav&gt;menu&gt;li]:(grow-1 text-center bg-[var(--welcome-card-end)])&#39;</span><span class="p">)}</span> <span class="o">/&gt;</span>
+    <span class="o">&lt;</span><span class="err">/div&gt;</span>
+  <span class="p">)</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<hr />
+
+<h2 id="6-完善样式细节-抽离组件-icontagitem-a-href-catalogue-a">6. 完善样式细节，抽离组件 IconTagItem <a href="#catalogue"> ⇧ </a></h2>
+
+<blockquote>
+<p><code>@/modules/tags/IconTagItem.tsx</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-tsx" data-lang="tsx"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-tsx" data-lang="tsx"><span class="kr">import</span> <span class="p">{</span> <span class="nx">cn</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">&#34;cn&#34;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">React</span> <span class="nx">from</span> <span class="s2">&#34;react&#34;</span><span class="p">;</span>
+
+<span class="kr">interface</span> <span class="nx">Props</span> <span class="p">{</span>
+  <span class="nx">className?</span>: <span class="kt">string</span>
+  <span class="nx">tagKey</span>: <span class="kt">string</span>
+  <span class="nx">tagName</span>: <span class="kt">string</span>
+  <span class="nx">selectedKey?</span>: <span class="kt">string</span>
+  <span class="nx">tagSign?</span>: <span class="kt">string</span>
+  <span class="nx">children?</span>: <span class="kt">React.ReactNode</span>
+  <span class="nx">onSelectKey</span><span class="o">?:</span> <span class="p">(</span><span class="nx">tagKey</span>: <span class="kt">string</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="k">void</span>
+<span class="p">}</span>
+
+<span class="kr">export</span> <span class="kr">const</span> <span class="nx">IconTagItem</span>: <span class="kt">React.FC</span><span class="o">&lt;</span><span class="nx">Props</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">({</span> <span class="nx">className</span><span class="p">,</span> <span class="nx">tagKey</span><span class="p">,</span> <span class="nx">tagName</span><span class="p">,</span> <span class="nx">tagSign</span><span class="p">,</span> <span class="nx">children</span><span class="p">,</span> <span class="nx">onSelectKey</span><span class="p">,</span> <span class="nx">selectedKey</span><span class="p">,</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">onClickTab</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">onSelectKey</span><span class="o">?</span><span class="p">.(</span><span class="nx">tagKey</span><span class="p">)</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="p">(</span>
+    <span class="o">&lt;</span><span class="nx">li</span>
+      <span class="nx">onClick</span><span class="o">=</span><span class="p">{</span><span class="nx">onClickTab</span><span class="p">}</span>
+      <span class="nx">className</span><span class="o">=</span><span class="p">{</span><span class="nx">cn</span><span class="p">(</span>
+        <span class="nx">className</span><span class="p">,</span>
+        <span class="s1">&#39;w-3em flex flex-col items-center justify-center gap-y-.5em&#39;</span><span class="p">,</span>
+      <span class="p">)}</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="nx">span</span>
+        <span class="nx">className</span><span class="o">=</span><span class="p">{</span><span class="nx">cn</span><span class="p">(</span>
+          <span class="s1">&#39;flex items-center justify-center&#39;</span><span class="p">,</span>
+          <span class="s1">&#39;where:(size-[48px] text-[24px] rounded-[50%])&#39;</span><span class="p">,</span>
+          <span class="s1">&#39;where:(b-1 bg-[var(--item-tag-bg)])&#39;</span><span class="p">,</span>
+          <span class="nx">selectedKey</span> <span class="o">===</span> <span class="nx">tagKey</span> <span class="o">?</span> <span class="s1">&#39;b-[var(--main)] b-1.5&#39;</span> <span class="o">:</span> <span class="s1">&#39;b-[var(--main)]/20&#39;</span><span class="p">,</span>
+        <span class="p">)}</span><span class="o">&gt;</span>
+        <span class="p">{</span><span class="nx">tagSign</span> <span class="o">??</span> <span class="nx">children</span><span class="p">}</span>
+      <span class="o">&lt;</span><span class="err">/span&gt;</span>
+      <span class="o">&lt;</span><span class="nx">span</span> <span class="nx">className</span><span class="o">=</span><span class="p">{</span><span class="nx">cn</span><span class="p">(</span>
+        <span class="s1">&#39;text-12px &#39;</span><span class="p">,</span>
+        <span class="nx">selectedKey</span> <span class="o">===</span> <span class="nx">tagKey</span> <span class="o">?</span> <span class="s1">&#39;color-[var(--main)] font-bold&#39;</span> <span class="o">:</span> <span class="s1">&#39;color-[var(--item-tag-text-color)]&#39;</span>
+      <span class="p">)}</span><span class="o">&gt;</span><span class="p">{</span><span class="nx">tagName</span><span class="p">}</span><span class="o">&lt;</span><span class="err">/span&gt;</span>
+    <span class="o">&lt;</span><span class="err">/li&gt;</span>
+  <span class="p">)</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>给图标添加选中样式 <code>selectedKey === tagKey ? 'b-[var(--main)] b-1.5' : 'b-[var(--main)]/20'</code></li>
+<li>给文字添加选中样式 加粗 <code>selectedKey === tagKey ? 'color-[var(--main)] font-bold' : 'color-[var(--item-tag-text-color)]'</code></li>
+</ul>
+
+<blockquote>
+<p><code>@/modules/tags/IconTags.tsx</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-tsx" data-lang="tsx"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-tsx" data-lang="tsx"><span class="kr">import</span> <span class="p">{</span> <span class="nx">SvgIcon</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">&#34;@/components/SvgIcon&#34;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">type</span> <span class="p">{</span> <span class="nx">TabKind</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">&#34;@/global&#34;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">IconTagItem</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">&#34;@/modules/tags/IconTagItem&#34;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">cn</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">&#34;cn&#34;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">useState</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">&#34;react&#34;</span><span class="p">;</span>
+
+<span class="kr">interface</span> <span class="nx">Props</span> <span class="p">{</span>
+  <span class="nx">className?</span>: <span class="kt">string</span>
+  <span class="nx">kind</span>: <span class="kt">TabKind</span>
+<span class="p">}</span>
+
+<span class="kr">const</span> <span class="nx">tags</span> <span class="o">=</span> <span class="nb">Array</span><span class="p">.</span><span class="nx">from</span><span class="p">({</span> <span class="nx">length</span>: <span class="kt">21</span> <span class="p">},</span> <span class="p">(</span><span class="nx">_</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="kr">export</span> <span class="kr">const</span> <span class="nx">IconTags</span>: <span class="kt">React.FC</span><span class="o">&lt;</span><span class="nx">Props</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">({</span> <span class="nx">className</span><span class="p">,</span> <span class="nx">kind</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;IconTags %c⧭ kind&#39;</span><span class="p">,</span> <span class="s1">&#39;color: #007300&#39;</span><span class="p">,</span> <span class="nx">kind</span><span class="p">);</span>
+
+  <span class="kr">const</span> <span class="p">[</span><span class="nx">selectedTabKey</span><span class="p">,</span> <span class="nx">setSelectedTabKey</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="o">&lt;</span><span class="kt">string</span><span class="o">&gt;</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">)</span>
+  <span class="k">return</span> <span class="p">(</span>
+    <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="p">{</span><span class="nx">cn</span><span class="p">(</span><span class="nx">className</span><span class="p">)</span> <span class="p">}</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="nx">ol</span> <span class="nx">className</span><span class="o">=</span><span class="p">{</span><span class="nx">cn</span><span class="p">(</span>
+        <span class="s1">&#39;grid place-items-center justify-center grid-cols-[repeat(auto-fit,3em)]&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;py-1em px-.5em gap-x-[2em] gap-y-[1em]&#39;</span><span class="p">,</span>
+      <span class="p">)}</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">IconTagItem</span>
+          <span class="nx">tagKey</span><span class="o">=</span><span class="s2">&#34;add&#34;</span>
+          <span class="nx">tagName</span><span class="o">=</span><span class="s2">&#34;添加&#34;</span> <span class="o">&gt;</span>
+          <span class="o">&lt;</span><span class="nx">SvgIcon</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&#34;add&#34;</span> <span class="nx">className</span><span class="o">=</span><span class="s2">&#34;size-[24px] fill-[var(--main)]&#34;</span> <span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="err">/IconTagItem&gt;</span>
+        <span class="p">{</span><span class="nx">tags</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">tag</span> <span class="o">=&gt;</span> <span class="p">(</span>
+          <span class="o">&lt;</span><span class="nx">IconTagItem</span>
+            <span class="nx">key</span><span class="o">=</span><span class="p">{</span><span class="nx">tag</span><span class="p">}</span>
+            <span class="nx">selectedKey</span><span class="o">=</span><span class="p">{</span><span class="nx">selectedTabKey</span><span class="p">}</span>
+            <span class="nx">onSelectKey</span><span class="o">=</span><span class="p">{</span><span class="nx">setSelectedTabKey</span><span class="p">}</span>
+            <span class="nx">tagKey</span><span class="o">=</span><span class="p">{</span><span class="sb">`</span><span class="si">${</span><span class="nx">tag</span><span class="si">}</span><span class="sb">`</span><span class="p">}</span>
+            <span class="nx">tagName</span><span class="o">=</span><span class="s2">&#34;打的&#34;</span>
+            <span class="nx">tagSign</span><span class="o">=</span><span class="s2">&#34;🤑&#34;</span> <span class="o">/&gt;</span>
+        <span class="p">))}</span>
+      <span class="o">&lt;</span><span class="err">/ol&gt;</span>
+    <span class="o">&lt;</span><span class="err">/div&gt;</span>
+  <span class="p">)</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<hr />
+
+<h2 id="7-这个布局写得好-头尾固定-中间伸缩可滚动-a-href-catalogue-a">7. 这个布局写得好：头尾固定，中间伸缩可滚动 <a href="#catalogue"> ⇧ </a></h2>
+
+<h3 id="创建多个组件占位-a-href-catalogue-a">创建多个组件占位 <a href="#catalogue"> ⇧ </a></h3>
+
+<ul>
+<li><code>InputPad</code></li>
+<li><code>DateInput</code></li>
+<li><code>AmountNumberOutput</code></li>
+<li><code>Numpad</code></li>
+</ul>
+
+<blockquote>
+<p><code>@/modules/items/input/InputPad.tsx</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-tsx" data-lang="tsx"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-tsx" data-lang="tsx"><span class="kr">import</span> <span class="p">{</span> <span class="nx">AmountNumberOutput</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">&#34;@/modules/items/input/AmountNumberOutput&#34;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">DateInput</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">&#34;@/modules/items/input/DateInput&#34;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">Numpad</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">&#34;@/modules/items/input/Numpad&#34;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">cn</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">&#34;cn&#34;</span><span class="p">;</span>
+
+<span class="kr">interface</span> <span class="nx">Props</span> <span class="p">{</span>
+  <span class="nx">className?</span>: <span class="kt">string</span>
+<span class="p">}</span>
+
+<span class="kr">export</span> <span class="kr">const</span> <span class="nx">InputPad</span>: <span class="kt">React.FC</span><span class="o">&lt;</span><span class="nx">Props</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">({</span> <span class="cm">/* className, */</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="p">(</span>
+    <span class="o">&lt;&gt;</span>
+      <span class="p">{</span><span class="cm">/* 日期输入、金额显示 */</span><span class="p">}</span>
+      <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="p">{</span><span class="nx">cn</span><span class="p">(</span>
+        <span class="s1">&#39;flex justify-between items-center&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;min-h-69px py-1em b-t-[var(--pad-border-color)] b-t-1&#39;</span><span class="p">,</span>
+      <span class="p">)}</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">DateInput</span> <span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="nx">AmountNumberOutput</span> <span class="nx">className</span><span class="o">=</span><span class="s2">&#34;mr-4&#34;</span> <span class="o">/&gt;</span>
+      <span class="o">&lt;</span><span class="err">/div&gt;</span>
+      <span class="p">{</span><span class="cm">/* 数字键盘 */</span><span class="p">}</span>
+      <span class="o">&lt;</span><span class="nx">Numpad</span> <span class="o">/&gt;</span>
+    <span class="o">&lt;</span><span class="err">/&gt;</span>
+  <span class="p">)</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<blockquote>
+<p><code>@/modules/items/input/DateInput.tsx</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-tsx" data-lang="tsx"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-tsx" data-lang="tsx"><span class="kr">interface</span> <span class="nx">Props</span> <span class="p">{</span>
+  <span class="nx">className?</span>: <span class="kt">string</span>
+<span class="p">}</span>
+
+<span class="kr">export</span> <span class="kr">const</span> <span class="nx">DateInput</span>: <span class="kt">React.FC</span><span class="o">&lt;</span><span class="nx">Props</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">({</span> <span class="cm">/* className, */</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="p">(</span>
+    <span class="o">&lt;</span><span class="nx">span</span> <span class="nx">className</span><span class="o">=</span><span class="s2">&#34;flex justify-start items-center&#34;</span><span class="o">&gt;</span>
+      <span class="nx">DateInput</span>
+    <span class="o">&lt;</span><span class="err">/span&gt;</span>
+  <span class="p">)</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<blockquote>
+<p><code>@/modules/items/input/AmountNumberOutput.tsx</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-tsx" data-lang="tsx"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-tsx" data-lang="tsx"><span class="kr">interface</span> <span class="nx">Props</span> <span class="p">{</span>
+  <span class="nx">className?</span>: <span class="kt">string</span>
+<span class="p">}</span>
+
+<span class="kr">export</span> <span class="kr">const</span> <span class="nx">AmountNumberOutput</span>: <span class="kt">React.FC</span><span class="o">&lt;</span><span class="nx">Props</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">({</span> <span class="cm">/* className, */</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="p">(</span>
+    <span class="o">&lt;</span><span class="nx">span</span> <span class="nx">className</span><span class="o">=</span><span class="s2">&#34;text-[24px] font-mono color-[var(--amount-text-color)]&#34;</span><span class="o">&gt;</span>
+      <span class="nx">AmountNumberOutput</span>
+    <span class="o">&lt;</span><span class="err">/span&gt;</span>
+  <span class="p">)</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<blockquote>
+<p><code>@/modules/items/input/Numpad.tsx</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-tsx" data-lang="tsx"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-tsx" data-lang="tsx"><span class="kr">import</span> <span class="p">{</span> <span class="nx">cn</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">&#34;cn&#34;</span><span class="p">;</span>
+
+<span class="kr">interface</span> <span class="nx">Props</span> <span class="p">{</span>
+  <span class="nx">className?</span>: <span class="kt">string</span>
+<span class="p">}</span>
+
+<span class="kr">export</span> <span class="kr">const</span> <span class="nx">Numpad</span>: <span class="kt">React.FC</span><span class="o">&lt;</span><span class="nx">Props</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">({</span> <span class="cm">/* className, */</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="p">(</span>
+    <span class="o">&lt;</span><span class="nx">div</span>
+      <span class="nx">className</span><span class="o">=</span><span class="p">{</span><span class="nx">cn</span><span class="p">(</span>
+        <span class="s1">&#39;grid grid-cols-[repeat(4,1fr)] grid-rows-[repeat(4,56px)]&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;bg-[var(--pad-border-color)] gap-1px p-t-1px&#39;</span><span class="p">,</span>
+      <span class="p">)}</span><span class="o">&gt;</span>
+      <span class="nx">Numpad</span>
+    <span class="o">&lt;</span><span class="err">/div&gt;</span>
+  <span class="p">)</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<hr />
+
+<h3 id="头尾固定-中间伸缩可滚动-a-href-catalogue-a">头尾固定，中间伸缩可滚动 <a href="#catalogue"> ⇧ </a></h3>
+
+<ul>
+<li><code>ItemCreatePage.tsx</code> 分成三个部分：<code>GradientBanner</code>、<code>SwitchTabs</code>、<code>InputPad</code>
+
+<ul>
+<li>外部容器使用 <code>flex flex-col</code></li>
+<li>头尾使用 <code>grow-0 shrink-0</code></li>
+<li><code>SwitchTabs</code> 作为中间部分，伸缩可滚动 <code>grow-1 shrink-1 overflow-hidden</code></li>
+<li>内部的 <code>tab-nav</code> 部分固定 <code>grow-0 shrink-0</code></li>
+<li>内部的 <code>tab-content</code> 部分滚动 <code>grow-1 shrink-1 overflow-y-auto</code></li>
+</ul></li>
+</ul>
+
+<blockquote>
+<p><code>@/pages/ItemCreatePage.tsx</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-tsx" data-lang="tsx"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-tsx" data-lang="tsx"><span class="kr">import</span> <span class="p">{</span> <span class="nx">GradientBanner</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">&#34;@/components/GradientBanner&#34;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">SvgIcon</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">&#34;@/components/SvgIcon&#34;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">SwitchTabs</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">&#34;@/components/SwitchTabs&#34;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">TopNav</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">&#34;@/components/TopNav&#34;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">TabKind</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">&#34;@/global&#34;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">InputPad</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">&#34;@/modules/items/input/InputPad&#34;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">IconTags</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">&#34;@/modules/tags/IconTags&#34;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">cn</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">&#34;cn&#34;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">useState</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">&#34;react&#34;</span><span class="p">;</span>
+
+<span class="kr">interface</span> <span class="nx">Props</span> <span class="p">{</span>
+  <span class="nx">className?</span>: <span class="kt">string</span>
+<span class="p">}</span>
+
+<span class="kr">interface</span> <span class="nx">TabItem</span> <span class="p">{</span>
+  <span class="nx">key</span>: <span class="kt">TabKind</span>
+  <span class="nx">text</span>: <span class="kt">string</span>
+  <span class="nx">tabContent?</span>: <span class="kt">React.ReactNode</span>
+<span class="p">}</span>
+<span class="kr">const</span> <span class="nx">tabItems</span>: <span class="kt">Readonly</span><span class="o">&lt;</span><span class="nb">Array</span><span class="o">&lt;</span><span class="nx">TabItem</span><span class="o">&gt;&gt;</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">{</span>
+    <span class="nx">key</span><span class="o">:</span> <span class="s1">&#39;expenses&#39;</span><span class="p">,</span> <span class="nx">text</span><span class="o">:</span> <span class="s1">&#39;支出&#39;</span><span class="p">,</span> <span class="nx">tabContent</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">IconTags</span> <span class="nx">kind</span><span class="o">=</span><span class="s2">&#34;expenses&#34;</span> <span class="o">/&gt;</span><span class="p">,</span>
+  <span class="p">},</span>
+  <span class="p">{</span> <span class="nx">key</span><span class="o">:</span> <span class="s1">&#39;incomes&#39;</span><span class="p">,</span> <span class="nx">text</span><span class="o">:</span> <span class="s1">&#39;收入&#39;</span><span class="p">,</span> <span class="nx">tabContent</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">IconTags</span> <span class="nx">kind</span><span class="o">=</span><span class="s2">&#34;incomes&#34;</span> <span class="o">/&gt;</span><span class="p">,</span> <span class="p">},</span>
+<span class="p">]</span> <span class="kr">as</span> <span class="kr">const</span>
+
+<span class="kr">export</span> <span class="kr">const</span> <span class="nx">ItemCreatePage</span>: <span class="kt">React.FC</span><span class="o">&lt;</span><span class="nx">Props</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">({</span> <span class="nx">className</span><span class="p">,</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">Icon</span> <span class="o">=</span> <span class="p">(</span><span class="o">&lt;</span><span class="nx">SvgIcon</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&#34;back-arrow&#34;</span> <span class="nx">className</span><span class="o">=</span><span class="s2">&#34;size-[24px]&#34;</span> <span class="o">/&gt;</span><span class="p">)</span>
+  <span class="kr">const</span> <span class="p">[</span><span class="nx">selectedKey</span><span class="p">,</span> <span class="nx">setSelectedKey</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="o">&lt;</span><span class="nx">TabKind</span><span class="o">&gt;</span><span class="p">(</span><span class="s1">&#39;expenses&#39;</span><span class="p">)</span>
+  <span class="k">return</span> <span class="p">(</span>
+    <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="p">{</span><span class="nx">cn</span><span class="p">(</span>
+      <span class="s1">&#39;container w-screen h-screen relative flex flex-col&#39;</span><span class="p">,</span>
+      <span class="nx">className</span><span class="p">,</span>
+    <span class="p">)}</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="nx">GradientBanner</span> <span class="nx">className</span><span class="o">=</span><span class="s2">&#34;grow-0 shrink-0&#34;</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">TopNav</span> <span class="nx">icon</span><span class="o">=</span><span class="p">{</span><span class="nx">Icon</span><span class="p">}</span> <span class="nx">title</span><span class="o">=</span><span class="s2">&#34;记一笔&#34;</span> <span class="o">/&gt;</span>
+      <span class="o">&lt;</span><span class="err">/GradientBanner&gt;</span>
+
+      <span class="o">&lt;</span><span class="nx">SwitchTabs</span>
+        <span class="nx">selectedTabKey</span><span class="o">=</span><span class="p">{</span><span class="nx">selectedKey</span><span class="p">}</span>
+        <span class="nx">tabItems</span><span class="o">=</span><span class="p">{</span><span class="nx">tabItems</span><span class="p">}</span>
+        <span class="nx">onSwitchTab</span><span class="o">=</span><span class="p">{(</span><span class="nx">key</span>: <span class="kt">TabKind</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="nx">setSelectedKey</span><span class="p">(</span><span class="nx">key</span><span class="p">)</span> <span class="p">}}</span>
+        <span class="nx">className</span><span class="o">=</span><span class="p">{</span><span class="nx">cn</span><span class="p">(</span>
+          <span class="s1">&#39;grow-1 shrink-1 overflow-hidden&#39;</span><span class="p">,</span>
+          <span class="s1">&#39;[&amp;&gt;nav&gt;menu&gt;li]:(grow-1 text-center bg-[var(--welcome-card-end)])&#39;</span><span class="p">,</span>
+        <span class="p">)}</span> <span class="o">/&gt;</span>
+
+      <span class="o">&lt;</span><span class="nx">section</span> <span class="nx">className</span><span class="o">=</span><span class="s2">&#34;grow-0 shrink-0&#34;</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">InputPad</span> <span class="o">/&gt;</span>
+      <span class="o">&lt;</span><span class="err">/section&gt;</span>
+    <span class="o">&lt;</span><span class="err">/div&gt;</span>
+  <span class="p">)</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<blockquote>
+<p><code>@/components/SwitchTabs.tsx</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-tsx" data-lang="tsx"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-tsx" data-lang="tsx"><span class="kr">import</span> <span class="p">{</span> <span class="nx">cn</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">&#34;cn&#34;</span><span class="p">;</span>
+
+<span class="kr">interface</span> <span class="nx">Props</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span> <span class="p">{</span><span class="cm">/* ... */</span><span class="p">}</span>
+
+<span class="kr">export</span> <span class="kr">const</span> <span class="nx">SwitchTabs</span> <span class="o">=</span> <span class="o">&lt;</span><span class="nx">T</span> <span class="kr">extends</span> <span class="kt">string</span><span class="o">&gt;</span><span class="p">({</span>
+  <span class="nx">className</span><span class="p">,</span>
+  <span class="nx">classPrefix</span><span class="p">,</span>
+  <span class="nx">selectedTabKey</span><span class="p">,</span>
+  <span class="nx">tabItems</span><span class="p">,</span>
+  <span class="nx">onSwitchTab</span><span class="p">,</span>
+<span class="p">}</span><span class="o">:</span> <span class="nx">Props</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">selectedClass</span> <span class="o">=</span> <span class="p">(</span><span class="nx">key</span>: <span class="kt">string</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">cn</span><span class="p">(</span><span class="cm">/* ... */</span><span class="p">)</span>
+  <span class="k">return</span> <span class="p">(</span>
+    <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="p">{</span><span class="nx">cn</span><span class="p">(</span><span class="nx">className</span><span class="p">,</span> <span class="nx">classPrefix</span><span class="p">,</span> <span class="s1">&#39;flex flex-col&#39;</span><span class="p">,)}</span><span class="o">&gt;</span>
+      <span class="p">{</span><span class="cm">/* 切换标签导航 */</span><span class="p">}</span>
+      <span class="o">&lt;</span><span class="nx">nav</span> <span class="nx">className</span><span class="o">=</span><span class="p">{</span><span class="nx">cn</span><span class="p">(</span>
+        <span class="nx">classPrefix</span> <span class="o">?</span> <span class="sb">`</span><span class="si">${</span><span class="nx">classPrefix</span><span class="si">}</span><span class="sb">-tab-nav`</span> <span class="o">:</span> <span class="s1">&#39;tab-nav&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;grow-0 shrink-0&#39;</span><span class="p">,</span>
+      <span class="p">)}</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">menu</span> <span class="nx">className</span><span class="o">=</span><span class="p">{</span><span class="nx">cn</span><span class="p">(</span><span class="cm">/* ... */</span><span class="p">)}</span><span class="o">&gt;</span>
+          <span class="p">{</span><span class="cm">/* ... */</span><span class="p">}</span>
+        <span class="o">&lt;</span><span class="err">/menu&gt;</span>
+      <span class="o">&lt;</span><span class="err">/nav&gt;</span>
+
+      <span class="p">{</span><span class="cm">/* 导航内容 */</span><span class="p">}</span>
+      <span class="o">&lt;</span><span class="nx">section</span> <span class="nx">className</span><span class="o">=</span><span class="p">{</span><span class="nx">cn</span><span class="p">(</span>
+        <span class="nx">classPrefix</span> <span class="o">?</span> <span class="sb">`</span><span class="si">${</span><span class="nx">classPrefix</span><span class="si">}</span><span class="sb">-tab-content`</span> <span class="o">:</span> <span class="s1">&#39;tab-content&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;grow-1 shrink-1&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;overflow-y-auto scrollbar-hide&#39;</span><span class="p">,</span>
+      <span class="p">)}</span><span class="o">&gt;</span>
+        <span class="p">{</span><span class="nx">tabItems</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="nx">item</span> <span class="o">=&gt;</span> <span class="nx">item</span><span class="p">.</span><span class="nx">key</span> <span class="o">===</span> <span class="nx">selectedTabKey</span><span class="p">)</span><span class="o">?</span><span class="p">.</span><span class="nx">tabContent</span><span class="p">}</span>
+      <span class="o">&lt;</span><span class="err">/section&gt;</span>
+    <span class="o">&lt;</span><span class="err">/div&gt;</span>
+  <span class="p">)</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<hr />
+
+<h2 id="8-使用-vh-check-解决全屏-bug-a-href-catalogue-a">8. 使用 vh-check 解决全屏 bug <a href="#catalogue"> ⇧ </a></h2>
+
+<ul>
+<li>已安装 <code>pnpm install vh-check@2.0.5</code></li>
+</ul>
+
+<blockquote>
+<p>入口文件 <code>main.ts</code> 导入执行</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-tsx" data-lang="tsx"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-tsx" data-lang="tsx"><span class="kr">import</span> <span class="nx">vhCheck</span> <span class="nx">from</span> <span class="s1">&#39;vh-check&#39;</span>
+
+<span class="nx">vhCheck</span><span class="p">()</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<blockquote>
+<p><code>unocss.config.ts</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-tsx" data-lang="tsx"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-tsx" data-lang="tsx"><span class="kr">export</span> <span class="k">default</span> <span class="nx">defineConfig</span><span class="p">({</span>
+  <span class="nx">rules</span><span class="o">:</span> <span class="p">[</span>
+    <span class="p">[</span><span class="s2">&#34;h-screen&#34;</span><span class="p">,</span> <span class="p">{</span><span class="nx">height</span><span class="o">:</span> <span class="s1">&#39;calc(100vh - var(--vh-offset, 0px))&#39;</span><span class="p">}],</span>
+    <span class="c1">// 或者自定义一个 `h-v-check-screen` 替换原有的 `h-screen`
+</span><span class="c1"></span>    <span class="p">[</span><span class="s2">&#34;h-v-check-screen&#34;</span><span class="p">,</span> <span class="p">{</span><span class="nx">height</span><span class="o">:</span> <span class="s1">&#39;calc(100vh - var(--vh-offset, 0px))&#39;</span><span class="p">}],</span>
+  <span class="p">]</span>
+<span class="p">})</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<blockquote>
+<p>参考</p>
+</blockquote>
+
+<ul>
+<li><a href="https://github.com/Hiswe/vh-check">vhCheck</a></li>
+<li><a href="https://github.com/Hiswe/vh-check/network/dependents">识别哪些开源项目是mangosteen相关可以偷师</a>
+
+<ul>
+<li>可以看哪些项目是山竹记账的</li>
+</ul></li>
+</ul>
+
+<hr />
+
+<!-- Article End -->
+
+<div style="text-align:center;">&middot;未完待续&middot;</div>
+
+<hr />
+
+<h2 id="参考文章">参考文章</h2>
+
+<ul>
+<li>初始代码：<a href="https://github.com/FrankFang/3iw2WJa">https://github.com/FrankFang/3iw2WJa</a></li>
+<li>提交记录（新增了 9 个）：<a href="https://github.com/FrankFang/rB4yHD/commits/master">https://github.com/FrankFang/rB4yHD/commits/master</a></li>
+<li>最终代码：<a href="https://github.com/FrankFang/rB4yHD">https://github.com/FrankFang/rB4yHD</a></li>
+</ul>
+
+<h2 id="相关文章">相关文章</h2>
+
+<ul>
+<li>无</li>
+</ul>
+
+<hr />
+
+<ul>
+<li>作者： Joel</li>
+<li>文章链接：</li>
+<li><a href="http://xmasuhai.xyz/posts/版权声明链接/">版权声明</a></li>
+<li>非自由转载-非商用-非衍生-保持署名</li>
+</ul>
+
+<hr />
+
+<hr />
+
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Joel Xu</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2026-11-04
+      
+        
+        
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="http://xmasuhai.xyz/tags/frontend/">FrontEnd</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/%E5%B1%B1%E7%AB%B9%E8%AE%B0%E8%B4%A6/%E5%B1%B1%E7%AB%B9%E8%AE%B0%E8%B4%A6%E5%89%8D%E7%AB%AF-react18.%E8%87%AA%E5%88%B6%E6%97%A5%E6%9C%9F%E9%80%89%E6%8B%A9%E5%99%A8%E4%B8%8A/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">【山竹记账前端-react】18.自制日期选择器（上）</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/%E5%B1%B1%E7%AB%B9%E8%AE%B0%E8%B4%A6/%E5%B1%B1%E7%AB%B9%E8%AE%B0%E8%B4%A6%E5%89%8D%E7%AB%AF-react16.%E6%89%8B%E6%9C%BA%E4%B8%8A%E7%9A%84-bug/">
+            <span class="next-text nav-default">【山竹记账前端-react】16.手机上的 bug</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:xmasuhai@163.com" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="https://github.com/xmasuhai" rel="me noopener" class="iconfont"
+      title="github"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M512 12.672c-282.88 0-512 229.248-512 512 0 226.261333 146.688 418.133333 350.08 485.76 25.6 4.821333 34.986667-11.008 34.986667-24.618667 0-12.16-0.426667-44.373333-0.64-87.04-142.421333 30.890667-172.458667-68.693333-172.458667-68.693333C188.672 770.986667 155.008 755.2 155.008 755.2c-46.378667-31.744 3.584-31.104 3.584-31.104 51.413333 3.584 78.421333 52.736 78.421333 52.736 45.653333 78.293333 119.850667 55.68 149.12 42.581333 4.608-33.109333 17.792-55.68 32.426667-68.48-113.706667-12.8-233.216-56.832-233.216-253.013333 0-55.893333 19.84-101.546667 52.693333-137.386667-5.76-12.928-23.04-64.981333 4.48-135.509333 0 0 42.88-13.738667 140.8 52.48 40.96-11.392 84.48-17.024 128-17.28 43.52 0.256 87.04 5.888 128 17.28 97.28-66.218667 140.16-52.48 140.16-52.48 27.52 70.528 10.24 122.581333 5.12 135.509333 32.64 35.84 52.48 81.493333 52.48 137.386667 0 196.693333-119.68 240-233.6 252.586667 17.92 15.36 34.56 46.762667 34.56 94.72 0 68.522667-0.64 123.562667-0.64 140.202666 0 13.44 8.96 29.44 35.2 24.32C877.44 942.592 1024 750.592 1024 524.672c0-282.752-229.248-512-512-512"></path>
+</svg>
+
+    </a>
+  
+    <a href="https://www.zhihu.com/people/xue-shou-41/posts" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+
+
+<a href="http://xmasuhai.xyz/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane">Jane</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy;
+    
+      2019 -
+    2026
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Joel Xu
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

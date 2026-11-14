@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>React Spring on Joel in The House</title>
+    <link>http://xmasuhai.xyz/tags/react-spring/</link>
+    <description>Recent content in React Spring on Joel in The House</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <managingEditor>xmasuhai@163.org (Joel Xu)</managingEditor>
+    <webMaster>xmasuhai@163.org (Joel Xu)</webMaster>
+    <copyright>Joel Xu</copyright>
+    <lastBuildDate>Sun, 08 Nov 2026 04:29:00 +0800</lastBuildDate>
+    
+	<atom:link href="http://xmasuhai.xyz/tags/react-spring/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>【山竹记账】日期选择组件弹性动画分析</title>
+      <link>http://xmasuhai.xyz/post/%E5%B1%B1%E7%AB%B9%E8%AE%B0%E8%B4%A6/%E7%95%AA%E5%A4%96/%E5%B1%B1%E7%AB%B9%E8%AE%B0%E8%B4%A6%E6%97%A5%E6%9C%9F%E9%80%89%E6%8B%A9%E7%BB%84%E4%BB%B6%E5%BC%B9%E6%80%A7%E5%8A%A8%E7%94%BB%E5%88%86%E6%9E%90/</link>
+      <pubDate>Sun, 08 Nov 2026 04:29:00 +0800</pubDate>
+      <author>xmasuhai@163.org (Joel Xu)</author>
+      <guid>http://xmasuhai.xyz/post/%E5%B1%B1%E7%AB%B9%E8%AE%B0%E8%B4%A6/%E7%95%AA%E5%A4%96/%E5%B1%B1%E7%AB%B9%E8%AE%B0%E8%B4%A6%E6%97%A5%E6%9C%9F%E9%80%89%E6%8B%A9%E7%BB%84%E4%BB%B6%E5%BC%B9%E6%80%A7%E5%8A%A8%E7%94%BB%E5%88%86%E6%9E%90/</guid>
+      <description>&lt;h2 id=&#34;前言-一个日期滚轮-为什么不只是修改-translatey&#34;&gt;前言：一个日期滚轮，为什么不只是修改 translateY？&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/xmasuhai/mangosteen-react-1/tree/008526615741655cb2a7eda6a8b790d33951c545&#34;&gt;源码&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;移动端的日期选择器通常由年、月、日三列组成。用户上下拖动某一列，数字跟随手指移动；拖过首项或末项时，列表还能被稍微拉出去，但越拉越费力；松手后，列表又弹回最近的合法选项。&lt;/p&gt;
+
+&lt;p&gt;看上去只是几个数字在移动，实际上需要同时处理四件事：&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;跟手&lt;/strong&gt;：正常范围内，手指移动多少，列表就移动多少。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;越界阻尼&lt;/strong&gt;：超过首尾边界后，不突然卡住，也不无限移动。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;离散吸附&lt;/strong&gt;：松手时，选中项必须对齐到一整行，不能停在两项中间。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;弹性过渡&lt;/strong&gt;：从松手位置到目标项之间，有自然的回弹过程，而且可以被下一次手势打断。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;本文结合山竹记账中的以下文件，拆解这套交互的实现：&lt;/p&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;文件&lt;/th&gt;
+&lt;th&gt;职责&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;src/components/form/DatePickerPopup.tsx&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;组织年月日三列、生成选项、绘制遮罩和选中框&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;src/components/form/DateTimeColumn.tsx&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;处理触摸生命周期、驱动动画、同步选中值&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;src/components/form/dateTimeColumnMotion.ts&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;提供拖动、阻尼、索引计算三个纯函数&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;src/components/form/__test__/dateTimeColumnMotion.test.ts&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;用 Vitest 验证核心数值规则&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;动画使用 &lt;code&gt;@react-spring/web&lt;/code&gt;，当前项目中的版本是 &lt;code&gt;10.1.2&lt;/code&gt;。本文代码与分析以当前实现为准，不把后文讨论的改进方向描述成已经完成的功能。&lt;/p&gt;
+
+&lt;p&gt;先给出全文最重要的结论：&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;拖动时的“阻力感”来自位移映射，松手后的“回弹感”来自弹簧动画。前者解决“显示在哪里”，后者解决“如何随时间到达目标”。两者不是同一件事。&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

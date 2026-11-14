@@ -1,0 +1,3504 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>【山竹记账】日期选择组件弹性动画分析 - Joel in The House</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="Joel Xu" />
+  <meta name="description" content="前言：一个日期滚轮，为什么不只是修改 translateY？  源码
+ 移动端的日期选择器通常由年、月、日三列组成。用户上下拖动某一列，数字跟随手指移动；拖过首项或末项时，列表还能被稍微拉出去，但越拉越费力；松手后，列表又弹回最近的合法选项。
+看上去只是几个数字在移动，实际上需要同时处理四件事：
+ 跟手：正常范围内，手指移动多少，列表就移动多少。 越界阻尼：超过首尾边界后，不突然卡住，也不无限移动。 离散吸附：松手时，选中项必须对齐到一整行，不能停在两项中间。 弹性过渡：从松手位置到目标项之间，有自然的回弹过程，而且可以被下一次手势打断。  本文结合山竹记账中的以下文件，拆解这套交互的实现：
+   文件 职责     src/components/form/DatePickerPopup.tsx 组织年月日三列、生成选项、绘制遮罩和选中框   src/components/form/DateTimeColumn.tsx 处理触摸生命周期、驱动动画、同步选中值   src/components/form/dateTimeColumnMotion.ts 提供拖动、阻尼、索引计算三个纯函数   src/components/form/__test__/dateTimeColumnMotion.test.ts 用 Vitest 验证核心数值规则    动画使用 @react-spring/web，当前项目中的版本是 10.1.2。本文代码与分析以当前实现为准，不把后文讨论的改进方向描述成已经完成的功能。
+先给出全文最重要的结论：
+ 拖动时的“阻力感”来自位移映射，松手后的“回弹感”来自弹簧动画。前者解决“显示在哪里”，后者解决“如何随时间到达目标”。两者不是同一件事。
+" />
+
+  <meta name="keywords" content="Hugo, theme, jane" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.59.1" />
+
+
+<link rel="canonical" href="http://xmasuhai.xyz/post/%E5%B1%B1%E7%AB%B9%E8%AE%B0%E8%B4%A6/%E7%95%AA%E5%A4%96/%E5%B1%B1%E7%AB%B9%E8%AE%B0%E8%B4%A6%E6%97%A5%E6%9C%9F%E9%80%89%E6%8B%A9%E7%BB%84%E4%BB%B6%E5%BC%B9%E6%80%A7%E5%8A%A8%E7%94%BB%E5%88%86%E6%9E%90/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="【山竹记账】日期选择组件弹性动画分析" />
+<meta property="og:description" content="前言：一个日期滚轮，为什么不只是修改 translateY？
+
+
+源码
+
+
+移动端的日期选择器通常由年、月、日三列组成。用户上下拖动某一列，数字跟随手指移动；拖过首项或末项时，列表还能被稍微拉出去，但越拉越费力；松手后，列表又弹回最近的合法选项。
+
+看上去只是几个数字在移动，实际上需要同时处理四件事：
+
+
+跟手：正常范围内，手指移动多少，列表就移动多少。
+越界阻尼：超过首尾边界后，不突然卡住，也不无限移动。
+离散吸附：松手时，选中项必须对齐到一整行，不能停在两项中间。
+弹性过渡：从松手位置到目标项之间，有自然的回弹过程，而且可以被下一次手势打断。
+
+
+本文结合山竹记账中的以下文件，拆解这套交互的实现：
+
+
+
+
+文件
+职责
+
+
+
+
+
+src/components/form/DatePickerPopup.tsx
+组织年月日三列、生成选项、绘制遮罩和选中框
+
+
+
+src/components/form/DateTimeColumn.tsx
+处理触摸生命周期、驱动动画、同步选中值
+
+
+
+src/components/form/dateTimeColumnMotion.ts
+提供拖动、阻尼、索引计算三个纯函数
+
+
+
+src/components/form/__test__/dateTimeColumnMotion.test.ts
+用 Vitest 验证核心数值规则
+
+
+
+
+动画使用 @react-spring/web，当前项目中的版本是 10.1.2。本文代码与分析以当前实现为准，不把后文讨论的改进方向描述成已经完成的功能。
+
+先给出全文最重要的结论：
+
+
+拖动时的“阻力感”来自位移映射，松手后的“回弹感”来自弹簧动画。前者解决“显示在哪里”，后者解决“如何随时间到达目标”。两者不是同一件事。
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://xmasuhai.xyz/post/%E5%B1%B1%E7%AB%B9%E8%AE%B0%E8%B4%A6/%E7%95%AA%E5%A4%96/%E5%B1%B1%E7%AB%B9%E8%AE%B0%E8%B4%A6%E6%97%A5%E6%9C%9F%E9%80%89%E6%8B%A9%E7%BB%84%E4%BB%B6%E5%BC%B9%E6%80%A7%E5%8A%A8%E7%94%BB%E5%88%86%E6%9E%90/" />
+<meta property="article:published_time" content="2026-11-08T04:29:00+08:00" />
+<meta property="article:modified_time" content="2026-11-08T05:25:57-08:00" />
+<meta itemprop="name" content="【山竹记账】日期选择组件弹性动画分析">
+<meta itemprop="description" content="前言：一个日期滚轮，为什么不只是修改 translateY？
+
+
+源码
+
+
+移动端的日期选择器通常由年、月、日三列组成。用户上下拖动某一列，数字跟随手指移动；拖过首项或末项时，列表还能被稍微拉出去，但越拉越费力；松手后，列表又弹回最近的合法选项。
+
+看上去只是几个数字在移动，实际上需要同时处理四件事：
+
+
+跟手：正常范围内，手指移动多少，列表就移动多少。
+越界阻尼：超过首尾边界后，不突然卡住，也不无限移动。
+离散吸附：松手时，选中项必须对齐到一整行，不能停在两项中间。
+弹性过渡：从松手位置到目标项之间，有自然的回弹过程，而且可以被下一次手势打断。
+
+
+本文结合山竹记账中的以下文件，拆解这套交互的实现：
+
+
+
+
+文件
+职责
+
+
+
+
+
+src/components/form/DatePickerPopup.tsx
+组织年月日三列、生成选项、绘制遮罩和选中框
+
+
+
+src/components/form/DateTimeColumn.tsx
+处理触摸生命周期、驱动动画、同步选中值
+
+
+
+src/components/form/dateTimeColumnMotion.ts
+提供拖动、阻尼、索引计算三个纯函数
+
+
+
+src/components/form/__test__/dateTimeColumnMotion.test.ts
+用 Vitest 验证核心数值规则
+
+
+
+
+动画使用 @react-spring/web，当前项目中的版本是 10.1.2。本文代码与分析以当前实现为准，不把后文讨论的改进方向描述成已经完成的功能。
+
+先给出全文最重要的结论：
+
+
+拖动时的“阻力感”来自位移映射，松手后的“回弹感”来自弹簧动画。前者解决“显示在哪里”，后者解决“如何随时间到达目标”。两者不是同一件事。
+">
+
+
+<meta itemprop="datePublished" content="2026-11-08T04:29:00&#43;08:00" />
+<meta itemprop="dateModified" content="2026-11-08T05:25:57-08:00" />
+<meta itemprop="wordCount" content="16366">
+
+
+
+<meta itemprop="keywords" content="FrontEnd,React,React Spring,手势交互," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="【山竹记账】日期选择组件弹性动画分析"/>
+<meta name="twitter:description" content="前言：一个日期滚轮，为什么不只是修改 translateY？
+
+
+源码
+
+
+移动端的日期选择器通常由年、月、日三列组成。用户上下拖动某一列，数字跟随手指移动；拖过首项或末项时，列表还能被稍微拉出去，但越拉越费力；松手后，列表又弹回最近的合法选项。
+
+看上去只是几个数字在移动，实际上需要同时处理四件事：
+
+
+跟手：正常范围内，手指移动多少，列表就移动多少。
+越界阻尼：超过首尾边界后，不突然卡住，也不无限移动。
+离散吸附：松手时，选中项必须对齐到一整行，不能停在两项中间。
+弹性过渡：从松手位置到目标项之间，有自然的回弹过程，而且可以被下一次手势打断。
+
+
+本文结合山竹记账中的以下文件，拆解这套交互的实现：
+
+
+
+
+文件
+职责
+
+
+
+
+
+src/components/form/DatePickerPopup.tsx
+组织年月日三列、生成选项、绘制遮罩和选中框
+
+
+
+src/components/form/DateTimeColumn.tsx
+处理触摸生命周期、驱动动画、同步选中值
+
+
+
+src/components/form/dateTimeColumnMotion.ts
+提供拖动、阻尼、索引计算三个纯函数
+
+
+
+src/components/form/__test__/dateTimeColumnMotion.test.ts
+用 Vitest 验证核心数值规则
+
+
+
+
+动画使用 @react-spring/web，当前项目中的版本是 10.1.2。本文代码与分析以当前实现为准，不把后文讨论的改进方向描述成已经完成的功能。
+
+先给出全文最重要的结论：
+
+
+拖动时的“阻力感”来自位移映射，松手后的“回弹感”来自弹簧动画。前者解决“显示在哪里”，后者解决“如何随时间到达目标”。两者不是同一件事。
+"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Joel in The House</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/post/">文档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/categories/">目录</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/about/">关于我</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Joel in The House
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/post/">文档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/categories/">目录</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/about/">关于我</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">【山竹记账】日期选择组件弹性动画分析</h1>
+      
+      <div class="post-meta">
+        <time datetime="2026-11-08" class="post-time">
+          2026-11-08
+        </time>
+        <div class="post-category">
+            <a href="http://xmasuhai.xyz/categories/frontend/"> FrontEnd </a>
+            
+          </div>
+        <span class="more-meta"> 约 16366 字 </span>
+          <span class="more-meta"> 预计阅读 33 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#前言-一个日期滚轮-为什么不只是修改-translatey">前言：一个日期滚轮，为什么不只是修改 translateY？</a></li>
+<li><a href="#一-先看完整数据流-从手指坐标到选中日期">一、先看完整数据流：从手指坐标到选中日期</a></li>
+<li><a href="#二-建立坐标系-为什么首项是-0-后面的项是负数">二、建立坐标系：为什么首项是 0，后面的项是负数？</a>
+<ul>
+<li><a href="#2-1-列表移动-选中框不动">2.1 列表移动，选中框不动</a></li>
+<li><a href="#2-2-索引与位移的对应关系">2.2 索引与位移的对应关系</a></li>
+<li><a href="#2-3-位移方向不等于手指此刻的移动方向">2.3 位移方向不等于手指此刻的移动方向</a></li>
+</ul></li>
+<li><a href="#三-不要混用三种位移和一个业务值">三、不要混用三种位移和一个业务值</a></li>
+<li><a href="#四-getdragtranslatey-从手势起点计算原始位移">四、getDragTranslateY：从手势起点计算原始位移</a>
+<ul>
+<li><a href="#4-1-函数实现">4.1 函数实现</a></li>
+<li><a href="#4-2-数值示例">4.2 数值示例</a></li>
+<li><a href="#4-3-起点在一次手势中固定-不要逐帧覆盖">4.3 起点在一次手势中固定，不要逐帧覆盖</a></li>
+<li><a href="#4-4-回拖时为什么不会丢失距离">4.4 回拖时为什么不会丢失距离？</a></li>
+</ul></li>
+<li><a href="#五-getresistedtranslatey-用指数函数实现越界阻尼">五、getResistedTranslateY：用指数函数实现越界阻尼</a>
+<ul>
+<li><a href="#5-1-完整实现">5.1 完整实现</a></li>
+<li><a href="#5-2-范围内-完全跟手">5.2 范围内：完全跟手</a></li>
+<li><a href="#5-3-首项边界越界-向下拉出列表">5.3 首项边界越界：向下拉出列表</a></li>
+<li><a href="#5-4-末项边界越界-以末项位置为基准向上拉伸">5.4 末项边界越界：以末项位置为基准向上拉伸</a></li>
+<li><a href="#5-5-为什么这个公式在边界处比较自然">5.5 为什么这个公式在边界处比较自然？</a></li>
+<li><a href="#5-6-用分段函数统一理解">5.6 用分段函数统一理解</a></li>
+<li><a href="#5-7-为什么不直接截断-或者统一乘以-0-3">5.7 为什么不直接截断，或者统一乘以 0.3？</a></li>
+</ul></li>
+<li><a href="#六-getnearestdatetimeindex-把连续位置转换成离散选项">六、getNearestDateTimeIndex：把连续位置转换成离散选项</a>
+<ul>
+<li><a href="#6-1-完整实现">6.1 完整实现</a></li>
+<li><a href="#6-2-第一步-把位移截断到合法范围">6.2 第一步：把位移截断到合法范围</a></li>
+<li><a href="#6-3-第二步-换算成连续索引-再四舍五入">6.3 第二步：换算成连续索引，再四舍五入</a></li>
+<li><a href="#6-4-第三步-再次限制索引范围">6.4 第三步：再次限制索引范围</a></li>
+<li><a href="#6-5-为什么使用可见位移-而不是拖动原始位移">6.5 为什么使用可见位移，而不是拖动原始位移？</a></li>
+<li><a href="#6-6-它不是惯性滚动算法">6.6 它不是惯性滚动算法</a></li>
+</ul></li>
+<li><a href="#七-react-spring-把目标位置变成随时间变化的动画">七、React Spring：把目标位置变成随时间变化的动画</a>
+<ul>
+<li><a href="#7-1-初始化动画值">7.1 初始化动画值</a></li>
+<li><a href="#7-2-为什么动画列表使用-animated-ol">7.2 为什么动画列表使用 animated.ol？</a></li>
+<li><a href="#7-3-弹簧动画和固定时长动画有什么不同">7.3 弹簧动画和固定时长动画有什么不同？</a></li>
+<li><a href="#7-4-tension-与-friction-如何影响手感">7.4 tension 与 friction 如何影响手感？</a></li>
+<li><a href="#7-5-空间阻尼与时间阻尼不能互相代替">7.5 空间阻尼与时间阻尼不能互相代替</a></li>
+</ul></li>
+<li><a href="#八-触摸生命周期-让动画-手势和业务状态交接清楚">八、触摸生命周期：让动画、手势和业务状态交接清楚</a>
+<ul>
+<li><a href="#8-1-为什么用-useref-保存手势">8.1 为什么用 useRef 保存手势？</a></li>
+<li><a href="#8-2-按下-停止旧动画-接管当前可见位置">8.2 按下：停止旧动画，接管当前可见位置</a></li>
+<li><a href="#8-3-移动-先算原始位移-再做一次阻尼">8.3 移动：先算原始位移，再做一次阻尼</a></li>
+<li><a href="#8-4-松手-确定目标-启动动画-提交选中值">8.4 松手：确定目标、启动动画、提交选中值</a></li>
+<li><a href="#8-5-取消-回到已经提交的选中值">8.5 取消：回到已经提交的选中值</a></li>
+</ul></li>
+<li><a href="#九-父组件同步-为什么不能每次-onchange-后都重新启动动画">九、父组件同步：为什么不能每次 onChange 后都重新启动动画？</a>
+<ul>
+<li><a href="#9-1-一个容易出现的控制权冲突">9.1 一个容易出现的控制权冲突</a></li>
+<li><a href="#9-2-settlingtargetref-记录-当前正在自行完成的目标">9.2 settlingTargetRef 记录“当前正在自行完成的目标”</a></li>
+<li><a href="#9-3-为什么-onrest-要比较对象身份">9.3 为什么 onRest 要比较对象身份？</a></li>
+</ul></li>
+<li><a href="#十-核心组件完整代码-把前面的环节接起来">十、核心组件完整代码：把前面的环节接起来</a></li>
+<li><a href="#十一-用一次完整手势串起所有计算">十一、用一次完整手势串起所有计算</a>
+<ul>
+<li><a href="#11-1-普通范围内-从第三项拖向第四项">11.1 普通范围内，从第三项拖向第四项</a></li>
+<li><a href="#11-2-从首项向下越界-再弹回首项">11.2 从首项向下越界，再弹回首项</a></li>
+<li><a href="#11-3-从末项继续向上越界">11.3 从末项继续向上越界</a></li>
+<li><a href="#11-4-动画途中重新按下">11.4 动画途中重新按下</a></li>
+</ul></li>
+<li><a href="#十二-布局-遮罩与触摸行为如何配合">十二、布局、遮罩与触摸行为如何配合？</a>
+<ul>
+<li><a href="#12-1-等高是索引公式成立的前提">12.1 等高是索引公式成立的前提</a></li>
+<li><a href="#12-2-overflow-clip-裁剪视觉内容-不提供原生滚动">12.2 overflow-clip 裁剪视觉内容，不提供原生滚动</a></li>
+<li><a href="#12-3-遮罩与选中框不要拦截触摸">12.3 遮罩与选中框不要拦截触摸</a></li>
+<li><a href="#12-4-touch-action-none-的作用与边界">12.4 touch-action: none 的作用与边界</a></li>
+</ul></li>
+<li><a href="#十三-年月日联动-动画只是视图-日期合法性属于业务层">十三、年月日联动：动画只是视图，日期合法性属于业务层</a></li>
+<li><a href="#十四-用-vitest-测试核心运动规则">十四、用 Vitest 测试核心运动规则</a>
+<ul>
+<li><a href="#14-1-为什么把计算抽成纯函数">14.1 为什么把计算抽成纯函数？</a></li>
+<li><a href="#14-2-代表性断言">14.2 代表性断言</a></li>
+<li><a href="#14-3-浮点断言为什么使用误差范围">14.3 浮点断言为什么使用误差范围？</a></li>
+<li><a href="#14-4-纯函数测试通过-不代表交互全部正确">14.4 纯函数测试通过，不代表交互全部正确</a></li>
+</ul></li>
+<li><a href="#十五-现有实现的边界与进一步完善方向">十五、现有实现的边界与进一步完善方向</a>
+<ul>
+<li><a href="#15-1-空列表兜底不等于支持空状态">15.1 空列表兜底不等于支持空状态</a></li>
+<li><a href="#15-2-当前参数校验不是全面的数值防御">15.2 当前参数校验不是全面的数值防御</a></li>
+<li><a href="#15-3-越界位置重新按下-可见坐标和原始坐标并不相同">15.3 越界位置重新按下：可见坐标和原始坐标并不相同</a></li>
+<li><a href="#15-4-拖动中列表变化-不能只靠-effect-的提前返回">15.4 拖动中列表变化，不能只靠 effect 的提前返回</a></li>
+<li><a href="#15-5-父组件接受-拒绝或延迟提交-要有明确约定">15.5 父组件接受、拒绝或延迟提交，要有明确约定</a></li>
+<li><a href="#15-6-当前只取-touches-0-并没有完整的多指管理">15.6 当前只取 touches[0]，并没有完整的多指管理</a></li>
+<li><a href="#15-7-自定义行高时-选中框也要同步">15.7 自定义行高时，选中框也要同步</a></li>
+<li><a href="#15-8-可访问性和减少动态效果">15.8 可访问性和减少动态效果</a></li>
+</ul></li>
+<li><a href="#十六-如何调参-以及是否应该加入惯性">十六、如何调参，以及是否应该加入惯性？</a>
+<ul>
+<li><a href="#16-1-当前行高同时承担三个角色">16.1 当前行高同时承担三个角色</a></li>
+<li><a href="#16-2-调整弹簧参数时-一次只改一个维度">16.2 调整弹簧参数时，一次只改一个维度</a></li>
+<li><a href="#16-3-惯性滚动需要新增哪些信息">16.3 惯性滚动需要新增哪些信息？</a></li>
+</ul></li>
+<li><a href="#十七-这套方案可以应用到哪些场景">十七、这套方案可以应用到哪些场景？</a>
+<ul>
+<li><a href="#17-1-等高离散选项滚轮">17.1 等高离散选项滚轮</a></li>
+<li><a href="#17-2-横向轮播与卡片吸附">17.2 横向轮播与卡片吸附</a></li>
+<li><a href="#17-3-抽屉-底部面板和可拖拽弹层">17.3 抽屉、底部面板和可拖拽弹层</a></li>
+<li><a href="#17-4-下拉刷新与边界反馈">17.4 下拉刷新与边界反馈</a></li>
+<li><a href="#17-5-不适合直接照搬的场景">17.5 不适合直接照搬的场景</a></li>
+</ul></li>
+<li><a href="#十八-验证清单-不仅要看-会不会动">十八、验证清单：不仅要看“会不会动”</a>
+<ul>
+<li><a href="#18-1-数学与纯函数">18.1 数学与纯函数</a></li>
+<li><a href="#18-2-手势与动画">18.2 手势与动画</a></li>
+<li><a href="#18-3-数据-布局与平台">18.3 数据、布局与平台</a></li>
+</ul></li>
+<li><a href="#十九-知识点总结-把-弹性动画-拆成可理解的工程问题">十九、知识点总结：把“弹性动画”拆成可理解的工程问题</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      <h2 id="前言-一个日期滚轮-为什么不只是修改-translatey">前言：一个日期滚轮，为什么不只是修改 translateY？</h2>
+
+<blockquote>
+<p><a href="https://github.com/xmasuhai/mangosteen-react-1/tree/008526615741655cb2a7eda6a8b790d33951c545">源码</a></p>
+</blockquote>
+
+<p>移动端的日期选择器通常由年、月、日三列组成。用户上下拖动某一列，数字跟随手指移动；拖过首项或末项时，列表还能被稍微拉出去，但越拉越费力；松手后，列表又弹回最近的合法选项。</p>
+
+<p>看上去只是几个数字在移动，实际上需要同时处理四件事：</p>
+
+<ol>
+<li><strong>跟手</strong>：正常范围内，手指移动多少，列表就移动多少。</li>
+<li><strong>越界阻尼</strong>：超过首尾边界后，不突然卡住，也不无限移动。</li>
+<li><strong>离散吸附</strong>：松手时，选中项必须对齐到一整行，不能停在两项中间。</li>
+<li><strong>弹性过渡</strong>：从松手位置到目标项之间，有自然的回弹过程，而且可以被下一次手势打断。</li>
+</ol>
+
+<p>本文结合山竹记账中的以下文件，拆解这套交互的实现：</p>
+
+<table>
+<thead>
+<tr>
+<th>文件</th>
+<th>职责</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><code>src/components/form/DatePickerPopup.tsx</code></td>
+<td>组织年月日三列、生成选项、绘制遮罩和选中框</td>
+</tr>
+
+<tr>
+<td><code>src/components/form/DateTimeColumn.tsx</code></td>
+<td>处理触摸生命周期、驱动动画、同步选中值</td>
+</tr>
+
+<tr>
+<td><code>src/components/form/dateTimeColumnMotion.ts</code></td>
+<td>提供拖动、阻尼、索引计算三个纯函数</td>
+</tr>
+
+<tr>
+<td><code>src/components/form/__test__/dateTimeColumnMotion.test.ts</code></td>
+<td>用 Vitest 验证核心数值规则</td>
+</tr>
+</tbody>
+</table>
+
+<p>动画使用 <code>@react-spring/web</code>，当前项目中的版本是 <code>10.1.2</code>。本文代码与分析以当前实现为准，不把后文讨论的改进方向描述成已经完成的功能。</p>
+
+<p>先给出全文最重要的结论：</p>
+
+<blockquote>
+<p><strong>拖动时的“阻力感”来自位移映射，松手后的“回弹感”来自弹簧动画。前者解决“显示在哪里”，后者解决“如何随时间到达目标”。两者不是同一件事。</strong></p>
+</blockquote>
+
+<h2 id="一-先看完整数据流-从手指坐标到选中日期">一、先看完整数据流：从手指坐标到选中日期</h2>
+
+<p>一次交互可以分成两条连续的链路。</p>
+
+<p>拖动阶段：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">手指按下
+  ↓
+停止尚未结束的动画，读取列表当前可见位移
+  ↓
+记录：手指起点 + 列表起点
+  ↓
+手指移动
+  ↓
+getDragTranslateY：计算原始位移
+  ↓
+getResistedTranslateY：压缩越界部分
+  ↓
+springApi.set：立即设置可见位移
+  ↓
+animated.ol：更新 transform</code></pre></td></tr></table>
+</div>
+</div>
+<p>松手阶段：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">手指松开
+  ↓
+读取列表当前可见位移
+  ↓
+getNearestDateTimeIndex：找到最近的合法索引
+  ↓
+目标位移 = -索引 × 行高
+  ↓
+springApi.start：弹簧动画移动到目标位移
+  ↓
+同时通过 onChange 通知父组件新的选中值</code></pre></td></tr></table>
+</div>
+</div>
+<p>这里刻意区分 <code>set</code> 和 <code>start</code>：拖动时优先跟手，不额外追赶手指；松手后才让动画负责过渡。</p>
+
+<h2 id="二-建立坐标系-为什么首项是-0-后面的项是负数">二、建立坐标系：为什么首项是 0，后面的项是负数？</h2>
+
+<h3 id="2-1-列表移动-选中框不动">2.1 列表移动，选中框不动</h3>
+
+<p>这个组件不是把选中框上下移动，而是把选中框固定在容器中央，让整列选项在框下移动。</p>
+
+<p>可以把界面理解成三个层次：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">日期列容器：裁剪超出区域的内容
+  ├─ 列表定位层：把第一行放到选中框位置
+  │    └─ 动画列表：通过 translateY 上下移动
+  ├─ 上下渐变遮罩：弱化非选中区域
+  └─ 中央选中框：始终保持不动</code></pre></td></tr></table>
+</div>
+</div>
+<p>实际代码中，列表定位层使用：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-tsx" data-lang="tsx"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-tsx" data-lang="tsx"><span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="s2">&#34;picker-positioner w-full absolute top-[calc(50%-var(--half-date-item-height))]&#34;</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="nx">animated</span><span class="p">.</span><span class="nx">ol</span>
+    <span class="nx">style</span><span class="o">=</span><span class="p">{{</span> <span class="nx">transform</span>: <span class="kt">springs.y.to</span><span class="p">((</span><span class="nx">y</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="sb">`translate3d(0, </span><span class="si">${</span><span class="nx">y</span><span class="si">}</span><span class="sb">px, 0)`</span><span class="p">)</span> <span class="p">}}</span>
+    <span class="nx">className</span><span class="o">=</span><span class="s2">&#34;date-time-picker text-center&#34;</span><span class="o">&gt;</span>
+    <span class="p">{</span><span class="cm">/* 每一项的高度和行高都等于 dateItemHeight */</span><span class="p">}</span>
+  <span class="o">&lt;</span><span class="err">/animated.ol&gt;</span>
+<span class="o">&lt;</span><span class="err">/div&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>假设容器高 <code>H</code>，每行高 <code>h</code>，那么第一行顶部的初始位置为：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">H / 2 - h / 2</code></pre></td></tr></table>
+</div>
+</div>
+<p>第一行中心自然就位于 <code>H / 2</code>，恰好落在容器中央。</p>
+
+<p>注意：这里的 <code>translateY = 0</code> 并不表示列表贴在整个弹窗顶部，而是表示<strong>列表在定位层内部没有额外平移，首项已经位于中央选中位置</strong>。</p>
+
+<p>如果脱离当前项目单独复用，需要同时保证 <code>ol</code> 的默认外边距、内边距和列表标记已经被重置，否则浏览器默认样式会破坏这套几何关系。</p>
+
+<h3 id="2-2-索引与位移的对应关系">2.2 索引与位移的对应关系</h3>
+
+<p>浏览器的屏幕纵坐标向下增大，因此：</p>
+
+<ul>
+<li><code>translateY</code> 增大：列表向下移动。</li>
+<li><code>translateY</code> 减小：列表向上移动。</li>
+<li>要让后面的选项进入中央选中框，就要把列表向上移动。</li>
+</ul>
+
+<p>第 <code>i</code> 项对齐时的位移为：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">y(i) = -i × h</code></pre></td></tr></table>
+</div>
+</div>
+<p>以 <code>5</code> 个选项、行高 <code>36px</code> 为例：</p>
+
+<table>
+<thead>
+<tr>
+<th align="right">索引</th>
+<th align="right">对齐位移</th>
+<th>说明</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="right"><code>0</code></td>
+<td align="right"><code>0px</code></td>
+<td>首项位于中央</td>
+</tr>
+
+<tr>
+<td align="right"><code>1</code></td>
+<td align="right"><code>-36px</code></td>
+<td>列表向上移动一行</td>
+</tr>
+
+<tr>
+<td align="right"><code>2</code></td>
+<td align="right"><code>-72px</code></td>
+<td>列表向上移动两行</td>
+</tr>
+
+<tr>
+<td align="right"><code>3</code></td>
+<td align="right"><code>-108px</code></td>
+<td>列表向上移动三行</td>
+</tr>
+
+<tr>
+<td align="right"><code>4</code></td>
+<td align="right"><code>-144px</code></td>
+<td>末项位于中央</td>
+</tr>
+</tbody>
+</table>
+
+<p>因此合法位移范围为：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">minTranslateY = -(listLength - 1) × itemHeight
+
+minTranslateY ≤ translateY ≤ 0</code></pre></td></tr></table>
+</div>
+</div>
+<p>为什么是 <code>listLength - 1</code>，不是 <code>listLength</code>？因为从索引 <code>0</code> 移动到索引 <code>4</code>，只需要经过四个行间距。</p>
+
+<h3 id="2-3-位移方向不等于手指此刻的移动方向">2.3 位移方向不等于手指此刻的移动方向</h3>
+
+<p>这是最容易混淆的一点：</p>
+
+<blockquote>
+<p><code>translateY &gt; 0</code> 表示列表越过首项边界，向下偏移；它不能直接说明手指此刻正在向下滑。</p>
+</blockquote>
+
+<p>例如列表已经被向下拉到正位移，手指开始往上回拖，在重新进入合法范围之前，列表位移仍可能大于 <code>0</code>。</p>
+
+<p>需要判断当前运动方向时，应看两次指针坐标的变化；需要判断是否越界时，才看列表当前位置与边界的关系。</p>
+
+<h2 id="三-不要混用三种位移和一个业务值">三、不要混用三种位移和一个业务值</h2>
+
+<p>理解后续代码之前，先把数据分清楚。</p>
+
+<table>
+<thead>
+<tr>
+<th>数据</th>
+<th>含义</th>
+<th>例子</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>原始位移</td>
+<td>根据手势起点和指针总移动量直接计算的结果</td>
+<td>向下拉出 <code>36px</code>，得到 <code>36</code></td>
+</tr>
+
+<tr>
+<td>可见位移</td>
+<td>原始位移经过越界阻尼后，真正绘制到列表上的结果</td>
+<td>原始 <code>36</code> 被压缩为约 <code>22.76</code></td>
+</tr>
+
+<tr>
+<td>目标位移</td>
+<td>松手后应该停靠的合法整行位置</td>
+<td>首项为 <code>0</code>，第三项为 <code>-72</code></td>
+</tr>
+
+<tr>
+<td>业务选中值</td>
+<td>父组件保存的年、月或日字符串</td>
+<td><code>&quot;2026&quot;</code>、<code>&quot;11&quot;</code>、<code>&quot;8&quot;</code></td>
+</tr>
+</tbody>
+</table>
+
+<p>正常范围内，原始位移和可见位移相同；发生越界后，它们就不相同了。</p>
+
+<p>目标位移一定属于离散的整行位置，但拖动过程中的可见位移可以是任意连续数值，例如 <code>-51.8px</code>。</p>
+
+<p>业务值也不等于动画当前位置。松手后，父组件可以已经拿到新日期，但列表还在向新日期的位置运动。</p>
+
+<h2 id="四-getdragtranslatey-从手势起点计算原始位移">四、getDragTranslateY：从手势起点计算原始位移</h2>
+
+<h3 id="4-1-函数实现">4.1 函数实现</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="kr">export</span> <span class="kr">const</span> <span class="nx">getDragTranslateY</span> <span class="o">=</span> <span class="p">(</span>
+  <span class="nx">startTranslateY</span>: <span class="kt">number</span><span class="p">,</span>
+  <span class="nx">startPointerY</span>: <span class="kt">number</span><span class="p">,</span>
+  <span class="nx">currentPointerY</span>: <span class="kt">number</span>
+<span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">startTranslateY</span> <span class="o">+</span> <span class="nx">currentPointerY</span> <span class="o">-</span> <span class="nx">startPointerY</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>对应公式：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">原始列表位移 = 手势开始时的列表位移 + 手指从按下到现在的总移动距离</code></pre></td></tr></table>
+</div>
+</div>
+<p>三个参数分别是：</p>
+
+<ul>
+<li><code>startTranslateY</code>：这次手势开始时，列表实际可见的位移。</li>
+<li><code>startPointerY</code>：手指按下时的 <code>clientY</code>。</li>
+<li><code>currentPointerY</code>：手指当前的 <code>clientY</code>。</li>
+</ul>
+
+<p><code>clientY</code> 使用视口坐标。按下和移动阶段使用同一坐标系，二者相减后得到手指的纵向移动距离。</p>
+
+<h3 id="4-2-数值示例">4.2 数值示例</h3>
+
+<p>假设列表从 <code>-72px</code> 开始，手指按下时位于 <code>100px</code>：</p>
+
+<table>
+<thead>
+<tr>
+<th align="right">当前手指位置</th>
+<th align="right">手指总位移</th>
+<th align="right">列表原始位移</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="right"><code>100px</code></td>
+<td align="right"><code>0px</code></td>
+<td align="right"><code>-72px</code></td>
+</tr>
+
+<tr>
+<td align="right"><code>120px</code></td>
+<td align="right"><code>20px</code></td>
+<td align="right"><code>-52px</code></td>
+</tr>
+
+<tr>
+<td align="right"><code>80px</code></td>
+<td align="right"><code>-20px</code></td>
+<td align="right"><code>-92px</code></td>
+</tr>
+</tbody>
+</table>
+
+<p>因此，手指向下，列表就向下；手指向上，列表就向上。</p>
+
+<h3 id="4-3-起点在一次手势中固定-不要逐帧覆盖">4.3 起点在一次手势中固定，不要逐帧覆盖</h3>
+
+<p><code>startPointerY</code> 和 <code>startTranslateY</code> 在同一次手势中保持不变，移动时只更新 <code>currentPointerY</code>。</p>
+
+<p>这样，无论触摸事件触发多少次、是否合并了中间事件，当前位置都可以由“起点 + 总位移”直接算出来，不依赖前面处理过多少帧。</p>
+
+<p>尤其不要把已经经过阻尼的可见位移，反复当作下一次计算的原始起点。</p>
+
+<p>举个错误实现的例子：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">第一次：原始越界 36px → 阻尼后约 22.76px
+
+第二次手指再向下移动 1px：
+错误地用 22.76 + 1 作为原始位移，再做一次阻尼
+结果反而只有约 17.4px</code></pre></td></tr></table>
+</div>
+</div>
+<p>手指继续向下，列表却向上缩回，这是重复压缩导致的错误。</p>
+
+<p>正确做法是仍然从原来的手势起点计算：原始越界从 <code>36px</code> 变成 <code>37px</code>，然后只对这次算出的原始结果施加一次阻尼。</p>
+
+<h3 id="4-4-回拖时为什么不会丢失距离">4.4 回拖时为什么不会丢失距离？</h3>
+
+<p>假设首项位置开始向下拖：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">手指起点：100px
+列表起点：0px
+
+手指到 136px → 原始位移 36px → 显示约 22.76px
+手指回到 100px → 原始位移 0px → 显示 0px
+手指继续到 90px → 原始位移 -10px → 显示 -10px</code></pre></td></tr></table>
+</div>
+</div>
+<p>无论之前被压缩了多少，只要回到相同的手指坐标，就会得到相同的原始位移和可见位移。</p>
+
+<p>因此，<strong>在起点固定的一次手势内，阻尼映射是由当前位置决定的，而不是由历史事件累计出来的</strong>。</p>
+
+<h2 id="五-getresistedtranslatey-用指数函数实现越界阻尼">五、getResistedTranslateY：用指数函数实现越界阻尼</h2>
+
+<h3 id="5-1-完整实现">5.1 完整实现</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="kr">export</span> <span class="kr">const</span> <span class="nx">getResistedTranslateY</span> <span class="o">=</span> <span class="p">(</span>
+  <span class="nx">translateY</span>: <span class="kt">number</span><span class="p">,</span>
+  <span class="nx">listLength</span>: <span class="kt">number</span><span class="p">,</span>
+  <span class="nx">itemHeight</span>: <span class="kt">number</span>
+<span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">listLength</span> <span class="o">&lt;=</span> <span class="mi">0</span> <span class="o">||</span> <span class="nx">itemHeight</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="mi">0</span>
+  <span class="p">}</span>
+
+  <span class="kr">const</span> <span class="nx">minTranslateY</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="nx">listLength</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="nx">itemHeight</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="nx">translateY</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">itemHeight</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">exp</span><span class="p">(</span><span class="o">-</span><span class="nx">translateY</span> <span class="o">/</span> <span class="nx">itemHeight</span><span class="p">))</span>
+  <span class="p">}</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="nx">translateY</span> <span class="o">&lt;</span> <span class="nx">minTranslateY</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kr">const</span> <span class="nx">overscroll</span> <span class="o">=</span> <span class="nx">minTranslateY</span> <span class="o">-</span> <span class="nx">translateY</span>
+    <span class="k">return</span> <span class="nx">minTranslateY</span> <span class="o">-</span> <span class="nx">itemHeight</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">exp</span><span class="p">(</span><span class="o">-</span><span class="nx">overscroll</span> <span class="o">/</span> <span class="nx">itemHeight</span><span class="p">))</span>
+  <span class="p">}</span>
+
+  <span class="k">return</span> <span class="nx">translateY</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>这个函数只负责“原始位移映射到显示位移”，不启动动画，也不决定最终选中哪一项。</p>
+
+<h3 id="5-2-范围内-完全跟手">5.2 范围内：完全跟手</h3>
+
+<p>当位移满足：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">minTranslateY ≤ translateY ≤ 0</code></pre></td></tr></table>
+</div>
+</div>
+<p>函数直接返回输入。</p>
+
+<p>例如 <code>5</code> 项、行高 <code>36px</code>，合法范围为 <code>[-144, 0]</code>，原始位移 <code>-81px</code> 会原样返回 <code>-81px</code>。</p>
+
+<p>注意，合法范围指的是连续区间，而不是只有 <code>0</code>、<code>-36</code>、<code>-72</code> 等整行位置才合法。整行对齐是松手后才处理的事情。</p>
+
+<h3 id="5-3-首项边界越界-向下拉出列表">5.3 首项边界越界：向下拉出列表</h3>
+
+<p>当 <code>translateY &gt; 0</code>，说明列表越过了首项边界。这里的原始越界距离就是 <code>translateY</code> 本身。</p>
+
+<p>设行高为 <code>h</code>，越界距离为 <code>d</code>，可见拉伸量为：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">R(d) = h × (1 - exp(-d / h))，其中 d ≥ 0</code></pre></td></tr></table>
+</div>
+</div>
+<p><code>Math.exp(x)</code> 表示自然常数 <code>e</code> 的 <code>x</code> 次方。</p>
+
+<p>以 <code>h = 36px</code> 为例：</p>
+
+<table>
+<thead>
+<tr>
+<th align="right">原始越界距离 d</th>
+<th align="right">可见拉伸量 R(d)</th>
+<th align="right">可见量占原始距离的比例</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="right"><code>0px</code></td>
+<td align="right"><code>0px</code></td>
+<td align="right">—</td>
+</tr>
+
+<tr>
+<td align="right"><code>9px</code></td>
+<td align="right">约 <code>7.96px</code></td>
+<td align="right">约 <code>88.5%</code></td>
+</tr>
+
+<tr>
+<td align="right"><code>18px</code></td>
+<td align="right">约 <code>14.16px</code></td>
+<td align="right">约 <code>78.7%</code></td>
+</tr>
+
+<tr>
+<td align="right"><code>36px</code></td>
+<td align="right">约 <code>22.76px</code></td>
+<td align="right">约 <code>63.2%</code></td>
+</tr>
+
+<tr>
+<td align="right"><code>72px</code></td>
+<td align="right">约 <code>31.13px</code></td>
+<td align="right">约 <code>43.2%</code></td>
+</tr>
+
+<tr>
+<td align="right"><code>108px</code></td>
+<td align="right">约 <code>34.21px</code></td>
+<td align="right">约 <code>31.7%</code></td>
+</tr>
+</tbody>
+</table>
+
+<p>可见拉伸量一直增加，但增长速度越来越慢，因此表现为“还能拉动，但越拉越费力”。</p>
+
+<p>这里并没有真实计算手指施加的力，所谓阻力感，是通过“同样的手指移动，换来越来越少的视觉位移”模拟出来的。</p>
+
+<h3 id="5-4-末项边界越界-以末项位置为基准向上拉伸">5.4 末项边界越界：以末项位置为基准向上拉伸</h3>
+
+<p>当 <code>translateY &lt; minTranslateY</code>，列表已经越过末项位置，继续向上移动。</p>
+
+<p>此时先计算正的越界距离：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">d = minTranslateY - translateY</code></pre></td></tr></table>
+</div>
+</div>
+<p>再把压缩后的距离从末项边界减去：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">可见位移 = minTranslateY - R(d)</code></pre></td></tr></table>
+</div>
+</div>
+<p>例如：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">listLength = 5
+itemHeight = 36px
+minTranslateY = -144px
+原始位移 = -180px
+
+越界距离 = -144 - (-180) = 36px
+压缩后拉伸量 ≈ 22.76px
+最终显示位移 ≈ -144 - 22.76 = -166.76px</code></pre></td></tr></table>
+</div>
+</div>
+<p>首项和末项使用同一条阻尼曲线，只是以不同的边界为原点、向相反方向延伸。</p>
+
+<h3 id="5-5-为什么这个公式在边界处比较自然">5.5 为什么这个公式在边界处比较自然？</h3>
+
+<p>把函数的性质展开，就能理解这不是随意选择的一个指数表达式。</p>
+
+<p><strong>第一，越界为零时，拉伸也为零。</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">R(0) = h × (1 - 1) = 0</code></pre></td></tr></table>
+</div>
+</div>
+<p>所以刚跨过边界时，显示位置不会突然跳变。</p>
+
+<p><strong>第二，刚越界时，变化速度与正常拖动一致。</strong></p>
+
+<p>对越界距离求导：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text"><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">R&#39;(d) = exp(-d / h)
+R&#39;(0) = 1</code></pre></td></tr></table>
+</div>
+</div>
+<p>范围内的位移映射斜率也是 <code>1</code>，因此边界两侧不仅位置连续，一阶变化率也连续，手感不会突然从“一比一跟手”切换到另一个固定比例。</p>
+
+<p>从近似关系看，当 <code>d</code> 很小时：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text"><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">exp(-d / h) ≈ 1 - d / h
+R(d) ≈ d</code></pre></td></tr></table>
+</div>
+</div>
+<p><strong>第三，越往外拖，新增位移越少。</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">R&#39;&#39;(d) = -exp(-d / h) / h &lt; 0</code></pre></td></tr></table>
+</div>
+</div>
+<p>这表示曲线向下弯，边际增长持续减小。比如原始越界达到一行高度时，局部斜率已经下降到约 <code>0.368</code>。</p>
+
+<p><strong>第四，拉伸有渐近上限。</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">当 d → +∞ 时，R(d) → h</code></pre></td></tr></table>
+</div>
+</div>
+<p>数学上，对于有限的正 <code>d</code>，拉伸量小于一行高度；但实际浮点计算中，指数项足够小时，<code>1 - 指数项</code> 可能被舍入成 <code>1</code>，结果恰好等于 <code>h</code>。</p>
+
+<p>因此测试极大越界距离时，使用“小于等于一行高度”比“严格小于”更符合 JavaScript 数值计算的实际情况。</p>
+
+<h3 id="5-6-用分段函数统一理解">5.6 用分段函数统一理解</h3>
+
+<p>设 <code>m = -(n - 1) × h</code>，原始位移为 <code>y</code>，显示位移为 <code>F(y)</code>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">         ⎧ R(y)          ，y &gt; 0
+F(y)  =  ⎨ y             ，m ≤ y ≤ 0
+         ⎩ m - R(m - y)  ，y &lt; m</code></pre></td></tr></table>
+</div>
+</div>
+<p>这可以总结为：</p>
+
+<blockquote>
+<p>合法范围内不改动；越界后保留方向，只压缩超出最近边界的那一部分。</p>
+</blockquote>
+
+<p>对于有效的有限输入，可见位移大致被限制在：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">minTranslateY - itemHeight ≤ 可见位移 ≤ itemHeight</code></pre></td></tr></table>
+</div>
+</div>
+<p>两端是考虑浮点舍入后的界限；在实数模型中，有限越界距离对应的外侧界限不会真正取到。</p>
+
+<h3 id="5-7-为什么不直接截断-或者统一乘以-0-3">5.7 为什么不直接截断，或者统一乘以 0.3？</h3>
+
+<p>三种方案的差别如下：</p>
+
+<table>
+<thead>
+<tr>
+<th>方案</th>
+<th>越界反馈</th>
+<th>问题或取舍</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>直接截断到边界</td>
+<td>完全拉不出去</td>
+<td>边界明确，但缺少弹性反馈</td>
+</tr>
+
+<tr>
+<td>越界距离乘固定比例</td>
+<td>可以继续拉出，阻力固定</td>
+<td>位移仍会无限增长；边界斜率通常突变</td>
+</tr>
+
+<tr>
+<td>指数压缩</td>
+<td>刚越界接近跟手，随后越来越难拉动</td>
+<td>计算稍复杂，但手感更渐进，且拉伸量有界</td>
+</tr>
+</tbody>
+</table>
+
+<p>没有一种方式适合所有产品。日期滚轮通常希望边界柔和、可见拉伸可控，所以这里选择指数压缩。</p>
+
+<h2 id="六-getnearestdatetimeindex-把连续位置转换成离散选项">六、getNearestDateTimeIndex：把连续位置转换成离散选项</h2>
+
+<h3 id="6-1-完整实现">6.1 完整实现</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="kr">export</span> <span class="kr">const</span> <span class="nx">getNearestDateTimeIndex</span> <span class="o">=</span> <span class="p">(</span>
+  <span class="nx">translateY</span>: <span class="kt">number</span><span class="p">,</span>
+  <span class="nx">listLength</span>: <span class="kt">number</span><span class="p">,</span>
+  <span class="nx">itemHeight</span>: <span class="kt">number</span>
+<span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">listLength</span> <span class="o">&lt;=</span> <span class="mi">0</span> <span class="o">||</span> <span class="nx">itemHeight</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="mi">0</span>
+  <span class="p">}</span>
+
+  <span class="kr">const</span> <span class="nx">minTranslateY</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="nx">listLength</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="nx">itemHeight</span>
+  <span class="kr">const</span> <span class="nx">boundedTranslateY</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">max</span><span class="p">(</span><span class="nx">minTranslateY</span><span class="p">,</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">min</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nx">translateY</span><span class="p">))</span>
+  <span class="k">return</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">min</span><span class="p">(</span><span class="nx">listLength</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">round</span><span class="p">(</span><span class="o">-</span><span class="nx">boundedTranslateY</span> <span class="o">/</span> <span class="nx">itemHeight</span><span class="p">)))</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>它只返回索引，不修改列表位置，也不调用弹簧动画。</p>
+
+<h3 id="6-2-第一步-把位移截断到合法范围">6.2 第一步：把位移截断到合法范围</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="kr">const</span> <span class="nx">boundedTranslateY</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">max</span><span class="p">(</span><span class="nx">minTranslateY</span><span class="p">,</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">min</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nx">translateY</span><span class="p">))</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>先用 <code>Math.min(0, translateY)</code> 限制首项边界，再用 <code>Math.max</code> 限制末项边界。
+取值范围可以理解为 <code>[minTranslateY, [translateY, 0]]</code> 即 <code>minTranslateY &lt;= translateY &lt;= 0</code></p>
+
+<p>以合法范围 <code>[-144, 0]</code> 为例：</p>
+
+<table>
+<thead>
+<tr>
+<th align="right">输入位移</th>
+<th align="right">截断后位移</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="right"><code>22.76px</code></td>
+<td align="right"><code>0px</code></td>
+</tr>
+
+<tr>
+<td align="right"><code>-57.6px</code></td>
+<td align="right"><code>-57.6px</code></td>
+</tr>
+
+<tr>
+<td align="right"><code>-166.76px</code></td>
+<td align="right"><code>-144px</code></td>
+</tr>
+</tbody>
+</table>
+
+<p>因此，松手时即使仍处于越界拉伸状态，也会选择首项或末项，而不会产生不存在的负索引或超长索引。</p>
+
+<h3 id="6-3-第二步-换算成连续索引-再四舍五入">6.3 第二步：换算成连续索引，再四舍五入</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="nb">Math</span><span class="p">.</span><span class="nx">round</span><span class="p">(</span><span class="o">-</span><span class="nx">boundedTranslateY</span> <span class="o">/</span> <span class="nx">itemHeight</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>合法位移非正，取反后除以行高，就能得到当前位于第几行附近。</p>
+
+<table>
+<thead>
+<tr>
+<th align="right">位移</th>
+<th align="right">连续索引</th>
+<th align="right">最近索引</th>
+<th align="right">目标位移</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="right"><code>-43.2px</code></td>
+<td align="right"><code>1.2</code></td>
+<td align="right"><code>1</code></td>
+<td align="right"><code>-36px</code></td>
+</tr>
+
+<tr>
+<td align="right"><code>-54px</code></td>
+<td align="right"><code>1.5</code></td>
+<td align="right"><code>2</code></td>
+<td align="right"><code>-72px</code></td>
+</tr>
+
+<tr>
+<td align="right"><code>-57.6px</code></td>
+<td align="right"><code>1.6</code></td>
+<td align="right"><code>2</code></td>
+<td align="right"><code>-72px</code></td>
+</tr>
+</tbody>
+</table>
+
+<p>恰好处于两项中点时，换算后的数值非负，<code>Math.round</code> 会选择索引更大的那一项。例如 <code>-18px</code> 对应 <code>0.5</code>，选索引 <code>1</code>。</p>
+
+<h3 id="6-4-第三步-再次限制索引范围">6.4 第三步：再次限制索引范围</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="nb">Math</span><span class="p">.</span><span class="nx">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">min</span><span class="p">(</span><span class="nx">listLength</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">roundedIndex</span><span class="p">))</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>在列表长度为正整数、行高为正、数值正常的条件下，前面的位移截断通常已经足够。最后再限制一次索引范围，是让返回值约束更明确的一道保护。</p>
+
+<h3 id="6-5-为什么使用可见位移-而不是拖动原始位移">6.5 为什么使用可见位移，而不是拖动原始位移？</h3>
+
+<p>松手代码读取的是：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="nx">springs</span><span class="p">.</span><span class="nx">y</span><span class="p">.</span><span class="nx">get</span><span class="p">()</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>也就是用户当前实际看到的位置。</p>
+
+<p>因此，确定目标和启动动画都以当前显示位置为依据。在合法范围内，原始位移与可见位移相同；在范围外，两者虽然不同，但截断后都会落到相同的首项或末项。</p>
+
+<p>这一步不需要反解阻尼函数。</p>
+
+<h3 id="6-6-它不是惯性滚动算法">6.6 它不是惯性滚动算法</h3>
+
+<p>这个函数没有速度参数，也没有时间参数。只要松手位置相同，无论用户之前拖得快还是慢，它计算出的目标索引就相同。</p>
+
+<p>因此，当前实现是“按当前位置吸附”，不是“根据松手速度向前甩动若干项”。弹簧动画内部可能涉及运动速度的连续演化，但那不等于业务层实现了速度投影选项。</p>
+
+<h2 id="七-react-spring-把目标位置变成随时间变化的动画">七、React Spring：把目标位置变成随时间变化的动画</h2>
+
+<h3 id="7-1-初始化动画值">7.1 初始化动画值</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-tsx" data-lang="tsx"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-tsx" data-lang="tsx"><span class="kr">const</span> <span class="p">[</span><span class="nx">springs</span><span class="p">,</span> <span class="nx">springApi</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useSpring</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">({</span>
+  <span class="nx">y</span>: <span class="kt">currentDateIndex</span> <span class="o">*</span> <span class="o">-</span><span class="nx">dateItemHeight</span><span class="p">,</span>
+  <span class="nx">config</span><span class="o">:</span> <span class="p">{</span> <span class="nx">tension</span>: <span class="kt">300</span><span class="p">,</span> <span class="nx">friction</span>: <span class="kt">30</span> <span class="p">},</span>
+<span class="p">}))</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>这里保存的不是每次渲染都立即固定下来的普通数值，而是可以被动画系统持续更新的 <code>SpringValue</code>。</p>
+
+<ul>
+<li><code>springs.y</code>：动画值对象。</li>
+<li><code>springs.y.get()</code>：读取此刻的数值。</li>
+<li><code>springApi.set({ y })</code>：立即设定位置，不请求一段追赶动画。</li>
+<li><code>springApi.start({ y })</code>：从当前状态向目标位置运动。</li>
+<li><code>springApi.stop()</code>：停止正在运行的动画。</li>
+</ul>
+
+<p><code>useSpring</code> 的初始化回调建立初始值；后续父组件值变化，还需要代码显式调用 <code>start</code>，不能只依赖初始化表达式重新执行。</p>
+
+<h3 id="7-2-为什么动画列表使用-animated-ol">7.2 为什么动画列表使用 animated.ol？</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-tsx" data-lang="tsx"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-tsx" data-lang="tsx"><span class="o">&lt;</span><span class="nx">animated</span><span class="p">.</span><span class="nx">ol</span>
+  <span class="nx">style</span><span class="o">=</span><span class="p">{{</span> <span class="nx">transform</span>: <span class="kt">springs.y.to</span><span class="p">((</span><span class="nx">y</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="sb">`translate3d(0, </span><span class="si">${</span><span class="nx">y</span><span class="si">}</span><span class="sb">px, 0)`</span><span class="p">)</span> <span class="p">}}</span><span class="o">&gt;</span>
+  <span class="p">{</span><span class="cm">/* 选项 */</span><span class="p">}</span>
+<span class="o">&lt;</span><span class="err">/animated.ol&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p><code>.to(...)</code> 把数值型动画值映射为 CSS 变换字符串，<code>animated.ol</code> 负责把动画值的更新应用到元素样式。</p>
+
+<p>这种方式不需要为了每一个动画帧都调用 React 的 <code>setState</code>，也不需要整列选项逐帧重新渲染。</p>
+
+<p>这里使用 <code>transform</code>，主要是让列表通过视觉变换移动，而不是每帧修改 <code>top</code> 去参与普通布局。浏览器通常能够较高效地处理这种更新，但 <code>translate3d</code> 不是“必然零开销”或“必然获得独立 GPU 图层”的保证，仍应以实际性能分析为准。</p>
+
+<h3 id="7-3-弹簧动画和固定时长动画有什么不同">7.3 弹簧动画和固定时长动画有什么不同？</h3>
+
+<p>固定时长动画通常思考的是：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">用 300ms，按某条缓动曲线，从 A 走到 B</code></pre></td></tr></table>
+</div>
+</div>
+<p>弹簧动画更接近：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text"><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">目标在 B，当前位置与 B 有距离，于是产生恢复力；
+运动又受到阻力，最终逐渐稳定在 B。</code></pre></td></tr></table>
+</div>
+</div>
+<p>可以用经典弹簧阻尼模型帮助理解：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">m × x&#39;&#39; + c × x&#39; + k × (x - target) = 0</code></pre></td></tr></table>
+</div>
+</div>
+<p>其中：</p>
+
+<ul>
+<li><code>m</code>：质量。</li>
+<li><code>k</code>：弹簧刚度，对应理解上的 <code>tension</code>。</li>
+<li><code>c</code>：阻尼系数，对应理解上的 <code>friction</code>。</li>
+<li><code>x - target</code>：当前位置到目标位置的偏差。</li>
+</ul>
+
+<p>这是理解参数作用的模型，不是说业务代码直接以像素、秒等物理单位精确模拟了一根真实弹簧。</p>
+
+<h3 id="7-4-tension-与-friction-如何影响手感">7.4 tension 与 friction 如何影响手感？</h3>
+
+<p>松手时使用：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="nx">config</span><span class="o">:</span> <span class="p">{</span> <span class="nx">tension</span>: <span class="kt">300</span><span class="p">,</span> <span class="nx">friction</span>: <span class="kt">18</span> <span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>一般来说：</p>
+
+<ul>
+<li><code>tension</code> 越大，回到目标的趋势越强，运动通常越利落。</li>
+<li><code>friction</code> 越大，运动衰减越明显，通常越不容易反复振荡。</li>
+<li><code>friction</code> 较低时，更容易出现越过目标后再回来的弹性效果。</li>
+</ul>
+
+<p>初始化配置中的阻尼为 <code>30</code>，松手配置中的阻尼为 <code>18</code>，体现了后者希望有更明显回弹的意图。</p>
+
+<p>为了形成数量级直觉，可以在简化模型中假设 <code>m = 1</code>，则临界阻尼为：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">cCritical = 2 × sqrt(k × m)
+          = 2 × sqrt(300)
+          ≈ 34.64</code></pre></td></tr></table>
+</div>
+</div>
+<p>在这个假设下，<code>30</code> 比 <code>18</code> 更接近临界阻尼，通常更稳；<code>18</code> 则更容易产生可见回摆。但实际表现还与库的求解、初始状态、精度阈值及配置方式有关，不能只用这一个算式断言动画时长或回弹次数。</p>
+
+<p>还要注意：React Spring 可以沿用或合并已有动画配置。当前源码在部分 <code>start({ y })</code> 中没有再次指定 <code>config</code>，因此不能简单声称“外部同步和取消一定使用 friction: 30”。如果产品要求每条交互路径参数固定，应在对应路径显式传入配置。</p>
+
+<h3 id="7-5-空间阻尼与时间阻尼不能互相代替">7.5 空间阻尼与时间阻尼不能互相代替</h3>
+
+<table>
+<thead>
+<tr>
+<th>对比项</th>
+<th>越界指数阻尼</th>
+<th>弹簧动画阻尼</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>输入</td>
+<td>原始越界距离</td>
+<td>当前运动状态与目标位置</td>
+</tr>
+
+<tr>
+<td>主要发生阶段</td>
+<td>手指拖动期间</td>
+<td>松手后的归位期间</td>
+</tr>
+
+<tr>
+<td>是否需要时间演化</td>
+<td>不需要，是静态映射</td>
+<td>需要，逐帧演化</td>
+</tr>
+
+<tr>
+<td>控制什么</td>
+<td>能被拉出多远、是否跟手</td>
+<td>如何回到目标、是否回摆</td>
+</tr>
+
+<tr>
+<td>对应代码</td>
+<td><code>getResistedTranslateY</code></td>
+<td><code>springApi.start</code> 的 <code>config</code></td>
+</tr>
+</tbody>
+</table>
+
+<p>给弹簧加大阻尼，不能替代拖动时的越界压缩；把越界曲线调得更硬，也不会自动产生松手后的回弹动画。</p>
+
+<h2 id="八-触摸生命周期-让动画-手势和业务状态交接清楚">八、触摸生命周期：让动画、手势和业务状态交接清楚</h2>
+
+<h3 id="8-1-为什么用-useref-保存手势">8.1 为什么用 useRef 保存手势？</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-tsx" data-lang="tsx"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-tsx" data-lang="tsx"><span class="kr">const</span> <span class="nx">gestureRef</span> <span class="o">=</span> <span class="nx">useRef</span><span class="o">&lt;</span><span class="p">{</span> <span class="nx">pointerY</span>: <span class="kt">number</span><span class="p">;</span> <span class="nx">translateY</span>: <span class="kt">number</span> <span class="p">}</span> <span class="o">|</span> <span class="kc">null</span><span class="o">&gt;</span><span class="p">(</span><span class="kc">null</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>这里保存的是一次手势的起点信息，不是界面需要直接展示的数据。</p>
+
+<ul>
+<li><code>null</code>：当前没有有效拖动。</li>
+<li>非 <code>null</code>：已经按下，可以根据记录的起点继续计算。</li>
+</ul>
+
+<p>使用 <code>useRef</code> 可以在事件之间共享数据，而不必为了高频的触摸更新触发 React 渲染。</p>
+
+<p>这并不意味着“动画组件里不能使用 state”，而是要区分职责：业务值可以通过 React 状态管理，瞬时手势和动画状态不必逐帧进入 React 渲染流程。</p>
+
+<h3 id="8-2-按下-停止旧动画-接管当前可见位置">8.2 按下：停止旧动画，接管当前可见位置</h3>
+
+<p>关键顺序是：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-tsx" data-lang="tsx"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-tsx" data-lang="tsx"><span class="nx">settlingTargetRef</span><span class="p">.</span><span class="nx">current</span> <span class="o">=</span> <span class="kc">null</span>
+<span class="nx">springApi</span><span class="p">.</span><span class="nx">stop</span><span class="p">()</span>
+<span class="kr">const</span> <span class="nx">translateY</span> <span class="o">=</span> <span class="nx">springs</span><span class="p">.</span><span class="nx">y</span><span class="p">.</span><span class="nx">get</span><span class="p">()</span>
+<span class="nx">springApi</span><span class="p">.</span><span class="nx">set</span><span class="p">({</span> <span class="nx">y</span>: <span class="kt">translateY</span> <span class="p">})</span>
+<span class="nx">gestureRef</span><span class="p">.</span><span class="nx">current</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">pointerY</span>: <span class="kt">touch.clientY</span><span class="p">,</span> <span class="nx">translateY</span> <span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>逐步理解：</p>
+
+<ol>
+<li>清除旧的吸附目标，让这次手势拥有新的控制权。</li>
+<li>停止尚未结束的弹簧运动。</li>
+<li>读取此刻真正显示的位置，而不是之前动画的目标位置。</li>
+<li>显式把这个位置作为接管时的值。</li>
+<li>记录手指位置和列表位置，作为本次拖动的共同起点。</li>
+</ol>
+
+<p>假设上次松手目标为 <code>-72px</code>，动画还只走到 <code>-50.4px</code>。如果新手势从 <code>-72px</code> 开始计算，用户一按下就可能看到跳动。</p>
+
+<p>正确起点应该是 <code>-50.4px</code>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">手指按下时：250px
+列表此刻：-50.4px
+
+手指仍在 250px → 原始位移 -50.4px
+手指移到 260px → 原始位移 -40.4px</code></pre></td></tr></table>
+</div>
+</div>
+<p>在合法范围内，这样能自然地从动画过渡到跟手拖动。对于“按下时仍处于越界区域”的特殊情况，还存在再次应用阻尼的问题，后文会单独讨论，不能仅凭这段逻辑就断言所有场景绝对无跳变。</p>
+
+<h3 id="8-3-移动-先算原始位移-再做一次阻尼">8.3 移动：先算原始位移，再做一次阻尼</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-tsx" data-lang="tsx"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-tsx" data-lang="tsx"><span class="kr">const</span> <span class="nx">translateY</span> <span class="o">=</span> <span class="nx">getDragTranslateY</span><span class="p">(</span><span class="nx">gesture</span><span class="p">.</span><span class="nx">translateY</span><span class="p">,</span> <span class="nx">gesture</span><span class="p">.</span><span class="nx">pointerY</span><span class="p">,</span> <span class="nx">touch</span><span class="p">.</span><span class="nx">clientY</span><span class="p">)</span>
+<span class="nx">springApi</span><span class="p">.</span><span class="nx">set</span><span class="p">({</span>
+  <span class="nx">y</span>: <span class="kt">getResistedTranslateY</span><span class="p">(</span><span class="nx">translateY</span><span class="p">,</span> <span class="nx">dateTimeList</span><span class="p">.</span><span class="nx">length</span><span class="p">,</span> <span class="nx">dateItemHeight</span><span class="p">),</span>
+<span class="p">})</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>这里没有 <code>start</code>，因为手指已经提供了每一刻的位置。如果每次移动都再启动一段弹簧动画，列表就会不断追赶手指，产生拖泥带水的延迟感。</p>
+
+<p>拖动过程只改变显示位置，不立即调用 <code>onChange</code>；这使得业务选中值在松手时才正式提交，而不是每经过半行就改变一次日期。</p>
+
+<h3 id="8-4-松手-确定目标-启动动画-提交选中值">8.4 松手：确定目标、启动动画、提交选中值</h3>
+
+<p>松手时依次完成：</p>
+
+<ol>
+<li>清除手势记录。</li>
+<li>根据当前可见位置计算最近合法索引。</li>
+<li>记录本次吸附目标。</li>
+<li>启动到目标整行位置的弹簧动画。</li>
+<li>立即调用 <code>onChange</code> 通知父组件。</li>
+</ol>
+
+<p>这里的“立即”很重要：业务值提交不需要等待动画结束。</p>
+
+<p>例如选中项已经变成 <code>11</code> 月，界面仍在向 <code>11</code> 月的位置收敛，这是正常的“业务目标先确定，视觉再到达”。</p>
+
+<p>相应地，父组件应当把 <code>onChange</code> 理解为“选中值提交”，而不是“动画播放完毕”。如果有埋点或操作必须等视觉稳定后才执行，应单独设计完成事件。</p>
+
+<h3 id="8-5-取消-回到已经提交的选中值">8.5 取消：回到已经提交的选中值</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-tsx" data-lang="tsx"><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-tsx" data-lang="tsx"><span class="nx">gestureRef</span><span class="p">.</span><span class="nx">current</span> <span class="o">=</span> <span class="kc">null</span>
+<span class="nx">springApi</span><span class="p">.</span><span class="nx">start</span><span class="p">({</span> <span class="nx">y</span>: <span class="kt">currentDateIndex</span> <span class="o">*</span> <span class="o">-</span><span class="nx">dateItemHeight</span> <span class="p">})</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>系统中断、触摸被取消等情况会触发 <code>touchcancel</code>。</p>
+
+<p>当前实现把它视为“本次选择未提交”：回到父组件当前选中的值，不调用 <code>onChange</code>。</p>
+
+<p>这与 <code>touchend</code> 的“按当前位置提交最近项”不同。明确区分完成和取消，是手势组件保持语义稳定的重要细节。</p>
+
+<h2 id="九-父组件同步-为什么不能每次-onchange-后都重新启动动画">九、父组件同步：为什么不能每次 onChange 后都重新启动动画？</h2>
+
+<h3 id="9-1-一个容易出现的控制权冲突">9.1 一个容易出现的控制权冲突</h3>
+
+<p><code>DateTimeColumn</code> 通过 <code>dateTimeValue</code> 接收业务选中值，通过 <code>onChange</code> 把用户的新选择交给父组件。</p>
+
+<p>松手时会发生：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">子组件启动吸附动画
+  ↓
+子组件调用 onChange
+  ↓
+父组件更新 dateTimeValue
+  ↓
+子组件渲染，相关 effect 执行</code></pre></td></tr></table>
+</div>
+</div>
+<p>如果 effect 不加区分，看到值变化就重新启动同一个目标的动画，会形成重复发令。即使目标相同，也属于不必要的竞争，可能干扰预期的动画过程或配置。</p>
+
+<h3 id="9-2-settlingtargetref-记录-当前正在自行完成的目标">9.2 settlingTargetRef 记录“当前正在自行完成的目标”</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-tsx" data-lang="tsx"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-tsx" data-lang="tsx"><span class="kr">const</span> <span class="nx">settlingTargetRef</span> <span class="o">=</span> <span class="nx">useRef</span><span class="o">&lt;</span><span class="p">{</span>
+  <span class="nx">index</span>: <span class="kt">number</span>
+  <span class="nx">itemHeight</span>: <span class="kt">number</span>
+  <span class="nx">listLength</span>: <span class="kt">number</span>
+<span class="p">}</span> <span class="o">|</span> <span class="kc">null</span><span class="o">&gt;</span><span class="p">(</span><span class="kc">null</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>这里不仅记录索引，还记录行高与列表长度，因为这些数据共同决定当前吸附上下文。</p>
+
+<p>effect 的逻辑是：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-tsx" data-lang="tsx"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-tsx" data-lang="tsx"><span class="nx">useEffect</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">gestureRef</span><span class="p">.</span><span class="nx">current</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span>
+  <span class="p">}</span>
+
+  <span class="kr">const</span> <span class="nx">settlingTarget</span> <span class="o">=</span> <span class="nx">settlingTargetRef</span><span class="p">.</span><span class="nx">current</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">settlingTarget</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span>
+      <span class="nx">settlingTarget</span><span class="p">.</span><span class="nx">index</span> <span class="o">===</span> <span class="nx">currentDateIndex</span> <span class="o">&amp;&amp;</span>
+      <span class="nx">settlingTarget</span><span class="p">.</span><span class="nx">itemHeight</span> <span class="o">===</span> <span class="nx">dateItemHeight</span> <span class="o">&amp;&amp;</span>
+      <span class="nx">settlingTarget</span><span class="p">.</span><span class="nx">listLength</span> <span class="o">===</span> <span class="nx">dateTimeList</span><span class="p">.</span><span class="nx">length</span>
+    <span class="p">)</span> <span class="p">{</span>
+      <span class="k">return</span>
+    <span class="p">}</span>
+    <span class="nx">settlingTargetRef</span><span class="p">.</span><span class="nx">current</span> <span class="o">=</span> <span class="kc">null</span>
+  <span class="p">}</span>
+
+  <span class="nx">springApi</span><span class="p">.</span><span class="nx">start</span><span class="p">({</span> <span class="nx">y</span>: <span class="kt">currentDateIndex</span> <span class="o">*</span> <span class="o">-</span><span class="nx">dateItemHeight</span> <span class="p">})</span>
+<span class="p">},</span> <span class="p">[</span><span class="nx">currentDateIndex</span><span class="p">,</span> <span class="nx">dateItemHeight</span><span class="p">,</span> <span class="nx">dateTimeList</span><span class="p">.</span><span class="nx">length</span><span class="p">,</span> <span class="nx">springApi</span><span class="p">])</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>可以把它理解成一个轻量的控制权协议：</p>
+
+<table>
+<thead>
+<tr>
+<th>情况</th>
+<th>处理</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>正在拖动</td>
+<td>暂不让 effect 抢走手势的位置控制权</td>
+</tr>
+
+<tr>
+<td>父组件回传的正是当前吸附目标，且几何信息一致</td>
+<td>保留已有动画，不重复启动</td>
+</tr>
+
+<tr>
+<td>外部选中值或相关几何信息变了</td>
+<td>清除旧目标，向新的受控位置动画</td>
+</tr>
+</tbody>
+</table>
+
+<p>这里比较的是“位置同步是否还有效”，不是做完整的列表内容深比较。列表业务语义变化、父组件拒绝提交等复杂情况，仍需要另外约定。</p>
+
+<h3 id="9-3-为什么-onrest-要比较对象身份">9.3 为什么 onRest 要比较对象身份？</h3>
+
+<p>松手时会新建一个目标对象，并在回调中保留它：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-tsx" data-lang="tsx"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-tsx" data-lang="tsx"><span class="kr">const</span> <span class="nx">settlingTarget</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nx">index</span>: <span class="kt">resultIndex</span><span class="p">,</span>
+  <span class="nx">itemHeight</span>: <span class="kt">dateItemHeight</span><span class="p">,</span>
+  <span class="nx">listLength</span>: <span class="kt">dateTimeList.length</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="nx">settlingTargetRef</span><span class="p">.</span><span class="nx">current</span> <span class="o">=</span> <span class="nx">settlingTarget</span>
+
+<span class="nx">springApi</span><span class="p">.</span><span class="nx">start</span><span class="p">({</span>
+  <span class="nx">y</span>: <span class="kt">resultIndex</span> <span class="o">*</span> <span class="o">-</span><span class="nx">dateItemHeight</span><span class="p">,</span>
+  <span class="nx">config</span><span class="o">:</span> <span class="p">{</span> <span class="nx">tension</span>: <span class="kt">300</span><span class="p">,</span> <span class="nx">friction</span>: <span class="kt">18</span> <span class="p">},</span>
+  <span class="nx">onRest</span><span class="o">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">settlingTargetRef</span><span class="p">.</span><span class="nx">current</span> <span class="o">===</span> <span class="nx">settlingTarget</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">settlingTargetRef</span><span class="p">.</span><span class="nx">current</span> <span class="o">=</span> <span class="kc">null</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+<span class="p">})</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>假设旧动画 A 之后又启动了新动画 B。即使旧动画的结束或停止路径触发了回调，也不能让 A 清掉 B 的目标记录。</p>
+
+<p>对象身份比较表示：</p>
+
+<blockquote>
+<p>只有 ref 里仍然保存着“我这一次创建的目标对象”，我才有资格清除它。</p>
+</blockquote>
+
+<p>单纯比较索引不够，因为两次不同的动画可能恰好拥有相同索引。新建对象相当于给每次吸附分配一个轻量的身份令牌。</p>
+
+<p>这个思路也适用于异步请求、延迟任务和其他可中断动画：旧任务完成时，先确认自己是否仍是当前任务，再更新共享状态。</p>
+
+<h2 id="十-核心组件完整代码-把前面的环节接起来">十、核心组件完整代码：把前面的环节接起来</h2>
+
+<p>下面给出当前 <code>DateTimeColumn.tsx</code> 的核心完整实现。三个运动计算函数分别使用前文的定义；样式类依赖当前项目的工具类体系，脱离项目复用时需要提供等价 CSS。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-tsx" data-lang="tsx"><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span><span class="lnt">126
+</span><span class="lnt">127
+</span><span class="lnt">128
+</span><span class="lnt">129
+</span><span class="lnt">130
+</span><span class="lnt">131
+</span><span class="lnt">132
+</span><span class="lnt">133
+</span><span class="lnt">134
+</span><span class="lnt">135
+</span><span class="lnt">136
+</span><span class="lnt">137
+</span><span class="lnt">138
+</span><span class="lnt">139
+</span><span class="lnt">140
+</span><span class="lnt">141
+</span><span class="lnt">142
+</span><span class="lnt">143
+</span><span class="lnt">144
+</span><span class="lnt">145
+</span><span class="lnt">146
+</span><span class="lnt">147
+</span><span class="lnt">148
+</span><span class="lnt">149
+</span><span class="lnt">150
+</span><span class="lnt">151
+</span><span class="lnt">152
+</span><span class="lnt">153
+</span><span class="lnt">154
+</span><span class="lnt">155
+</span><span class="lnt">156
+</span><span class="lnt">157
+</span><span class="lnt">158
+</span><span class="lnt">159
+</span><span class="lnt">160
+</span><span class="lnt">161
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-tsx" data-lang="tsx"><span class="kr">import</span> <span class="p">{</span> <span class="nx">animated</span><span class="p">,</span> <span class="nx">useSpring</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;@react-spring/web&#39;</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">cn</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;cn&#39;</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">useEffect</span><span class="p">,</span> <span class="nx">useRef</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;react&#39;</span>
+<span class="kr">import</span> <span class="nx">type</span> <span class="p">{</span> <span class="nx">TouchEventHandler</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;react&#39;</span>
+<span class="kr">import</span> <span class="p">{</span>
+  <span class="nx">getDragTranslateY</span><span class="p">,</span>
+  <span class="nx">getNearestDateTimeIndex</span><span class="p">,</span>
+  <span class="nx">getResistedTranslateY</span><span class="p">,</span>
+<span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;./dateTimeColumnMotion&#39;</span>
+
+<span class="kr">interface</span> <span class="nx">ColumnProps</span> <span class="p">{</span>
+  <span class="nx">className?</span>: <span class="kt">string</span>
+  <span class="nx">dateItemHeight?</span>: <span class="kt">number</span>
+  <span class="nx">dateTimeValue</span>: <span class="kt">string</span>
+  <span class="nx">dateTimeList</span>: <span class="kt">string</span><span class="p">[]</span>
+  <span class="nx">onChange</span><span class="o">:</span> <span class="p">(</span><span class="nx">value</span>: <span class="kt">string</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="k">void</span>
+<span class="p">}</span>
+
+<span class="kr">export</span> <span class="kr">const</span> <span class="nx">DateTimeColumn</span>: <span class="kt">React.FC</span><span class="o">&lt;</span><span class="nx">ColumnProps</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">({</span>
+  <span class="nx">className</span><span class="p">,</span>
+  <span class="nx">dateItemHeight</span> <span class="o">=</span> <span class="mi">36</span><span class="p">,</span>
+  <span class="nx">dateTimeValue</span><span class="p">,</span>
+  <span class="nx">dateTimeList</span><span class="p">,</span>
+  <span class="nx">onChange</span><span class="p">,</span>
+<span class="p">})</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">halfDateItemHeight</span> <span class="o">=</span> <span class="nx">dateItemHeight</span> <span class="o">/</span> <span class="mi">2</span>
+  <span class="kr">const</span> <span class="nx">itemHeightVarStyle</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;--date-item-height&#39;</span><span class="o">:</span> <span class="sb">`</span><span class="si">${</span><span class="nx">dateItemHeight</span><span class="si">}</span><span class="sb">px`</span><span class="p">,</span>
+    <span class="s1">&#39;--half-date-item-height&#39;</span><span class="o">:</span> <span class="sb">`</span><span class="si">${</span><span class="nx">halfDateItemHeight</span><span class="si">}</span><span class="sb">px`</span><span class="p">,</span>
+    <span class="nx">touchAction</span><span class="o">:</span> <span class="s1">&#39;none&#39;</span><span class="p">,</span>
+  <span class="p">}</span>
+
+  <span class="kr">const</span> <span class="nx">currentDateIndex</span> <span class="o">=</span> <span class="nx">dateTimeList</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="nx">dateTimeValue</span><span class="p">)</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">currentDateIndex</span> <span class="o">===</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s1">&#39;dateTimeValue is not in dateTimeList&#39;</span><span class="p">)</span>
+  <span class="p">}</span>
+
+  <span class="kr">const</span> <span class="nx">gestureRef</span> <span class="o">=</span> <span class="nx">useRef</span><span class="o">&lt;</span><span class="p">{</span> <span class="nx">pointerY</span>: <span class="kt">number</span><span class="p">;</span> <span class="nx">translateY</span>: <span class="kt">number</span> <span class="p">}</span> <span class="o">|</span> <span class="kc">null</span><span class="o">&gt;</span><span class="p">(</span><span class="kc">null</span><span class="p">)</span>
+  <span class="kr">const</span> <span class="nx">settlingTargetRef</span> <span class="o">=</span> <span class="nx">useRef</span><span class="o">&lt;</span><span class="p">{</span>
+    <span class="nx">index</span>: <span class="kt">number</span>
+    <span class="nx">itemHeight</span>: <span class="kt">number</span>
+    <span class="nx">listLength</span>: <span class="kt">number</span>
+  <span class="p">}</span> <span class="o">|</span> <span class="kc">null</span><span class="o">&gt;</span><span class="p">(</span><span class="kc">null</span><span class="p">)</span>
+
+  <span class="kr">const</span> <span class="p">[</span><span class="nx">springs</span><span class="p">,</span> <span class="nx">springApi</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useSpring</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">({</span>
+    <span class="nx">y</span>: <span class="kt">currentDateIndex</span> <span class="o">*</span> <span class="o">-</span><span class="nx">dateItemHeight</span><span class="p">,</span>
+    <span class="nx">config</span><span class="o">:</span> <span class="p">{</span> <span class="nx">tension</span>: <span class="kt">300</span><span class="p">,</span> <span class="nx">friction</span>: <span class="kt">30</span> <span class="p">},</span>
+  <span class="p">}))</span>
+
+  <span class="nx">useEffect</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">gestureRef</span><span class="p">.</span><span class="nx">current</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">return</span>
+    <span class="p">}</span>
+
+    <span class="kr">const</span> <span class="nx">settlingTarget</span> <span class="o">=</span> <span class="nx">settlingTargetRef</span><span class="p">.</span><span class="nx">current</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">settlingTarget</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span>
+        <span class="nx">settlingTarget</span><span class="p">.</span><span class="nx">index</span> <span class="o">===</span> <span class="nx">currentDateIndex</span> <span class="o">&amp;&amp;</span>
+        <span class="nx">settlingTarget</span><span class="p">.</span><span class="nx">itemHeight</span> <span class="o">===</span> <span class="nx">dateItemHeight</span> <span class="o">&amp;&amp;</span>
+        <span class="nx">settlingTarget</span><span class="p">.</span><span class="nx">listLength</span> <span class="o">===</span> <span class="nx">dateTimeList</span><span class="p">.</span><span class="nx">length</span>
+      <span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span>
+      <span class="p">}</span>
+      <span class="nx">settlingTargetRef</span><span class="p">.</span><span class="nx">current</span> <span class="o">=</span> <span class="kc">null</span>
+    <span class="p">}</span>
+
+    <span class="nx">springApi</span><span class="p">.</span><span class="nx">start</span><span class="p">({</span> <span class="nx">y</span>: <span class="kt">currentDateIndex</span> <span class="o">*</span> <span class="o">-</span><span class="nx">dateItemHeight</span> <span class="p">})</span>
+  <span class="p">},</span> <span class="p">[</span><span class="nx">currentDateIndex</span><span class="p">,</span> <span class="nx">dateItemHeight</span><span class="p">,</span> <span class="nx">dateTimeList</span><span class="p">.</span><span class="nx">length</span><span class="p">,</span> <span class="nx">springApi</span><span class="p">])</span>
+
+  <span class="kr">const</span> <span class="nx">onTouchStart</span>: <span class="kt">TouchEventHandler</span><span class="o">&lt;</span><span class="nx">HTMLDivElement</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="kr">const</span> <span class="nx">touch</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">touches</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">touch</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">return</span>
+    <span class="p">}</span>
+
+    <span class="nx">settlingTargetRef</span><span class="p">.</span><span class="nx">current</span> <span class="o">=</span> <span class="kc">null</span>
+    <span class="nx">springApi</span><span class="p">.</span><span class="nx">stop</span><span class="p">()</span>
+    <span class="kr">const</span> <span class="nx">translateY</span> <span class="o">=</span> <span class="nx">springs</span><span class="p">.</span><span class="nx">y</span><span class="p">.</span><span class="nx">get</span><span class="p">()</span>
+    <span class="nx">springApi</span><span class="p">.</span><span class="nx">set</span><span class="p">({</span> <span class="nx">y</span>: <span class="kt">translateY</span> <span class="p">})</span>
+    <span class="nx">gestureRef</span><span class="p">.</span><span class="nx">current</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">pointerY</span>: <span class="kt">touch.clientY</span><span class="p">,</span> <span class="nx">translateY</span> <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="kr">const</span> <span class="nx">onTouchMove</span>: <span class="kt">TouchEventHandler</span><span class="o">&lt;</span><span class="nx">HTMLDivElement</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="kr">const</span> <span class="nx">gesture</span> <span class="o">=</span> <span class="nx">gestureRef</span><span class="p">.</span><span class="nx">current</span>
+    <span class="kr">const</span> <span class="nx">touch</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">touches</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">gesture</span> <span class="o">||</span> <span class="o">!</span><span class="nx">touch</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">return</span>
+    <span class="p">}</span>
+
+    <span class="kr">const</span> <span class="nx">translateY</span> <span class="o">=</span> <span class="nx">getDragTranslateY</span><span class="p">(</span><span class="nx">gesture</span><span class="p">.</span><span class="nx">translateY</span><span class="p">,</span> <span class="nx">gesture</span><span class="p">.</span><span class="nx">pointerY</span><span class="p">,</span> <span class="nx">touch</span><span class="p">.</span><span class="nx">clientY</span><span class="p">)</span>
+    <span class="nx">springApi</span><span class="p">.</span><span class="nx">set</span><span class="p">({</span>
+      <span class="nx">y</span>: <span class="kt">getResistedTranslateY</span><span class="p">(</span><span class="nx">translateY</span><span class="p">,</span> <span class="nx">dateTimeList</span><span class="p">.</span><span class="nx">length</span><span class="p">,</span> <span class="nx">dateItemHeight</span><span class="p">),</span>
+    <span class="p">})</span>
+  <span class="p">}</span>
+
+  <span class="kr">const</span> <span class="nx">onTouchEnd</span>: <span class="kt">TouchEventHandler</span><span class="o">&lt;</span><span class="nx">HTMLDivElement</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">gestureRef</span><span class="p">.</span><span class="nx">current</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">return</span>
+    <span class="p">}</span>
+
+    <span class="nx">gestureRef</span><span class="p">.</span><span class="nx">current</span> <span class="o">=</span> <span class="kc">null</span>
+    <span class="kr">const</span> <span class="nx">resultIndex</span> <span class="o">=</span> <span class="nx">getNearestDateTimeIndex</span><span class="p">(</span>
+      <span class="nx">springs</span><span class="p">.</span><span class="nx">y</span><span class="p">.</span><span class="nx">get</span><span class="p">(),</span>
+      <span class="nx">dateTimeList</span><span class="p">.</span><span class="nx">length</span><span class="p">,</span>
+      <span class="nx">dateItemHeight</span>
+    <span class="p">)</span>
+    <span class="kr">const</span> <span class="nx">settlingTarget</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="nx">index</span>: <span class="kt">resultIndex</span><span class="p">,</span>
+      <span class="nx">itemHeight</span>: <span class="kt">dateItemHeight</span><span class="p">,</span>
+      <span class="nx">listLength</span>: <span class="kt">dateTimeList.length</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="nx">settlingTargetRef</span><span class="p">.</span><span class="nx">current</span> <span class="o">=</span> <span class="nx">settlingTarget</span>
+
+    <span class="nx">springApi</span><span class="p">.</span><span class="nx">start</span><span class="p">({</span>
+      <span class="nx">y</span>: <span class="kt">resultIndex</span> <span class="o">*</span> <span class="o">-</span><span class="nx">dateItemHeight</span><span class="p">,</span>
+      <span class="nx">config</span><span class="o">:</span> <span class="p">{</span> <span class="nx">tension</span>: <span class="kt">300</span><span class="p">,</span> <span class="nx">friction</span>: <span class="kt">18</span> <span class="p">},</span>
+      <span class="nx">onRest</span><span class="o">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">settlingTargetRef</span><span class="p">.</span><span class="nx">current</span> <span class="o">===</span> <span class="nx">settlingTarget</span><span class="p">)</span> <span class="p">{</span>
+          <span class="nx">settlingTargetRef</span><span class="p">.</span><span class="nx">current</span> <span class="o">=</span> <span class="kc">null</span>
+        <span class="p">}</span>
+      <span class="p">},</span>
+    <span class="p">})</span>
+    <span class="nx">onChange</span><span class="p">(</span><span class="nx">dateTimeList</span><span class="p">[</span><span class="nx">resultIndex</span><span class="p">])</span>
+  <span class="p">}</span>
+
+  <span class="kr">const</span> <span class="nx">onTouchCancel</span>: <span class="kt">TouchEventHandler</span><span class="o">&lt;</span><span class="nx">HTMLDivElement</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">gestureRef</span><span class="p">.</span><span class="nx">current</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">return</span>
+    <span class="p">}</span>
+
+    <span class="nx">gestureRef</span><span class="p">.</span><span class="nx">current</span> <span class="o">=</span> <span class="kc">null</span>
+    <span class="nx">springApi</span><span class="p">.</span><span class="nx">start</span><span class="p">({</span> <span class="nx">y</span>: <span class="kt">currentDateIndex</span> <span class="o">*</span> <span class="o">-</span><span class="nx">dateItemHeight</span> <span class="p">})</span>
+  <span class="p">}</span>
+
+  <span class="k">return</span> <span class="p">(</span>
+    <span class="o">&lt;</span><span class="nx">div</span>
+      <span class="nx">onTouchStart</span><span class="o">=</span><span class="p">{</span><span class="nx">onTouchStart</span><span class="p">}</span>
+      <span class="nx">onTouchMove</span><span class="o">=</span><span class="p">{</span><span class="nx">onTouchMove</span><span class="p">}</span>
+      <span class="nx">onTouchEnd</span><span class="o">=</span><span class="p">{</span><span class="nx">onTouchEnd</span><span class="p">}</span>
+      <span class="nx">onTouchCancel</span><span class="o">=</span><span class="p">{</span><span class="nx">onTouchCancel</span><span class="p">}</span>
+      <span class="nx">style</span><span class="o">=</span><span class="p">{</span><span class="nx">itemHeightVarStyle</span><span class="p">}</span>
+      <span class="nx">className</span><span class="o">=</span><span class="p">{</span><span class="nx">cn</span><span class="p">(</span>
+        <span class="s1">&#39;date-picker-column h-[var(--popup-height)] overflow-clip relative&#39;</span><span class="p">,</span>
+        <span class="nx">className</span>
+      <span class="p">)}</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="s2">&#34;picker-positioner w-full absolute top-[calc(50%-var(--half-date-item-height))]&#34;</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">animated</span><span class="p">.</span><span class="nx">ol</span>
+          <span class="nx">style</span><span class="o">=</span><span class="p">{{</span> <span class="nx">transform</span>: <span class="kt">springs.y.to</span><span class="p">((</span><span class="nx">y</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="sb">`translate3d(0, </span><span class="si">${</span><span class="nx">y</span><span class="si">}</span><span class="sb">px, 0)`</span><span class="p">)</span> <span class="p">}}</span>
+          <span class="nx">className</span><span class="o">=</span><span class="s2">&#34;date-time-picker text-center&#34;</span><span class="o">&gt;</span>
+          <span class="p">{</span><span class="nx">dateTimeList</span><span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">dateTimeStr</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">(</span>
+            <span class="o">&lt;</span><span class="nx">li</span>
+              <span class="nx">key</span><span class="o">=</span><span class="p">{</span><span class="nx">dateTimeStr</span><span class="p">}</span>
+              <span class="nx">className</span><span class="o">=</span><span class="s2">&#34;h-[var(--date-item-height)] leading-[var(--date-item-height)]&#34;</span><span class="o">&gt;</span>
+              <span class="p">{</span><span class="nx">dateTimeStr</span><span class="p">}</span>
+            <span class="o">&lt;</span><span class="err">/li&gt;</span>
+          <span class="p">))}</span>
+        <span class="o">&lt;</span><span class="err">/animated.ol&gt;</span>
+      <span class="o">&lt;</span><span class="err">/div&gt;</span>
+    <span class="o">&lt;</span><span class="err">/div&gt;</span>
+  <span class="p">)</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>从职责上看，这个组件只关心“一组字符串组成的等高选项如何选择”，并不需要知道自己代表年、月还是日。这也是它可以复用为其他滚轮选择列的原因。</p>
+
+<h2 id="十一-用一次完整手势串起所有计算">十一、用一次完整手势串起所有计算</h2>
+
+<h3 id="11-1-普通范围内-从第三项拖向第四项">11.1 普通范围内，从第三项拖向第四项</h3>
+
+<p>条件：<code>5</code> 个选项、行高 <code>36px</code>，当前索引为 <code>2</code>。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">初始位移：-2 × 36 = -72px
+手指起点：200px
+手指松开位置：180px</code></pre></td></tr></table>
+</div>
+</div>
+<p>拖动时：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">原始位移 = -72 + (180 - 200) = -92px
+合法范围 = [-144, 0]
+可见位移 = -92px</code></pre></td></tr></table>
+</div>
+</div>
+<p>松手时：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">连续索引 = 92 / 36 ≈ 2.556
+最近索引 = 3
+目标位移 = -3 × 36 = -108px</code></pre></td></tr></table>
+</div>
+</div>
+<p>最终由弹簧动画从 <code>-92px</code> 移动到 <code>-108px</code>，并把索引 <code>3</code> 对应的字符串交给父组件。</p>
+
+<h3 id="11-2-从首项向下越界-再弹回首项">11.2 从首项向下越界，再弹回首项</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text"><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">初始位移：0px
+手指向下移动：72px</code></pre></td></tr></table>
+</div>
+</div>
+<p>拖动时：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">原始位移 = 72px
+可见位移 = 36 × (1 - exp(-72 / 36))
+         ≈ 31.13px</code></pre></td></tr></table>
+</div>
+</div>
+<p>松手时：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">可见位移 31.13px → 截断为 0px
+目标索引 = 0
+目标位移 = 0px</code></pre></td></tr></table>
+</div>
+</div>
+<p>列表从约 <code>31.13px</code> 回到 <code>0px</code>，形成首项边界的回弹。</p>
+
+<h3 id="11-3-从末项继续向上越界">11.3 从末项继续向上越界</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">初始位移：-144px
+手指再向上移动：36px
+原始位移：-180px
+可见位移：约 -166.76px</code></pre></td></tr></table>
+</div>
+</div>
+<p>松手后可见位移被截断到末项边界，得到索引 <code>4</code>，再由弹簧动画回到 <code>-144px</code>。</p>
+
+<h3 id="11-4-动画途中重新按下">11.4 动画途中重新按下</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">上次目标：-108px
+此刻动画位置：-96px
+用户重新按下：停止动画，以 -96px 作为新起点
+手指向下移动 10px：列表变为 -86px</code></pre></td></tr></table>
+</div>
+</div>
+<p>在合法范围内，这个过程不需要先跳到旧目标，也不需要等待旧动画完成。它体现的是“用户输入优先于未完成动画”。</p>
+
+<h2 id="十二-布局-遮罩与触摸行为如何配合">十二、布局、遮罩与触摸行为如何配合？</h2>
+
+<h3 id="12-1-等高是索引公式成立的前提">12.1 等高是索引公式成立的前提</h3>
+
+<p>每一项同时设置高度与行高：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-tsx" data-lang="tsx"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-tsx" data-lang="tsx"><span class="nx">className</span><span class="o">=</span><span class="s2">&#34;h-[var(--date-item-height)] leading-[var(--date-item-height)]&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>索引与位移的线性关系依赖于“所有项高度相等”。如果选项可以换行、行高不一致，就不能继续使用 <code>-index × itemHeight</code>，而需要累计每项高度，松手时再查找最近的中心点。</p>
+
+<h3 id="12-2-overflow-clip-裁剪视觉内容-不提供原生滚动">12.2 overflow-clip 裁剪视觉内容，不提供原生滚动</h3>
+
+<p>日期列容器使用 <code>overflow-clip</code>，超出窗口的列表内容被裁剪。这里不是通过原生 <code>scrollTop</code> 滚动，真正的位置来自动画列表的 <code>transform</code>。</p>
+
+<p>所以浏览器不会自动替我们处理吸附、边界回弹和惯性；这些行为需要由当前的手势与动画逻辑负责。</p>
+
+<h3 id="12-3-遮罩与选中框不要拦截触摸">12.3 遮罩与选中框不要拦截触摸</h3>
+
+<p>父组件中，遮罩和选中框位于列表上方，并使用：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">pointer-events: none</code></pre></td></tr></table>
+</div>
+</div>
+<p>否则，透明覆盖层也可能挡住下方日期列的触摸命中，导致“看得见数字，却拖不动”。</p>
+
+<p>遮罩通过上下两个渐变弱化远离中心的选项；中间选框强调当前选择区域。它们只负责视觉层次，不参与位移计算。</p>
+
+<h3 id="12-4-touch-action-none-的作用与边界">12.4 touch-action: none 的作用与边界</h3>
+
+<p>日期列内联设置：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="nx">touchAction</span><span class="o">:</span> <span class="s1">&#39;none&#39;</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>目的是告诉支持该机制的浏览器：这个区域的触摸平移、缩放不按默认直接操作行为处理，由组件接管。</p>
+
+<p>需要注意：</p>
+
+<ul>
+<li><code>touch-action</code> 不等同于调用 <code>preventDefault()</code>，也不等同于阻止事件冒泡。</li>
+<li>它会影响这个区域内的浏览器默认手势，不能不加区分地作用到整页。</li>
+<li>当前使用 Touch Events，实际滚动竞争、取消和嵌套容器行为仍要在目标移动浏览器上验证。</li>
+<li>如果后续确实需要主动取消触摸默认行为，要检查事件是否可取消，以及监听器是否为被动监听，不能在不确认的情况下机械添加 <code>preventDefault()</code>。</li>
+</ul>
+
+<h2 id="十三-年月日联动-动画只是视图-日期合法性属于业务层">十三、年月日联动：动画只是视图，日期合法性属于业务层</h2>
+
+<p><code>DatePickerPopup</code> 分别生成：</p>
+
+<ul>
+<li>年列表：起始年到结束年。</li>
+<li>月列表：<code>1</code> 到 <code>12</code>。</li>
+<li>日列表：当前年月对应的天数。</li>
+</ul>
+
+<p>三个 <code>DateTimeColumn</code> 复用同一套运动逻辑，只传入不同的列表和值。</p>
+
+<p>但日期选择器还有另一类问题：<strong>业务合法性与动画合法性不是一回事。</strong></p>
+
+<p>例如从 <code>1</code> 月 <code>31</code> 日切换到 <code>2</code> 月，日列表可能从 <code>31</code> 项变为 <code>28</code> 或 <code>29</code> 项。此时必须先决定日期规则：是把日截断到当月最后一天，还是采用其他明确的交互策略。</p>
+
+<p>动画列要求：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="nx">dateTimeList</span><span class="p">.</span><span class="nx">includes</span><span class="p">(</span><span class="nx">dateTimeValue</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>当前组件在值不属于列表时直接抛错，因此父组件或日期辅助层必须确保值与列表一致。不能只更新列表，仍把 <code>&quot;31&quot;</code> 作为二月的选中值传进去。</p>
+
+<p>本文不展开日期辅助类对月份赋值的内部处理，也不据此假定所有月末与闰年边界都已验证。更稳妥的设计顺序是：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">计算新的年月日
+  ↓
+按业务规则规范化日期
+  ↓
+生成新的合法选项列表
+  ↓
+传入合法的选中值
+  ↓
+动画层同步到新位置</code></pre></td></tr></table>
+</div>
+</div>
+<p>另外，生成了起止年份，并不等于已经实现“精确到某一天的起止日期限制”。如果产品要求最早只能选某年某月某日，还需要在对应年份限制月份、在边界月份限制日期。</p>
+
+<h2 id="十四-用-vitest-测试核心运动规则">十四、用 Vitest 测试核心运动规则</h2>
+
+<h3 id="14-1-为什么把计算抽成纯函数">14.1 为什么把计算抽成纯函数？</h3>
+
+<p>如果所有公式都写进触摸处理函数里，验证一次位移计算就可能需要构造 DOM、模拟触摸和等待动画。</p>
+
+<p>抽成纯函数后，测试只关心：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">给定输入 → 返回什么数值</code></pre></td></tr></table>
+</div>
+</div>
+<p>它们不依赖浏览器布局、不读取 React 状态，也不依赖动画时钟，因此可以直接进行确定性的数值测试。</p>
+
+<p>当前已有五个 Vitest 用例，覆盖以下规则：</p>
+
+<table>
+<thead>
+<tr>
+<th>用例</th>
+<th>验证重点</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>范围内一比一移动</td>
+<td>中间位移及两个合法边界保持原值</td>
+</tr>
+
+<tr>
+<td>首尾越界阻尼</td>
+<td>两端允许可见拉伸、方向正确、对称、极大输入不超过拉伸上限</td>
+</tr>
+
+<tr>
+<td>回拖计算</td>
+<td>原始位移由起点决定，能跨过边界进入合法范围</td>
+</tr>
+
+<tr>
+<td>中断弹簧后的新拖动</td>
+<td>纯拖动函数能以当前可见位置作为起点，不丢失这段位置</td>
+</tr>
+
+<tr>
+<td>最近项吸附</td>
+<td>四舍五入、首尾截断、单项列表</td>
+</tr>
+</tbody>
+</table>
+
+<h3 id="14-2-代表性断言">14.2 代表性断言</h3>
+
+<p>下面节选现有测试中的关键断言：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="kr">import</span> <span class="p">{</span> <span class="nx">describe</span><span class="p">,</span> <span class="nx">expect</span><span class="p">,</span> <span class="nx">it</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;vitest&#39;</span>
+<span class="kr">import</span> <span class="p">{</span>
+  <span class="nx">getDragTranslateY</span><span class="p">,</span>
+  <span class="nx">getNearestDateTimeIndex</span><span class="p">,</span>
+  <span class="nx">getResistedTranslateY</span><span class="p">,</span>
+<span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;@/components/form/dateTimeColumnMotion.ts&#39;</span>
+
+<span class="kr">const</span> <span class="nx">itemHeight</span> <span class="o">=</span> <span class="mi">36</span>
+<span class="kr">const</span> <span class="nx">listLength</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="kr">const</span> <span class="nx">minTranslateY</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="nx">listLength</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="nx">itemHeight</span>
+
+<span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;dateTimeColumnMotion&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">it</span><span class="p">(</span><span class="s1">&#39;keeps in-range movement at a one-to-one distance&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">getResistedTranslateY</span><span class="p">(</span><span class="o">-</span><span class="mi">81</span><span class="p">,</span> <span class="nx">listLength</span><span class="p">,</span> <span class="nx">itemHeight</span><span class="p">)).</span><span class="nx">toBe</span><span class="p">(</span><span class="o">-</span><span class="mi">81</span><span class="p">)</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">getResistedTranslateY</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nx">listLength</span><span class="p">,</span> <span class="nx">itemHeight</span><span class="p">)).</span><span class="nx">toBe</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">getResistedTranslateY</span><span class="p">(</span><span class="nx">minTranslateY</span><span class="p">,</span> <span class="nx">listLength</span><span class="p">,</span> <span class="nx">itemHeight</span><span class="p">)).</span><span class="nx">toBe</span><span class="p">(</span><span class="nx">minTranslateY</span><span class="p">)</span>
+  <span class="p">})</span>
+
+  <span class="nx">it</span><span class="p">(</span><span class="s1">&#39;resists top and bottom overscroll while allowing visible stretch&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="kr">const</span> <span class="nx">topStretch</span> <span class="o">=</span> <span class="nx">getResistedTranslateY</span><span class="p">(</span><span class="nx">itemHeight</span><span class="p">,</span> <span class="nx">listLength</span><span class="p">,</span> <span class="nx">itemHeight</span><span class="p">)</span>
+    <span class="kr">const</span> <span class="nx">bottomStretch</span> <span class="o">=</span> <span class="nx">getResistedTranslateY</span><span class="p">(</span><span class="nx">minTranslateY</span> <span class="o">-</span> <span class="nx">itemHeight</span><span class="p">,</span> <span class="nx">listLength</span><span class="p">,</span> <span class="nx">itemHeight</span><span class="p">)</span>
+
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">topStretch</span><span class="p">).</span><span class="nx">toBeGreaterThan</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">topStretch</span><span class="p">).</span><span class="nx">toBeLessThan</span><span class="p">(</span><span class="nx">itemHeight</span><span class="p">)</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">bottomStretch</span><span class="p">).</span><span class="nx">toBeLessThan</span><span class="p">(</span><span class="nx">minTranslateY</span><span class="p">)</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">bottomStretch</span><span class="p">).</span><span class="nx">toBeGreaterThan</span><span class="p">(</span><span class="nx">minTranslateY</span> <span class="o">-</span> <span class="nx">itemHeight</span><span class="p">)</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">abs</span><span class="p">(</span><span class="nx">topStretch</span> <span class="o">-</span> <span class="p">(</span><span class="nx">minTranslateY</span> <span class="o">-</span> <span class="nx">bottomStretch</span><span class="p">))).</span><span class="nx">toBeLessThan</span><span class="p">(</span><span class="mi">1</span><span class="nx">e</span><span class="o">-</span><span class="mi">10</span><span class="p">)</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">getResistedTranslateY</span><span class="p">(</span><span class="nx">itemHeight</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="nx">listLength</span><span class="p">,</span> <span class="nx">itemHeight</span><span class="p">)).</span><span class="nx">toBeLessThanOrEqual</span><span class="p">(</span>
+      <span class="nx">itemHeight</span>
+    <span class="p">)</span>
+  <span class="p">})</span>
+
+  <span class="nx">it</span><span class="p">(</span><span class="s1">&#39;supports dragging back across an edge without losing the raw pointer delta&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">getDragTranslateY</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">90</span><span class="p">)).</span><span class="nx">toBe</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">getResistedTranslateY</span><span class="p">(</span><span class="nx">getDragTranslateY</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">90</span><span class="p">),</span> <span class="nx">listLength</span><span class="p">,</span> <span class="nx">itemHeight</span><span class="p">)).</span><span class="nx">toBe</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">)</span>
+  <span class="p">})</span>
+
+  <span class="nx">it</span><span class="p">(</span><span class="s1">&#39;starts a new drag at the visible position after an interrupted spring&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="kr">const</span> <span class="nx">visibleTranslateY</span> <span class="o">=</span> <span class="o">-</span><span class="nx">itemHeight</span> <span class="o">*</span> <span class="mf">1.4</span>
+
+    <span class="nx">expect</span><span class="p">(</span>
+      <span class="nb">Math</span><span class="p">.</span><span class="nx">abs</span><span class="p">(</span><span class="nx">getDragTranslateY</span><span class="p">(</span><span class="nx">visibleTranslateY</span><span class="p">,</span> <span class="mi">250</span><span class="p">,</span> <span class="mi">250</span><span class="p">)</span> <span class="o">-</span> <span class="nx">visibleTranslateY</span><span class="p">)</span>
+    <span class="p">).</span><span class="nx">toBeLessThan</span><span class="p">(</span><span class="mi">1</span><span class="nx">e</span><span class="o">-</span><span class="mi">10</span><span class="p">)</span>
+    <span class="nx">expect</span><span class="p">(</span>
+      <span class="nb">Math</span><span class="p">.</span><span class="nx">abs</span><span class="p">(</span><span class="nx">getDragTranslateY</span><span class="p">(</span><span class="nx">visibleTranslateY</span><span class="p">,</span> <span class="mi">250</span><span class="p">,</span> <span class="mi">260</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="nx">visibleTranslateY</span> <span class="o">+</span> <span class="mi">10</span><span class="p">))</span>
+    <span class="p">).</span><span class="nx">toBeLessThan</span><span class="p">(</span><span class="mi">1</span><span class="nx">e</span><span class="o">-</span><span class="mi">10</span><span class="p">)</span>
+  <span class="p">})</span>
+
+  <span class="nx">it</span><span class="p">(</span><span class="s1">&#39;snaps to the nearest legal item and clamps overscroll to the list&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">getNearestDateTimeIndex</span><span class="p">(</span><span class="o">-</span><span class="nx">itemHeight</span> <span class="o">*</span> <span class="mf">1.6</span><span class="p">,</span> <span class="nx">listLength</span><span class="p">,</span> <span class="nx">itemHeight</span><span class="p">)).</span><span class="nx">toBe</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">getNearestDateTimeIndex</span><span class="p">(</span><span class="nx">itemHeight</span> <span class="o">*</span> <span class="mi">2</span><span class="p">,</span> <span class="nx">listLength</span><span class="p">,</span> <span class="nx">itemHeight</span><span class="p">)).</span><span class="nx">toBe</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">getNearestDateTimeIndex</span><span class="p">(</span><span class="nx">minTranslateY</span> <span class="o">-</span> <span class="nx">itemHeight</span> <span class="o">*</span> <span class="mi">2</span><span class="p">,</span> <span class="nx">listLength</span><span class="p">,</span> <span class="nx">itemHeight</span><span class="p">)).</span><span class="nx">toBe</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">getNearestDateTimeIndex</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">itemHeight</span><span class="p">)).</span><span class="nx">toBe</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+  <span class="p">})</span>
+<span class="p">})</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>项目已提供非交互测试脚本 <code>&quot;test&quot;: &quot;vitest run&quot;</code>，在项目根目录执行以下命令可以只运行目标文件：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-powershell" data-lang="powershell"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-powershell" data-lang="powershell"><span class="n">pnpm</span> <span class="n">test</span> <span class="n">src</span><span class="p">/</span><span class="n">components</span><span class="p">/</span><span class="n">form</span><span class="p">/</span><span class="n">__test__</span><span class="p">/</span><span class="n">dateTimeColumnMotion</span><span class="p">.</span><span class="n">test</span><span class="p">.</span><span class="n">ts</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>这里的 <code>@</code> 导入依赖项目现有路径别名。把示例移到独立项目时，需要配置相同别名，或者改成相对路径。</p>
+
+<h3 id="14-3-浮点断言为什么使用误差范围">14.3 浮点断言为什么使用误差范围？</h3>
+
+<p>指数运算和小数乘法可能产生浮点舍入误差，不适合对所有结果都使用严格相等。</p>
+
+<p>例如首尾阻尼对称性采用：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-ts" data-lang="ts"><span class="nx">expect</span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">abs</span><span class="p">(</span><span class="nx">topStretch</span> <span class="o">-</span> <span class="p">(</span><span class="nx">minTranslateY</span> <span class="o">-</span> <span class="nx">bottomStretch</span><span class="p">))).</span><span class="nx">toBeLessThan</span><span class="p">(</span><span class="mi">1</span><span class="nx">e</span><span class="o">-</span><span class="mi">10</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>这明确表达的是“误差必须严格小于 <code>1e-10</code>”，而不是随意放宽到肉眼看起来差不多。</p>
+
+<p>对于确切的整数结果和未改变的输入，可以继续使用 <code>toBe</code>；对于单调性、边界等性质，则使用大小比较。</p>
+
+<h3 id="14-4-纯函数测试通过-不代表交互全部正确">14.4 纯函数测试通过，不代表交互全部正确</h3>
+
+<p>现有五个用例没有真正挂载 <code>DateTimeColumn</code>，也没有驱动真实触摸或 React Spring 的时间演化。</p>
+
+<p>它们不能直接证明以下行为：</p>
+
+<ul>
+<li>新手势是否真的停止了旧动画。</li>
+<li><code>onChange</code> 和父组件更新是否正确交接。</li>
+<li>旧 <code>onRest</code> 回调是否不会覆盖新目标。</li>
+<li>越界位置重新按下是否完全连续。</li>
+<li>触摸取消、多指操作、嵌套滚动是否符合预期。</li>
+<li>年月切换导致日列表变化时是否始终保持合法日期。</li>
+</ul>
+
+<p>这些需要组件测试、浏览器交互测试或真机验证。测试的结论要与测试层级匹配，不能因为“有一个动画中断相关的纯函数用例”，就认为动画中断流程已经获得完整覆盖。</p>
+
+<h2 id="十五-现有实现的边界与进一步完善方向">十五、现有实现的边界与进一步完善方向</h2>
+
+<p>本节是对当前源码的工程化补充，不表示下面这些能力已经实现。</p>
+
+<h3 id="15-1-空列表兜底不等于支持空状态">15.1 空列表兜底不等于支持空状态</h3>
+
+<p>两个涉及列表范围的纯函数都在 <code>listLength &lt;= 0</code> 或 <code>itemHeight &lt;= 0</code> 时返回 <code>0</code>。</p>
+
+<p>这是数值计算的兜底，不意味着组件可以安全显示空列表：组件还要求 <code>dateTimeValue</code> 存在于列表中，空列表会在前面的合法性检查中抛错。</p>
+
+<p>如果产品确实需要空状态，应在组件边界单独设计禁用、占位或不渲染策略，不能拿索引 <code>0</code> 直接访问空数组。</p>
+
+<p>同样，行高非正时即使纯函数返回了 <code>0</code>，视觉布局也已经不成立，调用方仍应保证正行高。</p>
+
+<h3 id="15-2-当前参数校验不是全面的数值防御">15.2 当前参数校验不是全面的数值防御</h3>
+
+<p>源码没有完整检查：</p>
+
+<ul>
+<li><code>NaN</code>、无穷大等非有限输入。</li>
+<li>列表长度是不是整数。</li>
+<li>项目之间是否存在重复字符串。</li>
+</ul>
+
+<p>例如 <code>NaN &lt;= 0</code> 为 <code>false</code>，不能被当前的非正值判断拦住；后续 <code>Math.min</code>、<code>Math.max</code> 也可能继续传播 <code>NaN</code>。</p>
+
+<p>在组件内部，<code>dateTimeList.length</code> 天然是非负整数，触摸坐标通常也是有效数值，所以可以通过调用约束简化纯函数。但如果把这些函数发布成通用工具库，应明确参数契约，必要时使用 <code>Number.isFinite</code> 等校验。</p>
+
+<p>重复字符串不仅会影响 React 的 <code>key</code>，也会让 <code>indexOf</code> 无法区分同名选项。通用组件更适合使用唯一标识，而不是默认展示文本本身就是身份。</p>
+
+<h3 id="15-3-越界位置重新按下-可见坐标和原始坐标并不相同">15.3 越界位置重新按下：可见坐标和原始坐标并不相同</h3>
+
+<p>这是比“不要累计阻尼”更进一步的细节。</p>
+
+<p>假设旧动画还在首项外侧，可见位移为 <code>20px</code>。新手势按下时，当前代码把 <code>20px</code> 记录为起点，这是读取视觉状态的正确方向。</p>
+
+<p>但第一次移动时，又会把这个起点当作原始位移送入阻尼函数。即使指针没有明显移动，也可能出现：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text"><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">原本显示：20px
+再次映射：36 × (1 - exp(-20 / 36)) ≈ 15.34px</code></pre></td></tr></table>
+</div>
+</div>
+<p>因此，“读取可见位置”能避免从旧目标开始拖动，却不能单独解决“越界可见值被再次压缩”的问题。</p>
+
+<p>一种改进思路是：先把可见拉伸量反解成原始越界距离，再作为新手势的计算基准。</p>
+
+<p>对于：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">v = h × (1 - exp(-d / h))</code></pre></td></tr></table>
+</div>
+</div>
+<p>可以得到：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">d = -h × ln(1 - v / h)</code></pre></td></tr></table>
+</div>
+</div>
+<p>其中 <code>0 ≤ v &lt; h</code>。</p>
+
+<ul>
+<li>首项外侧：<code>v</code> 就是当前正的可见位移。</li>
+<li>末项外侧：先取 <code>v = minTranslateY - visibleY</code>，再把反解距离加到末项外侧。</li>
+<li>合法范围内：原始坐标与可见坐标相同，无需反解。</li>
+</ul>
+
+<p>工程实现需要处理接近上限时的数值稳定性，避免 <code>v / h</code> 被舍入为 <code>1</code> 后对 <code>0</code> 取对数。也可以改为单独保存原始坐标、重新设计手势接管映射，或限制动画在边界外的状态。</p>
+
+<p>在数值实现上，极小距离对应的 <code>1 - Math.exp(-d / h)</code> 还存在两个接近数相减的精度损失，可以考虑等价写法 <code>-Math.expm1(-d / h)</code>；反解则可以考虑 <code>-h * Math.log1p(-v / h)</code>。这些写法能改善小量计算，但不能替代对输入范围和上限舍入的检查，当前源码也尚未采用这些改写。</p>
+
+<p>无论采用哪一种方案，都要先明确它如何兼顾“按下位置不跳变”和“后续拖动手感一致”，并补充专门的组件级回归测试。当前五个纯函数用例没有覆盖这个完整链路。</p>
+
+<h3 id="15-4-拖动中列表变化-不能只靠-effect-的提前返回">15.4 拖动中列表变化，不能只靠 effect 的提前返回</h3>
+
+<p>当前 effect 在拖动时直接返回，目的是保护手势控制权。但如果此时父组件改变了列表长度、行高或选中值，旧手势起点仍可能对应旧几何信息。</p>
+
+<p>而且修改 ref 不会触发渲染；当拖动结束后，如果 effect 依赖没有再次变化，之前被跳过的同步不会自动重放。</p>
+
+<p>可选策略包括：</p>
+
+<ol>
+<li>手势期间冻结这一列的列表和行高。</li>
+<li>外部数据变化时取消当前手势，再按新列表归位。</li>
+<li>显式记录待同步状态，手势结束时重新协调。</li>
+</ol>
+
+<p>具体选哪一种取决于产品语义，但必须把它设计成协议，而不是假定所有外部变化都会自动被 effect 补上。</p>
+
+<h3 id="15-5-父组件接受-拒绝或延迟提交-要有明确约定">15.5 父组件接受、拒绝或延迟提交，要有明确约定</h3>
+
+<p>当前方案适合父组件及时接受 <code>onChange</code> 并回传新值的常见情况。</p>
+
+<p>如果父组件只是忽略回调，且原来的 <code>dateTimeValue</code> 没有变化，相关 effect 不一定重新运行。此时子组件已经向新目标运动，视觉位置可能与旧的受控值不一致。</p>
+
+<p>如果业务需要校验、异步提交或拒绝选择，应该另外设计明确的确认机制，例如区分临时选择与已提交值，或通过独立的同步信号触发回滚。</p>
+
+<p>同理，“正在拖动时跳过外部同步”只是一个控制权选择，不代表组件已经具备完整的并发数据协调能力。</p>
+
+<h3 id="15-6-当前只取-touches-0-并没有完整的多指管理">15.6 当前只取 touches[0]，并没有完整的多指管理</h3>
+
+<p>现在的处理适合单指拖动，但没有记录触摸点的 <code>identifier</code>。</p>
+
+<p>多指加入、某一根手指先离开时，<code>touches[0]</code> 不一定始终对应最初那根手指，<code>touchend</code> 也未必意味着主手势已经结束。</p>
+
+<p>如果需要更可靠的输入管理，可以：</p>
+
+<ul>
+<li>在 Touch Events 中记录并查找同一个 <code>identifier</code>。</li>
+<li>或改用 Pointer Events，记录 <code>pointerId</code>，结合指针捕获与取消事件管理生命周期。</li>
+</ul>
+
+<p>Pointer Events 还可以统一鼠标、触摸和触控笔。但这需要重新梳理交互协议，不是简单把事件名称替换一下就完成。</p>
+
+<p>当前代码也没有鼠标拖动、滚轮和键盘交互，不能直接把它当作完整的桌面端选择器。</p>
+
+<h3 id="15-7-自定义行高时-选中框也要同步">15.7 自定义行高时，选中框也要同步</h3>
+
+<p>日期列接收 <code>dateItemHeight</code> 并使用 CSS 变量布局，但当前父组件选中框仍写着 <code>h-[36px]</code>。</p>
+
+<p>默认行高 <code>36px</code> 时两者一致；如果传入 <code>44px</code>，列表计算和选框视觉尺寸就可能脱节。</p>
+
+<p>改进时应让选中框、列表项、居中偏移和阻尼尺度共享同一个行高来源，而不是只改运动公式。</p>
+
+<h3 id="15-8-可访问性和减少动态效果">15.8 可访问性和减少动态效果</h3>
+
+<p><code>ol</code>、<code>li</code> 能表达列表结构，但不会自动提供一个完整选择控件的交互语义。</p>
+
+<p>面向生产环境，还应根据产品形式选择合适的可访问模式，并配套：</p>
+
+<ul>
+<li>清晰的列标签，例如年、月、日。</li>
+<li>当前选中状态与可理解的读屏反馈。</li>
+<li>焦点管理及键盘上下选择、首尾跳转等操作。</li>
+<li>对 <code>prefers-reduced-motion</code> 的处理：减少回摆、缩短过渡或直接定位。</li>
+<li>避免每一帧动画都向辅助技术重复播报。</li>
+</ul>
+
+<p>这些能力需要语义、键盘和视觉状态一起设计，不能只添加一个 <code>role</code> 就认为完成。</p>
+
+<h2 id="十六-如何调参-以及是否应该加入惯性">十六、如何调参，以及是否应该加入惯性？</h2>
+
+<h3 id="16-1-当前行高同时承担三个角色">16.1 当前行高同时承担三个角色</h3>
+
+<p>当前的 <code>itemHeight</code> 同时决定：</p>
+
+<ol>
+<li>每项视觉高度。</li>
+<li>索引对应的位移间距。</li>
+<li>越界最大拉伸尺度。</li>
+</ol>
+
+<p>这样参数少，也容易保持不同尺寸下的相似手感。但如果设计希望行高 <code>36px</code>，最多只能拉出 <code>20px</code>，就需要把阻尼尺度独立出来。</p>
+
+<p>可以在设计上改为：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">R(d) = L × (1 - exp(-d / L))</code></pre></td></tr></table>
+</div>
+</div>
+<p>其中 <code>L</code> 是独立的最大拉伸尺度，而 <code>itemHeight</code> 继续只负责行间距。这个形式仍保持边界斜率为 <code>1</code>。</p>
+
+<p>如果进一步分别设置幅度 <code>A</code> 和距离尺度 <code>B</code>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text"><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">R(d) = A × (1 - exp(-d / B))
+R&#39;(0) = A / B</code></pre></td></tr></table>
+</div>
+</div>
+<p>那么要与合法范围的一比一跟手平滑衔接，就需要注意 <code>A / B</code> 是否为 <code>1</code>。调参不仅是“看起来舒服”，也涉及边界连续性。</p>
+
+<h3 id="16-2-调整弹簧参数时-一次只改一个维度">16.2 调整弹簧参数时，一次只改一个维度</h3>
+
+<p>一个比较实际的调参顺序是：</p>
+
+<ol>
+<li>先确定行高和允许的越界拉伸量。</li>
+<li>确认正常拖动没有延迟、跳动或重复阻尼。</li>
+<li>再调整松手弹簧的恢复力度。</li>
+<li>最后调整阻尼，控制回摆幅度与收敛速度。</li>
+</ol>
+
+<p>如果拖动坐标本身算错，单纯提高 <code>friction</code> 只能掩盖问题，不能修复问题。</p>
+
+<h3 id="16-3-惯性滚动需要新增哪些信息">16.3 惯性滚动需要新增哪些信息？</h3>
+
+<p>如果希望用户快速一甩，列表继续滚动若干项，就需要额外记录指针位置与时间，估计松手速度。</p>
+
+<p>一种概念上的流程是：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">采样指针位置与时间
+  ↓
+估计松手速度
+  ↓
+用衰减或投影模型预测目标位置
+  ↓
+把目标限制在合法范围
+  ↓
+转换成最近的合法索引
+  ↓
+弹簧吸附到整行位置</code></pre></td></tr></table>
+</div>
+</div>
+<p>真正实现时还要考虑速度采样窗口、方向变化、极短手势、异常时间间隔和边界能量处理。惯性增加的是一套“目标预测规则”，不是把 <code>tension</code> 调大就能得到。</p>
+
+<p>对于日期选择，当前这种按位置吸附的方案更简单、可预测；对于长选项滚轮，惯性可能更省操作。应先判断交互需求，再决定是否引入复杂度。</p>
+
+<h2 id="十七-这套方案可以应用到哪些场景">十七、这套方案可以应用到哪些场景？</h2>
+
+<h3 id="17-1-等高离散选项滚轮">17.1 等高离散选项滚轮</h3>
+
+<p>最直接的复用场景包括：</p>
+
+<ul>
+<li>时间选择器的时、分、秒。</li>
+<li>身高、体重、年龄、数量选择。</li>
+<li>有限档位的设置面板。</li>
+<li>地区选择器中的省、市、区列。</li>
+</ul>
+
+<p>共性是：选项离散、每项等高、最终需要对齐一项。</p>
+
+<p>地区选择器还涉及上级改变后下级列表重建，因此要额外处理列表变化与选中值合法性，不能只复用动画就忽略数据联动。</p>
+
+<h3 id="17-2-横向轮播与卡片吸附">17.2 横向轮播与卡片吸附</h3>
+
+<p>把纵坐标换成横坐标，把行高换成卡片步长，就可以复用“位移 → 最近索引 → 弹簧归位”的结构。</p>
+
+<p>但要把卡片间隙也计入步长，并根据布局、左右方向和可能的 RTL 模式重新定义坐标，不应机械地只把变量名 <code>Y</code> 改成 <code>X</code>。</p>
+
+<h3 id="17-3-抽屉-底部面板和可拖拽弹层">17.3 抽屉、底部面板和可拖拽弹层</h3>
+
+<p>同样可以借鉴：</p>
+
+<ul>
+<li>合法区域跟手。</li>
+<li>超出允许高度后施加非线性阻尼。</li>
+<li>松手时选择最近的停靠点。</li>
+<li>使用可中断的弹簧动画归位。</li>
+</ul>
+
+<p>区别在于这些组件的停靠点不一定等距，需要比较多个目标位置的距离，必要时还要结合速度决定展开还是关闭。</p>
+
+<h3 id="17-4-下拉刷新与边界反馈">17.4 下拉刷新与边界反馈</h3>
+
+<p>下拉刷新可以复用“原始拖动距离映射为更小可见距离”的思路，但释放后的行为由刷新状态机决定，不是简单吸附到列表项。</p>
+
+<p>还要区分触发阈值、加载中停留位置、刷新完成后的收起位置，以及与原生页面滚动的关系。</p>
+
+<h3 id="17-5-不适合直接照搬的场景">17.5 不适合直接照搬的场景</h3>
+
+<ul>
+<li><strong>无限循环滚轮</strong>：需要处理索引取模、循环数据与视觉重定位，当前有限边界模型不够。</li>
+<li><strong>不等高列表</strong>：需要累计高度和查找最近中心点，不能只除以固定行高。</li>
+<li><strong>长列表自由滚动</strong>：通常更适合优先评估原生滚动、虚拟列表与 CSS Scroll Snap。</li>
+<li><strong>高可访问性表单</strong>：应先评估原生选择控件是否已经足够，避免为了视觉效果承担不必要的交互成本。</li>
+</ul>
+
+<p>选择自定义方案的理由，应是产品确实需要这套手势与视觉，而不是默认所有选择控件都必须手写动画。</p>
+
+<h2 id="十八-验证清单-不仅要看-会不会动">十八、验证清单：不仅要看“会不会动”</h2>
+
+<p>下面这份清单是进一步验证组件时的建议，不代表这些项目都已由现有五个用例覆盖。</p>
+
+<h3 id="18-1-数学与纯函数">18.1 数学与纯函数</h3>
+
+<ul>
+<li>合法区间内，位移是否保持原值。</li>
+<li>首尾边界值是否连续，刚越界时是否没有明显折点。</li>
+<li>越界拉伸是否保持方向正确、两端对称、单调增长。</li>
+<li>极大越界距离是否仍受最大拉伸量限制。</li>
+<li>中点前后是否选择预期索引，恰好中点是否符合约定。</li>
+<li>空列表、单项列表和非法尺寸是否符合参数契约。</li>
+</ul>
+
+<h3 id="18-2-手势与动画">18.2 手势与动画</h3>
+
+<ul>
+<li>慢拖、快拖、停住再拖是否跟手。</li>
+<li>一次手势越界后再回到范围内，是否没有累计误差。</li>
+<li>动画中途重新按下，是否从可见位置接管。</li>
+<li>在合法范围与越界范围重新按下，是否都连续。</li>
+<li>快速连续拖动多次，旧回调是否不会清除新目标。</li>
+<li><code>touchcancel</code> 是否回到已提交项，而不是意外提交新值。</li>
+<li>多指加入、移出组件区域、系统中断是否有明确行为。</li>
+</ul>
+
+<h3 id="18-3-数据-布局与平台">18.3 数据、布局与平台</h3>
+
+<ul>
+<li>外部直接修改选中值，是否同步到正确位置。</li>
+<li>父组件接受、拒绝或延迟提交时，视觉与业务值是否一致。</li>
+<li>交互途中改变列表长度、行高，是否按既定策略协调。</li>
+<li>大小月、闰年和起止日期边界是否保持合法值。</li>
+<li>自定义行高后，选框、列表、居中偏移是否仍一致。</li>
+<li>目标移动浏览器中，页面滚动与日期列拖动是否冲突。</li>
+<li>键盘、读屏与减少动态效果设置是否得到支持。</li>
+</ul>
+
+<h2 id="十九-知识点总结-把-弹性动画-拆成可理解的工程问题">十九、知识点总结：把“弹性动画”拆成可理解的工程问题</h2>
+
+<table>
+<thead>
+<tr>
+<th>知识点</th>
+<th>在当前组件中的体现</th>
+<th>可以迁移的思路</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>坐标与索引转换</td>
+<td><code>y = -index × itemHeight</code></td>
+<td>先确定坐标方向和几何约定，再写交互公式</td>
+</tr>
+
+<tr>
+<td>手势起点建模</td>
+<td>起始列表位置加指针总位移</td>
+<td>避免高频事件累计误差和历史依赖</td>
+</tr>
+
+<tr>
+<td>原始值与显示值分离</td>
+<td>拖动原始位移不累计阻尼结果</td>
+<td>非线性映射之后的值不要未经区分再次作为原始输入</td>
+</tr>
+
+<tr>
+<td>非线性压缩</td>
+<td>指数函数处理首尾越界</td>
+<td>用单调、有界、边界平滑的曲线模拟阻力感</td>
+</tr>
+
+<tr>
+<td>连续到离散的映射</td>
+<td>截断、除以行高、四舍五入</td>
+<td>手势结束时把连续位置转换成合法业务目标</td>
+</tr>
+
+<tr>
+<td>空间与时间分工</td>
+<td>拖动时 <code>set</code>，松手后 <code>start</code></td>
+<td>跟手阶段与归位阶段采用不同控制方式</td>
+</tr>
+
+<tr>
+<td>动画可中断性</td>
+<td>停止旧动画，读取当前可见值</td>
+<td>用户再次输入时，接管当前状态而不是旧目标</td>
+</tr>
+
+<tr>
+<td>控制权协调</td>
+<td>手势 ref、吸附目标 ref、同步 effect</td>
+<td>明确输入、动画和外部状态谁在什么阶段拥有控制权</td>
+</tr>
+
+<tr>
+<td>异步回调隔离</td>
+<td><code>onRest</code> 比较目标对象身份</td>
+<td>旧任务完成前先确认自己仍是当前任务</td>
+</tr>
+
+<tr>
+<td>测试分层</td>
+<td>纯函数测试与交互验证分开</td>
+<td>数学正确、事件正确、平台体验正确需要不同证据</td>
+</tr>
+</tbody>
+</table>
+
+<p>如果把整个实现压缩成五句话，就是：</p>
+
+<ol>
+<li><strong>按下时接管当前可见位置，建立固定手势起点。</strong></li>
+<li><strong>移动时从起点计算原始位移，只对越界部分做一次非线性压缩。</strong></li>
+<li><strong>松手时把可见位移转换成最近的合法索引。</strong></li>
+<li><strong>用弹簧动画到达目标位置，同时把业务选中值提交给父组件。</strong></li>
+<li><strong>通过控制权和任务身份管理，避免新手势、旧动画与父组件同步互相覆盖。</strong></li>
+</ol>
+
+<p>日期选择器只是一个具体载体。真正可以复用的，是这套“输入坐标 → 几何约束 → 视觉映射 → 离散决策 → 动画收敛”的设计方法。</p>
+
+<p>当我们把每一层的输入、输出和边界说清楚，所谓“有弹性的手感”就不再是凭感觉拼出的效果，而是可以推导、调节、测试和逐步完善的交互系统。</p>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Joel Xu</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2026-11-08
+      
+        
+        
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="http://xmasuhai.xyz/tags/frontend/">FrontEnd</a>
+          <a href="http://xmasuhai.xyz/tags/react/">React</a>
+          <a href="http://xmasuhai.xyz/tags/react-spring/">React Spring</a>
+          <a href="http://xmasuhai.xyz/tags/%E6%89%8B%E5%8A%BF%E4%BA%A4%E4%BA%92/">手势交互</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/%E5%B1%B1%E7%AB%B9%E8%AE%B0%E8%B4%A6/%E5%B1%B1%E7%AB%B9%E8%AE%B0%E8%B4%A6%E5%89%8D%E7%AB%AF-react19.%E8%87%AA%E5%88%B6%E6%97%A5%E6%9C%9F%E9%80%89%E6%8B%A9%E5%99%A8%E4%B8%8B/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">【山竹记账前端-react】18.自制日期选择器（下）</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/%E5%B1%B1%E7%AB%B9%E8%AE%B0%E8%B4%A6/%E5%B1%B1%E7%AB%B9%E8%AE%B0%E8%B4%A6%E5%89%8D%E7%AB%AF-react20.%E6%95%B0%E5%AD%97%E9%94%AE%E7%9B%98%E8%BE%93%E5%85%A5%E9%87%91%E9%A2%9D%E5%92%8C%E9%87%91%E9%A2%9D%E6%98%BE%E7%A4%BA/">
+            <span class="next-text nav-default">【山竹记账前端-react】20.数字键盘输入金额和金额显示</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:xmasuhai@163.com" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="https://github.com/xmasuhai" rel="me noopener" class="iconfont"
+      title="github"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M512 12.672c-282.88 0-512 229.248-512 512 0 226.261333 146.688 418.133333 350.08 485.76 25.6 4.821333 34.986667-11.008 34.986667-24.618667 0-12.16-0.426667-44.373333-0.64-87.04-142.421333 30.890667-172.458667-68.693333-172.458667-68.693333C188.672 770.986667 155.008 755.2 155.008 755.2c-46.378667-31.744 3.584-31.104 3.584-31.104 51.413333 3.584 78.421333 52.736 78.421333 52.736 45.653333 78.293333 119.850667 55.68 149.12 42.581333 4.608-33.109333 17.792-55.68 32.426667-68.48-113.706667-12.8-233.216-56.832-233.216-253.013333 0-55.893333 19.84-101.546667 52.693333-137.386667-5.76-12.928-23.04-64.981333 4.48-135.509333 0 0 42.88-13.738667 140.8 52.48 40.96-11.392 84.48-17.024 128-17.28 43.52 0.256 87.04 5.888 128 17.28 97.28-66.218667 140.16-52.48 140.16-52.48 27.52 70.528 10.24 122.581333 5.12 135.509333 32.64 35.84 52.48 81.493333 52.48 137.386667 0 196.693333-119.68 240-233.6 252.586667 17.92 15.36 34.56 46.762667 34.56 94.72 0 68.522667-0.64 123.562667-0.64 140.202666 0 13.44 8.96 29.44 35.2 24.32C877.44 942.592 1024 750.592 1024 524.672c0-282.752-229.248-512-512-512"></path>
+</svg>
+
+    </a>
+  
+    <a href="https://www.zhihu.com/people/xue-shou-41/posts" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+
+
+<a href="http://xmasuhai.xyz/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane">Jane</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy;
+    
+      2019 -
+    2026
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Joel Xu
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
