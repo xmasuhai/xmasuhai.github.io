@@ -1,0 +1,1845 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>【山竹记账后端】12.JWT 续期与 Refresh Token - Joel in The House</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="Joel Xu" />
+  <meta name="description" content="【山竹记账后端】12.JWT 续期与 Refresh Token 大纲链接 § [toc] 1. 如何处理JWT过期 ⇧ 目前的jwt，没有过期功能，用户可以无限期的使用 防止 jwt 泄漏，或者用户" />
+
+  <meta name="keywords" content="Hugo, theme, jane" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.59.1" />
+
+
+<link rel="canonical" href="http://xmasuhai.xyz/post/%E5%B1%B1%E7%AB%B9%E8%AE%B0%E8%B4%A6/%E5%B1%B1%E7%AB%B9%E8%AE%B0%E8%B4%A6%E5%90%8E%E7%AB%AF12.jwt-%E7%BB%AD%E6%9C%9F%E4%B8%8E-refresh-token/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="【山竹记账后端】12.JWT 续期与 Refresh Token" />
+<meta property="og:description" content="【山竹记账后端】12.JWT 续期与 Refresh Token 大纲链接 § [toc] 1. 如何处理JWT过期 ⇧ 目前的jwt，没有过期功能，用户可以无限期的使用 防止 jwt 泄漏，或者用户" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://xmasuhai.xyz/post/%E5%B1%B1%E7%AB%B9%E8%AE%B0%E8%B4%A6/%E5%B1%B1%E7%AB%B9%E8%AE%B0%E8%B4%A6%E5%90%8E%E7%AB%AF12.jwt-%E7%BB%AD%E6%9C%9F%E4%B8%8E-refresh-token/" />
+<meta property="article:published_time" content="2026-11-27T23:17:24+08:00" />
+<meta property="article:modified_time" content="2026-11-27T23:17:24+08:00" />
+<meta itemprop="name" content="【山竹记账后端】12.JWT 续期与 Refresh Token">
+<meta itemprop="description" content="【山竹记账后端】12.JWT 续期与 Refresh Token 大纲链接 § [toc] 1. 如何处理JWT过期 ⇧ 目前的jwt，没有过期功能，用户可以无限期的使用 防止 jwt 泄漏，或者用户">
+
+
+<meta itemprop="datePublished" content="2026-11-27T23:17:24&#43;08:00" />
+<meta itemprop="dateModified" content="2026-11-27T23:17:24&#43;08:00" />
+<meta itemprop="wordCount" content="6902">
+
+
+
+<meta itemprop="keywords" content="Project,山竹记账,BackEnd,Rails," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="【山竹记账后端】12.JWT 续期与 Refresh Token"/>
+<meta name="twitter:description" content="【山竹记账后端】12.JWT 续期与 Refresh Token 大纲链接 § [toc] 1. 如何处理JWT过期 ⇧ 目前的jwt，没有过期功能，用户可以无限期的使用 防止 jwt 泄漏，或者用户"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Joel in The House</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/post/">文档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/categories/">目录</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/about/">关于我</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Joel in The House
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/post/">文档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/categories/">目录</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/about/">关于我</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">【山竹记账后端】12.JWT 续期与 Refresh Token</h1>
+      
+      <div class="post-meta">
+        <time datetime="2026-11-27" class="post-time">
+          2026-11-27
+        </time>
+        <div class="post-category">
+            <a href="http://xmasuhai.xyz/categories/%E5%B1%B1%E7%AB%B9%E8%AE%B0%E8%B4%A6/"> 山竹记账 </a>
+            
+          </div>
+        <span class="more-meta"> 约 6902 字 </span>
+          <span class="more-meta"> 预计阅读 14 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#山竹记账后端-12-jwt-续期与-refresh-token">【山竹记账后端】12.JWT 续期与 Refresh Token</a>
+<ul>
+<li><a href="#1-如何处理jwt过期-a-href-catalogue-a">1. 如何处理JWT过期 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#2-jwt-过期测试-a-href-catalogue-a">2. JWT 过期测试 <a href="#catalogue"> ⇧ </a></a>
+<ul>
+<li><a href="#添加过期测试用例-a-href-catalogue-a">添加过期测试用例 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#回归测试所有用例-修复-a-href-catalogue-a">回归测试所有用例，修复 <a href="#catalogue"> ⇧ </a></a></li>
+</ul></li>
+<li><a href="#3-refresh-token-是什么-a-href-catalogue-a">3. <code>Refresh Token</code> 是什么 <a href="#catalogue"> ⇧ </a></a>
+<ul>
+<li><a href="#核心要点-a-href-catalogue-a">核心要点 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#时序图示意-a-href-catalogue-a">时序图示意 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#重要细节-a-href-catalogue-a">重要细节 <a href="#catalogue"> ⇧ </a></a>
+<ul>
+<li><a href="#1-基本续期流程-a-href-catalogue-a">1. 基本续期流程 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#2-多设备-多次登录的-refresh-token-处理-a-href-catalogue-a">2. 多设备 / 多次登录的 Refresh Token 处理 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#3-过期判断方式-a-href-catalogue-a">3. 过期判断方式 <a href="#catalogue"> ⇧ </a></a></li>
+</ul></li>
+<li><a href="#4-控制自动续期的设备数量-a-href-catalogue-a">4. 控制自动续期的设备数量 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#5-jwt-与-refresh-token-的有效期设计原则">5. JWT 与 Refresh Token 的有效期设计原则</a></li>
+<li><a href="#6-登录数量控制与续期数量控制的区别-为什么控制续期数而非登录数-a-href-catalogue-a">6. 登录数量控制与续期数量控制的区别，为什么控制续期数而非登录数 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#7-补充说明-refreshtoken-的两种实现方式">7. 补充说明：RefreshToken 的两种实现方式</a></li>
+<li><a href="#简要结论-a-href-catalogue-a">简要结论 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#注意事项-a-href-catalogue-a">注意事项 <a href="#catalogue"> ⇧ </a></a></li>
+</ul></li>
+<li><a href="#4-refresh-token-实现-a-href-catalogue-a">4. <code>Refresh Token</code> 实现 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#5-修复登录bug-a-href-catalogue-a">5. 修复登录bug <a href="#catalogue"> ⇧ </a></a>
+<ul>
+<li><a href="#补充会话登录接口文档-a-href-catalogue-a">补充会话登录接口文档 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#实现登录直接创建用户-a-href-catalogue-a">实现登录直接创建用户 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#会话登录请求测试用例添加首次登录-a-href-catalogue-a">会话登录请求测试用例添加首次登录 <a href="#catalogue"> ⇧ </a></a></li>
+</ul></li>
+<li><a href="#6-可能的报错信息-a-href-catalogue-a">6. 可能的报错信息 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#参考文章">参考文章</a></li>
+<li><a href="#相关文章">相关文章</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+
+<h1 id="山竹记账后端-12-jwt-续期与-refresh-token">【山竹记账后端】12.JWT 续期与 Refresh Token</h1>
+
+<hr />
+
+<blockquote>
+<p>大纲链接 <a id="catalogue" href="#catalogue" > § </a></p>
+</blockquote>
+
+<p>[toc]</p>
+
+<hr />
+
+<h2 id="1-如何处理jwt过期-a-href-catalogue-a">1. 如何处理JWT过期 <a href="#catalogue"> ⇧ </a></h2>
+
+<blockquote>
+<p>目前的<code>jwt</code>，没有过期功能，用户可以无限期的使用</p>
+</blockquote>
+
+<ul>
+<li>防止 <code>jwt</code> 泄漏，或者用户被其他用户利用，需要添加过期功能</li>
+<li>过期一般设置 <code>2h~24h</code></li>
+<li>需要在原本的 <code>payload</code> 中添加标准字段属性 <code>exp: (Time.now + 2.hours).to_i</code>，转成秒数数字，非毫秒数</li>
+<li><code>payload = {user_id: self.id, email: self.email, exp: (Time.now + 2.hours).to_i}</code></li>
+<li>在<code>AutoJwt</code>中间件解码时，无需添加验证是否过期的逻辑 <code>epx = payload[0][&quot;exp&quot;]</code>
+
+<ul>
+<li>在<code>JWT.decode</code>解码是自动判断是否过期，如果过期，则会走 <code>rescue nul</code> 的逻辑，即<code>payload</code>为空</li>
+<li>使用高级的 <code>rescue</code> 写法，可明确提示是哪一种报错：过期或被篡改</li>
+</ul></li>
+<li>有些接口是无需jwt检查的，需要添加 <code>api</code> 白名单，可绕过验证 <code>jwt</code></li>
+</ul>
+
+<blockquote>
+<p><code>app/models/user.rb</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-rb" data-lang="rb"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-rb" data-lang="rb"><span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
+  <span class="n">validates</span> <span class="ss">:email</span><span class="p">,</span> <span class="ss">presence</span><span class="p">:</span> <span class="kp">true</span>
+
+  <span class="c1"># User 自己生成 JWT.</span>
+  <span class="c1"># @return [String]</span>
+  <span class="k">def</span> <span class="nf">generate_jwt</span>
+    <span class="n">payload</span> <span class="o">=</span> <span class="p">{</span> <span class="ss">user_id</span><span class="p">:</span> <span class="nb">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="ss">email</span><span class="p">:</span> <span class="nb">self</span><span class="o">.</span><span class="n">email</span><span class="p">,</span>
+      <span class="ss">exp</span><span class="p">:</span> <span class="p">(</span><span class="no">Time</span><span class="o">.</span><span class="n">now</span> <span class="o">+</span> <span class="mi">2</span><span class="o">.</span><span class="n">hours</span><span class="p">)</span><span class="o">.</span><span class="n">to_i</span> <span class="p">}</span>
+    <span class="n">hmac_secret</span> <span class="o">=</span> <span class="no">Rails</span><span class="o">.</span><span class="n">application</span><span class="o">.</span><span class="n">credentials</span><span class="o">.</span><span class="n">hmac_secret</span>
+    <span class="no">JWT</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">payload</span><span class="p">,</span> <span class="n">hmac_secret</span><span class="p">,</span> <span class="s2">&#34;HS256&#34;</span><span class="p">)</span>
+  <span class="k">end</span>
+
+  <span class="c1"># 生成 JWT 的 HTTP 头.</span>
+  <span class="c1"># @return [Hash]</span>
+  <span class="k">def</span> <span class="nf">generate_auth_header</span>
+    <span class="p">{</span> <span class="s2">&#34;Authorization&#34;</span><span class="p">:</span> <span class="s2">&#34;Bearer </span><span class="si">#{</span><span class="nb">self</span><span class="o">.</span><span class="n">generate_jwt</span><span class="si">}</span><span class="s2">&#34;</span> <span class="p">}</span>
+  <span class="k">end</span>
+<span class="k">end</span></code></pre></td></tr></table>
+</div>
+</div>
+<blockquote>
+<p><code>lib/middleware/auto_jwt.rb</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-rb" data-lang="rb"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-rb" data-lang="rb"><span class="nb">require</span> <span class="s2">&#34;set&#34;</span>
+
+<span class="k">class</span> <span class="nc">AutoJwt</span>
+  <span class="c1"># 初始化中间件.</span>
+  <span class="c1"># @param [Object] app Param documentation.</span>
+  <span class="c1"># @return [Object]</span>
+  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+    <span class="vi">@app</span> <span class="o">=</span> <span class="n">app</span>
+  <span class="k">end</span>
+
+  <span class="c1"># 从请求头中获取 jwt，并解析.</span>
+  <span class="c1"># @param [Object] env Param documentation.</span>
+  <span class="c1"># @raise [StandardError]</span>
+  <span class="c1"># @return [Array]</span>
+  <span class="k">def</span> <span class="nf">call</span><span class="p">(</span><span class="n">env</span><span class="p">)</span>
+    <span class="c1"># 跳过 JWT 解析</span>
+    <span class="k">return</span> <span class="vi">@app</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">env</span><span class="p">)</span> <span class="k">if</span> <span class="no">SKIP_JWT_PATHS</span><span class="o">.</span><span class="n">include?</span><span class="p">(</span><span class="n">env</span><span class="o">[</span><span class="s2">&#34;PATH_INFO&#34;</span><span class="o">]</span><span class="p">)</span>
+
+    <span class="n">header</span> <span class="o">=</span> <span class="n">env</span><span class="o">[</span><span class="s2">&#34;HTTP_AUTHORIZATION&#34;</span><span class="o">]</span>
+    <span class="k">if</span> <span class="n">header</span><span class="o">.</span><span class="n">present?</span>
+      <span class="n">jwt</span> <span class="o">=</span> <span class="n">header</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&#34; &#34;</span><span class="p">)</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="k">rescue</span> <span class="s2">&#34;&#34;</span>
+      <span class="k">begin</span>
+      <span class="n">payload</span> <span class="o">=</span> <span class="no">JWT</span><span class="o">.</span><span class="n">decode</span> <span class="n">jwt</span><span class="p">,</span> <span class="no">Rails</span><span class="o">.</span><span class="n">application</span><span class="o">.</span><span class="n">credentials</span><span class="o">.</span><span class="n">hmac_secret</span><span class="p">,</span>
+        <span class="kp">true</span><span class="p">,</span> <span class="p">{</span> <span class="ss">algorithm</span><span class="p">:</span> <span class="s2">&#34;HS256&#34;</span> <span class="p">}</span>
+      <span class="k">rescue</span> <span class="no">JWT</span><span class="o">::</span><span class="no">ExpiredSignature</span>
+        <span class="k">return</span> <span class="o">[</span> <span class="mi">401</span><span class="p">,</span> <span class="p">{},</span>
+          <span class="o">[</span> <span class="no">JSON</span><span class="o">.</span><span class="n">generate</span><span class="p">({</span> <span class="ss">reason</span><span class="p">:</span> <span class="s2">&#34;Unauthorized, Token expired&#34;</span> <span class="p">})</span> <span class="o">]</span> <span class="o">]</span>
+      <span class="k">rescue</span>
+        <span class="k">return</span> <span class="o">[</span> <span class="mi">401</span><span class="p">,</span> <span class="p">{},</span>
+          <span class="o">[</span> <span class="no">JSON</span><span class="o">.</span><span class="n">generate</span><span class="p">({</span> <span class="ss">reason</span><span class="p">:</span> <span class="s2">&#34;Unauthorized, Invalid JWT&#34;</span> <span class="p">})</span> <span class="o">]</span> <span class="o">]</span>
+      <span class="k">end</span>
+      <span class="n">env</span><span class="o">[</span><span class="s2">&#34;current_user_id&#34;</span><span class="o">]</span> <span class="o">=</span> <span class="n">payload</span><span class="o">[</span><span class="mi">0</span><span class="o">][</span><span class="s2">&#34;user_id&#34;</span><span class="o">]</span> <span class="k">rescue</span> <span class="kp">nil</span>
+    <span class="k">end</span>
+    <span class="vi">@status</span><span class="p">,</span> <span class="vi">@headers</span><span class="p">,</span> <span class="vi">@response</span> <span class="o">=</span> <span class="vi">@app</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">env</span><span class="p">)</span>
+    <span class="o">[</span> <span class="vi">@status</span><span class="p">,</span> <span class="vi">@headers</span><span class="p">,</span> <span class="vi">@response</span> <span class="o">]</span>
+  <span class="k">end</span>
+
+  <span class="c1"># 定义白名单常量，使用 %w[...] 写字符串数组更简洁</span>
+  <span class="c1"># .freeze 防止内容被篡改；Set#include? 的查询时间复杂度是 O(1)，比数组的 O(n) 更快</span>
+  <span class="no">SKIP_JWT_PATHS</span> <span class="o">=</span> <span class="no">Set</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="sx">%w[
+</span><span class="sx">    /api/v1/session
+</span><span class="sx">  ]</span><span class="o">.</span><span class="n">freeze</span><span class="p">)</span>
+<span class="k">end</span></code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>此处返回值中状态吗不可以写成 <code>:unauthorized</code>，只能写数字 <code>401</code>，或者 <code>Rack::Utils.status_code(:unauthorized)</code></li>
+<li><code>Rack</code> 中间件返回的状态码必须是整数
+
+<ul>
+<li><code>Rack 3.2.7</code> 在构造测试响应时调用了 <code>status.to_i</code></li>
+<li>但 <code>Ruby</code> 的 <code>Symbol</code> 没有 <code>to_i</code>，因此 get 就抛出了 <code>NoMethodError</code></li>
+</ul></li>
+</ul>
+
+<hr />
+
+<h2 id="2-jwt-过期测试-a-href-catalogue-a">2. JWT 过期测试 <a href="#catalogue"> ⇧ </a></h2>
+
+<h3 id="添加过期测试用例-a-href-catalogue-a">添加过期测试用例 <a href="#catalogue"> ⇧ </a></h3>
+
+<blockquote>
+<p><code>spec/requests/api/v1/mes_spec.rb</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-rb" data-lang="rb"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-rb" data-lang="rb"><span class="nb">require</span> <span class="s1">&#39;rails_helper&#39;</span>
+<span class="nb">require</span> <span class="s2">&#34;active_support/testing/time_helpers&#34;</span>
+
+<span class="no">RSpec</span><span class="o">.</span><span class="n">describe</span> <span class="s2">&#34;Api::V1::Mes&#34;</span><span class="p">,</span> <span class="ss">type</span><span class="p">:</span> <span class="ss">:request</span> <span class="k">do</span>
+  <span class="kp">include</span> <span class="no">ActiveSupport</span><span class="o">::</span><span class="no">Testing</span><span class="o">::</span><span class="no">TimeHelpers</span>
+  <span class="n">describe</span> <span class="s2">&#34;获取当前用户&#34;</span> <span class="k">do</span>
+    <span class="n">it</span> <span class="s2">&#34;登录后成功获取&#34;</span> <span class="k">do</span>
+      <span class="n">user</span> <span class="o">=</span> <span class="no">User</span><span class="o">.</span><span class="n">create</span> <span class="ss">email</span><span class="p">:</span> <span class="s1">&#39;xmasuhai@163.com&#39;</span>
+      <span class="n">post</span> <span class="s1">&#39;/api/v1/session&#39;</span><span class="p">,</span>
+        <span class="ss">params</span><span class="p">:</span> <span class="p">{</span> <span class="ss">email</span><span class="p">:</span> <span class="s1">&#39;xmasuhai@163.com&#39;</span><span class="p">,</span> <span class="ss">code</span><span class="p">:</span> <span class="s1">&#39;123456&#39;</span> <span class="p">}</span>
+      <span class="n">json</span> <span class="o">=</span> <span class="no">JSON</span><span class="o">.</span><span class="n">parse</span> <span class="n">response</span><span class="o">.</span><span class="n">body</span>
+      <span class="n">jwtString</span> <span class="o">=</span> <span class="n">json</span><span class="o">[</span><span class="s2">&#34;jwt&#34;</span><span class="o">]</span>
+      <span class="n">expect</span><span class="p">(</span><span class="n">jwtString</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">be_a</span><span class="p">(</span><span class="nb">String</span><span class="p">)</span>
+      <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&#34;Authorization&#34;</span> <span class="o">=&gt;</span> <span class="s2">&#34;Bearer </span><span class="si">#{</span><span class="n">jwtString</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">,</span>
+        <span class="s2">&#34;Accept&#34;</span> <span class="o">=&gt;</span> <span class="s2">&#34;application/json&#34;</span>
+      <span class="p">}</span>
+      <span class="n">get</span> <span class="s1">&#39;/api/v1/me&#39;</span><span class="p">,</span> <span class="ss">headers</span><span class="p">:</span> <span class="n">headers</span>
+      <span class="n">expect</span><span class="p">(</span><span class="n">response</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">have_http_status</span><span class="p">(</span><span class="ss">:ok</span><span class="p">)</span>
+      <span class="n">json</span> <span class="o">=</span> <span class="no">JSON</span><span class="o">.</span><span class="n">parse</span> <span class="n">response</span><span class="o">.</span><span class="n">body</span>
+      <span class="n">resource</span> <span class="o">=</span> <span class="n">json</span><span class="o">[</span><span class="s2">&#34;resource&#34;</span><span class="o">]</span>
+      <span class="n">expect</span><span class="p">(</span><span class="n">resource</span><span class="o">[</span><span class="s2">&#34;email&#34;</span><span class="o">]</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">eq</span> <span class="s2">&#34;xmasuhai@163.com&#34;</span>
+      <span class="n">expect</span><span class="p">(</span><span class="n">resource</span><span class="o">[</span><span class="s2">&#34;id&#34;</span><span class="o">]</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">eq</span> <span class="n">user</span><span class="o">.</span><span class="n">id</span>
+    <span class="k">end</span>
+    <span class="n">it</span> <span class="s2">&#34;jwt 过期&#34;</span> <span class="k">do</span>
+      <span class="n">travel_to</span> <span class="no">Time</span><span class="o">.</span><span class="n">now</span> <span class="o">-</span> <span class="mi">3</span><span class="o">.</span><span class="n">hours</span>
+      <span class="n">user</span> <span class="o">=</span> <span class="no">User</span><span class="o">.</span><span class="n">create</span> <span class="ss">email</span><span class="p">:</span> <span class="s1">&#39;1@163.com&#39;</span>
+      <span class="n">jwt</span> <span class="o">=</span> <span class="n">user</span><span class="o">.</span><span class="n">generate_jwt</span>
+      <span class="n">travel_back</span>
+      <span class="n">get</span> <span class="s2">&#34;/api/v1/me&#34;</span><span class="p">,</span> <span class="ss">headers</span><span class="p">:</span> <span class="p">{</span> <span class="s2">&#34;Authorization&#34;</span><span class="p">:</span> <span class="s2">&#34;Bearer </span><span class="si">#{</span><span class="n">jwt</span><span class="si">}</span><span class="s2">&#34;</span> <span class="p">}</span>
+      <span class="n">expect</span><span class="p">(</span><span class="n">response</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">have_http_status</span><span class="p">(</span><span class="ss">:unauthorized</span><span class="p">)</span>
+    <span class="k">end</span>
+    <span class="n">it</span> <span class="s2">&#34;jwt 未过期&#34;</span> <span class="k">do</span>
+      <span class="n">travel_to</span> <span class="no">Time</span><span class="o">.</span><span class="n">now</span> <span class="o">-</span> <span class="mi">1</span><span class="o">.</span><span class="n">hours</span>
+      <span class="n">user</span> <span class="o">=</span> <span class="no">User</span><span class="o">.</span><span class="n">create</span> <span class="ss">email</span><span class="p">:</span> <span class="s1">&#39;1@163.com&#39;</span>
+      <span class="n">jwt</span> <span class="o">=</span> <span class="n">user</span><span class="o">.</span><span class="n">generate_jwt</span>
+      <span class="n">travel_back</span>
+      <span class="n">get</span> <span class="s2">&#34;/api/v1/me&#34;</span><span class="p">,</span> <span class="ss">headers</span><span class="p">:</span> <span class="p">{</span> <span class="s2">&#34;Authorization&#34;</span><span class="p">:</span> <span class="s2">&#34;Bearer </span><span class="si">#{</span><span class="n">jwt</span><span class="si">}</span><span class="s2">&#34;</span> <span class="p">}</span>
+      <span class="n">expect</span><span class="p">(</span><span class="n">response</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">have_http_status</span><span class="p">(</span><span class="ss">:ok</span><span class="p">)</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span></code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>需要导入 <code>require &quot;active_support/testing/time_helpers&quot;</code></li>
+<li>使用时添加 <code>include ActiveSupport::Testing::TimeHelpers</code></li>
+<li>使用内置提供的时间穿梭方法
+
+<ul>
+<li>将时间拨回到三小时前 <code>travel_to Time.now - 3.hours</code></li>
+<li>回拨到现在 <code>travel_back</code></li>
+</ul></li>
+<li>运行测试 <code>rspec spec/requests/api/v1/mes_spec.rb</code></li>
+</ul>
+
+<hr />
+
+<h3 id="回归测试所有用例-修复-a-href-catalogue-a">回归测试所有用例，修复 <a href="#catalogue"> ⇧ </a></h3>
+
+<ul>
+<li>运行所有测试 <code>rspec</code></li>
+<li>两个测试未通过： <code>post '/api/v1/validation_codes'</code> 和 <code>post '/api/v1/items'</code></li>
+<li><code>'/api/v1/validation_codes'</code> 无需验证 <code>jwt</code> 添加到白名单中</li>
+<li><code>post '/api/v1/items'</code> 的 <code>create</code> 测试用例中可以临时使用 <code>xit</code> 跳过这个测试用例</li>
+<li>未通过的测试用例代码不可直接提交，要么补充完善好测试用例，要么使用 <code>xit</code> 临时跳过，不影响其他开发者签出代码时跑用例失败</li>
+</ul>
+
+<blockquote>
+<p><code>lib/middleware/auto_jwt.rb</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-rb" data-lang="rb"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-rb" data-lang="rb"><span class="nb">require</span> <span class="s2">&#34;set&#34;</span>
+
+<span class="k">class</span> <span class="nc">AutoJwt</span>
+  <span class="c1"># 初始化中间件.</span>
+  <span class="c1"># @param [Object] app Param documentation.</span>
+  <span class="c1"># @return [Object]</span>
+  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+    <span class="vi">@app</span> <span class="o">=</span> <span class="n">app</span>
+  <span class="k">end</span>
+
+  <span class="c1"># 从请求头中获取 jwt，并解析.</span>
+  <span class="c1"># @param [Object] env Param documentation.</span>
+  <span class="c1"># @raise [StandardError]</span>
+  <span class="c1"># @return [Array]</span>
+  <span class="k">def</span> <span class="nf">call</span><span class="p">(</span><span class="n">env</span><span class="p">)</span>
+    <span class="c1"># 跳过 JWT 解析</span>
+    <span class="k">return</span> <span class="vi">@app</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">env</span><span class="p">)</span> <span class="k">if</span> <span class="no">SKIP_JWT_PATHS</span><span class="o">.</span><span class="n">include?</span> <span class="n">env</span><span class="o">[</span><span class="s2">&#34;PATH_INFO&#34;</span><span class="o">]</span>
+    <span class="n">header</span> <span class="o">=</span> <span class="n">env</span><span class="o">[</span><span class="s2">&#34;HTTP_AUTHORIZATION&#34;</span><span class="o">]</span>
+    <span class="n">jwt</span> <span class="o">=</span> <span class="n">header</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&#34; &#34;</span><span class="p">)</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="k">rescue</span> <span class="s2">&#34;&#34;</span>
+    <span class="k">begin</span>
+      <span class="n">payload</span> <span class="o">=</span> <span class="no">JWT</span><span class="o">.</span><span class="n">decode</span> <span class="n">jwt</span><span class="p">,</span> <span class="no">Rails</span><span class="o">.</span><span class="n">application</span><span class="o">.</span><span class="n">credentials</span><span class="o">.</span><span class="n">hmac_secret</span><span class="p">,</span>
+        <span class="kp">true</span><span class="p">,</span> <span class="p">{</span> <span class="ss">algorithm</span><span class="p">:</span> <span class="s2">&#34;HS256&#34;</span> <span class="p">}</span>
+    <span class="k">rescue</span> <span class="no">JWT</span><span class="o">::</span><span class="no">ExpiredSignature</span>
+      <span class="k">return</span> <span class="o">[</span> <span class="no">Rack</span><span class="o">::</span><span class="no">Utils</span><span class="o">.</span><span class="n">status_code</span><span class="p">(</span><span class="ss">:unauthorized</span><span class="p">),</span> <span class="p">{},</span>
+        <span class="o">[</span> <span class="no">JSON</span><span class="o">.</span><span class="n">generate</span><span class="p">({</span> <span class="ss">reason</span><span class="p">:</span> <span class="s2">&#34;Token Expired&#34;</span> <span class="p">})</span> <span class="o">]</span> <span class="o">]</span>
+    <span class="k">rescue</span>
+      <span class="k">return</span> <span class="o">[</span> <span class="no">Rack</span><span class="o">::</span><span class="no">Utils</span><span class="o">.</span><span class="n">status_code</span><span class="p">(</span><span class="ss">:unauthorized</span><span class="p">),</span> <span class="p">{},</span>
+        <span class="o">[</span> <span class="no">JSON</span><span class="o">.</span><span class="n">generate</span><span class="p">({</span> <span class="ss">reason</span><span class="p">:</span> <span class="s2">&#34;Token Invalid&#34;</span> <span class="p">})</span> <span class="o">]</span> <span class="o">]</span>
+    <span class="k">end</span>
+    <span class="n">env</span><span class="o">[</span><span class="s2">&#34;current_user_id&#34;</span><span class="o">]</span> <span class="o">=</span> <span class="n">payload</span><span class="o">[</span><span class="mi">0</span><span class="o">][</span><span class="s2">&#34;user_id&#34;</span><span class="o">]</span> <span class="k">rescue</span> <span class="kp">nil</span>
+    <span class="vi">@status</span><span class="p">,</span> <span class="vi">@headers</span><span class="p">,</span> <span class="vi">@response</span> <span class="o">=</span> <span class="vi">@app</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">env</span><span class="p">)</span>
+    <span class="o">[</span> <span class="vi">@status</span><span class="p">,</span> <span class="vi">@headers</span><span class="p">,</span> <span class="vi">@response</span> <span class="o">]</span>
+  <span class="k">end</span>
+
+  <span class="c1"># 定义白名单常量，使用 %w[...] 写字符串数组更简洁，.freeze 防止内容被篡改</span>
+  <span class="no">SKIP_JWT_PATHS</span> <span class="o">=</span> <span class="no">Set</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="sx">%w[
+</span><span class="sx">    /api/v1/session
+</span><span class="sx">    /api/v1/validation_codes
+</span><span class="sx">  ]</span><span class="o">.</span><span class="n">freeze</span><span class="p">)</span>
+<span class="k">end</span></code></pre></td></tr></table>
+</div>
+</div>
+<blockquote>
+<p><code>spec/requests/items_spec.rb</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-rb" data-lang="rb"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-rb" data-lang="rb"><span class="nb">require</span> <span class="s1">&#39;rails_helper&#39;</span>
+
+<span class="no">RSpec</span><span class="o">.</span><span class="n">describe</span> <span class="s2">&#34;Api::V1::Items&#34;</span><span class="p">,</span> <span class="ss">type</span><span class="p">:</span> <span class="ss">:request</span> <span class="k">do</span>
+  <span class="n">describe</span> <span class="s2">&#34;账目获取（分页）&#34;</span> <span class="k">do</span>
+    <span class="n">it</span> <span class="s2">&#34;分页验证（未登录）&#34;</span> <span class="k">do</span>
+      <span class="c1"># ...</span>
+    <span class="k">end</span>
+    <span class="n">it</span> <span class="s2">&#34;分页验证（已登录）&#34;</span> <span class="k">do</span>
+      <span class="c1"># ...</span>
+    <span class="k">end</span>
+    <span class="n">it</span> <span class="s2">&#34;按日期筛选&#34;</span> <span class="k">do</span>
+      <span class="c1"># ...</span>
+    <span class="k">end</span>
+    <span class="n">it</span> <span class="s2">&#34;按日期筛选（边界条件：时区）&#34;</span> <span class="k">do</span>
+      <span class="c1"># ...</span>
+    <span class="k">end</span>
+    <span class="n">it</span> <span class="s2">&#34;按日期筛选（边界条件：开始日期范围未传参完整）&#34;</span> <span class="k">do</span>
+      <span class="c1"># ...</span>
+    <span class="k">end</span>
+    <span class="n">it</span> <span class="s2">&#34;按日期筛选（边界条件：结束日期范围未传参完整）&#34;</span> <span class="k">do</span>
+      <span class="c1"># ...</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+
+  <span class="n">describe</span> <span class="s2">&#34;create&#34;</span> <span class="k">do</span>
+    <span class="n">xit</span> <span class="s2">&#34;can create a item&#34;</span> <span class="k">do</span>
+      <span class="n">expect</span> <span class="p">{</span>
+        <span class="n">post</span> <span class="s1">&#39;/api/v1/items&#39;</span><span class="p">,</span> <span class="ss">params</span><span class="p">:</span> <span class="p">{</span> <span class="ss">amount</span><span class="p">:</span> <span class="mi">99</span> <span class="p">}</span>
+      <span class="p">}</span><span class="o">.</span><span class="n">to</span> <span class="n">change</span> <span class="p">{</span> <span class="no">Item</span><span class="o">.</span><span class="n">count</span> <span class="p">}</span><span class="o">.</span><span class="n">by</span> <span class="mi">1</span>
+      <span class="n">expect</span><span class="p">(</span><span class="n">response</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">have_http_status</span> <span class="ss">:ok</span>
+      <span class="n">json</span> <span class="o">=</span> <span class="no">JSON</span><span class="o">.</span><span class="n">parse</span> <span class="n">response</span><span class="o">.</span><span class="n">body</span>
+      <span class="n">expect</span><span class="p">(</span><span class="n">json</span><span class="o">[</span><span class="s1">&#39;resource&#39;</span><span class="o">][</span><span class="s1">&#39;id&#39;</span><span class="o">]</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">be_an</span><span class="p">(</span><span class="no">Numeric</span><span class="p">)</span>
+      <span class="n">expect</span><span class="p">(</span><span class="n">json</span><span class="o">[</span><span class="s1">&#39;resource&#39;</span><span class="o">][</span><span class="s1">&#39;amount&#39;</span><span class="o">]</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">eq</span> <span class="mi">99</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+  <span class="c1"># TODO: 添加更多测试用例</span>
+<span class="k">end</span></code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li><p>再运行所有测试 <code>rspec</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-ruby" data-lang="ruby"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-ruby" data-lang="ruby"><span class="n">rspec</span>
+<span class="o">.............</span><span class="n">*</span><span class="o">..</span>
+
+<span class="ss">Pending</span><span class="p">:</span> <span class="p">(</span><span class="no">Failures</span> <span class="n">listed</span> <span class="n">here</span> <span class="n">are</span> <span class="n">expected</span> <span class="ow">and</span> <span class="k">do</span> <span class="ow">not</span> <span class="n">affect</span> <span class="n">your</span> <span class="n">suite</span><span class="err">&#39;</span><span class="n">s</span> <span class="n">status</span><span class="p">)</span>
+
+<span class="mi">1</span><span class="p">)</span> <span class="no">Api</span><span class="o">::</span><span class="no">V1</span><span class="o">::</span><span class="no">Items</span> <span class="n">create</span> <span class="n">can</span> <span class="n">create</span> <span class="n">a</span> <span class="n">item</span>
+ <span class="c1"># Temporarily skipped with xit</span>
+ <span class="c1"># ./spec/requests/items_spec.rb:90</span>
+
+
+<span class="no">Finished</span> <span class="k">in</span> <span class="mi">0</span><span class="o">.</span><span class="mi">19357</span> <span class="n">seconds</span> <span class="p">(</span><span class="n">files</span> <span class="n">took</span> <span class="mi">0</span><span class="o">.</span><span class="mi">6464</span> <span class="n">seconds</span> <span class="n">to</span> <span class="nb">load</span><span class="p">)</span>
+<span class="mi">16</span> <span class="n">examples</span><span class="p">,</span> <span class="mi">0</span> <span class="n">failures</span><span class="p">,</span> <span class="mi">1</span> <span class="n">pending</span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+
+<hr />
+
+<blockquote>
+<p>暂时不实现具体代码；要实现一个比较完善的 <code>Refresh Token</code>，代码量较大</p>
+</blockquote>
+
+<h2 id="3-refresh-token-是什么-a-href-catalogue-a">3. <code>Refresh Token</code> 是什么 <a href="#catalogue"> ⇧ </a></h2>
+
+<h3 id="核心要点-a-href-catalogue-a">核心要点 <a href="#catalogue"> ⇧ </a></h3>
+
+<ul>
+<li><strong>问题背景</strong>：
+
+<ul>
+<li><code>JWT</code> 设置较短有效期（如 2 小时）以保证安全，但过期后要求用户重新登录体验差；</li>
+<li><code>Refresh Token</code> 用于在 <code>JWT</code> 过期后<strong>无需用户重新登录</strong>即可自动获取新的 <code>JWT</code></li>
+<li><code>JWT</code> 过期后，发送刷新令牌请求，凭 <code>Refresh Token</code> 请求续期接口换取新 <code>JWT</code>；</li>
+<li>只有 <code>Refresh Token</code> 失效时，才需要重新登录。</li>
+</ul></li>
+<li><strong>两类 Token 定位不同</strong>：
+
+<ul>
+<li><code>JWT</code> 用于用户认证，有标准：<a href="https://www.rfc-editor.org/info/rfc7519/">JWT spec RFC 7519</a>；</li>
+<li><code>Refresh Token</code><strong>与 JWT 完全独立</strong>：用于 <code>JWT</code> 续期，没有明确标准格式</li>
+<li>需自行设计随机数存表，存入数据库、<code>Redis</code> 等存储介质（有状态）</li>
+<li>也可以和 <code>JWT</code> 采取相同的无状态机制</li>
+</ul></li>
+<li><strong>Refresh Token 本质</strong>：服务端在登录时额外下发的一个随机字符串（或者和 <code>JWT</code> 相同的加密字符串）
+
+<ul>
+<li>存储在数据库的 <code>Refresh Token</code> 表中，记录了用户 <code>ID</code>、随机数值和创建时间</li>
+</ul></li>
+<li><strong>自动续期 vs 登录控制</strong>：
+
+<ul>
+<li>通过 <code>Refresh Token</code> 数据库记录控制的是<strong>自动续期的设备数</strong>，而非同时登录的设备数</li>
+<li><code>JWT</code> 是无状态的，服务端不记录下发了多少个，无法控制登录数</li>
+</ul></li>
+<li>多设备各自持有独立的 <code>Refresh Token</code>，互不影响；可通过数据库记录，来限制自动续期的设备数量</li>
+<li>有效期按使用频率与被盗风险设计：
+
+<ul>
+<li><code>JWT</code> 使用频繁、易被盗，有效期短；</li>
+<li><code>Refresh Token</code> 使用频率低，有效期可更长，但一般不超过一个月；</li>
+<li>可通过重置功能清空该用户所有已下发的 <code>Refresh Token</code> 兜底</li>
+</ul></li>
+</ul>
+
+<hr />
+
+<h3 id="时序图示意-a-href-catalogue-a">时序图示意 <a href="#catalogue"> ⇧ </a></h3>
+
+<blockquote>
+<p>用户登录</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-mermaid" data-lang="mermaid"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-mermaid" data-lang="mermaid">sequenceDiagram
+  actor 用户
+  participant 客户端
+  participant 认证服务器
+  participant 资源服务器
+
+  用户-&gt;&gt;客户端: 1. 登录请求
+  客户端-&gt;&gt;认证服务器: 2. 发送用户名密码
+  认证服务器-&gt;&gt;认证服务器: 3. 验证用户身份
+  认证服务器--&gt;&gt;客户端: 4. 返回访问令牌(24h) + 刷新令牌(7天)
+  客户端-&gt;&gt;资源服务器: 5. 携带访问令牌访问资源
+  资源服务器--&gt;&gt;客户端: 6. 返回资源数据
+
+  Note over 客户端,资源服务器: 24小时后...
+  客户端-&gt;&gt;资源服务器: 7. 访问令牌已过期
+  资源服务器--&gt;&gt;客户端: 8. 返回401未授权
+  客户端-&gt;&gt;认证服务器: 9. 使用刷新令牌获取新访问令牌
+  认证服务器--&gt;&gt;客户端: 10. 返回新的访问令牌(24h)
+  客户端-&gt;&gt;资源服务器: 11. 使用新访问令牌访问资源
+  资源服务器--&gt;&gt;客户端: 12. 返回资源数据
+
+  Note over 客户端,资源服务器: 7天后...
+  客户端-&gt;&gt;认证服务器: 13. 刷新令牌也过期
+  认证服务器--&gt;&gt;客户端: 14. 返回401，需要重新登录
+  客户端--&gt;&gt;用户: 15. 要求用户重新登录</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>实线箭头（<code>-&gt;&gt;</code>）表示请求 / 调用，虚线箭头（<code>--&gt;&gt;</code>）表示响应 / 返回</li>
+<li>第 3 步 &ldquo;验证用户身份&rdquo; 为认证服务器内部处理，用自循环箭头表示</li>
+<li>两个时间间隔节点（24 小时后、7 天后）用 <code>Note</code> 标注，与原图黄色横条对应</li>
+</ul>
+
+<blockquote>
+<p>用户退出登录</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-mermaid" data-lang="mermaid"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-mermaid" data-lang="mermaid">sequenceDiagram
+  actor 用户
+  participant 客户端
+  participant 认证服务器
+  participant 资源服务器
+
+  用户-&gt;&gt;客户端: 1. 点击退出登录
+  客户端-&gt;&gt;客户端: 2. 清空本地存储的访问令牌与刷新令牌
+  客户端-&gt;&gt;认证服务器: 3. 请求注销会话（携带当前令牌）
+  认证服务器-&gt;&gt;认证服务器: 4. 使该令牌及关联会话失效
+  认证服务器--&gt;&gt;客户端: 5. 返回注销成功
+  Note over 客户端: 6. 跳转回登录页，不再携带令牌访问资源</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>第 2 步在客户端本地完成令牌清除（内存、Cookie、localStorage 等），为客户端内部自处理动作</li>
+<li>第 3–5 步为与认证服务器的交互：服务端将当前 <code>access token /refresh token</code> 加入黑名单或撤销会话，防止已泄露令牌继续被使用</li>
+<li>注销成功后客户端不再持有令牌，后续访问资源会重新走登录流程</li>
+</ul>
+
+<blockquote>
+<p>完整流程</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-mermaid" data-lang="mermaid"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-mermaid" data-lang="mermaid">sequenceDiagram
+  actor 用户
+  participant 客户端
+  participant 认证服务器
+  participant 资源服务器
+
+  用户-&gt;&gt;客户端: 1. 登录请求
+  客户端-&gt;&gt;认证服务器: 2. 发送用户名密码
+  认证服务器-&gt;&gt;认证服务器: 3. 验证用户身份
+  认证服务器--&gt;&gt;客户端: 4. 返回访问令牌(24h) + 刷新令牌(7天)
+  客户端-&gt;&gt;资源服务器: 5. 携带访问令牌访问资源
+  资源服务器--&gt;&gt;客户端: 6. 返回资源数据
+
+  Note over 客户端,资源服务器: 24小时后...
+  客户端-&gt;&gt;资源服务器: 7. 访问令牌已过期
+  资源服务器--&gt;&gt;客户端: 8. 返回401未授权
+  客户端-&gt;&gt;认证服务器: 9. 使用刷新令牌获取新访问令牌
+  认证服务器--&gt;&gt;客户端: 10. 返回新的访问令牌(24h)
+  客户端-&gt;&gt;资源服务器: 11. 使用新访问令牌访问资源
+  资源服务器--&gt;&gt;客户端: 12. 返回资源数据
+
+  Note over 客户端,资源服务器: 7天后...
+  客户端-&gt;&gt;认证服务器: 13. 刷新令牌也过期
+  认证服务器--&gt;&gt;客户端: 14. 返回401，需要重新登录
+  客户端--&gt;&gt;用户: 15. 要求用户重新登录
+
+  用户-&gt;&gt;客户端: 退出登录请求
+  客户端-&gt;&gt;客户端: 清空本地访问令牌与刷新令牌
+  客户端-&gt;&gt;认证服务器: 请求注销会话（携带令牌）
+  认证服务器-&gt;&gt;认证服务器: 撤销令牌、失效会话
+  认证服务器--&gt;&gt;客户端: 注销成功响应
+  Note over 客户端: 跳回登录页</code></pre></td></tr></table>
+</div>
+</div>
+<hr />
+
+<h3 id="重要细节-a-href-catalogue-a">重要细节 <a href="#catalogue"> ⇧ </a></h3>
+
+<h4 id="1-基本续期流程-a-href-catalogue-a">1. 基本续期流程 <a href="#catalogue"> ⇧ </a></h4>
+
+<ol>
+<li>用户登录 → 服务端下发 <strong>JWT</strong>（有效期 2 小时）+ <strong>RefreshToken</strong>（有效期如 7 天）</li>
+<li><code>Refresh Token</code>，存入 <code>Refresh Token</code> 表（RT 表）；加密字符串可包含信息：所属用户、随机数、过期时间、下发的完整时间</li>
+<li><code>JWT</code> 过期后，前端不提示用户重新登录，而是携带 <code>Refresh Token</code> 请求续期接口 <code>/api/v1/refresh_token</code></li>
+<li>服务端校验 <code>Refresh Token</code> 有效后，下发一个新的 <code>JWT</code>，用户继续访问</li>
+<li>7 天内可反复续期；第 7 天 <code>Refresh Token</code> 也过期时，才提示用户重新登录</li>
+<li>重新登录后获得新的 <code>JWT</code> 和新的 <code>Refresh Token</code>，循环往复</li>
+</ol>
+
+<hr />
+
+<h4 id="2-多设备-多次登录的-refresh-token-处理-a-href-catalogue-a">2. 多设备 / 多次登录的 Refresh Token 处理 <a href="#catalogue"> ⇧ </a></h4>
+
+<ul>
+<li>用户在不同设备或不同时间登录，每次得到的 <code>Refresh Token</code> <strong>应该不同</strong>，可以各自续期。
+
+<ul>
+<li>如何相同，可能会出现极端情况：两次登录间隔恰好 7 天，第二次登录拿到的 <code>Refresh Token</code> 立刻就过期了，显然不合理。</li>
+</ul></li>
+<li>数据库中每个 <code>Refresh Token</code> 占据一条数据库记录，分别记录各自的创建时间和所属用户。</li>
+<li>可通过 <code>Refresh Token</code> 的数据库控制同时自动续期的个数；个数、天数都不写死</li>
+<li>一个设备的 <code>Refresh Token</code> 过期不影响其他设备：谁过期谁登录，不同的 <code>Refresh Token</code>、不同的 <code>JWT</code> 各自互不影响</li>
+</ul>
+
+<hr />
+
+<h4 id="3-过期判断方式-a-href-catalogue-a">3. 过期判断方式 <a href="#catalogue"> ⇧ </a></h4>
+
+<ul>
+<li><strong>不需要</strong>在数据库中存储过期时间字段</li>
+<li>只需记录<strong>创建时间</strong>，过期判断：数据库无需单独存过期时间，只记录创建时间；
+
+<ul>
+<li>7 天前创建即过期，3 天前创建即未过期；记录随机数和所属用户即可</li>
+<li>用当前时间减去创建时间即可判断是否过期（如创建于 7 天前 → 过期；3 天前 → 未过期）。</li>
+</ul></li>
+</ul>
+
+<hr />
+
+<h3 id="4-控制自动续期的设备数量-a-href-catalogue-a">4. 控制自动续期的设备数量 <a href="#catalogue"> ⇧ </a></h3>
+
+<ul>
+<li>续期数量限制示例：
+
+<ul>
+<li>假设同一用户只允许 3 个设备自动续期。</li>
+<li>创建第 4 个 Refresh Token 时，检查是否已有 3 个有效的记录</li>
+<li>可选策略一：拒绝创建第 4 个。</li>
+<li>可选策略二：创建第 4 个的同时，将最早的（第 1 个）标记失效或从数据库删除</li>
+<li>被删除的 Refresh Token 下次续期时会被判定为不合法，该设备需重新登录 踢下线</li>
+</ul></li>
+<li>设备数量限制可配置，不写死在代码中</li>
+</ul>
+
+<hr />
+
+<h3 id="5-jwt-与-refresh-token-的有效期设计原则">5. JWT 与 Refresh Token 的有效期设计原则</h3>
+
+<table>
+<thead>
+<tr>
+<th>对比项</th>
+<th>JWT</th>
+<th>RefreshToken</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>用途</td>
+<td>用户认证（每次请求都带）</td>
+<td>JWT 过期后自动续期</td>
+</tr>
+
+<tr>
+<td>标准</td>
+<td>有标准（JWT spec）</td>
+<td>无标准，自行设计</td>
+</tr>
+
+<tr>
+<td>使用频率</td>
+<td>极高（每次刷新页面都用）</td>
+<td>低（仅在 JWT 过期时用）</td>
+</tr>
+
+<tr>
+<td>有效期</td>
+<td><strong>短</strong>（如 2 小时）</td>
+<td><strong>较长</strong>（如 7 天、14 天，不宜超过一个月）</td>
+</tr>
+
+<tr>
+<td>存储</td>
+<td>无状态，不存数据库</td>
+<td>有状态，存数据库</td>
+</tr>
+</tbody>
+</table>
+
+<ul>
+<li><strong>JWT 有效期必须短</strong>：因为使用频繁，被黑客截获的概率大；有效期短可将风险窗口控制在 2 小时内。</li>
+<li><strong>RefreshToken 有效期可稍长</strong>：使用频率低，被截获概率小；但不宜过长（如一个月以上），否则一旦泄露风险极大。</li>
+<li><strong>重置机制</strong>：
+
+<ul>
+<li>网站可提供&rdquo;重置&rdquo;按钮，用户点击后清除该用户所有已下发的 <code>Refresh Token</code>，使黑客窃取的 <code>Refresh Token</code> 立即失效</li>
+<li>必须实现&rdquo;退出登录&rdquo;按钮，用户点击后清除该用户所有已下发的 <code>Refresh Token</code>，使黑客窃取的 <code>Refresh Token</code> 立即失效</li>
+<li>或者提供用户自行可选择退出其他设备登录的功能，用户点击后清除该用户在其他设备上已下发的 <code>Refresh Token</code> 立即失效</li>
+</ul></li>
+</ul>
+
+<hr />
+
+<h3 id="6-登录数量控制与续期数量控制的区别-为什么控制续期数而非登录数-a-href-catalogue-a">6. 登录数量控制与续期数量控制的区别，为什么控制续期数而非登录数 <a href="#catalogue"> ⇧ </a></h3>
+
+<ul>
+<li>服务器控制的是自动续期数量，不是同时登录数量。</li>
+<li><code>JWT</code> 无状态，无法控制登录数量：<code>JWT</code> 下发后，服务端不记得发过多少，也没有存入数据库，不知道用户同时在线多少</li>
+<li>登录后两小时必然会续期，因此直接控制续期数量等价于控制设备数，且实现成本更低。</li>
+<li>控制 <code>Refresh Token</code> 比控制 <code>JWT</code> 合算
+
+<ul>
+<li>若控制 JWT，需把所有 JWT 存入数据库；JWT 下发频繁会导致表数据膨胀，没有必要</li>
+</ul></li>
+</ul>
+
+<hr />
+
+<h3 id="7-补充说明-refreshtoken-的两种实现方式">7. 补充说明：RefreshToken 的两种实现方式</h3>
+
+<ol>
+<li><p><strong>随机字符串（有状态）</strong>：</p>
+
+<ul>
+<li>生成一个随机数存入数据库（代码示意：<code>bin/rails c</code>在控制台中，<code>SecureRandom.hex</code>生成随机数）。</li>
+<li>优点：可主动删除/失效下发的 Refresh Token，控制能力强（如限制设备数、提供重置功能）。</li>
+<li>缺点：需要维护数据库表。</li>
+</ul></li>
+
+<li><p><strong>另一种 <code>JWT</code>（无状态）</strong>：</p>
+
+<ul>
+<li>用 <code>JWT</code> 格式生成 <code>Refresh Token</code>，<code>payload</code> 可为空对象或仅标注用途（如 <code>{&quot;type&quot;: &quot;refresh&quot;}</code>）。</li>
+<li>优点：无需数据库表，天然无状态，不占用数据库空间。</li>
+<li>缺点：无法主动失效，签发后在有效期内一直有效，无法做设备数控制或重置。</li>
+</ul></li>
+</ol>
+
+<ul>
+<li><strong>推荐方案</strong>：
+
+<ul>
+<li><code>JWT</code> 本身保持无状态（使用太频繁，存数据库浪费空间）；</li>
+<li><code>Refresh Token</code> 采用有状态方案存入数据库，便于主动控制（删除、重置等）。</li>
+</ul></li>
+</ul>
+
+<hr />
+
+<h3 id="简要结论-a-href-catalogue-a">简要结论 <a href="#catalogue"> ⇧ </a></h3>
+
+<ul>
+<li><code>JWT</code> 有标准、服务端不存储</li>
+<li><code>Refresh Token</code> 无标准、是服务端自行设计实现落库（数据库或 Redis），以便校验合法性与进行管控，与 <code>JWT</code> 独立的续期凭证</li>
+<li>核心目的是在 <code>JWT</code> 过期后自动获取新 <code>JWT</code>，避免频繁重新登录用户体验差</li>
+<li><code>Refresh Token</code> 自身过期才需要重新登录</li>
+<li>其设计需关注三点：
+
+<ul>
+<li>有效期比 <code>JWT</code> 长但不宜过长</li>
+<li>通过数据库记录创建时间判断过期</li>
+<li>通过数据库记录数量控制自动续期设备数</li>
+</ul></li>
+<li>服务端只能管控 <code>Refresh Token</code> 的数量，进而间接管控自动续期的设备数量；</li>
+<li>两类 <code>Token</code> 按使用频率分配有效期长度，并可通过重置清空兜底</li>
+<li>推荐 <code>JWT</code> 保持无状态、<code>Refresh Token</code> 采用有状态（存数据库），以兼顾性能与可控性</li>
+</ul>
+
+<hr />
+
+<h3 id="注意事项-a-href-catalogue-a">注意事项 <a href="#catalogue"> ⇧ </a></h3>
+
+<ul>
+<li>不同设备、不同浏览器必须下发不同的 <code>Refresh Token</code>，不能共用。</li>
+<li><code>Refresh Token</code> 表只需记录随机数、所属用户、创建时间；过期状态由创建时间推算，无需单独存过期时间。</li>
+<li><code>Refresh Token</code> 有效期不要超过一个月。</li>
+<li>可预留重置按钮：一键清空该用户所有已下发的 <code>Refresh Token</code>。</li>
+</ul>
+
+<hr />
+
+<h2 id="4-refresh-token-实现-a-href-catalogue-a">4. <code>Refresh Token</code> 实现 <a href="#catalogue"> ⇧ </a></h2>
+
+<blockquote>
+<p>``</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-rb" data-lang="rb"></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-rb" data-lang="rb"></code></pre></td></tr></table>
+</div>
+</div>
+<hr />
+
+<h2 id="5-修复登录bug-a-href-catalogue-a">5. 修复登录bug <a href="#catalogue"> ⇧ </a></h2>
+
+<h3 id="补充会话登录接口文档-a-href-catalogue-a">补充会话登录接口文档 <a href="#catalogue"> ⇧ </a></h3>
+
+<blockquote>
+<p><code>spec/acceptance/sessions_spec.rb</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-rb" data-lang="rb"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-rb" data-lang="rb"><span class="nb">require</span> <span class="s1">&#39;rails_helper&#39;</span>
+<span class="nb">require</span> <span class="s1">&#39;rspec_api_documentation/dsl&#39;</span>
+
+<span class="n">resource</span> <span class="s2">&#34;会话&#34;</span> <span class="k">do</span>
+  <span class="n">post</span> <span class="s2">&#34;/api/v1/session&#34;</span> <span class="k">do</span>
+    <span class="n">parameter</span> <span class="ss">:email</span><span class="p">,</span> <span class="s2">&#34;邮箱&#34;</span><span class="p">,</span> <span class="ss">required</span><span class="p">:</span> <span class="kp">true</span>
+    <span class="n">parameter</span> <span class="ss">:code</span><span class="p">,</span> <span class="s2">&#34;验证码&#34;</span><span class="p">,</span> <span class="ss">required</span><span class="p">:</span> <span class="kp">true</span>
+    <span class="n">response_field</span> <span class="ss">:jwt</span><span class="p">,</span> <span class="s2">&#34;JWT，用于验证用户身份的 token&#34;</span>
+    <span class="n">let</span><span class="p">(</span><span class="ss">:email</span><span class="p">)</span> <span class="p">{</span> <span class="s2">&#34;1@qq.com&#34;</span> <span class="p">}</span>
+    <span class="n">let</span><span class="p">(</span><span class="ss">:code</span><span class="p">)</span> <span class="p">{</span> <span class="s2">&#34;123456&#34;</span> <span class="p">}</span>
+
+    <span class="n">example</span> <span class="s2">&#34;登录&#34;</span> <span class="k">do</span>
+      <span class="no">User</span><span class="o">.</span><span class="n">create</span> <span class="ss">email</span><span class="p">:</span> <span class="n">email</span>
+      <span class="n">do_request</span>
+      <span class="c1"># expect(status).to eq 200</span>
+      <span class="n">expect</span><span class="p">(</span><span class="n">status</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">eq</span> <span class="no">Rack</span><span class="o">::</span><span class="no">Utils</span><span class="o">.</span><span class="n">status_code</span><span class="p">(</span><span class="ss">:ok</span><span class="p">)</span>
+      <span class="n">json</span> <span class="o">=</span> <span class="no">JSON</span><span class="o">.</span><span class="n">parse</span> <span class="n">response_body</span>
+      <span class="n">expect</span><span class="p">(</span><span class="n">json</span><span class="o">[</span><span class="s2">&#34;jwt&#34;</span><span class="o">]</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">be_a</span> <span class="nb">String</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span></code></pre></td></tr></table>
+</div>
+</div>
+<hr />
+
+<h3 id="实现登录直接创建用户-a-href-catalogue-a">实现登录直接创建用户 <a href="#catalogue"> ⇧ </a></h3>
+
+<ul>
+<li>目前直接发送邮箱和验证码是可以登录的，暂无密码登录，无需先创建用户，直接第一次就可以注册并登录了</li>
+<li>无需再判断 <code>user.nil?</code> 后返回 <code>render status: :not_found, json: { errors: &quot;用户不存在&quot; }</code></li>
+<li>直接创建用户 <code>user = User.find_or_create_by email: params[:email]</code></li>
+<li><code>user</code> 必然存在，直接生成 <code>jwt</code>：<code>render status: :ok, json: { jwt: user.generate_jwt }</code></li>
+</ul>
+
+<blockquote>
+<p><code>app/controllers/api/v1/sessions_controller.rb</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-rb" data-lang="rb"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-rb" data-lang="rb"><span class="nb">require</span> <span class="s2">&#34;jwt&#34;</span>
+
+<span class="k">class</span> <span class="nc">Api</span><span class="o">::</span><span class="no">V1</span><span class="o">::</span><span class="no">SessionsController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+  <span class="c1"># 创建会话</span>
+  <span class="c1"># @return [String] jwt</span>
+  <span class="c1"># @return [String] errors</span>
+  <span class="c1"># @return [Integer] status</span>
+  <span class="k">def</span> <span class="nf">create</span>
+    <span class="c1"># 如果是测试环境，则跳过验证码查找</span>
+    <span class="k">if</span> <span class="no">Rails</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">test?</span>
+      <span class="k">return</span> <span class="n">render</span> <span class="ss">status</span><span class="p">:</span> <span class="ss">:unauthorized</span><span class="p">,</span> <span class="ss">json</span><span class="p">:</span> <span class="p">{</span> <span class="ss">errors</span><span class="p">:</span> <span class="s2">&#34;邮箱或验证码错误&#34;</span> <span class="p">}</span> <span class="k">if</span>
+        <span class="n">params</span><span class="o">[</span><span class="ss">:code</span><span class="o">]</span> <span class="o">!=</span> <span class="s2">&#34;123456&#34;</span>
+    <span class="k">else</span>
+      <span class="n">canSignIn</span> <span class="o">=</span> <span class="no">ValidationCode</span><span class="o">.</span><span class="n">exists?</span> <span class="ss">email</span><span class="p">:</span> <span class="n">params</span><span class="o">[</span><span class="ss">:email</span><span class="o">]</span><span class="p">,</span>
+        <span class="ss">code</span><span class="p">:</span> <span class="n">params</span><span class="o">[</span><span class="ss">:code</span><span class="o">]</span><span class="p">,</span> <span class="ss">used_at</span><span class="p">:</span> <span class="kp">nil</span>
+      <span class="k">return</span> <span class="n">render</span> <span class="ss">status</span><span class="p">:</span> <span class="ss">:unauthorized</span><span class="p">,</span> <span class="ss">json</span><span class="p">:</span> <span class="p">{</span> <span class="ss">errors</span><span class="p">:</span> <span class="s2">&#34;邮箱或验证码错误&#34;</span> <span class="p">}</span> <span class="k">unless</span> <span class="n">canSignIn</span>
+    <span class="k">end</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="no">User</span><span class="o">.</span><span class="n">find_or_create_by</span> <span class="ss">email</span><span class="p">:</span> <span class="n">params</span><span class="o">[</span><span class="ss">:email</span><span class="o">]</span>
+    <span class="n">render</span> <span class="ss">status</span><span class="p">:</span> <span class="ss">:ok</span><span class="p">,</span> <span class="ss">json</span><span class="p">:</span> <span class="p">{</span> <span class="ss">jwt</span><span class="p">:</span> <span class="n">user</span><span class="o">.</span><span class="n">generate_jwt</span> <span class="p">}</span>
+  <span class="k">end</span>
+<span class="k">end</span></code></pre></td></tr></table>
+</div>
+</div>
+<hr />
+
+<h3 id="会话登录请求测试用例添加首次登录-a-href-catalogue-a">会话登录请求测试用例添加首次登录 <a href="#catalogue"> ⇧ </a></h3>
+
+<blockquote>
+<p><code>spec/requests/api/v1/sessions_spec.rb</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-rb" data-lang="rb"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-rb" data-lang="rb"><span class="nb">require</span> <span class="s1">&#39;rails_helper&#39;</span>
+
+<span class="no">RSpec</span><span class="o">.</span><span class="n">describe</span> <span class="s2">&#34;Api::V1::Sessions&#34;</span><span class="p">,</span> <span class="ss">type</span><span class="p">:</span> <span class="ss">:request</span> <span class="k">do</span>
+  <span class="n">describe</span> <span class="s2">&#34;登录会话&#34;</span> <span class="k">do</span>
+    <span class="n">it</span> <span class="s2">&#34;可以登录（创建会话）&#34;</span> <span class="k">do</span>
+      <span class="n">user</span> <span class="o">=</span> <span class="no">User</span><span class="o">.</span><span class="n">create</span> <span class="ss">email</span><span class="p">:</span> <span class="s1">&#39;1@163.com&#39;</span>
+      <span class="n">post</span> <span class="s1">&#39;/api/v1/session&#39;</span><span class="p">,</span> <span class="ss">params</span><span class="p">:</span> <span class="p">{</span> <span class="ss">email</span><span class="p">:</span> <span class="n">user</span><span class="o">.</span><span class="n">email</span><span class="p">,</span> <span class="ss">code</span><span class="p">:</span> <span class="s1">&#39;123456&#39;</span> <span class="p">}</span>
+      <span class="n">expect</span><span class="p">(</span><span class="n">response</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">have_http_status</span><span class="p">(</span><span class="ss">:ok</span><span class="p">)</span>
+      <span class="n">json</span> <span class="o">=</span> <span class="no">JSON</span><span class="o">.</span><span class="n">parse</span> <span class="n">response</span><span class="o">.</span><span class="n">body</span>
+      <span class="n">expect</span><span class="p">(</span><span class="n">json</span><span class="o">[</span><span class="s2">&#34;jwt&#34;</span><span class="o">]</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">be_a</span><span class="p">(</span><span class="nb">String</span><span class="p">)</span>
+    <span class="k">end</span>
+    <span class="n">it</span> <span class="s2">&#34;首次登录&#34;</span> <span class="k">do</span>
+      <span class="n">post</span> <span class="s1">&#39;/api/v1/session&#39;</span><span class="p">,</span> <span class="ss">params</span><span class="p">:</span> <span class="p">{</span> <span class="ss">email</span><span class="p">:</span> <span class="s2">&#34;1@qq.com&#34;</span><span class="p">,</span> <span class="ss">code</span><span class="p">:</span> <span class="s1">&#39;123456&#39;</span> <span class="p">}</span>
+      <span class="n">expect</span><span class="p">(</span><span class="n">response</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">have_http_status</span><span class="p">(</span><span class="ss">:ok</span><span class="p">)</span>
+      <span class="n">json</span> <span class="o">=</span> <span class="no">JSON</span><span class="o">.</span><span class="n">parse</span> <span class="n">response</span><span class="o">.</span><span class="n">body</span>
+      <span class="n">expect</span><span class="p">(</span><span class="n">json</span><span class="o">[</span><span class="s2">&#34;jwt&#34;</span><span class="o">]</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">be_a</span><span class="p">(</span><span class="nb">String</span><span class="p">)</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span></code></pre></td></tr></table>
+</div>
+</div>
+<blockquote>
+<p><code>spec/acceptance/sessions_spec.rb</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-ruby" data-lang="ruby"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-ruby" data-lang="ruby"><span class="nb">require</span> <span class="s1">&#39;rails_helper&#39;</span>
+<span class="nb">require</span> <span class="s1">&#39;rspec_api_documentation/dsl&#39;</span>
+
+<span class="n">resource</span> <span class="s2">&#34;会话&#34;</span> <span class="k">do</span>
+  <span class="n">post</span> <span class="s2">&#34;/api/v1/session&#34;</span> <span class="k">do</span>
+    <span class="n">parameter</span> <span class="ss">:email</span><span class="p">,</span> <span class="s2">&#34;邮箱&#34;</span><span class="p">,</span> <span class="ss">required</span><span class="p">:</span> <span class="kp">true</span>
+    <span class="n">parameter</span> <span class="ss">:code</span><span class="p">,</span> <span class="s2">&#34;验证码&#34;</span><span class="p">,</span> <span class="ss">required</span><span class="p">:</span> <span class="kp">true</span>
+    <span class="n">response_field</span> <span class="ss">:jwt</span><span class="p">,</span> <span class="s2">&#34;JWT，用于验证用户身份的 token&#34;</span>
+    <span class="n">let</span><span class="p">(</span><span class="ss">:email</span><span class="p">)</span> <span class="p">{</span> <span class="s2">&#34;1@qq.com&#34;</span> <span class="p">}</span>
+    <span class="n">let</span><span class="p">(</span><span class="ss">:code</span><span class="p">)</span> <span class="p">{</span> <span class="s2">&#34;123456&#34;</span> <span class="p">}</span>
+
+    <span class="n">example</span> <span class="s2">&#34;登录&#34;</span> <span class="k">do</span>
+      <span class="c1"># User.create email: email</span>
+      <span class="n">do_request</span>
+      <span class="c1"># expect(status).to eq 200</span>
+      <span class="n">expect</span><span class="p">(</span><span class="n">status</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">eq</span> <span class="no">Rack</span><span class="o">::</span><span class="no">Utils</span><span class="o">.</span><span class="n">status_code</span><span class="p">(</span><span class="ss">:ok</span><span class="p">)</span>
+      <span class="n">json</span> <span class="o">=</span> <span class="no">JSON</span><span class="o">.</span><span class="n">parse</span> <span class="n">response_body</span>
+      <span class="n">expect</span><span class="p">(</span><span class="n">json</span><span class="o">[</span><span class="s2">&#34;jwt&#34;</span><span class="o">]</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">be_a</span> <span class="nb">String</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span></code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>无需再创建用户 <code>User.create email: email</code></li>
+</ul>
+
+<hr />
+
+<h2 id="6-可能的报错信息-a-href-catalogue-a">6. 可能的报错信息 <a href="#catalogue"> ⇧ </a></h2>
+
+<blockquote>
+<p>密钥相关报错</p>
+</blockquote>
+
+<ul>
+<li>拿到代码后，可能需要重新创建密钥：<code>https://docs.qq.com/doc/DU3ByQXZWbFpQRHND</code> 。</li>
+<li>这一步是可选的，但如果遇到 <code>ActiveSupport::MessageEncryptor::InvalidMessage</code> 报错，那么你就必须重新创建密钥了。</li>
+</ul>
+
+<hr />
+
+<!-- Article End -->
+
+<div style="text-align:center;">&middot;未完待续&middot;</div>
+
+<hr />
+
+<h2 id="参考文章">参考文章</h2>
+
+<ul>
+<li><a href="https://github.com/FrankFang/ZjkeGCQOzdfA">代码</a></li>
+</ul>
+
+<h2 id="相关文章">相关文章</h2>
+
+<ul>
+<li><a href="https://share.google/aimode/5cB3ATkRcG5l4LeXe">ai JWT spec</a></li>
+<li><a href="https://www.jwt.io/">JSON Web Token (JWT) Debugger</a></li>
+<li><a href="https://www.jwt.io/introduction#what-is-json-web-token">Introduction to JSON Web Tokens</a></li>
+<li><a href="https://en.wikipedia.org/wiki/JSON_Web_Token#Standard_fields">JSON Web Token  JSON Web 令牌 Standard fields  标准字段</a></li>
+<li><a href="https://kuku.baidu.com/app?_at_=1795762788021#/workbench/new-task?md5=6d7614b0583087f97db78abe108f861e">JWT Token 过期解决方法：从踩坑到无感刷删新的完整指南</a></li>
+<li><a href="https://juejin.cn/post/7547675589625298953">JWT 双 Token 认证机制：从实现到原理的深度解析</a></li>
+<li><a href="https://juejin.cn/post/7546479364020469812">Next.js 实战 JWT 双 Token 无感刷新</a></li>
+<li><a href="https://juejin.cn/post/7309894481167286323">实现安全的身份认证与授权原理与实战：如何设计安全的访问令牌刷新机制</a></li>
+<li><a href="https://juejin.cn/post/7557936478317690931">JWT 访问令牌与刷新令牌过期时间完全解析- 24 小时vs 7 天的安全密码</a></li>
+</ul>
+
+<hr />
+
+<ul>
+<li>作者： Joel</li>
+<li>文章链接：</li>
+<li><a href="http://xmasuhai.xyz/posts/版权声明链接/">版权声明</a></li>
+<li>非自由转载-非商用-非衍生-保持署名</li>
+</ul>
+
+<hr />
+
+<hr />
+
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Joel Xu</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2026-11-27
+      
+        
+        
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="http://xmasuhai.xyz/tags/project/">Project</a>
+          <a href="http://xmasuhai.xyz/tags/%E5%B1%B1%E7%AB%B9%E8%AE%B0%E8%B4%A6/">山竹记账</a>
+          <a href="http://xmasuhai.xyz/tags/backend/">BackEnd</a>
+          <a href="http://xmasuhai.xyz/tags/rails/">Rails</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/%E5%B1%B1%E7%AB%B9%E8%AE%B0%E8%B4%A6/%E5%B1%B1%E7%AB%B9%E8%AE%B0%E8%B4%A6%E5%90%8E%E7%AB%AF13.%E8%B6%85%E5%BF%AB%E9%80%9F%E5%AE%9E%E7%8E%B0%E5%90%8E%E7%AB%AF%E6%8E%A5%E5%8F%A3/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">【山竹记账后端】13.超快速实现后端接口</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/%E5%B1%B1%E7%AB%B9%E8%AE%B0%E8%B4%A6/%E5%B1%B1%E7%AB%B9%E8%AE%B0%E8%B4%A6%E5%90%8E%E7%AB%AF10.%E5%90%8E%E7%AB%AF%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0-jwt/">
+            <span class="next-text nav-default">【山竹记账后端】10.后端如何实现 JWT</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:xmasuhai@163.com" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="https://github.com/xmasuhai" rel="me noopener" class="iconfont"
+      title="github"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M512 12.672c-282.88 0-512 229.248-512 512 0 226.261333 146.688 418.133333 350.08 485.76 25.6 4.821333 34.986667-11.008 34.986667-24.618667 0-12.16-0.426667-44.373333-0.64-87.04-142.421333 30.890667-172.458667-68.693333-172.458667-68.693333C188.672 770.986667 155.008 755.2 155.008 755.2c-46.378667-31.744 3.584-31.104 3.584-31.104 51.413333 3.584 78.421333 52.736 78.421333 52.736 45.653333 78.293333 119.850667 55.68 149.12 42.581333 4.608-33.109333 17.792-55.68 32.426667-68.48-113.706667-12.8-233.216-56.832-233.216-253.013333 0-55.893333 19.84-101.546667 52.693333-137.386667-5.76-12.928-23.04-64.981333 4.48-135.509333 0 0 42.88-13.738667 140.8 52.48 40.96-11.392 84.48-17.024 128-17.28 43.52 0.256 87.04 5.888 128 17.28 97.28-66.218667 140.16-52.48 140.16-52.48 27.52 70.528 10.24 122.581333 5.12 135.509333 32.64 35.84 52.48 81.493333 52.48 137.386667 0 196.693333-119.68 240-233.6 252.586667 17.92 15.36 34.56 46.762667 34.56 94.72 0 68.522667-0.64 123.562667-0.64 140.202666 0 13.44 8.96 29.44 35.2 24.32C877.44 942.592 1024 750.592 1024 524.672c0-282.752-229.248-512-512-512"></path>
+</svg>
+
+    </a>
+  
+    <a href="https://www.zhihu.com/people/xue-shou-41/posts" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+
+
+<a href="http://xmasuhai.xyz/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane">Jane</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy;
+    
+      2019 -
+    2026
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Joel Xu
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

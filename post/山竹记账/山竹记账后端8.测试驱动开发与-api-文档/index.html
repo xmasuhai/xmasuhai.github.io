@@ -1,0 +1,1769 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>【山竹记账后端】8.测试驱动开发与 API 文档 - Joel in The House</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="Joel Xu" />
+  <meta name="description" content="【山竹记账后端】8.测试驱动开发与 API 文档 大纲链接 § [toc] 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 sequenceDiagram autonumber actor U as 用户 participant B as 浏览器（App） participant S as" />
+
+  <meta name="keywords" content="Hugo, theme, jane" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.59.1" />
+
+
+<link rel="canonical" href="http://xmasuhai.xyz/post/%E5%B1%B1%E7%AB%B9%E8%AE%B0%E8%B4%A6/%E5%B1%B1%E7%AB%B9%E8%AE%B0%E8%B4%A6%E5%90%8E%E7%AB%AF8.%E6%B5%8B%E8%AF%95%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91%E4%B8%8E-api-%E6%96%87%E6%A1%A3/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="【山竹记账后端】8.测试驱动开发与 API 文档" />
+<meta property="og:description" content="【山竹记账后端】8.测试驱动开发与 API 文档 大纲链接 § [toc] 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 sequenceDiagram autonumber actor U as 用户 participant B as 浏览器（App） participant S as" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://xmasuhai.xyz/post/%E5%B1%B1%E7%AB%B9%E8%AE%B0%E8%B4%A6/%E5%B1%B1%E7%AB%B9%E8%AE%B0%E8%B4%A6%E5%90%8E%E7%AB%AF8.%E6%B5%8B%E8%AF%95%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91%E4%B8%8E-api-%E6%96%87%E6%A1%A3/" />
+<meta property="article:published_time" content="2026-11-22T16:40:06+08:00" />
+<meta property="article:modified_time" content="2026-11-22T16:40:06+08:00" />
+<meta itemprop="name" content="【山竹记账后端】8.测试驱动开发与 API 文档">
+<meta itemprop="description" content="【山竹记账后端】8.测试驱动开发与 API 文档 大纲链接 § [toc] 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 sequenceDiagram autonumber actor U as 用户 participant B as 浏览器（App） participant S as">
+
+
+<meta itemprop="datePublished" content="2026-11-22T16:40:06&#43;08:00" />
+<meta itemprop="dateModified" content="2026-11-22T16:40:06&#43;08:00" />
+<meta itemprop="wordCount" content="3243">
+
+
+
+<meta itemprop="keywords" content="Project,山竹记账,BackEnd,Rails," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="【山竹记账后端】8.测试驱动开发与 API 文档"/>
+<meta name="twitter:description" content="【山竹记账后端】8.测试驱动开发与 API 文档 大纲链接 § [toc] 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 sequenceDiagram autonumber actor U as 用户 participant B as 浏览器（App） participant S as"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Joel in The House</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/post/">文档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/categories/">目录</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/about/">关于我</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Joel in The House
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/post/">文档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/categories/">目录</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="http://xmasuhai.xyz/about/">关于我</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">【山竹记账后端】8.测试驱动开发与 API 文档</h1>
+      
+      <div class="post-meta">
+        <time datetime="2026-11-22" class="post-time">
+          2026-11-22
+        </time>
+        <div class="post-category">
+            <a href="http://xmasuhai.xyz/categories/%E5%B1%B1%E7%AB%B9%E8%AE%B0%E8%B4%A6/"> 山竹记账 </a>
+            
+          </div>
+        <span class="more-meta"> 约 3243 字 </span>
+          <span class="more-meta"> 预计阅读 7 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#山竹记账后端-8-测试驱动开发与-api-文档">【山竹记账后端】8.测试驱动开发与 API 文档</a>
+<ul>
+<li><a href="#1-测试驱动开发就是先测试再编码-tdd-a-href-catalogue-a">1. 测试驱动开发就是先测试再编码 <code>TDD</code> <a href="#catalogue"> ⇧ </a></a>
+<ul>
+<li><a href="#安装-rspec-api-documentation">安装 <code>rspec_api_documentation</code></a></li>
+<li><a href="#第一个api用例文档-a-href-catalogue-a">第一个api用例文档 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#使用-http-server-临时查看生成的api文档-a-href-catalogue-a">使用 <code>http-server</code> 临时查看生成的api文档 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#添加测试用例-validationcode-a-href-catalogue-a">添加测试用例 <code>validationCode</code> <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#实现代码-validation-codes-controller-rb-a-href-catalogue-a">实现代码 <code>validation_codes_controller.rb</code> <a href="#catalogue"> ⇧ </a></a></li>
+</ul></li>
+<li><a href="#2-测试驱动开发就是先测试再编码-a-href-catalogue-a">2. 测试驱动开发就是先测试再编码 <a href="#catalogue"> ⇧ </a></a>
+<ul>
+<li><a href="#有个逻辑问题-a-href-catalogue-a">有个逻辑问题 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#测试用例中发送email-添加中文说明-a-href-catalogue-a">测试用例中发送email，添加中文说明 <a href="#catalogue"> ⇧ </a></a></li>
+</ul></li>
+<li><a href="#3-解决请求中的json问题-a-href-catalogue-a">3. 解决请求中的JSON问题 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#4-解决响应中的json问题-a-href-catalogue-a">4. 解决响应中的JSON问题 <a href="#catalogue"> ⇧ </a></a>
+<ul>
+<li><a href="#回顾-a-href-catalogue-a">回顾 <a href="#catalogue"> ⇧ </a></a></li>
+</ul></li>
+<li><a href="#6-优化每次都要写请求-header-a-href-catalogue-a">6. 优化每次都要写请求 <code>header</code> <a href="#catalogue"> ⇧ </a></a>
+<ul>
+<li><a href="#避免把响应-body-中的验证码直接展现给用户-a-href-catalogue-a">避免把响应<code>Body</code>中的验证码直接展现给用户 <a href="#catalogue"> ⇧ </a></a></li>
+</ul></li>
+<li><a href="#7-可能的报错信息-a-href-catalogue-a">7. 可能的报错信息 <a href="#catalogue"> ⇧ </a></a>
+<ul>
+<li><a href="#密钥相关报错-a-href-catalogue-a">密钥相关报错 <a href="#catalogue"> ⇧ </a></a></li>
+<li><a href="#rspec-api-documentation-目录不存在-a-href-catalogue-a"><code>rspec_api_documentation</code> 目录不存在 <a href="#catalogue"> ⇧ </a></a></li>
+</ul></li>
+<li><a href="#参考文章">参考文章</a></li>
+<li><a href="#相关文章">相关文章</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+
+<h1 id="山竹记账后端-8-测试驱动开发与-api-文档">【山竹记账后端】8.测试驱动开发与 API 文档</h1>
+
+<hr />
+
+<blockquote>
+<p>大纲链接 <a id="catalogue" href="#catalogue" > § </a></p>
+</blockquote>
+
+<p>[toc]</p>
+
+<hr />
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-mermaid" data-lang="mermaid"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-mermaid" data-lang="mermaid">sequenceDiagram
+    autonumber
+    actor U as 用户
+    participant B as 浏览器（App）
+    participant S as 服务器（Rails）
+    participant D as 数据库（PostgresSql）
+    participant M as 用户邮箱
+
+    U-&gt;&gt;B: 输入邮箱 / 点击发送验证码
+    B-&gt;&gt;S: 请求创建验证码
+    S-&gt;&gt;D: 验证成功 / 请求数据库生成验证码
+    D--&gt;&gt;S: return email / ValidationCode
+    S--&gt;&gt;M: 发送证码到用户邮箱
+
+    U--&gt;&gt;M: 打开邮箱查看
+    M--&gt;&gt;U: 返回（邮箱中收到验证码）
+    U-&gt;&gt;B: 输入验证码 / 点击登录
+
+    B-&gt;&gt;S: 请求登录
+    S-&gt;&gt;D: 验证 email / ValidationCode
+    D--&gt;&gt;S: return
+    S--&gt;&gt;B: 通过或失败
+    B--&gt;&gt;U: 登录成功或失败</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>输入验证码相关-时序图</li>
+</ul>
+
+<h2 id="1-测试驱动开发就是先测试再编码-tdd-a-href-catalogue-a">1. 测试驱动开发就是先测试再编码 <code>TDD</code> <a href="#catalogue"> ⇧ </a></h2>
+
+<h3 id="安装-rspec-api-documentation">安装 <code>rspec_api_documentation</code></h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-zsh" data-lang="zsh"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-zsh" data-lang="zsh">gem <span class="s1">&#39;rspec_api_documentation&#39;</span></code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li><p>将 <code>gem 'rspec_api_documentation'</code> 复制到 <code>GemFile</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-rb" data-lang="rb"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-rb" data-lang="rb"><span class="n">source</span> <span class="s2">&#34;https://mirrors.ustc.edu.cn/rubygems/&#34;</span>
+<span class="c1"># source &#34;https://mirrors.tuna.tsinghua.edu.cn/rubygems/&#34;</span>
+<span class="c1"># source &#34;https://rubygems.org&#34;</span>
+
+<span class="c1"># Bundle edge Rails instead: gem &#34;rails&#34;, github: &#34;rails/rails&#34;, branch: &#34;main&#34;</span>
+<span class="n">gem</span> <span class="s2">&#34;rails&#34;</span><span class="p">,</span> <span class="s2">&#34;~&gt; 7.2.3&#34;</span><span class="p">,</span> <span class="s2">&#34;&gt;= 7.2.3.2&#34;</span>
+<span class="c1"># Use postgresql as the database for Active Record</span>
+<span class="n">gem</span> <span class="s2">&#34;pg&#34;</span><span class="p">,</span> <span class="s2">&#34;~&gt; 1.1&#34;</span>
+<span class="c1"># Use the Puma web server [https://github.com/puma/puma]</span>
+<span class="n">gem</span> <span class="s2">&#34;puma&#34;</span><span class="p">,</span> <span class="s2">&#34;&gt;= 5.0&#34;</span>
+
+<span class="n">gem</span> <span class="s2">&#34;tzinfo-data&#34;</span><span class="p">,</span> <span class="ss">platforms</span><span class="p">:</span> <span class="o">%</span><span class="n">i</span><span class="o">[</span> <span class="n">mswin</span> <span class="n">mswin64</span> <span class="n">mingw</span> <span class="n">x64_mingw</span> <span class="n">jruby</span> <span class="o">]</span>
+<span class="n">gem</span> <span class="s2">&#34;bootsnap&#34;</span><span class="p">,</span> <span class="nb">require</span><span class="p">:</span> <span class="kp">false</span>
+
+<span class="n">gem</span> <span class="s2">&#34;kaminari&#34;</span>
+<span class="n">gem</span> <span class="s2">&#34;rspec_api_documentation&#34;</span>
+
+<span class="n">group</span> <span class="ss">:development</span><span class="p">,</span> <span class="ss">:test</span> <span class="k">do</span>
+<span class="n">gem</span> <span class="s2">&#34;rspec-rails&#34;</span><span class="p">,</span> <span class="s2">&#34;~&gt; 8.0.0&#34;</span>
+<span class="n">gem</span> <span class="s2">&#34;debug&#34;</span><span class="p">,</span> <span class="ss">platforms</span><span class="p">:</span> <span class="o">%</span><span class="n">i</span><span class="o">[</span> <span class="n">mri</span> <span class="n">mswin</span> <span class="n">mswin64</span> <span class="n">mingw</span> <span class="n">x64_mingw</span> <span class="o">]</span><span class="p">,</span> <span class="nb">require</span><span class="p">:</span> <span class="s2">&#34;debug/prelude&#34;</span>
+<span class="n">gem</span> <span class="s2">&#34;brakeman&#34;</span><span class="p">,</span> <span class="nb">require</span><span class="p">:</span> <span class="kp">false</span>
+<span class="n">gem</span> <span class="s2">&#34;rubocop-rails-omakase&#34;</span><span class="p">,</span> <span class="nb">require</span><span class="p">:</span> <span class="kp">false</span>
+<span class="k">end</span></code></pre></td></tr></table>
+</div>
+</div></li>
+
+<li><p>运行 <code>bundle install</code></p></li>
+
+<li><p>可忽略以下警告</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-zsh" data-lang="zsh"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-zsh" data-lang="zsh">Don<span class="err">&#39;</span>t run Bundler as root. Bundler can ask <span class="k">for</span> sudo <span class="k">if</span> it is needed, and installing your bundle as root will <span class="nb">break</span> this application <span class="k">for</span> all non-root users on this
+machine.
+<span class="o">[</span>DEPRECATED<span class="o">]</span> Your Gemfile contains multiple primary sources. Using <span class="sb">`</span><span class="nb">source</span><span class="sb">`</span> more than once without a block is a security risk, and may result in installing unexpected gems. To resolve this warning, use a block to indicate which gems should come from the secondary source.
+...</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+
+<h3 id="第一个api用例文档-a-href-catalogue-a">第一个api用例文档 <a href="#catalogue"> ⇧ </a></h3>
+
+<blockquote>
+<p>参考文档示例创建两个目录</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-zsh" data-lang="zsh"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-zsh" data-lang="zsh">mkdir spec/acceptance
+<span class="c1"># vim spec/acceptance/orders_spec.rb</span>
+code spec/acceptance/orders_spec.rb</code></pre></td></tr></table>
+</div>
+</div>
+<blockquote>
+<p><code>spec/acceptance/orders_spec.rb</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-rb" data-lang="rb"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-rb" data-lang="rb"><span class="nb">require</span> <span class="s1">&#39;rails_helper&#39;</span>
+<span class="nb">require</span> <span class="s1">&#39;rspec_api_documentation/dsl&#39;</span>
+
+<span class="n">resource</span> <span class="s2">&#34;Orders&#34;</span> <span class="k">do</span>
+  <span class="n">get</span> <span class="s2">&#34;/orders&#34;</span> <span class="k">do</span>
+    <span class="n">example</span> <span class="s2">&#34;Listing orders&#34;</span> <span class="k">do</span>
+      <span class="n">do_request</span>
+      <span class="n">expect</span><span class="p">(</span><span class="n">status</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">eq</span> <span class="mi">200</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span></code></pre></td></tr></table>
+</div>
+</div>
+<blockquote>
+<p>运行创建文档命令</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-zsh" data-lang="zsh"><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-zsh" data-lang="zsh">rake docs:generate
+open doc/api/index.html</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>运行文档生成命令加前缀 <code>bin/rake docs:generate</code></li>
+</ul>
+
+<blockquote>
+<p>发现有报错</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-zsh" data-lang="zsh"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-zsh" data-lang="zsh">An error occurred <span class="k">while</span> loading ./spec/acceptance/orders_spec.rb.
+Failure/Error: ActiveRecord::Migration.maintain_test_schema!
+
+ActiveRecord::DatabaseConnectionError:
+  There is an issue connecting to your database with your username/password, username: mangosteen.
+
+  Please check your database configuration to ensure the username/password are valid.
+...
+<span class="c1"># ------------------</span>
+<span class="c1"># --- Caused by: ---</span>
+<span class="c1"># PG::ConnectionBad:</span>
+<span class="c1">#   could not translate host name &#34;db-for-mangosteen&#34; to address: Name or service not known</span>
+<span class="c1">#   /usr/local/rvm/gems/ruby-3.1.2/gems/pg-1.6.3-x86_64-linux/lib/pg/connection.rb:944:in `connect_start&#39;</span>
+No examples found.
+
+Finished in <span class="m">0</span>.00594 seconds <span class="o">(</span>files took <span class="m">5</span>.8 seconds to load<span class="o">)</span>
+<span class="m">0</span> examples, <span class="m">0</span> failures, <span class="m">1</span> error occurred outside of examples</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>是由于未连接数据库造成的</li>
+<li>在宿主机运行命令 <code>docker start db-for-mangosteen</code></li>
+</ul>
+
+<blockquote>
+<p>如果启动失败，比如升级客户端后，删除了之前创建的 <code>Network</code>，可以运行以下命令重新创建数据库</p>
+</blockquote>
+
+<ul>
+<li><p>在容器外部宿主机系统运行一行命令</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-zsh" data-lang="zsh"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-zsh" data-lang="zsh">docker run -d --name db-for-mangosteen -e <span class="nv">POSTGRES_USER</span><span class="o">=</span>mangosteen -e <span class="nv">POSTGRES_PASSWORD</span><span class="o">=</span><span class="m">123456</span> -e <span class="nv">POSTGRES_DB</span><span class="o">=</span>mangosteen_dev -e <span class="nv">PGDATA</span><span class="o">=</span>/var/lib/postgresql/data/pgdata -v mangosteen-data:/var/lib/postgresql/data -p <span class="m">5432</span>:5432 --network<span class="o">=</span>network1 postgres:14</code></pre></td></tr></table>
+</div>
+</div></li>
+
+<li><p>注意其中确认 <code>POSTGRES_DB=mangosteen_dev</code></p></li>
+
+<li><p>如果已存在，可以先删掉旧的，运行 <code>docker rm -f db-for-mangosteen</code>，再运行创建命令</p></li>
+
+<li><p>运行命令查看 <code>docker ps</code></p></li>
+
+<li><p>成功运行数据库后，再运行文档生成命令 <code>bin/rake docs:generate</code></p></li>
+</ul>
+
+<blockquote>
+<p>再次失败，报错如下：</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-zsh" data-lang="zsh"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-zsh" data-lang="zsh">Generating API Docs
+  Orders
+  GET /orders
+    ! Listing orders <span class="o">(</span>FAILED<span class="o">)</span>
+
+Failures:
+
+  <span class="m">1</span><span class="o">)</span> Orders GET /orders Listing orders
+     Failure/Error: do_request
+
+     NoMethodError:
+       undefined method <span class="sb">`</span>rewind<span class="s1">&#39; for nil:NilClass
+</span><span class="s1">
+</span><span class="s1">             input.rewind
+</span><span class="s1">                  ^^^^^^^
+</span><span class="s1">     # /usr/local/rvm/gems/ruby-3.1.2/gems/rspec_api_documentation-6.1.0/lib/rspec_api_documentation/client_base.rb:48:in `read_request_body&#39;</span>
+     <span class="c1"># /usr/local/rvm/gems/ruby-3.1.2/gems/rspec_api_documentation-6.1.0/lib/rspec_api_documentation/client_base.rb:55:in `document_example&#39;</span>
+     <span class="c1"># /usr/local/rvm/gems/ruby-3.1.2/gems/rspec_api_documentation-6.1.0/lib/rspec_api_documentation/client_base.rb:43:in `process&#39;</span>
+     <span class="c1"># /usr/local/rvm/gems/ruby-3.1.2/gems/rspec_api_documentation-6.1.0/lib/rspec_api_documentation/client_base.rb:12:in `get&#39;</span>
+     <span class="c1"># ./spec/acceptance/orders_spec.rb:7:in `block (3 levels) in &lt;top (required)&gt;&#39;</span>
+
+Finished in <span class="m">0</span>.13102 seconds <span class="o">(</span>files took <span class="m">0</span>.63755 seconds to load<span class="o">)</span>
+<span class="m">1</span> example, <span class="m">1</span> failure
+
+Failed examples:
+
+rspec ./spec/acceptance/orders_spec.rb:6 <span class="c1"># Orders GET /orders Listing orders</span></code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>这是由于生成的初始接口代码目前未实现 <code>spec/acceptance/orders_spec.rb</code> 其中的路由不存在</li>
+</ul>
+
+<blockquote>
+<p>重命名测试文件 <code>spec/acceptance/items_spec.rb</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-rb" data-lang="rb"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-rb" data-lang="rb"><span class="nb">require</span> <span class="s1">&#39;rails_helper&#39;</span>
+<span class="nb">require</span> <span class="s1">&#39;rspec_api_documentation/dsl&#39;</span>
+
+<span class="n">resource</span> <span class="s2">&#34;Items&#34;</span> <span class="k">do</span>
+  <span class="n">get</span> <span class="s2">&#34;/api/v1/items&#34;</span> <span class="k">do</span>
+    <span class="n">example</span> <span class="s2">&#34;Listing items&#34;</span> <span class="k">do</span>
+      <span class="n">do_request</span>
+      <span class="n">expect</span><span class="p">(</span><span class="n">status</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">eq</span> <span class="mi">200</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span></code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>再次运行命令 <code>bin/rake docs:generate</code></li>
+</ul>
+
+<blockquote>
+<p>遇到依赖版本 <code>rspec_api_documentation</code>、<code>rack</code>、<code>rack-test</code>不匹配bug问题</p>
+</blockquote>
+
+<ul>
+<li><p>引入补丁 <code>spec/support/rspec_api_documentation.rb</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-rb" data-lang="rb"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-rb" data-lang="rb"><span class="c1"># spec/support/rspec_api_documentation.rb</span>
+<span class="c1"># 修复 rspec_api_documentation 与 Rack 3 / rack-test 2.2 的兼容问题。</span>
+<span class="c1">#</span>
+<span class="c1"># 现象：Rack 3 / rack-test 2.2 在 GET 等无请求体的请求中，不会向 env</span>
+<span class="c1"># 中写入 `rack.input`，导致 `last_request.env[&#34;rack.input&#34;]` 为 nil。</span>
+<span class="c1"># rspec_api_documentation 6.1.0 的 ClientBase#read_request_body 会直接对其</span>
+<span class="c1"># 调用 `rewind`，抛出：</span>
+<span class="c1">#   NoMethodError: undefined method `rewind&#39; for nil:NilClass</span>
+<span class="c1">#   input.rewind</span>
+<span class="c1">#</span>
+<span class="c1"># 处理：当 rack.input 为 nil 时返回空字符串，避免对 nil 调用 rewind；</span>
+<span class="c1"># 非 nil 时保持原有 rewind + read 行为。</span>
+<span class="k">module</span> <span class="nn">RspecApiDocumentation</span>
+<span class="k">class</span> <span class="nc">ClientBase</span>
+<span class="k">def</span> <span class="nf">read_request_body</span>
+  <span class="n">input</span> <span class="o">=</span> <span class="n">last_request</span><span class="o">.</span><span class="n">env</span><span class="o">[</span><span class="s2">&#34;rack.input&#34;</span><span class="o">]</span>
+  <span class="k">return</span> <span class="s2">&#34;&#34;</span> <span class="k">if</span> <span class="n">input</span><span class="o">.</span><span class="n">nil?</span>
+
+  <span class="n">input</span><span class="o">.</span><span class="n">rewind</span>
+  <span class="n">input</span><span class="o">.</span><span class="n">read</span>
+<span class="k">end</span>
+<span class="k">end</span>
+<span class="k">end</span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+
+<blockquote>
+<p>引入 <code>spec/acceptance/items_spec.rb</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-rb" data-lang="rb"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-rb" data-lang="rb"><span class="nb">require</span> <span class="s1">&#39;rails_helper&#39;</span>
+<span class="nb">require</span> <span class="s1">&#39;rspec_api_documentation/dsl&#39;</span>
+<span class="n">require_relative</span> <span class="s1">&#39;../support/rspec_api_documentation&#39;</span>
+
+<span class="n">resource</span> <span class="s2">&#34;Items&#34;</span> <span class="k">do</span>
+  <span class="n">get</span> <span class="s2">&#34;/api/v1/items&#34;</span> <span class="k">do</span>
+    <span class="n">example</span> <span class="s2">&#34;Listing items&#34;</span> <span class="k">do</span>
+      <span class="n">do_request</span>
+
+      <span class="n">expect</span><span class="p">(</span><span class="n">status</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">eq</span> <span class="mi">200</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span></code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>再次运行命令 <code>bin/rake docs:generate</code> 成功通过测试</li>
+</ul>
+
+<hr />
+
+<h3 id="使用-http-server-临时查看生成的api文档-a-href-catalogue-a">使用 <code>http-server</code> 临时查看生成的api文档 <a href="#catalogue"> ⇧ </a></h3>
+
+<ul>
+<li>目前自动已生成网页文档：<code>doc/api/index.html</code>、<code>doc/api/items/listing_items.html</code></li>
+
+<li><p>运行 <code>pnpx http-server ./doc/api/</code> 即可访问api文档网站 <code>http://127.0.0.1:8080/index.html</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-zsh" data-lang="zsh"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-zsh" data-lang="zsh"><span class="c1"># 或者运行以下命令</span>
+<span class="nb">cd</span> ./doc/api
+npx http-server .</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+
+<hr />
+
+<h3 id="添加测试用例-validationcode-a-href-catalogue-a">添加测试用例 <code>validationCode</code> <a href="#catalogue"> ⇧ </a></h3>
+
+<ul>
+<li><p>创建 <code>touch ./spec/acceptance/validation_codes_spec.rb</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-rb" data-lang="rb"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-rb" data-lang="rb"><span class="nb">require</span> <span class="s1">&#39;rails_helper&#39;</span>
+<span class="nb">require</span> <span class="s1">&#39;rspec_api_documentation/dsl&#39;</span>
+<span class="n">require_relative</span> <span class="s1">&#39;../support/rspec_api_documentation&#39;</span>
+
+<span class="n">resource</span> <span class="s2">&#34;验证码api&#34;</span> <span class="k">do</span>
+<span class="n">post</span> <span class="s2">&#34;/api/v1/validation_codes&#34;</span> <span class="k">do</span>
+<span class="n">example</span> <span class="s2">&#34;请求发送验证码&#34;</span> <span class="k">do</span>
+  <span class="n">do_request</span>
+
+  <span class="n">expect</span><span class="p">(</span><span class="n">status</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">eq</span> <span class="mi">422</span>
+<span class="k">end</span>
+<span class="k">end</span>
+<span class="k">end</span></code></pre></td></tr></table>
+</div>
+</div></li>
+
+<li><p>首次期待状态码为 <code>422</code>，因为没有传 <code>email</code> 字段</p></li>
+
+<li><p>运行 <code>bin/rake docs:generate</code> 如果测试通过，就会自动生成文档；如果测试失败，就需要去写代码处理这个问题</p></li>
+
+<li><p>目前结果如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-zsh" data-lang="zsh"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-zsh" data-lang="zsh">Generating API Docs
+Items
+GET /api/v1/items
+* Listing items
+验证码api
+POST /api/v1/validation_codes
+! 请求发送验证码 <span class="o">(</span>FAILED<span class="o">)</span>
+
+Failures:
+
+<span class="m">1</span><span class="o">)</span> 验证码api POST /api/v1/validation_codes 请求发送验证码
+ Failure/Error: expect<span class="o">(</span>status<span class="o">)</span>.to eq <span class="m">422</span>
+
+   expected: <span class="m">422</span>
+        got: <span class="m">200</span>
+
+   <span class="o">(</span>compared <span class="nv">using</span> <span class="o">==)</span>
+ <span class="c1"># ./spec/acceptance/validation_codes_spec.rb:10:in `block (3 levels) in &lt;main&gt;&#39;</span>
+
+Finished in <span class="m">0</span>.11129 seconds <span class="o">(</span>files took <span class="m">0</span>.6342 seconds to load<span class="o">)</span>
+<span class="m">2</span> examples, <span class="m">1</span> failure
+
+Failed examples:
+
+rspec ./spec/acceptance/validation_codes_spec.rb:7 <span class="c1"># 验证码api POST /api/v1/validation_codes 请求发送验证码</span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+
+<p><img src="https://share.note.youdao.com/yws/api/personal/file/WEB7d38243f57e094975939b66a72768307?method=download&amp;shareKey=88a234dc99fbe1e0055d74310b4baafe" alt="请求发送验证码-测试失败" /></p>
+
+<hr />
+
+<h3 id="实现代码-validation-codes-controller-rb-a-href-catalogue-a">实现代码 <code>validation_codes_controller.rb</code> <a href="#catalogue"> ⇧ </a></h3>
+
+<blockquote>
+<p><code>app/models/validation_code.rb</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-rb" data-lang="rb"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-rb" data-lang="rb"><span class="k">class</span> <span class="nc">ValidationCode</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
+  <span class="c1"># email必填</span>
+  <span class="n">validates</span> <span class="ss">:email</span><span class="p">,</span> <span class="ss">presence</span><span class="p">:</span> <span class="kp">true</span>
+<span class="k">end</span></code></pre></td></tr></table>
+</div>
+</div>
+<blockquote>
+<p><code>app/controllers/api/v1/validation_codes_controller.rb</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-rb" data-lang="rb"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-rb" data-lang="rb"><span class="k">class</span> <span class="nc">Api</span><span class="o">::</span><span class="no">V1</span><span class="o">::</span><span class="no">ValidationCodesController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+  <span class="k">def</span> <span class="nf">create</span>
+    <span class="n">code</span> <span class="o">=</span> <span class="no">SecureRandom</span><span class="o">.</span><span class="n">random_number</span><span class="o">.</span><span class="n">to_s</span><span class="o">[</span><span class="mi">2</span><span class="o">..</span><span class="mi">7</span><span class="o">]</span>
+    <span class="n">validation_code</span> <span class="o">=</span> <span class="no">ValidationCode</span><span class="o">.</span><span class="n">new</span> <span class="ss">email</span><span class="p">:</span> <span class="n">params</span><span class="o">[</span><span class="ss">:email</span><span class="o">]</span><span class="p">,</span>
+      <span class="ss">kind</span><span class="p">:</span> <span class="s2">&#34;sign_in&#34;</span><span class="p">,</span> <span class="ss">code</span><span class="p">:</span> <span class="n">code</span>
+    <span class="k">if</span> <span class="n">validation_code</span><span class="o">.</span><span class="n">save</span>
+      <span class="n">head</span> <span class="mi">200</span>
+    <span class="k">else</span>
+      <span class="n">render</span> <span class="ss">json</span><span class="p">:</span> <span class="p">{</span> <span class="ss">errors</span><span class="p">:</span> <span class="n">validation_code</span><span class="o">.</span><span class="n">errors</span> <span class="p">},</span> <span class="ss">status</span><span class="p">:</span> <span class="mi">422</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span></code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>此时再次运行测试代码 <code>bin/rake docs:generate</code>，测试通过</li>
+<li>代码只要满足测试用例，就可以生成api文档给前端</li>
+<li>查看生成文档 <code>pnpx http-server ./doc/api/</code></li>
+<li>之后会实现脚本自动部署文档</li>
+<li><code>Body</code> 不显示 <code>json</code> 而是 <code>[binary data]</code> 之后处理</li>
+</ul>
+
+<p><img src="https://share.note.youdao.com/yws/api/personal/file/WEB7c939a7b826ea6d9f40e0ba6b6d40177?method=download&amp;shareKey=103a6e00f4840dabbb4c4aa70b04d152" alt="请求发送验证码-测试通过" /></p>
+
+<blockquote>
+<p><code>rails</code> 约定大于配置</p>
+</blockquote>
+
+<hr />
+
+<h2 id="2-测试驱动开发就是先测试再编码-a-href-catalogue-a">2. 测试驱动开发就是先测试再编码 <a href="#catalogue"> ⇧ </a></h2>
+
+<ul>
+<li>测试驱动开发
+
+<ul>
+<li><code>Rspec</code></li>
+<li>生成 <code>Api</code> 文档</li>
+</ul></li>
+</ul>
+
+<h3 id="有个逻辑问题-a-href-catalogue-a">有个逻辑问题 <a href="#catalogue"> ⇧ </a></h3>
+
+<ul>
+<li>api文档不应该展示错误，只需要显示正确请求的文档</li>
+<li><code>422 Unprocessable Content</code> 是不必要的</li>
+<li>目录名称 <code>acceptance</code> 也说明了这一点，只放后端接受前端发的请求</li>
+<li>如果不接受，最好放到其他目录测试，比如 <code>spec/requests</code> 中</li>
+</ul>
+
+<hr />
+
+<h3 id="测试用例中发送email-添加中文说明-a-href-catalogue-a">测试用例中发送email，添加中文说明 <a href="#catalogue"> ⇧ </a></h3>
+
+<blockquote>
+<p><code>spec/acceptance/validation_codes_spec.rb</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-rb" data-lang="rb"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-rb" data-lang="rb"><span class="nb">require</span> <span class="s1">&#39;rails_helper&#39;</span>
+<span class="nb">require</span> <span class="s1">&#39;rspec_api_documentation/dsl&#39;</span>
+<span class="n">require_relative</span> <span class="s1">&#39;../support/rspec_api_documentation&#39;</span>
+
+<span class="n">resource</span> <span class="s2">&#34;验证码api&#34;</span> <span class="k">do</span>
+  <span class="n">post</span> <span class="s2">&#34;/api/v1/validation_codes&#34;</span> <span class="k">do</span>
+    <span class="n">parameter</span> <span class="ss">:email</span><span class="p">,</span> <span class="ss">type</span><span class="p">:</span> <span class="ss">:string</span>
+
+    <span class="n">let</span><span class="p">(</span><span class="ss">:email</span><span class="p">)</span> <span class="p">{</span> <span class="s1">&#39;1@qq.com&#39;</span> <span class="p">}</span>
+
+    <span class="n">example</span> <span class="s2">&#34;请求发送验证码&#34;</span> <span class="k">do</span>
+      <span class="n">do_request</span>
+
+      <span class="n">expect</span><span class="p">(</span><span class="n">status</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">eq</span> <span class="mi">200</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span></code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>可以在用例中添加参数的详细描述</li>
+<li>真实发送成功需要修改返回状态码</li>
+<li>修改类测试用例代码，需要重新 <code>bin/rake docs:generate</code></li>
+<li>查看文档 <code>pnpx http-server ./doc/api/</code> <code>http://127.0.0.1:8080</code>
+
+<ul>
+<li><code>Content-Type: application/x-www-form-urlencoded</code> 稍后修改为 <code>json</code> 配置</li>
+</ul></li>
+<li>文档
+
+<ul>
+<li><code>parameter :email, type: :string</code> 对参数<code>email</code>的文字描述，生成一个表格</li>
+<li><code>let(:email) { '1@qq.com' }</code> 对<code>email</code>的赋值</li>
+<li><code>do_request</code> 自动把参数 <code>email</code> 带上，自动展示 body 内容</li>
+</ul></li>
+</ul>
+
+<blockquote>
+<p>添加<code>body</code> 修改 <code>app/controllers/api/v1/validation_codes_controller.rb</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-rb" data-lang="rb"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-rb" data-lang="rb"><span class="k">class</span> <span class="nc">Api</span><span class="o">::</span><span class="no">V1</span><span class="o">::</span><span class="no">ValidationCodesController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+  <span class="k">def</span> <span class="nf">create</span>
+    <span class="n">code</span> <span class="o">=</span> <span class="no">SecureRandom</span><span class="o">.</span><span class="n">random_number</span><span class="o">.</span><span class="n">to_s</span><span class="o">[</span><span class="mi">2</span><span class="o">..</span><span class="mi">7</span><span class="o">]</span>
+    <span class="n">validation_code</span> <span class="o">=</span> <span class="no">ValidationCode</span><span class="o">.</span><span class="n">new</span> <span class="ss">email</span><span class="p">:</span> <span class="n">params</span><span class="o">[</span><span class="ss">:email</span><span class="o">]</span><span class="p">,</span> <span class="ss">kind</span><span class="p">:</span> <span class="s2">&#34;sign_in&#34;</span><span class="p">,</span> <span class="ss">code</span><span class="p">:</span> <span class="n">code</span>
+    <span class="k">if</span> <span class="n">validation_code</span><span class="o">.</span><span class="n">save</span>
+      <span class="n">render</span> <span class="ss">json</span><span class="p">:</span> <span class="p">{</span> <span class="ss">code</span><span class="p">:</span> <span class="n">code</span> <span class="p">},</span> <span class="ss">status</span><span class="p">:</span> <span class="mi">200</span>
+    <span class="k">else</span>
+      <span class="n">render</span> <span class="ss">json</span><span class="p">:</span> <span class="p">{</span> <span class="ss">errors</span><span class="p">:</span> <span class="n">validation_code</span><span class="o">.</span><span class="n">errors</span> <span class="p">},</span> <span class="ss">status</span><span class="p">:</span> <span class="mi">422</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span></code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>重新 <code>bin/rake docs:generate</code></li>
+<li>查看文档 <code>pnpx http-server ./doc/api/</code> <code>http://127.0.0.1:8080</code>
+
+<ul>
+<li>后续修改 <code>Body</code> 显示错误 <code>[binary data]</code> 的问题</li>
+</ul></li>
+</ul>
+
+<blockquote>
+<p>参考</p>
+</blockquote>
+
+<ul>
+<li><a href="https://github.com/zipmark/rspec_api_documentation#example-of-spec-file">rspec_api_documentation Example of spec file</a></li>
+</ul>
+
+<hr />
+
+<h2 id="3-解决请求中的json问题-a-href-catalogue-a">3. 解决请求中的JSON问题 <a href="#catalogue"> ⇧ </a></h2>
+
+<blockquote>
+<p>修改 <code>spec/spec_helper.rb</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-rb" data-lang="rb"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-rb" data-lang="rb"><span class="c1"># ...</span>
+<span class="nb">require</span> <span class="s1">&#39;rspec_api_documentation&#39;</span>
+<span class="no">RspecApiDocumentation</span><span class="o">.</span><span class="n">configure</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+  <span class="c1"># config.format = :json</span>
+  <span class="c1"># config.response_body_formatter = Proc.new { |response_content_type, response_body| response_body }</span>
+  <span class="n">config</span><span class="o">.</span><span class="n">request_body_formatter</span> <span class="o">=</span> <span class="ss">:json</span>
+<span class="k">end</span>
+<span class="c1"># ...</span></code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li><code>:json</code> 轻量的字符串</li>
+</ul>
+
+<blockquote>
+<p>修改 <code>spec/acceptance/validation_codes_spec.rb</code> 添加 <code>header</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-rb" data-lang="rb"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-rb" data-lang="rb"><span class="nb">require</span> <span class="s1">&#39;rails_helper&#39;</span>
+<span class="nb">require</span> <span class="s1">&#39;rspec_api_documentation/dsl&#39;</span>
+<span class="n">require_relative</span> <span class="s1">&#39;../support/rspec_api_documentation&#39;</span>
+
+<span class="n">resource</span> <span class="s2">&#34;验证码api&#34;</span> <span class="k">do</span>
+  <span class="n">post</span> <span class="s2">&#34;/api/v1/validation_codes&#34;</span> <span class="k">do</span>
+    <span class="n">parameter</span> <span class="ss">:email</span><span class="p">,</span> <span class="ss">type</span><span class="p">:</span> <span class="ss">:string</span>
+    <span class="n">header</span> <span class="s2">&#34;Content-Type&#34;</span><span class="p">,</span> <span class="s2">&#34;application/json&#34;</span>
+    <span class="n">let</span><span class="p">(</span><span class="ss">:email</span><span class="p">)</span> <span class="p">{</span> <span class="s1">&#39;1@qq.com&#39;</span> <span class="p">}</span>
+
+    <span class="n">example</span> <span class="s2">&#34;请求发送验证码&#34;</span> <span class="k">do</span>
+      <span class="n">do_request</span>
+      <span class="n">expect</span><span class="p">(</span><span class="n">status</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">eq</span> <span class="mi">200</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span></code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>重新 <code>bin/rake docs:generate</code></li>
+<li>查看文档 <code>pnpx http-server ./doc/api/</code> <code>http://127.0.0.1:8080</code></li>
+</ul>
+
+<blockquote>
+<p>参考</p>
+</blockquote>
+
+<ul>
+<li><a href="https://github.com/zipmark/rspec_api_documentation#specspec_helperrb">rspec_api_documentation spec/spec_helper.rb</a></li>
+<li><a href="https://github.com/zipmark/rspec_api_documentation#configuration-options">rspec_api_documentation configuration-options</a></li>
+</ul>
+
+<hr />
+
+<h2 id="4-解决响应中的json问题-a-href-catalogue-a">4. 解决响应中的JSON问题 <a href="#catalogue"> ⇧ </a></h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-zsh" data-lang="zsh"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-zsh" data-lang="zsh">git clone git@github.com:jrg-team/rspec_api_documentation.git vendor/rspec_api_documentation</code></pre></td></tr></table>
+</div>
+</div>
+<blockquote>
+<p>修改包引用 <code>Gemfile</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-Gemfile" data-lang="Gemfile"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Gemfile" data-lang="Gemfile"><span class="c1"># ...</span>
+<span class="n">gem</span> <span class="s2">&#34;kaminari&#34;</span>
+<span class="n">gem</span> <span class="s2">&#34;rspec_api_documentation&#34;</span><span class="p">,</span> <span class="ss">path</span><span class="p">:</span> <span class="s2">&#34;./vendor/rspec_api_documentation&#34;</span>
+<span class="c1"># ...</span></code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>之后运行命令 <code>bundle</code> 或者 <code>bundle install</code></li>
+<li>重新 <code>bin/rake docs:generate</code></li>
+<li>查看文档 <code>pnpx http-server ./doc/api/</code> <code>http://127.0.0.1:8080</code></li>
+<li>需要注意的是不要将含有子仓库的 <code>./vendor/rspec_api_documentation</code> 文件提交上去
+
+<ul>
+<li>进入 <code>cd vendor/rspec_api_documentation</code> 删除 <code>rm -rf .git</code></li>
+<li>然后再提交即可</li>
+</ul></li>
+</ul>
+
+<blockquote>
+<p>参考</p>
+</blockquote>
+
+<ul>
+<li><a href="https://github.com/jrg-team/rspec_api_documentation">jrg-team/rspec_api_documentation</a></li>
+</ul>
+
+<hr />
+
+<h3 id="回顾-a-href-catalogue-a">回顾 <a href="#catalogue"> ⇧ </a></h3>
+
+<ul>
+<li>为了是文档中请求 <code>Header</code>有 <code>Content-Type</code>字段，需要在每一次单独请求的时候添加 <code>header &quot;Content-Type&quot;, &quot;application/json&quot;</code>
+
+<ul>
+<li>后续可优化</li>
+</ul></li>
+<li>为了让请求<code>Body</code>展示<code>json</code>，需要在 <code>spec/rails_helper.rb</code> 添加配置 <code>config.request_body_formatter = :json</code></li>
+<li>为了让响应<code>Body</code>展示<code>json</code>，需要在 <code>Gemfile</code> 中引用魔改过的版本 <code>gem &quot;rspec_api_documentation&quot;, path: &quot;./vendor/rspec_api_documentation&quot;</code></li>
+</ul>
+
+<hr />
+
+<h2 id="6-优化每次都要写请求-header-a-href-catalogue-a">6. 优化每次都要写请求 <code>header</code> <a href="#catalogue"> ⇧ </a></h2>
+
+<blockquote>
+<p>避免代码重复 修改 <code>spec/spec_helper.rb</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-rb" data-lang="rb"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-rb" data-lang="rb"><span class="c1"># ...</span>
+<span class="no">RSpec</span><span class="o">.</span><span class="n">configure</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+  <span class="n">config</span><span class="o">.</span><span class="n">before</span><span class="p">(</span><span class="ss">:each</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">spec</span><span class="o">|</span>
+    <span class="k">if</span> <span class="n">spec</span><span class="o">.</span><span class="n">metadata</span><span class="o">[</span><span class="ss">:type</span><span class="o">].</span><span class="n">qual?</span> <span class="ss">:acceptance</span>
+      <span class="n">require_relative</span> <span class="s1">&#39;./support/rspec_api_documentation&#39;</span>
+      <span class="n">header</span> <span class="s2">&#34;Accept&#34;</span><span class="p">,</span> <span class="s2">&#34;application/json&#34;</span>
+      <span class="n">header</span> <span class="s2">&#34;Content-Type&#34;</span><span class="p">,</span> <span class="s2">&#34;application/json&#34;</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+  <span class="c1"># ...</span>
+<span class="k">end</span></code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>重新 <code>bin/rake docs:generate</code></li>
+<li>查看文档 <code>pnpx http-server ./doc/api/</code> <code>http://127.0.0.1:8080</code></li>
+</ul>
+
+<hr />
+
+<h3 id="避免把响应-body-中的验证码直接展现给用户-a-href-catalogue-a">避免把响应<code>Body</code>中的验证码直接展现给用户 <a href="#catalogue"> ⇧ </a></h3>
+
+<blockquote>
+<p><code>spec/acceptance/validation_codes_spec.rb</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-rb" data-lang="rb"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-rb" data-lang="rb"><span class="nb">require</span> <span class="s1">&#39;rails_helper&#39;</span>
+<span class="nb">require</span> <span class="s1">&#39;rspec_api_documentation/dsl&#39;</span>
+
+<span class="n">resource</span> <span class="s2">&#34;验证码api&#34;</span> <span class="k">do</span>
+  <span class="n">post</span> <span class="s2">&#34;/api/v1/validation_codes&#34;</span> <span class="k">do</span>
+    <span class="n">parameter</span> <span class="ss">:email</span><span class="p">,</span> <span class="ss">type</span><span class="p">:</span> <span class="ss">:string</span>
+    <span class="n">let</span><span class="p">(</span><span class="ss">:email</span><span class="p">)</span> <span class="p">{</span> <span class="s1">&#39;1@qq.com&#39;</span> <span class="p">}</span>
+
+    <span class="n">example</span> <span class="s2">&#34;请求发送验证码&#34;</span> <span class="k">do</span>
+      <span class="n">do_request</span>
+      <span class="n">expect</span><span class="p">(</span><span class="n">status</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">eq</span> <span class="mi">200</span>
+      <span class="c1"># jsStr = JSON.parse response_body</span>
+      <span class="c1"># p jsStr</span>
+      <span class="c1"># 不直接在文档中展示验证码，只返回状态码即可</span>
+      <span class="n">expect</span><span class="p">(</span><span class="n">response_body</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">eq</span> <span class="s2">&#34; &#34;</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span></code></pre></td></tr></table>
+</div>
+</div>
+<blockquote>
+<p><code>app/controllers/api/v1/validation_codes_controller.rb</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-rb" data-lang="rb"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-rb" data-lang="rb"><span class="k">class</span> <span class="nc">Api</span><span class="o">::</span><span class="no">V1</span><span class="o">::</span><span class="no">ValidationCodesController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+  <span class="k">def</span> <span class="nf">create</span>
+    <span class="n">code</span> <span class="o">=</span> <span class="no">SecureRandom</span><span class="o">.</span><span class="n">random_number</span><span class="o">.</span><span class="n">to_s</span><span class="o">[</span><span class="mi">2</span><span class="o">..</span><span class="mi">7</span><span class="o">]</span>
+    <span class="n">validation_code</span> <span class="o">=</span> <span class="no">ValidationCode</span><span class="o">.</span><span class="n">new</span> <span class="ss">email</span><span class="p">:</span> <span class="n">params</span><span class="o">[</span><span class="ss">:email</span><span class="o">]</span><span class="p">,</span> <span class="ss">kind</span><span class="p">:</span> <span class="s2">&#34;sign_in&#34;</span><span class="p">,</span> <span class="ss">code</span><span class="p">:</span> <span class="n">code</span>
+    <span class="k">if</span> <span class="n">validation_code</span><span class="o">.</span><span class="n">save</span>
+      <span class="c1"># 不直接在文档中展示验证码，只返回状态码即可</span>
+      <span class="c1"># render json: { code: code }, status: 200</span>
+      <span class="n">render</span> <span class="ss">status</span><span class="p">:</span> <span class="mi">200</span>
+    <span class="k">else</span>
+      <span class="n">render</span> <span class="ss">json</span><span class="p">:</span> <span class="p">{</span> <span class="ss">errors</span><span class="p">:</span> <span class="n">validation_code</span><span class="o">.</span><span class="n">errors</span> <span class="p">},</span> <span class="ss">status</span><span class="p">:</span> <span class="mi">422</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span></code></pre></td></tr></table>
+</div>
+</div>
+<hr />
+
+<h2 id="7-可能的报错信息-a-href-catalogue-a">7. 可能的报错信息 <a href="#catalogue"> ⇧ </a></h2>
+
+<h3 id="密钥相关报错-a-href-catalogue-a">密钥相关报错 <a href="#catalogue"> ⇧ </a></h3>
+
+<ul>
+<li>拿到代码后，可能需要重新创建密钥：<code>https://docs.qq.com/doc/DU3ByQXZWbFpQRHND</code> 。</li>
+<li>这一步是可选的，但如果遇到 <code>ActiveSupport::MessageEncryptor::InvalidMessage</code> 报错，那么你就必须重新创建密钥了。</li>
+</ul>
+
+<hr />
+
+<h3 id="rspec-api-documentation-目录不存在-a-href-catalogue-a"><code>rspec_api_documentation</code> 目录不存在 <a href="#catalogue"> ⇧ </a></h3>
+
+<blockquote>
+<p>解决办法：</p>
+</blockquote>
+
+<ul>
+<li>在 <code>VSCode</code> 中打开终端（确保当前目录为项目的根目录）</li>
+<li>运行 <code>git clone https://github.com/FrankFang/hTAhuOU4I2QH /tmp/x</code></li>
+<li>运行 <code>rm ./vendor/rspec_api_documentation; cp -r /tmp/x/vendor/rspec_api_documentation ./vendor/</code></li>
+</ul>
+
+<hr />
+
+<!-- Article End -->
+
+<div style="text-align:center;">&middot;未完待续&middot;</div>
+
+<hr />
+
+<hr />
+
+<h2 id="参考文章">参考文章</h2>
+
+<ul>
+<li><a href="https://github.com/FrankFang/hTAhuOU4I2QH/commits/master">代码</a></li>
+</ul>
+
+<h2 id="相关文章">相关文章</h2>
+
+<ul>
+<li><a href="https://share.google/aimode/GONvQ0YK83FV6eDCu">通过 RSpec 生成文档并获得类似 Knife4j 的在线调试与可视化效果</a></li>
+<li><a href="https://evilmartians.com/chronicles/let-there-be-docs-generating-openapi-schema-across-rails-stack">Let there be docs! Generating an OpenAPI schema across the Rails stack</a></li>
+<li><a href="https://medium.com/apis-you-wont-hate/generating-openapi-docs-for-ruby-on-rails-with-rswag-9205b010e463">Generating OpenAPI docs for Ruby on Rails with RSwag</a></li>
+<li><a href="https://docs.bump.sh/guides/openapi/code-first-rails/">Generating OpenAPI docs for Ruby on Rails with RSwag</a></li>
+<li><a href="https://github.com/rswag/rswag#getting-started">github rswag</a></li>
+<li><a href="https://github.com/zipmark/rspec_api_documentation">github rspec_api_documentation</a></li>
+</ul>
+
+<hr />
+
+<ul>
+<li>作者： Joel</li>
+<li>文章链接：</li>
+<li><a href="http://xmasuhai.xyz/posts/版权声明链接/">版权声明</a></li>
+<li>非自由转载-非商用-非衍生-保持署名</li>
+</ul>
+
+<hr />
+
+<hr />
+
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Joel Xu</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2026-11-22
+      
+        
+        
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="http://xmasuhai.xyz/tags/project/">Project</a>
+          <a href="http://xmasuhai.xyz/tags/%E5%B1%B1%E7%AB%B9%E8%AE%B0%E8%B4%A6/">山竹记账</a>
+          <a href="http://xmasuhai.xyz/tags/backend/">BackEnd</a>
+          <a href="http://xmasuhai.xyz/tags/rails/">Rails</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/%E5%B1%B1%E7%AB%B9%E8%AE%B0%E8%B4%A6/%E5%B1%B1%E7%AB%B9%E8%AE%B0%E8%B4%A6%E5%90%8E%E7%AB%AF9.mockorderenum-%E7%AD%89%E7%9F%A5%E8%AF%86%E7%82%B9/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">【山竹记账后端】9.mock、order、enum 等知识点</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/%E5%B1%B1%E7%AB%B9%E8%AE%B0%E8%B4%A6/%E9%A1%B9%E7%9B%AE%E6%96%87%E6%A1%A3/%E5%B1%B1%E7%AB%B9%E8%AE%B0%E8%B4%A6-%E6%96%87%E6%A1%A32.%E5%B1%B1%E7%AB%B9%E8%AE%B0%E8%B4%A6%E6%A6%82%E8%A6%81%E8%AE%BE%E8%AE%A1%E6%96%87%E6%A1%A3v1/">
+            <span class="next-text nav-default">【山竹记账-文档】2.山竹记账概要设计文档v1</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:xmasuhai@163.com" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="https://github.com/xmasuhai" rel="me noopener" class="iconfont"
+      title="github"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M512 12.672c-282.88 0-512 229.248-512 512 0 226.261333 146.688 418.133333 350.08 485.76 25.6 4.821333 34.986667-11.008 34.986667-24.618667 0-12.16-0.426667-44.373333-0.64-87.04-142.421333 30.890667-172.458667-68.693333-172.458667-68.693333C188.672 770.986667 155.008 755.2 155.008 755.2c-46.378667-31.744 3.584-31.104 3.584-31.104 51.413333 3.584 78.421333 52.736 78.421333 52.736 45.653333 78.293333 119.850667 55.68 149.12 42.581333 4.608-33.109333 17.792-55.68 32.426667-68.48-113.706667-12.8-233.216-56.832-233.216-253.013333 0-55.893333 19.84-101.546667 52.693333-137.386667-5.76-12.928-23.04-64.981333 4.48-135.509333 0 0 42.88-13.738667 140.8 52.48 40.96-11.392 84.48-17.024 128-17.28 43.52 0.256 87.04 5.888 128 17.28 97.28-66.218667 140.16-52.48 140.16-52.48 27.52 70.528 10.24 122.581333 5.12 135.509333 32.64 35.84 52.48 81.493333 52.48 137.386667 0 196.693333-119.68 240-233.6 252.586667 17.92 15.36 34.56 46.762667 34.56 94.72 0 68.522667-0.64 123.562667-0.64 140.202666 0 13.44 8.96 29.44 35.2 24.32C877.44 942.592 1024 750.592 1024 524.672c0-282.752-229.248-512-512-512"></path>
+</svg>
+
+    </a>
+  
+    <a href="https://www.zhihu.com/people/xue-shou-41/posts" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+
+
+<a href="http://xmasuhai.xyz/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane">Jane</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy;
+    
+      2019 -
+    2026
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Joel Xu
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
